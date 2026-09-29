@@ -43,8 +43,6 @@ export const STRINGS_AR = {
         featureImageAlt: 'صورة مميزة', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'خطأ غير معروف', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'تعذرت الكتابة إلى الحافظة',
-        updateBannerTitle: 'تحديث Notebook Navigator متاح',
-        updateBannerInstruction: 'قم بالتحديث في الإعدادات -> إضافات المجتمع',
         previous: 'السابق', // Generic aria label for previous navigation (English: Previous)
         next: 'التالي' // Generic aria label for next navigation (English: Next)
     },
@@ -438,7 +436,6 @@ export const STRINGS_AR = {
     folderAppearance: {
         appearance: 'المظهر',
         sortBy: 'فرز حسب',
-        standardPreset: 'قياسي',
         compactPreset: 'مضغوط',
         defaultSuffix: '(افتراضي)',
         defaultLabel: 'افتراضي',
@@ -804,17 +801,6 @@ export const STRINGS_AR = {
             toggleAllInFileMenu: 'تبديل الكل في قائمة الملف',
             applyButton: 'تطبيق',
             emptyState: 'لم يتم العثور على مفاتيح خصائص.'
-        },
-        welcome: {
-            title: 'مرحباً بك في {pluginName}',
-            introText:
-                'مرحباً وأهلاً بك في Notebook Navigator، متصفح ملفات وتقويم أفضل لـ Obsidian. قبل أن تبدأ، أوصي حقاً بمشاهدة الفصول الثلاثة الأولى على الأقل من الفيديو أدناه، Mastering Notebook Navigator. ستتعرف من خلالها على كيفية عمل اللوحتين وكيف تبدأ الاستخدام بسرعة.',
-            continueText:
-                'وإذا كان لديك عشر دقائق إضافية، فتابع مشاهدة فصلي الإعداد عند التشغيل الأول وروتين الاستخدام اليومي. سيمنحك ذلك كل ما تحتاج إليه للبدء، ويمكنك العودة لاحقاً لمشاهدة مزيد من التفاصيل. ستجد رابطاً للفيديو في أعلى إعدادات Notebook Navigator.',
-            thanksText: 'استمتع باستخدام Notebook Navigator!',
-            videoAlt: 'إتقان Notebook Navigator 3',
-            openVideoButton: 'تشغيل الفيديو',
-            closeButton: 'ربما لاحقاً'
         }
     },
     // File system operations
@@ -985,7 +971,6 @@ export const STRINGS_AR = {
         toggleTagSort: 'تبديل ترتيب فرز الوسوم', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'تبديل الوسوم حسب التحديد',
         togglePropertiesBySelection: 'تبديل الخصائص حسب التحديد',
-        toggleCompactMode: 'تبديل الوضع المضغوط', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'تبديل قسم المثبتة',
         collapseExpand: 'طي / توسيع جميع عناصر التنقل', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'طي / توسيع جميع مجموعات القائمة',
@@ -1053,10 +1038,7 @@ export const STRINGS_AR = {
         },
         index: {
             label: 'عام',
-            description: 'ملاحظات الإصدار والدعم وملف تعريف الخزنة وأنواع الملفات ومفاتيح الخصائص.',
-            groups: {
-                about: 'حول'
-            }
+            description: 'ملاحظات الإصدار والدعم وملف تعريف الخزنة وأنواع الملفات ومفاتيح الخصائص.'
         },
         pageGroups: {
             configuration: 'التكوين',
@@ -2652,38 +2634,9 @@ export const STRINGS_AR = {
                 momentLinkText: 'تنسيق Moment',
                 help: 'التنسيقات الشائعة:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'دعم التطوير',
-                desc: 'إذا أحببت استخدام Notebook Navigator، يرجى التفكير في دعم تطويره المستمر.',
-                buttonText: '❤️ رعاية',
-                coffeeButton: '☕️ اشترِ لي قهوة'
-            },
-            otherPlugins: {
-                name: 'اطّلع على إضافاتي الأخرى',
-                betterPaste: 'تنظيف النص والروابط والصور الملصقة',
-                pixelPerfectImage: 'تغيير حجم الصور بدقة والمزيد'
-            },
-            checkForNewVersionOnStart: {
-                name: 'التحقق من إصدار جديد عند البدء',
-                desc: 'التحقق من إصدارات الإضافة الجديدة عند البدء وإظهار إشعار عند توفر تحديث. التحقق يحدث مرة واحدة يوميًا على الأكثر.',
-                status: 'إصدار جديد متاح: {version}'
-            },
             startupDebugLogging: {
                 name: 'تسجيل تصحيح أخطاء بدء التشغيل',
                 desc: 'يكتب تشخيصات بدء التشغيل في ملف Markdown يحمل طابعًا زمنيًا في جذر الخزنة، ثم يتوقف بعد استقرار بدء التشغيل. قد تتم مزامنة الملف وقد يتضمن مسارات ملفات.'
-            },
-            whatsNew: {
-                name: 'الجديد في Notebook Navigator {version}',
-                desc: 'شاهد التحديثات والتحسينات الأخيرة',
-                buttonText: 'عرض التحديثات الأخيرة'
-            },
-            showReleaseNotes: {
-                name: 'عرض الجديد بعد التحديث',
-                desc: 'عطّل هذا الخيار لمنع فتح مربع حوار «الجديد» تلقائيًا بعد التحديثات.'
-            },
-            masteringVideo: {
-                name: 'إتقان Notebook Navigator (فيديو)',
-                desc: 'يغطي هذا الفيديو كل ما تحتاجه لتكون منتجاً في Notebook Navigator، بما في ذلك اختصارات لوحة المفاتيح والبحث والوسوم والتخصيص المتقدم.'
             },
             cacheStatistics: {
                 localCache: 'الذاكرة المؤقتة المحلية',
@@ -2707,12 +2660,5 @@ export const STRINGS_AR = {
                 exportFailed: 'تصدير الأخطاء'
             }
         }
-    },
-    whatsNew: {
-        title: 'الجديد في Notebook Navigator',
-        openBannerImage: 'فتح صورة لافتة الإصدار',
-        supportMessage: 'إذا وجدت Notebook Navigator مفيدًا، يرجى التفكير في دعم تطويره.',
-        supportButton: 'اشترِ لي قهوة',
-        thanksButton: 'شكرًا!'
     }
 };

@@ -115,8 +115,6 @@ const BOOLEAN_SETTING_KEYS = [
     'calendarShowOutsideMonthDays',
     'calendarShowYearCalendar',
     'useFrontmatterMetadata',
-    'showReleaseNotes',
-    'checkForUpdatesOnStart',
     'showFileTaskProgress',
     'showFileTaskProgressBar',
     'showFileTaskProgressCount',

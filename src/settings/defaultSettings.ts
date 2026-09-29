@@ -236,12 +236,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     // Icon packs tab
     externalIconProviders: sanitizeRecord<boolean>(undefined),
 
-    // About
-    showReleaseNotes: true,
-
-    // Advanced tab
-    checkForUpdatesOnStart: true,
-
     // Navigation pane tab - Appearance
     pinNavigationBanner: true,
     showNoteCount: true,
@@ -474,7 +468,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     virtualFolderBackgroundColors: sanitizeRecord<string>(undefined),
     navigationSeparators: sanitizeRecord<boolean>(undefined),
     userColors: [...DEFAULT_CUSTOM_COLORS],
-    lastShownVersion: '',
     rootFolderOrder: [],
     rootTagOrder: [],
     rootPropertyOrder: []

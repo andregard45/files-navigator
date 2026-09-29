@@ -43,8 +43,6 @@ export const STRINGS_VI = {
         featureImageAlt: 'Ảnh nổi bật', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Lỗi không xác định', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Không thể ghi vào clipboard',
-        updateBannerTitle: 'Có bản cập nhật Notebook Navigator',
-        updateBannerInstruction: 'Cập nhật trong Cài đặt -> Plugin cộng đồng',
         previous: 'Trước', // Generic aria label for previous navigation (English: Previous)
         next: 'Sau' // Generic aria label for next navigation (English: Next)
     },
@@ -438,7 +436,6 @@ export const STRINGS_VI = {
     folderAppearance: {
         appearance: 'Giao diện',
         sortBy: 'Sắp xếp theo',
-        standardPreset: 'Chuẩn',
         compactPreset: 'Gọn',
         defaultSuffix: '(mặc định)',
         defaultLabel: 'Mặc định',
@@ -806,17 +803,6 @@ export const STRINGS_VI = {
             toggleAllInFileMenu: 'Chuyển đổi tất cả trong menu tệp',
             applyButton: 'Áp dụng',
             emptyState: 'Không tìm thấy khóa thuộc tính.'
-        },
-        welcome: {
-            title: 'Chào mừng đến với {pluginName}',
-            introText:
-                'Xin chào và chào mừng bạn đến với Notebook Navigator, một trình duyệt tệp và lịch tốt hơn dành cho Obsidian. Trước khi bắt đầu, tôi thực sự khuyên bạn nên xem ít nhất ba chương đầu của video Mastering Notebook Navigator bên dưới. Video này giới thiệu cách hoạt động của hai ngăn và giúp bạn nhanh chóng làm quen.',
-            continueText:
-                'Tiếp theo, nếu bạn có thêm mười phút, hãy xem tiếp các chương về thiết lập lần đầu và quy trình sử dụng hàng ngày. Những chương này cung cấp mọi thứ bạn cần để bắt đầu, và bạn có thể quay lại xem chi tiết hơn sau. Bạn sẽ tìm thấy liên kết đến video ở đầu phần cài đặt Notebook Navigator.',
-            thanksText: 'Chúc bạn sử dụng Notebook Navigator vui vẻ!',
-            videoAlt: 'Làm chủ Notebook Navigator 3',
-            openVideoButton: 'Phát video',
-            closeButton: 'Có lẽ sau'
         }
     },
     // File system operations
@@ -988,7 +974,6 @@ export const STRINGS_VI = {
         toggleTagSort: 'Bật/tắt sắp xếp thẻ', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Bật/tắt thẻ theo lựa chọn',
         togglePropertiesBySelection: 'Bật/tắt thuộc tính theo lựa chọn',
-        toggleCompactMode: 'Bật/tắt chế độ gọn', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Bật/tắt phần đã ghim',
         collapseExpand: 'Thu gọn / mở rộng tất cả mục điều hướng', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Thu gọn / mở rộng tất cả nhóm trong danh sách',
@@ -1056,10 +1041,7 @@ export const STRINGS_VI = {
         },
         index: {
             label: 'Chung',
-            description: 'Ghi chú phát hành, hỗ trợ, hồ sơ vault, loại tệp và khóa thuộc tính.',
-            groups: {
-                about: 'Giới thiệu'
-            }
+            description: 'Ghi chú phát hành, hỗ trợ, hồ sơ vault, loại tệp và khóa thuộc tính.'
         },
         pageGroups: {
             configuration: 'Cấu hình',
@@ -2656,38 +2638,9 @@ export const STRINGS_VI = {
                 momentLinkText: 'định dạng Moment',
                 help: 'Định dạng phổ biến:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Hỗ trợ phát triển',
-                desc: 'Nếu bạn thích dùng Notebook Navigator, hãy cân nhắc hỗ trợ việc phát triển liên tục.',
-                buttonText: '❤️ Tài trợ',
-                coffeeButton: '☕️ Mua cho tôi một ly cà phê'
-            },
-            otherPlugins: {
-                name: 'Xem các plugin khác của tôi',
-                betterPaste: 'Dọn dẹp văn bản, liên kết và ảnh đã dán',
-                pixelPerfectImage: 'Đổi kích thước ảnh chính xác và hơn thế nữa'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Kiểm tra phiên bản mới khi khởi động',
-                desc: 'Kiểm tra bản phát hành plugin mới khi khởi động và hiện thông báo khi có bản cập nhật. Kiểm tra xảy ra tối đa một lần mỗi ngày.',
-                status: 'Có phiên bản mới: {version}'
-            },
             startupDebugLogging: {
                 name: 'Ghi log gỡ lỗi khi khởi động',
                 desc: 'Ghi chẩn đoán khởi động vào một tệp Markdown có dấu thời gian ở thư mục gốc của kho, rồi dừng sau khi khởi động ổn định. Tệp có thể được đồng bộ hóa và có thể bao gồm đường dẫn tệp.'
-            },
-            whatsNew: {
-                name: 'Có gì mới trong Notebook Navigator {version}',
-                desc: 'Xem cập nhật và cải tiến gần đây',
-                buttonText: 'Xem cập nhật gần đây'
-            },
-            showReleaseNotes: {
-                name: 'Hiển thị "Có gì mới" sau khi cập nhật',
-                desc: 'Tắt để hộp thoại "Có gì mới" không tự động mở sau khi cập nhật.'
-            },
-            masteringVideo: {
-                name: 'Làm chủ Notebook Navigator (video)',
-                desc: 'Video này bao gồm mọi thứ bạn cần để làm việc hiệu quả với Notebook Navigator, bao gồm phím tắt, tìm kiếm, thẻ và tùy chỉnh nâng cao.'
             },
             cacheStatistics: {
                 localCache: 'Cache cục bộ',
@@ -2711,12 +2664,5 @@ export const STRINGS_VI = {
                 exportFailed: 'Xuất lỗi'
             }
         }
-    },
-    whatsNew: {
-        title: 'Có gì mới trong Notebook Navigator',
-        openBannerImage: 'Mở hình ảnh banner phát hành',
-        supportMessage: 'Nếu bạn thấy Notebook Navigator hữu ích, hãy cân nhắc hỗ trợ việc phát triển.',
-        supportButton: 'Mua cho tôi một ly cà phê',
-        thanksButton: 'Cảm ơn!'
     }
 };

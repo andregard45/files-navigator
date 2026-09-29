@@ -217,19 +217,6 @@ export function showListPaneAppearanceMenu({
 
     menu.addItem(item => {
         const label = withSuffix(
-            strings.folderAppearance.standardPreset,
-            defaultMode === 'standard' ? strings.folderAppearance.defaultSuffix : null
-        );
-        setItemTitle(item, label, appearance?.mode === 'standard');
-        item.setIcon('lucide-list')
-            .setChecked(effectiveMode === 'standard')
-            .onClick(() => {
-                updateAppearance({ mode: defaultMode === 'standard' ? undefined : 'standard' });
-            });
-    });
-
-    menu.addItem(item => {
-        const label = withSuffix(
             strings.folderAppearance.compactPreset,
             defaultMode === 'compact' ? strings.folderAppearance.defaultSuffix : null
         );

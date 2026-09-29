@@ -28,7 +28,6 @@ import type { TagTreeService } from '../services/TagTreeService';
 import type { PropertyTreeService } from '../services/PropertyTreeService';
 import type { CommandQueueService } from '../services/CommandQueueService';
 import type { OmnisearchService } from '../services/OmnisearchService';
-import type ReleaseCheckService from '../services/ReleaseCheckService';
 
 /**
  * Interface defining all services and stable dependencies available through the context.
@@ -57,8 +56,6 @@ interface Services {
     commandQueue: CommandQueueService | null;
     /** Omnisearch integration service */
     omnisearchService: OmnisearchService | null;
-    /** Release check service for GitHub update notifications */
-    releaseCheckService: ReleaseCheckService | null;
 }
 
 /**
@@ -102,8 +99,7 @@ export function ServicesProvider({ children, plugin }: { children: React.ReactNo
             tagTreeService: plugin.tagTreeService,
             propertyTreeService: plugin.propertyTreeService,
             commandQueue: plugin.commandQueue,
-            omnisearchService: plugin.omnisearchService,
-            releaseCheckService: plugin.releaseCheckService
+            omnisearchService: plugin.omnisearchService
         };
     }, [plugin, isMobile]);
 

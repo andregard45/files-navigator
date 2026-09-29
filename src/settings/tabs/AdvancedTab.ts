@@ -34,10 +34,6 @@ import { getNotSyncedSettingName } from '../syncModeToggle';
 /** Builds native 1.13 setting definitions for advanced settings. */
 export function createAdvancedSettingDefinitions(context: SettingsTabContext): SettingDefinitionItem[] {
     const generalItems: NonNullable<SettingDefinitionGroup['items']> = [
-        createToggleDefinition('checkForUpdatesOnStart', {
-            name: strings.settings.items.checkForNewVersionOnStart.name,
-            desc: strings.settings.items.checkForNewVersionOnStart.desc
-        }),
         createRenderDefinition({
             name: getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name),
             desc: strings.settings.items.startupDebugLogging.desc,

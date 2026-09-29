@@ -43,8 +43,6 @@ export const STRINGS_RU = {
         featureImageAlt: 'Изображение-обложка', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Неизвестная ошибка', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Не удалось записать в буфер обмена',
-        updateBannerTitle: 'Доступно обновление Notebook Navigator',
-        updateBannerInstruction: 'Обновите в Настройки -> Сторонние плагины',
         previous: 'Назад', // Generic aria label for previous navigation (English: Previous)
         next: 'Вперёд' // Generic aria label for next navigation (English: Next)
     },
@@ -439,7 +437,6 @@ export const STRINGS_RU = {
     folderAppearance: {
         appearance: 'Оформление',
         sortBy: 'Сортировать по',
-        standardPreset: 'Стандартный',
         compactPreset: 'Компактный',
         defaultSuffix: '(по умолчанию)',
         defaultLabel: 'По умолчанию',
@@ -805,17 +802,6 @@ export const STRINGS_RU = {
             toggleAllInFileMenu: 'Переключить все в меню файла',
             applyButton: 'Применить',
             emptyState: 'Ключи свойств не найдены.'
-        },
-        welcome: {
-            title: 'Добро пожаловать в {pluginName}',
-            introText:
-                'Здравствуйте! Добро пожаловать в Notebook Navigator, улучшенный файловый браузер и календарь для Obsidian. Перед началом я действительно рекомендую посмотреть хотя бы первые три главы видео ниже, Mastering Notebook Navigator. Они познакомят вас с работой двух панелей и помогут быстро освоиться.',
-            continueText:
-                'Затем, если у вас есть ещё десять минут, посмотрите главы о первоначальной настройке и повседневной работе. В них есть всё необходимое для начала, а к подробностям можно вернуться позже. Ссылка на видео находится в верхней части настроек Notebook Navigator.',
-            thanksText: 'Пользуйтесь Notebook Navigator с удовольствием!',
-            videoAlt: 'Осваиваем Notebook Navigator 3',
-            openVideoButton: 'Воспроизвести видео',
-            closeButton: 'Может, позже'
         }
     },
     // File system operations
@@ -987,7 +973,6 @@ export const STRINGS_RU = {
         toggleTagSort: 'Переключить сортировку тегов', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Переключить теги по выбору',
         togglePropertiesBySelection: 'Переключить свойства по выбору',
-        toggleCompactMode: 'Переключить компактный режим', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Переключить закреплённый раздел',
         collapseExpand: 'Свернуть / развернуть все элементы навигации', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Свернуть / развернуть все группы списка',
@@ -1055,10 +1040,7 @@ export const STRINGS_RU = {
         },
         index: {
             label: 'Общие',
-            description: 'Заметки о выпуске, поддержка, профиль хранилища, типы файлов и ключи свойств.',
-            groups: {
-                about: 'О плагине'
-            }
+            description: 'Заметки о выпуске, поддержка, профиль хранилища, типы файлов и ключи свойств.'
         },
         pageGroups: {
             configuration: 'Конфигурация',
@@ -2657,38 +2639,9 @@ export const STRINGS_RU = {
                 momentLinkText: 'формат Moment',
                 help: 'Распространённые форматы:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Поддержать разработку',
-                desc: 'Если вам нравится использовать Notebook Navigator, пожалуйста, рассмотрите возможность поддержки его дальнейшей разработки.',
-                buttonText: '❤️ Спонсор',
-                coffeeButton: '☕️ Купить кофе'
-            },
-            otherPlugins: {
-                name: 'Посмотрите мои другие плагины',
-                betterPaste: 'Очищает вставленный текст, ссылки и изображения',
-                pixelPerfectImage: 'Точное изменение размера изображений и другое'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Проверять новую версию при запуске',
-                desc: 'Проверяет наличие новых релизов плагина при запуске и показывает уведомление, когда доступно обновление. Проверки происходят не чаще одного раза в день.',
-                status: 'Доступна новая версия: {version}'
-            },
             startupDebugLogging: {
                 name: 'Журнал отладки запуска',
                 desc: 'Записывает диагностику запуска в Markdown-файл с временной меткой в корне хранилища, затем останавливается после стабилизации запуска. Файл может синхронизироваться и содержать пути к файлам.'
-            },
-            whatsNew: {
-                name: 'Что нового в Notebook Navigator {version}',
-                desc: 'Посмотреть последние обновления и улучшения',
-                buttonText: 'Посмотреть обновления'
-            },
-            showReleaseNotes: {
-                name: 'Показывать окно «Что нового» после обновления',
-                desc: 'Отключите, чтобы окно «Что нового» не открывалось автоматически после обновлений.'
-            },
-            masteringVideo: {
-                name: 'Освоение Notebook Navigator (видео)',
-                desc: 'Это видео охватывает всё, что нужно для продуктивной работы с Notebook Navigator, включая горячие клавиши, поиск, теги и расширенную настройку.'
             },
             cacheStatistics: {
                 localCache: 'Локальный кэш',
@@ -2712,12 +2665,5 @@ export const STRINGS_RU = {
                 exportFailed: 'Экспортировать ошибки'
             }
         }
-    },
-    whatsNew: {
-        title: 'Что нового в Notebook Navigator',
-        openBannerImage: 'Открыть изображение баннера релиза',
-        supportMessage: 'Если вы находите Notebook Navigator полезным, пожалуйста, рассмотрите возможность поддержки его разработки.',
-        supportButton: 'Купить кофе',
-        thanksButton: 'Спасибо!'
     }
 };

@@ -43,8 +43,6 @@ export const STRINGS_ES = {
         featureImageAlt: 'Imagen destacada', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Error desconocido', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'No se pudo escribir en el portapapeles',
-        updateBannerTitle: 'Actualización de Notebook Navigator disponible',
-        updateBannerInstruction: 'Actualiza en Ajustes -> Complementos comunitarios',
         previous: 'Anterior', // Generic aria label for previous navigation (English: Previous)
         next: 'Siguiente' // Generic aria label for next navigation (English: Next)
     },
@@ -441,7 +439,6 @@ export const STRINGS_ES = {
     folderAppearance: {
         appearance: 'Apariencia',
         sortBy: 'Ordenar por',
-        standardPreset: 'Estándar',
         compactPreset: 'Compacto',
         defaultSuffix: '(predeterminado)',
         defaultLabel: 'Predeterminado',
@@ -809,17 +806,6 @@ export const STRINGS_ES = {
             toggleAllInFileMenu: 'Alternar todos en menú de archivo',
             applyButton: 'Aplicar',
             emptyState: 'No se encontraron claves de propiedad.'
-        },
-        welcome: {
-            title: 'Bienvenido a {pluginName}',
-            introText:
-                '¡Hola y bienvenido a Notebook Navigator, un mejor explorador de archivos y calendario para Obsidian! Antes de empezar, te recomiendo de verdad que veas al menos los tres primeros capítulos del vídeo de abajo, Mastering Notebook Navigator. Te presentan cómo funcionan los dos paneles y te ayudan a empezar rápidamente.',
-            continueText:
-                'Después, si tienes otros diez minutos, sigue con los capítulos sobre la configuración inicial y el ciclo de uso diario. Con ellos tendrás todo lo necesario para empezar y podrás volver más adelante para ver los detalles. Encontrarás un enlace al vídeo en la parte superior de los ajustes de Notebook Navigator.',
-            thanksText: '¡Que disfrutes usando Notebook Navigator!',
-            videoAlt: 'Dominando Notebook Navigator 3',
-            openVideoButton: 'Reproducir video',
-            closeButton: 'Quizás más tarde'
         }
     },
 
@@ -992,7 +978,6 @@ export const STRINGS_ES = {
         toggleTagSort: 'Alternar orden de etiquetas', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Alternar etiquetas por selección',
         togglePropertiesBySelection: 'Alternar propiedades por selección',
-        toggleCompactMode: 'Alternar modo compacto', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Alternar sección fijada',
         collapseExpand: 'Contraer / expandir todos los elementos de navegación', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Contraer / expandir todos los grupos de la lista',
@@ -1060,10 +1045,7 @@ export const STRINGS_ES = {
         },
         index: {
             label: 'General',
-            description: 'Notas de versión, soporte, perfil de bóveda, tipos de archivo y claves de propiedades.',
-            groups: {
-                about: 'Acerca de'
-            }
+            description: 'Notas de versión, soporte, perfil de bóveda, tipos de archivo y claves de propiedades.'
         },
         pageGroups: {
             configuration: 'Configuración',
@@ -2668,38 +2650,9 @@ export const STRINGS_ES = {
                 momentLinkText: 'formato Moment',
                 help: 'Formatos comunes:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Apoyar el desarrollo',
-                desc: 'Si te encanta usar Notebook Navigator, considera apoyar su desarrollo continuo.',
-                buttonText: '❤️ Patrocinar',
-                coffeeButton: '☕️ Invítame a un café'
-            },
-            otherPlugins: {
-                name: 'Descubre mis otros plugins',
-                betterPaste: 'Limpia el texto, los enlaces y las imágenes que pegas',
-                pixelPerfectImage: 'Cambio de tamaño exacto de imágenes y más'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Buscar nueva versión al iniciar',
-                desc: 'Busca nuevas versiones del plugin al iniciar y muestra una notificación cuando hay una actualización disponible. Las comprobaciones se realizan como máximo una vez al día.',
-                status: 'Nueva versión disponible: {version}'
-            },
             startupDebugLogging: {
                 name: 'Registro de depuración de inicio',
                 desc: 'Escribe diagnósticos de inicio en un archivo Markdown con marca de tiempo en la raíz de la bóveda y se detiene cuando el inicio se estabiliza. El archivo puede sincronizarse y puede incluir rutas de archivos.'
-            },
-            whatsNew: {
-                name: 'Novedades en Notebook Navigator {version}',
-                desc: 'Ver actualizaciones y mejoras recientes',
-                buttonText: 'Ver actualizaciones recientes'
-            },
-            showReleaseNotes: {
-                name: 'Mostrar las novedades tras una actualización',
-                desc: 'Desactívalo para impedir que el diálogo de novedades se abra automáticamente después de las actualizaciones.'
-            },
-            masteringVideo: {
-                name: 'Dominar Notebook Navigator (vídeo)',
-                desc: 'Este vídeo cubre todo lo que necesitas para ser productivo en Notebook Navigator, incluyendo atajos de teclado, búsqueda, etiquetas y personalización avanzada.'
             },
             cacheStatistics: {
                 localCache: 'Caché local',
@@ -2723,12 +2676,5 @@ export const STRINGS_ES = {
                 exportFailed: 'Exportar errores'
             }
         }
-    },
-    whatsNew: {
-        title: 'Novedades en Notebook Navigator',
-        openBannerImage: 'Abrir imagen del banner de la versión',
-        supportMessage: 'Si encuentras útil Notebook Navigator, considera apoyar su desarrollo.',
-        supportButton: 'Invítame a un café',
-        thanksButton: '¡Gracias!'
     }
 };

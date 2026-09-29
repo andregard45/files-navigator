@@ -76,14 +76,6 @@ describe('createModifiedSettingsTransfer', () => {
         });
     });
 
-    it('excludes the shared release marker from exports', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.lastShownVersion = '3.3.2';
-
-        expect(createModifiedSettingsTransfer(settings, '3.3.2').settings).toEqual({
-            propertyGroupKey: ''
-        });
-    });
 });
 
 describe('applyModifiedSettingsTransfer', () => {
@@ -99,18 +91,6 @@ describe('applyModifiedSettingsTransfer', () => {
         expect(nextSettings.folderSortOrder).toBe(DEFAULT_SETTINGS.folderSortOrder);
         expect(nextSettings.tagSortOrder).toBe('frequency-desc');
         expect(nextSettings.searchProvider).toBe('omnisearch');
-    });
-
-    it('keeps the current release marker when an import contains an older value', () => {
-        const currentSettings = structuredClone(DEFAULT_SETTINGS);
-        currentSettings.lastShownVersion = '3.3.2';
-
-        const nextSettings = applyModifiedSettingsTransfer(currentSettings, {
-            tagSortOrder: 'frequency-desc',
-            lastShownVersion: '3.1.0'
-        });
-
-        expect(nextSettings.lastShownVersion).toBe('3.3.2');
     });
 
     it('rejects non-object transfer payloads', () => {

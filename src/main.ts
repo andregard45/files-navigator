@@ -47,7 +47,6 @@ import { RecentNotesService } from './services/RecentNotesService';
 import type { ExternalIconProviderController } from './services/icons/external/ExternalIconProviderController';
 import type { ExternalIconProviderId } from './services/icons/external/providerRegistry';
 import type { NavigateToFolderOptions } from './hooks/useNavigatorReveal';
-import ReleaseCheckService, { type ReleaseUpdateNotice } from './services/ReleaseCheckService';
 import { isNotebookNavigatorCalendarView, isNotebookNavigatorView } from './view/viewGuards';
 import { LEGACY_STORAGE_KEYS, localStorage } from './utils/localStorage';
 import { INTERNAL_NOTEBOOK_NAVIGATOR_API, NotebookNavigatorAPI } from './api/NotebookNavigatorAPI';
@@ -145,7 +144,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     externalIconController: ExternalIconProviderController | null = null;
     api: NotebookNavigatorAPI | null = null;
     recentNotesService: RecentNotesService | null = null;
-    releaseCheckService: ReleaseCheckService | null = null;
     debugLoggingService: DebugLoggingService | null = null;
     // Keys used for persisting UI state in browser localStorage
     keys: LocalStorageKeys = STORAGE_KEYS;
@@ -153,7 +151,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     private settingsUpdateListeners = new Map<string, () => void>();
     // Map of callbacks to notify open React views when files are renamed
     private fileRenameListeners = new Map<string, (oldPath: string, newPath: string) => void>();
-    private updateNoticeListeners = new Map<string, (notice: ReleaseUpdateNotice | null) => void>();
     languageService!: LanguageService;
     // Flag indicating plugin is being unloaded to prevent operations during shutdown
     private isUnloading = false;
@@ -176,7 +173,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     private homepageController: HomepageController | null = null;
     private folderNoteSidebarService: FolderNoteSidebarService | null = null;
     private settingTab: LazyNotebookNavigatorSettingTab | null = null;
-    private pendingUpdateNotice: ReleaseUpdateNotice | null = null;
     private hasWorkspaceLayoutReady = false;
     private lastCalendarPlacement: CalendarPlacement | null = null;
     private calendarPlacementRequestId = 0;
@@ -337,36 +333,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     public unregisterRecentDataListener(id: string): void {
         this.preferencesController.unregisterRecentDataListener(id);
-    }
-
-    /**
-     * Registers a listener that will be notified when release update notices change.
-     */
-    public registerUpdateNoticeListener(id: string, callback: (notice: ReleaseUpdateNotice | null) => void): void {
-        this.updateNoticeListeners.set(id, callback);
-    }
-
-    /**
-     * Removes an update notice listener.
-     */
-    public unregisterUpdateNoticeListener(id: string): void {
-        this.updateNoticeListeners.delete(id);
-    }
-
-    /**
-     * Returns the current pending update notice, if any.
-     */
-    public getPendingUpdateNotice(): ReleaseUpdateNotice | null {
-        return this.pendingUpdateNotice;
-    }
-
-    /**
-     * Dismisses the current update notice for the active session.
-     */
-    public markUpdateNoticeAsDisplayed(version: string): void {
-        if (this.pendingUpdateNotice && this.pendingUpdateNotice.version === version) {
-            this.setPendingUpdateNotice(null);
-        }
     }
 
     /**
@@ -776,7 +742,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
             this.api[INTERNAL_NOTEBOOK_NAVIGATOR_API].metadata.emitFolderChangedForPath(folderPath);
         });
-        this.releaseCheckService = new ReleaseCheckService(this);
         recordStartupDiagnostic('services.initialized');
 
         const iconService = getIconService();
@@ -856,11 +821,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                 await this.languageService.ready;
                 if (this.isUnloading) return;
 
-                if (isFirstLaunch) {
-                    const { WelcomeModal } = await import('./modals/WelcomeModal');
-                    new WelcomeModal(this.app).open();
-                }
-
                 // PDF_CRASH_DIAGNOSTICS: show the last unfinished mobile PDF path from the previous session.
                 const pendingPdfPath = consumePendingPdfProcessingDiagnostic();
                 if (pendingPdfPath) {
@@ -876,31 +836,11 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                     }).open();
                 }
 
-                // Check for version updates after a short delay.
-                // Obsidian Sync can update the plugin settings shortly after startup, so defer the check to avoid using cached settings.
-                const versionUpdateGracePeriodMs = 1000;
-                if (typeof window === 'undefined') {
-                    await this.checkForVersionUpdate({ isFirstLaunch });
-                } else {
-                    window.setTimeout(() => {
-                        runAsyncAction(async () => {
-                            if (this.isUnloading) {
-                                return;
-                            }
-                            await this.checkForVersionUpdate({ isFirstLaunch });
-                        });
-                    }, versionUpdateGracePeriodMs);
-                }
-
                 // Trigger Style Settings plugin to parse our settings
                 this.app.workspace.trigger('parse-style-settings');
 
                 this.applyCalendarPlacementView({ force: true, reveal: false });
 
-                // Check for new GitHub releases if enabled, without blocking startup
-                if (this.settings.checkForUpdatesOnStart) {
-                    runAsyncAction(() => this.runReleaseUpdateCheck());
-                }
                 recordStartupDiagnostic('layout.readyTasks.complete');
                 recordStartupUserVisible({ shouldActivateOnStartup });
             });
@@ -1049,20 +989,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     public setFolderSortOrder(order: AlphaSortOrder): void {
         this.preferencesController.setFolderSortOrder(order);
-    }
-
-    /**
-     * Returns the timestamp of the last release check (local-only).
-     */
-    public getReleaseCheckTimestamp(): number | null {
-        return this.preferencesController.getReleaseCheckTimestamp();
-    }
-
-    /**
-     * Persists the last release check timestamp to local storage.
-     */
-    public setReleaseCheckTimestamp(timestamp: number): void {
-        this.preferencesController.setReleaseCheckTimestamp(timestamp);
     }
 
     /**
@@ -1500,17 +1426,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         this.onSettingsUpdate();
     }
 
-    /**
-     * Records a displayed What's new version locally before persisting the shared marker. The
-     * controller rejects older versions so a delayed modal callback cannot regress either marker.
-     */
-    public async advanceLastShownVersion(version: string): Promise<void> {
-        if (!this.settingsController.advanceLastShownVersion(version)) {
-            return;
-        }
-        await this.saveSettingsAndUpdate();
-    }
-
     public createSettingsTransferJson(): string {
         return JSON.stringify(createModifiedSettingsTransfer(this.settings, this.manifest.version), null, 2);
     }
@@ -1897,164 +1812,5 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
     public async openHomepage(trigger: 'startup' | 'command'): Promise<boolean> {
         return this.homepageController?.open(trigger) ?? false;
-    }
-
-    /**
-     * Checks for new GitHub releases and updates the pending notice if a newer version is found.
-     * @param force - If true, bypasses the minimum check interval
-     */
-    public async runReleaseUpdateCheck(force = false): Promise<void> {
-        await this.evaluateReleaseUpdates(force);
-    }
-
-    /**
-     * Clears the pending update notice without marking it as displayed.
-     */
-    public dismissPendingUpdateNotice(): void {
-        this.setPendingUpdateNotice(null);
-    }
-
-    /**
-     * Performs the actual release check and updates the pending notice.
-     */
-    private async evaluateReleaseUpdates(force = false): Promise<void> {
-        if (!this.releaseCheckService || this.isUnloading) {
-            return;
-        }
-
-        if (!this.settings.checkForUpdatesOnStart && !force) {
-            return;
-        }
-
-        try {
-            const notice = await this.releaseCheckService.checkForUpdates(force);
-            this.setPendingUpdateNotice(notice ?? null);
-        } catch {
-            // Ignore release check failures silently
-        }
-    }
-
-    /**
-     * Updates the pending notice and notifies all listeners.
-     * Skips notification if the notice hasn't actually changed.
-     */
-    private setPendingUpdateNotice(notice: ReleaseUpdateNotice | null): void {
-        const currentVersion = this.pendingUpdateNotice?.version ?? null;
-        const incomingVersion = notice?.version ?? null;
-        const hasNotice = !!notice;
-        const hadNotice = !!this.pendingUpdateNotice;
-
-        // Skip if notice hasn't changed
-        if (currentVersion === incomingVersion && hasNotice === hadNotice) {
-            return;
-        }
-
-        this.pendingUpdateNotice = notice;
-
-        if (!notice) {
-            this.releaseCheckService?.clearPendingNotice();
-        }
-
-        this.notifyUpdateNoticeListeners();
-    }
-
-    /**
-     * Notifies all registered listeners about the current update notice state.
-     */
-    private notifyUpdateNoticeListeners(): void {
-        if (this.isUnloading) {
-            return;
-        }
-
-        const listeners = Array.from(this.updateNoticeListeners.values());
-        listeners.forEach(callback => {
-            try {
-                callback(this.pendingUpdateNotice);
-            } catch {
-                // Ignore listener errors to avoid breaking notification flow
-            }
-        });
-    }
-
-    /**
-     * Check if the plugin has been updated and show release notes if needed
-     */
-    private async checkForVersionUpdate(params: { isFirstLaunch: boolean }): Promise<void> {
-        const { isFirstLaunch } = params;
-        // Get current version from manifest
-        const currentVersion = this.manifest.version;
-
-        // The greater local or synced marker prevents stale settings files from re-showing a release.
-        const lastShownVersion = this.settingsController.getLastShownVersion();
-
-        // Initialize lastShownVersion on first install.
-        if (!lastShownVersion) {
-            if (isFirstLaunch) {
-                await this.advanceLastShownVersion(currentVersion);
-                return;
-            }
-
-            // Disabled dialogs still advance the marker so re-enabling them starts with
-            // the next update instead of replaying every release skipped meanwhile.
-            if (!this.settings.showReleaseNotes) {
-                await this.advanceLastShownVersion(currentVersion);
-                return;
-            }
-
-            const { getLatestReleaseNotes, isReleaseAutoDisplayEnabled } = await import('./releaseNotes');
-
-            if (!isReleaseAutoDisplayEnabled(currentVersion)) {
-                await this.advanceLastShownVersion(currentVersion);
-                return;
-            }
-
-            const { WhatsNewModal } = await import('./modals/WhatsNewModal');
-
-            const releaseNotes = getLatestReleaseNotes();
-            new WhatsNewModal(this.app, releaseNotes, () => {
-                // Save version after 1 second delay when user closes the modal
-                window.setTimeout(() => {
-                    // Wrap in runAsyncAction to handle async without blocking callback
-                    runAsyncAction(async () => {
-                        await this.advanceLastShownVersion(currentVersion);
-                    });
-                }, 1000);
-            }).open();
-            return;
-        }
-
-        // A newer shared marker can come from a device running a newer plugin version. Downgrades
-        // never auto-display because recording the older version would reopen the dialog elsewhere.
-        const { getReleaseNotesBetweenVersions, compareVersions, isReleaseAutoDisplayEnabled } = await import('./releaseNotes');
-        if (compareVersions(currentVersion, lastShownVersion) <= 0) {
-            return;
-        }
-
-        if (!this.settings.showReleaseNotes) {
-            // Keep the high-water marker current while dialogs are disabled, otherwise
-            // re-enabling them would replay release notes from every skipped update.
-            await this.advanceLastShownVersion(currentVersion);
-            return;
-        }
-
-        // Only the current release decides whether startup should open the dialog. Advance the
-        // marker when it opts out so the skipped dialog is not reconsidered on the next startup.
-        if (!isReleaseAutoDisplayEnabled(currentVersion)) {
-            await this.advanceLastShownVersion(currentVersion);
-            return;
-        }
-
-        const { WhatsNewModal } = await import('./modals/WhatsNewModal');
-        const releaseNotes = getReleaseNotesBetweenVersions(lastShownVersion, currentVersion);
-
-        new WhatsNewModal(this.app, releaseNotes, () => {
-            // Save version after 1 second delay when user closes the modal
-            window.setTimeout(() => {
-                // Wrap in runAsyncAction to handle async without blocking callback
-                runAsyncAction(async () => {
-                    await this.advanceLastShownVersion(currentVersion);
-                });
-            }, 1000);
-        }).open();
     }
 }

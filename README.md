@@ -5,8 +5,6 @@ Read in your language: [English](https://notebooknavigator.com/docs.html) • [�
 Turn Obsidian into a fast, customizable notes browser with folders, tags, properties and shortcuts in one view.
 Visual previews. Full keyboard navigation. Dual-pane layout. Mobile optimized. Works with 100,000+ notes.
 
-If you love using Notebook Navigator, please consider [☕️ Buying me a coffee](https://buymeacoffee.com/johansan) or [Sponsor on GitHub ❤️](https://github.com/sponsors/johansan).
-
 Coming from another app? Read the switching guides for [Evernote](https://notebooknavigator.com/evernote/), [Apple Notes](https://notebooknavigator.com/apple-notes/), [Bear](https://notebooknavigator.com/bear/), [OneNote](https://notebooknavigator.com/onenote/) and [Day One](https://notebooknavigator.com/day-one/).
 
 <br/>
@@ -28,43 +26,33 @@ Coming from another app? Read the switching guides for [Evernote](https://notebo
 
 <br/>
 
-## 2 Getting started
-
-Here is the official tutorial for learning and mastering Notebook Navigator:
-
-[![Mastering Notebook Navigator](https://raw.githubusercontent.com/johansan/notebook-navigator/main/images/youtube-thumbnail.jpg)](https://www.youtube.com/watch?v=m2maDNtho7Y)
-
-The video has subtitles in 21 languages.
-
-<br/>
-
-## 3 Security and quality
+## 2 Security and quality
 
 Notebook Navigator is checked with [TypeScript](https://www.typescriptlang.org/), [ESLint](https://eslint.org/) with the official [Obsidian ESLint plugin](https://github.com/obsidianmd/eslint-plugin), [Prettier](https://prettier.io/), [Vitest](https://vitest.dev/) and a production build before changes are merged. The build must complete with zero errors and zero warnings.
 
 Security checks run through [CodeQL](https://codeql.github.com/), with scan history in the [CodeQL workflow runs](https://github.com/johansan/notebook-navigator/actions/workflows/codeql.yml). Current status is shown in the badges at the top of this page.
 
-Notebook Navigator runs locally, but some features make documented HTTP requests for updates, downloads, and remote content. See [section 11 - Network and Diagnostics Disclosure](#11-network-and-diagnostics-disclosure) for the full list.
+Notebook Navigator runs locally, but some features make documented HTTP requests for updates, downloads, and remote content. See [section 10 - Network and Diagnostics Disclosure](#10-network-and-diagnostics-disclosure) for the full list.
 
 <br/>
 
 ## Table of contents
 
-- [4 Documentation](#4-documentation)
-- [5 Keyboard shortcuts](#5-keyboard-shortcuts)
-- [6 Synced and local settings](#6-synced-and-local-settings)
-- [7 Search](#7-search)
-- [8 Custom hotkeys](#8-custom-hotkeys)
-- [9 Commands](#9-commands)
-- [10 Features](#10-features)
-- [11 Network and Diagnostics Disclosure](#11-network-and-diagnostics-disclosure)
-- [12 Contact](#12-contact)
-- [13 Questions or issues?](#13-questions-or-issues)
-- [14 License](#14-license)
+- [3 Documentation](#3-documentation)
+- [4 Keyboard shortcuts](#4-keyboard-shortcuts)
+- [5 Synced and local settings](#5-synced-and-local-settings)
+- [6 Search](#6-search)
+- [7 Custom hotkeys](#7-custom-hotkeys)
+- [8 Commands](#8-commands)
+- [9 Features](#9-features)
+- [10 Network and Diagnostics Disclosure](#10-network-and-diagnostics-disclosure)
+- [11 Contact](#11-contact)
+- [12 Questions or issues?](#12-questions-or-issues)
+- [13 License](#13-license)
 
 <br/>
 
-## 4 Documentation
+## 3 Documentation
 
 - [**API Reference**](docs/api-reference.md) - Public API documentation. Covers metadata management, navigation control and event subscriptions for JavaScript/TypeScript developers.
 
@@ -88,7 +76,7 @@ Notebook Navigator runs locally, but some features make documented HTTP requests
 
 <br/>
 
-## 5 Keyboard shortcuts
+## 4 Keyboard shortcuts
 
 | Key                                 | Action                                                                                                                                                                                    |
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -114,11 +102,11 @@ Notebook Navigator runs locally, but some features make documented HTTP requests
 
 <br/>
 
-## 6 Synced and local settings
+## 5 Synced and local settings
 
 Many settings in Notebook Navigator display a sync toggle — a cloud icon that switches between "Enable sync" and "Disable sync". This controls where each setting is stored and whether it is shared across devices.
 
-### 6.1 How sync works
+### 5.1 How sync works
 
 Obsidian plugins store their configuration in `data.json`, located at `.obsidian/plugins/notebook-navigator/data.json` inside your vault folder. When you use a sync service — such as [Obsidian Sync](https://obsidian.md/sync), iCloud, GitHub, Dropbox, or Google Drive — this file is synchronized across all your devices along with the rest of your vault. Any setting saved to `data.json` will propagate to every device that syncs the vault.
 
@@ -136,11 +124,11 @@ If you do not use a sync service, the sync toggle has no practical effect since 
 
 <br/>
 
-## 7 Search
+## 6 Search
 
 Notebook Navigator has two search modes: filter search and Omnisearch. Switch between them using the up/down arrow keys or by clicking the search icon. Combine file names, properties, tags, dates, and filters in one query (e.g., `meeting .status=active #work @thisweek`).
 
-### 7.1 Filter search
+### 6.1 Filter search
 
 Filters files by display name, alias, tags, properties, dates, folders, extensions, and tasks within the current folder and subfolders. Default search mode.
 
@@ -210,7 +198,7 @@ The default date field follows the current sort order. When sorting by name, the
 - Operator query: `#work OR .status=started`
 - Mixed query: `#work OR ext:md` (`OR` is matched in file names)
 
-### 7.2 Omnisearch
+### 6.2 Omnisearch
 
 Full-text search across the vault, filtered to the current folder, subfolders, or selected tags. Requires the [Omnisearch](https://github.com/scambier/obsidian-omnisearch) plugin. If Omnisearch is not installed, search falls back to filter search.
 
@@ -225,7 +213,7 @@ Note previews show Omnisearch result excerpts instead of the default preview tex
 
 <br/>
 
-## 8 Custom hotkeys
+## 7 Custom hotkeys
 
 Edit `.obsidian/plugins/notebook-navigator/data.json` to customize Notebook Navigator hotkeys. Open the file and locate the `keyboardShortcuts` section. Each entry maps an action to one or more key bindings:
 
@@ -235,7 +223,7 @@ Edit `.obsidian/plugins/notebook-navigator/data.json` to customize Notebook Navi
 
 Add multiple bindings per action to support alternate keys, like the `ArrowUp` and `K` example above. Combine modifiers in one entry by listing each value, for example `"modifiers": ["Mod", "Shift"]`. Keyboard sequences such as `gg` or `dd` are not supported. Reload Obsidian after editing the file.
 
-### 8.1 Modifiers
+### 7.1 Modifiers
 
 | Modifier | Key                                       |
 | -------- | ----------------------------------------- |
@@ -244,7 +232,7 @@ Add multiple bindings per action to support alternate keys, like the `ArrowUp` a
 | `Shift`  | Shift                                     |
 | `Ctrl`   | Control (prefer `Mod` for cross-platform) |
 
-### 8.2 Available actions
+### 7.2 Available actions
 
 | Action                            | Default key(s)                    |
 | --------------------------------- | --------------------------------- |
@@ -274,7 +262,7 @@ Add multiple bindings per action to support alternate keys, like the `ArrowUp` a
 
 <br/>
 
-## 9 Commands
+## 8 Commands
 
 Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 
@@ -351,7 +339,7 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 - `Notebook Navigator: Rebuild cache` Rebuilds the local Notebook Navigator cache. Use this if you experience missing tags, incorrect previews or missing feature images
 - `Notebook Navigator: Restore default settings` Replaces the settings file with verified defaults after saving a timestamped backup. This command is only available when Notebook Navigator cannot read its settings and stops during startup
 
-### 9.1 Command IDs
+### 8.1 Command IDs
 
 | Command ID                                          | Command name                                               |
 | --------------------------------------------------- | ---------------------------------------------------------- |
@@ -394,7 +382,6 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 | `notebook-navigator:toggle-tag-sort`                | Notebook Navigator: Toggle tag sort order                  |
 | `notebook-navigator:toggle-tags-by-selection`       | Notebook Navigator: Toggle tags by selection               |
 | `notebook-navigator:toggle-properties-by-selection` | Notebook Navigator: Toggle properties by selection         |
-| `notebook-navigator:toggle-compact-mode`            | Notebook Navigator: Toggle compact mode                    |
 | `notebook-navigator:toggle-pinned-section`          | Notebook Navigator: Toggle pinned section                  |
 | `notebook-navigator:collapse-expand-list-groups`    | Notebook Navigator: Collapse / expand all list groups      |
 | `notebook-navigator:collapse-expand`                | Notebook Navigator: Collapse / expand all navigation items |
@@ -419,9 +406,9 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 
 <br/>
 
-## 10 Features
+## 9 Features
 
-### 10.1 Interface
+### 9.1 Interface
 
 - **Dual-pane layout** - Navigation pane (folders/tags/properties) and list pane (files)
 - **Single-pane mode** - Navigation and list views with animated transitions
@@ -431,7 +418,7 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 - **Multi-language support** - 21 languages with RTL layout support
 - **Interface icon set** - Customizable UI icons across the plugin
 
-### 10.2 Navigation
+### 9.2 Navigation
 
 - **Vault profiles** - Multiple filtered views with per-profile hidden folders/tags/notes, file visibility, banner, and shortcuts
 - **Shortcuts** - Notes, folders, tags, properties, and saved searches with pinning and reordering
@@ -443,7 +430,7 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 - **Auto-reveal active file** - Folder expansion and scroll-to-selection
 - **Keyboard and commands** - Configurable hotkeys, selection history back/forward commands, next/previous file commands, open shortcut 1–9 commands
 
-### 10.3 Organization
+### 9.3 Organization
 
 - **Pin notes** - Keep important notes at the top of folders and tags
 - **Folder notes** - Set/detach folder notes, pin folder notes, open in new tab option
@@ -455,7 +442,7 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 - **Color and icon system** - Folder/tag/property/file colors, icon packs, emoji/Lucide icons, frontmatter read/write, icon mapping by file name and file type category
 - **Name warnings** - Warn about forbidden filesystem characters and characters that break Obsidian links when naming files and folders
 
-### 10.4 File display
+### 9.4 File display
 
 - **Note previews** - 1–5 preview lines with optional HTML stripping
 - **Thumbnails** - Featured images plus auto-generated thumbnails for PDF, SVG, and drawing files stored in the metadata cache
@@ -470,7 +457,7 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 - **Compact mode** - Compact display when preview, date, and images are disabled
 - **Clickable tags** - Tags in file list navigate directly to that tag
 
-### 10.5 Productivity
+### 9.5 Productivity
 
 - **Search** - Filter by file name, aliases, tags, properties, dates, folders, extensions, and tasks with AND/OR/exclusions
 - **Omnisearch integration** - Full-text search via [Omnisearch](https://github.com/scambier/obsidian-omnisearch)
@@ -483,7 +470,7 @@ Set custom hotkeys for these commands in Obsidian's Hotkeys settings:
 
 <br/>
 
-### 10.6 Templates
+### 9.6 Templates
 
 Templates are markdown notes stored in the folder set under **File operations & templates > Templates > Template folder location**. Notebook Navigator applies them when it creates calendar notes, folder notes, notes created with `New note from template` and, through folder templates, any new note in a folder. Daily notes that Notebook Navigator creates with the Daily Notes core plugin settings use the template configured in that plugin. The **Template engine** setting selects how a template is processed:
 
@@ -586,33 +573,21 @@ Weekly note template:
 
 <br/>
 
-## 11 Network and Diagnostics Disclosure
+## 10 Network and Diagnostics Disclosure
 
 Notebook Navigator runs locally, but some features make HTTP requests from Obsidian. Startup debug logging can also write a local diagnostic file in your vault.
 
-### 11.1 Release update checks (Optional)
-
-- **Setting:** "Check for new version on start"
-- **Request:** `https://api.github.com/repos/johansan/notebook-navigator/releases/latest`
-- **Frequency:** At most once per 24 hours, on startup
-- **Data:** Sends standard HTTP metadata; does not include vault content
-
-### 11.2 Icon pack downloads (Optional)
+### 10.1 Icon pack downloads (Optional)
 
 - **Setting:** Enable an icon pack in the Icon Packs tab
 - **Requests:** `https://raw.githubusercontent.com/johansan/notebook-navigator/main/icon-assets/...` (manifest, font, metadata)
 - **Storage:** Stored locally in IndexedDB
 
-### 11.3 External images, videos, and YouTube thumbnails
+### 10.2 External images, videos, and YouTube thumbnails
 
 - **Feature images (Optional):** Controlled by the "Download external images" setting. Downloads remote images and YouTube thumbnails for feature images and stores them locally in IndexedDB.
-- **Welcome modal (First launch):** Loads a YouTube thumbnail from `https://img.youtube.com/vi/<id>/...`.
-- **What's new modal (On update / when opened):** Loads release banner images from `https://raw.githubusercontent.com/johansan/notebook-navigator/main/images/version-banners/<filename>` using the filename and extension declared by the release note.
-- **What's new modal (On update / when opened):** Loads release videos from `https://raw.githubusercontent.com/johansan/notebook-navigator/main/images/version-banners/<id>.mp4` for release notes that include a video.
-- **What's new modal (When opening a release video):** Opens release videos from `https://cdn.jsdelivr.net/gh/johansan/notebook-navigator@main/images/version-banners/<id>.mp4` so browsers can play the video directly.
-- **What's new modal (On update / when opened):** Loads YouTube thumbnails from `https://img.youtube.com/vi/<id>/...` for release notes that include a YouTube link.
 
-### 11.4 Startup debug files (Optional)
+### 10.3 Startup debug files (Optional)
 
 - **Setting:** "Startup debug logging"
 - **Storage:** Writes a timestamped `nn-debug-...md` file in the vault root, then stops after startup settles. The file may sync if the vault root is synced.
@@ -620,7 +595,7 @@ Notebook Navigator runs locally, but some features make HTTP requests from Obsid
 - **Paths and identifiers:** Startup initialization, PDF diagnostics, and error cases can include the Obsidian app/vault identifier, vault-relative PDF paths, or error stack details. Review and redact the file before sharing it publicly.
 - **Upload:** Notebook Navigator does not upload debug files. They are shared only if you upload, attach, or sync them outside the plugin.
 
-### 11.5 Language downloads
+### 10.4 Language downloads
 
 - **Request:** `https://github.com/johansan/notebook-navigator/releases/download/<installed-version>/languages.json`
 - **Frequency:** On startup when the language pack matching the installed plugin is not cached. All languages are downloaded together.
@@ -628,7 +603,7 @@ Notebook Navigator runs locally, but some features make HTTP requests from Obsid
 - **Offline use:** English is bundled. Settings remain available during downloads. The navigator shows a loading screen with **Continue in English**; failed downloads also use English. A download completed after continuing in English is used on the next launch.
 - **Data:** Sends standard HTTP metadata; does not include vault content. Downloaded files contain text data, while language formatting functions remain bundled with the plugin.
 
-### 11.6 Privacy and data handling
+### 10.5 Privacy and data handling
 
 - Notebook Navigator does not send note content, file names, tags, or debug files to a Notebook Navigator server.
 - Requests to GitHub, YouTube, and any external image host are made directly from your device and include standard HTTP metadata (IP address, user-agent, and similar).
@@ -636,7 +611,7 @@ Notebook Navigator runs locally, but some features make HTTP requests from Obsid
 
 <br/>
 
-## 12 Contact
+## 11 Contact
 
 Notebook Navigator is built and maintained by [Johan Sanneblad](https://www.linkedin.com/in/johansan/). Johan has a PhD in Software Development and has worked with innovation development for companies such as Apple, Electronic Arts, Google, Microsoft, Lego, SKF, Volvo Cars, Volvo Group and Yamaha.
 
@@ -644,7 +619,7 @@ Feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/johansan/
 
 <br/>
 
-## 13 Questions or issues?
+## 12 Questions or issues?
 
 Read the [FAQ](FAQ.md) for answers to common questions.
 
@@ -655,6 +630,6 @@ Read the [FAQ](FAQ.md) for answers to common questions.
 
 <br/>
 
-## 14 License
+## 13 License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/johansan/notebook-navigator/blob/main/LICENSE) file for details.

@@ -28,7 +28,6 @@ import type {
     SettingDescription
 } from './settings/tabs/SettingsTabContext';
 import { strings } from './i18n';
-import { createStartResourcesSettingDefinitions } from './settings/tabs/StartResourcesSection';
 import { createVaultSetupSettingDefinitions } from './settings/tabs/VaultSetupSection';
 import { createSettingGroupFactory } from './settings/settingGroups';
 import { runAsyncAction } from './utils/async';
@@ -503,8 +502,7 @@ export class NotebookNavigatorSettingTab extends PluginSettingTab {
                 type: 'group' as const,
                 heading: group.getHeading(),
                 items: group.items.map(tabId => this.createNativeSettingsPageDefinition(tabId))
-            })),
-            ...createStartResourcesSettingDefinitions(context)
+            }))
         ];
 
         return this.createNativeDefinitionItems(
@@ -559,7 +557,6 @@ export class NotebookNavigatorSettingTab extends PluginSettingTab {
         }
 
         await this.plugin.saveSettingsAndUpdate();
-        await this.handleNativeSettingControlPostSaveSideEffects(key);
     }
 
     // Obsidian calls native control hooks only for 1.13 settings pages.
@@ -581,17 +578,6 @@ export class NotebookNavigatorSettingTab extends PluginSettingTab {
         if (key === 'showTags') {
             this.currentShowTagsVisible = this.plugin.settings.showTags;
             this.showTagsListeners.forEach(callback => callback(this.currentShowTagsVisible));
-            return;
-        }
-
-        if (key === 'checkForUpdatesOnStart' && !this.plugin.settings.checkForUpdatesOnStart) {
-            this.plugin.dismissPendingUpdateNotice();
-        }
-    }
-
-    private async handleNativeSettingControlPostSaveSideEffects(key: NativeSettingControlKey): Promise<void> {
-        if (key === 'checkForUpdatesOnStart' && this.plugin.settings.checkForUpdatesOnStart) {
-            await this.plugin.runReleaseUpdateCheck(true);
         }
     }
 

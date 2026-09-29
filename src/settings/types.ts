@@ -781,12 +781,6 @@ export interface NotebookNavigatorSettings {
     // Icon packs tab
     externalIconProviders: Record<string, boolean>;
 
-    // About
-    showReleaseNotes: boolean;
-
-    // Advanced tab
-    checkForUpdatesOnStart: boolean;
-
     // Navigation pane tab - Appearance
     pinNavigationBanner: boolean;
     showNoteCount: boolean;
@@ -1033,7 +1027,6 @@ export interface NotebookNavigatorSettings {
     virtualFolderBackgroundColors: Record<string, string>;
     navigationSeparators: Record<string, boolean>;
     userColors: string[];
-    lastShownVersion: string;
     rootFolderOrder: string[];
     rootTagOrder: string[];
     rootPropertyOrder: string[];

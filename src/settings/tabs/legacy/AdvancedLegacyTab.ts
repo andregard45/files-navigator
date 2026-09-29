@@ -41,24 +41,6 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
 
     advancedGroup.addSetting(setting => {
         setting
-            .setName(strings.settings.items.checkForNewVersionOnStart.name)
-            .setDesc(strings.settings.items.checkForNewVersionOnStart.desc)
-            .addToggle(toggle =>
-                toggle.setValue(plugin.settings.checkForUpdatesOnStart).onChange(async value => {
-                    plugin.settings.checkForUpdatesOnStart = value;
-                    if (!value) {
-                        plugin.dismissPendingUpdateNotice();
-                    }
-                    await plugin.saveSettingsAndUpdate();
-                    if (value) {
-                        await plugin.runReleaseUpdateCheck(true);
-                    }
-                })
-            );
-    });
-
-    advancedGroup.addSetting(setting => {
-        setting
             .setName(getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name))
             .setDesc(strings.settings.items.startupDebugLogging.desc)
             .addToggle(toggle =>

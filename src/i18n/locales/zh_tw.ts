@@ -43,8 +43,6 @@ export const STRINGS_ZH_TW = {
         featureImageAlt: '特色圖片',
         unknownError: '未知錯誤',
         clipboardWriteError: '無法寫入剪貼簿',
-        updateBannerTitle: 'Notebook Navigator 有可用更新',
-        updateBannerInstruction: '在設定 -> 社群外掛程式中更新',
         previous: '上一個', // Generic aria label for previous navigation (English: Previous)
         next: '下一個' // Generic aria label for next navigation (English: Next)
     },
@@ -438,7 +436,6 @@ export const STRINGS_ZH_TW = {
     folderAppearance: {
         appearance: '外觀',
         sortBy: '排序方式',
-        standardPreset: '標準',
         compactPreset: '精簡',
         defaultSuffix: '(預設)',
         defaultLabel: '預設',
@@ -799,17 +796,6 @@ export const STRINGS_ZH_TW = {
             toggleAllInFileMenu: '切換檔案選單中的全部',
             applyButton: '套用',
             emptyState: '未找到屬性鍵。'
-        },
-        welcome: {
-            title: '歡迎使用 {pluginName}',
-            introText:
-                '您好，歡迎使用 Notebook Navigator，一款更好用的 Obsidian 檔案瀏覽器和日曆。在開始之前，強烈建議您至少觀看下方《Mastering Notebook Navigator》影片的前三章。影片會介紹兩個窗格的運作方式，協助您快速上手。',
-            continueText:
-                '如果您還有十分鐘，請繼續觀看初次設定和日常使用流程這兩個章節。看完後，您就掌握了入門所需的全部內容，之後還可以回來了解更多細節。Notebook Navigator 設定頂部提供了該影片的連結。',
-            thanksText: '祝您使用 Notebook Navigator 愉快！',
-            videoAlt: '精通 Notebook Navigator 3',
-            openVideoButton: '播放影片',
-            closeButton: '以後再說'
         }
     },
 
@@ -981,7 +967,6 @@ export const STRINGS_ZH_TW = {
         toggleTagSort: '切換標籤排序',
         toggleTagsBySelection: '依選擇切換標籤',
         togglePropertiesBySelection: '依選擇切換屬性',
-        toggleCompactMode: '切換精簡模式', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: '切換釘選區段',
         collapseExpand: '摺疊/展開所有導覽項目',
         collapseExpandListGroups: '摺疊/展開所有列表群組',
@@ -1049,10 +1034,7 @@ export const STRINGS_ZH_TW = {
         },
         index: {
             label: '一般',
-            description: '發行說明、支援、儲存庫設定檔、檔案類型與屬性鍵。',
-            groups: {
-                about: '關於'
-            }
+            description: '發行說明、支援、儲存庫設定檔、檔案類型與屬性鍵。'
         },
         pageGroups: {
             configuration: '設定',
@@ -2641,38 +2623,9 @@ export const STRINGS_ZH_TW = {
                 momentLinkText: 'Moment 格式',
                 help: '常用格式：\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: '支持開發',
-                desc: '如果您喜歡使用 Notebook Navigator，請考慮支持其持續開發。',
-                buttonText: '❤️ 贊助',
-                coffeeButton: '☕️ 請我喝咖啡'
-            },
-            otherPlugins: {
-                name: '看看我的其他外掛程式',
-                betterPaste: '整理貼上的文字、連結和圖片',
-                pixelPerfectImage: '精確的圖片縮放等'
-            },
-            checkForNewVersionOnStart: {
-                name: '啟動時檢查新版本',
-                desc: '啟動時檢查新的外掛程式版本，當有可用更新時顯示通知。檢查最多每天一次。',
-                status: '有新版本可用：{version}'
-            },
             startupDebugLogging: {
                 name: '啟動偵錯記錄',
                 desc: '將啟動診斷寫入儲存庫根目錄中含時間戳的 Markdown 檔案，並在啟動穩定後停止。該檔案可能會同步，且可能包含檔案路徑。'
-            },
-            whatsNew: {
-                name: 'Notebook Navigator {version} 的最新動態',
-                desc: '查看最近的更新和改進',
-                buttonText: '查看最近更新'
-            },
-            showReleaseNotes: {
-                name: '更新後顯示新功能',
-                desc: '關閉後，更新後不會自動開啟新功能對話框。'
-            },
-            masteringVideo: {
-                name: '精通 Notebook Navigator（影片）',
-                desc: '本影片涵蓋了在 Notebook Navigator 中高效工作所需的一切內容，包括快速鍵、搜尋、標籤和進階自訂。'
             },
             cacheStatistics: {
                 localCache: '本機快取',
@@ -2696,12 +2649,5 @@ export const STRINGS_ZH_TW = {
                 exportFailed: '匯出錯誤'
             }
         }
-    },
-    whatsNew: {
-        title: 'Notebook Navigator 的新功能',
-        openBannerImage: '開啟發布橫幅圖片',
-        supportMessage: '如果您覺得 Notebook Navigator 有用，請考慮支持其開發。',
-        supportButton: '請我喝咖啡',
-        thanksButton: '謝謝！'
     }
 };

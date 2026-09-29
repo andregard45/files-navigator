@@ -390,18 +390,6 @@ export class PluginPreferencesController {
         this.options.persistSyncModeSettingUpdate('folderSortOrder');
     }
 
-    public getReleaseCheckTimestamp(): number | null {
-        const value = localStorage.get<unknown>(this.options.keys.releaseCheckTimestampKey);
-        if (typeof value === 'number' && Number.isFinite(value)) {
-            return value;
-        }
-        return null;
-    }
-
-    public setReleaseCheckTimestamp(timestamp: number): void {
-        localStorage.set(this.options.keys.releaseCheckTimestampKey, timestamp);
-    }
-
     public getRecentColors(): string[] {
         const stored = localStorage.get<unknown>(this.options.keys.recentColorsKey);
         if (!Array.isArray(stored)) {

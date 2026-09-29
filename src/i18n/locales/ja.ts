@@ -43,8 +43,6 @@ export const STRINGS_JA = {
         featureImageAlt: 'アイキャッチ画像', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '不明なエラー', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'クリップボードに書き込めませんでした',
-        updateBannerTitle: 'Notebook Navigator の更新があります',
-        updateBannerInstruction: '設定 -> コミュニティプラグイン で更新',
         previous: '前へ', // Generic aria label for previous navigation (English: Previous)
         next: '次へ' // Generic aria label for next navigation (English: Next)
     },
@@ -440,7 +438,6 @@ export const STRINGS_JA = {
     folderAppearance: {
         appearance: '外観',
         sortBy: '並べ替え',
-        standardPreset: '標準',
         compactPreset: 'コンパクト',
         defaultSuffix: '(デフォルト)',
         defaultLabel: 'デフォルト',
@@ -807,17 +804,6 @@ export const STRINGS_JA = {
             toggleAllInFileMenu: 'ファイルメニューのすべてを切り替え',
             applyButton: '適用',
             emptyState: 'プロパティキーが見つかりません。'
-        },
-        welcome: {
-            title: '{pluginName}へようこそ',
-            introText:
-                'こんにちは。Obsidianのファイルブラウザとカレンダーをより使いやすくするNotebook Navigatorへようこそ。使い始める前に、下の動画「Mastering Notebook Navigator」の最初の3章だけでもぜひご覧ください。2つのペインの仕組みが分かり、すぐに使い始められます。',
-            continueText:
-                'さらに10分ほど時間があれば、初回セットアップと日常の使い方の章も続けてご覧ください。使い始めるために必要な内容がひととおり分かり、細かい部分はあとから見直せます。動画へのリンクはNotebook Navigator設定の上部にもあります。',
-            thanksText: 'Notebook Navigatorを楽しんでお使いください！',
-            videoAlt: 'Notebook Navigator 3をマスターする',
-            openVideoButton: 'ビデオを再生',
-            closeButton: 'また今度'
         }
     },
 
@@ -990,7 +976,6 @@ export const STRINGS_JA = {
         toggleTagSort: 'タグの並び順を切り替え', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: '選択範囲でタグを切り替え',
         togglePropertiesBySelection: '選択範囲でプロパティを切り替え',
-        toggleCompactMode: 'コンパクトモードの切り替え', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'ピン留めセクションの切り替え',
         collapseExpand: 'すべてのナビゲーション項目を折りたたむ/展開', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'リストのすべてのグループを折りたたむ/展開',
@@ -1058,10 +1043,7 @@ export const STRINGS_JA = {
         },
         index: {
             label: '一般設定',
-            description: 'リリースノート、サポート、保管庫プロファイル、ファイルタイプ、プロパティキー。',
-            groups: {
-                about: 'このプラグインについて'
-            }
+            description: 'リリースノート、サポート、保管庫プロファイル、ファイルタイプ、プロパティキー。'
         },
         pageGroups: {
             configuration: '設定',
@@ -2657,38 +2639,9 @@ export const STRINGS_JA = {
                 momentLinkText: 'Moment フォーマット',
                 help: '一般的な形式:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: '開発をサポート',
-                desc: 'Notebook Navigatorを愛用していただいている場合は、継続的な開発をサポートすることをご検討ください。',
-                buttonText: '❤️ スポンサーになる',
-                coffeeButton: '☕️ コーヒーをおごる'
-            },
-            otherPlugins: {
-                name: 'ほかのプラグインも見る',
-                betterPaste: '貼り付けたテキスト、リンク、画像を整える',
-                pixelPerfectImage: '正確な画像リサイズなど'
-            },
-            checkForNewVersionOnStart: {
-                name: '起動時に新しいバージョンを確認',
-                desc: '起動時に新しいプラグインリリースを確認し、アップデートが利用可能な場合に通知を表示します。確認は最大1日1回行われます。',
-                status: '新しいバージョンが利用可能: {version}'
-            },
             startupDebugLogging: {
                 name: '起動デバッグログ',
                 desc: '起動診断を保管庫のルートにタイムスタンプ付きの Markdown ファイルとして書き込み、起動が落ち着いた後に停止します。このファイルは同期される場合があり、ファイルパスを含むことがあります。'
-            },
-            whatsNew: {
-                name: 'Notebook Navigator {version} の新機能',
-                desc: '最近の更新と改善を確認',
-                buttonText: '最近の更新を表示'
-            },
-            showReleaseNotes: {
-                name: '更新後に新機能を表示',
-                desc: '無効にすると、更新後に新機能ダイアログが自動的に開かなくなります。'
-            },
-            masteringVideo: {
-                name: 'Notebook Navigator をマスターする（動画）',
-                desc: 'この動画では、Notebook Navigator で生産性を高めるために必要なすべてを解説しています。ホットキー、検索、タグ、高度なカスタマイズなどが含まれます。'
             },
             cacheStatistics: {
                 localCache: 'ローカルキャッシュ',
@@ -2712,12 +2665,5 @@ export const STRINGS_JA = {
                 exportFailed: 'エラーをエクスポート'
             }
         }
-    },
-    whatsNew: {
-        title: 'Notebook Navigatorの新機能',
-        openBannerImage: 'リリースバナー画像を開く',
-        supportMessage: 'Notebook Navigatorが役立つと思われる場合は、開発のサポートをご検討ください。',
-        supportButton: 'コーヒーをおごる',
-        thanksButton: 'ありがとう！'
     }
 };

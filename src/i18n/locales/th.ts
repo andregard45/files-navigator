@@ -43,8 +43,6 @@ export const STRINGS_TH = {
         featureImageAlt: 'รูปภาพเด่น',
         unknownError: 'ข้อผิดพลาดที่ไม่ทราบสาเหตุ',
         clipboardWriteError: 'ไม่สามารถเขียนลงคลิปบอร์ดได้',
-        updateBannerTitle: 'มีการอัปเดต Notebook Navigator',
-        updateBannerInstruction: 'อัปเดตใน การตั้งค่า -> ปลั๊กอินชุมชน',
         previous: 'ก่อนหน้า', // Generic aria label for previous navigation (English: Previous)
         next: 'ถัดไป' // Generic aria label for next navigation (English: Next)
     },
@@ -438,7 +436,6 @@ export const STRINGS_TH = {
     folderAppearance: {
         appearance: 'ลักษณะ',
         sortBy: 'เรียงตาม',
-        standardPreset: 'มาตรฐาน',
         compactPreset: 'กะทัดรัด',
         defaultSuffix: '(ค่าเริ่มต้น)',
         defaultLabel: 'ค่าเริ่มต้น',
@@ -801,17 +798,6 @@ export const STRINGS_TH = {
             toggleAllInFileMenu: 'สลับทั้งหมดในเมนูไฟล์',
             applyButton: 'นำไปใช้',
             emptyState: 'ไม่พบคีย์คุณสมบัติ'
-        },
-        welcome: {
-            title: 'ยินดีต้อนรับสู่ {pluginName}',
-            introText:
-                'สวัสดีและยินดีต้อนรับสู่ Notebook Navigator โปรแกรมเรียกดูไฟล์และปฏิทินที่ดีกว่าสำหรับ Obsidian ก่อนเริ่มใช้งาน ขอแนะนำให้ดูอย่างน้อยสามบทแรกของวิดีโอ Mastering Notebook Navigator ด้านล่าง วิดีโอจะแนะนำการทำงานของสองแผงและช่วยให้คุณเริ่มใช้งานได้อย่างรวดเร็ว',
-            continueText:
-                'จากนั้น หากมีเวลาอีกสิบนาที ให้ดูบทเกี่ยวกับการตั้งค่าครั้งแรกและขั้นตอนการใช้งานประจำวันต่อ เนื้อหาเหล่านี้ครอบคลุมทุกอย่างที่จำเป็นสำหรับการเริ่มต้น และคุณสามารถกลับมาดูรายละเอียดเพิ่มเติมในภายหลังได้ ลิงก์วิดีโออยู่ที่ด้านบนของการตั้งค่า Notebook Navigator',
-            thanksText: 'ขอให้สนุกกับการใช้ Notebook Navigator!',
-            videoAlt: 'เชี่ยวชาญ Notebook Navigator 3',
-            openVideoButton: 'เล่นวิดีโอ',
-            closeButton: 'ไว้ทีหลัง'
         }
     },
     // File system operations
@@ -982,7 +968,6 @@ export const STRINGS_TH = {
         toggleTagSort: 'สลับลำดับการเรียงแท็ก',
         toggleTagsBySelection: 'สลับแท็กตามการเลือก',
         togglePropertiesBySelection: 'สลับคุณสมบัติตามการเลือก',
-        toggleCompactMode: 'สลับโหมดกะทัดรัด', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'สลับส่วนที่ปักหมุด',
         collapseExpand: 'ยุบ / ขยายรายการนำทางทั้งหมด',
         collapseExpandListGroups: 'ยุบ / ขยายกลุ่มรายการทั้งหมด',
@@ -1050,10 +1035,7 @@ export const STRINGS_TH = {
         },
         index: {
             label: 'ทั่วไป',
-            description: 'บันทึกประจำรุ่น การสนับสนุน โปรไฟล์ห้องนิรภัย ประเภทไฟล์ และคีย์คุณสมบัติ',
-            groups: {
-                about: 'เกี่ยวกับ'
-            }
+            description: 'บันทึกประจำรุ่น การสนับสนุน โปรไฟล์ห้องนิรภัย ประเภทไฟล์ และคีย์คุณสมบัติ'
         },
         pageGroups: {
             configuration: 'การกำหนดค่า',
@@ -2649,38 +2631,9 @@ export const STRINGS_TH = {
                 momentLinkText: 'รูปแบบ Moment',
                 help: 'รูปแบบทั่วไป:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'สนับสนุนการพัฒนา',
-                desc: 'หากคุณชอบใช้ Notebook Navigator โปรดพิจารณาสนับสนุนการพัฒนาอย่างต่อเนื่อง',
-                buttonText: '❤️ สปอนเซอร์',
-                coffeeButton: '☕️ เลี้ยงกาแฟ'
-            },
-            otherPlugins: {
-                name: 'ดูปลั๊กอินอื่นของฉัน',
-                betterPaste: 'จัดระเบียบข้อความ ลิงก์ และรูปภาพที่วาง',
-                pixelPerfectImage: 'ปรับขนาดภาพได้แม่นยำและอื่น ๆ'
-            },
-            checkForNewVersionOnStart: {
-                name: 'ตรวจสอบเวอร์ชันใหม่เมื่อเริ่ม',
-                desc: 'ตรวจสอบรุ่นปลั๊กอินใหม่เมื่อเริ่มงานและแสดงการแจ้งเตือนเมื่อมีการอัปเดต การตรวจสอบจะเกิดขึ้นอย่างมากวันละครั้ง',
-                status: 'มีเวอร์ชันใหม่: {version}'
-            },
             startupDebugLogging: {
                 name: 'บันทึกดีบักตอนเริ่มต้น',
                 desc: 'เขียนข้อมูลวินิจฉัยการเริ่มต้นลงในไฟล์ Markdown ที่มีเวลาประทับในรากของห้องนิรภัย แล้วหยุดหลังจากการเริ่มต้นคงที่ ไฟล์อาจถูกซิงค์และอาจมีเส้นทางไฟล์'
-            },
-            whatsNew: {
-                name: 'มีอะไรใหม่ใน Notebook Navigator {version}',
-                desc: 'ดูการอัปเดตและการปรับปรุงล่าสุด',
-                buttonText: 'ดูการอัปเดตล่าสุด'
-            },
-            showReleaseNotes: {
-                name: 'แสดงหน้าต่างมีอะไรใหม่หลังอัปเดต',
-                desc: 'ปิดใช้งานเพื่อไม่ให้หน้าต่างมีอะไรใหม่เปิดโดยอัตโนมัติหลังการอัปเดต'
-            },
-            masteringVideo: {
-                name: 'เชี่ยวชาญ Notebook Navigator (วิดีโอ)',
-                desc: 'วิดีโอนี้ครอบคลุมทุกสิ่งที่คุณต้องการเพื่อใช้งาน Notebook Navigator อย่างมีประสิทธิภาพ รวมถึงปุ่มลัด การค้นหา แท็ก และการปรับแต่งขั้นสูง'
             },
             cacheStatistics: {
                 localCache: 'แคชท้องถิ่น',
@@ -2704,12 +2657,5 @@ export const STRINGS_TH = {
                 exportFailed: 'ส่งออกข้อผิดพลาด'
             }
         }
-    },
-    whatsNew: {
-        title: 'มีอะไรใหม่ใน Notebook Navigator',
-        openBannerImage: 'เปิดภาพแบนเนอร์รุ่นเผยแพร่',
-        supportMessage: 'หากคุณพบว่า Notebook Navigator มีประโยชน์ โปรดพิจารณาสนับสนุนการพัฒนา',
-        supportButton: 'เลี้ยงกาแฟ',
-        thanksButton: 'ขอบคุณ!'
     }
 };
