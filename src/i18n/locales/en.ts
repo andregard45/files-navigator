@@ -803,17 +803,6 @@ export const STRINGS_EN = {
             applyButton: 'Apply',
             emptyState: 'No property keys found.'
         },
-        welcome: {
-            title: 'Welcome to {pluginName}',
-            introText:
-                'Hello and a warm welcome to Notebook Navigator, a better file browser and calendar for Obsidian. Before you get started I really recommend that you watch at least the first three chapters in the video below, Mastering Notebook Navigator. It gives you an introduction to how the two panes work and how you can get up to speed quickly.',
-            continueText:
-                'Then if you have another ten minutes, keep watching the first-run setup and everyday loop chapters. This gives you everything to get started, and you can then go back and watch more details later. You will find a link to the video in the top of Notebook Navigator settings.',
-            thanksText: 'Have fun using Notebook Navigator!',
-            videoAlt: 'Mastering Notebook Navigator 3',
-            openVideoButton: 'Play video',
-            closeButton: 'Maybe later'
-        }
     },
     // File system operations
     fileSystem: {
@@ -1051,10 +1040,7 @@ export const STRINGS_EN = {
         },
         index: {
             label: 'General',
-            description: 'Release notes, support, vault profile, file types, and property keys.',
-            groups: {
-                about: 'About'
-            }
+            description: 'Release notes, support, vault profile, file types, and property keys.'
         },
         pageGroups: {
             configuration: 'Configuration',
@@ -2649,38 +2635,13 @@ export const STRINGS_EN = {
                 momentLinkText: 'Moment format',
                 help: 'Common formats:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Support development',
-                desc: 'If you love using Notebook Navigator, please consider supporting its continued development.',
-                buttonText: '❤️ Sponsor',
-                coffeeButton: '☕️ Buy me a coffee'
-            },
-            otherPlugins: {
-                name: 'Check out my other plugins',
-                betterPaste: 'Clean up pasted text, links and images',
-                pixelPerfectImage: 'Exact image resizing and more'
-            },
             checkForNewVersionOnStart: {
                 name: 'Check for new version on start',
-                desc: 'Checks for new plugin releases on startup and shows a notification when an update is available. Checks occur at most once per day.',
-                status: 'New version available: {version}'
+                desc: 'Checks for new plugin releases on startup and shows a notification when an update is available. Checks occur at most once per day.'
             },
             startupDebugLogging: {
                 name: 'Startup debug logging',
                 desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
-            },
-            whatsNew: {
-                name: "What's new in Notebook Navigator {version}",
-                desc: 'See recent updates and improvements',
-                buttonText: 'View recent updates'
-            },
-            showReleaseNotes: {
-                name: 'Show release notes after updating',
-                desc: "Disable to stop the What's new dialog from opening automatically after updates."
-            },
-            masteringVideo: {
-                name: 'Mastering Notebook Navigator (video)',
-                desc: 'This video covers everything you need to be productive in Notebook Navigator, including hot keys, search, tags and advanced customization.'
             },
             cacheStatistics: {
                 localCache: 'Local cache',
@@ -2704,12 +2665,5 @@ export const STRINGS_EN = {
                 exportFailed: 'Export errors'
             }
         }
-    },
-    whatsNew: {
-        title: "What's new in Notebook Navigator",
-        openBannerImage: 'Open release banner image',
-        supportMessage: 'If you find Notebook Navigator helpful, please consider supporting its development.',
-        supportButton: 'Buy me a coffee',
-        thanksButton: 'Thanks!'
     }
 };

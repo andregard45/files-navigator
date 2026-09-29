@@ -807,17 +807,6 @@ export const STRINGS_TR = {
             applyButton: 'Uygula',
             emptyState: 'Özellik anahtarı bulunamadı.'
         },
-        welcome: {
-            title: '{pluginName} uygulamasına hoş geldiniz',
-            introText:
-                "Merhaba ve Obsidian için daha iyi bir dosya tarayıcısı ve takvim olan Notebook Navigator'a hoş geldiniz. Başlamadan önce aşağıdaki Mastering Notebook Navigator videosunun en az ilk üç bölümünü izlemenizi gerçekten öneririm. Bu bölümler iki bölmenin nasıl çalıştığını tanıtır ve hızlıca kullanmaya başlamanıza yardımcı olur.",
-            continueText:
-                'Ardından on dakikanız daha varsa ilk kurulum ve günlük kullanım döngüsü bölümlerini izlemeye devam edin. Bunlar başlamak için ihtiyacınız olan her şeyi sunar; daha fazla ayrıntı için daha sonra geri dönebilirsiniz. Videonun bağlantısını Notebook Navigator ayarlarının üst kısmında bulabilirsiniz.',
-            thanksText: "Notebook Navigator'ı keyifle kullanın!",
-            videoAlt: 'Notebook Navigator 3 ustalığı',
-            openVideoButton: 'Videoyu oynat',
-            closeButton: 'Belki sonra'
-        }
     },
     // File system operations
     fileSystem: {
@@ -1055,10 +1044,7 @@ export const STRINGS_TR = {
         },
         index: {
             label: 'Genel',
-            description: 'Sürüm notları, destek, kasa profili, dosya türleri ve özellik anahtarları.',
-            groups: {
-                about: 'Hakkında'
-            }
+            description: 'Sürüm notları, destek, kasa profili, dosya türleri ve özellik anahtarları.'
         },
         pageGroups: {
             configuration: 'Yapılandırma',
@@ -2656,38 +2642,13 @@ export const STRINGS_TR = {
                 momentLinkText: 'Moment formatı',
                 help: 'Yaygın formatlar:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Geliştirmeyi destekleyin',
-                desc: 'Notebook Navigator kullanmayı seviyorsanız, lütfen sürekli gelişimini desteklemeyi düşünün.',
-                buttonText: '❤️ Sponsor ol',
-                coffeeButton: '☕️ Bana bir kahve ısmarla'
-            },
-            otherPlugins: {
-                name: 'Diğer eklentilerime göz at',
-                betterPaste: 'Yapıştırılan metni, bağlantıları ve görselleri temizler',
-                pixelPerfectImage: 'Tam isabetli görsel boyutlandırma ve daha fazlası'
-            },
             checkForNewVersionOnStart: {
                 name: 'Başlangıçta yeni sürüm kontrolü',
-                desc: 'Başlangıçta yeni eklenti sürümlerini kontrol eder ve güncelleme mevcut olduğunda bildirim gösterir. Kontroller günde en fazla bir kez yapılır.',
-                status: 'Yeni sürüm mevcut: {version}'
+                desc: 'Başlangıçta yeni eklenti sürümlerini kontrol eder ve güncelleme mevcut olduğunda bildirim gösterir. Kontroller günde en fazla bir kez yapılır.'
             },
             startupDebugLogging: {
                 name: 'Başlangıç hata ayıklama günlüğü',
                 desc: 'Başlangıç tanılarını kasanın kökünde zaman damgalı bir Markdown dosyasına yazar ve başlangıç kararlı hale geldikten sonra durur. Dosya eşitlenebilir ve dosya yolları içerebilir.'
-            },
-            whatsNew: {
-                name: 'Notebook Navigator {version} yenilikleri',
-                desc: 'Son güncellemeleri ve iyileştirmeleri görün',
-                buttonText: 'Son güncellemeleri görüntüle'
-            },
-            showReleaseNotes: {
-                name: 'Güncellemeden sonra yenilikleri göster',
-                desc: 'Güncellemelerden sonra yenilikler penceresinin otomatik olarak açılmasını önlemek için devre dışı bırakın.'
-            },
-            masteringVideo: {
-                name: "Notebook Navigator'da uzmanlaşma (video)",
-                desc: "Bu video, Notebook Navigator'da verimli olmak için ihtiyacınız olan her şeyi kapsar; kısayol tuşları, arama, etiketler ve gelişmiş özelleştirme dahil."
             },
             cacheStatistics: {
                 localCache: 'Yerel önbellek',
@@ -2711,12 +2672,5 @@ export const STRINGS_TR = {
                 exportFailed: 'Hataları dışa aktar'
             }
         }
-    },
-    whatsNew: {
-        title: 'Notebook Navigator yenilikleri',
-        openBannerImage: 'Sürüm afiş görselini aç',
-        supportMessage: "Notebook Navigator'ı yararlı buluyorsanız, lütfen gelişimini desteklemeyi düşünün.",
-        supportButton: 'Bana bir kahve ısmarla',
-        thanksButton: 'Teşekkürler!'
     }
 };

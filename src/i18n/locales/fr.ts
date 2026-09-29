@@ -812,17 +812,6 @@ export const STRINGS_FR = {
             applyButton: 'Appliquer',
             emptyState: 'Aucune clé de propriété trouvée.'
         },
-        welcome: {
-            title: 'Bienvenue dans {pluginName}',
-            introText:
-                'Bonjour et bienvenue dans Notebook Navigator, un explorateur de fichiers et un calendrier améliorés pour Obsidian. Avant de commencer, je vous recommande vraiment de regarder au moins les trois premiers chapitres de la vidéo ci-dessous, Mastering Notebook Navigator. Ils vous présentent le fonctionnement des deux panneaux et vous permettront de prendre rapidement vos repères.',
-            continueText:
-                "Ensuite, si vous avez encore dix minutes, poursuivez avec les chapitres sur la configuration initiale et l'utilisation quotidienne. Vous aurez ainsi tout ce qu'il faut pour commencer, puis vous pourrez revenir plus tard pour découvrir les détails. Vous trouverez un lien vers la vidéo en haut des paramètres de Notebook Navigator.",
-            thanksText: 'Amusez-vous bien avec Notebook Navigator !',
-            videoAlt: 'Maîtriser Notebook Navigator 3',
-            openVideoButton: 'Lire la vidéo',
-            closeButton: 'Peut-être plus tard'
-        }
     },
 
     // File system operations
@@ -1062,10 +1051,7 @@ export const STRINGS_FR = {
         },
         index: {
             label: 'Général',
-            description: 'Notes de version, support, profil du coffre, types de fichiers et clés de propriétés.',
-            groups: {
-                about: 'À propos'
-            }
+            description: 'Notes de version, support, profil du coffre, types de fichiers et clés de propriétés.'
         },
         pageGroups: {
             configuration: 'Configuration',
@@ -2669,38 +2655,13 @@ export const STRINGS_FR = {
                 momentLinkText: 'format Moment',
                 help: 'Formats courants :\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Soutenir le développement',
-                desc: 'Si vous aimez utiliser Notebook Navigator, veuillez envisager de soutenir son développement continu.',
-                buttonText: '❤️ Sponsoriser',
-                coffeeButton: '☕️ Offrez-moi un café'
-            },
-            otherPlugins: {
-                name: 'Découvrez mes autres plugins',
-                betterPaste: 'Nettoie le texte, les liens et les images collés',
-                pixelPerfectImage: 'Redimensionnement exact des images et plus'
-            },
             checkForNewVersionOnStart: {
                 name: 'Vérifier les nouvelles versions au démarrage',
-                desc: "Vérifie les nouvelles versions du plugin au démarrage et affiche une notification lorsqu'une mise à jour est disponible. Les vérifications ont lieu au maximum une fois par jour.",
-                status: 'Nouvelle version disponible : {version}'
+                desc: "Vérifie les nouvelles versions du plugin au démarrage et affiche une notification lorsqu'une mise à jour est disponible. Les vérifications ont lieu au maximum une fois par jour."
             },
             startupDebugLogging: {
                 name: 'Journal de débogage du démarrage',
                 desc: 'Écrit les diagnostics de démarrage dans un fichier Markdown horodaté à la racine du coffre, puis s’arrête une fois le démarrage stabilisé. Le fichier peut être synchronisé et contenir des chemins de fichiers.'
-            },
-            whatsNew: {
-                name: 'Nouveautés dans Notebook Navigator {version}',
-                desc: 'Voir les mises à jour et améliorations récentes',
-                buttonText: 'Voir les mises à jour récentes'
-            },
-            showReleaseNotes: {
-                name: 'Afficher les nouveautés après une mise à jour',
-                desc: 'Désactivez cette option pour empêcher l’ouverture automatique de la fenêtre des nouveautés après les mises à jour.'
-            },
-            masteringVideo: {
-                name: 'Maîtriser Notebook Navigator (vidéo)',
-                desc: 'Cette vidéo couvre tout ce dont vous avez besoin pour être productif avec Notebook Navigator, y compris les raccourcis clavier, la recherche, les mots-clés et la personnalisation avancée.'
             },
             cacheStatistics: {
                 localCache: 'Cache local',
@@ -2724,12 +2685,5 @@ export const STRINGS_FR = {
                 exportFailed: 'Exporter les erreurs'
             }
         }
-    },
-    whatsNew: {
-        title: 'Nouveautés dans Notebook Navigator',
-        openBannerImage: 'Ouvrir l’image de bannière de la version',
-        supportMessage: 'Si vous trouvez Notebook Navigator utile, veuillez envisager de soutenir son développement.',
-        supportButton: 'Offrir un café',
-        thanksButton: 'Merci !'
     }
 };
