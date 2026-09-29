@@ -284,13 +284,9 @@ export interface LocalStorageKeys {
     databaseContentVersionKey: string;
     frontmatterMetadataCacheSignatureKey: string;
     cacheRebuildNoticeKey: string;
-    debugLoggingEnabledKey: string;
     lastShownVersionKey: string;
-    // PDF_CRASH_DIAGNOSTICS: vault-scoped key used by the PDF crash diagnostic flow.
-    pdfProcessingDiagnosticKey: string;
     localStorageVersionKey: string;
     vaultProfileKey: string;
-    releaseCheckTimestampKey: string;
     searchProviderKey: string;
     homepageKey: string;
     folderSortOrderKey: string;
@@ -351,13 +347,9 @@ export const STORAGE_KEYS: LocalStorageKeys = {
     databaseContentVersionKey: 'notebook-navigator-db-content-version',
     frontmatterMetadataCacheSignatureKey: 'notebook-navigator-frontmatter-metadata-cache-signature',
     cacheRebuildNoticeKey: 'notebook-navigator-cache-rebuild-notice',
-    debugLoggingEnabledKey: 'notebook-navigator-debug-logging-enabled',
     lastShownVersionKey: 'notebook-navigator-last-shown-version',
-    // PDF_CRASH_DIAGNOSTICS: persists the last PDF path being processed on mobile support builds.
-    pdfProcessingDiagnosticKey: 'notebook-navigator-pdf-processing-diagnostic',
     localStorageVersionKey: 'notebook-navigator-localstorage-version',
     vaultProfileKey: 'notebook-navigator-vault-profile',
-    releaseCheckTimestampKey: 'notebook-navigator-release-check-timestamp',
     searchProviderKey: 'notebook-navigator-search-provider',
     homepageKey: 'notebook-navigator-homepage',
     folderSortOrderKey: 'notebook-navigator-folder-sort-order',

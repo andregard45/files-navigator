@@ -27,7 +27,6 @@ import { showNotice } from '../../../utils/noticeUtils';
 import { isDualPaneSupported } from '../../../utils/paneLayout';
 import { getNavigationPaneSizing } from '../../../utils/paneSizing';
 import { createSettingGroupFactory } from '../../settingGroups';
-import { getNotSyncedSettingName } from '../../syncModeToggle';
 import type { SettingsTabContext } from '../SettingsTabContext';
 
 /** Legacy settings renderer used only by Obsidian versions before native 1.13 setting definitions. */
@@ -35,38 +34,8 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
     const { containerEl, plugin, addInfoSetting } = context;
 
     const createGroup = createSettingGroupFactory(containerEl);
-    const advancedGroup = createGroup(undefined);
     const maintenanceGroup = createGroup(strings.settings.pages.advanced.groups.maintenance);
-    const resetGroup = createGroup(strings.settings.pages.advanced.groups.resetSettings);
-
-    advancedGroup.addSetting(setting => {
-        setting
-            .setName(strings.settings.items.checkForNewVersionOnStart.name)
-            .setDesc(strings.settings.items.checkForNewVersionOnStart.desc)
-            .addToggle(toggle =>
-                toggle.setValue(plugin.settings.checkForUpdatesOnStart).onChange(async value => {
-                    plugin.settings.checkForUpdatesOnStart = value;
-                    if (!value) {
-                        plugin.dismissPendingUpdateNotice();
-                    }
-                    await plugin.saveSettingsAndUpdate();
-                    if (value) {
-                        await plugin.runReleaseUpdateCheck(true);
-                    }
-                })
-            );
-    });
-
-    advancedGroup.addSetting(setting => {
-        setting
-            .setName(getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name))
-            .setDesc(strings.settings.items.startupDebugLogging.desc)
-            .addToggle(toggle =>
-                toggle.setValue(plugin.isDebugLoggingEnabled()).onChange(value => {
-                    plugin.setDebugLoggingEnabled(value);
-                })
-            );
-    });
+    const settingsManagementGroup = createGroup(strings.settings.pages.advanced.groups.settingsManagement);
 
     // The pane separator only exists where dual pane is available (desktop and tablets)
     if (isDualPaneSupported()) {
@@ -85,7 +54,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
         });
     }
 
-    advancedGroup.addSetting(setting => {
+    settingsManagementGroup.addSetting(setting => {
         setting
             .setName(strings.settings.items.importAndExportSettings.name)
             .setDesc(strings.settings.items.importAndExportSettings.desc)
@@ -202,7 +171,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
     context.requestStatisticsRefresh();
     context.ensureStatisticsInterval();
 
-    resetGroup.addSetting(setting => {
+    settingsManagementGroup.addSetting(setting => {
         setting
             .setName(strings.settings.items.resetAllSettings.name)
             .setDesc(strings.settings.items.resetAllSettings.desc)

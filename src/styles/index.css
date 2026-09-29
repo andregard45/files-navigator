@@ -28,8 +28,6 @@ Keep this list ordered: later files override earlier ones.
 /* Layout + shared UI */
 /* layout-base.css: root containers (`.notebook-navigator`, `.nn-split-container`), focus/selection CSS variables, UI scale wrapper. */
 @import './sections/layout-base.css';
-/* ui-update-notice.css: update banner (`.nn-update-banner`) with mobile breakpoints. */
-@import './sections/ui-update-notice.css';
 /* ui-notices.css: custom Obsidian notices (cache rebuild progress notice). */
 @import './sections/ui-notices.css';
 /* layout-panes.css: pane sizing and orientation (`.nn-navigation-pane`, `.nn-list-pane`), background modes, resize handle. */

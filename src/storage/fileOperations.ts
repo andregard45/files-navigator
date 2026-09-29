@@ -18,7 +18,6 @@
 
 import { TFile } from 'obsidian';
 import { createDefaultFileData, IndexedDBStorage, type FileData } from './IndexedDBStorage';
-import { recordStartupDiagnostic } from '../services/diagnostics/DebugLoggingService';
 import type { ContentProviderType } from '../interfaces/IContentProvider';
 import { getProviderProcessedMtimeField } from './providerMtime';
 
@@ -123,13 +122,7 @@ export async function initializeDatabase(
         previewLoadMaxBatch?: number;
     }
 ): Promise<void> {
-    const initStartMs = performance.now();
-    recordStartupDiagnostic('fileOperations.initializeDatabase.start', {
-        appId: appIdParam,
-        hasExistingInstance: dbInstance !== null
-    });
     if (isShuttingDown) {
-        recordStartupDiagnostic('fileOperations.initializeDatabase.skipped', { reason: 'shutdown' });
         return;
     }
     if (isShutdownState) {
@@ -152,7 +145,6 @@ export async function initializeDatabase(
     initializationPromise = (async () => {
         try {
             if (isShutdownInProgress()) {
-                recordStartupDiagnostic('fileOperations.initializeDatabase.skipped', { reason: 'shutdownInProgress' });
                 return;
             }
             appId = appIdParam;
@@ -171,9 +163,6 @@ export async function initializeDatabase(
             if (isShutdownInProgress() || dbInstance !== db) {
                 return;
             }
-            recordStartupDiagnostic('fileOperations.initializeDatabase.complete', {
-                elapsedMs: Math.round(performance.now() - initStartMs)
-            });
         } finally {
             isInitializing = false;
         }

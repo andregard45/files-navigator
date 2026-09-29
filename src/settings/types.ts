@@ -781,9 +781,6 @@ export interface NotebookNavigatorSettings {
     // Icon packs tab
     externalIconProviders: Record<string, boolean>;
 
-    // Advanced tab
-    checkForUpdatesOnStart: boolean;
-
     // Navigation pane tab - Appearance
     pinNavigationBanner: boolean;
     showNoteCount: boolean;

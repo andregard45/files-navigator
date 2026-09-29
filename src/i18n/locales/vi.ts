@@ -43,8 +43,6 @@ export const STRINGS_VI = {
         featureImageAlt: 'Ảnh nổi bật', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Lỗi không xác định', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Không thể ghi vào clipboard',
-        updateBannerTitle: 'Có bản cập nhật Notebook Navigator',
-        updateBannerInstruction: 'Cập nhật trong Cài đặt -> Plugin cộng đồng',
         previous: 'Trước', // Generic aria label for previous navigation (English: Previous)
         next: 'Sau' // Generic aria label for next navigation (English: Next)
     },
@@ -806,7 +804,7 @@ export const STRINGS_VI = {
             toggleAllInFileMenu: 'Chuyển đổi tất cả trong menu tệp',
             applyButton: 'Áp dụng',
             emptyState: 'Không tìm thấy khóa thuộc tính.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -1169,7 +1167,7 @@ export const STRINGS_VI = {
                 description: 'Chẩn đoán, dọn dẹp metadata, nhập/xuất và đặt lại.',
                 groups: {
                     maintenance: 'Bảo trì',
-                    resetSettings: 'Đặt lại cài đặt'
+                    settingsManagement: 'Đặt lại cài đặt'
                 }
             }
         },
@@ -2641,14 +2639,6 @@ export const STRINGS_VI = {
                 helpTooltip: 'Định dạng với Moment',
                 momentLinkText: 'định dạng Moment',
                 help: 'Định dạng phổ biến:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Kiểm tra phiên bản mới khi khởi động',
-                desc: 'Kiểm tra bản phát hành plugin mới khi khởi động và hiện thông báo khi có bản cập nhật. Kiểm tra xảy ra tối đa một lần mỗi ngày.'
-            },
-            startupDebugLogging: {
-                name: 'Ghi log gỡ lỗi khi khởi động',
-                desc: 'Ghi chẩn đoán khởi động vào một tệp Markdown có dấu thời gian ở thư mục gốc của kho, rồi dừng sau khi khởi động ổn định. Tệp có thể được đồng bộ hóa và có thể bao gồm đường dẫn tệp.'
             },
             cacheStatistics: {
                 localCache: 'Cache cục bộ',

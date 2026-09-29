@@ -43,8 +43,6 @@ export const STRINGS_FA = {
         featureImageAlt: 'تصویر ویژه',
         unknownError: 'خطای ناشناخته',
         clipboardWriteError: 'نمی‌توان در کلیپ‌بورد نوشت',
-        updateBannerTitle: 'به‌روزرسانی Notebook Navigator موجود است',
-        updateBannerInstruction: 'در تنظیمات -> افزونه‌های انجمن به‌روزرسانی کنید',
         previous: 'قبلی', // Generic aria label for previous navigation (English: Previous)
         next: 'بعدی' // Generic aria label for next navigation (English: Next)
     },
@@ -807,7 +805,7 @@ export const STRINGS_FA = {
             toggleAllInFileMenu: 'تغییر وضعیت همه در منوی فایل',
             applyButton: 'اعمال',
             emptyState: 'کلید ویژگی‌ای یافت نشد.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -1170,7 +1168,7 @@ export const STRINGS_FA = {
                 description: 'تشخیص، پاکسازی متادیتا، واردکردن/صادرکردن و بازنشانی.',
                 groups: {
                     maintenance: 'نگهداری',
-                    resetSettings: 'بازنشانی تنظیمات'
+                    settingsManagement: 'بازنشانی تنظیمات'
                 }
             }
         },
@@ -2642,14 +2640,6 @@ export const STRINGS_FA = {
                 helpTooltip: 'قالب با استفاده از Moment',
                 momentLinkText: 'قالب Moment',
                 help: 'قالب‌های رایج:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'بررسی نسخه جدید هنگام شروع',
-                desc: 'هنگام شروع نسخه‌های جدید افزونه را بررسی می‌کند و هنگام در دسترس بودن به‌روزرسانی اعلان نمایش می‌دهد. بررسی‌ها حداکثر روزی یک بار انجام می‌شوند.'
-            },
-            startupDebugLogging: {
-                name: 'ثبت اشکال‌زدایی راه‌اندازی',
-                desc: 'تشخیص‌های راه‌اندازی را در یک فایل Markdown زمان‌دار در ریشه خزانه می‌نویسد و پس از پایدار شدن راه‌اندازی متوقف می‌شود. فایل ممکن است همگام‌سازی شود و می‌تواند مسیرهای فایل را شامل شود.'
             },
             cacheStatistics: {
                 localCache: 'کش محلی',

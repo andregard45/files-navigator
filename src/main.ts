@@ -47,7 +47,6 @@ import { RecentNotesService } from './services/RecentNotesService';
 import type { ExternalIconProviderController } from './services/icons/external/ExternalIconProviderController';
 import type { ExternalIconProviderId } from './services/icons/external/providerRegistry';
 import type { NavigateToFolderOptions } from './hooks/useNavigatorReveal';
-import ReleaseCheckService, { type ReleaseUpdateNotice } from './services/ReleaseCheckService';
 import { isNotebookNavigatorCalendarView, isNotebookNavigatorView } from './view/viewGuards';
 import { LEGACY_STORAGE_KEYS, localStorage } from './utils/localStorage';
 import { INTERNAL_NOTEBOOK_NAVIGATOR_API, NotebookNavigatorAPI } from './api/NotebookNavigatorAPI';
@@ -83,13 +82,6 @@ import {
 import { NOTEBOOK_NAVIGATOR_ICON_ID, NOTEBOOK_NAVIGATOR_ICON_SVG } from './constants/notebookNavigatorIcon';
 import { PluginSettingsController, type SettingsLoadResult } from './services/settings/PluginSettingsController';
 import { PluginPreferencesController } from './services/settings/PluginPreferencesController';
-import { clearPendingPdfProcessingDiagnostic, consumePendingPdfProcessingDiagnostic } from './services/content/pdf/pdfCrashDiagnostics';
-import {
-    DebugLoggingService,
-    recordStartupDiagnostic,
-    recordStartupUserVisible,
-    setDebugLoggingService
-} from './services/diagnostics/DebugLoggingService';
 import { applyModifiedSettingsTransfer, createModifiedSettingsTransfer, createSettingsTransferBaseName } from './settings/transfer';
 import { DEFAULT_SETTINGS } from './settings/defaultSettings';
 import { buildFilePathInFolder, generateUniqueFilename } from './utils/fileCreationUtils';
@@ -145,15 +137,12 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     externalIconController: ExternalIconProviderController | null = null;
     api: NotebookNavigatorAPI | null = null;
     recentNotesService: RecentNotesService | null = null;
-    releaseCheckService: ReleaseCheckService | null = null;
-    debugLoggingService: DebugLoggingService | null = null;
     // Keys used for persisting UI state in browser localStorage
     keys: LocalStorageKeys = STORAGE_KEYS;
     // Map of callbacks to notify open React views when settings change
     private settingsUpdateListeners = new Map<string, () => void>();
     // Map of callbacks to notify open React views when files are renamed
     private fileRenameListeners = new Map<string, (oldPath: string, newPath: string) => void>();
-    private updateNoticeListeners = new Map<string, (notice: ReleaseUpdateNotice | null) => void>();
     languageService!: LanguageService;
     // Flag indicating plugin is being unloaded to prevent operations during shutdown
     private isUnloading = false;
@@ -176,7 +165,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     private homepageController: HomepageController | null = null;
     private folderNoteSidebarService: FolderNoteSidebarService | null = null;
     private settingTab: LazyNotebookNavigatorSettingTab | null = null;
-    private pendingUpdateNotice: ReleaseUpdateNotice | null = null;
     private hasWorkspaceLayoutReady = false;
     private lastCalendarPlacement: CalendarPlacement | null = null;
     private calendarPlacementRequestId = 0;
@@ -227,16 +215,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         }
     }
 
-    public isDebugLoggingEnabled(): boolean {
-        return this.debugLoggingService?.isEnabled() ?? false;
-    }
-
-    public setDebugLoggingEnabled(enabled: boolean): void {
-        this.debugLoggingService?.setEnabled(enabled);
-        if (!enabled) {
-            clearPendingPdfProcessingDiagnostic();
-        }
-    }
 
     public async setSyncMode(settingId: SyncModeSettingId, mode: SettingSyncMode): Promise<void> {
         const changed = await this.settingsController.setSyncMode(settingId, mode);
@@ -340,36 +318,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     }
 
     /**
-     * Registers a listener that will be notified when release update notices change.
-     */
-    public registerUpdateNoticeListener(id: string, callback: (notice: ReleaseUpdateNotice | null) => void): void {
-        this.updateNoticeListeners.set(id, callback);
-    }
-
-    /**
-     * Removes an update notice listener.
-     */
-    public unregisterUpdateNoticeListener(id: string): void {
-        this.updateNoticeListeners.delete(id);
-    }
-
-    /**
-     * Returns the current pending update notice, if any.
-     */
-    public getPendingUpdateNotice(): ReleaseUpdateNotice | null {
-        return this.pendingUpdateNotice;
-    }
-
-    /**
-     * Dismisses the current update notice for the active session.
-     */
-    public markUpdateNoticeAsDisplayed(version: string): void {
-        if (this.pendingUpdateNotice && this.pendingUpdateNotice.version === version) {
-            this.setPendingUpdateNotice(null);
-        }
-    }
-
-    /**
      * Returns the map of recent icon IDs per provider from local storage
      */
     public getRecentIcons(): Record<string, string[]> {
@@ -410,16 +358,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     async onload() {
         // Initialize localStorage before database so version checks work
         localStorage.init(this.app);
-        this.debugLoggingService = new DebugLoggingService(this.app, { pluginVersion: this.manifest.version });
-        setDebugLoggingService(this.debugLoggingService);
-        this.debugLoggingService.initialize();
-        if (!this.debugLoggingService.isEnabled()) {
-            clearPendingPdfProcessingDiagnostic();
-        }
-        recordStartupDiagnostic('onload.start', {
-            pluginVersion: this.manifest.version,
-            minAppVersion: this.manifest.minAppVersion
-        });
 
         if (typeof addIcon === 'function') {
             addIcon(NOTEBOOK_NAVIGATOR_ICON_ID, NOTEBOOK_NAVIGATOR_ICON_SVG);
@@ -428,7 +366,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Initialize database early for StorageContext consumers
         const appId = (this.app as ExtendedApp).appId || '';
         this.languageService = new LanguageService(this.manifest.version, new LanguageDatabase(appId));
-        recordStartupDiagnostic('languages.cache.start');
         const languageInitialization = this.languageService.initialize();
         this.register(
             this.languageService.subscribe(() => {
@@ -441,7 +378,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Only the local cache is awaited; downloads must not block settings or workspace restoration.
         await languageInitialization;
         if (this.isUnloading) return;
-        recordStartupDiagnostic('languages.cache.complete', { ready: this.languageService.getSnapshot().ready });
 
         // Use a fixed per-platform LRU size for feature image blobs.
         const featureImageCacheMaxEntries = Platform.isMobile ? 200 : 1000;
@@ -449,25 +385,16 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         const previewTextCacheMaxEntries = Platform.isMobile ? 10000 : 50000;
         // Limit the number of preview text paths processed per load flush.
         const previewLoadMaxBatch = Platform.isMobile ? 20 : 50;
-        recordStartupDiagnostic('database.init.scheduled', {
-            featureImageCacheMaxEntries,
-            previewTextCacheMaxEntries,
-            previewLoadMaxBatch
-        });
         runAsyncAction(
             async () => {
                 try {
-                    recordStartupDiagnostic('database.init.start');
                     await initializeDatabase(appId, { featureImageCacheMaxEntries, previewTextCacheMaxEntries, previewLoadMaxBatch });
-                    recordStartupDiagnostic('database.init.complete');
                 } catch (error: unknown) {
-                    recordStartupDiagnostic('database.init.failed', { error });
                     console.error('Failed to initialize database:', error);
                 }
             },
             {
                 onError: (error: unknown) => {
-                    recordStartupDiagnostic('database.init.failed', { error });
                     console.error('Failed to initialize database:', error);
                 }
             }
@@ -487,7 +414,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             return;
         }
         this.settings = this.settingsController.settings;
-        recordStartupDiagnostic('settings.loaded', { result: settingsLoadResult });
         if (settingsLoadResult === 'unavailable') {
             // data.json exists but could not be read; stop before any code path can overwrite it with defaults
             this.enterSettingsUnavailableState();
@@ -561,7 +487,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             if (this.isUnloading) {
                 return;
             }
-            recordStartupDiagnostic('settings.userEnableRecovery', { result: reloadResult });
             if (reloadResult === 'loaded') {
                 await this.completeStartup(false);
                 return;
@@ -588,7 +513,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         if (this.isUnloading) {
             return;
         }
-        recordStartupDiagnostic('settings.freshStartPrompt', { recentlyInstalled });
         const { ConfirmModal } = await import('./modals/ConfirmModal');
         const prompt = strings.plugin.settingsMissingConfirm;
         new ConfirmModal(
@@ -600,7 +524,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             {
                 onCancel: () => {
                     if (!this.isUnloading) {
-                        recordStartupDiagnostic('settings.freshStartCancelled');
                         this.enterSettingsUnavailableState();
                     }
                 }
@@ -622,7 +545,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             if (this.isUnloading) {
                 return;
             }
-            recordStartupDiagnostic('settings.freshStartConfirmed', { result: reloadResult });
             if (reloadResult === 'loaded') {
                 await this.completeStartup(false);
                 return;
@@ -776,9 +698,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
             this.api[INTERNAL_NOTEBOOK_NAVIGATOR_API].metadata.emitFolderChangedForPath(folderPath);
         });
-        this.releaseCheckService = new ReleaseCheckService(this);
-        recordStartupDiagnostic('services.initialized');
-
         const iconService = getIconService();
         iconService.registerProvider(new VaultIconProvider(this.app));
         if (this.hasEnabledExternalIconProviders()) {
@@ -826,7 +745,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                 syncTemplateCommands(this);
                 syncTemplateCommandButtons(this);
             });
-            recordStartupDiagnostic('languages.ready');
         });
 
         // ==== Settings tab ====
@@ -842,10 +760,8 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
         this.app.workspace.onLayoutReady(() => {
             this.hasWorkspaceLayoutReady = true;
-            recordStartupDiagnostic('layout.ready');
             // Execute startup tasks asynchronously to avoid blocking the layout
             runAsyncAction(async () => {
-                recordStartupDiagnostic('layout.readyTasks.start');
                 if (this.isUnloading) {
                     return;
                 }
@@ -856,35 +772,13 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                 await this.languageService.ready;
                 if (this.isUnloading) return;
 
-                // PDF_CRASH_DIAGNOSTICS: show the last unfinished mobile PDF path from the previous session.
-                const pendingPdfPath = consumePendingPdfProcessingDiagnostic();
-                if (pendingPdfPath) {
-                    this.debugLoggingService?.logReport('PDF processing from previous run', { path: pendingPdfPath });
-                    const { InfoModal } = await import('./modals/InfoModal');
-                    new InfoModal(this.app, {
-                        title: 'PDF processing from previous run',
-                        intro: 'The previous app session ended while this PDF thumbnail was being processed.',
-                        items: [
-                            `\`${pendingPdfPath}\``,
-                            'This can also happen if Obsidian or Android closed the app before cleanup finished.'
-                        ]
-                    }).open();
-                }
-
                 // Trigger Style Settings plugin to parse our settings
                 this.app.workspace.trigger('parse-style-settings');
 
                 this.applyCalendarPlacementView({ force: true, reveal: false });
 
-                // Check for new GitHub releases if enabled, without blocking startup
-                if (this.settings.checkForUpdatesOnStart) {
-                    runAsyncAction(() => this.runReleaseUpdateCheck());
-                }
-                recordStartupDiagnostic('layout.readyTasks.complete');
-                recordStartupUserVisible({ shouldActivateOnStartup });
             });
         });
-        recordStartupDiagnostic('onload.complete');
 
         // Process external settings changes that arrived while onload was still initializing
         this.hasStartedWithSettings = true;
@@ -1028,20 +922,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     public setFolderSortOrder(order: AlphaSortOrder): void {
         this.preferencesController.setFolderSortOrder(order);
-    }
-
-    /**
-     * Returns the timestamp of the last release check (local-only).
-     */
-    public getReleaseCheckTimestamp(): number | null {
-        return this.preferencesController.getReleaseCheckTimestamp();
-    }
-
-    /**
-     * Persists the last release check timestamp to local storage.
-     */
-    public setReleaseCheckTimestamp(timestamp: number): void {
-        this.preferencesController.setReleaseCheckTimestamp(timestamp);
     }
 
     /**
@@ -1422,9 +1302,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     onunload() {
         this.initiateShutdown();
-        this.debugLoggingService?.dispose();
-        setDebugLoggingService(null);
-        this.debugLoggingService = null;
 
         this.preferencesController.dispose();
 
@@ -1865,83 +1742,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
     public async openHomepage(trigger: 'startup' | 'command'): Promise<boolean> {
         return this.homepageController?.open(trigger) ?? false;
-    }
-
-    /**
-     * Checks for new GitHub releases and updates the pending notice if a newer version is found.
-     * @param force - If true, bypasses the minimum check interval
-     */
-    public async runReleaseUpdateCheck(force = false): Promise<void> {
-        await this.evaluateReleaseUpdates(force);
-    }
-
-    /**
-     * Clears the pending update notice without marking it as displayed.
-     */
-    public dismissPendingUpdateNotice(): void {
-        this.setPendingUpdateNotice(null);
-    }
-
-    /**
-     * Performs the actual release check and updates the pending notice.
-     */
-    private async evaluateReleaseUpdates(force = false): Promise<void> {
-        if (!this.releaseCheckService || this.isUnloading) {
-            return;
-        }
-
-        if (!this.settings.checkForUpdatesOnStart && !force) {
-            return;
-        }
-
-        try {
-            const notice = await this.releaseCheckService.checkForUpdates(force);
-            this.setPendingUpdateNotice(notice ?? null);
-        } catch {
-            // Ignore release check failures silently
-        }
-    }
-
-    /**
-     * Updates the pending notice and notifies all listeners.
-     * Skips notification if the notice hasn't actually changed.
-     */
-    private setPendingUpdateNotice(notice: ReleaseUpdateNotice | null): void {
-        const currentVersion = this.pendingUpdateNotice?.version ?? null;
-        const incomingVersion = notice?.version ?? null;
-        const hasNotice = !!notice;
-        const hadNotice = !!this.pendingUpdateNotice;
-
-        // Skip if notice hasn't changed
-        if (currentVersion === incomingVersion && hasNotice === hadNotice) {
-            return;
-        }
-
-        this.pendingUpdateNotice = notice;
-
-        if (!notice) {
-            this.releaseCheckService?.clearPendingNotice();
-        }
-
-        this.notifyUpdateNoticeListeners();
-    }
-
-    /**
-     * Notifies all registered listeners about the current update notice state.
-     */
-    private notifyUpdateNoticeListeners(): void {
-        if (this.isUnloading) {
-            return;
-        }
-
-        const listeners = Array.from(this.updateNoticeListeners.values());
-        listeners.forEach(callback => {
-            try {
-                callback(this.pendingUpdateNotice);
-            } catch {
-                // Ignore listener errors to avoid breaking notification flow
-            }
-        });
     }
 
 }

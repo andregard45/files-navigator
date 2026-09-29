@@ -43,8 +43,6 @@ export const STRINGS_AR = {
         featureImageAlt: 'صورة مميزة', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'خطأ غير معروف', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'تعذرت الكتابة إلى الحافظة',
-        updateBannerTitle: 'تحديث Notebook Navigator متاح',
-        updateBannerInstruction: 'قم بالتحديث في الإعدادات -> إضافات المجتمع',
         previous: 'السابق', // Generic aria label for previous navigation (English: Previous)
         next: 'التالي' // Generic aria label for next navigation (English: Next)
     },
@@ -804,7 +802,7 @@ export const STRINGS_AR = {
             toggleAllInFileMenu: 'تبديل الكل في قائمة الملف',
             applyButton: 'تطبيق',
             emptyState: 'لم يتم العثور على مفاتيح خصائص.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -1166,7 +1164,7 @@ export const STRINGS_AR = {
                 description: 'التشخيص وتنظيف البيانات الوصفية والاستيراد/التصدير وإعادة التعيين.',
                 groups: {
                     maintenance: 'الصيانة',
-                    resetSettings: 'إعادة ضبط الإعدادات'
+                    settingsManagement: 'إعادة ضبط الإعدادات'
                 }
             }
         },
@@ -2637,14 +2635,6 @@ export const STRINGS_AR = {
                 helpTooltip: 'تنسيق باستخدام Moment',
                 momentLinkText: 'تنسيق Moment',
                 help: 'التنسيقات الشائعة:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'التحقق من إصدار جديد عند البدء',
-                desc: 'التحقق من إصدارات الإضافة الجديدة عند البدء وإظهار إشعار عند توفر تحديث. التحقق يحدث مرة واحدة يوميًا على الأكثر.'
-            },
-            startupDebugLogging: {
-                name: 'تسجيل تصحيح أخطاء بدء التشغيل',
-                desc: 'يكتب تشخيصات بدء التشغيل في ملف Markdown يحمل طابعًا زمنيًا في جذر الخزنة، ثم يتوقف بعد استقرار بدء التشغيل. قد تتم مزامنة الملف وقد يتضمن مسارات ملفات.'
             },
             cacheStatistics: {
                 localCache: 'الذاكرة المؤقتة المحلية',

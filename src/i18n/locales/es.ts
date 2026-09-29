@@ -43,8 +43,6 @@ export const STRINGS_ES = {
         featureImageAlt: 'Imagen destacada', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Error desconocido', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'No se pudo escribir en el portapapeles',
-        updateBannerTitle: 'Actualización de Notebook Navigator disponible',
-        updateBannerInstruction: 'Actualiza en Ajustes -> Complementos comunitarios',
         previous: 'Anterior', // Generic aria label for previous navigation (English: Previous)
         next: 'Siguiente' // Generic aria label for next navigation (English: Next)
     },
@@ -809,7 +807,7 @@ export const STRINGS_ES = {
             toggleAllInFileMenu: 'Alternar todos en menú de archivo',
             applyButton: 'Aplicar',
             emptyState: 'No se encontraron claves de propiedad.'
-        },
+        }
     },
 
     // File system operations
@@ -1176,7 +1174,7 @@ export const STRINGS_ES = {
                 description: 'Diagnósticos, limpieza de metadatos, importación/exportación y restablecimiento.',
                 groups: {
                     maintenance: 'Mantenimiento',
-                    resetSettings: 'Restablecer ajustes'
+                    settingsManagement: 'Restablecer ajustes'
                 }
             }
         },
@@ -2653,14 +2651,6 @@ export const STRINGS_ES = {
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment',
                 help: 'Formatos comunes:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Buscar nueva versión al iniciar',
-                desc: 'Busca nuevas versiones del plugin al iniciar y muestra una notificación cuando hay una actualización disponible. Las comprobaciones se realizan como máximo una vez al día.'
-            },
-            startupDebugLogging: {
-                name: 'Registro de depuración de inicio',
-                desc: 'Escribe diagnósticos de inicio en un archivo Markdown con marca de tiempo en la raíz de la bóveda y se detiene cuando el inicio se estabiliza. El archivo puede sincronizarse y puede incluir rutas de archivos.'
             },
             cacheStatistics: {
                 localCache: 'Caché local',

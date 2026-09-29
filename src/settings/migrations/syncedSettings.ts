@@ -530,11 +530,6 @@ export function applyExistingUserDefaults(params: { settings: NotebookNavigatorS
     const { settings } = params;
 
 
-    // Initialize update check setting with default value for existing users
-    if (typeof settings.checkForUpdatesOnStart !== 'boolean') {
-        settings.checkForUpdatesOnStart = true;
-    }
-
     if (!isTextCountDisplay(settings.textCountDisplay)) {
         settings.textCountDisplay = 'none';
     }

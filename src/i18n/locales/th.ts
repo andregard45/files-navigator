@@ -43,8 +43,6 @@ export const STRINGS_TH = {
         featureImageAlt: 'รูปภาพเด่น',
         unknownError: 'ข้อผิดพลาดที่ไม่ทราบสาเหตุ',
         clipboardWriteError: 'ไม่สามารถเขียนลงคลิปบอร์ดได้',
-        updateBannerTitle: 'มีการอัปเดต Notebook Navigator',
-        updateBannerInstruction: 'อัปเดตใน การตั้งค่า -> ปลั๊กอินชุมชน',
         previous: 'ก่อนหน้า', // Generic aria label for previous navigation (English: Previous)
         next: 'ถัดไป' // Generic aria label for next navigation (English: Next)
     },
@@ -801,7 +799,7 @@ export const STRINGS_TH = {
             toggleAllInFileMenu: 'สลับทั้งหมดในเมนูไฟล์',
             applyButton: 'นำไปใช้',
             emptyState: 'ไม่พบคีย์คุณสมบัติ'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -1163,7 +1161,7 @@ export const STRINGS_TH = {
                 description: 'การวินิจฉัย การล้างข้อมูลเมตา การนำเข้า/ส่งออก และการรีเซ็ต',
                 groups: {
                     maintenance: 'การบำรุงรักษา',
-                    resetSettings: 'รีเซ็ตการตั้งค่า'
+                    settingsManagement: 'รีเซ็ตการตั้งค่า'
                 }
             }
         },
@@ -2634,14 +2632,6 @@ export const STRINGS_TH = {
                 helpTooltip: 'รูปแบบโดยใช้ Moment',
                 momentLinkText: 'รูปแบบ Moment',
                 help: 'รูปแบบทั่วไป:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'ตรวจสอบเวอร์ชันใหม่เมื่อเริ่ม',
-                desc: 'ตรวจสอบรุ่นปลั๊กอินใหม่เมื่อเริ่มงานและแสดงการแจ้งเตือนเมื่อมีการอัปเดต การตรวจสอบจะเกิดขึ้นอย่างมากวันละครั้ง'
-            },
-            startupDebugLogging: {
-                name: 'บันทึกดีบักตอนเริ่มต้น',
-                desc: 'เขียนข้อมูลวินิจฉัยการเริ่มต้นลงในไฟล์ Markdown ที่มีเวลาประทับในรากของห้องนิรภัย แล้วหยุดหลังจากการเริ่มต้นคงที่ ไฟล์อาจถูกซิงค์และอาจมีเส้นทางไฟล์'
             },
             cacheStatistics: {
                 localCache: 'แคชท้องถิ่น',

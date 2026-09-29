@@ -17,7 +17,7 @@
  */
 
 import { DEFAULT_SETTINGS } from '../../settings/defaultSettings';
-import { migrateCollapsedPinnedContexts, migrateRecentColors, migrateReleaseCheckState } from '../../settings/migrations/localPreferences';
+import { migrateCollapsedPinnedContexts, migrateRecentColors } from '../../settings/migrations/localPreferences';
 import { migrateMomentDateFormats } from '../../settings/migrations/momentFormats';
 import {
     applyExistingUserDefaults,
@@ -334,8 +334,7 @@ export class PluginSettingsController {
         storageKeyNames.forEach(storageKey => {
             if (
                 storageKey === 'databaseSchemaVersionKey' ||
-                storageKey === 'databaseContentVersionKey' ||
-                storageKey === 'debugLoggingEnabledKey'
+                storageKey === 'databaseContentVersionKey'
             ) {
                 return;
             }
@@ -728,11 +727,6 @@ export class PluginSettingsController {
             this.currentSettings.rootPropertyOrder = [];
         }
 
-        const migratedReleaseState = migrateReleaseCheckState({
-            settings: this.currentSettings,
-            storedData,
-            keys: this.options.keys
-        });
         const migratedRecentColors = migrateRecentColors({ settings: this.currentSettings, storedData, keys: this.options.keys });
         const migratedCollapsedPinnedContexts = migrateCollapsedPinnedContexts({
             settings: this.currentSettings,
@@ -789,7 +783,6 @@ export class PluginSettingsController {
         this.refreshMatcherCachesIfNeeded();
 
         const needsPersistedCleanup =
-            migratedReleaseState ||
             migratedRecentColors ||
             migratedCollapsedPinnedContexts ||
             hadLocalValuesInSettings ||
@@ -1004,8 +997,6 @@ export class PluginSettingsController {
         delete rest.hiddenTags;
         delete rest.fileVisibility;
         delete rest.recentColors;
-        delete rest.lastReleaseCheckAt;
-        delete rest.latestKnownRelease;
         delete rest.searchProvider;
         delete rest.showCalendar;
         delete rest.calendarCustomPromptForTitle;

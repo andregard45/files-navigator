@@ -43,8 +43,6 @@ export const STRINGS_KO = {
         featureImageAlt: '대표 이미지', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '알 수 없는 오류', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: '클립보드에 쓸 수 없습니다',
-        updateBannerTitle: 'Notebook Navigator 업데이트 사용 가능',
-        updateBannerInstruction: '설정 -> 커뮤니티 플러그인에서 업데이트',
         previous: '이전', // Generic aria label for previous navigation (English: Previous)
         next: '다음' // Generic aria label for next navigation (English: Next)
     },
@@ -804,7 +802,7 @@ export const STRINGS_KO = {
             toggleAllInFileMenu: '파일 메뉴에서 모두 전환',
             applyButton: '적용',
             emptyState: '속성 키를 찾을 수 없습니다.'
-        },
+        }
     },
 
     // File system operations
@@ -1167,7 +1165,7 @@ export const STRINGS_KO = {
                 description: '진단, 메타데이터 정리, 가져오기/내보내기 및 초기화.',
                 groups: {
                     maintenance: '유지 관리',
-                    resetSettings: '설정 초기화'
+                    settingsManagement: '설정 초기화'
                 }
             }
         },
@@ -2636,14 +2634,6 @@ export const STRINGS_KO = {
                 helpTooltip: 'Moment 형식',
                 momentLinkText: 'Moment 형식',
                 help: '일반적인 형식:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: '시작 시 새 버전 확인',
-                desc: '시작 시 새로운 플러그인 릴리스를 확인하고 업데이트가 있으면 알림을 표시합니다. 확인은 하루에 최대 한 번 수행됩니다.'
-            },
-            startupDebugLogging: {
-                name: '시작 디버그 로그',
-                desc: '시작 진단 정보를 보관함 루트의 타임스탬프가 있는 Markdown 파일에 기록한 뒤 시작이 안정되면 중지합니다. 이 파일은 동기화될 수 있으며 파일 경로를 포함할 수 있습니다.'
             },
             cacheStatistics: {
                 localCache: '로컬 캐시',

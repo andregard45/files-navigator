@@ -43,8 +43,6 @@ export const STRINGS_PL = {
         featureImageAlt: 'Wyróżniony obraz', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Nieznany błąd', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Nie można zapisać do schowka',
-        updateBannerTitle: 'Aktualizacja Notebook Navigator dostępna',
-        updateBannerInstruction: 'Zaktualizuj w Ustawienia → Wtyczki społeczności',
         previous: 'Poprzedni', // Generic aria label for previous navigation (English: Previous)
         next: 'Następny' // Generic aria label for next navigation (English: Next)
     },
@@ -810,7 +808,7 @@ export const STRINGS_PL = {
             toggleAllInFileMenu: 'Przełącz wszystkie w menu pliku',
             applyButton: 'Zastosuj',
             emptyState: 'Nie znaleziono kluczy atrybutów.'
-        },
+        }
     },
 
     // File system operations
@@ -1175,7 +1173,7 @@ export const STRINGS_PL = {
                 description: 'Diagnostyka, czyszczenie metadanych, import/eksport i resetowanie.',
                 groups: {
                     maintenance: 'Konserwacja',
-                    resetSettings: 'Resetowanie ustawień'
+                    settingsManagement: 'Resetowanie ustawień'
                 }
             }
         },
@@ -2650,14 +2648,6 @@ export const STRINGS_PL = {
                 helpTooltip: 'Format z Moment',
                 momentLinkText: 'format Moment',
                 help: 'Popularne formaty:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Sprawdź nową wersję podczas uruchamiania',
-                desc: 'Sprawdza dostępność nowych wersji wtyczki podczas uruchamiania i wyświetla powiadomienie, gdy dostępna jest aktualizacja. Sprawdzanie odbywa się maksymalnie raz dziennie.'
-            },
-            startupDebugLogging: {
-                name: 'Rejestrowanie debugowania przy starcie',
-                desc: 'Zapisuje diagnostykę startu w pliku Markdown ze znacznikiem czasu w katalogu głównym sejfu, a następnie zatrzymuje się po ustabilizowaniu startu. Plik może być synchronizowany i zawierać ścieżki plików.'
             },
             cacheStatistics: {
                 localCache: 'Lokalna pamięć podręczna',

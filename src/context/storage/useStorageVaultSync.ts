@@ -35,7 +35,6 @@ import { isPropertyFeatureEnabled } from '../../utils/propertyTree';
 import { emitDrawingCompanionImageChange, findDrawingFileForCompanionImage } from '../../utils/drawingFeatureImages';
 import { filterFilesRequiringFileThumbnails, shouldQueueFileThumbnailProvider } from '../storageQueueFilters';
 import { getCacheRebuildProgressTypes, getContentWorkTotal, getMetadataDependentTypes } from './storageContentTypes';
-import { finishStartupDiagnostics, isDebugLogPath, recordStartupDiagnostic } from '../../services/diagnostics/DebugLoggingService';
 import {
     clearFrontmatterMetadataCacheSignature,
     isFrontmatterMetadataCacheCurrent,
@@ -191,12 +190,8 @@ export function useStorageVaultSync(params: {
             }
 
             if (isInitialLoad) {
-                const initialLoadStartMs = performance.now();
                 try {
-                    recordStartupDiagnostic('storage.initialLoad.start', { indexableFileCount: allFiles.length });
-                    const diffStartMs = performance.now();
-                    const { toAdd, toUpdate, toRemove, existingData, cachedFileCount } = calculateFileDiff(allFiles);
-                    const diffElapsedMs = Math.round(performance.now() - diffStartMs);
+                    const { toAdd, toUpdate, toRemove, existingData } = calculateFileDiff(allFiles);
 
                     if (toRemove.length > 0) {
                         await removeFilesFromCache(toRemove);
@@ -210,15 +205,10 @@ export function useStorageVaultSync(params: {
                     // Both tree rebuilds share one visible-file scan.
                     let visibleFilesForTrees: TFile[] | null = null;
                     const getVisibleFilesForTrees = () => (visibleFilesForTrees ??= getVisibleMarkdownFiles());
-                    let tagTreeElapsedMs = 0;
                     if (settings.showTags) {
-                        const tagTreeStartMs = performance.now();
                         rebuildTagTree(getVisibleFilesForTrees);
-                        tagTreeElapsedMs = Math.round(performance.now() - tagTreeStartMs);
                     }
-                    const propertyTreeStartMs = performance.now();
                     rebuildPropertyTree(getVisibleFilesForTrees);
-                    const propertyTreeElapsedMs = Math.round(performance.now() - propertyTreeStartMs);
 
                     isStorageReadyRef.current = true;
                     setIsStorageReady(true);
@@ -227,12 +217,10 @@ export function useStorageVaultSync(params: {
 
                     const metadataDependentTypes = getMetadataDependentTypes(settings, app);
                     const contentEnabled = metadataDependentTypes.length > 0;
-                    const queuedStartupDetails: Record<string, unknown> = { metadataDependentTypes, frontmatterMetadataCacheInvalidated };
 
                     if (contentRegistryRef.current && contentEnabled) {
                         const markdownFiles: TFile[] = [];
                         const fileThumbnailFiles: TFile[] = [];
-                        let filesNeedingThumbnailCount = 0;
 
                         for (const file of allFiles) {
                             if (file.extension === 'md') {
@@ -250,7 +238,6 @@ export function useStorageVaultSync(params: {
 
                         if (settings.showFeatureImage && fileThumbnailFiles.length > 0) {
                             const filesNeedingThumbnails = filterFilesRequiringFileThumbnails(fileThumbnailFiles, settings);
-                            filesNeedingThumbnailCount = filesNeedingThumbnails.length;
                             if (filesNeedingThumbnails.length > 0) {
                                 contentRegistryRef.current.queueFilesForAllProviders(filesNeedingThumbnails, settings, {
                                     include: ['fileThumbnails']
@@ -258,35 +245,8 @@ export function useStorageVaultSync(params: {
                             }
                         }
 
-                        queuedStartupDetails.markdownFiles = markdownFiles.length;
-                        queuedStartupDetails.fileThumbnailFiles = fileThumbnailFiles.length;
-                        queuedStartupDetails.filesNeedingThumbnails = filesNeedingThumbnailCount;
                     }
-
-                    finishStartupDiagnostics({
-                        status: 'storageReady',
-                        indexableFileCount: allFiles.length,
-                        cachedFileCount,
-                        diff: {
-                            toAdd: toAdd.length,
-                            toUpdate: toUpdate.length,
-                            toRemove: toRemove.length
-                        },
-                        queued: queuedStartupDetails,
-                        timingsMs: {
-                            diff: diffElapsedMs,
-                            tagTree: tagTreeElapsedMs,
-                            propertyTree: propertyTreeElapsedMs,
-                            initialLoad: Math.round(performance.now() - initialLoadStartMs)
-                        }
-                    });
                 } catch (error: unknown) {
-                    recordStartupDiagnostic('storage.initialLoad.failed', { error });
-                    finishStartupDiagnostics({
-                        status: 'initialLoadFailed',
-                        indexableFileCount: allFiles.length,
-                        error
-                    });
                     console.error('Failed during initial load sequence:', error);
                 }
             } else {
@@ -300,14 +260,7 @@ export function useStorageVaultSync(params: {
                 const processDiff = async () => {
                     if (stoppedRef.current) return;
                     try {
-                        const { toAdd, toUpdate, toRemove, existingData, cachedFileCount } = calculateFileDiff(allFiles);
-                        recordStartupDiagnostic('storage.diff.processed', {
-                            indexableFileCount: allFiles.length,
-                            cachedFileCount,
-                            toAdd: toAdd.length,
-                            toUpdate: toUpdate.length,
-                            toRemove: toRemove.length
-                        });
+                        const { toAdd, toUpdate, toRemove, existingData } = calculateFileDiff(allFiles);
 
                         if (toAdd.length > 0 || toUpdate.length > 0 || toRemove.length > 0) {
                             try {
@@ -542,7 +495,7 @@ export function useStorageVaultSync(params: {
                     return;
                 }
 
-                const files = resolveLiveFiles(pendingFiles).filter(file => file.extension === 'md' && !isDebugLogPath(file.path));
+                const files = resolveLiveFiles(pendingFiles).filter(file => file.extension === 'md');
                 if (files.length === 0) {
                     return;
                 }
@@ -712,10 +665,6 @@ export function useStorageVaultSync(params: {
             if (!(file instanceof TFile)) {
                 return;
             }
-            if (isDebugLogPath(file.path)) {
-                return;
-            }
-
             const drawingFile = findDrawingFileForCompanionImage(app, file.path);
             if (drawingFile) {
                 notifyDrawingCompanionChange(file.path);
@@ -731,9 +680,6 @@ export function useStorageVaultSync(params: {
         };
 
         const handleCreateOrDelete = (file: TAbstractFile) => {
-            if (file instanceof TFile && isDebugLogPath(file.path)) {
-                return;
-            }
             rebuildFileCache?.();
             if (file instanceof TFile) {
                 notifyDrawingCompanionChange(file.path);
@@ -764,7 +710,7 @@ export function useStorageVaultSync(params: {
             if (stoppedRef.current) {
                 return;
             }
-            if (!(file instanceof TFile) || file.extension !== 'md' || isDebugLogPath(file.path)) {
+            if (!(file instanceof TFile) || file.extension !== 'md') {
                 return;
             }
             const liveSettings = latestSettingsRef.current;

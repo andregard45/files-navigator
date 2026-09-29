@@ -43,8 +43,6 @@ export const STRINGS_IT = {
         featureImageAlt: 'Immagine in evidenza', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Errore sconosciuto', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Impossibile scrivere negli appunti',
-        updateBannerTitle: 'Aggiornamento Notebook Navigator disponibile',
-        updateBannerInstruction: 'Aggiorna in Impostazioni -> Plugin della community',
         previous: 'Precedente', // Generic aria label for previous navigation (English: Previous)
         next: 'Successivo' // Generic aria label for next navigation (English: Next)
     },
@@ -804,7 +802,7 @@ export const STRINGS_IT = {
             toggleAllInFileMenu: 'Attiva/disattiva tutti nel menu file',
             applyButton: 'Applica',
             emptyState: 'Nessuna chiave proprietà trovata.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -1169,7 +1167,7 @@ export const STRINGS_IT = {
                 description: 'Diagnostica, pulizia metadati, importazione/esportazione e ripristino.',
                 groups: {
                     maintenance: 'Manutenzione',
-                    resetSettings: 'Reimposta impostazioni'
+                    settingsManagement: 'Reimposta impostazioni'
                 }
             }
         },
@@ -2646,14 +2644,6 @@ export const STRINGS_IT = {
                 helpTooltip: 'Formato con Moment',
                 momentLinkText: 'formato Moment',
                 help: 'Formati comuni:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: "Controlla nuova versione all'avvio",
-                desc: "Controlla nuovi rilasci plugin all'avvio e mostra notifica quando un aggiornamento è disponibile. I controlli avvengono al massimo una volta al giorno."
-            },
-            startupDebugLogging: {
-                name: "Registro di debug all'avvio",
-                desc: "Scrive la diagnostica di avvio in un file Markdown con data e ora nella radice del vault, poi si ferma quando l'avvio si stabilizza. Il file può essere sincronizzato e può includere percorsi di file."
             },
             cacheStatistics: {
                 localCache: 'Cache locale',

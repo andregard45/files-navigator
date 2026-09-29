@@ -43,8 +43,6 @@ export const STRINGS_EN = {
         featureImageAlt: 'Feature image', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Unknown error', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Could not write to clipboard',
-        updateBannerTitle: 'Notebook Navigator update available',
-        updateBannerInstruction: 'Update in Settings -> Community plugins',
         previous: 'Previous', // Generic aria label for previous navigation (English: Previous)
         next: 'Next' // Generic aria label for next navigation (English: Next)
     },
@@ -802,7 +800,7 @@ export const STRINGS_EN = {
             toggleAllInFileMenu: 'Toggle all in file menu',
             applyButton: 'Apply',
             emptyState: 'No property keys found.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -1164,7 +1162,7 @@ export const STRINGS_EN = {
                 description: 'Diagnostics, metadata cleanup, import/export, and reset.',
                 groups: {
                     maintenance: 'Maintenance',
-                    resetSettings: 'Reset settings'
+                    settingsManagement: 'Settings Management'
                 }
             }
         },
@@ -2634,14 +2632,6 @@ export const STRINGS_EN = {
                 helpTooltip: 'Format using Moment',
                 momentLinkText: 'Moment format',
                 help: 'Common formats:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Check for new version on start',
-                desc: 'Checks for new plugin releases on startup and shows a notification when an update is available. Checks occur at most once per day.'
-            },
-            startupDebugLogging: {
-                name: 'Startup debug logging',
-                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
             },
             cacheStatistics: {
                 localCache: 'Local cache',

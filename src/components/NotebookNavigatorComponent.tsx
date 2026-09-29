@@ -36,7 +36,6 @@ import { useMobileSwipeNavigation } from '../hooks/useSwipeGesture';
 import { useFileCache } from '../context/StorageContext';
 import { strings } from '../i18n';
 import { runAsyncAction } from '../utils/async';
-import { useUpdateNotice } from '../hooks/useUpdateNotice';
 import { FolderSuggestModal } from '../modals/FolderSuggestModal';
 import { buildPropertyNodeSuggestions, PropertyNodeSuggestModal } from '../modals/PropertyNodeSuggestModal';
 import { TagSuggestModal } from '../modals/TagSuggestModal';
@@ -85,7 +84,6 @@ import type { NavigateToPropertyOptions } from '../utils/propertyNavigation';
 import type { NavigateToTagOptions } from '../utils/tagNavigation';
 import { Calendar } from './calendar';
 import type { SearchShortcut } from '../types/shortcuts';
-import { UpdateNoticeBanner } from './UpdateNoticeBanner';
 import { showNotice } from '../utils/noticeUtils';
 import { EMPTY_SEARCH_NAV_FILTER_STATE, type SearchNavFilterState } from '../types/search';
 import { getFeatureImageDisplayMeasurements, getListPaneMeasurements } from '../utils/listPaneMeasurements';
@@ -269,7 +267,6 @@ export const NotebookNavigatorComponent = React.memo(
             [selectionState.selectedFolder, selectionState.selectedProperty, selectionState.selectedTag, selectionState.selectionType]
         );
         const { stopAllProcessing, rebuildCache, fileData } = useFileCache();
-        const { bannerNotice, markAsDisplayed } = useUpdateNotice();
         // Keep stable references to avoid stale closures in imperative handles
         const stopProcessingRef = useRef(stopAllProcessing);
         useEffect(() => {
@@ -1557,7 +1554,6 @@ export const NotebookNavigatorComponent = React.memo(
                         // The actual keyboard handling is done in NavigationPane and ListPane
                     }}
                 >
-                    {settings.checkForUpdatesOnStart && <UpdateNoticeBanner notice={bannerNotice} onDismiss={markAsDisplayed} />}
                     {/* KEYBOARD EVENT FLOW:
                 1. Both NavigationPane and ListPane receive the same containerRef
                 2. Each pane sets up keyboard listeners on this shared container

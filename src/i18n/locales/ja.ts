@@ -43,8 +43,6 @@ export const STRINGS_JA = {
         featureImageAlt: 'アイキャッチ画像', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '不明なエラー', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'クリップボードに書き込めませんでした',
-        updateBannerTitle: 'Notebook Navigator の更新があります',
-        updateBannerInstruction: '設定 -> コミュニティプラグイン で更新',
         previous: '前へ', // Generic aria label for previous navigation (English: Previous)
         next: '次へ' // Generic aria label for next navigation (English: Next)
     },
@@ -807,7 +805,7 @@ export const STRINGS_JA = {
             toggleAllInFileMenu: 'ファイルメニューのすべてを切り替え',
             applyButton: '適用',
             emptyState: 'プロパティキーが見つかりません。'
-        },
+        }
     },
 
     // File system operations
@@ -1171,7 +1169,7 @@ export const STRINGS_JA = {
                 description: '診断、メタデータのクリーンアップ、インポート/エクスポート、リセット。',
                 groups: {
                     maintenance: 'メンテナンス',
-                    resetSettings: '設定をリセット'
+                    settingsManagement: '設定をリセット'
                 }
             }
         },
@@ -2642,14 +2640,6 @@ export const STRINGS_JA = {
                 helpTooltip: 'Moment形式',
                 momentLinkText: 'Moment フォーマット',
                 help: '一般的な形式:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: '起動時に新しいバージョンを確認',
-                desc: '起動時に新しいプラグインリリースを確認し、アップデートが利用可能な場合に通知を表示します。確認は最大1日1回行われます。'
-            },
-            startupDebugLogging: {
-                name: '起動デバッグログ',
-                desc: '起動診断を保管庫のルートにタイムスタンプ付きの Markdown ファイルとして書き込み、起動が落ち着いた後に停止します。このファイルは同期される場合があり、ファイルパスを含むことがあります。'
             },
             cacheStatistics: {
                 localCache: 'ローカルキャッシュ',

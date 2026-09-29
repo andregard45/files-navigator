@@ -557,7 +557,6 @@ export class NotebookNavigatorSettingTab extends PluginSettingTab {
         }
 
         await this.plugin.saveSettingsAndUpdate();
-        await this.handleNativeSettingControlPostSaveSideEffects(key);
     }
 
     // Obsidian calls native control hooks only for 1.13 settings pages.
@@ -580,16 +579,6 @@ export class NotebookNavigatorSettingTab extends PluginSettingTab {
             this.currentShowTagsVisible = this.plugin.settings.showTags;
             this.showTagsListeners.forEach(callback => callback(this.currentShowTagsVisible));
             return;
-        }
-
-        if (key === 'checkForUpdatesOnStart' && !this.plugin.settings.checkForUpdatesOnStart) {
-            this.plugin.dismissPendingUpdateNotice();
-        }
-    }
-
-    private async handleNativeSettingControlPostSaveSideEffects(key: NativeSettingControlKey): Promise<void> {
-        if (key === 'checkForUpdatesOnStart' && this.plugin.settings.checkForUpdatesOnStart) {
-            await this.plugin.runReleaseUpdateCheck(true);
         }
     }
 
