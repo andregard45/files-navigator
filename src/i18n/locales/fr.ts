@@ -43,8 +43,6 @@ export const STRINGS_FR = {
         featureImageAlt: 'Image vedette', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Erreur inconnue', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: "Impossible d'écrire dans le presse-papiers",
-        updateBannerTitle: 'Mise à jour Notebook Navigator disponible',
-        updateBannerInstruction: 'Mettre à jour dans Paramètres -> Modules complémentaires',
         previous: 'Précédent', // Generic aria label for previous navigation (English: Previous)
         next: 'Suivant' // Generic aria label for next navigation (English: Next)
     },
@@ -811,7 +809,7 @@ export const STRINGS_FR = {
             toggleAllInFileMenu: 'Tout basculer dans le menu du fichier',
             applyButton: 'Appliquer',
             emptyState: 'Aucune clé de propriété trouvée.'
-        },
+        }
     },
 
     // File system operations
@@ -2654,14 +2652,6 @@ export const STRINGS_FR = {
                 helpTooltip: 'Format avec Moment',
                 momentLinkText: 'format Moment',
                 help: 'Formats courants :\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Vérifier les nouvelles versions au démarrage',
-                desc: "Vérifie les nouvelles versions du plugin au démarrage et affiche une notification lorsqu'une mise à jour est disponible. Les vérifications ont lieu au maximum une fois par jour."
-            },
-            startupDebugLogging: {
-                name: 'Journal de débogage du démarrage',
-                desc: 'Écrit les diagnostics de démarrage dans un fichier Markdown horodaté à la racine du coffre, puis s’arrête une fois le démarrage stabilisé. Le fichier peut être synchronisé et contenir des chemins de fichiers.'
             },
             cacheStatistics: {
                 localCache: 'Cache local',

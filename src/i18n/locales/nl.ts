@@ -43,8 +43,6 @@ export const STRINGS_NL = {
         featureImageAlt: 'Uitgelichte afbeelding',
         unknownError: 'Onbekende fout',
         clipboardWriteError: 'Kon niet naar klembord schrijven',
-        updateBannerTitle: 'Notebook Navigator update beschikbaar',
-        updateBannerInstruction: 'Werk bij in Instellingen -> Community plugins',
         previous: 'Vorige', // Generic aria label for previous navigation (English: Previous)
         next: 'Volgende' // Generic aria label for next navigation (English: Next)
     },
@@ -810,7 +808,7 @@ export const STRINGS_NL = {
             toggleAllInFileMenu: 'Alles in bestandsmenu omschakelen',
             applyButton: 'Toepassen',
             emptyState: 'Geen eigenschapssleutels gevonden.'
-        },
+        }
     },
 
     // File system operations
@@ -2650,14 +2648,6 @@ export const STRINGS_NL = {
                 helpTooltip: 'Formaat met Moment',
                 momentLinkText: 'Moment-formaat',
                 help: 'Veelvoorkomende formaten:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Controleren op nieuwe versie bij opstarten',
-                desc: 'Controleert bij het opstarten op nieuwe plugin-releases en toont een melding wanneer een update beschikbaar is. Controles vinden hooguit één keer per dag plaats.'
-            },
-            startupDebugLogging: {
-                name: 'Debuglogboek bij opstarten',
-                desc: 'Schrijft opstartdiagnoses naar een Markdown-bestand met tijdstempel in de hoofdmap van de kluis en stopt nadat het opstarten is gestabiliseerd. Het bestand kan worden gesynchroniseerd en bestandspaden bevatten.'
             },
             cacheStatistics: {
                 localCache: 'Lokale cache',

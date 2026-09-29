@@ -43,8 +43,6 @@ export const STRINGS_UK = {
         featureImageAlt: 'Головне зображення', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Невідома помилка', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Не вдалося записати в буфер обміну',
-        updateBannerTitle: 'Доступне оновлення Notebook Navigator',
-        updateBannerInstruction: 'Оновіть у Налаштування -> Плагіни спільноти',
         previous: 'Назад', // Generic aria label for previous navigation (English: Previous)
         next: 'Вперед' // Generic aria label for next navigation (English: Next)
     },
@@ -806,7 +804,7 @@ export const STRINGS_UK = {
             toggleAllInFileMenu: 'Перемкнути все в меню файлу',
             applyButton: 'Застосувати',
             emptyState: 'Ключі властивостей не знайдено.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -2642,14 +2640,6 @@ export const STRINGS_UK = {
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment',
                 help: 'Поширені формати:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Перевіряти нову версію при запуску',
-                desc: 'Перевіряє нові релізи плагіна при запуску та показує сповіщення, коли доступне оновлення. Перевірки відбуваються не частіше одного разу на день.'
-            },
-            startupDebugLogging: {
-                name: 'Журнал налагодження запуску',
-                desc: 'Записує діагностику запуску у Markdown-файл із часовою позначкою в корені сховища, а потім зупиняється після стабілізації запуску. Файл може синхронізуватися та містити шляхи до файлів.'
             },
             cacheStatistics: {
                 localCache: 'Локальний кеш',

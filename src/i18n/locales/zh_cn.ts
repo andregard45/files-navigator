@@ -43,8 +43,6 @@ export const STRINGS_ZH_CN = {
         featureImageAlt: '特色图片', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '未知错误', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: '无法写入剪贴板',
-        updateBannerTitle: 'Notebook Navigator 有可用更新',
-        updateBannerInstruction: '在设置 -> 社区插件中更新',
         previous: '上一个', // Generic aria label for previous navigation (English: Previous)
         next: '下一个' // Generic aria label for next navigation (English: Next)
     },
@@ -798,7 +796,7 @@ export const STRINGS_ZH_CN = {
             toggleAllInFileMenu: '切换文件菜单中的全部',
             applyButton: '应用',
             emptyState: '未找到属性键。'
-        },
+        }
     },
 
     // File system operations
@@ -2626,14 +2624,6 @@ export const STRINGS_ZH_CN = {
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式',
                 help: '常用格式：\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: '启动时检查新版本',
-                desc: '启动时检查新的插件版本，当有可用更新时显示通知。检查最多每天一次。'
-            },
-            startupDebugLogging: {
-                name: '启动调试日志',
-                desc: '将启动诊断写入仓库根目录中带时间戳的 Markdown 文件，并在启动稳定后停止。该文件可能会同步，并且可能包含文件路径。'
             },
             cacheStatistics: {
                 localCache: '本地缓存',

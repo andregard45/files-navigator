@@ -43,8 +43,6 @@ export const STRINGS_ID = {
         featureImageAlt: 'Gambar unggulan',
         unknownError: 'Kesalahan tidak diketahui',
         clipboardWriteError: 'Tidak dapat menulis ke papan klip',
-        updateBannerTitle: 'Pembaruan Notebook Navigator tersedia',
-        updateBannerInstruction: 'Perbarui di Pengaturan -> Plugin komunitas',
         previous: 'Sebelumnya', // Generic aria label for previous navigation (English: Previous)
         next: 'Berikutnya' // Generic aria label for next navigation (English: Next)
     },
@@ -807,7 +805,7 @@ export const STRINGS_ID = {
             toggleAllInFileMenu: 'Alihkan semua di menu file',
             applyButton: 'Terapkan',
             emptyState: 'Tidak ditemukan kunci properti.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -2643,14 +2641,6 @@ export const STRINGS_ID = {
                 helpTooltip: 'Format menggunakan Moment',
                 momentLinkText: 'format Moment',
                 help: 'Format umum:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Periksa versi baru saat mulai',
-                desc: 'Memeriksa rilis plugin baru saat startup dan menampilkan notifikasi saat pembaruan tersedia. Pemeriksaan terjadi paling banyak sekali sehari.'
-            },
-            startupDebugLogging: {
-                name: 'Log debug saat startup',
-                desc: 'Menulis diagnostik startup ke file Markdown bertanda waktu di root vault, lalu berhenti setelah startup stabil. File dapat disinkronkan dan dapat menyertakan jalur file.'
             },
             cacheStatistics: {
                 localCache: 'Cache lokal',

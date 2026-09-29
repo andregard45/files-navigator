@@ -43,8 +43,6 @@ export const STRINGS_DE = {
         featureImageAlt: 'Feature-Bild', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Unbekannter Fehler', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Konnte nicht in Zwischenablage schreiben',
-        updateBannerTitle: 'Notebook Navigator-Update verfügbar',
-        updateBannerInstruction: 'In Einstellungen -> Externe Erweiterungen aktualisieren',
         previous: 'Zurück', // Generic aria label for previous navigation (English: Previous)
         next: 'Weiter' // Generic aria label for next navigation (English: Next)
     },
@@ -808,7 +806,7 @@ export const STRINGS_DE = {
             toggleAllInFileMenu: 'Alle im Dateimenü umschalten',
             applyButton: 'Anwenden',
             emptyState: 'Keine Eigenschaftsschlüssel gefunden.'
-        },
+        }
     },
 
     // File system operations
@@ -2651,14 +2649,6 @@ export const STRINGS_DE = {
                 helpTooltip: 'Format mit Moment',
                 momentLinkText: 'Moment-Format',
                 help: 'Häufige Formate:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Beim Start nach neuer Version suchen',
-                desc: 'Prüft beim Start auf neue Plugin-Versionen und zeigt eine Benachrichtigung an, wenn ein Update verfügbar ist. Überprüfungen erfolgen höchstens einmal täglich.'
-            },
-            startupDebugLogging: {
-                name: 'Start-Debugprotokollierung',
-                desc: 'Schreibt Startdiagnosen in eine Markdown-Datei mit Zeitstempel im Stammverzeichnis des Vaults und stoppt, nachdem der Start abgeschlossen ist. Die Datei kann synchronisiert werden und Dateipfade enthalten.'
             },
             cacheStatistics: {
                 localCache: 'Lokaler Cache',

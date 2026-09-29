@@ -43,8 +43,6 @@ export const STRINGS_RU = {
         featureImageAlt: 'Изображение-обложка', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Неизвестная ошибка', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Не удалось записать в буфер обмена',
-        updateBannerTitle: 'Доступно обновление Notebook Navigator',
-        updateBannerInstruction: 'Обновите в Настройки -> Сторонние плагины',
         previous: 'Назад', // Generic aria label for previous navigation (English: Previous)
         next: 'Вперёд' // Generic aria label for next navigation (English: Next)
     },
@@ -805,7 +803,7 @@ export const STRINGS_RU = {
             toggleAllInFileMenu: 'Переключить все в меню файла',
             applyButton: 'Применить',
             emptyState: 'Ключи свойств не найдены.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -2642,14 +2640,6 @@ export const STRINGS_RU = {
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment',
                 help: 'Распространённые форматы:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Проверять новую версию при запуске',
-                desc: 'Проверяет наличие новых релизов плагина при запуске и показывает уведомление, когда доступно обновление. Проверки происходят не чаще одного раза в день.'
-            },
-            startupDebugLogging: {
-                name: 'Журнал отладки запуска',
-                desc: 'Записывает диагностику запуска в Markdown-файл с временной меткой в корне хранилища, затем останавливается после стабилизации запуска. Файл может синхронизироваться и содержать пути к файлам.'
             },
             cacheStatistics: {
                 localCache: 'Локальный кэш',

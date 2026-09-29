@@ -43,8 +43,6 @@ export const STRINGS_PT_BR = {
         featureImageAlt: 'Imagem de destaque',
         unknownError: 'Erro desconhecido',
         clipboardWriteError: 'Não foi possível gravar na área de transferência',
-        updateBannerTitle: 'Atualização do Notebook Navigator disponível',
-        updateBannerInstruction: 'Atualize em Configurações -> Plugins não oficiais',
         previous: 'Anterior', // Generic aria label for previous navigation (English: Previous)
         next: 'Próximo' // Generic aria label for next navigation (English: Next)
     },
@@ -809,7 +807,7 @@ export const STRINGS_PT_BR = {
             toggleAllInFileMenu: 'Alternar todos no menu do arquivo',
             applyButton: 'Aplicar',
             emptyState: 'Nenhuma chave de propriedade encontrada.'
-        },
+        }
     },
 
     // File system operations
@@ -2651,14 +2649,6 @@ export const STRINGS_PT_BR = {
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment',
                 help: 'Formatos comuns:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Verificar nova versão ao iniciar',
-                desc: 'Verifica novas versões do plugin na inicialização e mostra uma notificação quando uma atualização está disponível. As verificações ocorrem no máximo uma vez por dia.'
-            },
-            startupDebugLogging: {
-                name: 'Registro de depuração na inicialização',
-                desc: 'Gravar diagnósticos de inicialização em um arquivo Markdown com carimbo de data/hora na raiz do cofre e parar depois que a inicialização se estabiliza. O arquivo pode ser sincronizado e pode incluir caminhos de arquivos.'
             },
             cacheStatistics: {
                 localCache: 'Cache local',

@@ -18,7 +18,6 @@
 
 import { STORAGE_KEYS } from '../types';
 import { localStorage } from '../utils/localStorage';
-import { recordStartupDiagnostic } from '../services/diagnostics/DebugLoggingService';
 import type { ContentProviderType, FileContentType } from '../interfaces/IContentProvider';
 import { isMarkdownPath } from '../utils/fileTypeUtils';
 import { DEFAULT_FEATURE_IMAGE_CACHE_MAX, FEATURE_IMAGE_STORE_NAME, FeatureImageBlobStore } from './FeatureImageBlobStore';
@@ -293,13 +292,6 @@ export class IndexedDBStorage {
         if (contentVersionUnknown) {
             rebuildReasons.push('contentVersionMissing');
         }
-        recordStartupDiagnostic('indexedDb.versionCheck', {
-            storedSchemaVersion,
-            storedContentVersion,
-            currentSchemaVersion,
-            currentContentVersion,
-            rebuildReasons
-        });
 
         // Only downgrade schema changes require database recreation; upgrades are handled via onupgradeneeded.
         if (schemaChanged) {
@@ -334,7 +326,6 @@ export class IndexedDBStorage {
                 console.error('Database open failed. Recreating database.', error);
             }
             this.pendingRebuildNotice = true;
-            recordStartupDiagnostic('indexedDb.open.recreate', { error });
             await this.deleteDatabase();
             await this.openDatabase(true);
         }
@@ -344,7 +335,6 @@ export class IndexedDBStorage {
             if (!this.db) throw new Error('Database not initialized');
             // Clear all data to force rebuild
             await this.clearStores(this.db);
-            recordStartupDiagnostic('indexedDb.rebuildContent', { reasons: rebuildReasons });
         }
 
         localStorage.set(STORAGE_KEYS.databaseSchemaVersionKey, currentSchemaVersion.toString());
@@ -399,7 +389,6 @@ export class IndexedDBStorage {
     }
 
     private async openDatabase(skipCacheLoad: boolean = false): Promise<void> {
-        const openStartMs = performance.now();
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(this.dbName, DB_SCHEMA_VERSION);
 
@@ -446,9 +435,6 @@ export class IndexedDBStorage {
                 // Initialize the cache with all data from IndexedDB
                 if (skipCacheLoad) {
                     this.cache.resetToEmpty();
-                    recordStartupDiagnostic('indexedDb.cacheHydration.skipped', {
-                        elapsedMs: Math.round(performance.now() - openStartMs)
-                    });
                 } else {
                     try {
                         const db = this.db;
@@ -457,14 +443,8 @@ export class IndexedDBStorage {
                             resolve();
                             return;
                         }
-                        const hydrationStartMs = performance.now();
                         await hydrateCacheFromMainStore({ db, cache: this.cache });
-                        recordStartupDiagnostic('indexedDb.cacheHydration.complete', {
-                            elapsedMs: Math.round(performance.now() - hydrationStartMs),
-                            fileCount: this.cache.getFileCount()
-                        });
                     } catch (error: unknown) {
-                        recordStartupDiagnostic('indexedDb.cacheHydration.failed', { error });
                         console.error('[DB Cache] Failed to initialize cache:', error);
                         console.error(
                             '[DB Cache] IndexedDB cache hydration failed. Run Notebook Navigator: Rebuild cache to reset the database.'

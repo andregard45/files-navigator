@@ -21,9 +21,7 @@ import { LIMITS } from '../../../constants/limits';
 import { isPromiseLike } from '../../../utils/async';
 import { isRecord } from '../../../utils/typeGuards';
 import { createRenderLimiter } from '../thumbnail/thumbnailRuntimeUtils';
-import { clearPdfProcessingInProgress, markPdfProcessingInProgress } from './pdfCrashDiagnostics';
 import { preflightPdfCoverThumbnailStageA, preflightPdfCoverThumbnailStageB, type PdfByteScanMetrics } from './pdfPreflight';
-import { isDebugLoggingEnabled, recordDebugReport } from '../../diagnostics/DebugLoggingService';
 
 // Options for rendering a PDF cover page thumbnail
 export interface PdfCoverThumbnailOptions {
@@ -82,52 +80,6 @@ const MOBILE_PDF_OPERATOR_LIST_TIMEOUT_MS = LIMITS.thumbnails.pdf.preflight.oper
 const MOBILE_PDF_PREFLIGHT_MULTIPLIERS = LIMITS.thumbnails.pdf.preflight.multipliers;
 const MOBILE_PDF_MAX_DECODED_IMAGE_PIXELS = LIMITS.thumbnails.featureImage.maxFallbackPixels.mobile;
 
-interface PdfThumbnailTrace {
-    path: string;
-    startedMs: number;
-    lastStageMs: number;
-    stageTimings: Record<string, number>;
-    emitted: boolean;
-}
-
-function createPdfThumbnailTrace(path: string): PdfThumbnailTrace | null {
-    if (!isDebugLoggingEnabled()) {
-        return null;
-    }
-
-    const startedMs = performance.now();
-    return {
-        path,
-        startedMs,
-        lastStageMs: startedMs,
-        stageTimings: {},
-        emitted: false
-    };
-}
-
-function markPdfTraceStage(trace: PdfThumbnailTrace | null, stage: string): void {
-    if (!trace) {
-        return;
-    }
-
-    const currentMs = performance.now();
-    trace.stageTimings[stage] = Math.round(currentMs - trace.lastStageMs);
-    trace.lastStageMs = currentMs;
-}
-
-function finishPdfTrace(trace: PdfThumbnailTrace | null, details: Record<string, unknown>): void {
-    if (!trace || trace.emitted) {
-        return;
-    }
-
-    trace.emitted = true;
-    recordDebugReport('PDF thumbnail trace', {
-        path: trace.path,
-        elapsedMs: Math.round(performance.now() - trace.startedMs),
-        stageTimings: trace.stageTimings,
-        ...details
-    });
-}
 
 function clearWorkerIdleTimer(): void {
     if (workerIdleTimerId === null) {
@@ -336,23 +288,18 @@ export async function renderPdfCoverThumbnail(app: App, pdfFile: TFile, options:
         return null;
     }
 
-    const trace = createPdfThumbnailTrace(pdfFile.path);
     clearWorkerIdleTimer();
     const release = await renderLimiter.acquire();
-    markPdfTraceStage(trace, 'renderSlotWait');
-    const pdfProcessingDiagnosticHandle = markPdfProcessingInProgress(pdfFile.path);
 
     let doc: PdfDocument | null = null;
     let page: PdfPage | null = null;
     let preflightScan: PdfByteScanMetrics | null = null;
-    let tracePreflight: Record<string, unknown> | null = null;
 
     try {
         if (Platform.isMobile) {
             let buffer: ArrayBuffer;
             try {
                 buffer = await app.vault.adapter.readBinary(pdfFile.path);
-                markPdfTraceStage(trace, 'readBinary');
             } catch (error) {
                 const scan: PdfByteScanMetrics = {
                     sumImagePixels: 0,
@@ -363,16 +310,6 @@ export async function renderPdfCoverThumbnail(app: App, pdfFile: TFile, options:
                     hasTransparencyGroup: false,
                     uncertain: true
                 };
-                tracePreflight = {
-                    scan,
-                    budgetBytes: MOBILE_PDF_PREFLIGHT_BUDGET_BYTES
-                };
-                finishPdfTrace(trace, {
-                    result: 'skipped',
-                    skipReason: 'stageA.readBinaryFailed',
-                    preflight: tracePreflight,
-                    error
-                });
                 return null;
             }
 
@@ -381,34 +318,18 @@ export async function renderPdfCoverThumbnail(app: App, pdfFile: TFile, options:
                 budgetBytes: MOBILE_PDF_PREFLIGHT_BUDGET_BYTES,
                 maxDecodedImagePixels: MOBILE_PDF_MAX_DECODED_IMAGE_PIXELS
             });
-            markPdfTraceStage(trace, 'preflightStageA');
 
             preflightScan = stageA.metrics.scan;
-            tracePreflight = {
-                stage: 'A',
-                scan: stageA.metrics.scan,
-                budgetBytes: stageA.metrics.budgetBytes,
-                estimatedBytes: stageA.metrics.stageAEstimatedBytes ?? null
-            };
-
             if (stageA.decision === 'skip') {
-                finishPdfTrace(trace, {
-                    result: 'skipped',
-                    skipReason: stageA.reason,
-                    preflight: tracePreflight
-                });
                 return null;
             }
         }
 
         const pdfjs: unknown = await loadPdfJs();
-        markPdfTraceStage(trace, 'loadPdfJs');
         const errorsVerbosityLevel = getPdfJsErrorsVerbosityLevel(pdfjs);
         const worker = await getSharedWorkerInstance(pdfjs, errorsVerbosityLevel);
-        markPdfTraceStage(trace, 'worker');
 
         if (!isPdfJsLibrary(pdfjs)) {
-            finishPdfTrace(trace, { result: 'failed', stage: 'pdfjs.invalidLibrary' });
             return null;
         }
 
@@ -430,26 +351,20 @@ export async function renderPdfCoverThumbnail(app: App, pdfFile: TFile, options:
                 ...documentParams
             });
             if (!isPdfDocumentLoadingTask(task)) {
-                finishPdfTrace(trace, { result: 'failed', stage: 'pdfjs.invalidLoadingTask' });
                 return null;
             }
 
             const loadedDoc = await task.promise;
-            markPdfTraceStage(trace, 'loadDocument');
             if (!isPdfDocument(loadedDoc)) {
-                finishPdfTrace(trace, { result: 'failed', stage: 'pdfjs.invalidDocument' });
                 return null;
             }
             doc = loadedDoc;
         } catch (error) {
-            finishPdfTrace(trace, { result: 'failed', stage: 'pdfjs.loadDocument', error });
             return null;
         }
 
         const firstPage = await doc.getPage(1);
-        markPdfTraceStage(trace, 'getPage');
         if (!isPdfPage(firstPage)) {
-            finishPdfTrace(trace, { result: 'failed', stage: 'pdfjs.invalidPage' });
             return null;
         }
         page = firstPage;
@@ -473,30 +388,7 @@ export async function renderPdfCoverThumbnail(app: App, pdfFile: TFile, options:
                 maxDecodedImagePixels: MOBILE_PDF_MAX_DECODED_IMAGE_PIXELS,
                 multipliers: MOBILE_PDF_PREFLIGHT_MULTIPLIERS
             });
-            markPdfTraceStage(trace, 'preflightStageB');
-            tracePreflight = {
-                stage: 'B',
-                scan: stageB.metrics.scan,
-                budgetBytes: stageB.metrics.budgetBytes,
-                paintOps: stageB.metrics.operators?.paintOps ?? null,
-                xObjectPaintOps: stageB.metrics.operators?.xObjectPaintOps ?? null,
-                inlinePaintOps: stageB.metrics.operators?.inlinePaintOps ?? null,
-                maskPaintOps: stageB.metrics.operators?.maskPaintOps ?? null,
-                transparencyGroupOps: stageB.metrics.operators?.transparencyGroupOps ?? null,
-                uniqueXObjectIds: stageB.metrics.operators?.uniqueXObjectIds ?? null,
-                maxInlineImagePixels: stageB.metrics.operators?.maxInlineImagePixels ?? null,
-                operatorListLength: stageB.metrics.operators?.operatorListLength ?? null,
-                operatorListTimedOut: stageB.metrics.operators?.timedOut ?? null,
-                pagePixels: stageB.metrics.pagePixels ?? null,
-                estimatedBytes: stageB.metrics.estimatedBytes ?? null
-            };
-
             if (stageB.decision === 'skip') {
-                finishPdfTrace(trace, {
-                    result: 'skipped',
-                    skipReason: stageB.reason,
-                    preflight: tracePreflight
-                });
                 return null;
             }
         }
@@ -509,50 +401,23 @@ export async function renderPdfCoverThumbnail(app: App, pdfFile: TFile, options:
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
-            finishPdfTrace(trace, { result: 'failed', stage: 'canvas.context' });
             return null;
         }
 
         const renderTask = firstPage.render({ canvasContext: ctx, canvas, viewport });
 
         await renderTask.promise;
-        markPdfTraceStage(trace, 'renderPage');
 
         const blob = await canvasToBlob(canvas, options.mimeType, options.quality);
-        markPdfTraceStage(trace, 'canvasToBlob');
         if (blob) {
-            finishPdfTrace(trace, {
-                result: 'rendered',
-                mimeType: blob.type,
-                size: blob.size,
-                width: canvas.width,
-                height: canvas.height,
-                ...(tracePreflight ? { preflight: tracePreflight } : {})
-            });
             return blob;
         }
 
         const fallbackBlob = await canvasToBlob(canvas, 'image/png');
-        markPdfTraceStage(trace, 'canvasToPngBlob');
-        finishPdfTrace(
-            trace,
-            fallbackBlob
-                ? {
-                      result: 'rendered',
-                      mimeType: fallbackBlob.type,
-                      size: fallbackBlob.size,
-                      ...(tracePreflight ? { preflight: tracePreflight } : {})
-                  }
-                : { result: 'failed', stage: 'canvasToBlob' }
-        );
         return fallbackBlob;
     } catch (error) {
-        finishPdfTrace(trace, { result: 'failed', stage: 'exception', error });
         return null;
     } finally {
-        finishPdfTrace(trace, { result: 'finishedWithoutResult' });
-        // PDF_CRASH_DIAGNOSTICS: normal exits clear the active PDF marker.
-        clearPdfProcessingInProgress(pdfProcessingDiagnosticHandle);
 
         try {
             page?.cleanup?.();

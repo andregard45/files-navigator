@@ -43,8 +43,6 @@ export const STRINGS_PT = {
         featureImageAlt: 'Imagem de destaque', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Erro desconhecido', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Não foi possível escrever na área de transferência',
-        updateBannerTitle: 'Atualização do Notebook Navigator disponível',
-        updateBannerInstruction: 'Atualize em Definições -> Plugins da comunidade',
         previous: 'Anterior', // Generic aria label for previous navigation (English: Previous)
         next: 'Seguinte' // Generic aria label for next navigation (English: Next)
     },
@@ -807,7 +805,7 @@ export const STRINGS_PT = {
             toggleAllInFileMenu: 'Alternar todos no menu do ficheiro',
             applyButton: 'Aplicar',
             emptyState: 'Nenhuma chave de propriedade encontrada.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -2648,14 +2646,6 @@ export const STRINGS_PT = {
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment',
                 help: 'Formatos comuns:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Verificar nova versão ao iniciar',
-                desc: 'Verifica novos lançamentos do plugin ao iniciar e mostra uma notificação quando uma atualização está disponível. As verificações ocorrem no máximo uma vez por dia.'
-            },
-            startupDebugLogging: {
-                name: 'Registo de depuração no arranque',
-                desc: 'Escrever diagnósticos de arranque num ficheiro Markdown com carimbo de data/hora na raiz do cofre e parar depois de o arranque estabilizar. O ficheiro pode ser sincronizado e pode incluir caminhos de ficheiros.'
             },
             cacheStatistics: {
                 localCache: 'Cache local',

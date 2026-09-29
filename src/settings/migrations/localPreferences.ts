@@ -162,40 +162,6 @@ function parseCompactItemHeight(value: unknown): number | null {
 }
 
 /**
- * Migrates the release check timestamp from synced settings to vault-local storage.
- * Removes the legacy synced release fields from persisted settings.
- */
-export function migrateReleaseCheckState(params: {
-    settings: NotebookNavigatorSettings;
-    storedData: Record<string, unknown> | null;
-    keys: LocalStorageKeys;
-}): boolean {
-    const { settings, storedData, keys } = params;
-
-    const storedTimestamp =
-        typeof storedData?.['lastReleaseCheckAt'] === 'number' && Number.isFinite(storedData.lastReleaseCheckAt)
-            ? storedData.lastReleaseCheckAt
-            : null;
-
-    const localTimestamp = localStorage.get<unknown>(keys.releaseCheckTimestampKey);
-
-    // Prefer local values, falling back to legacy synced values if local storage is unset.
-    const resolvedTimestamp =
-        typeof localTimestamp === 'number' && Number.isFinite(localTimestamp) ? localTimestamp : (storedTimestamp ?? null);
-
-    // Write back only if the resolved value differs from the stored local value.
-    if (resolvedTimestamp && resolvedTimestamp !== localTimestamp) {
-        localStorage.set(keys.releaseCheckTimestampKey, resolvedTimestamp);
-    }
-
-    delete (settings as unknown as Record<string, unknown>).lastReleaseCheckAt;
-    delete (settings as unknown as Record<string, unknown>).latestKnownRelease;
-
-    // Signals that synced fields existed and should be cleaned up via getPersistableSettings().
-    return Boolean(storedData && ('lastReleaseCheckAt' in storedData || 'latestKnownRelease' in storedData));
-}
-
-/**
  * Migrates pinned-section collapse state from synced settings to vault-local storage.
  */
 export function migrateCollapsedPinnedContexts(params: {

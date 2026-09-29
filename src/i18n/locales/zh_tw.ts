@@ -43,8 +43,6 @@ export const STRINGS_ZH_TW = {
         featureImageAlt: '特色圖片',
         unknownError: '未知錯誤',
         clipboardWriteError: '無法寫入剪貼簿',
-        updateBannerTitle: 'Notebook Navigator 有可用更新',
-        updateBannerInstruction: '在設定 -> 社群外掛程式中更新',
         previous: '上一個', // Generic aria label for previous navigation (English: Previous)
         next: '下一個' // Generic aria label for next navigation (English: Next)
     },
@@ -799,7 +797,7 @@ export const STRINGS_ZH_TW = {
             toggleAllInFileMenu: '切換檔案選單中的全部',
             applyButton: '套用',
             emptyState: '未找到屬性鍵。'
-        },
+        }
     },
 
     // File system operations
@@ -2626,14 +2624,6 @@ export const STRINGS_ZH_TW = {
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式',
                 help: '常用格式：\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: '啟動時檢查新版本',
-                desc: '啟動時檢查新的外掛程式版本，當有可用更新時顯示通知。檢查最多每天一次。'
-            },
-            startupDebugLogging: {
-                name: '啟動偵錯記錄',
-                desc: '將啟動診斷寫入儲存庫根目錄中含時間戳的 Markdown 檔案，並在啟動穩定後停止。該檔案可能會同步，且可能包含檔案路徑。'
             },
             cacheStatistics: {
                 localCache: '本機快取',

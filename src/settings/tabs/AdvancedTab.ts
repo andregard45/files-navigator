@@ -28,22 +28,11 @@ import { isDualPaneSupported } from '../../utils/paneLayout';
 import { localStorage } from '../../utils/localStorage';
 import { runAsyncAction } from '../../utils/async';
 import { showNotice } from '../../utils/noticeUtils';
-import { createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
-import { getNotSyncedSettingName } from '../syncModeToggle';
+import { createGroupDefinition, createRenderDefinition } from '../nativeSettingControls';
 
 /** Builds native 1.13 setting definitions for advanced settings. */
 export function createAdvancedSettingDefinitions(context: SettingsTabContext): SettingDefinitionItem[] {
     const generalItems: NonNullable<SettingDefinitionGroup['items']> = [
-        createToggleDefinition('checkForUpdatesOnStart', {
-            name: strings.settings.items.checkForNewVersionOnStart.name,
-            desc: strings.settings.items.checkForNewVersionOnStart.desc
-        }),
-        createRenderDefinition({
-            name: getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name),
-            desc: strings.settings.items.startupDebugLogging.desc,
-            aliases: [strings.settings.items.startupDebugLogging.name],
-            render: setting => renderDebugLoggingSetting(setting, context)
-        }),
         createRenderDefinition({
             name: strings.settings.items.importAndExportSettings.name,
             desc: strings.settings.items.importAndExportSettings.desc,
@@ -130,19 +119,6 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         createGroupDefinition(strings.settings.pages.advanced.groups.maintenance, maintenanceItems),
         createGroupDefinition(strings.settings.pages.advanced.groups.resetSettings, resetItems)
     ];
-}
-
-function renderDebugLoggingSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name))
-        .setDesc(strings.settings.items.startupDebugLogging.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.isDebugLoggingEnabled()).onChange(value => {
-                plugin.setDebugLoggingEnabled(value);
-            })
-        );
 }
 
 function renderResetAllSettingsSetting(setting: Setting, context: SettingsTabContext): void {

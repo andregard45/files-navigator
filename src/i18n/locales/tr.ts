@@ -43,8 +43,6 @@ export const STRINGS_TR = {
         featureImageAlt: 'Öne çıkan görsel', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Bilinmeyen hata', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Panoya yazılamadı',
-        updateBannerTitle: 'Notebook Navigator güncellemesi mevcut',
-        updateBannerInstruction: 'Ayarlar -> Topluluk eklentileri bölümünden güncelleyin',
         previous: 'Önceki', // Generic aria label for previous navigation (English: Previous)
         next: 'Sonraki' // Generic aria label for next navigation (English: Next)
     },
@@ -806,7 +804,7 @@ export const STRINGS_TR = {
             toggleAllInFileMenu: 'Dosya menüsünde tümünü değiştir',
             applyButton: 'Uygula',
             emptyState: 'Özellik anahtarı bulunamadı.'
-        },
+        }
     },
     // File system operations
     fileSystem: {
@@ -2641,14 +2639,6 @@ export const STRINGS_TR = {
                 helpTooltip: 'Moment formatı',
                 momentLinkText: 'Moment formatı',
                 help: 'Yaygın formatlar:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
-            },
-            checkForNewVersionOnStart: {
-                name: 'Başlangıçta yeni sürüm kontrolü',
-                desc: 'Başlangıçta yeni eklenti sürümlerini kontrol eder ve güncelleme mevcut olduğunda bildirim gösterir. Kontroller günde en fazla bir kez yapılır.'
-            },
-            startupDebugLogging: {
-                name: 'Başlangıç hata ayıklama günlüğü',
-                desc: 'Başlangıç tanılarını kasanın kökünde zaman damgalı bir Markdown dosyasına yazar ve başlangıç kararlı hale geldikten sonra durur. Dosya eşitlenebilir ve dosya yolları içerebilir.'
             },
             cacheStatistics: {
                 localCache: 'Yerel önbellek',

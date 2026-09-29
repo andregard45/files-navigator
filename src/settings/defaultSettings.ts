@@ -236,9 +236,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     // Icon packs tab
     externalIconProviders: sanitizeRecord<boolean>(undefined),
 
-    // Advanced tab
-    checkForUpdatesOnStart: true,
-
     // Navigation pane tab - Appearance
     pinNavigationBanner: true,
     showNoteCount: true,

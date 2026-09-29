@@ -23,7 +23,6 @@ import { FileData } from '../../storage/IndexedDBStorage';
 import { getDBInstance, isShutdownInProgress } from '../../storage/fileOperations';
 import { getProviderProcessedMtimeField } from '../../storage/providerMtime';
 import { runAsyncAction } from '../../utils/async';
-import { recordContentProviderBatch } from '../diagnostics/DebugLoggingService';
 import { ContentReadCache } from './ContentReadCache';
 import { LIMITS } from '../../constants/limits';
 
@@ -464,13 +463,6 @@ export abstract class BaseContentProvider implements IContentProvider {
                     });
                 }
             }
-            recordContentProviderBatch({
-                provider: type,
-                queued: batch.length,
-                active: activeJobs.length,
-                contentUpdates: updates.length,
-                processedMtimeUpdates: processedMtimeUpdates.length
-            });
         } catch (error: unknown) {
             // Check if error is an abort operation (user-initiated cancellation)
             const isAbortError = error instanceof DOMException && error.name === 'AbortError';
