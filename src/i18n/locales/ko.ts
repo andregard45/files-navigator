@@ -884,10 +884,6 @@ export const STRINGS_KO = {
             propertySetOnNotes: '{count}개 노트의 속성을 업데이트했습니다',
             manualSortPropertyRemovedFromNote: '1개 노트에서 정렬 속성을 제거했습니다',
             manualSortPropertyRemovedFromNotes: '{count}개 노트에서 정렬 속성을 제거했습니다',
-            iconPackDownloaded: '{provider} 다운로드됨',
-            iconPackUpdated: '{provider} 업데이트됨 ({version})',
-            iconPackRemoved: '{provider} 제거됨',
-            iconPackLoadFailed: '{provider} 로드에 실패했습니다',
             hiddenFileReveal: '파일이 숨겨져 있습니다. 표시하려면 "숨겨진 항목 표시"를 활성화하세요'
         },
         confirmations: {
@@ -1156,10 +1152,6 @@ export const STRINGS_KO = {
                     rightSidebar: '오른쪽 사이드바'
                 }
             },
-            iconPacks: {
-                label: '아이콘 팩',
-                description: '인터페이스 아이콘, 파일 아이콘 및 아이콘 팩 관리.'
-            },
             advanced: {
                 label: '고급',
                 description: '진단, 메타데이터 정리, 가져오기/내보내기 및 초기화.',
@@ -1410,8 +1402,7 @@ export const STRINGS_KO = {
                 desc: '기본 제공 아이콘 또는 아이콘 팩 프리셋을 선택합니다. 사용자 지정 확장자 규칙은 이 프리셋보다 우선합니다.',
                 options: {
                     builtIn: '기본 제공 아이콘'
-                },
-                notInstalledWarning: '이 아이콘 팩이 설치되어 있지 않습니다. 대신 기본 제공 아이콘이 표시됩니다.'
+                }
             },
             fileTypeIconMap: {
                 name: '파일 유형 아이콘 맵',
@@ -2571,18 +2562,6 @@ export const STRINGS_KO = {
                 error: '캐시 다시 빌드 실패',
                 indexingTitle: '보관함을 인덱싱하는 중...',
                 progress: 'Notebook Navigator 캐시를 업데이트하는 중.'
-            },
-            iconPackManagement: {
-                downloadButton: '다운로드',
-                downloadingLabel: '다운로드 중...',
-                removeButton: '제거',
-                statusInstalled: '다운로드됨 (버전 {version})',
-                statusNotInstalled: '다운로드되지 않음',
-                versionUnknown: '알 수 없음',
-                downloadFailed: '{name} 다운로드에 실패했습니다. 연결을 확인하고 다시 시도해주세요.',
-                removeFailed: '{name} 제거에 실패했습니다.',
-                infoNote:
-                    '다운로드된 아이콘 팩은 기기 간 설치 상태를 동기화합니다. 아이콘 팩은 각 기기의 로컬 데이터베이스에 남아 있습니다. 동기화는 다운로드 또는 제거 여부만 추적합니다. 아이콘 팩은 Notebook Navigator 저장소에서 다운로드됩니다 (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'frontmatter 메타데이터 사용',

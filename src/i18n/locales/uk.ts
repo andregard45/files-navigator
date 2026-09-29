@@ -885,10 +885,6 @@ export const STRINGS_UK = {
             propertySetOnNotes: 'Властивість оновлено в {count} нотатках',
             manualSortPropertyRemovedFromNote: 'Вилучено властивість сортування з 1 нотатки',
             manualSortPropertyRemovedFromNotes: 'Вилучено властивість сортування з {count} нотаток',
-            iconPackDownloaded: '{provider} завантажено',
-            iconPackUpdated: '{provider} оновлено ({version})',
-            iconPackRemoved: '{provider} вилучено',
-            iconPackLoadFailed: 'Не вдалося завантажити {provider}',
             hiddenFileReveal: 'Файл прихований. Увімкніть «Показати приховані елементи» для відображення'
         },
         confirmations: {
@@ -1159,10 +1155,6 @@ export const STRINGS_UK = {
                     rightSidebar: 'Права бічна панель'
                 }
             },
-            iconPacks: {
-                label: 'Пакети іконок',
-                description: 'Іконки інтерфейсу, іконки файлів і керування пакетами іконок.'
-            },
             advanced: {
                 label: 'Розширені',
                 description: 'Діагностика, очищення метаданих, імпорт/експорт і скидання.',
@@ -1413,8 +1405,7 @@ export const STRINGS_UK = {
                 desc: 'Виберіть вбудовані іконки або попередній набір пакета іконок. Користувацькі правила розширень замінюють цей попередній набір.',
                 options: {
                     builtIn: 'Вбудовані іконки'
-                },
-                notInstalledWarning: 'Цей пакет іконок не встановлено. Натомість відображаються вбудовані іконки.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Зіставлення типів та іконок',
@@ -2577,18 +2568,6 @@ export const STRINGS_UK = {
                 error: 'Не вдалося перебудувати кеш',
                 indexingTitle: 'Індексація сховища...',
                 progress: 'Оновлення кешу Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Завантажити',
-                downloadingLabel: 'Завантаження...',
-                removeButton: 'Вилучити',
-                statusInstalled: 'Завантажено (версія {version})',
-                statusNotInstalled: 'Не завантажено',
-                versionUnknown: 'невідома',
-                downloadFailed: "Не вдалося завантажити {name}. Перевірте з'єднання та спробуйте знову.",
-                removeFailed: 'Не вдалося вилучити {name}.',
-                infoNote:
-                    'Завантажені пакети іконок синхронізують стан встановлення між пристроями. Пакети іконок залишаються в локальній базі даних на кожному пристрої; синхронізація лише відстежує, чи завантажувати або вилучати їх. Пакети іконок завантажуються з репозиторію Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Використовувати метадані frontmatter',

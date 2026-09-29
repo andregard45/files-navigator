@@ -214,25 +214,6 @@ To keep intentional dynamic CSS usage, add an allowlist comment:
 /* unused-css keep nn-dynamic-class --nn-dynamic-variable */
 ```
 
-## update-icon-packs.sh
-
-Runs the icon pack updater from `icon-assets/scripts/update-icon-packs.ts`.
-
-**Usage:**
-
-```bash
-./scripts/update-icon-packs.sh                     # Update all packs
-./scripts/update-icon-packs.sh --check-only        # Check for updates without applying them
-./scripts/update-icon-packs.sh --force             # Force updates
-./scripts/update-icon-packs.sh --generate-only     # Regenerate bundled manifest files from local icon-assets
-./scripts/update-icon-packs.sh phosphor --force    # Update a specific pack
-```
-
-**Features:**
-
-- Uses `npx tsx` to run the TypeScript updater
-- Supports updating all packs or selected pack IDs
-- Supports check-only, forced update, and local manifest regeneration modes
 
 ## build-languages.mjs
 

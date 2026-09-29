@@ -22,4 +22,3 @@ export const NOTEBOOK_NAVIGATOR_RELEASE_CHECK_URL = `https://api.github.com/repo
 
 
 export const MOMENT_FORMAT_DOCS_URL = 'https://momentjs.com/docs/#/displaying/format/';
-export const ICON_ASSETS_REPOSITORY_URL = `https://github.com/${NOTEBOOK_NAVIGATOR_REPOSITORY}/tree/main/icon-assets`;

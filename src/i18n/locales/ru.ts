@@ -885,10 +885,6 @@ export const STRINGS_RU = {
             propertySetOnNotes: 'Свойство обновлено. Изменено заметок: {count}',
             manualSortPropertyRemovedFromNote: 'Свойство сортировки удалено из 1 заметки',
             manualSortPropertyRemovedFromNotes: 'Свойство сортировки удалено. Изменено заметок: {count}',
-            iconPackDownloaded: '{provider} загружен',
-            iconPackUpdated: '{provider} обновлён ({version})',
-            iconPackRemoved: '{provider} удалён',
-            iconPackLoadFailed: 'Не удалось загрузить {provider}',
             hiddenFileReveal: 'Файл скрыт. Включите «Показать скрытые элементы» для отображения'
         },
         confirmations: {
@@ -1158,10 +1154,6 @@ export const STRINGS_RU = {
                     rightSidebar: 'Правая боковая панель'
                 }
             },
-            iconPacks: {
-                label: 'Наборы иконок',
-                description: 'Иконки интерфейса, иконки файлов и управление наборами иконок.'
-            },
             advanced: {
                 label: 'Расширенные',
                 description: 'Диагностика, очистка метаданных, импорт/экспорт и сброс.',
@@ -1412,8 +1404,7 @@ export const STRINGS_RU = {
                 desc: 'Выберите встроенные иконки или предустановку пакета иконок. Пользовательские правила расширений переопределяют эту предустановку.',
                 options: {
                     builtIn: 'Встроенные иконки'
-                },
-                notInstalledWarning: 'Этот пакет иконок не установлен. Вместо него отображаются встроенные иконки.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Сопоставление типов и иконок',
@@ -2577,18 +2568,6 @@ export const STRINGS_RU = {
                 error: 'Не удалось пересобрать кэш',
                 indexingTitle: 'Индексирование хранилища...',
                 progress: 'Обновление кэша Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Скачать',
-                downloadingLabel: 'Загрузка...',
-                removeButton: 'Удалить',
-                statusInstalled: 'Загружено (версия {version})',
-                statusNotInstalled: 'Не загружено',
-                versionUnknown: 'неизвестно',
-                downloadFailed: 'Не удалось скачать {name}. Проверьте подключение и попробуйте снова.',
-                removeFailed: 'Не удалось удалить {name}.',
-                infoNote:
-                    'Загруженные наборы иконок синхронизируют состояние установки между устройствами. Наборы иконок остаются в локальной базе данных на каждом устройстве; синхронизация отслеживает только необходимость загрузки или удаления. Наборы иконок загружаются из репозитория Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Использовать метаданные frontmatter',

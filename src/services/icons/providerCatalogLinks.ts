@@ -16,8 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { EXTERNAL_ICON_PROVIDERS, type ExternalIconProviderId } from './external/providerRegistry';
-
 const BUILTIN_PROVIDER_LINKS: Record<string, string> = {
     lucide: 'https://lucide.dev/icons/'
 };
@@ -30,11 +28,5 @@ export function getProviderCatalogUrl(providerId: string): string | null {
         return null;
     }
 
-    const builtInUrl = BUILTIN_PROVIDER_LINKS[providerId];
-    if (builtInUrl) {
-        return builtInUrl;
-    }
-
-    const externalProvider = EXTERNAL_ICON_PROVIDERS[providerId as ExternalIconProviderId];
-    return externalProvider?.catalogUrl ?? null;
+    return BUILTIN_PROVIDER_LINKS[providerId] ?? null;
 }

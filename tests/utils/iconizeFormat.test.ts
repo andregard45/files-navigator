@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 import {
     convertIconizeToIconId,
@@ -32,35 +30,6 @@ import {
 } from '../../src/utils/iconizeFormat';
 
 const ENGLAND_FLAG_TAG_SEQUENCE = '\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}';
-const EXTERNAL_PROVIDER_METADATA: Array<{ providerId: string; relativePath: string }> = [
-    { providerId: 'bootstrap-icons', relativePath: 'icon-assets/bootstrap-icons/bootstrap-icons.json' },
-    { providerId: 'fontawesome-solid', relativePath: 'icon-assets/fontawesome/icons-solid.json' },
-    { providerId: 'material-icons', relativePath: 'icon-assets/material-icons/icons.json' },
-    { providerId: 'phosphor', relativePath: 'icon-assets/phosphor/icons.json' },
-    { providerId: 'rpg-awesome', relativePath: 'icon-assets/rpg-awesome/icons.json' },
-    { providerId: 'simple-icons', relativePath: 'icon-assets/simple-icons/simple-icons.json' }
-];
-
-function readProviderIconIds(relativePath: string): string[] {
-    const absolutePath = path.resolve(process.cwd(), relativePath);
-    const raw = JSON.parse(readFileSync(absolutePath, 'utf8')) as unknown;
-
-    if (Array.isArray(raw)) {
-        return raw.flatMap(entry => {
-            if (!entry || typeof entry !== 'object' || typeof (entry as { id?: unknown }).id !== 'string') {
-                return [];
-            }
-
-            return [(entry as { id: string }).id];
-        });
-    }
-
-    if (!raw || typeof raw !== 'object') {
-        return [];
-    }
-
-    return Object.keys(raw);
-}
 
 describe('convertIconizeToIconId', () => {
     it('converts lucide identifiers without provider prefix', () => {
@@ -111,15 +80,21 @@ describe('convertIconizeToIconId', () => {
         expect(convertIconizeToIconId('📝')).toBeNull();
     });
 
-    it('round-trips bundled external provider identifiers through Iconize format', () => {
-        EXTERNAL_PROVIDER_METADATA.forEach(({ providerId, relativePath }) => {
-            readProviderIconIds(relativePath).forEach(identifier => {
-                const canonical = `${providerId}:${identifier}`;
-                const iconize = convertIconIdToIconize(canonical);
+    it('round-trips representative external provider identifiers through Iconize format', () => {
+        // Icon pack assets were removed from the repository; verify the parser
+        // (kept for backward compatibility) round-trips known identifiers.
+        const samples: Array<[string, string]> = [
+            ['bootstrap-icons:house-fill', 'BiHouseFill'],
+            ['fontawesome-solid:user', 'FasUser'],
+            ['material-icons:build_circle', 'MiBuildCircle'],
+            ['phosphor:apple-logo', 'PhAppleLogo'],
+            ['rpg-awesome:harpoon-trident', 'RaHarpoonTrident'],
+            ['simple-icons:github', 'SiGithub']
+        ];
 
-                expect(iconize, canonical).not.toBeNull();
-                expect(convertIconizeToIconId(iconize as string), canonical).toBe(canonical);
-            });
+        samples.forEach(([canonical, iconize]) => {
+            expect(convertIconIdToIconize(canonical)).toBe(iconize);
+            expect(convertIconizeToIconId(iconize)).toBe(canonical);
         });
     });
 });
@@ -267,17 +242,6 @@ describe('frontmatter icon helpers', () => {
         const canonical = `emoji:${ENGLAND_FLAG_TAG_SEQUENCE}`;
         expect(serializeIconForFrontmatter(canonical)).toBe(ENGLAND_FLAG_TAG_SEQUENCE);
         expect(deserializeIconFromFrontmatterCompat(canonical)).toBe(canonical);
-    });
-});
-
-describe('icon map examples', () => {
-    it('uses icons that exist in the bundled Phosphor metadata', () => {
-        const phosphorIconIds = new Set(readProviderIconIds('icon-assets/phosphor/icons.json'));
-
-        expect(phosphorIconIds.has('calendar')).toBe(true);
-        expect(phosphorIconIds.has('receipt')).toBe(true);
-        expect(phosphorIconIds.has('file-code')).toBe(true);
-        expect(phosphorIconIds.has('file-pdf')).toBe(true);
     });
 });
 

@@ -883,10 +883,6 @@ export const STRINGS_AR = {
             propertySetOnNotes: 'تم تحديث الخاصية في {count} من الملاحظات',
             manualSortPropertyRemovedFromNote: 'تمت إزالة خاصية الفرز من ملاحظة واحدة',
             manualSortPropertyRemovedFromNotes: 'تمت إزالة خاصية الفرز من {count} من الملاحظات',
-            iconPackDownloaded: 'تم تنزيل {provider}',
-            iconPackUpdated: 'تم تحديث {provider} ({version})',
-            iconPackRemoved: 'تمت إزالة {provider}',
-            iconPackLoadFailed: 'فشل تحميل {provider}',
             hiddenFileReveal: 'الملف مخفي. قم بتمكين "إظهار العناصر المخفية" لعرضه'
         },
         confirmations: {
@@ -1155,10 +1151,6 @@ export const STRINGS_AR = {
                     rightSidebar: 'الشريط الجانبي الأيمن'
                 }
             },
-            iconPacks: {
-                label: 'حزم الأيقونات',
-                description: 'أيقونات الواجهة وأيقونات الملفات وإدارة حزم الأيقونات.'
-            },
             advanced: {
                 label: 'متقدم',
                 description: 'التشخيص وتنظيف البيانات الوصفية والاستيراد/التصدير وإعادة التعيين.',
@@ -1409,8 +1401,7 @@ export const STRINGS_AR = {
                 desc: 'اختر الأيقونات المدمجة أو إعدادًا مسبقًا لحزمة أيقونات. تتجاوز قواعد الامتدادات المخصصة هذا الإعداد المسبق.',
                 options: {
                     builtIn: 'الأيقونات المدمجة'
-                },
-                notInstalledWarning: 'حزمة الأيقونات هذه غير مثبتة. تُعرض الأيقونات المدمجة بدلاً منها.'
+                }
             },
             fileTypeIconMap: {
                 name: 'خريطة أيقونات نوع الملف',
@@ -2572,18 +2563,6 @@ export const STRINGS_AR = {
                 error: 'فشل إعادة بناء الذاكرة المؤقتة',
                 indexingTitle: 'جارٍ فهرسة الخزنة...',
                 progress: 'جارٍ تحديث ذاكرة التخزين المؤقت لـ Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'تنزيل',
-                downloadingLabel: 'جارٍ التنزيل...',
-                removeButton: 'إزالة',
-                statusInstalled: 'تم التنزيل (الإصدار {version})',
-                statusNotInstalled: 'غير منزل',
-                versionUnknown: 'غير معروف',
-                downloadFailed: 'فشل تنزيل {name}. تحقق من الاتصال وحاول مرة أخرى.',
-                removeFailed: 'فشل إزالة {name}.',
-                infoNote:
-                    'حزم الأيقونات المنزلة تزامن حالة التثبيت عبر الأجهزة. تبقى حزم الأيقونات في قاعدة البيانات المحلية على كل جهاز؛ المزامنة تتبع فقط ما إذا كان يجب تنزيلها أو إزالتها. حزم الأيقونات تنزل من مستودع Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'استخدام البيانات الأمامية',

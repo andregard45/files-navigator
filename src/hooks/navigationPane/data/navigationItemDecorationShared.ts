@@ -139,8 +139,7 @@ export function createNavigationItemDecorationContext(params: {
         fileNameIconMap: settings.fileNameIconMap,
         showCategoryIcons: true,
         fileTypeIconMap: settings.fileTypeIconMap,
-        fileTypeIconPreset: settings.fileTypeIconPreset,
-        externalIconProviders: settings.externalIconProviders
+        fileTypeIconPreset: settings.fileTypeIconPreset
     };
     const fileIconFallbackMode: FileIconFallbackMode = 'file';
     const getFileNameForMatch = (file: TFile): string | undefined => {

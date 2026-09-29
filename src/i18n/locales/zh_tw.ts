@@ -879,10 +879,6 @@ export const STRINGS_ZH_TW = {
             propertySetOnNotes: '已在 {count} 篇筆記中更新屬性',
             manualSortPropertyRemovedFromNote: '已從 1 則筆記移除排序屬性',
             manualSortPropertyRemovedFromNotes: '已從 {count} 則筆記移除排序屬性',
-            iconPackDownloaded: '{provider} 已下載',
-            iconPackUpdated: '{provider} 已更新 ({version})',
-            iconPackRemoved: '{provider} 已移除',
-            iconPackLoadFailed: '{provider} 載入失敗',
             hiddenFileReveal: '檔案已隱藏。啟用「顯示隱藏項目」以顯示它'
         },
         confirmations: {
@@ -1151,10 +1147,6 @@ export const STRINGS_ZH_TW = {
                     rightSidebar: '右側邊欄'
                 }
             },
-            iconPacks: {
-                label: '圖示包',
-                description: '介面圖示、檔案圖示與圖示包管理。'
-            },
             advanced: {
                 label: '進階',
                 description: '診斷、中繼資料清理、匯入/匯出與重設。',
@@ -1402,8 +1394,7 @@ export const STRINGS_ZH_TW = {
                 desc: '選擇內建圖示或圖示包預設。自訂副檔名規則會覆寫此預設。',
                 options: {
                     builtIn: '內建圖示'
-                },
-                notInstalledWarning: '未安裝此圖示包。將改為顯示內建圖示。'
+                }
             },
             fileTypeIconMap: {
                 name: '檔案類型圖示對應',
@@ -2561,18 +2552,6 @@ export const STRINGS_ZH_TW = {
                 error: '重建快取失敗',
                 indexingTitle: '正在索引儲存庫...',
                 progress: '正在更新 Notebook Navigator 快取。'
-            },
-            iconPackManagement: {
-                downloadButton: '下載',
-                downloadingLabel: '正在下載...',
-                removeButton: '移除',
-                statusInstalled: '已下載（版本 {version}）',
-                statusNotInstalled: '未下載',
-                versionUnknown: '未知',
-                downloadFailed: '下載 {name} 失敗。請檢查您的連線並重試。',
-                removeFailed: '移除 {name} 失敗。',
-                infoNote:
-                    '下載的圖示包會在裝置之間同步安裝狀態。圖示包儲存在每個裝置的本機資料庫中；同步僅追蹤它們是否應該被下載或移除。圖示包從 Notebook Navigator 儲存庫下載 (https://github.com/johansan/notebook-navigator/tree/main/icon-assets)。'
             },
             useFrontmatterMetadata: {
                 name: '使用前置中繼資料',

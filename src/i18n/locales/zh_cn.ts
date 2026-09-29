@@ -878,10 +878,6 @@ export const STRINGS_ZH_CN = {
             propertySetOnNotes: '已在 {count} 篇笔记中更新属性',
             manualSortPropertyRemovedFromNote: '已从 1 篇笔记中移除排序属性',
             manualSortPropertyRemovedFromNotes: '已从 {count} 篇笔记中移除排序属性',
-            iconPackDownloaded: '{provider} 已下载',
-            iconPackUpdated: '{provider} 已更新 ({version})',
-            iconPackRemoved: '{provider} 已移除',
-            iconPackLoadFailed: '{provider} 加载失败',
             hiddenFileReveal: '文件已隐藏。启用“显示隐藏项目”以显示它'
         },
         confirmations: {
@@ -1150,10 +1146,6 @@ export const STRINGS_ZH_CN = {
                     rightSidebar: '右侧边栏'
                 }
             },
-            iconPacks: {
-                label: '图标包',
-                description: '界面图标、文件图标和图标包管理。'
-            },
             advanced: {
                 label: '高级',
                 description: '诊断、元数据清理、导入/导出和重置。',
@@ -1401,8 +1393,7 @@ export const STRINGS_ZH_CN = {
                 desc: '选择内置图标或图标包预设。自定义扩展名规则会覆盖此预设。',
                 options: {
                     builtIn: '内置图标'
-                },
-                notInstalledWarning: '未安装此图标包。将改为显示内置图标。'
+                }
             },
             fileTypeIconMap: {
                 name: '文件类型图标映射',
@@ -2561,18 +2552,6 @@ export const STRINGS_ZH_CN = {
                 error: '重建缓存失败',
                 indexingTitle: '正在索引仓库...',
                 progress: '正在更新 Notebook Navigator 缓存。'
-            },
-            iconPackManagement: {
-                downloadButton: '下载',
-                downloadingLabel: '正在下载...',
-                removeButton: '移除',
-                statusInstalled: '已下载（版本 {version}）',
-                statusNotInstalled: '未下载',
-                versionUnknown: '未知',
-                downloadFailed: '下载{name}失败。请检查您的连接并重试。',
-                removeFailed: '移除{name}失败。',
-                infoNote:
-                    '下载的图标包会在设备之间同步安装状态。图标包保存在每个设备的本地数据库中；同步仅跟踪它们是否应该被下载或移除。图标包从 Notebook Navigator 仓库下载（https://github.com/johansan/notebook-navigator/tree/main/icon-assets）。'
             },
             useFrontmatterMetadata: {
                 name: '使用前置元数据',

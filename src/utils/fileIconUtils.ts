@@ -25,7 +25,6 @@ import { casefoldPreservingWhitespace } from './recordUtils';
 import {
     DEFAULT_FILE_TYPE_ICON_PRESET,
     getFileTypeIconPresetMap,
-    isFileTypeIconProviderPreset,
     type FileTypeIconPreset
 } from './fileTypeIconPresets';
 
@@ -43,7 +42,6 @@ export interface FileIconResolutionSettings {
     showCategoryIcons: boolean;
     fileTypeIconMap: Record<string, string>;
     fileTypeIconPreset: FileTypeIconPreset;
-    externalIconProviders?: Record<string, boolean>;
 }
 
 export interface FileNameIconNeedle {
@@ -142,17 +140,13 @@ export function resolveFileNameMatchIconId(basename: string, iconMap: Record<str
 export function resolveFileTypeIconId(
     fileTypeIconKey: string,
     iconMap: Record<string, string>,
-    fileTypeIconPreset: FileTypeIconPreset = DEFAULT_FILE_TYPE_ICON_PRESET,
-    externalIconProviders?: Record<string, boolean>
+    fileTypeIconPreset: FileTypeIconPreset = DEFAULT_FILE_TYPE_ICON_PRESET
 ): IconId | null {
     if (!fileTypeIconKey) {
         return null;
     }
 
-    const presetMap =
-        isFileTypeIconProviderPreset(fileTypeIconPreset) && externalIconProviders && externalIconProviders[fileTypeIconPreset] !== true
-            ? null
-            : getFileTypeIconPresetMap(fileTypeIconPreset);
+    const presetMap = getFileTypeIconPresetMap(fileTypeIconPreset);
     const resolved = iconMap[fileTypeIconKey] ?? presetMap?.[fileTypeIconKey] ?? BUILT_IN_FILE_TYPE_ICON_MAP[fileTypeIconKey];
     if (resolved) {
         const deserialized = deserializeIconFromFrontmatter(resolved);
@@ -191,8 +185,7 @@ export function resolveFileIconId(
         const fileTypeIconId = resolveFileTypeIconId(
             fileTypeIconKey,
             settings.fileTypeIconMap,
-            settings.fileTypeIconPreset,
-            settings.externalIconProviders
+            settings.fileTypeIconPreset
         );
         if (fileTypeIconId) {
             return fileTypeIconId;
@@ -216,13 +209,12 @@ export function resolveFileDragIconId(
     fileTypeIconMap: Record<string, string>,
     metadataCache?: MetadataCacheLike,
     preferredIconId?: IconId | null,
-    fileTypeIconPreset: FileTypeIconPreset = DEFAULT_FILE_TYPE_ICON_PRESET,
-    externalIconProviders?: Record<string, boolean>
+    fileTypeIconPreset: FileTypeIconPreset = DEFAULT_FILE_TYPE_ICON_PRESET
 ): IconId {
     if (preferredIconId) {
         return preferredIconId;
     }
 
     const fileTypeIconKey = resolveFileTypeIconKey(file, metadataCache);
-    return resolveFileTypeIconId(fileTypeIconKey, fileTypeIconMap, fileTypeIconPreset, externalIconProviders) ?? 'file';
+    return resolveFileTypeIconId(fileTypeIconKey, fileTypeIconMap, fileTypeIconPreset) ?? 'file';
 }

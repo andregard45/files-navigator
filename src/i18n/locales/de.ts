@@ -890,10 +890,6 @@ export const STRINGS_DE = {
             propertySetOnNotes: 'Eigenschaft bei {count} Notizen aktualisiert',
             manualSortPropertyRemovedFromNote: 'Sortier-Eigenschaft aus 1 Notiz entfernt',
             manualSortPropertyRemovedFromNotes: 'Sortier-Eigenschaft aus {count} Notizen entfernt',
-            iconPackDownloaded: '{provider} heruntergeladen',
-            iconPackUpdated: '{provider} aktualisiert ({version})',
-            iconPackRemoved: '{provider} entfernt',
-            iconPackLoadFailed: '{provider} konnte nicht geladen werden',
             hiddenFileReveal: 'Datei ist ausgeblendet. Aktiviere „Ausgeblendete Elemente anzeigen“, um sie anzuzeigen'
         },
         confirmations: {
@@ -1164,10 +1160,6 @@ export const STRINGS_DE = {
                     rightSidebar: 'Rechte Seitenleiste'
                 }
             },
-            iconPacks: {
-                label: 'Symbolpakete',
-                description: 'Oberflächensymbole, Dateisymbole und Symbolpaket-Verwaltung.'
-            },
             advanced: {
                 label: 'Erweitert',
                 description: 'Diagnose, Metadatenbereinigung, Import/Export und Zurücksetzen.',
@@ -1418,8 +1410,7 @@ export const STRINGS_DE = {
                 desc: 'Die integrierten Symbole oder eine Symbolpaket-Voreinstellung auswählen. Benutzerdefinierte Erweiterungsregeln überschreiben diese Voreinstellung.',
                 options: {
                     builtIn: 'Integrierte Symbole'
-                },
-                notInstalledWarning: 'Dieses Symbolpaket ist nicht installiert. Stattdessen werden integrierte Symbole angezeigt.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Dateityp-Symbol-Zuordnung',
@@ -2586,18 +2577,6 @@ export const STRINGS_DE = {
                 error: 'Cache-Neuaufbau fehlgeschlagen',
                 indexingTitle: 'Vault wird indiziert...',
                 progress: 'Notebook Navigator-Cache wird aktualisiert.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Herunterladen',
-                downloadingLabel: 'Wird heruntergeladen...',
-                removeButton: 'Entfernen',
-                statusInstalled: 'Heruntergeladen (Version {version})',
-                statusNotInstalled: 'Nicht heruntergeladen',
-                versionUnknown: 'unbekannt',
-                downloadFailed: 'Fehler beim Herunterladen von {name}. Überprüfe deine Verbindung und versuche es erneut.',
-                removeFailed: 'Fehler beim Entfernen von {name}.',
-                infoNote:
-                    'Heruntergeladene Symbolpakete synchronisieren den Installationsstatus über Geräte hinweg. Symbolpakete bleiben in der lokalen Datenbank auf jedem Gerät; die Synchronisierung verfolgt nur, ob sie heruntergeladen oder entfernt werden sollen. Symbolpakete werden aus dem Notebook Navigator Repository heruntergeladen (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Frontmatter-Metadaten verwenden',

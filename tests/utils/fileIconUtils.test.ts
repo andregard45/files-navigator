@@ -25,7 +25,7 @@ import {
     resolveFileTypeIconKey
 } from '../../src/utils/fileIconUtils';
 import { createTestTFile } from './createTestTFile';
-import { DEFAULT_FILE_TYPE_ICON_PRESET, FILE_TYPE_ICON_PROVIDER_PRESET_IDS } from '../../src/utils/fileTypeIconPresets';
+import { DEFAULT_FILE_TYPE_ICON_PRESET, FILE_TYPE_ICON_PRESET_IDS } from '../../src/utils/fileTypeIconPresets';
 
 describe('resolveFileNameMatchIconId', () => {
     it('returns null for empty basenames', () => {
@@ -113,26 +113,10 @@ describe('resolveFileTypeIconKey', () => {
             expect(resolveFileTypeIconId('md', { md: 'ph-book' })).toBe('phosphor:book');
         });
 
-        it('uses explicit overrides before preset mappings', () => {
-            expect(resolveFileTypeIconId('md', { md: 'ph-book' }, 'material-icons')).toBe('phosphor:book');
-        });
-
-        it('uses preset mappings before built-in mappings', () => {
-            expect(resolveFileTypeIconId('md', {}, 'material-icons')).toBe('material-icons:article');
-            expect(resolveFileTypeIconId('png', {}, 'phosphor')).toBe('phosphor:image');
-        });
-
-        it('uses category icons for Bootstrap and Phosphor', () => {
-            expect(resolveFileTypeIconId('docx', {}, 'bootstrap-icons')).toBe('bootstrap-icons:file-earmark-richtext');
-            expect(resolveFileTypeIconId('mp4', {}, 'bootstrap-icons')).toBe('bootstrap-icons:play-btn');
-            expect(resolveFileTypeIconId('tsx', {}, 'phosphor')).toBe('phosphor:code');
-            expect(resolveFileTypeIconId('rs', {}, 'phosphor')).toBe('phosphor:code');
-            expect(resolveFileTypeIconId('png', {}, 'rpg-awesome')).toBe('rpg-awesome:mirror');
-        });
-
-        it('ignores preset mappings when the provider is not enabled', () => {
-            expect(resolveFileTypeIconId('md', {}, 'material-icons', {})).toBe('file-text');
-            expect(resolveFileTypeIconId('cpp', {}, 'material-icons', {})).toBe(null);
+        it('ignores legacy icon-pack presets and falls back to built-in mappings', () => {
+            // Icon pack presets were removed; any stored preset value resolves via built-ins only.
+            expect(resolveFileTypeIconId('md', {}, 'none')).toBe('file-text');
+            expect(resolveFileTypeIconId('png', {}, DEFAULT_FILE_TYPE_ICON_PRESET)).toBe('image');
         });
 
         it('falls back to built-in mappings when no override exists', () => {
@@ -144,8 +128,8 @@ describe('resolveFileTypeIconKey', () => {
             expect(resolveFileTypeIconId('cpp', {})).toBe(null);
         });
 
-        it('does not expose Simple Icons as a file-type preset', () => {
-            expect(FILE_TYPE_ICON_PROVIDER_PRESET_IDS).not.toContain('simple-icons');
+        it('exposes only the built-in (none) file-type preset', () => {
+            expect(FILE_TYPE_ICON_PRESET_IDS).toEqual(['none']);
         });
     });
 

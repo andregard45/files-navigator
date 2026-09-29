@@ -1,4 +1,3 @@
 name: Notebook Navigator CodeQL config
 
-paths-ignore:
-  - icon-assets/scripts/update-icon-packs.ts
+paths-ignore: []

@@ -35,8 +35,7 @@ import {
     type IconMapParseResult
 } from '../../utils/iconizeFormat';
 import { formatCommaSeparatedList, parseCommaSeparatedList } from '../../utils/commaSeparatedListUtils';
-import { EXTERNAL_ICON_PROVIDERS } from '../../services/icons/external/providerRegistry';
-import { FILE_TYPE_ICON_PROVIDER_PRESET_IDS, isFileTypeIconPreset, isFileTypeIconProviderPreset } from '../../utils/fileTypeIconPresets';
+import { isFileTypeIconPreset } from '../../utils/fileTypeIconPresets';
 import {
     getMarkdownTextCountDependencies,
     subscribeMarkdownWordCountConsumerChanges,
@@ -184,7 +183,7 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
             createRenderDefinition({
                 name: strings.settings.items.fileTypeIconPreset.name,
                 desc: strings.settings.items.fileTypeIconPreset.desc,
-                aliases: Object.values(getFileTypeIconPresetOptions(context)).map(option => option.label),
+                aliases: Object.values(getFileTypeIconPresetOptions()).map(option => option.label),
                 visible: () => plugin.settings.showFileIcons && plugin.settings.showCategoryIcons,
                 render: setting => renderFileTypeIconPresetSetting(setting, context)
             }),
@@ -592,61 +591,24 @@ function renderColorSetting(
     });
 }
 
-function getFileTypeIconPresetOptions(context: SettingsTabContext): Record<string, FileTypeIconPresetOption> {
-    const options: Record<string, FileTypeIconPresetOption> = {
+function getFileTypeIconPresetOptions(): Record<string, FileTypeIconPresetOption> {
+    return {
         none: {
             label: strings.settings.items.fileTypeIconPreset.options.builtIn,
             isInstalled: true
         }
     };
-
-    FILE_TYPE_ICON_PROVIDER_PRESET_IDS.forEach(providerId => {
-        const config = EXTERNAL_ICON_PROVIDERS[providerId];
-        const isInstalled = context.plugin.isExternalIconProviderInstalled(providerId);
-        options[providerId] = {
-            label: config.name,
-            isInstalled
-        };
-    });
-
-    return options;
-}
-
-function isSelectedFileTypeIconPresetUnavailable(context: SettingsTabContext): boolean {
-    const { plugin } = context;
-    const preset = plugin.settings.fileTypeIconPreset;
-    return isFileTypeIconProviderPreset(preset) && !plugin.isExternalIconProviderInstalled(preset);
 }
 
 function renderFileTypeIconPresetSetting(setting: Setting, context: SettingsTabContext): void {
     const { plugin } = context;
-    const options = getFileTypeIconPresetOptions(context);
+    const options = getFileTypeIconPresetOptions();
 
     setting.setName(strings.settings.items.fileTypeIconPreset.name).setDesc(strings.settings.items.fileTypeIconPreset.desc);
-    const warningEl = setting.descEl.createDiv({
-        cls: 'setting-item-description nn-setting-hidden nn-setting-warning'
-    });
-
-    const updateWarning = () => {
-        const showWarning = isSelectedFileTypeIconPresetUnavailable(context);
-        warningEl.setText(showWarning ? strings.settings.items.fileTypeIconPreset.notInstalledWarning : '');
-        warningEl.toggleClass('nn-setting-hidden', !showWarning);
-    };
 
     setting.addDropdown(dropdown => {
         Object.entries(options).forEach(([value, option]) => {
             dropdown.addOption(value, option.label);
-        });
-
-        Object.entries(options).forEach(([value, option]) => {
-            if (option.isInstalled) {
-                return;
-            }
-
-            const optionEl = Array.from(dropdown.selectEl.options).find(candidate => candidate.value === value);
-            if (optionEl) {
-                optionEl.disabled = true;
-            }
         });
 
         dropdown.setValue(plugin.settings.fileTypeIconPreset).onChange(async value => {
@@ -655,12 +617,9 @@ function renderFileTypeIconPresetSetting(setting: Setting, context: SettingsTabC
             }
 
             plugin.settings.fileTypeIconPreset = value;
-            updateWarning();
             await plugin.saveSettingsAndUpdate();
         });
     });
-
-    updateWarning();
 }
 
 function renderIconMapSetting(

@@ -885,10 +885,6 @@ export const STRINGS_TR = {
             propertySetOnNotes: '{count} notta özellik güncellendi',
             manualSortPropertyRemovedFromNote: '1 nottan sıralama özelliği kaldırıldı',
             manualSortPropertyRemovedFromNotes: '{count} nottan sıralama özelliği kaldırıldı',
-            iconPackDownloaded: '{provider} indirildi',
-            iconPackUpdated: '{provider} güncellendi ({version})',
-            iconPackRemoved: '{provider} kaldırıldı',
-            iconPackLoadFailed: '{provider} yüklenemedi',
             hiddenFileReveal: 'Dosya gizli. Görüntülemek için "Gizli öğeleri göster" seçeneğini etkinleştirin'
         },
         confirmations: {
@@ -1158,10 +1154,6 @@ export const STRINGS_TR = {
                     rightSidebar: 'Sağ kenar çubuğu'
                 }
             },
-            iconPacks: {
-                label: 'Simge paketleri',
-                description: 'Arayüz simgeleri, dosya simgeleri ve simge paketi yönetimi.'
-            },
             advanced: {
                 label: 'Gelişmiş',
                 description: 'Tanılama, meta veri temizliği, içe/dışa aktarma ve sıfırlama.',
@@ -1412,8 +1404,7 @@ export const STRINGS_TR = {
                 desc: 'Yerleşik simgeleri veya bir simge paketi ön ayarını seçin. Özel uzantı kuralları bu ön ayarı geçersiz kılar.',
                 options: {
                     builtIn: 'Yerleşik simgeler'
-                },
-                notInstalledWarning: 'Bu simge paketi yüklü değil. Bunun yerine yerleşik simgeler gösterilir.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Dosya türü simge eşlemesi',
@@ -2576,18 +2567,6 @@ export const STRINGS_TR = {
                 error: 'Önbellek yeniden oluşturulamadı',
                 indexingTitle: 'Kasa dizinleniyor...',
                 progress: 'Notebook Navigator önbelleği güncelleniyor.'
-            },
-            iconPackManagement: {
-                downloadButton: 'İndir',
-                downloadingLabel: 'İndiriliyor...',
-                removeButton: 'Kaldır',
-                statusInstalled: 'İndirildi (sürüm {version})',
-                statusNotInstalled: 'İndirilmedi',
-                versionUnknown: 'bilinmiyor',
-                downloadFailed: '{name} indirilemedi. Bağlantınızı kontrol edin ve tekrar deneyin.',
-                removeFailed: '{name} kaldırılamadı.',
-                infoNote:
-                    'İndirilen simge paketleri kurulum durumunu cihazlar arasında senkronize eder. Simge paketleri her cihazda yerel veritabanında kalır; senkronizasyon yalnızca indirme veya kaldırma durumunu izler. Simge paketleri Notebook Navigator deposundan indirilir (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Frontmatter meta verilerini kullan',

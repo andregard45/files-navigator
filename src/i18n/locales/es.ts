@@ -890,10 +890,6 @@ export const STRINGS_ES = {
             propertySetOnNotes: 'Propiedad actualizada en {count} notas',
             manualSortPropertyRemovedFromNote: 'Propiedad de orden eliminada de 1 nota',
             manualSortPropertyRemovedFromNotes: 'Propiedad de orden eliminada de {count} notas',
-            iconPackDownloaded: '{provider} descargado',
-            iconPackUpdated: '{provider} actualizado ({version})',
-            iconPackRemoved: '{provider} eliminado',
-            iconPackLoadFailed: 'No se pudo cargar {provider}',
             hiddenFileReveal: 'El archivo está oculto. Activa "Mostrar elementos ocultos" para mostrarlo'
         },
         confirmations: {
@@ -1165,10 +1161,6 @@ export const STRINGS_ES = {
                     rightSidebar: 'Barra lateral derecha'
                 }
             },
-            iconPacks: {
-                label: 'Paquetes de iconos',
-                description: 'Iconos de interfaz, iconos de archivos y gestión de paquetes de iconos.'
-            },
             advanced: {
                 label: 'Avanzado',
                 description: 'Diagnósticos, limpieza de metadatos, importación/exportación y restablecimiento.',
@@ -1419,8 +1411,7 @@ export const STRINGS_ES = {
                 desc: 'Elegir los iconos integrados o un preajuste de paquete de iconos. Las reglas de extensión personalizadas anulan este preajuste.',
                 options: {
                     builtIn: 'Iconos integrados'
-                },
-                notInstalledWarning: 'Este paquete de iconos no está instalado. En su lugar se muestran los iconos integrados.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Mapa de iconos por tipo',
@@ -2588,18 +2579,6 @@ export const STRINGS_ES = {
                 error: 'Error al reconstruir caché',
                 indexingTitle: 'Indexando la bóveda...',
                 progress: 'Actualizando la caché de Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Descargar',
-                downloadingLabel: 'Descargando...',
-                removeButton: 'Eliminar',
-                statusInstalled: 'Descargado (versión {version})',
-                statusNotInstalled: 'No descargado',
-                versionUnknown: 'desconocida',
-                downloadFailed: 'Error al descargar {name}. Verifica tu conexión e intenta nuevamente.',
-                removeFailed: 'Error al eliminar {name}.',
-                infoNote:
-                    'Los paquetes de iconos descargados sincronizan el estado de instalación entre dispositivos. Los paquetes de iconos permanecen en la base de datos local en cada dispositivo; la sincronización solo rastrea si deben descargarse o eliminarse. Los paquetes de iconos se descargan del repositorio de Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Usar metadatos del frontmatter',
