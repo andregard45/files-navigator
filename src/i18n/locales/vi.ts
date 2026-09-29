@@ -1167,7 +1167,7 @@ export const STRINGS_VI = {
                 description: 'Chẩn đoán, dọn dẹp metadata, nhập/xuất và đặt lại.',
                 groups: {
                     maintenance: 'Bảo trì',
-                    resetSettings: 'Đặt lại cài đặt'
+                    dataManagement: 'Đặt lại cài đặt'
                 }
             }
         },

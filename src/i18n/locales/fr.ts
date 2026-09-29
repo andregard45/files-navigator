@@ -1175,7 +1175,7 @@ export const STRINGS_FR = {
                 description: 'Diagnostics, nettoyage des métadonnées, import/export et réinitialisation.',
                 groups: {
                     maintenance: 'Maintenance',
-                    resetSettings: 'Réinitialiser les paramètres'
+                    dataManagement: 'Réinitialiser les paramètres'
                 }
             }
         },

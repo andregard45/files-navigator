@@ -1173,7 +1173,7 @@ export const STRINGS_PL = {
                 description: 'Diagnostyka, czyszczenie metadanych, import/eksport i resetowanie.',
                 groups: {
                     maintenance: 'Konserwacja',
-                    resetSettings: 'Resetowanie ustawień'
+                    dataManagement: 'Resetowanie ustawień'
                 }
             }
         },

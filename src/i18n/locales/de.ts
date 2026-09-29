@@ -1173,7 +1173,7 @@ export const STRINGS_DE = {
                 description: 'Diagnose, Metadatenbereinigung, Import/Export und Zurücksetzen.',
                 groups: {
                     maintenance: 'Wartung',
-                    resetSettings: 'Einstellungen zurücksetzen'
+                    dataManagement: 'Einstellungen zurücksetzen'
                 }
             }
         },

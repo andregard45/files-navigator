@@ -32,33 +32,6 @@ import { createGroupDefinition, createRenderDefinition } from '../nativeSettingC
 
 /** Builds native 1.13 setting definitions for advanced settings. */
 export function createAdvancedSettingDefinitions(context: SettingsTabContext): SettingDefinitionItem[] {
-    const generalItems: NonNullable<SettingDefinitionGroup['items']> = [
-        createRenderDefinition({
-            name: strings.settings.items.importAndExportSettings.name,
-            desc: strings.settings.items.importAndExportSettings.desc,
-            aliases: [
-                strings.settings.items.importAndExportSettings.importButtonText,
-                strings.settings.items.importAndExportSettings.exportButtonText
-            ],
-            render: setting => {
-                const { plugin } = context;
-                setting
-                    .setName(strings.settings.items.importAndExportSettings.name)
-                    .setDesc(strings.settings.items.importAndExportSettings.desc)
-                    .addButton(button =>
-                        button.setButtonText(strings.settings.items.importAndExportSettings.importButtonText).onClick(() => {
-                            new SettingsImportModal(context.app, plugin).open();
-                        })
-                    )
-                    .addButton(button =>
-                        button.setButtonText(strings.settings.items.importAndExportSettings.exportButtonText).onClick(() => {
-                            new SettingsExportModal(context.app, plugin).open();
-                        })
-                    );
-            }
-        })
-    ];
-
     const maintenanceItems: NonNullable<SettingDefinitionGroup['items']> = [];
 
     // The pane separator only exists where dual pane is available (desktop and tablets)
@@ -105,7 +78,31 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         })
     );
 
-    const resetItems: NonNullable<SettingDefinitionGroup['items']> = [
+    const dataManagementItems: NonNullable<SettingDefinitionGroup['items']> = [
+        createRenderDefinition({
+            name: strings.settings.items.importAndExportSettings.name,
+            desc: strings.settings.items.importAndExportSettings.desc,
+            aliases: [
+                strings.settings.items.importAndExportSettings.importButtonText,
+                strings.settings.items.importAndExportSettings.exportButtonText
+            ],
+            render: setting => {
+                const { plugin } = context;
+                setting
+                    .setName(strings.settings.items.importAndExportSettings.name)
+                    .setDesc(strings.settings.items.importAndExportSettings.desc)
+                    .addButton(button =>
+                        button.setButtonText(strings.settings.items.importAndExportSettings.importButtonText).onClick(() => {
+                            new SettingsImportModal(context.app, plugin).open();
+                        })
+                    )
+                    .addButton(button =>
+                        button.setButtonText(strings.settings.items.importAndExportSettings.exportButtonText).onClick(() => {
+                            new SettingsExportModal(context.app, plugin).open();
+                        })
+                    );
+            }
+        }),
         createRenderDefinition({
             name: strings.settings.items.resetAllSettings.name,
             desc: strings.settings.items.resetAllSettings.desc,
@@ -114,11 +111,7 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         })
     ];
 
-    return [
-        createGroupDefinition(undefined, generalItems),
-        createGroupDefinition(strings.settings.pages.advanced.groups.maintenance, maintenanceItems),
-        createGroupDefinition(strings.settings.pages.advanced.groups.resetSettings, resetItems)
-    ];
+    return [createGroupDefinition(strings.settings.pages.advanced.groups.maintenance, maintenanceItems), createGroupDefinition(strings.settings.pages.advanced.groups.dataManagement, dataManagementItems)];
 }
 
 function renderResetAllSettingsSetting(setting: Setting, context: SettingsTabContext): void {

@@ -1168,7 +1168,7 @@ export const STRINGS_FA = {
                 description: 'تشخیص، پاکسازی متادیتا، واردکردن/صادرکردن و بازنشانی.',
                 groups: {
                     maintenance: 'نگهداری',
-                    resetSettings: 'بازنشانی تنظیمات'
+                    dataManagement: 'بازنشانی تنظیمات'
                 }
             }
         },
