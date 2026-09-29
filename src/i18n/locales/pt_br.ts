@@ -1173,7 +1173,7 @@ export const STRINGS_PT_BR = {
                 description: 'Diagnóstico, limpeza de metadados, importação/exportação e redefinição.',
                 groups: {
                     maintenance: 'Manutenção',
-                    dataManagement: 'Redefinir configurações'
+                    settingsManagement: 'Redefinir configurações'
                 }
             }
         },

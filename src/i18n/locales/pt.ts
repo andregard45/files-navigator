@@ -1170,7 +1170,7 @@ export const STRINGS_PT = {
                 description: 'Diagnósticos, limpeza de metadados, importação/exportação e reposição.',
                 groups: {
                     maintenance: 'Manutenção',
-                    dataManagement: 'Repor definições'
+                    settingsManagement: 'Repor definições'
                 }
             }
         },

@@ -1165,7 +1165,7 @@ export const STRINGS_KO = {
                 description: '진단, 메타데이터 정리, 가져오기/내보내기 및 초기화.',
                 groups: {
                     maintenance: '유지 관리',
-                    dataManagement: '설정 초기화'
+                    settingsManagement: '설정 초기화'
                 }
             }
         },

@@ -1174,7 +1174,7 @@ export const STRINGS_ES = {
                 description: 'Diagnósticos, limpieza de metadatos, importación/exportación y restablecimiento.',
                 groups: {
                     maintenance: 'Mantenimiento',
-                    dataManagement: 'Restablecer ajustes'
+                    settingsManagement: 'Restablecer ajustes'
                 }
             }
         },

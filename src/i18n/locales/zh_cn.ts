@@ -1159,7 +1159,7 @@ export const STRINGS_ZH_CN = {
                 description: '诊断、元数据清理、导入/导出和重置。',
                 groups: {
                     maintenance: '维护',
-                    dataManagement: '重置设置'
+                    settingsManagement: '重置设置'
                 }
             }
         },

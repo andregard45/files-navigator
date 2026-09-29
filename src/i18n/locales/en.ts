@@ -1162,7 +1162,7 @@ export const STRINGS_EN = {
                 description: 'Diagnostics, metadata cleanup, import/export, and reset.',
                 groups: {
                     maintenance: 'Maintenance',
-                    dataManagement: 'Data Management'
+                    settingsManagement: 'Settings Management'
                 }
             }
         },

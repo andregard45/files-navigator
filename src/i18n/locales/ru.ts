@@ -1167,7 +1167,7 @@ export const STRINGS_RU = {
                 description: 'Диагностика, очистка метаданных, импорт/экспорт и сброс.',
                 groups: {
                     maintenance: 'Обслуживание',
-                    dataManagement: 'Сброс настроек'
+                    settingsManagement: 'Сброс настроек'
                 }
             }
         },

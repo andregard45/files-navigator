@@ -1169,7 +1169,7 @@ export const STRINGS_ID = {
                 description: 'Diagnostik, pembersihan metadata, impor/ekspor, dan pengaturan ulang.',
                 groups: {
                     maintenance: 'Pemeliharaan',
-                    dataManagement: 'Atur ulang pengaturan'
+                    settingsManagement: 'Atur ulang pengaturan'
                 }
             }
         },

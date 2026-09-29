@@ -1169,7 +1169,7 @@ export const STRINGS_JA = {
                 description: '診断、メタデータのクリーンアップ、インポート/エクスポート、リセット。',
                 groups: {
                     maintenance: 'メンテナンス',
-                    dataManagement: '設定をリセット'
+                    settingsManagement: '設定をリセット'
                 }
             }
         },

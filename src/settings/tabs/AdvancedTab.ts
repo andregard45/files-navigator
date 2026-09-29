@@ -78,7 +78,7 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         })
     );
 
-    const dataManagementItems: NonNullable<SettingDefinitionGroup['items']> = [
+    const settingsManagementItems: NonNullable<SettingDefinitionGroup['items']> = [
         createRenderDefinition({
             name: strings.settings.items.importAndExportSettings.name,
             desc: strings.settings.items.importAndExportSettings.desc,
@@ -111,7 +111,7 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         })
     ];
 
-    return [createGroupDefinition(strings.settings.pages.advanced.groups.maintenance, maintenanceItems), createGroupDefinition(strings.settings.pages.advanced.groups.dataManagement, dataManagementItems)];
+    return [createGroupDefinition(strings.settings.pages.advanced.groups.maintenance, maintenanceItems), createGroupDefinition(strings.settings.pages.advanced.groups.settingsManagement, settingsManagementItems)];
 }
 
 function renderResetAllSettingsSetting(setting: Setting, context: SettingsTabContext): void {

@@ -1164,7 +1164,7 @@ export const STRINGS_AR = {
                 description: 'التشخيص وتنظيف البيانات الوصفية والاستيراد/التصدير وإعادة التعيين.',
                 groups: {
                     maintenance: 'الصيانة',
-                    dataManagement: 'إعادة ضبط الإعدادات'
+                    settingsManagement: 'إعادة ضبط الإعدادات'
                 }
             }
         },

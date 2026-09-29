@@ -35,7 +35,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
 
     const createGroup = createSettingGroupFactory(containerEl);
     const maintenanceGroup = createGroup(strings.settings.pages.advanced.groups.maintenance);
-    const dataManagementGroup = createGroup(strings.settings.pages.advanced.groups.dataManagement);
+    const settingsManagementGroup = createGroup(strings.settings.pages.advanced.groups.settingsManagement);
 
     // The pane separator only exists where dual pane is available (desktop and tablets)
     if (isDualPaneSupported()) {
@@ -54,7 +54,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
         });
     }
 
-    dataManagementGroup.addSetting(setting => {
+    settingsManagementGroup.addSetting(setting => {
         setting
             .setName(strings.settings.items.importAndExportSettings.name)
             .setDesc(strings.settings.items.importAndExportSettings.desc)
@@ -171,7 +171,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
     context.requestStatisticsRefresh();
     context.ensureStatisticsInterval();
 
-    dataManagementGroup.addSetting(setting => {
+    settingsManagementGroup.addSetting(setting => {
         setting
             .setName(strings.settings.items.resetAllSettings.name)
             .setDesc(strings.settings.items.resetAllSettings.desc)
