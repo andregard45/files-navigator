@@ -799,17 +799,6 @@ export const STRINGS_ZH_CN = {
             applyButton: '应用',
             emptyState: '未找到属性键。'
         },
-        welcome: {
-            title: '欢迎使用 {pluginName}',
-            introText:
-                '您好，欢迎使用 Notebook Navigator，一款更好用的 Obsidian 文件浏览器和日历。在开始之前，强烈建议您至少观看下方《Mastering Notebook Navigator》视频的前三章。它会介绍两个窗格的工作方式，帮助您快速上手。',
-            continueText:
-                '如果您还有十分钟，请继续观看首次设置和日常使用流程这两个章节。看完后，您就掌握了入门所需的全部内容，以后还可以回来了解更多细节。Notebook Navigator 设置顶部提供了该视频的链接。',
-            thanksText: '祝您使用 Notebook Navigator 愉快！',
-            videoAlt: '精通 Notebook Navigator 3',
-            openVideoButton: '播放视频',
-            closeButton: '以后再说'
-        }
     },
 
     // File system operations
@@ -1048,10 +1037,7 @@ export const STRINGS_ZH_CN = {
         },
         index: {
             label: '通用',
-            description: '发行说明、支持、仓库配置文件、文件类型和属性键。',
-            groups: {
-                about: '关于'
-            }
+            description: '发行说明、支持、仓库配置文件、文件类型和属性键。'
         },
         pageGroups: {
             configuration: '配置',
@@ -2641,38 +2627,13 @@ export const STRINGS_ZH_CN = {
                 momentLinkText: 'Moment 格式',
                 help: '常用格式：\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: '支持开发',
-                desc: '如果您喜欢使用 Notebook Navigator，请考虑支持其持续开发。',
-                buttonText: '❤️ 赞助',
-                coffeeButton: '☕️ 请我喝咖啡'
-            },
-            otherPlugins: {
-                name: '看看我的其他插件',
-                betterPaste: '整理粘贴的文本、链接和图片',
-                pixelPerfectImage: '精确的图片缩放等'
-            },
             checkForNewVersionOnStart: {
                 name: '启动时检查新版本',
-                desc: '启动时检查新的插件版本，当有可用更新时显示通知。检查最多每天一次。',
-                status: '有新版本可用：{version}'
+                desc: '启动时检查新的插件版本，当有可用更新时显示通知。检查最多每天一次。'
             },
             startupDebugLogging: {
                 name: '启动调试日志',
                 desc: '将启动诊断写入仓库根目录中带时间戳的 Markdown 文件，并在启动稳定后停止。该文件可能会同步，并且可能包含文件路径。'
-            },
-            whatsNew: {
-                name: 'Notebook Navigator {version} 的最新动态',
-                desc: '查看最近的更新和改进',
-                buttonText: '查看最近更新'
-            },
-            showReleaseNotes: {
-                name: '更新后显示新功能',
-                desc: '关闭后，更新后不会自动打开新功能对话框。'
-            },
-            masteringVideo: {
-                name: '精通 Notebook Navigator（视频）',
-                desc: '本视频涵盖了在 Notebook Navigator 中高效工作所需的一切内容，包括快捷键、搜索、标签和高级自定义。'
             },
             cacheStatistics: {
                 localCache: '本地缓存',
@@ -2696,12 +2657,5 @@ export const STRINGS_ZH_CN = {
                 exportFailed: '导出错误'
             }
         }
-    },
-    whatsNew: {
-        title: 'Notebook Navigator 的新功能',
-        openBannerImage: '打开发布横幅图片',
-        supportMessage: '如果您觉得 Notebook Navigator 有用，请考虑支持其开发。',
-        supportButton: '请我喝咖啡',
-        thanksButton: '谢谢！'
     }
 };

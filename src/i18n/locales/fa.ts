@@ -808,17 +808,6 @@ export const STRINGS_FA = {
             applyButton: 'اعمال',
             emptyState: 'کلید ویژگی‌ای یافت نشد.'
         },
-        welcome: {
-            title: 'به {pluginName} خوش آمدید',
-            introText:
-                'سلام و به Notebook Navigator، مرورگر فایل و تقویمی بهتر برای Obsidian، خوش آمدید. پیش از شروع، واقعاً پیشنهاد می‌کنم دست‌کم سه فصل اول ویدیوی زیر، Mastering Notebook Navigator، را تماشا کنید. این فصل‌ها با نحوه کار دو پنل آشنایتان می‌کنند تا بتوانید سریع شروع کنید.',
-            continueText:
-                'سپس اگر ده دقیقه دیگر وقت دارید، فصل‌های راه‌اندازی اولیه و روال استفاده روزمره را هم تماشا کنید. با این بخش‌ها هرچه برای شروع لازم دارید در اختیار خواهید داشت و بعداً می‌توانید برای دیدن جزئیات بیشتر برگردید. پیوند ویدیو را در بالای تنظیمات Notebook Navigator پیدا می‌کنید.',
-            thanksText: 'از کار با Notebook Navigator لذت ببرید!',
-            videoAlt: 'تسلط بر Notebook Navigator 3',
-            openVideoButton: 'پخش ویدیو',
-            closeButton: 'شاید بعداً'
-        }
     },
     // File system operations
     fileSystem: {
@@ -1057,10 +1046,7 @@ export const STRINGS_FA = {
         },
         index: {
             label: 'عمومی',
-            description: 'یادداشت‌های انتشار، پشتیبانی، پروفایل خزانه، انواع فایل و کلیدهای ویژگی.',
-            groups: {
-                about: 'درباره'
-            }
+            description: 'یادداشت‌های انتشار، پشتیبانی، پروفایل خزانه، انواع فایل و کلیدهای ویژگی.'
         },
         pageGroups: {
             configuration: 'پیکربندی',
@@ -2657,38 +2643,13 @@ export const STRINGS_FA = {
                 momentLinkText: 'قالب Moment',
                 help: 'قالب‌های رایج:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'حمایت از توسعه',
-                desc: 'اگر از استفاده از Notebook Navigator لذت می‌برید، لطفاً حمایت از توسعه مداوم آن را در نظر بگیرید.',
-                buttonText: '❤️ حمایت مالی',
-                coffeeButton: '☕️ یک قهوه مهمانم کن'
-            },
-            otherPlugins: {
-                name: 'افزونه‌های دیگرم را ببینید',
-                betterPaste: 'پاکسازی متن، پیوندها و تصاویر چسبانده‌شده',
-                pixelPerfectImage: 'تغییر اندازه دقیق تصویر و بیشتر'
-            },
             checkForNewVersionOnStart: {
                 name: 'بررسی نسخه جدید هنگام شروع',
-                desc: 'هنگام شروع نسخه‌های جدید افزونه را بررسی می‌کند و هنگام در دسترس بودن به‌روزرسانی اعلان نمایش می‌دهد. بررسی‌ها حداکثر روزی یک بار انجام می‌شوند.',
-                status: 'نسخه جدید موجود: {version}'
+                desc: 'هنگام شروع نسخه‌های جدید افزونه را بررسی می‌کند و هنگام در دسترس بودن به‌روزرسانی اعلان نمایش می‌دهد. بررسی‌ها حداکثر روزی یک بار انجام می‌شوند.'
             },
             startupDebugLogging: {
                 name: 'ثبت اشکال‌زدایی راه‌اندازی',
                 desc: 'تشخیص‌های راه‌اندازی را در یک فایل Markdown زمان‌دار در ریشه خزانه می‌نویسد و پس از پایدار شدن راه‌اندازی متوقف می‌شود. فایل ممکن است همگام‌سازی شود و می‌تواند مسیرهای فایل را شامل شود.'
-            },
-            whatsNew: {
-                name: 'چه چیزی در Notebook Navigator {version} جدید است',
-                desc: 'به‌روزرسانی‌ها و بهبودهای اخیر را ببینید',
-                buttonText: 'مشاهده به‌روزرسانی‌های اخیر'
-            },
-            showReleaseNotes: {
-                name: 'نمایش تازه‌ها پس از به‌روزرسانی',
-                desc: 'برای جلوگیری از باز شدن خودکار پنجرهٔ تازه‌ها پس از به‌روزرسانی، این گزینه را غیرفعال کنید.'
-            },
-            masteringVideo: {
-                name: 'تسلط بر Notebook Navigator (ویدیو)',
-                desc: 'این ویدیو تمام آنچه برای کار بهره‌ور با Notebook Navigator نیاز دارید را پوشش می‌دهد، از جمله میانبرهای صفحه‌کلید، جستجو، برچسب‌ها و سفارشی‌سازی پیشرفته.'
             },
             cacheStatistics: {
                 localCache: 'کش محلی',
@@ -2712,12 +2673,5 @@ export const STRINGS_FA = {
                 exportFailed: 'صادر کردن خطاها'
             }
         }
-    },
-    whatsNew: {
-        title: 'چه چیزی در Notebook Navigator جدید است',
-        openBannerImage: 'باز کردن تصویر بنر انتشار',
-        supportMessage: 'اگر Notebook Navigator را مفید می‌دانید، لطفاً حمایت از توسعه آن را در نظر بگیرید.',
-        supportButton: 'یک قهوه مهمانم کن',
-        thanksButton: 'ممنون!'
     }
 };

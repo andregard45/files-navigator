@@ -1,0 +1,79 @@
+{
+  "name": "stylelint-no-unsupported-browser-features",
+  "version": "8.1.2",
+  "description": "Disallow features that are unsupported by the browsers that you are targeting",
+  "homepage": "https://github.com/RJWadley/stylelint-no-unsupported-browser-features#readme",
+  "scripts": {
+    "codecov": "codecov",
+    "test": "cross-env BROWSERSLIST_DISABLE_CACHE=true BROWSERSLIST='IE 8' jest",
+    "test:coverage": "cross-env BROWSERSLIST_DISABLE_CACHE=true BROWSERSLIST='IE 8' jest --coverage",
+    "lint:prettier": "prettier --list-different '**/*.js'",
+    "lint:js": "eslint '**/*.js'",
+    "semantic-release": "semantic-release",
+    "prepare": "husky"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "peerDependencies": {
+    "stylelint": ">=16.0.2"
+  },
+  "dependencies": {
+    "browserslist": "^4.26.3",
+    "doiuse": "^6.0.6",
+    "postcss": "^8.4.32"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "19.6.1",
+    "@commitlint/config-conventional": "19.6.0",
+    "@eslint/js": "^9.19.0",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "11.0.1",
+    "@semantic-release/release-notes-generator": "14.0.3",
+    "codecov": "3.8.3",
+    "cross-env": "7.0.3",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
+    "husky": "9.1.7",
+    "jest": "29.7.0",
+    "jest-light-runner": "^0.6.0",
+    "jest-preset-stylelint": "7.2.0",
+    "lint-staged": "15.4.3",
+    "prettier": "3.4.2",
+    "semantic-release": "25.0.9",
+    "stylelint": "16.14.1"
+  },
+  "author": "RJWadley",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.12.0"
+  },
+  "type": "module",
+  "exports": "./lib/index.js",
+  "files": [
+    "lib/index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RJWadley/stylelint-no-unsupported-browser-features.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RJWadley/stylelint-no-unsupported-browser-features/issues"
+  },
+  "keywords": [
+    "stylelint",
+    "stylelint-plugin",
+    "css",
+    "doiuse",
+    "linter",
+    "browser",
+    "support"
+  ],
+  "renovate": {
+    "extends": [
+      "config:js-lib",
+      ":dependencyDashboardApproval",
+      ":enableVulnerabilityAlerts"
+    ]
+  }
+}

@@ -808,17 +808,6 @@ export const STRINGS_ID = {
             applyButton: 'Terapkan',
             emptyState: 'Tidak ditemukan kunci properti.'
         },
-        welcome: {
-            title: 'Selamat datang di {pluginName}',
-            introText:
-                'Halo dan selamat datang di Notebook Navigator, penjelajah file dan kalender yang lebih baik untuk Obsidian. Sebelum memulai, saya sangat menyarankan agar Anda menonton setidaknya tiga bab pertama dari video di bawah ini, Mastering Notebook Navigator. Video tersebut memperkenalkan cara kerja kedua panel dan membantu Anda cepat memahami penggunaannya.',
-            continueText:
-                'Lalu, jika Anda punya waktu sepuluh menit lagi, lanjutkan menonton bab penyiapan awal dan alur penggunaan sehari-hari. Bab-bab tersebut mencakup semua yang Anda perlukan untuk memulai, dan Anda dapat kembali nanti untuk melihat penjelasan yang lebih mendetail. Tautan videonya ada di bagian atas pengaturan Notebook Navigator.',
-            thanksText: 'Selamat menggunakan Notebook Navigator!',
-            videoAlt: 'Menguasai Notebook Navigator 3',
-            openVideoButton: 'Putar video',
-            closeButton: 'Mungkin nanti'
-        }
     },
     // File system operations
     fileSystem: {
@@ -1057,10 +1046,7 @@ export const STRINGS_ID = {
         },
         index: {
             label: 'Umum',
-            description: 'Catatan rilis, dukungan, profil vault, tipe file, dan kunci properti.',
-            groups: {
-                about: 'Tentang'
-            }
+            description: 'Catatan rilis, dukungan, profil vault, tipe file, dan kunci properti.'
         },
         pageGroups: {
             configuration: 'Konfigurasi',
@@ -2658,38 +2644,13 @@ export const STRINGS_ID = {
                 momentLinkText: 'format Moment',
                 help: 'Format umum:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Dukung pengembangan',
-                desc: 'Jika Anda menyukai Notebook Navigator, silakan pertimbangkan untuk mendukung pengembangan berkelanjutannya.',
-                buttonText: '❤️ Sponsor',
-                coffeeButton: '☕️ Traktir saya kopi'
-            },
-            otherPlugins: {
-                name: 'Lihat plugin saya yang lain',
-                betterPaste: 'Membersihkan teks, tautan, dan gambar yang ditempel',
-                pixelPerfectImage: 'Pengubahan ukuran gambar yang presisi dan lainnya'
-            },
             checkForNewVersionOnStart: {
                 name: 'Periksa versi baru saat mulai',
-                desc: 'Memeriksa rilis plugin baru saat startup dan menampilkan notifikasi saat pembaruan tersedia. Pemeriksaan terjadi paling banyak sekali sehari.',
-                status: 'Versi baru tersedia: {version}'
+                desc: 'Memeriksa rilis plugin baru saat startup dan menampilkan notifikasi saat pembaruan tersedia. Pemeriksaan terjadi paling banyak sekali sehari.'
             },
             startupDebugLogging: {
                 name: 'Log debug saat startup',
                 desc: 'Menulis diagnostik startup ke file Markdown bertanda waktu di root vault, lalu berhenti setelah startup stabil. File dapat disinkronkan dan dapat menyertakan jalur file.'
-            },
-            whatsNew: {
-                name: 'Apa yang baru di Notebook Navigator {version}',
-                desc: 'Lihat pembaruan dan peningkatan terbaru',
-                buttonText: 'Lihat pembaruan terbaru'
-            },
-            showReleaseNotes: {
-                name: 'Tampilkan yang baru setelah pembaruan',
-                desc: 'Nonaktifkan agar dialog "Yang baru" tidak terbuka secara otomatis setelah pembaruan.'
-            },
-            masteringVideo: {
-                name: 'Menguasai Notebook Navigator (video)',
-                desc: 'Video ini membahas semua yang Anda butuhkan untuk produktif di Notebook Navigator, termasuk pintasan keyboard, pencarian, tag, dan kustomisasi lanjutan.'
             },
             cacheStatistics: {
                 localCache: 'Cache lokal',
@@ -2713,12 +2674,5 @@ export const STRINGS_ID = {
                 exportFailed: 'Ekspor kesalahan'
             }
         }
-    },
-    whatsNew: {
-        title: 'Apa yang baru di Notebook Navigator',
-        openBannerImage: 'Buka gambar banner rilis',
-        supportMessage: 'Jika Anda merasa Notebook Navigator membantu, silakan pertimbangkan untuk mendukung pengembangannya.',
-        supportButton: 'Traktir saya kopi',
-        thanksButton: 'Terima kasih!'
     }
 };

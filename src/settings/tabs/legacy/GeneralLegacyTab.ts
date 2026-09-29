@@ -17,11 +17,9 @@
  */
 
 import type { SettingsTabContext } from '../SettingsTabContext';
-import { renderStartResourcesSection } from '../StartResourcesSection';
 import { renderGeneralVaultSetupSection } from '../VaultSetupSection';
 
 /** Renders the General settings page. */
 export function renderGeneralTab(context: SettingsTabContext): void {
     renderGeneralVaultSetupSection(context);
-    renderStartResourcesSection(context);
 }

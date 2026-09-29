@@ -92,10 +92,6 @@ function createFixture(version = '1.0.0', tagged = true): Fixture {
     fs.writeFileSync(path.join(root, 'scripts/release.js'), source);
     fs.copyFileSync(path.join(repoRoot, 'scripts/mdReleaseNotes.js'), path.join(root, 'scripts/mdReleaseNotes.js'));
     fs.writeFileSync(path.join(root, 'scripts/build.sh'), '#!/bin/sh\nexit 0\n');
-    fs.writeFileSync(
-        path.join(root, 'src/releaseNotes.ts'),
-        "export const RELEASE_NOTES = [{ version: '1.0.0' }, { version: '1.1.0' }];\n"
-    );
     fs.writeFileSync(path.join(root, 'styles.css'), '/* fixture styles */\n');
     fs.writeFileSync(path.join(root, '.gitignore'), '.release.lock\nmain.js\nlanguages.json\n');
     writeJson(root, 'manifest.json', { id: 'test', name: 'Test', version, minAppVersion: '1.11.0', description: 'Test', author: 'Test' });

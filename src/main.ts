@@ -856,11 +856,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                 await this.languageService.ready;
                 if (this.isUnloading) return;
 
-                if (isFirstLaunch) {
-                    const { WelcomeModal } = await import('./modals/WelcomeModal');
-                    new WelcomeModal(this.app).open();
-                }
-
                 // PDF_CRASH_DIAGNOSTICS: show the last unfinished mobile PDF path from the previous session.
                 const pendingPdfPath = consumePendingPdfProcessingDiagnostic();
                 if (pendingPdfPath) {
@@ -874,22 +869,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                             'This can also happen if Obsidian or Android closed the app before cleanup finished.'
                         ]
                     }).open();
-                }
-
-                // Check for version updates after a short delay.
-                // Obsidian Sync can update the plugin settings shortly after startup, so defer the check to avoid using cached settings.
-                const versionUpdateGracePeriodMs = 1000;
-                if (typeof window === 'undefined') {
-                    await this.checkForVersionUpdate({ isFirstLaunch });
-                } else {
-                    window.setTimeout(() => {
-                        runAsyncAction(async () => {
-                            if (this.isUnloading) {
-                                return;
-                            }
-                            await this.checkForVersionUpdate({ isFirstLaunch });
-                        });
-                    }, versionUpdateGracePeriodMs);
                 }
 
                 // Trigger Style Settings plugin to parse our settings
@@ -1500,17 +1479,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         this.onSettingsUpdate();
     }
 
-    /**
-     * Records a displayed What's new version locally before persisting the shared marker. The
-     * controller rejects older versions so a delayed modal callback cannot regress either marker.
-     */
-    public async advanceLastShownVersion(version: string): Promise<void> {
-        if (!this.settingsController.advanceLastShownVersion(version)) {
-            return;
-        }
-        await this.saveSettingsAndUpdate();
-    }
-
     public createSettingsTransferJson(): string {
         return JSON.stringify(createModifiedSettingsTransfer(this.settings, this.manifest.version), null, 2);
     }
@@ -1976,85 +1944,4 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         });
     }
 
-    /**
-     * Check if the plugin has been updated and show release notes if needed
-     */
-    private async checkForVersionUpdate(params: { isFirstLaunch: boolean }): Promise<void> {
-        const { isFirstLaunch } = params;
-        // Get current version from manifest
-        const currentVersion = this.manifest.version;
-
-        // The greater local or synced marker prevents stale settings files from re-showing a release.
-        const lastShownVersion = this.settingsController.getLastShownVersion();
-
-        // Initialize lastShownVersion on first install.
-        if (!lastShownVersion) {
-            if (isFirstLaunch) {
-                await this.advanceLastShownVersion(currentVersion);
-                return;
-            }
-
-            // Disabled dialogs still advance the marker so re-enabling them starts with
-            // the next update instead of replaying every release skipped meanwhile.
-            if (!this.settings.showReleaseNotes) {
-                await this.advanceLastShownVersion(currentVersion);
-                return;
-            }
-
-            const { getLatestReleaseNotes, isReleaseAutoDisplayEnabled } = await import('./releaseNotes');
-
-            if (!isReleaseAutoDisplayEnabled(currentVersion)) {
-                await this.advanceLastShownVersion(currentVersion);
-                return;
-            }
-
-            const { WhatsNewModal } = await import('./modals/WhatsNewModal');
-
-            const releaseNotes = getLatestReleaseNotes();
-            new WhatsNewModal(this.app, releaseNotes, () => {
-                // Save version after 1 second delay when user closes the modal
-                window.setTimeout(() => {
-                    // Wrap in runAsyncAction to handle async without blocking callback
-                    runAsyncAction(async () => {
-                        await this.advanceLastShownVersion(currentVersion);
-                    });
-                }, 1000);
-            }).open();
-            return;
-        }
-
-        // A newer shared marker can come from a device running a newer plugin version. Downgrades
-        // never auto-display because recording the older version would reopen the dialog elsewhere.
-        const { getReleaseNotesBetweenVersions, compareVersions, isReleaseAutoDisplayEnabled } = await import('./releaseNotes');
-        if (compareVersions(currentVersion, lastShownVersion) <= 0) {
-            return;
-        }
-
-        if (!this.settings.showReleaseNotes) {
-            // Keep the high-water marker current while dialogs are disabled, otherwise
-            // re-enabling them would replay release notes from every skipped update.
-            await this.advanceLastShownVersion(currentVersion);
-            return;
-        }
-
-        // Only the current release decides whether startup should open the dialog. Advance the
-        // marker when it opts out so the skipped dialog is not reconsidered on the next startup.
-        if (!isReleaseAutoDisplayEnabled(currentVersion)) {
-            await this.advanceLastShownVersion(currentVersion);
-            return;
-        }
-
-        const { WhatsNewModal } = await import('./modals/WhatsNewModal');
-        const releaseNotes = getReleaseNotesBetweenVersions(lastShownVersion, currentVersion);
-
-        new WhatsNewModal(this.app, releaseNotes, () => {
-            // Save version after 1 second delay when user closes the modal
-            window.setTimeout(() => {
-                // Wrap in runAsyncAction to handle async without blocking callback
-                runAsyncAction(async () => {
-                    await this.advanceLastShownVersion(currentVersion);
-                });
-            }, 1000);
-        }).open();
-    }
 }

@@ -96,10 +96,6 @@ Keep this list ordered: later files override earlier ones.
 @import './sections/modal-file-icon-rule-editor.css';
 /* modal-ux-icon-map.css: UX icon map modal layout, mobile sizing, scroll container. */
 @import './sections/modal-ux-icon-map.css';
-/* modal-welcome.css: welcome modal layout, video thumbnail sizing, and button row. */
-@import './sections/modal-welcome.css';
-/* modal-whats-new.css: “What’s new” modal layout, list formatting, and release notes typography. */
-@import './sections/modal-whats-new.css';
 /* modal-icon-picker.css: icon picker modal layout, search input, results grid, and category headers. */
 @import './sections/modal-icon-picker.css';
 /* modal-property-keys.css: property key visibility modal layout (navigation/list toggles). */
@@ -116,8 +112,6 @@ Keep this list ordered: later files override earlier ones.
 /* Settings */
 /* settings-page.css: settings tab layout, toolbar visibility controls, and settings helpers. */
 @import './sections/settings-page.css';
-/* settings-sponsor-button.css: hover styling for the settings support button. */
-@import './sections/settings-sponsor-button.css';
 /* settings-mobile.css: mobile-only settings overrides (wide inputs). */
 @import './sections/settings-mobile.css';
 /* settings-database-statistics.css: database statistics section layout, tables, and export controls. */

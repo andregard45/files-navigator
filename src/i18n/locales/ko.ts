@@ -805,17 +805,6 @@ export const STRINGS_KO = {
             applyButton: '적용',
             emptyState: '속성 키를 찾을 수 없습니다.'
         },
-        welcome: {
-            title: '{pluginName}에 오신 것을 환영합니다',
-            introText:
-                '안녕하세요. Obsidian을 위한 더 나은 파일 브라우저이자 캘린더인 Notebook Navigator에 오신 것을 환영합니다. 시작하기 전에 아래의 Mastering Notebook Navigator 영상에서 적어도 처음 세 챕터는 꼭 시청해 보시길 권합니다. 두 창이 어떻게 작동하는지 소개하고 빠르게 사용을 시작할 수 있도록 안내합니다.',
-            continueText:
-                '10분 정도 더 여유가 있다면 초기 설정과 일상 사용 흐름 챕터도 이어서 시청하세요. 시작에 필요한 내용을 모두 익힌 뒤, 나중에 돌아와 자세한 내용을 더 볼 수 있습니다. 영상 링크는 Notebook Navigator 설정 상단에서도 찾을 수 있습니다.',
-            thanksText: 'Notebook Navigator를 즐겁게 사용하세요!',
-            videoAlt: 'Notebook Navigator 3 마스터하기',
-            openVideoButton: '비디오 재생',
-            closeButton: '나중에'
-        }
     },
 
     // File system operations
@@ -1054,10 +1043,7 @@ export const STRINGS_KO = {
         },
         index: {
             label: '일반',
-            description: '릴리스 노트, 지원, 보관함 프로필, 파일 유형, 속성 키.',
-            groups: {
-                about: '정보'
-            }
+            description: '릴리스 노트, 지원, 보관함 프로필, 파일 유형, 속성 키.'
         },
         pageGroups: {
             configuration: '구성',
@@ -2651,38 +2637,13 @@ export const STRINGS_KO = {
                 momentLinkText: 'Moment 형식',
                 help: '일반적인 형식:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: '개발 지원',
-                desc: 'Notebook Navigator를 사용하는 것을 좋아하신다면 지속적인 개발을 지원해 주시기 바랍니다.',
-                buttonText: '❤️ 후원하기',
-                coffeeButton: '☕️ 커피 한 잔 사주기'
-            },
-            otherPlugins: {
-                name: '제가 만든 다른 플러그인 보기',
-                betterPaste: '붙여넣은 텍스트, 링크, 이미지를 정리',
-                pixelPerfectImage: '정확한 이미지 크기 조정 등'
-            },
             checkForNewVersionOnStart: {
                 name: '시작 시 새 버전 확인',
-                desc: '시작 시 새로운 플러그인 릴리스를 확인하고 업데이트가 있으면 알림을 표시합니다. 확인은 하루에 최대 한 번 수행됩니다.',
-                status: '새 버전 사용 가능: {version}'
+                desc: '시작 시 새로운 플러그인 릴리스를 확인하고 업데이트가 있으면 알림을 표시합니다. 확인은 하루에 최대 한 번 수행됩니다.'
             },
             startupDebugLogging: {
                 name: '시작 디버그 로그',
                 desc: '시작 진단 정보를 보관함 루트의 타임스탬프가 있는 Markdown 파일에 기록한 뒤 시작이 안정되면 중지합니다. 이 파일은 동기화될 수 있으며 파일 경로를 포함할 수 있습니다.'
-            },
-            whatsNew: {
-                name: 'Notebook Navigator {version}의 새로운 기능',
-                desc: '최근 업데이트와 개선 사항 보기',
-                buttonText: '최근 업데이트 보기'
-            },
-            showReleaseNotes: {
-                name: '업데이트 후 새로운 기능 표시',
-                desc: '비활성화하면 업데이트 후 새로운 기능 대화상자가 자동으로 열리지 않습니다.'
-            },
-            masteringVideo: {
-                name: 'Notebook Navigator 마스터하기 (동영상)',
-                desc: '이 동영상에서는 Notebook Navigator를 효율적으로 사용하는 데 필요한 모든 것을 다룹니다. 단축키, 검색, 태그 및 고급 사용자 지정이 포함됩니다.'
             },
             cacheStatistics: {
                 localCache: '로컬 캐시',
@@ -2706,12 +2667,5 @@ export const STRINGS_KO = {
                 exportFailed: '오류 내보내기'
             }
         }
-    },
-    whatsNew: {
-        title: 'Notebook Navigator의 새로운 기능',
-        openBannerImage: '릴리스 배너 이미지 열기',
-        supportMessage: 'Notebook Navigator가 도움이 되신다면 개발을 지원해 주시기 바랍니다.',
-        supportButton: '커피 사주기',
-        thanksButton: '감사합니다!'
     }
 };

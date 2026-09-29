@@ -811,17 +811,6 @@ export const STRINGS_NL = {
             applyButton: 'Toepassen',
             emptyState: 'Geen eigenschapssleutels gevonden.'
         },
-        welcome: {
-            title: 'Welkom bij {pluginName}',
-            introText:
-                'Hallo en van harte welkom bij Notebook Navigator, een betere bestandsbrowser en kalender voor Obsidian. Voordat je begint, raad ik je echt aan om ten minste de eerste drie hoofdstukken van de video hieronder, Mastering Notebook Navigator, te bekijken. Daarin maak je kennis met de werking van de twee panelen en kun je snel aan de slag.',
-            continueText:
-                'Als je daarna nog tien minuten hebt, kijk dan verder naar de hoofdstukken over de eerste configuratie en de dagelijkse routine. Daarmee weet je alles wat je nodig hebt om te beginnen en kun je later terugkomen voor meer details. Bovenaan de instellingen van Notebook Navigator vind je een link naar de video.',
-            thanksText: 'Veel plezier met Notebook Navigator!',
-            videoAlt: 'Notebook Navigator 3 beheersen',
-            openVideoButton: 'Video afspelen',
-            closeButton: 'Misschien later'
-        }
     },
 
     // File system operations
@@ -1061,10 +1050,7 @@ export const STRINGS_NL = {
         },
         index: {
             label: 'Algemeen',
-            description: 'Releasenotities, ondersteuning, kluisprofiel, bestandstypen en eigenschapssleutels.',
-            groups: {
-                about: 'Over'
-            }
+            description: 'Releasenotities, ondersteuning, kluisprofiel, bestandstypen en eigenschapssleutels.'
         },
         pageGroups: {
             configuration: 'Configuratie',
@@ -2665,38 +2651,13 @@ export const STRINGS_NL = {
                 momentLinkText: 'Moment-formaat',
                 help: 'Veelvoorkomende formaten:\nYYYY-MM-DD[T]HH:mm:ss → 2025-01-04T14:30:45\nYYYY-MM-DD[T]HH:mm:ssZ → 2025-08-07T16:53:39+02:00\nDD/MM/YYYY HH:mm:ss → 04/01/2025 14:30:45\nMM/DD/YYYY h:mm:ss a → 01/04/2025 2:30:45 PM'
             },
-            supportDevelopment: {
-                name: 'Ontwikkeling ondersteunen',
-                desc: 'Als je Notebook Navigator graag gebruikt, overweeg dan om de voortdurende ontwikkeling te ondersteunen.',
-                buttonText: '❤️ Sponsor',
-                coffeeButton: '☕️ Koop me een koffie'
-            },
-            otherPlugins: {
-                name: 'Bekijk mijn andere plugins',
-                betterPaste: 'Ruimt geplakte tekst, links en afbeeldingen op',
-                pixelPerfectImage: 'Exact afbeeldingen schalen en meer'
-            },
             checkForNewVersionOnStart: {
                 name: 'Controleren op nieuwe versie bij opstarten',
-                desc: 'Controleert bij het opstarten op nieuwe plugin-releases en toont een melding wanneer een update beschikbaar is. Controles vinden hooguit één keer per dag plaats.',
-                status: 'Nieuwe versie beschikbaar: {version}'
+                desc: 'Controleert bij het opstarten op nieuwe plugin-releases en toont een melding wanneer een update beschikbaar is. Controles vinden hooguit één keer per dag plaats.'
             },
             startupDebugLogging: {
                 name: 'Debuglogboek bij opstarten',
                 desc: 'Schrijft opstartdiagnoses naar een Markdown-bestand met tijdstempel in de hoofdmap van de kluis en stopt nadat het opstarten is gestabiliseerd. Het bestand kan worden gesynchroniseerd en bestandspaden bevatten.'
-            },
-            whatsNew: {
-                name: 'Wat is er nieuw in Notebook Navigator {version}',
-                desc: 'Bekijk recente updates en verbeteringen',
-                buttonText: 'Bekijk recente updates'
-            },
-            showReleaseNotes: {
-                name: 'Releasenotes tonen na een update',
-                desc: 'Schakel uit om te voorkomen dat het dialoogvenster met wat er nieuw is automatisch wordt geopend na updates.'
-            },
-            masteringVideo: {
-                name: 'Notebook Navigator beheersen (video)',
-                desc: 'Deze video behandelt alles wat je nodig hebt om productief te zijn in Notebook Navigator, inclusief sneltoetsen, zoeken, tags en geavanceerde aanpassingen.'
             },
             cacheStatistics: {
                 localCache: 'Lokale cache',
@@ -2720,12 +2681,5 @@ export const STRINGS_NL = {
                 exportFailed: 'Exportfouten'
             }
         }
-    },
-    whatsNew: {
-        title: 'Wat is er nieuw in Notebook Navigator',
-        openBannerImage: 'Releasebannerafbeelding openen',
-        supportMessage: 'Als je Notebook Navigator nuttig vindt, overweeg dan om de ontwikkeling te ondersteunen.',
-        supportButton: 'Koop me een koffie',
-        thanksButton: 'Bedankt!'
     }
 };

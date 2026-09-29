@@ -28,7 +28,6 @@ import type {
     SettingDescription
 } from './settings/tabs/SettingsTabContext';
 import { strings } from './i18n';
-import { createStartResourcesSettingDefinitions } from './settings/tabs/StartResourcesSection';
 import { createVaultSetupSettingDefinitions } from './settings/tabs/VaultSetupSection';
 import { createSettingGroupFactory } from './settings/settingGroups';
 import { runAsyncAction } from './utils/async';
@@ -504,7 +503,6 @@ export class NotebookNavigatorSettingTab extends PluginSettingTab {
                 heading: group.getHeading(),
                 items: group.items.map(tabId => this.createNativeSettingsPageDefinition(tabId))
             })),
-            ...createStartResourcesSettingDefinitions(context)
         ];
 
         return this.createNativeDefinitionItems(
