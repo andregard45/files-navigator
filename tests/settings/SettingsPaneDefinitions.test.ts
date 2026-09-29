@@ -109,12 +109,6 @@ const EXPECTED_PANES: Array<{ id: SettingsPaneId; label: string; description: st
         native: true
     },
     {
-        id: 'icon-packs',
-        label: 'Icon packs',
-        description: 'Interface icons, file icons, and icon pack management.',
-        native: true
-    },
-    {
         id: 'advanced',
         label: 'Advanced',
         description: 'Diagnostics, metadata cleanup, import/export, and reset.',

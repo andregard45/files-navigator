@@ -888,10 +888,6 @@ export const STRINGS_JA = {
             propertySetOnNotes: '{count}件のノートでプロパティを更新しました',
             manualSortPropertyRemovedFromNote: '1件のノートから並べ替えプロパティを削除しました',
             manualSortPropertyRemovedFromNotes: '{count}件のノートから並べ替えプロパティを削除しました',
-            iconPackDownloaded: '「{provider}」をダウンロードしました',
-            iconPackUpdated: '「{provider}」を更新しました ({version})',
-            iconPackRemoved: '「{provider}」を削除しました',
-            iconPackLoadFailed: '「{provider}」を読み込めませんでした',
             hiddenFileReveal: 'ファイルは非表示です。表示するには「非表示項目を表示」を有効にしてください'
         },
         confirmations: {
@@ -1160,10 +1156,6 @@ export const STRINGS_JA = {
                     rightSidebar: '右サイドバー'
                 }
             },
-            iconPacks: {
-                label: 'アイコンパック',
-                description: 'インターフェースアイコン、ファイルアイコン、アイコンパック管理。'
-            },
             advanced: {
                 label: '詳細設定',
                 description: '診断、メタデータのクリーンアップ、インポート/エクスポート、リセット。',
@@ -1414,8 +1406,7 @@ export const STRINGS_JA = {
                 desc: '内蔵アイコンまたはアイコンパックのプリセットを選択します。カスタム拡張子ルールはこのプリセットを上書きします。',
                 options: {
                     builtIn: '内蔵アイコン'
-                },
-                notInstalledWarning: 'このアイコンパックはインストールされていません。代わりに内蔵アイコンが表示されます。'
+                }
             },
             fileTypeIconMap: {
                 name: 'ファイルタイプアイコンマップ',
@@ -2577,18 +2568,6 @@ export const STRINGS_JA = {
                 error: 'キャッシュの再構築に失敗しました',
                 indexingTitle: '保管庫をインデックス中...',
                 progress: 'Notebook Navigator のキャッシュを更新しています。'
-            },
-            iconPackManagement: {
-                downloadButton: 'ダウンロード',
-                downloadingLabel: 'ダウンロード中...',
-                removeButton: '削除',
-                statusInstalled: 'ダウンロード済み (バージョン {version})',
-                statusNotInstalled: '未ダウンロード',
-                versionUnknown: '不明',
-                downloadFailed: '{name}のダウンロードに失敗しました。接続を確認してもう一度お試しください。',
-                removeFailed: '{name}の削除に失敗しました。',
-                infoNote:
-                    'ダウンロードしたアイコンパックはデバイス間でインストール状態を同期します。アイコンパックは各デバイスのローカルデータベースに保存されます。同期はダウンロードまたは削除の必要性のみを追跡します。アイコンパックはNotebook Navigatorリポジトリからダウンロードされます (https://github.com/johansan/notebook-navigator/tree/main/icon-assets)。'
             },
             useFrontmatterMetadata: {
                 name: 'フロントマターメタデータを使用',

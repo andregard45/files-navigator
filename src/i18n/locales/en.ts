@@ -881,10 +881,6 @@ export const STRINGS_EN = {
             propertySetOnNotes: 'Updated property on {count} notes',
             manualSortPropertyRemovedFromNote: 'Removed sort property from 1 note',
             manualSortPropertyRemovedFromNotes: 'Removed sort property from {count} notes',
-            iconPackDownloaded: '{provider} downloaded',
-            iconPackUpdated: '{provider} updated ({version})',
-            iconPackRemoved: '{provider} removed',
-            iconPackLoadFailed: 'Failed to load {provider}',
             hiddenFileReveal: 'File is hidden. Enable "Show hidden items" to display it'
         },
         confirmations: {
@@ -1153,10 +1149,6 @@ export const STRINGS_EN = {
                     rightSidebar: 'Right sidebar'
                 }
             },
-            iconPacks: {
-                label: 'Icon packs',
-                description: 'Interface icons, file icons, and icon pack management.'
-            },
             advanced: {
                 label: 'Advanced',
                 description: 'Diagnostics, metadata cleanup, import/export, and reset.',
@@ -1407,8 +1399,7 @@ export const STRINGS_EN = {
                 desc: 'Choose the built-in icons or an icon pack preset. Custom extension rules override this preset.',
                 options: {
                     builtIn: 'Built-in icons'
-                },
-                notInstalledWarning: 'This icon pack is not installed. Built-in icons are shown instead.'
+                }
             },
             fileTypeIconMap: {
                 name: 'File type icon map',
@@ -2569,18 +2560,6 @@ export const STRINGS_EN = {
                 error: 'Failed to rebuild cache',
                 indexingTitle: 'Indexing vault...',
                 progress: 'Updating Notebook Navigator cache.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Download',
-                downloadingLabel: 'Downloading...',
-                removeButton: 'Remove',
-                statusInstalled: 'Downloaded (version {version})',
-                statusNotInstalled: 'Not downloaded',
-                versionUnknown: 'unknown',
-                downloadFailed: 'Failed to download {name}. Check your connection and try again.',
-                removeFailed: 'Failed to remove {name}.',
-                infoNote:
-                    'Downloaded icon packs sync installation state across devices. Icon packs stay in the local database on each device; sync only tracks whether to download or remove them. Icon packs download from the Notebook Navigator repository (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Use frontmatter metadata',

@@ -708,8 +708,7 @@ export const FileItem = React.memo(function FileItem({
                 fileNameIconMap: settings.fileNameIconMap,
                 showCategoryIcons: settings.showCategoryIcons,
                 fileTypeIconMap: settings.fileTypeIconMap,
-                fileTypeIconPreset: settings.fileTypeIconPreset,
-                externalIconProviders: settings.externalIconProviders
+                fileTypeIconPreset: settings.fileTypeIconPreset
             },
             {
                 customIconId: fileIconId ?? folderIconId,
@@ -732,7 +731,6 @@ export const FileItem = React.memo(function FileItem({
         isExternalFile,
         metadataVersion,
         settings.fileNameIconMap,
-        settings.externalIconProviders,
         settings.fileTypeIconPreset,
         settings.fileTypeIconMap,
         settings.showCategoryIcons,
@@ -751,10 +749,9 @@ export const FileItem = React.memo(function FileItem({
             settings.fileTypeIconMap,
             app.metadataCache,
             undefined,
-            settings.fileTypeIconPreset,
-            settings.externalIconProviders
+            settings.fileTypeIconPreset
         );
-    }, [app.metadataCache, file, metadataVersion, settings.externalIconProviders, settings.fileTypeIconMap, settings.fileTypeIconPreset]);
+    }, [app.metadataCache, file, metadataVersion, settings.fileTypeIconMap, settings.fileTypeIconPreset]);
     // Icon to use when dragging the file
     const dragIconId = effectiveFileIconId || dragFallbackIconId;
 

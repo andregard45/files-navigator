@@ -891,10 +891,6 @@ export const STRINGS_PL = {
             propertySetOnNotes: 'Zaktualizowano atrybut w wielu ({count}) notatkach',
             manualSortPropertyRemovedFromNote: 'Usunięto atrybut sortowania z 1 notatki',
             manualSortPropertyRemovedFromNotes: 'Usunięto atrybut sortowania z {count} notatek',
-            iconPackDownloaded: '{provider} pobrano',
-            iconPackUpdated: '{provider} zaktualizowano ({version})',
-            iconPackRemoved: '{provider} usunięto',
-            iconPackLoadFailed: 'Nie udało się wczytać {provider}',
             hiddenFileReveal: 'Plik jest ukryty. Aby go wyświetlić, włącz opcję "Pokaż ukryte elementy".'
         },
         confirmations: {
@@ -1164,10 +1160,6 @@ export const STRINGS_PL = {
                     rightSidebar: 'Prawy pasek boczny'
                 }
             },
-            iconPacks: {
-                label: 'Pakiety ikon',
-                description: 'Ikony interfejsu, ikony plików i zarządzanie pakietami ikon.'
-            },
             advanced: {
                 label: 'Zaawansowane',
                 description: 'Diagnostyka, czyszczenie metadanych, import/eksport i resetowanie.',
@@ -1418,8 +1410,7 @@ export const STRINGS_PL = {
                 desc: 'Wybierz wbudowane ikonki lub ustawienie wstępne pakietu ikonek. Niestandardowe reguły rozszerzeń zastępują to ustawienie wstępne.',
                 options: {
                     builtIn: 'Wbudowane ikonki'
-                },
-                notInstalledWarning: 'Ten pakiet ikonek nie jest zainstalowany. Zamiast niego są wyświetlane wbudowane ikonki.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Przypisanie ikonek na podstawie typu pliku',
@@ -2585,18 +2576,6 @@ export const STRINGS_PL = {
                 error: 'Nie udało się odbudować pamięci podręcznej',
                 indexingTitle: 'Indeksowanie sejfu...',
                 progress: 'Aktualizowanie pamięci podręcznej Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Pobierz',
-                downloadingLabel: 'Pobieranie...',
-                removeButton: 'Usuń',
-                statusInstalled: 'Pobrano (wersja {version})',
-                statusNotInstalled: 'Nie pobrano',
-                versionUnknown: 'nieznana',
-                downloadFailed: 'Nie udało się pobrać {name}. Sprawdź połączenie i spróbuj ponownie.',
-                removeFailed: 'Nie udało się usunąć {name}.',
-                infoNote:
-                    'Pobrane pakiety ikonek synchronizują się między urządzeniami. Pakiety ikonek są przechowywane lokalnie na każdym urządzeniu; synchronizacja śledzi jedynie, czy należy je pobrać, czy usunąć. Pakiety ikonek są pobierane z repozytorium Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Używaj metadanych',

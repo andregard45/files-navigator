@@ -886,10 +886,6 @@ export const STRINGS_VI = {
             propertySetOnNotes: 'Đã cập nhật thuộc tính trên {count} ghi chú',
             manualSortPropertyRemovedFromNote: 'Đã xóa thuộc tính sắp xếp khỏi 1 ghi chú',
             manualSortPropertyRemovedFromNotes: 'Đã xóa thuộc tính sắp xếp khỏi {count} ghi chú',
-            iconPackDownloaded: 'Đã tải {provider}',
-            iconPackUpdated: 'Đã cập nhật {provider} ({version})',
-            iconPackRemoved: 'Đã gỡ {provider}',
-            iconPackLoadFailed: 'Không thể tải {provider}',
             hiddenFileReveal: 'Tệp bị ẩn. Bật "Hiện mục ẩn" để hiển thị'
         },
         confirmations: {
@@ -1158,10 +1154,6 @@ export const STRINGS_VI = {
                     rightSidebar: 'Thanh bên phải'
                 }
             },
-            iconPacks: {
-                label: 'Gói biểu tượng',
-                description: 'Biểu tượng giao diện, biểu tượng tệp và quản lý gói biểu tượng.'
-            },
             advanced: {
                 label: 'Nâng cao',
                 description: 'Chẩn đoán, dọn dẹp metadata, nhập/xuất và đặt lại.',
@@ -1412,8 +1404,7 @@ export const STRINGS_VI = {
                 desc: 'Chọn biểu tượng tích hợp hoặc cài đặt sẵn của gói biểu tượng. Quy tắc phần mở rộng tùy chỉnh ghi đè cài đặt sẵn này.',
                 options: {
                     builtIn: 'Biểu tượng tích hợp'
-                },
-                notInstalledWarning: 'Gói biểu tượng này chưa được cài đặt. Biểu tượng tích hợp sẽ được hiển thị thay thế.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Bản đồ biểu tượng loại tệp',
@@ -2576,18 +2567,6 @@ export const STRINGS_VI = {
                 error: 'Không thể xây dựng lại cache',
                 indexingTitle: 'Đang lập chỉ mục vault...',
                 progress: 'Đang cập nhật cache Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Tải xuống',
-                downloadingLabel: 'Đang tải...',
-                removeButton: 'Gỡ bỏ',
-                statusInstalled: 'Đã tải (phiên bản {version})',
-                statusNotInstalled: 'Chưa tải',
-                versionUnknown: 'không rõ',
-                downloadFailed: 'Không thể tải {name}. Kiểm tra kết nối và thử lại.',
-                removeFailed: 'Không thể gỡ {name}.',
-                infoNote:
-                    'Gói biểu tượng đã tải đồng bộ trạng thái cài đặt giữa các thiết bị. Gói biểu tượng ở trong cơ sở dữ liệu cục bộ trên mỗi thiết bị; đồng bộ chỉ theo dõi tải hay gỡ. Gói biểu tượng tải từ kho Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Dùng metadata frontmatter',

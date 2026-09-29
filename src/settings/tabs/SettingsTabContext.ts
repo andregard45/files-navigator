@@ -35,7 +35,6 @@ export type SettingsTabId =
     | 'files'
     | 'tags'
     | 'properties'
-    | 'icon-packs'
     | 'advanced';
 
 export type AddSettingFunction = (createSetting: (setting: Setting) => void) => Setting;

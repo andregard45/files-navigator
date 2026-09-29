@@ -887,10 +887,6 @@ export const STRINGS_ID = {
             propertySetOnNotes: 'Properti diperbarui pada {count} catatan',
             manualSortPropertyRemovedFromNote: 'Properti urutan dihapus dari 1 catatan',
             manualSortPropertyRemovedFromNotes: 'Properti urutan dihapus dari {count} catatan',
-            iconPackDownloaded: '{provider} diunduh',
-            iconPackUpdated: '{provider} diperbarui ({version})',
-            iconPackRemoved: '{provider} dihapus',
-            iconPackLoadFailed: 'Gagal memuat {provider}',
             hiddenFileReveal: 'File tersembunyi. Aktifkan "Tampilkan item tersembunyi" untuk menampilkannya'
         },
         confirmations: {
@@ -1160,10 +1156,6 @@ export const STRINGS_ID = {
                     rightSidebar: 'Bilah sisi kanan'
                 }
             },
-            iconPacks: {
-                label: 'Paket ikon',
-                description: 'Ikon antarmuka, ikon file, dan manajemen paket ikon.'
-            },
             advanced: {
                 label: 'Lanjutan',
                 description: 'Diagnostik, pembersihan metadata, impor/ekspor, dan pengaturan ulang.',
@@ -1414,8 +1406,7 @@ export const STRINGS_ID = {
                 desc: 'Pilih ikon bawaan atau preset paket ikon. Aturan ekstensi khusus menggantikan preset ini.',
                 options: {
                     builtIn: 'Ikon bawaan'
-                },
-                notInstalledWarning: 'Paket ikon ini belum terpasang. Ikon bawaan ditampilkan sebagai gantinya.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Peta ikon tipe file',
@@ -2578,18 +2569,6 @@ export const STRINGS_ID = {
                 error: 'Gagal membangun ulang cache',
                 indexingTitle: 'Mengindeks vault...',
                 progress: 'Memperbarui cache Notebook Navigator.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Unduh',
-                downloadingLabel: 'Mengunduh...',
-                removeButton: 'Hapus',
-                statusInstalled: 'Diunduh (versi {version})',
-                statusNotInstalled: 'Belum diunduh',
-                versionUnknown: 'tidak diketahui',
-                downloadFailed: 'Gagal mengunduh {name}. Periksa koneksi Anda dan coba lagi.',
-                removeFailed: 'Gagal menghapus {name}.',
-                infoNote:
-                    'Paket ikon yang diunduh menyinkronkan status instalasi di seluruh perangkat. Paket ikon tetap di database lokal di setiap perangkat; sinkronisasi hanya melacak apakah akan mengunduh atau menghapusnya. Paket ikon diunduh dari repositori Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Gunakan metadata frontmatter',

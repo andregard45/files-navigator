@@ -891,10 +891,6 @@ export const STRINGS_NL = {
             propertySetOnNotes: 'Eigenschap bijgewerkt op {count} notities',
             manualSortPropertyRemovedFromNote: 'Sorteereigenschap verwijderd uit 1 notitie',
             manualSortPropertyRemovedFromNotes: 'Sorteereigenschap verwijderd uit {count} notities',
-            iconPackDownloaded: '{provider} gedownload',
-            iconPackUpdated: '{provider} bijgewerkt ({version})',
-            iconPackRemoved: '{provider} verwijderd',
-            iconPackLoadFailed: 'Kan {provider} niet laden',
             hiddenFileReveal: 'Bestand is verborgen. Schakel "Verborgen items tonen" in om het weer te geven'
         },
         confirmations: {
@@ -1165,10 +1161,6 @@ export const STRINGS_NL = {
                     rightSidebar: 'Rechterzijbalk'
                 }
             },
-            iconPacks: {
-                label: 'Pictogrampakketten',
-                description: 'Interfacepictogrammen, bestandspictogrammen en beheer van pictogrampakketten.'
-            },
             advanced: {
                 label: 'Geavanceerd',
                 description: 'Diagnostiek, opschonen van metadata, import/export en herstellen.',
@@ -1419,8 +1411,7 @@ export const STRINGS_NL = {
                 desc: 'Kies de ingebouwde pictogrammen of een voorinstelling voor pictogrampakketten. Aangepaste extensieregels overschrijven deze voorinstelling.',
                 options: {
                     builtIn: 'Ingebouwde pictogrammen'
-                },
-                notInstalledWarning: 'Dit pictogrampakket is niet geïnstalleerd. In plaats daarvan worden ingebouwde pictogrammen getoond.'
+                }
             },
             fileTypeIconMap: {
                 name: 'Toewijzing bestandstype-pictogram',
@@ -2585,18 +2576,6 @@ export const STRINGS_NL = {
                 error: 'Kan cache niet opnieuw opbouwen',
                 indexingTitle: 'Kluis wordt geïndexeerd...',
                 progress: 'Notebook Navigator-cache wordt bijgewerkt.'
-            },
-            iconPackManagement: {
-                downloadButton: 'Downloaden',
-                downloadingLabel: 'Downloaden...',
-                removeButton: 'Verwijderen',
-                statusInstalled: 'Gedownload (versie {version})',
-                statusNotInstalled: 'Niet gedownload',
-                versionUnknown: 'onbekend',
-                downloadFailed: 'Kan {name} niet downloaden. Controleer je verbinding en probeer opnieuw.',
-                removeFailed: 'Kan {name} niet verwijderen.',
-                infoNote:
-                    'Gedownloade pictogrampakketten synchroniseren installatiestatus tussen apparaten. Pictogrampakketten blijven in de lokale database op elk apparaat; synchronisatie houdt alleen bij of ze moeten worden gedownload of verwijderd. Pictogrampakketten downloaden van de Notebook Navigator repository (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'Frontmatter-metadata gebruiken',

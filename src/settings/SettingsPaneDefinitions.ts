@@ -24,7 +24,6 @@ import { createFoldersAndFolderNotesSettingDefinitions, createTagsPropertiesSett
 import { createDisplayFiltersSettingDefinitions } from './tabs/DisplayFiltersTab';
 import { createFilesSettingDefinitions } from './tabs/FilesTab';
 import { createFrontmatterSettingDefinitions } from './tabs/FrontmatterTab';
-import { createIconPacksSettingDefinitions } from './tabs/IconPacksTab';
 import { createListPaneSettingDefinitions } from './tabs/ListTab';
 import { createNavigationPaneSettingDefinitions } from './tabs/NavigationTab';
 import { createNotesSettingDefinitions } from './tabs/NotesTab';
@@ -38,7 +37,6 @@ import { renderDisplayFiltersTab } from './tabs/legacy/DisplayFiltersLegacyTab';
 import { renderFilesTab } from './tabs/legacy/FilesLegacyTab';
 import { renderFrontmatterTab } from './tabs/legacy/FrontmatterLegacyTab';
 import { renderGeneralTab } from './tabs/legacy/GeneralLegacyTab';
-import { renderIconPacksTab } from './tabs/legacy/IconPacksLegacyTab';
 import { renderListPaneTab } from './tabs/legacy/ListLegacyTab';
 import { renderNavigationPaneTab } from './tabs/legacy/NavigationLegacyTab';
 import { renderNotesTab } from './tabs/legacy/NotesLegacyTab';
@@ -77,7 +75,7 @@ export const SETTINGS_PAGE_GROUP_DEFINITIONS: SettingsPageGroupDefinition[] = [
     },
     {
         getHeading: () => strings.settings.pageGroups.calendarAndTools,
-        items: ['calendar', 'icon-packs', 'advanced']
+        items: ['calendar', 'advanced']
     }
 ];
 
@@ -165,13 +163,6 @@ const SETTINGS_PANE_DEFINITIONS: SettingsPaneDefinition[] = [
         getDescription: () => strings.settings.pages.calendar.description,
         render: renderCalendarTab,
         createDefinitions: createCalendarSettingDefinitions
-    },
-    {
-        id: 'icon-packs',
-        getLabel: () => strings.settings.pages.iconPacks.label,
-        getDescription: () => strings.settings.pages.iconPacks.description,
-        render: renderIconPacksTab,
-        createDefinitions: createIconPacksSettingDefinitions
     },
     {
         id: 'advanced',

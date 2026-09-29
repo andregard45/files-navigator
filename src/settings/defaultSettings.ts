@@ -233,9 +233,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     deleteAttachments: 'ask',
     moveFileConflicts: 'ask',
 
-    // Icon packs tab
-    externalIconProviders: sanitizeRecord<boolean>(undefined),
-
     // Navigation pane tab - Appearance
     pinNavigationBanner: true,
     showNoteCount: true,

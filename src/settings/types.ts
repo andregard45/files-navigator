@@ -778,9 +778,6 @@ export interface NotebookNavigatorSettings {
     deleteAttachments: DeleteAttachmentsSetting;
     moveFileConflicts: MoveFileConflictsSetting;
 
-    // Icon packs tab
-    externalIconProviders: Record<string, boolean>;
-
     // Navigation pane tab - Appearance
     pinNavigationBanner: boolean;
     showNoteCount: boolean;

@@ -44,8 +44,6 @@ import { FileSystemOperations } from './services/FileSystemService';
 import { getIconService } from './services/icons';
 import { VaultIconProvider } from './services/icons/providers/VaultIconProvider';
 import { RecentNotesService } from './services/RecentNotesService';
-import type { ExternalIconProviderController } from './services/icons/external/ExternalIconProviderController';
-import type { ExternalIconProviderId } from './services/icons/external/providerRegistry';
 import type { NavigateToFolderOptions } from './hooks/useNavigatorReveal';
 import { isNotebookNavigatorCalendarView, isNotebookNavigatorView } from './view/viewGuards';
 import { LEGACY_STORAGE_KEYS, localStorage } from './utils/localStorage';
@@ -134,7 +132,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     public settings: NotebookNavigatorSettings = { ...DEFAULT_SETTINGS };
     fileSystemOps: FileSystemOperations | null = null;
     omnisearchService: OmnisearchService | null = null;
-    externalIconController: ExternalIconProviderController | null = null;
     api: NotebookNavigatorAPI | null = null;
     recentNotesService: RecentNotesService | null = null;
     // Keys used for persisting UI state in browser localStorage
@@ -700,17 +697,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         });
         const iconService = getIconService();
         iconService.registerProvider(new VaultIconProvider(this.app));
-        if (this.hasEnabledExternalIconProviders()) {
-            this.syncExternalIconController();
-        }
-
-        // Re-sync icon settings when settings update
-        this.registerSettingsUpdateListener('external-icon-controller', () => {
-            if (this.externalIconController || this.hasEnabledExternalIconProviders()) {
-                this.syncExternalIconController();
-            }
-        });
-
         // Register view
         this.registerView(NOTEBOOK_NAVIGATOR_VIEW, leaf => {
             // eslint-disable-next-line @typescript-eslint/no-require-imports -- Obsidian registerView callbacks must construct views synchronously.
@@ -1156,56 +1142,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         await view.rebuildCache();
     }
 
-    public isExternalIconProviderInstalled(providerId: ExternalIconProviderId): boolean {
-        return this.externalIconController?.isProviderInstalled(providerId) ?? false;
-    }
-
-    public isExternalIconProviderDownloading(providerId: ExternalIconProviderId): boolean {
-        return this.externalIconController?.isProviderDownloading(providerId) ?? false;
-    }
-
-    public getExternalIconProviderVersion(providerId: ExternalIconProviderId): string | null {
-        return this.externalIconController?.getProviderVersion(providerId) ?? null;
-    }
-
-    public async downloadExternalIconProvider(providerId: ExternalIconProviderId): Promise<void> {
-        await this.getExternalIconController().installProvider(providerId);
-    }
-
-    public async removeExternalIconProvider(providerId: ExternalIconProviderId): Promise<void> {
-        await this.getExternalIconController().removeProvider(providerId);
-    }
-
-    private hasEnabledExternalIconProviders(): boolean {
-        const providers = sanitizeRecord(this.settings.externalIconProviders);
-        return Object.values(providers).some(Boolean);
-    }
-
-    private getExternalIconController(): ExternalIconProviderController {
-        if (!this.externalIconController) {
-            const { ExternalIconProviderController } =
-                // eslint-disable-next-line @typescript-eslint/no-require-imports -- External icon pack controller is only needed when packs are enabled or managed.
-                require('./services/icons/external/ExternalIconProviderController') as typeof import('./services/icons/external/ExternalIconProviderController');
-            this.externalIconController = new ExternalIconProviderController(this.app, getIconService(), this);
-        }
-        return this.externalIconController;
-    }
-
-    private syncExternalIconController(): void {
-        runAsyncAction(
-            async () => {
-                const controller = this.getExternalIconController();
-                await controller.initialize();
-                await controller.syncWithSettings();
-            },
-            {
-                onError: (error: unknown) => {
-                    console.error('External icon controller init failed:', error);
-                }
-            }
-        );
-    }
-
     /**
      * Register a callback to be notified when files are renamed
      * Used by React views to update selection state
@@ -1312,11 +1248,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Clear all listeners first to prevent any callbacks during cleanup
         this.settingsUpdateListeners.clear();
         this.fileRenameListeners.clear();
-
-        if (this.externalIconController) {
-            this.externalIconController.dispose();
-            this.externalIconController = null;
-        }
 
         // Clean up the metadata service
         if (this.metadataService) {

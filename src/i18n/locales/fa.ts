@@ -887,10 +887,6 @@ export const STRINGS_FA = {
             propertySetOnNotes: 'ویژگی در {count} یادداشت به‌روزرسانی شد',
             manualSortPropertyRemovedFromNote: 'ویژگی مرتب‌سازی از ۱ یادداشت حذف شد',
             manualSortPropertyRemovedFromNotes: 'ویژگی مرتب‌سازی از {count} یادداشت حذف شد',
-            iconPackDownloaded: '{provider} دانلود شد',
-            iconPackUpdated: '{provider} به‌روزرسانی شد ({version})',
-            iconPackRemoved: '{provider} حذف شد',
-            iconPackLoadFailed: 'بارگذاری {provider} ناموفق بود',
             hiddenFileReveal: 'فایل مخفی است. «نمایش آیتم‌های مخفی» را فعال کنید'
         },
         confirmations: {
@@ -1159,10 +1155,6 @@ export const STRINGS_FA = {
                     rightSidebar: 'نوار کناری راست'
                 }
             },
-            iconPacks: {
-                label: 'بسته‌های آیکون',
-                description: 'آیکون‌های رابط کاربری، آیکون‌های فایل و مدیریت بسته‌های آیکون.'
-            },
             advanced: {
                 label: 'پیشرفته',
                 description: 'تشخیص، پاکسازی متادیتا، واردکردن/صادرکردن و بازنشانی.',
@@ -1413,8 +1405,7 @@ export const STRINGS_FA = {
                 desc: 'آیکون‌های داخلی یا یک پیش‌تنظیم بسته آیکون را انتخاب کنید. قوانین سفارشی پسوند این پیش‌تنظیم را بازنویسی می‌کنند.',
                 options: {
                     builtIn: 'آیکون‌های داخلی'
-                },
-                notInstalledWarning: 'این بسته آیکون نصب نشده است. به‌جای آن آیکون‌های داخلی نمایش داده می‌شوند.'
+                }
             },
             fileTypeIconMap: {
                 name: 'نگاشت آیکون نوع فایل',
@@ -2577,18 +2568,6 @@ export const STRINGS_FA = {
                 error: 'بازسازی کش ناموفق بود',
                 indexingTitle: 'در حال نمایه\u200cسازی خزانه...',
                 progress: 'Notebook Navigator در حال به\u200cروزرسانی کش است.'
-            },
-            iconPackManagement: {
-                downloadButton: 'دانلود',
-                downloadingLabel: 'در حال دانلود...',
-                removeButton: 'حذف',
-                statusInstalled: 'دانلود شده (نسخه {version})',
-                statusNotInstalled: 'دانلود نشده',
-                versionUnknown: 'ناشناخته',
-                downloadFailed: 'دانلود {name} ناموفق بود. اتصال خود را بررسی کنید و دوباره تلاش کنید.',
-                removeFailed: 'حذف {name} ناموفق بود.',
-                infoNote:
-                    'بسته‌های آیکون دانلود شده وضعیت نصب را بین دستگاه‌ها همگام می‌کنند. بسته‌های آیکون در پایگاه داده محلی هر دستگاه می‌مانند؛ همگام‌سازی فقط پیگیری می‌کند آیا دانلود یا حذف شوند. بسته‌های آیکون از مخزن Notebook Navigator دانلود می‌شوند (https://github.com/johansan/notebook-navigator/tree/main/icon-assets).'
             },
             useFrontmatterMetadata: {
                 name: 'استفاده از متادیتای فرانت‌متر',

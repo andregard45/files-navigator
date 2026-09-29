@@ -880,10 +880,6 @@ export const STRINGS_TH = {
             propertySetOnNotes: 'อัปเดตคุณสมบัติใน {count} โน้ต',
             manualSortPropertyRemovedFromNote: 'ลบคุณสมบัติการจัดเรียงจาก 1 โน้ตแล้ว',
             manualSortPropertyRemovedFromNotes: 'ลบคุณสมบัติการจัดเรียงจาก {count} โน้ตแล้ว',
-            iconPackDownloaded: 'ดาวน์โหลด {provider} แล้ว',
-            iconPackUpdated: 'อัปเดต {provider} แล้ว ({version})',
-            iconPackRemoved: 'นำ {provider} ออกแล้ว',
-            iconPackLoadFailed: 'โหลด {provider} ล้มเหลว',
             hiddenFileReveal: 'ไฟล์ซ่อนอยู่ เปิดใช้งาน "แสดงรายการที่ซ่อน" เพื่อแสดง'
         },
         confirmations: {
@@ -1152,10 +1148,6 @@ export const STRINGS_TH = {
                     rightSidebar: 'แถบด้านขวา'
                 }
             },
-            iconPacks: {
-                label: 'ชุดไอคอน',
-                description: 'ไอคอนอินเทอร์เฟซ ไอคอนไฟล์ และการจัดการชุดไอคอน'
-            },
             advanced: {
                 label: 'ขั้นสูง',
                 description: 'การวินิจฉัย การล้างข้อมูลเมตา การนำเข้า/ส่งออก และการรีเซ็ต',
@@ -1406,8 +1398,7 @@ export const STRINGS_TH = {
                 desc: 'เลือกไอคอนในตัวหรือค่าที่ตั้งไว้ล่วงหน้าของชุดไอคอน กฎนามสกุลแบบกำหนดเองจะเขียนทับค่านี้',
                 options: {
                     builtIn: 'ไอคอนในตัว'
-                },
-                notInstalledWarning: 'ยังไม่ได้ติดตั้งชุดไอคอนนี้ จะแสดงไอคอนในตัวแทน'
+                }
             },
             fileTypeIconMap: {
                 name: 'แผนที่ไอคอนประเภทไฟล์',
@@ -2569,18 +2560,6 @@ export const STRINGS_TH = {
                 error: 'สร้างแคชใหม่ล้มเหลว',
                 indexingTitle: 'กำลังสร้างดัชนีห้องนิรภัย...',
                 progress: 'Notebook Navigator กำลังอัปเดตแคช'
-            },
-            iconPackManagement: {
-                downloadButton: 'ดาวน์โหลด',
-                downloadingLabel: 'กำลังดาวน์โหลด...',
-                removeButton: 'นำออก',
-                statusInstalled: 'ดาวน์โหลดแล้ว (เวอร์ชัน {version})',
-                statusNotInstalled: 'ยังไม่ดาวน์โหลด',
-                versionUnknown: 'ไม่ทราบ',
-                downloadFailed: 'ดาวน์โหลด {name} ล้มเหลว ตรวจสอบการเชื่อมต่อและลองอีกครั้ง',
-                removeFailed: 'นำ {name} ออกล้มเหลว',
-                infoNote:
-                    'ชุดไอคอนที่ดาวน์โหลดจะซิงค์สถานะการติดตั้งระหว่างอุปกรณ์ ชุดไอคอนอยู่ในฐานข้อมูลท้องถิ่นของแต่ละอุปกรณ์; การซิงค์ติดตามเฉพาะว่าจะดาวน์โหลดหรือนำออก ชุดไอคอนดาวน์โหลดจากที่เก็บ Notebook Navigator (https://github.com/johansan/notebook-navigator/tree/main/icon-assets)'
             },
             useFrontmatterMetadata: {
                 name: 'ใช้เมตาดาต้า frontmatter',
