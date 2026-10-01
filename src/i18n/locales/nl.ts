@@ -98,11 +98,6 @@ export const STRINGS_NL = {
         ariaLabel: 'Kalender',
         dailyNotesNotEnabled: 'De core plug-in Dagelijkse notities is niet ingeschakeld.',
         noteHiddenByProfile: 'De kalendernotitie is verborgen door het huidige kluisprofiel.',
-        createDailyNote: {
-            title: 'Nieuwe dagelijkse notitie',
-            message: 'Bestand {filename} bestaat niet. Wil je het aanmaken?',
-            confirmButton: 'Aanmaken'
-        },
         helpModal: {
             title: 'Kalendersneltoetsen',
             items: [
@@ -1611,10 +1606,6 @@ export const STRINGS_NL = {
                 name: 'Recente bestanden met snelkoppelingen vastpinnen',
                 desc: 'Recente bestanden opnemen wanneer snelkoppelingen zijn vastgepind.'
             },
-            enableCalendar: {
-                name: 'Kalender inschakelen',
-                desc: 'Kalenderfuncties van Notebook Navigator inschakelen.'
-            },
             calendarPlacement: {
                 name: 'Kalenderpositie',
                 desc: 'Weergeven in de linker- of rechterzijbalk.',
@@ -1698,14 +1689,6 @@ export const STRINGS_NL = {
             calendarShowYearCalendar: {
                 name: 'Jaarkalender tonen',
                 desc: 'Jaarnavigatie en maandraster weergeven in de rechterzijbalk.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Bevestigen voor aanmaken',
-                desc: 'Toon een bevestigingsdialoog bij het aanmaken van een nieuwe dagelijkse notitie.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Verborgen items tonen',
-                desc: 'Indien ingeschakeld, toont de kalender altijd alle kalendernotities, inclusief notities die door de filters van het kluisprofiel zijn verborgen.'
             },
             dailyNoteSource: {
                 name: 'Bron voor dagelijkse notities',

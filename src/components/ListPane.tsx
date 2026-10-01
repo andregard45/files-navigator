@@ -332,8 +332,7 @@ export const ListPane = React.memo(
         const uiState = useUIState();
         const isVerticalDualPane = !uiState.singlePane && uiState.effectiveDualPaneOrientation === 'vertical';
         const calendarPlacement = settings.calendarPlacement;
-        const shouldRenderCalendarOverlay =
-            settings.calendarEnabled && calendarPlacement === 'left-sidebar' && showCalendar && isVerticalDualPane;
+        const shouldRenderCalendarOverlay = calendarPlacement === 'left-sidebar' && showCalendar && isVerticalDualPane;
         const listPaneRef = useRef<HTMLDivElement | null>(null);
         const hoverPointerClientPositionRef = useRef<PointerClientPosition | null>(null);
         // Android uses toolbar at top, iOS at bottom

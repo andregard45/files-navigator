@@ -185,7 +185,6 @@ export const NavigationPane = React.memo(
         const showCalendar = uxPreferences.showCalendar;
         const isVerticalDualPane = !uiState.singlePane && uiState.effectiveDualPaneOrientation === 'vertical';
         const shouldRenderCalendarOverlay =
-            settings.calendarEnabled &&
             settings.calendarPlacement === 'left-sidebar' &&
             showCalendar &&
             ((!uiState.singlePane && !isVerticalDualPane) ||

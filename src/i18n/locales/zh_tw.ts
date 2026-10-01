@@ -96,11 +96,6 @@ export const STRINGS_ZH_TW = {
         ariaLabel: '導覽日曆',
         dailyNotesNotEnabled: '未啟用每日筆記核心外掛程式。',
         noteHiddenByProfile: '日曆筆記已被目前的儲存庫設定檔隱藏。',
-        createDailyNote: {
-            title: '建立每日筆記',
-            message: '每日筆記 {filename} 不存在。是否建立？',
-            confirmButton: '建立'
-        },
         helpModal: {
             title: '日曆快捷鍵',
             items: [
@@ -1594,10 +1589,6 @@ export const STRINGS_ZH_TW = {
                 name: '將最近檔案與捷徑一起釘選',
                 desc: '釘選捷徑時包含最近檔案。'
             },
-            enableCalendar: {
-                name: '啟用日曆',
-                desc: '啟用 Notebook Navigator 的日曆功能。'
-            },
             calendarPlacement: {
                 name: '日曆位置',
                 desc: '在左側邊欄或右側邊欄中顯示。',
@@ -1680,14 +1671,6 @@ export const STRINGS_ZH_TW = {
             calendarShowYearCalendar: {
                 name: '顯示年曆',
                 desc: '在右側邊欄中顯示年份導覽和月份網格。'
-            },
-            calendarConfirmBeforeCreate: {
-                name: '建立前確認',
-                desc: '建立新的每日筆記時顯示確認對話方塊。'
-            },
-            calendarShowHiddenItems: {
-                name: '顯示隱藏項目',
-                desc: '啟用時，日曆一律顯示所有日曆筆記，包括被儲存庫設定檔篩選器隱藏的筆記。'
             },
             dailyNoteSource: {
                 name: '每日筆記來源',

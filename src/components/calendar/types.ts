@@ -35,12 +35,12 @@ export interface CalendarHoverTooltipState {
 }
 
 /**
- * Calendar note state keeps the vault result separate from profile visibility.
+ * Calendar note state. Calendar notes are always shown, so profile visibility filters never hide them.
  *
- * - `existingFile` retains an existing hidden file so clicks never attempt to create the same path.
+ * - `existingFile` is the vault result for the target path (may be null when the note does not exist).
  * - `visibleFile` is the file the calendar may render, preview, count, or mark as active.
- * - `isHidden` blocks open and create actions until hidden items are shown.
- * - `targetPath` identifies the destination even when no file exists, so hidden folders also block creation.
+ * - `isHidden` is always false; it remains in the type because downstream action guards read it.
+ * - `targetPath` identifies the destination even when no file exists.
  */
 export interface CalendarNoteTarget {
     existingFile: TFile | null;

@@ -63,17 +63,6 @@ export function renderCalendarDisplaySections(
 
     const topGroup = createGroup(undefined);
 
-    topGroup
-        .addSetting(setting => {
-            setting.setName(strings.settings.items.enableCalendar.name).setDesc(strings.settings.items.enableCalendar.desc);
-        })
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.calendarEnabled).onChange(async value => {
-                plugin.settings.calendarEnabled = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
     const calendarPlacementSetting = topGroup.addSetting(setting => {
         setting.setName(strings.settings.items.calendarPlacement.name).setDesc(strings.settings.items.calendarPlacement.desc);
     });
@@ -93,32 +82,6 @@ export function renderCalendarDisplaySections(
     });
 
     addSettingSyncModeToggle({ setting: calendarPlacementSetting, plugin, settingId: 'calendarPlacement' });
-
-    topGroup
-        .addSetting(setting => {
-            setting
-                .setName(strings.settings.items.calendarConfirmBeforeCreate.name)
-                .setDesc(strings.settings.items.calendarConfirmBeforeCreate.desc);
-        })
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.calendarConfirmBeforeCreate).onChange(async value => {
-                plugin.settings.calendarConfirmBeforeCreate = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    topGroup
-        .addSetting(setting => {
-            setting
-                .setName(strings.settings.items.calendarShowHiddenItems.name)
-                .setDesc(strings.settings.items.calendarShowHiddenItems.desc);
-        })
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.calendarShowHiddenItems).onChange(async value => {
-                plugin.settings.calendarShowHiddenItems = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
 
     const appearanceGroup = createGroup(strings.settings.pages.calendar.groups.appearance);
     const momentApi = getMomentApi();

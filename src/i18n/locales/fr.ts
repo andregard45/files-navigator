@@ -97,11 +97,6 @@ export const STRINGS_FR = {
         ariaLabel: 'Calendrier',
         dailyNotesNotEnabled: "Le plugin de notes quotidiennes n'est pas activé.",
         noteHiddenByProfile: 'La note du calendrier est masquée par le profil de coffre actuel.',
-        createDailyNote: {
-            title: 'Nouvelle note quotidienne',
-            message: "Le fichier {filename} n'existe pas. Voulez-vous le créer ?",
-            confirmButton: 'Créer'
-        },
         helpModal: {
             title: 'Raccourcis du calendrier',
             items: [
@@ -1612,10 +1607,6 @@ export const STRINGS_FR = {
                 name: 'Épingler les fichiers récents avec les raccourcis',
                 desc: "Inclure les fichiers récents lors de l'épinglage des raccourcis."
             },
-            enableCalendar: {
-                name: 'Activer le calendrier',
-                desc: 'Activer les fonctionnalités de calendrier de Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Emplacement du calendrier',
                 desc: 'Afficher dans la barre latérale gauche ou droite.',
@@ -1699,14 +1690,6 @@ export const STRINGS_FR = {
             calendarShowYearCalendar: {
                 name: 'Afficher le calendrier annuel',
                 desc: 'Afficher la navigation annuelle et la grille des mois dans la barre latérale droite.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Confirmer avant de créer une note',
-                desc: "Afficher une boîte de dialogue de confirmation lors de la création d'une nouvelle note quotidienne."
-            },
-            calendarShowHiddenItems: {
-                name: 'Afficher les éléments masqués',
-                desc: "Lorsqu'activé, le calendrier affiche toujours toutes les notes du calendrier, y compris les notes masquées par les filtres du profil de coffre."
             },
             dailyNoteSource: {
                 name: 'Source des notes quotidiennes',

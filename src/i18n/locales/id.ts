@@ -97,11 +97,6 @@ export const STRINGS_ID = {
         ariaLabel: 'Kalender',
         dailyNotesNotEnabled: 'Plugin catatan harian tidak diaktifkan.',
         noteHiddenByProfile: 'Catatan kalender disembunyikan oleh profil vault saat ini.',
-        createDailyNote: {
-            title: 'Catatan harian baru',
-            message: 'File {filename} tidak ada. Apakah Anda ingin membuatnya?',
-            confirmButton: 'Buat'
-        },
         helpModal: {
             title: 'Pintasan kalender',
             items: [
@@ -1606,10 +1601,6 @@ export const STRINGS_ID = {
                 name: 'Sematkan file terbaru bersama pintasan',
                 desc: 'Sertakan file terbaru saat pintasan disematkan.'
             },
-            enableCalendar: {
-                name: 'Aktifkan kalender',
-                desc: 'Aktifkan fitur kalender Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Penempatan kalender',
                 desc: 'Tampilkan di bilah sisi kiri atau kanan.',
@@ -1693,14 +1684,6 @@ export const STRINGS_ID = {
             calendarShowYearCalendar: {
                 name: 'Tampilkan kalender tahunan',
                 desc: 'Tampilkan navigasi tahun dan kisi bulan di bilah sisi kanan.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Konfirmasi sebelum membuat catatan baru',
-                desc: 'Tampilkan dialog konfirmasi saat membuat catatan harian baru.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Tampilkan item tersembunyi',
-                desc: 'Saat diaktifkan, kalender selalu menampilkan semua catatan kalender, termasuk catatan yang disembunyikan oleh filter profil vault.'
             },
             dailyNoteSource: {
                 name: 'Sumber catatan harian',

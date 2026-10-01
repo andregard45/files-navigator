@@ -96,11 +96,6 @@ export const STRINGS_KO = {
         ariaLabel: '달력',
         dailyNotesNotEnabled: '일일 노트 코어 플러그인이 활성화되어 있지 않습니다.',
         noteHiddenByProfile: '캘린더 노트가 현재 보관함 프로필에서 숨겨져 있습니다.',
-        createDailyNote: {
-            title: '새 일일 노트',
-            message: '파일 {filename}이(가) 존재하지 않습니다. 생성하시겠습니까?',
-            confirmButton: '생성'
-        },
         helpModal: {
             title: '캘린더 단축키',
             items: [
@@ -1602,10 +1597,6 @@ export const STRINGS_KO = {
                 name: '바로가기와 함께 최근 파일 고정',
                 desc: '바로가기를 고정할 때 최근 파일을 포함합니다.'
             },
-            enableCalendar: {
-                name: '캘린더 활성화',
-                desc: 'Notebook Navigator의 캘린더 기능을 활성화합니다.'
-            },
             calendarPlacement: {
                 name: '캘린더 위치',
                 desc: '왼쪽 또는 오른쪽 사이드바에 표시합니다.',
@@ -1688,14 +1679,6 @@ export const STRINGS_KO = {
             calendarShowYearCalendar: {
                 name: '연간 캘린더 표시',
                 desc: '오른쪽 사이드바에 연도 탐색 및 월 그리드를 표시합니다.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: '생성 전 확인',
-                desc: '새 일일 노트를 생성할 때 확인 대화 상자를 표시합니다.'
-            },
-            calendarShowHiddenItems: {
-                name: '숨겨진 항목 표시',
-                desc: '활성화하면 캘린더에 항상 모든 캘린더 노트가 표시되며, 보관함 프로필 필터로 숨겨진 노트도 포함됩니다.'
             },
             dailyNoteSource: {
                 name: '일일 노트 소스',

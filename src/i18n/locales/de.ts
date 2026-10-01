@@ -96,11 +96,6 @@ export const STRINGS_DE = {
         ariaLabel: 'Kalender',
         dailyNotesNotEnabled: 'Das Kernplugin für tägliche Notizen ist nicht aktiviert.',
         noteHiddenByProfile: 'Die Kalendernotiz ist durch das aktuelle Vault-Profil ausgeblendet.',
-        createDailyNote: {
-            title: 'Neue tägliche Notiz',
-            message: 'Datei {filename} existiert nicht. Möchtest du sie erstellen?',
-            confirmButton: 'Erstellen'
-        },
         helpModal: {
             title: 'Kalender-Tastenkürzel',
             items: [
@@ -1610,10 +1605,6 @@ export const STRINGS_DE = {
                 name: 'Zuletzt verwendete Dateien mit Verknüpfungen anheften',
                 desc: 'Zuletzt verwendete Dateien beim Anheften von Verknüpfungen einbeziehen.'
             },
-            enableCalendar: {
-                name: 'Kalender aktivieren',
-                desc: 'Kalenderfunktionen von Notebook Navigator aktivieren.'
-            },
             calendarPlacement: {
                 name: 'Kalenderposition',
                 desc: 'Anzeige in der linken oder rechten Seitenleiste.',
@@ -1697,14 +1688,6 @@ export const STRINGS_DE = {
             calendarShowYearCalendar: {
                 name: 'Jahreskalender anzeigen',
                 desc: 'Jahresnavigation und Monatsraster in der rechten Seitenleiste anzeigen.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Vor Erstellung bestätigen',
-                desc: 'Bestätigungsdialog beim Erstellen einer neuen täglichen Notiz anzeigen.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Ausgeblendete Elemente anzeigen',
-                desc: 'Wenn aktiviert, zeigt der Kalender immer alle Kalendernotizen, einschließlich Notizen, die durch Filter des Vault-Profils ausgeblendet sind.'
             },
             dailyNoteSource: {
                 name: 'Tagesnotiz-Quelle',

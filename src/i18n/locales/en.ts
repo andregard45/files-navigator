@@ -97,11 +97,6 @@ export const STRINGS_EN = {
         ariaLabel: 'Calendar',
         dailyNotesNotEnabled: 'Daily notes core plugin is not enabled.',
         noteHiddenByProfile: 'Calendar note is hidden by the current vault profile.',
-        createDailyNote: {
-            title: 'New daily note',
-            message: 'File {filename} does not exist. Would you like to create it?',
-            confirmButton: 'Create'
-        },
         helpModal: {
             title: 'Calendar shortcuts',
             items: [
@@ -1599,10 +1594,6 @@ export const STRINGS_EN = {
                 name: 'Pin recent files with shortcuts',
                 desc: 'Include recent files when shortcuts are pinned.'
             },
-            enableCalendar: {
-                name: 'Enable calendar',
-                desc: 'Enable calendar features of Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Calendar placement',
                 desc: 'Display in the left or right sidebar.',
@@ -1685,14 +1676,6 @@ export const STRINGS_EN = {
             calendarShowYearCalendar: {
                 name: 'Show year calendar',
                 desc: 'Display year navigation and month grid in the right sidebar.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Confirm before creating new note',
-                desc: 'Show a confirmation dialog when creating a new daily note.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Show hidden items',
-                desc: 'When enabled, the calendar always shows all calendar notes, including notes hidden by vault profile filters.'
             },
             dailyNoteSource: {
                 name: 'Daily note source',

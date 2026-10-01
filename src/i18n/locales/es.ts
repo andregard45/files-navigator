@@ -96,11 +96,6 @@ export const STRINGS_ES = {
         ariaLabel: 'Calendario',
         dailyNotesNotEnabled: 'El complemento principal de notas diarias no está habilitado.',
         noteHiddenByProfile: 'La nota del calendario está oculta por el perfil de bóveda actual.',
-        createDailyNote: {
-            title: 'Nueva nota diaria',
-            message: 'El archivo {filename} no existe. ¿Deseas crearlo?',
-            confirmButton: 'Crear'
-        },
         helpModal: {
             title: 'Atajos del calendario',
             items: [
@@ -1611,10 +1606,6 @@ export const STRINGS_ES = {
                 name: 'Fijar archivos recientes con accesos directos',
                 desc: 'Incluir archivos recientes cuando se fijan los accesos directos.'
             },
-            enableCalendar: {
-                name: 'Activar calendario',
-                desc: 'Activar las funciones de calendario de Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Ubicación del calendario',
                 desc: 'Mostrar en la barra lateral izquierda o derecha.',
@@ -1698,14 +1689,6 @@ export const STRINGS_ES = {
             calendarShowYearCalendar: {
                 name: 'Mostrar calendario anual',
                 desc: 'Mostrar navegación anual y cuadrícula de meses en la barra lateral derecha.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Confirmar antes de crear nueva nota',
-                desc: 'Mostrar un diálogo de confirmación al crear una nueva nota diaria.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Mostrar elementos ocultos',
-                desc: 'Cuando está habilitado, el calendario siempre muestra todas las notas del calendario, incluidas las notas ocultas por los filtros del perfil de bóveda.'
             },
             dailyNoteSource: {
                 name: 'Fuente de notas diarias',

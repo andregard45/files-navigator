@@ -19,7 +19,6 @@
 import { normalizePath, type TFile } from 'obsidian';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { escapeMomentLiteralPath } from '../../utils/calendarCustomNotePatterns';
-import { isPathInExcludedFolder } from '../../utils/fileFilters';
 import {
     buildCustomCalendarFilePathForPattern,
     buildCustomCalendarMomentPattern,
@@ -44,9 +43,6 @@ export interface CalendarNoteRootFolderSettings {
 interface ResolveCalendarNoteTargetOptions {
     existingFile: TFile | null;
     targetPath: string | null;
-    hiddenFolders: string[];
-    showHiddenItems: boolean;
-    isExistingFileVisible: (file: TFile) => boolean;
 }
 
 interface ResolveCalendarNotePathOptions {
@@ -202,29 +198,17 @@ export function resolveCalendarNotePath({
 }
 
 /**
- * Resolves the four calendar target states without discarding an existing hidden file.
+ * Resolves the calendar target states. Calendar notes are always treated as shown, so vault
+ * profile filters never hide existing notes or block creating them in hidden folders.
  *
- * - Existing and visible: both file fields contain the file and actions may open it.
- * - Existing and hidden: only `existingFile` contains the file and actions are blocked.
- * - Missing and visible: both file fields are null and actions may create the target.
- * - Missing and hidden: both file fields are null and actions are blocked because the destination folder is hidden.
+ * - Existing: both file fields contain the file and actions may open it.
+ * - Missing: both file fields are null and actions may create the target.
  */
-export function resolveCalendarNoteTarget({
-    existingFile,
-    targetPath,
-    hiddenFolders,
-    showHiddenItems,
-    isExistingFileVisible
-}: ResolveCalendarNoteTargetOptions): CalendarNoteTarget {
-    const isHidden =
-        !showHiddenItems &&
-        ((targetPath !== null && hiddenFolders.length > 0 && isPathInExcludedFolder(targetPath, hiddenFolders)) ||
-            (existingFile !== null && !isExistingFileVisible(existingFile)));
-
+export function resolveCalendarNoteTarget({ existingFile, targetPath }: ResolveCalendarNoteTargetOptions): CalendarNoteTarget {
     return {
         existingFile,
-        visibleFile: isHidden ? null : existingFile,
-        isHidden,
+        visibleFile: existingFile,
+        isHidden: false,
         targetPath
     };
 }
