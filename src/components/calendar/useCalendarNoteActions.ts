@@ -19,12 +19,11 @@
 import React, { useCallback, useRef } from 'react';
 import { App, Menu, TFile, type PaneType } from 'obsidian';
 import { strings } from '../../i18n';
-import { ConfirmModal } from '../../modals/ConfirmModal';
 import type { CommandQueueService } from '../../services/CommandQueueService';
 import type { FileSystemOperations } from '../../services/FileSystemService';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { runAsyncAction } from '../../utils/async';
-import { createDailyNote, getDailyNoteFilename, getDailyNotePath, type DailyNoteSettings } from '../../utils/dailyNotes';
+import { createDailyNote, getDailyNotePath, type DailyNoteSettings } from '../../utils/dailyNotes';
 import { setAsyncOnClick } from '../../utils/contextMenu/menuAsyncHelpers';
 import { showNotice } from '../../utils/noticeUtils';
 import { openFileInContext } from '../../utils/openFileInContext';
@@ -193,18 +192,6 @@ export function useCalendarNoteActions({
 
             const createFile = () => runAsyncAction(() => createCustomNote());
 
-            if (settings.calendarConfirmBeforeCreate) {
-                new ConfirmModal(
-                    app,
-                    strings.paneHeader.newNote,
-                    strings.navigationCalendar.createDailyNote.message.replace('{filename}', resolvedPath.filePath),
-                    createFile,
-                    strings.navigationCalendar.createDailyNote.confirmButton,
-                    { confirmButtonClass: 'mod-cta' }
-                ).open();
-                return;
-            }
-
             createFile();
         },
         [
@@ -233,7 +220,6 @@ export function useCalendarNoteActions({
                 }
 
                 const localizedDate = date.clone().locale(dailyNoteLocale);
-                const filename = getDailyNoteFilename(localizedDate, resolvedDailySettings);
                 const targetPath = getDailyNotePath(localizedDate, resolvedDailySettings);
                 const target = resolveLatestNoteTarget(targetPath);
                 if (target.isHidden) {
@@ -268,20 +254,6 @@ export function useCalendarNoteActions({
                     await openCalendarNoteFile(created, options);
                     collapseNavigationIfMobile();
                 };
-
-                if (settings.calendarConfirmBeforeCreate) {
-                    new ConfirmModal(
-                        app,
-                        strings.navigationCalendar.createDailyNote.title,
-                        strings.navigationCalendar.createDailyNote.message.replace('{filename}', filename),
-                        () => {
-                            runAsyncAction(createFile);
-                        },
-                        strings.navigationCalendar.createDailyNote.confirmButton,
-                        { confirmButtonClass: 'mod-cta' }
-                    ).open();
-                    return;
-                }
 
                 runAsyncAction(() => createFile());
                 return;

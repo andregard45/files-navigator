@@ -51,7 +51,7 @@ export function NavigationToolbar({
     // Hook providing shared navigation actions (expand/collapse, folder creation, toggle visibility)
     const { shouldCollapseItems, handleExpandCollapseAll, handleNewFolder, handleToggleShowExcludedFolders } = useNavigationActions();
     const showExpandCollapseButton = navigationVisibility.expandCollapse;
-    const showCalendarButton = navigationVisibility.calendar && settings.calendarEnabled && settings.calendarPlacement !== 'right-sidebar';
+    const showCalendarButton = navigationVisibility.calendar && settings.calendarPlacement !== 'right-sidebar';
     const showHiddenItemsButton = navigationVisibility.hiddenItems;
     const showRootReorderButton = navigationVisibility.rootReorder;
     const showNewFolderButton = navigationVisibility.newFolder;

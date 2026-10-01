@@ -34,23 +34,11 @@ export function createCalendarSettingDefinitions(context: SettingsTabContext): S
 
     return [
         createGroupDefinition(undefined, [
-            createToggleDefinition('calendarEnabled', {
-                name: strings.settings.items.enableCalendar.name,
-                desc: strings.settings.items.enableCalendar.desc
-            }),
             createRenderDefinition({
                 name: strings.settings.items.calendarPlacement.name,
                 desc: strings.settings.items.calendarPlacement.desc,
                 aliases: Object.values(strings.settings.items.calendarPlacement.options),
                 render: setting => renderCalendarPlacementSetting(setting, context)
-            }),
-            createToggleDefinition('calendarConfirmBeforeCreate', {
-                name: strings.settings.items.calendarConfirmBeforeCreate.name,
-                desc: strings.settings.items.calendarConfirmBeforeCreate.desc
-            }),
-            createToggleDefinition('calendarShowHiddenItems', {
-                name: strings.settings.items.calendarShowHiddenItems.name,
-                desc: strings.settings.items.calendarShowHiddenItems.desc
             })
         ]),
         createGroupDefinition(strings.settings.pages.calendar.groups.appearance, [

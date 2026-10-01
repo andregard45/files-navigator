@@ -490,7 +490,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             'featureImagePixelSize',
             'downloadExternalFeatureImages',
             'textCountDisplay',
-            'calendarEnabled',
             'manualSortGroupHeaderProperty',
             'manualSortPropertyKey',
             'noteGrouping',

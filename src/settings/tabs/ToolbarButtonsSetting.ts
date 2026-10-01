@@ -79,9 +79,6 @@ export function renderToolbarButtonsSetting(
 
     if (toolbar === 'navigation') {
         const navigationToolbarButtons = getNavigationToolbarButtons().filter(button => {
-            if (button.id === 'calendar') {
-                return plugin.settings.calendarEnabled;
-            }
             // The dual pane toggle renders only in the desktop pane header, which desktop
             // and tablets always show; phones never render it
             if (button.id === 'toggleDualPane') {

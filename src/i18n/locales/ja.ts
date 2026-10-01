@@ -96,11 +96,6 @@ export const STRINGS_JA = {
         ariaLabel: 'カレンダー',
         dailyNotesNotEnabled: 'デイリーノートプラグインが有効になっていません。',
         noteHiddenByProfile: 'カレンダーノートは現在の保管庫プロファイルで非表示になっています。',
-        createDailyNote: {
-            title: '新規デイリーノート',
-            message: 'ファイル {filename} は存在しません。作成しますか？',
-            confirmButton: '作成'
-        },
         helpModal: {
             title: 'カレンダーのショートカット',
             items: [
@@ -1606,10 +1601,6 @@ export const STRINGS_JA = {
                 name: '最近のファイルをショートカットと一緒に固定',
                 desc: 'ショートカットを固定するときに最近のファイルを含めます。'
             },
-            enableCalendar: {
-                name: 'カレンダーを有効化',
-                desc: 'Notebook Navigatorのカレンダー機能を有効にします。'
-            },
             calendarPlacement: {
                 name: 'カレンダーの配置',
                 desc: '左または右サイドバーに表示します。',
@@ -1692,14 +1683,6 @@ export const STRINGS_JA = {
             calendarShowYearCalendar: {
                 name: '年間カレンダーを表示',
                 desc: '右サイドバーに年ナビゲーションと月グリッドを表示します。'
-            },
-            calendarConfirmBeforeCreate: {
-                name: '作成前に確認',
-                desc: '新しいデイリーノートを作成する際に確認ダイアログを表示します。'
-            },
-            calendarShowHiddenItems: {
-                name: '非表示項目を表示',
-                desc: '有効にすると、カレンダーには常にすべてのカレンダーノートが表示され、保管庫プロファイルのフィルターで非表示になっているノートも含まれます。'
             },
             dailyNoteSource: {
                 name: 'デイリーノートのソース',

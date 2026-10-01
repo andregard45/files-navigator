@@ -97,11 +97,6 @@ export const STRINGS_PL = {
         ariaLabel: 'Kalendarz',
         dailyNotesNotEnabled: 'Wbudowana wtyczka Dziennik jest wyłączona.',
         noteHiddenByProfile: 'Notatka kalendarza jest ukryta przez bieżący profil sejfu.',
-        createDailyNote: {
-            title: 'Nowy dziennik',
-            message: 'Plik {filename} nie istnieje. Czy chcesz go utworzyć?',
-            confirmButton: 'Utwórz'
-        },
         helpModal: {
             title: 'Skróty kalendarza',
             items: [
@@ -1610,10 +1605,6 @@ export const STRINGS_PL = {
                 name: 'Przypnij ostatnie pliki razem ze skrótami',
                 desc: 'Dołącz ostatnie pliki podczas przypinania skrótów.'
             },
-            enableCalendar: {
-                name: 'Włącz kalendarz',
-                desc: 'Włącz funkcje kalendarza w Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Położenie kalendarza',
                 desc: 'Umieść kalendarz w lewym lub prawym panelu bocznym.',
@@ -1697,14 +1688,6 @@ export const STRINGS_PL = {
             calendarShowYearCalendar: {
                 name: 'Pokaż kalendarz roczny',
                 desc: 'Wyświetla nawigację roczną i siatkę miesięczną w prawym pasku bocznym.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Potwierdź przed utworzeniem',
-                desc: 'Wyświetla możliwość potwierdzenia podczas tworzenia nowej notatki dziennika.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Pokaż ukryte elementy',
-                desc: 'Po włączeniu kalendarz zawsze pokazuje wszystkie notatki kalendarza, w tym notatki ukryte przez filtry profilu sejfu.'
             },
             dailyNoteSource: {
                 name: 'Źródło notatek',

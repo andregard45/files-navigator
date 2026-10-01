@@ -647,11 +647,6 @@ export class PluginSettingsController {
             this.currentSettings.hideRecentNotes = DEFAULT_SETTINGS.hideRecentNotes;
         }
 
-        this.currentSettings.calendarEnabled = this.sanitizeBooleanSetting(
-            this.currentSettings.calendarEnabled,
-            DEFAULT_SETTINGS.calendarEnabled
-        );
-
         if (!isPropertySortSecondaryOption(this.currentSettings.propertySortSecondary)) {
             this.currentSettings.propertySortSecondary = DEFAULT_SETTINGS.propertySortSecondary;
         }

@@ -97,11 +97,6 @@ export const STRINGS_PT = {
         ariaLabel: 'Calendário',
         dailyNotesNotEnabled: 'O plugin de notas diárias não está ativado.',
         noteHiddenByProfile: 'A nota do calendário está oculta pelo perfil do cofre atual.',
-        createDailyNote: {
-            title: 'Nova nota diária',
-            message: 'O ficheiro {filename} não existe. Deseja criá-lo?',
-            confirmButton: 'Criar'
-        },
         helpModal: {
             title: 'Atalhos do calendário',
             items: [
@@ -1607,10 +1602,6 @@ export const STRINGS_PT = {
                 name: 'Fixar ficheiros recentes com atalhos',
                 desc: 'Incluir ficheiros recentes quando os atalhos estão fixos.'
             },
-            enableCalendar: {
-                name: 'Ativar calendário',
-                desc: 'Ativar funcionalidades de calendário do Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Posição do calendário',
                 desc: 'Exibir na barra lateral esquerda ou direita.',
@@ -1694,14 +1685,6 @@ export const STRINGS_PT = {
             calendarShowYearCalendar: {
                 name: 'Mostrar calendário anual',
                 desc: 'Apresentar navegação anual e grelha de meses na barra lateral direita.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Confirmar antes de criar',
-                desc: 'Mostrar uma caixa de diálogo de confirmação ao criar uma nova nota diária.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Mostrar itens ocultos',
-                desc: 'Quando ativado, o calendário mostra sempre todas as notas do calendário, incluindo notas ocultas pelos filtros do perfil do cofre.'
             },
             dailyNoteSource: {
                 name: 'Fonte de notas diárias',

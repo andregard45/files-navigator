@@ -959,11 +959,8 @@ export interface NotebookNavigatorSettings {
     showParentFolderColor: boolean;
     showParentFolderIcon: boolean;
 
-    // Calendar tab - Calendar
-    calendarEnabled: boolean;
+    // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
     calendarPlacement: CalendarPlacement;
-    calendarConfirmBeforeCreate: boolean;
-    calendarShowHiddenItems: boolean;
     calendarLocale: string;
     calendarWeekendDays: CalendarWeekendDays;
     calendarMonthHeadingFormat: CalendarMonthHeadingFormat;

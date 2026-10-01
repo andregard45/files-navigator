@@ -97,11 +97,6 @@ export const STRINGS_TH = {
         ariaLabel: 'ปฏิทิน',
         dailyNotesNotEnabled: 'ปลั๊กอินโน้ตรายวันไม่ได้เปิดใช้งาน',
         noteHiddenByProfile: 'โน้ตปฏิทินถูกซ่อนโดยโปรไฟล์ห้องนิรภัยปัจจุบัน',
-        createDailyNote: {
-            title: 'โน้ตรายวันใหม่',
-            message: 'ไฟล์ {filename} ไม่มีอยู่ คุณต้องการสร้างหรือไม่?',
-            confirmButton: 'สร้าง'
-        },
         helpModal: {
             title: 'ทางลัดปฏิทิน',
             items: [
@@ -1598,10 +1593,6 @@ export const STRINGS_TH = {
                 name: 'ปักหมุดไฟล์ล่าสุดพร้อมทางลัด',
                 desc: 'รวมไฟล์ล่าสุดเมื่อปักหมุดทางลัด'
             },
-            enableCalendar: {
-                name: 'เปิดใช้งานปฏิทิน',
-                desc: 'เปิดใช้งานฟีเจอร์ปฏิทินของ Notebook Navigator'
-            },
             calendarPlacement: {
                 name: 'ตำแหน่งปฏิทิน',
                 desc: 'แสดงในแถบด้านซ้ายหรือขวา',
@@ -1685,14 +1676,6 @@ export const STRINGS_TH = {
             calendarShowYearCalendar: {
                 name: 'แสดงปฏิทินรายปี',
                 desc: 'แสดงการนำทางปีและตารางเดือนในแถบด้านขวา'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'ยืนยันก่อนสร้างโน้ตใหม่',
-                desc: 'แสดงกล่องยืนยันเมื่อสร้างโน้ตรายวันใหม่'
-            },
-            calendarShowHiddenItems: {
-                name: 'แสดงรายการที่ซ่อน',
-                desc: 'เมื่อเปิดใช้งาน ปฏิทินจะแสดงโน้ตปฏิทินทั้งหมดเสมอ รวมถึงโน้ตที่ถูกซ่อนโดยตัวกรองของโปรไฟล์ห้องนิรภัย'
             },
             dailyNoteSource: {
                 name: 'แหล่งที่มาโน้ตรายวัน',

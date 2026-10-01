@@ -400,11 +400,8 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showParentFolderColor: false,
     showParentFolderIcon: false,
 
-    // Calendar tab - Calendar
-    calendarEnabled: true,
+    // Calendar tab - Calendar (always enabled)
     calendarPlacement: 'left-sidebar',
-    calendarConfirmBeforeCreate: true,
-    calendarShowHiddenItems: false,
     calendarLocale: 'system-default',
     calendarWeekendDays: 'sat-sun',
     calendarMonthHeadingFormat: 'full',

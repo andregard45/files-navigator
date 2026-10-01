@@ -97,11 +97,6 @@ export const STRINGS_VI = {
         ariaLabel: 'Lịch',
         dailyNotesNotEnabled: 'Plugin ghi chú hàng ngày chưa được bật.',
         noteHiddenByProfile: 'Ghi chú lịch bị ẩn bởi hồ sơ vault hiện tại.',
-        createDailyNote: {
-            title: 'Ghi chú hàng ngày mới',
-            message: 'Tệp {filename} không tồn tại. Bạn có muốn tạo không?',
-            confirmButton: 'Tạo'
-        },
         helpModal: {
             title: 'Lối tắt lịch',
             items: [
@@ -1604,10 +1599,6 @@ export const STRINGS_VI = {
                 name: 'Ghim tệp gần đây cùng lối tắt',
                 desc: 'Bao gồm tệp gần đây khi lối tắt được ghim.'
             },
-            enableCalendar: {
-                name: 'Bật lịch',
-                desc: 'Bật các tính năng lịch của Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Vị trí lịch',
                 desc: 'Hiển thị trong thanh bên trái hoặc phải.',
@@ -1691,14 +1682,6 @@ export const STRINGS_VI = {
             calendarShowYearCalendar: {
                 name: 'Hiển thị lịch năm',
                 desc: 'Hiển thị điều hướng năm và lưới tháng trong thanh bên phải.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Xác nhận trước khi tạo ghi chú mới',
-                desc: 'Hiển thị hộp thoại xác nhận khi tạo ghi chú hàng ngày mới.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Hiện mục ẩn',
-                desc: 'Khi bật, lịch luôn hiển thị tất cả ghi chú lịch, bao gồm cả ghi chú bị ẩn bởi bộ lọc của hồ sơ vault.'
             },
             dailyNoteSource: {
                 name: 'Nguồn ghi chú hàng ngày',

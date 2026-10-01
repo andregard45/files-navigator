@@ -97,11 +97,6 @@ export const STRINGS_FA = {
         ariaLabel: 'تقویم',
         dailyNotesNotEnabled: 'افزونه یادداشت روزانه فعال نیست.',
         noteHiddenByProfile: 'یادداشت تقویم توسط پروفایل فعلی خزانه پنهان شده است.',
-        createDailyNote: {
-            title: 'یادداشت روزانه جدید',
-            message: 'فایل {filename} وجود ندارد. آیا می‌خواهید آن را ایجاد کنید؟',
-            confirmButton: 'ایجاد'
-        },
         helpModal: {
             title: 'میانبرهای تقویم',
             items: [
@@ -1605,10 +1600,6 @@ export const STRINGS_FA = {
                 name: 'سنجاق کردن فایل‌های اخیر با میانبرها',
                 desc: 'هنگام سنجاق کردن میانبرها، فایل‌های اخیر را نیز شامل شود.'
             },
-            enableCalendar: {
-                name: 'فعال‌سازی تقویم',
-                desc: 'فعال‌سازی ویژگی‌های تقویم در Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'محل قرارگیری تقویم',
                 desc: 'نمایش در نوار کناری چپ یا راست.',
@@ -1692,14 +1683,6 @@ export const STRINGS_FA = {
             calendarShowYearCalendar: {
                 name: 'نمایش تقویم سالانه',
                 desc: 'نمایش ناوبری سال و شبکه ماه‌ها در نوار کناری سمت راست.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'تأیید قبل از ایجاد یادداشت جدید',
-                desc: 'نمایش پنجره تأیید هنگام ایجاد یادداشت روزانه جدید.'
-            },
-            calendarShowHiddenItems: {
-                name: 'نمایش آیتم‌های مخفی',
-                desc: 'وقتی فعال، تقویم همیشه همه یادداشت‌های تقویم را نشان می‌دهد، از جمله یادداشت‌های پنهان‌شده توسط فیلترهای پروفایل خزانه.'
             },
             dailyNoteSource: {
                 name: 'منبع یادداشت روزانه',

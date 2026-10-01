@@ -22,7 +22,6 @@ import { getCurrentLanguage, strings } from '../../i18n';
 import {
     createDailyNote,
     getDailyNoteFile,
-    getDailyNoteFilename,
     getDailyNoteSettings as getCoreDailyNoteSettings
 } from '../../utils/dailyNotes';
 import {
@@ -630,8 +629,6 @@ async function openCalendarNoteForToday(plugin: NotebookNavigatorPlugin, kind: C
         const dailyNoteDate = date.clone().locale(resolveDailyNoteLocale(momentApi));
         const file = getDailyNoteFile(plugin.app, dailyNoteDate, dailyNoteSettings);
         if (!file) {
-            const filename = getDailyNoteFilename(dailyNoteDate, dailyNoteSettings);
-
             const createFile = async () => {
                 const created = await createDailyNote(plugin.app, dailyNoteDate, dailyNoteSettings, plugin.settings);
                 if (!created) {
@@ -639,20 +636,6 @@ async function openCalendarNoteForToday(plugin: NotebookNavigatorPlugin, kind: C
                 }
                 await openFileInActiveLeaf(plugin, created);
             };
-
-            if (plugin.settings.calendarConfirmBeforeCreate) {
-                new ConfirmModal(
-                    plugin.app,
-                    strings.navigationCalendar.createDailyNote.title,
-                    strings.navigationCalendar.createDailyNote.message.replace('{filename}', filename),
-                    () => {
-                        runAsyncAction(createFile);
-                    },
-                    strings.navigationCalendar.createDailyNote.confirmButton,
-                    { confirmButtonClass: 'mod-cta' }
-                ).open();
-                return;
-            }
 
             await createFile();
             return;
@@ -677,18 +660,6 @@ async function openCalendarNoteForToday(plugin: NotebookNavigatorPlugin, kind: C
     const file = fileEntry instanceof TFile ? fileEntry : null;
     if (!file) {
         const createFile = () => runAsyncAction(() => createAndOpenCustomCalendarNote(plugin, kind, dateForPath));
-
-        if (plugin.settings.calendarConfirmBeforeCreate) {
-            new ConfirmModal(
-                plugin.app,
-                strings.paneHeader.newNote,
-                strings.navigationCalendar.createDailyNote.message.replace('{filename}', expected.filePath),
-                createFile,
-                strings.navigationCalendar.createDailyNote.confirmButton,
-                { confirmButtonClass: 'mod-cta' }
-            ).open();
-            return;
-        }
 
         createFile();
         return;
@@ -961,10 +932,6 @@ export default function registerNavigatorCommands(plugin: NotebookNavigatorPlugi
         name: strings.commands.toggleCalendar,
         callback: () => {
             runAsyncAction(async () => {
-                if (!plugin.settings.calendarEnabled) {
-                    return;
-                }
-
                 await plugin.activateView();
                 plugin.toggleShowCalendar();
             });

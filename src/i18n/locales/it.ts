@@ -97,11 +97,6 @@ export const STRINGS_IT = {
         ariaLabel: 'Calendario',
         dailyNotesNotEnabled: 'Il plugin delle note giornaliere non è abilitato.',
         noteHiddenByProfile: 'La nota del calendario è nascosta dal profilo del vault corrente.',
-        createDailyNote: {
-            title: 'Nuova nota giornaliera',
-            message: 'Il file {filename} non esiste. Vuoi crearlo?',
-            confirmButton: 'Crea'
-        },
         helpModal: {
             title: 'Scorciatoie del calendario',
             items: [
@@ -1604,10 +1599,6 @@ export const STRINGS_IT = {
                 name: 'Fissa file recenti con scorciatoie',
                 desc: 'Includi i file recenti quando le scorciatoie sono fissate.'
             },
-            enableCalendar: {
-                name: 'Attiva calendario',
-                desc: 'Attiva le funzionalità del calendario di Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'Posizione del calendario',
                 desc: 'Visualizza nella barra laterale sinistra o destra.',
@@ -1691,14 +1682,6 @@ export const STRINGS_IT = {
             calendarShowYearCalendar: {
                 name: 'Mostra calendario annuale',
                 desc: 'Mostra la navigazione annuale e la griglia dei mesi nella barra laterale destra.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Conferma prima di creare',
-                desc: 'Mostra una finestra di conferma quando si crea una nuova nota giornaliera.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Mostra elementi nascosti',
-                desc: 'Quando abilitato, il calendario mostra sempre tutte le note del calendario, incluse le note nascoste dai filtri del profilo del vault.'
             },
             dailyNoteSource: {
                 name: 'Fonte note giornaliere',

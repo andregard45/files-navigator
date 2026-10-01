@@ -97,11 +97,6 @@ export const STRINGS_TR = {
         ariaLabel: 'Takvim',
         dailyNotesNotEnabled: 'Günlük notlar eklentisi etkin değil.',
         noteHiddenByProfile: 'Takvim notu geçerli kasa profili tarafından gizleniyor.',
-        createDailyNote: {
-            title: 'Yeni günlük not',
-            message: '{filename} dosyası mevcut değil. Oluşturmak ister misiniz?',
-            confirmButton: 'Oluştur'
-        },
         helpModal: {
             title: 'Takvim kısayolları',
             items: [
@@ -1604,10 +1599,6 @@ export const STRINGS_TR = {
                 name: 'Son dosyaları kısayollarla birlikte sabitle',
                 desc: 'Kısayollar sabitlendiğinde son dosyaları dahil et.'
             },
-            enableCalendar: {
-                name: 'Takvimi etkinleştir',
-                desc: 'Notebook Navigator takvim özelliklerini etkinleştir.'
-            },
             calendarPlacement: {
                 name: 'Takvim konumu',
                 desc: 'Sol veya sağ kenar çubuğunda görüntüle.',
@@ -1691,14 +1682,6 @@ export const STRINGS_TR = {
             calendarShowYearCalendar: {
                 name: 'Yıllık takvimi göster',
                 desc: 'Sağ kenar çubuğunda yıl gezintisi ve ay ızgarası göster.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'Oluşturmadan önce onayla',
-                desc: 'Yeni bir günlük not oluştururken onay iletişim kutusu göster.'
-            },
-            calendarShowHiddenItems: {
-                name: 'Gizli öğeleri göster',
-                desc: 'Etkinleştirildiğinde, takvim her zaman tüm takvim notlarını gösterir; kasa profili filtreleri tarafından gizlenen notlar da buna dahildir.'
             },
             dailyNoteSource: {
                 name: 'Günlük not kaynağı',

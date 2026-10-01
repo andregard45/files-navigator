@@ -96,11 +96,6 @@ export const STRINGS_ZH_CN = {
         ariaLabel: '导航日历',
         dailyNotesNotEnabled: '未启用日记核心插件。',
         noteHiddenByProfile: '日历笔记已被当前仓库配置文件隐藏。',
-        createDailyNote: {
-            title: '新建日记',
-            message: '文件 {filename} 不存在。是否创建？',
-            confirmButton: '创建'
-        },
         helpModal: {
             title: '日历快捷键',
             items: [
@@ -1593,10 +1588,6 @@ export const STRINGS_ZH_CN = {
                 name: '将最近文件与快捷方式一起固定',
                 desc: '固定快捷方式时包含最近文件。'
             },
-            enableCalendar: {
-                name: '启用日历',
-                desc: '启用 Notebook Navigator 的日历功能。'
-            },
             calendarPlacement: {
                 name: '日历位置',
                 desc: '在左侧边栏或右侧边栏中显示。',
@@ -1679,14 +1670,6 @@ export const STRINGS_ZH_CN = {
             calendarShowYearCalendar: {
                 name: '显示年历',
                 desc: '在右侧边栏中显示年份导航和月份网格。'
-            },
-            calendarConfirmBeforeCreate: {
-                name: '创建前确认',
-                desc: '点击没有笔记的日期时显示确认对话框。'
-            },
-            calendarShowHiddenItems: {
-                name: '显示隐藏项目',
-                desc: '启用时，日历始终显示所有日历笔记，包括被仓库配置文件过滤器隐藏的笔记。'
             },
             dailyNoteSource: {
                 name: '日记来源',

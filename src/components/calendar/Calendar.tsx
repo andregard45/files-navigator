@@ -23,7 +23,6 @@ import { InfoModal } from '../../modals/InfoModal';
 import { useServices } from '../../context/ServicesContext';
 import { useSettingsState, useSettingsUpdate } from '../../context/SettingsContext';
 import { useFileCacheOptional } from '../../context/StorageContext';
-import { useUXPreferences } from '../../context/UXPreferencesContext';
 import { getDBInstanceOrNull, isShutdownInProgress, waitForDatabaseInitialization } from '../../storage/fileOperations';
 import { runAsyncAction } from '../../utils/async';
 import { getCalendarCustomWeekAnchorUnit } from '../../utils/calendarCustomNotePatterns';
@@ -43,7 +42,6 @@ import { type CalendarNoteKind } from '../../utils/calendarNotes';
 import { escapeMomentLiteralPath } from '../../utils/calendarCustomNotePatterns';
 import { usesMobileChrome } from '../../utils/paneLayout';
 import { getActiveVaultProfile } from '../../utils/vaultProfiles';
-import { createFileVisibilityChecker } from '../../utils/fileFilters';
 import type { CalendarWeeksToShow } from '../../settings/types';
 import { registerActiveFileWorkspaceListeners } from '../../utils/workspaceActiveFileEvents';
 import { CalendarGrid } from './CalendarGrid';
@@ -188,15 +186,12 @@ export function Calendar({
     const { app, commandQueue, fileSystemOps, isMobile, plugin } = useServices();
     const settings = useSettingsState();
     const updateSettings = useSettingsUpdate();
-    const { showHiddenItems: showHiddenItemsPreference } = useUXPreferences();
-    // calendarShowHiddenItems treats every calendar note as shown so vault profile filters (hidden
-    // folders, file name patterns, tags, and properties) never hide calendar notes or block creating
-    // them in hidden folders. The transient Show hidden items preference has the same effect.
-    // Downstream visibility checks all read this derived flag.
-    const showHiddenItems = settings.calendarShowHiddenItems || showHiddenItemsPreference;
+    // The calendar always shows every note: vault profile filters (hidden folders, file name
+    // patterns, tags, and properties) never hide calendar notes or block creating them in hidden
+    // folders. Downstream visibility checks all read this constant flag.
+    const showHiddenItems = true;
     const activeProfile = getActiveVaultProfile(settings);
     const periodicNotesFolder = activeProfile.periodicNotesFolder;
-    const hiddenFolders = activeProfile.hiddenFolders;
     const hasFrontmatterVisibilityRules = activeProfile.hiddenFileProperties.length > 0;
     const hasTagVisibilityRules = activeProfile.hiddenFileTags.length > 0;
     const customCalendarRootFolderSettings = useMemo(() => ({ calendarCustomRootFolder: periodicNotesFolder }), [periodicNotesFolder]);
@@ -230,20 +225,11 @@ export function Calendar({
     const [hoverTooltipPreviewVersion, setHoverTooltipPreviewVersion] = useState(0);
     const [metadataVersion, setMetadataVersion] = useState(0);
     const [profileVisibilityVersion, setProfileVisibilityVersion] = useState(0);
-    const isExistingFileVisible = useMemo(() => createFileVisibilityChecker(app, settings, { showHiddenItems: false }), [app, settings]);
     const resolveNoteTarget = useCallback(
         (targetPath: string | null, existingFile: TFile | null): CalendarNoteTarget => {
-            // Recreate this callback after metadata/tag visibility changes so cached calendar targets are recalculated.
-            void profileVisibilityVersion;
-            return resolveCalendarNoteTarget({
-                existingFile,
-                targetPath,
-                hiddenFolders,
-                showHiddenItems,
-                isExistingFileVisible
-            });
+            return resolveCalendarNoteTarget({ existingFile, targetPath });
         },
-        [hiddenFolders, isExistingFileVisible, profileVisibilityVersion, showHiddenItems]
+        []
     );
     const visibleIndicatorNotePathsRef = useRef<Set<string>>(new Set());
     const visibleFeatureImageNotePathsRef = useRef<Set<string>>(new Set());
@@ -450,7 +436,8 @@ export function Calendar({
             const shouldTrackFeatureImage = settings.calendarShowFeatureImage && visibleFeatureImagePaths.size > 0;
             const shouldTrackTaskIndicator = settings.calendarShowTasks && visibleIndicatorPaths.size > 0;
             const shouldTrackHoverPreview = Boolean(hoverPreviewPath);
-            const shouldTrackProfileVisibility = !showHiddenItems && (hasFrontmatterVisibilityRules || hasTagVisibilityRules);
+            // The calendar always shows hidden items, so profile-visibility tracking is unconditional.
+            const shouldTrackProfileVisibility = hasFrontmatterVisibilityRules || hasTagVisibilityRules;
 
             let hasFeatureImageChange = !shouldTrackFeatureImage;
             let hasTaskIndicatorChange = !shouldTrackTaskIndicator;
@@ -520,12 +507,11 @@ export function Calendar({
         hoverTooltipStateRef,
         settings.calendarShowFeatureImage,
         settings.calendarShowTasks,
-        scheduleProfileVisibilityUpdate,
-        showHiddenItems
+        scheduleProfileVisibilityUpdate
     ]);
 
     useEffect(() => {
-        if (showHiddenItems || (!hasFrontmatterVisibilityRules && !hasTagVisibilityRules)) {
+        if (!hasFrontmatterVisibilityRules && !hasTagVisibilityRules) {
             return;
         }
 
@@ -539,7 +525,7 @@ export function Calendar({
         return () => {
             app.metadataCache.offref(offref);
         };
-    }, [app.metadataCache, hasFrontmatterVisibilityRules, hasTagVisibilityRules, scheduleProfileVisibilityUpdate, showHiddenItems]);
+    }, [app.metadataCache, hasFrontmatterVisibilityRules, hasTagVisibilityRules, scheduleProfileVisibilityUpdate]);
 
     useEffect(() => {
         const frontmatterNameField = settings.frontmatterNameField.trim();

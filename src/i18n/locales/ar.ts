@@ -97,11 +97,6 @@ export const STRINGS_AR = {
         ariaLabel: 'التقويم',
         dailyNotesNotEnabled: 'إضافة الملاحظات اليومية غير مفعلة.',
         noteHiddenByProfile: 'ملاحظة التقويم مخفية بواسطة ملف تعريف الخزنة الحالي.',
-        createDailyNote: {
-            title: 'ملاحظة يومية جديدة',
-            message: 'الملف {filename} غير موجود. هل تريد إنشاءه؟',
-            confirmButton: 'إنشاء'
-        },
         helpModal: {
             title: 'اختصارات التقويم',
             items: [
@@ -1601,10 +1596,6 @@ export const STRINGS_AR = {
                 name: 'تثبيت الملفات الحديثة مع الاختصارات',
                 desc: 'تضمين الملفات الحديثة عند تثبيت الاختصارات.'
             },
-            enableCalendar: {
-                name: 'تفعيل التقويم',
-                desc: 'تفعيل ميزات التقويم في Notebook Navigator.'
-            },
             calendarPlacement: {
                 name: 'موضع التقويم',
                 desc: 'العرض في الشريط الجانبي الأيمن أو الأيسر.',
@@ -1687,14 +1678,6 @@ export const STRINGS_AR = {
             calendarShowYearCalendar: {
                 name: 'عرض تقويم السنة',
                 desc: 'عرض التنقل بين السنوات وشبكة الأشهر في الشريط الجانبي الأيمن.'
-            },
-            calendarConfirmBeforeCreate: {
-                name: 'تأكيد قبل الإنشاء',
-                desc: 'عرض مربع حوار تأكيد عند إنشاء ملاحظة يومية جديدة.'
-            },
-            calendarShowHiddenItems: {
-                name: 'إظهار العناصر المخفية',
-                desc: 'عند التمكين، يعرض التقويم دائمًا جميع ملاحظات التقويم، بما في ذلك الملاحظات المخفية بواسطة مرشحات ملف تعريف الخزنة.'
             },
             dailyNoteSource: {
                 name: 'مصدر الملاحظات اليومية',

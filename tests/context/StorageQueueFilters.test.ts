@@ -323,7 +323,6 @@ describe('Storage queue filters', () => {
             showFeatureImage: false,
             showTooltips: false,
             textCountDisplay: 'none',
-            calendarEnabled: true
         };
 
         const types: ContentProviderType[] = ['markdownPipeline'];
@@ -361,7 +360,6 @@ describe('Storage queue filters', () => {
             showFeatureImage: false,
             showTooltips: false,
             textCountDisplay: 'none',
-            calendarEnabled: true
         };
 
         const types: ContentProviderType[] = ['markdownPipeline'];
@@ -399,7 +397,6 @@ describe('Storage queue filters', () => {
             showFeatureImage: false,
             showTooltips: false,
             textCountDisplay: 'none',
-            calendarEnabled: true
         };
 
         const types: ContentProviderType[] = ['markdownPipeline'];
@@ -437,7 +434,6 @@ describe('Storage queue filters', () => {
             showFeatureImage: false,
             showTooltips: false,
             textCountDisplay: 'none',
-            calendarEnabled: true
         };
 
         const types: ContentProviderType[] = ['markdownPipeline'];
