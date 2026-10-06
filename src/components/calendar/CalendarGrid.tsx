@@ -17,10 +17,8 @@
  */
 
 import React from 'react';
-import type { CalendarWeekendDays } from '../../settings/types';
 import { DateUtils } from '../../utils/dateUtils';
 import { CalendarDayButton } from './CalendarDayButton';
-import { isWeekendDay } from './calendarUtils';
 import type { CalendarDay, CalendarHoverTooltipData, CalendarNoteTarget, CalendarWeek } from './types';
 
 const DAY_ARIA_LABEL_CACHE_MAX_ENTRIES = 1024;
@@ -137,7 +135,6 @@ interface CalendarGridProps {
     weekNoteTargetsByKey: Map<string, CalendarNoteTarget>;
     weekUnfinishedTaskCountByKey: Map<string, number>;
     displayLocale: string;
-    calendarWeekendDays: CalendarWeekendDays;
     todayIso: string | null;
     unfinishedTaskCountByIso: Map<string, number>;
     featureImageUrls: Record<string, string>;
@@ -169,7 +166,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
     weekNoteTargetsByKey,
     weekUnfinishedTaskCountByKey,
     displayLocale,
-    calendarWeekendDays,
     todayIso,
     unfinishedTaskCountByIso,
     featureImageUrls,
@@ -188,18 +184,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
     onWeekLabelClick,
     onWeekContextMenu
 }: CalendarGridProps) {
-    // Consecutive week rows share the weekday for each column, so weekend flags are computed once per column
-    const firstWeekDays = weeks[0]?.days;
-    const weekendByIndex = firstWeekDays
-        ? firstWeekDays.map(weekDay => isWeekendDay(weekDay.date.toDate().getDay(), calendarWeekendDays))
-        : [];
-    // Hidden days render as empty cells and drop out of the weekend background, so the weekend fill is
-    // tracked per cell instead of per column. Without this the block would keep its square edges against
-    // the empty cells because the rounded corners are placed from the neighboring weekend cells.
-    const weekendCellsByWeek = weeks.map(week =>
-        week.days.map((day, dayIndex) => (weekendByIndex[dayIndex] ?? false) && (day.inMonth || !hideOutsideMonthDays))
-    );
-
     return (
         <div className="nn-navigation-calendar-grid" data-weeknumbers={showWeekNumbers ? 'true' : undefined}>
             <div className="nn-navigation-calendar-weekdays" data-weeknumbers={showWeekNumbers ? 'true' : undefined}>
@@ -218,7 +202,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                     const weekNoteFile = weekNoteTarget?.visibleFile ?? null;
                     const weekHasUnfinishedTasks = (weekUnfinishedTaskCountByKey.get(week.key) ?? 0) > 0;
                     const isActiveEditorWeek = Boolean(weekNoteFile && activeEditorFilePath === weekNoteFile.path);
-                    const weekendCells = weekendCellsByWeek[weekIndex] ?? [];
                     const isHiddenOutsideMonthWeek = hideOutsideMonthDays && week.days.every(day => !day.inMonth);
 
                     return (
@@ -285,36 +268,13 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                 const hasFeatureImageKey = Boolean(visibleFile && featureImageKeysByIso.has(day.iso));
                                 const isToday = todayIso === day.iso;
                                 const isActiveEditorDay = Boolean(visibleFile && activeEditorFilePath === visibleFile.path);
-                                const isWeekend = weekendCells[dayIndex] ?? false;
-                                const hasWeekendBefore = isWeekend && dayIndex > 0 && Boolean(weekendCells[dayIndex - 1]);
-                                const hasWeekendAfter = isWeekend && dayIndex < week.days.length - 1 && Boolean(weekendCells[dayIndex + 1]);
-                                const hasWeekendAbove = isWeekend && Boolean(weekendCellsByWeek[weekIndex - 1]?.[dayIndex]);
-                                const hasWeekendBelow = isWeekend && Boolean(weekendCellsByWeek[weekIndex + 1]?.[dayIndex]);
-                                const roundWeekendTopLeft = isWeekend && !hasWeekendAbove && !hasWeekendBefore;
-                                const roundWeekendTopRight = isWeekend && !hasWeekendAbove && !hasWeekendAfter;
-                                const roundWeekendBottomLeft = isWeekend && !hasWeekendBelow && !hasWeekendBefore;
-                                const roundWeekendBottomRight = isWeekend && !hasWeekendBelow && !hasWeekendAfter;
-                                const dayCellClassName = [
-                                    'nn-navigation-calendar-day-cell',
-                                    isWeekend ? 'is-weekend' : 'is-weekday',
-                                    hasWeekendBefore ? 'has-weekend-before' : '',
-                                    hasWeekendAfter ? 'has-weekend-after' : '',
-                                    hasWeekendAbove ? 'has-weekend-above' : '',
-                                    hasWeekendBelow ? 'has-weekend-below' : '',
-                                    roundWeekendTopLeft ? 'round-weekend-top-left' : '',
-                                    roundWeekendTopRight ? 'round-weekend-top-right' : '',
-                                    roundWeekendBottomLeft ? 'round-weekend-bottom-left' : '',
-                                    roundWeekendBottomRight ? 'round-weekend-bottom-right' : ''
-                                ]
-                                    .filter(Boolean)
-                                    .join(' ');
+                                const dayCellClassName = 'nn-navigation-calendar-day-cell';
 
                                 const dayButtonClassName = [
                                     'nn-navigation-calendar-day',
                                     day.inMonth ? 'is-in-month' : 'is-outside-month',
                                     isToday ? 'is-today' : '',
                                     isActiveEditorDay ? 'is-active-editor-file' : '',
-                                    isWeekend ? 'is-weekend' : 'is-weekday',
                                     hasDailyNote ? 'has-daily-note' : '',
                                     hasUnfinishedTasks ? 'has-unfinished-tasks' : '',
                                     hasFeatureImageKey ? 'has-feature-image-key' : '',

@@ -1632,16 +1632,6 @@ export const STRINGS_FR = {
                     systemDefault: 'Par défaut'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Jours de week-end',
-                desc: 'Afficher les jours de week-end avec une couleur de fond différente.',
-                options: {
-                    none: 'Aucun',
-                    satSun: 'Samedi et dimanche',
-                    friSat: 'Vendredi et samedi',
-                    thuFri: 'Jeudi et vendredi'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Format du nom du mois',
                 desc: 'Nom du mois complet (janvier) ou abrégé (janv.).',

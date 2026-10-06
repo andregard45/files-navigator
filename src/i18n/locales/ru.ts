@@ -1624,16 +1624,6 @@ export const STRINGS_RU = {
                     systemDefault: 'По умолчанию'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Выходные дни',
-                desc: 'Отображать выходные дни с другим цветом фона.',
-                options: {
-                    none: 'Нет',
-                    satSun: 'Суббота и воскресенье',
-                    friSat: 'Пятница и суббота',
-                    thuFri: 'Четверг и пятница'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Формат названия месяца',
                 desc: 'Полное (январь) или сокращённое (янв.) название месяца.',

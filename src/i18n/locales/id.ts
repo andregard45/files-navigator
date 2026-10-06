@@ -1626,16 +1626,6 @@ export const STRINGS_ID = {
                     systemDefault: 'Default'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Hari akhir pekan',
-                desc: 'Tampilkan hari akhir pekan dengan warna latar belakang berbeda.',
-                options: {
-                    none: 'Tidak ada',
-                    satSun: 'Sabtu dan Minggu',
-                    friSat: 'Jumat dan Sabtu',
-                    thuFri: 'Kamis dan Jumat'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Format nama bulan',
                 desc: 'Nama bulan lengkap (Januari) atau singkat (Jan).',

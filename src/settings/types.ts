@@ -383,13 +383,6 @@ export function isCalendarLeftPlacement(value: unknown): value is CalendarLeftPl
     return value === 'navigation' || value === 'below';
 }
 
-/** Which days are highlighted as weekend days in the calendar UI. */
-export type CalendarWeekendDays = 'none' | 'sat-sun' | 'fri-sat' | 'thu-fri';
-
-export function isCalendarWeekendDays(value: unknown): value is CalendarWeekendDays {
-    return value === 'none' || value === 'sat-sun' || value === 'fri-sat' || value === 'thu-fri';
-}
-
 /** How the calendar month heading is formatted. */
 export type CalendarMonthHeadingFormat = 'full' | 'short';
 
@@ -962,7 +955,6 @@ export interface NotebookNavigatorSettings {
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
     calendarPlacement: CalendarPlacement;
     calendarLocale: string;
-    calendarWeekendDays: CalendarWeekendDays;
     calendarMonthHeadingFormat: CalendarMonthHeadingFormat;
     calendarHighlightToday: boolean;
     calendarShowFeatureImage: boolean;

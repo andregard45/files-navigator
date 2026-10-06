@@ -1618,16 +1618,6 @@ export const STRINGS_EN = {
                     systemDefault: 'Default'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Weekend days',
-                desc: 'Show weekend days with a different background color.',
-                options: {
-                    none: 'None',
-                    satSun: 'Saturday and Sunday',
-                    friSat: 'Friday and Saturday',
-                    thuFri: 'Thursday and Friday'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Month name format',
                 desc: 'Long (January) or short (Jan) month name.',

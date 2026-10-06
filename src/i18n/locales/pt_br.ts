@@ -1630,16 +1630,6 @@ export const STRINGS_PT_BR = {
                     systemDefault: 'Padrão'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Dias de fim de semana',
-                desc: 'Mostrar dias de fim de semana com uma cor de fundo diferente.',
-                options: {
-                    none: 'Nenhum',
-                    satSun: 'Sábado e domingo',
-                    friSat: 'Sexta-feira e sábado',
-                    thuFri: 'Quinta-feira e sexta-feira'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Formato do nome do mês',
                 desc: 'Nome do mês completo (janeiro) ou abreviado (jan).',

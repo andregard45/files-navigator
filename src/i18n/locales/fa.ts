@@ -1625,16 +1625,6 @@ export const STRINGS_FA = {
                     systemDefault: 'پیش‌فرض'
                 }
             },
-            calendarWeekendDays: {
-                name: 'روزهای آخر هفته',
-                desc: 'نمایش روزهای آخر هفته با رنگ پس‌زمینه متفاوت.',
-                options: {
-                    none: 'هیچ',
-                    satSun: 'شنبه و یکشنبه',
-                    friSat: 'جمعه و شنبه',
-                    thuFri: 'پنجشنبه و جمعه'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'قالب نام ماه',
                 desc: 'نام ماه کامل (January) یا کوتاه (Jan).',

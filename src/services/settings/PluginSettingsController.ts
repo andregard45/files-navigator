@@ -52,7 +52,6 @@ import {
     isCalendarLeftPlacement,
     isCalendarPeriodicNotesLocaleSource,
     isCalendarPlacement,
-    isCalendarWeekendDays,
     isEnterKeyAction,
     isFeatureImagePixelSizeSetting,
     isFeatureImageSizeSetting,
@@ -653,10 +652,6 @@ export class PluginSettingsController {
 
         if (!isManualSortNewNotePlacement(this.currentSettings.manualSortNewNotePlacement)) {
             this.currentSettings.manualSortNewNotePlacement = DEFAULT_SETTINGS.manualSortNewNotePlacement;
-        }
-
-        if (!isCalendarWeekendDays(this.currentSettings.calendarWeekendDays)) {
-            this.currentSettings.calendarWeekendDays = DEFAULT_SETTINGS.calendarWeekendDays;
         }
 
         if (!isCalendarMonthHeadingFormat(this.currentSettings.calendarMonthHeadingFormat)) {

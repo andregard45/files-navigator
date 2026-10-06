@@ -17,7 +17,7 @@
  */
 
 import { TFile } from 'obsidian';
-import type { CalendarWeekendDays, MultiSelectModifier } from '../../settings/types';
+import type { MultiSelectModifier } from '../../settings/types';
 import type { IndexedDBStorage } from '../../storage/IndexedDBStorage';
 import type { CalendarNoteKind } from '../../utils/calendarNotes';
 import { isMultiSelectModifierPressed } from '../../utils/keyboardOpenContext';
@@ -123,20 +123,6 @@ export function resolveCalendarWeekWindow(params: {
         windowStart: cursorWeekStart.clone().subtract(offset, 'week'),
         weekCount: weeksToShow
     };
-}
-
-export function isWeekendDay(dayOfWeek: number, weekendDays: CalendarWeekendDays): boolean {
-    switch (weekendDays) {
-        case 'none':
-            return false;
-        case 'fri-sat':
-            return dayOfWeek === 5 || dayOfWeek === 6;
-        case 'thu-fri':
-            return dayOfWeek === 4 || dayOfWeek === 5;
-        case 'sat-sun':
-        default:
-            return dayOfWeek === 0 || dayOfWeek === 6;
-    }
 }
 
 function getUnfinishedTaskCountForPath(db: IndexedDBStorage, path: string): number | null {

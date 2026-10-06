@@ -363,7 +363,6 @@ These variables are shared by the navigation and list panes.
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `--nn-theme-calendar-weekend-bg` | `color-mix(in srgb, var(--nn-theme-foreground) 10%, transparent)` | Weekend day background |
 | `--nn-theme-calendar-hover-bg` | `var(--background-modifier-hover)` | Calendar button and day background when hovered |
 | `--nn-theme-calendar-day-today-color` | `var(--nn-theme-calendar-day-in-month-color)` | Today text color |
 | `--nn-theme-calendar-day-today-bg` | `var(--text-selection)` | Today highlight background |
@@ -573,7 +572,6 @@ supported by Notebook Navigator:
   --nn-theme-calendar-day-outside-month-color: var(--nn-theme-foreground-faded);
 
   /* Calendar day states */
-  --nn-theme-calendar-weekend-bg: rgba(169, 183, 198, 0.1);
   --nn-theme-calendar-hover-bg: #4b5059;
   --nn-theme-calendar-day-today-color: #ffffff;
   --nn-theme-calendar-day-today-bg: #4a78c8;

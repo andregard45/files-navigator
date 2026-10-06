@@ -1613,16 +1613,6 @@ export const STRINGS_ZH_TW = {
                     systemDefault: '系統預設'
                 }
             },
-            calendarWeekendDays: {
-                name: '週末',
-                desc: '以不同背景顏色顯示週末。',
-                options: {
-                    none: '無',
-                    satSun: '週六和週日',
-                    friSat: '週五和週六',
-                    thuFri: '週四和週五'
-                }
-            },
             calendarMonthNameFormat: {
                 name: '月份名稱格式',
                 desc: '顯示完整（一月）或簡稱（1月）的月份名稱。',

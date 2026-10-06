@@ -1630,16 +1630,6 @@ export const STRINGS_PL = {
                     systemDefault: 'Domyślne'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Dni weekendowe',
-                desc: 'Wyświetla dni weekendowe z innym kolorem tła.',
-                options: {
-                    none: 'Brak',
-                    satSun: 'sobota i niedziela',
-                    friSat: 'piątek i sobota',
-                    thuFri: 'czwartek i piątek'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Format nazwy miesiąca',
                 desc: 'Pełna (styczeń) lub skrócona (sty) nazwa miesiąca.',

@@ -49,17 +49,6 @@ export function createCalendarSettingDefinitions(context: SettingsTabContext): S
                     calendarLocaleWarningEl = renderCalendarLocaleSetting(setting, context);
                 }
             }),
-            createDropdownDefinition('calendarWeekendDays', {
-                name: strings.settings.items.calendarWeekendDays.name,
-                desc: strings.settings.items.calendarWeekendDays.desc,
-                aliases: Object.values(strings.settings.items.calendarWeekendDays.options),
-                options: {
-                    none: strings.settings.items.calendarWeekendDays.options.none,
-                    'sat-sun': strings.settings.items.calendarWeekendDays.options.satSun,
-                    'fri-sat': strings.settings.items.calendarWeekendDays.options.friSat,
-                    'thu-fri': strings.settings.items.calendarWeekendDays.options.thuFri
-                }
-            }),
             createDropdownDefinition('calendarMonthHeadingFormat', {
                 name: strings.settings.items.calendarMonthNameFormat.name,
                 desc: strings.settings.items.calendarMonthNameFormat.desc,

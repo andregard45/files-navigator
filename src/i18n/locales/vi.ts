@@ -1624,16 +1624,6 @@ export const STRINGS_VI = {
                     systemDefault: 'Mặc định'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Ngày cuối tuần',
-                desc: 'Hiển thị ngày cuối tuần với màu nền khác.',
-                options: {
-                    none: 'Không',
-                    satSun: 'Thứ bảy và chủ nhật',
-                    friSat: 'Thứ sáu và thứ bảy',
-                    thuFri: 'Thứ năm và thứ sáu'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Định dạng tên tháng',
                 desc: 'Tên tháng đầy đủ (tháng 1) hoặc viết tắt (Thg 01).',

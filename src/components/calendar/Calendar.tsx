@@ -2026,7 +2026,6 @@ export function Calendar({
                     weekNoteTargetsByKey={weekNoteTargetsByKey}
                     weekUnfinishedTaskCountByKey={weekUnfinishedTaskCountByKey}
                     displayLocale={displayLocale}
-                    calendarWeekendDays={settings.calendarWeekendDays}
                     todayIso={todayIso}
                     unfinishedTaskCountByIso={unfinishedTaskCountByIso}
                     featureImageUrls={featureImageUrls}

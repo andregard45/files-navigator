@@ -43,7 +43,6 @@
     --nn-calendar-note-indicator-max-size: 5px;
     --nn-calendar-note-indicator-center-offset: clamp(6px, calc(var(--nn-calendar-day-font-size) * 0.65), 12px);
     --nn-calendar-task-indicator-offset-x: clamp(5px, calc(var(--nn-calendar-day-font-size) * 0.42), 9px);
-    --nn-calendar-weekend-corner-radius: 6px;
     --nn-calendar-cell-radius: 6px;
     --nn-calendar-header-chip-bg: var(--nn-theme-nav-bg);
     --nn-calendar-note-indicator-color: var(--nn-theme-calendar-note-indicator-color);
@@ -779,53 +778,6 @@ button.nn-navigation-calendar-weeknumber-button {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
-}
-
-.nn-navigation-calendar-day-cell.is-weekend::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    /* Opaque surface underlay with the translucent weekend color layered on top. This makes the
-       painted result opaque, so the 1px overdraw into gaps shared with adjacent weekend cells
-       overlaps invisibly. Without the underlay, overlapping translucent fills double-composite
-       into darker seams, and half-pixel overdraw leaves hairline gaps on fractional-DPR displays. */
-    background-color: var(--nn-calendar-cell-surface-bg);
-    background-image: linear-gradient(var(--nn-theme-calendar-weekend-bg), var(--nn-theme-calendar-weekend-bg));
-    border-radius: 0;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.has-weekend-before::before {
-    inset-inline-start: -1px;
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.has-weekend-after::before {
-    inset-inline-end: -1px;
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.has-weekend-above::before {
-    inset-block-start: -1px;
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.has-weekend-below::before {
-    inset-block-end: -1px;
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.round-weekend-top-left::before {
-    border-top-left-radius: var(--nn-calendar-weekend-corner-radius);
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.round-weekend-top-right::before {
-    border-top-right-radius: var(--nn-calendar-weekend-corner-radius);
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.round-weekend-bottom-left::before {
-    border-bottom-left-radius: var(--nn-calendar-weekend-corner-radius);
-}
-
-.nn-navigation-calendar-day-cell.is-weekend.round-weekend-bottom-right::before {
-    border-bottom-right-radius: var(--nn-calendar-weekend-corner-radius);
 }
 
 button.nn-navigation-calendar-day {

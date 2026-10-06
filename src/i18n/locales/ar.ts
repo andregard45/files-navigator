@@ -1620,16 +1620,6 @@ export const STRINGS_AR = {
                     systemDefault: 'افتراضي'
                 }
             },
-            calendarWeekendDays: {
-                name: 'أيام عطلة نهاية الأسبوع',
-                desc: 'عرض أيام عطلة نهاية الأسبوع بلون خلفية مختلف.',
-                options: {
-                    none: 'لا شيء',
-                    satSun: 'السبت والأحد',
-                    friSat: 'الجمعة والسبت',
-                    thuFri: 'الخميس والجمعة'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'تنسيق اسم الشهر',
                 desc: 'اسم الشهر الكامل (يناير) أو المختصر (يناير).',
