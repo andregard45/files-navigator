@@ -357,8 +357,6 @@ export const STRINGS_FR = {
             duplicateMultipleFiles: 'Dupliquer {count} fichiers',
             renameFile: 'Renommer le fichier',
             deleteFile: 'Supprimer le fichier',
-            setCalendarHighlight: 'Définir le surlignage',
-            removeCalendarHighlight: 'Supprimer le surlignage',
             deleteMultipleFiles: 'Supprimer {count} fichiers'
         },
         folder: {
@@ -1656,10 +1654,6 @@ export const STRINGS_FR = {
             calendarHighlightToday: {
                 name: "Mettre en évidence la date d'aujourd'hui",
                 desc: "Mettre en évidence la date d'aujourd'hui avec une couleur de fond et du texte en gras."
-            },
-            calendarShowFeatureImage: {
-                name: "Afficher l'image vedette",
-                desc: 'Afficher les images vedettes des notes dans le calendrier.'
             },
             calendarShowTasks: {
                 name: 'Afficher les tâches',

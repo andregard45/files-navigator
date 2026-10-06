@@ -334,8 +334,6 @@ export const STRINGS_UK = {
             renameFile: 'Перейменувати файл',
             deleteNote: 'Видалити нотатку',
             deleteFile: 'Видалити файл',
-            setCalendarHighlight: 'Встановити виділення',
-            removeCalendarHighlight: 'Прибрати виділення',
             deleteMultipleNotes: 'Видалити нотатки: {count}',
             deleteMultipleFiles: 'Видалити файли: {count}',
             moveNoteToFolder: 'Перемістити нотатку до...',
@@ -1649,10 +1647,6 @@ export const STRINGS_UK = {
             calendarHighlightToday: {
                 name: 'Виділяти сьогоднішню дату',
                 desc: 'Виділяти сьогоднішню дату кольором фону та жирним текстом.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Показувати головне зображення',
-                desc: 'Відображати головні зображення нотаток у календарі.'
             },
             calendarShowTasks: {
                 name: 'Показувати завдання',

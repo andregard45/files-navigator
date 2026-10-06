@@ -332,8 +332,6 @@ export const STRINGS_AR = {
             renameFile: 'إعادة تسمية الملف',
             deleteNote: 'حذف الملاحظة',
             deleteFile: 'حذف الملف',
-            setCalendarHighlight: 'تعيين التمييز',
-            removeCalendarHighlight: 'إزالة التمييز',
             deleteMultipleNotes: 'حذف {count} من الملاحظات',
             deleteMultipleFiles: 'حذف {count} من الملفات',
             moveNoteToFolder: 'نقل الملاحظة إلى...',
@@ -1644,10 +1642,6 @@ export const STRINGS_AR = {
             calendarHighlightToday: {
                 name: 'تمييز تاريخ اليوم',
                 desc: 'تمييز تاريخ اليوم بلون خلفية ونص غامق.'
-            },
-            calendarShowFeatureImage: {
-                name: 'إظهار الصورة المميزة',
-                desc: 'عرض الصور المميزة للملاحظات في التقويم.'
             },
             calendarShowTasks: {
                 name: 'إظهار المهام',

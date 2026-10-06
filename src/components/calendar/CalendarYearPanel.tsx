@@ -30,8 +30,6 @@ interface CalendarYearPanelProps {
     hasYearPeriodNote: boolean;
     isYearPeriodActive: boolean;
     yearMonthEntries: CalendarYearMonthEntry[];
-    highlightedMonthFeatureImageKeys: Set<string>;
-    highlightedMonthImageUrls: Record<string, string>;
     onNavigateYear: (delta: number) => void;
     onYearPeriodClick: (event: React.MouseEvent<HTMLElement>) => void;
     onYearPeriodMouseDown: (event: React.MouseEvent<HTMLElement>) => void;
@@ -48,8 +46,6 @@ export const CalendarYearPanel = React.memo(function CalendarYearPanel({
     hasYearPeriodNote,
     isYearPeriodActive,
     yearMonthEntries,
-    highlightedMonthFeatureImageKeys,
-    highlightedMonthImageUrls,
     onNavigateYear,
     onYearPeriodClick,
     onYearPeriodMouseDown,
@@ -103,12 +99,7 @@ export const CalendarYearPanel = React.memo(function CalendarYearPanel({
                 {yearMonthEntries.map(entry => {
                     const isSelectedMonth = displayedYearValue === activeYearValue && entry.monthIndex === activeMonthIndex;
                     const isCurrentMonth = entry.key === currentMonthKey;
-                    const hasFeatureImageKey = highlightedMonthFeatureImageKeys.has(entry.key);
-                    const featureImageUrl = highlightedMonthImageUrls[entry.key] ?? null;
                     const monthAriaLabel = `${entry.fullLabel} ${displayedYearValue}`;
-                    const style: React.CSSProperties | undefined = featureImageUrl
-                        ? { backgroundImage: `url(${featureImageUrl})` }
-                        : undefined;
 
                     return (
                         <button
@@ -119,14 +110,11 @@ export const CalendarYearPanel = React.memo(function CalendarYearPanel({
                                 isCurrentMonth ? 'is-current-month' : '',
                                 isSelectedMonth ? 'is-selected-month' : '',
                                 entry.hasDailyNote ? 'has-daily-note' : '',
-                                entry.hasUnfinishedTasks ? 'has-unfinished-tasks' : '',
-                                hasFeatureImageKey ? 'has-feature-image-key' : '',
-                                featureImageUrl ? 'has-feature-image' : ''
+                                entry.hasUnfinishedTasks ? 'has-unfinished-tasks' : ''
                             ]
                                 .filter(Boolean)
                                 .join(' ')}
                             aria-label={monthAriaLabel}
-                            style={style}
                             onClick={event => onSelectYearMonth(event, entry.date)}
                         >
                             <span className="nn-navigation-calendar-active-outline" aria-hidden="true" />

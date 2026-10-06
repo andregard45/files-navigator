@@ -332,8 +332,6 @@ export const STRINGS_IT = {
             renameFile: 'Rinomina file',
             deleteNote: 'Elimina nota',
             deleteFile: 'Elimina file',
-            setCalendarHighlight: 'Imposta evidenziazione',
-            removeCalendarHighlight: 'Rimuovi evidenziazione',
             deleteMultipleNotes: 'Elimina {count} note',
             deleteMultipleFiles: 'Elimina {count} file',
             moveNoteToFolder: 'Sposta nota in...',
@@ -1648,10 +1646,6 @@ export const STRINGS_IT = {
             calendarHighlightToday: {
                 name: 'Evidenzia la data di oggi',
                 desc: 'Evidenzia la data di oggi con un colore di sfondo e testo in grassetto.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Mostra immagine in evidenza',
-                desc: 'Visualizza le immagini in evidenza delle note nel calendario.'
             },
             calendarShowTasks: {
                 name: 'Mostra attività',

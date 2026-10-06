@@ -10,7 +10,6 @@ import { ContentReadCache } from '../services/content/ContentReadCache';
 import { getMarkdownPipelineClearFlags, MarkdownPipelineContentProvider } from '../services/content/MarkdownPipelineContentProvider';
 import { NotebookNavigatorView } from '../view/NotebookNavigatorView';
 import { Calendar } from './calendar';
-import type { CalendarFeatureImageTarget } from './calendar/useCalendarFeatureImages';
 
 export function CalendarRightSidebar() {
     const { app, plugin } = useServices();
@@ -185,24 +184,6 @@ export function CalendarRightSidebar() {
         },
         [queueCalendarContentRefresh]
     );
-    const handleMissingFeatureImage = useCallback(
-        (target: CalendarFeatureImageTarget) => {
-            runAsyncAction(async () => {
-                if (storageRuntimeActive || !settings.showFeatureImage || target.file.extension !== 'md') {
-                    return;
-                }
-
-                const db = getDBInstance();
-                await db.clearFileContent(target.file.path, 'featureImage');
-                if (!isMountedRef.current || isStorageRuntimeActive()) {
-                    return;
-                }
-
-                queueCalendarContentRefresh([target.file]);
-            });
-        },
-        [queueCalendarContentRefresh, settings.showFeatureImage, storageRuntimeActive]
-    );
 
     return (
         <div className="nn-calendar-right-sidebar nn-list-pane">
@@ -210,7 +191,6 @@ export function CalendarRightSidebar() {
                 <Calendar
                     weeksToShowOverride={6}
                     onAddDateFilter={handleAddDateFilter}
-                    onMissingFeatureImage={handleMissingFeatureImage}
                     onVisibleCalendarNoteFilesChange={handleVisibleCalendarNoteFilesChange}
                     isRightSidebar={true}
                 />

@@ -333,8 +333,6 @@ export const STRINGS_RU = {
             renameFile: 'Переименовать файл',
             deleteNote: 'Удалить заметку',
             deleteFile: 'Удалить файл',
-            setCalendarHighlight: 'Установить выделение',
-            removeCalendarHighlight: 'Убрать выделение',
             deleteMultipleNotes: 'Удалить заметки ({count})',
             deleteMultipleFiles: 'Удалить файлы ({count})',
             moveNoteToFolder: 'Переместить заметку в...',
@@ -1648,10 +1646,6 @@ export const STRINGS_RU = {
             calendarHighlightToday: {
                 name: 'Выделять сегодняшнюю дату',
                 desc: 'Выделять сегодняшнюю дату цветом фона и жирным текстом.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Показывать изображение-обложку',
-                desc: 'Отображать изображения-обложки заметок в календаре.'
             },
             calendarShowTasks: {
                 name: 'Показывать задачи',

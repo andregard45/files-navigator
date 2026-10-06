@@ -85,7 +85,6 @@ export interface CalendarNoteContextMenuTarget {
     canCreate: boolean;
     monthKey?: string | null;
     dayIso?: string | null;
-    hasFeatureImage?: boolean;
     currentMonthHighlightDayIso?: string | null;
 }
 

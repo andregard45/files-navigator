@@ -355,8 +355,6 @@ export const STRINGS_JA = {
             duplicateMultipleFiles: '{count}個のファイルを複製',
             renameFile: 'ファイルの名前を変更',
             deleteFile: 'ファイルを削除',
-            setCalendarHighlight: 'ハイライトを設定',
-            removeCalendarHighlight: 'ハイライトを解除',
             deleteMultipleFiles: '{count}個のファイルを削除'
         },
         folder: {
@@ -1649,10 +1647,6 @@ export const STRINGS_JA = {
             calendarHighlightToday: {
                 name: '今日の日付を強調表示',
                 desc: '今日の日付を背景色と太字で強調表示します。'
-            },
-            calendarShowFeatureImage: {
-                name: 'アイキャッチ画像を表示',
-                desc: 'カレンダーでノートのアイキャッチ画像を表示します。'
             },
             calendarShowTasks: {
                 name: 'タスクを表示',

@@ -46,8 +46,6 @@ interface CalendarDayCellProps {
     day: CalendarDay;
     dayCellClassName: string;
     dayButtonClassName: string;
-    featureImageUrl: string | null;
-    hasFeatureImageKey: boolean;
     hasUnfinishedTasks: boolean;
     frontmatterTitle: string;
     displayLocale: string;
@@ -58,19 +56,17 @@ interface CalendarDayCellProps {
     onHideTooltip: (element: HTMLElement) => void;
     onDayClick: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay) => void;
     onDayMouseDown: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay) => void;
-    onDayContextMenu: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay, canCreate: boolean, hasFeatureImage: boolean) => void;
+    onDayContextMenu: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay, canCreate: boolean) => void;
 }
 
 /**
  * One day cell. Memoized so grid commits that do not change a cell's inputs
- * (active-editor changes, task or image updates on other days) skip the cell.
+ * (active-editor changes, task updates on other days) skip the cell.
  */
 const CalendarDayCell = React.memo(function CalendarDayCell({
     day,
     dayCellClassName,
     dayButtonClassName,
-    featureImageUrl,
-    hasFeatureImageKey,
     hasUnfinishedTasks,
     frontmatterTitle,
     displayLocale,
@@ -84,7 +80,6 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
     onDayContextMenu
 }: CalendarDayCellProps) {
     const dayNumber = day.date.date();
-    const style: React.CSSProperties | undefined = featureImageUrl ? { backgroundImage: `url(${featureImageUrl})` } : undefined;
     const ariaLabel = getDayAriaLabel(day, displayLocale);
     const dateTimestamp = day.date.toDate().getTime();
     const hasFrontmatterTitle = frontmatterTitle.trim().length > 0;
@@ -92,9 +87,9 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
     const showDate = hasFrontmatterTitle;
     const tooltipAriaText = hasFrontmatterTitle ? `${ariaLabel}, ${frontmatterTitle}` : ariaLabel;
     const visibleFile = day.note.visibleFile;
-    const tooltipEnabled = Boolean(visibleFile || featureImageUrl);
+    const tooltipEnabled = Boolean(visibleFile);
     const tooltipData: CalendarHoverTooltipData = {
-        imageUrl: featureImageUrl,
+        imageUrl: null,
         title: tooltipTitle || ariaLabel,
         dateTimestamp,
         previewPath: visibleFile?.path ?? null,
@@ -107,7 +102,6 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
             <CalendarDayButton
                 className={dayButtonClassName}
                 ariaText={tooltipAriaText}
-                style={style}
                 tooltipEnabled={tooltipEnabled}
                 tooltipData={tooltipData}
                 dayNumber={dayNumber}
@@ -117,7 +111,7 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
                 onHideTooltip={onHideTooltip}
                 onMouseDown={event => onDayMouseDown(event, day)}
                 onClick={event => onDayClick(event, day)}
-                onContextMenu={event => onDayContextMenu(event, day, canCreateDayNotes, hasFeatureImageKey)}
+                onContextMenu={event => onDayContextMenu(event, day, canCreateDayNotes)}
             />
         </div>
     );
@@ -137,8 +131,6 @@ interface CalendarGridProps {
     displayLocale: string;
     todayIso: string | null;
     unfinishedTaskCountByIso: Map<string, number>;
-    featureImageUrls: Record<string, string>;
-    featureImageKeysByIso: Map<string, string>;
     frontmatterTitlesByPath: Map<string, string>;
     dateFormat: string;
     isMobile: boolean;
@@ -147,7 +139,7 @@ interface CalendarGridProps {
     onHideTooltip: (element: HTMLElement) => void;
     onDayClick: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay) => void;
     onDayMouseDown: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay) => void;
-    onDayContextMenu: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay, canCreate: boolean, hasFeatureImage: boolean) => void;
+    onDayContextMenu: (event: React.MouseEvent<HTMLButtonElement>, day: CalendarDay, canCreate: boolean) => void;
     onWeekClick: (event: React.MouseEvent<HTMLElement>, week: CalendarWeek, note: CalendarNoteTarget | null) => void;
     onWeekMouseDown: (event: React.MouseEvent<HTMLElement>, week: CalendarWeek, note: CalendarNoteTarget | null) => void;
     onWeekLabelClick: (event: React.MouseEvent<HTMLElement>, week: CalendarWeek) => void;
@@ -168,8 +160,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
     displayLocale,
     todayIso,
     unfinishedTaskCountByIso,
-    featureImageUrls,
-    featureImageKeysByIso,
     frontmatterTitlesByPath,
     dateFormat,
     isMobile,
@@ -263,9 +253,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                 const hasDailyNote = Boolean(visibleFile);
                                 const dayUnfinishedTaskCount = hasDailyNote ? (unfinishedTaskCountByIso.get(day.iso) ?? 0) : 0;
                                 const hasUnfinishedTasks = dayUnfinishedTaskCount > 0;
-                                // Feature-image URLs are released asynchronously, so visibility must gate the rendered value immediately.
-                                const featureImageUrl = visibleFile ? (featureImageUrls[day.iso] ?? null) : null;
-                                const hasFeatureImageKey = Boolean(visibleFile && featureImageKeysByIso.has(day.iso));
                                 const isToday = todayIso === day.iso;
                                 const isActiveEditorDay = Boolean(visibleFile && activeEditorFilePath === visibleFile.path);
                                 const dayCellClassName = 'nn-navigation-calendar-day-cell';
@@ -276,9 +263,7 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                     isToday ? 'is-today' : '',
                                     isActiveEditorDay ? 'is-active-editor-file' : '',
                                     hasDailyNote ? 'has-daily-note' : '',
-                                    hasUnfinishedTasks ? 'has-unfinished-tasks' : '',
-                                    hasFeatureImageKey ? 'has-feature-image-key' : '',
-                                    featureImageUrl ? 'has-feature-image' : ''
+                                    hasUnfinishedTasks ? 'has-unfinished-tasks' : ''
                                 ]
                                     .filter(Boolean)
                                     .join(' ');
@@ -291,8 +276,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                         day={day}
                                         dayCellClassName={dayCellClassName}
                                         dayButtonClassName={dayButtonClassName}
-                                        featureImageUrl={featureImageUrl}
-                                        hasFeatureImageKey={hasFeatureImageKey}
                                         hasUnfinishedTasks={hasUnfinishedTasks}
                                         frontmatterTitle={frontmatterTitle}
                                         displayLocale={displayLocale}

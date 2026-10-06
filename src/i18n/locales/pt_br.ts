@@ -335,8 +335,6 @@ export const STRINGS_PT_BR = {
             renameFile: 'Renomear arquivo',
             deleteNote: 'Excluir nota',
             deleteFile: 'Excluir arquivo',
-            setCalendarHighlight: 'Definir destaque',
-            removeCalendarHighlight: 'Remover destaque',
             deleteMultipleNotes: 'Excluir {count} notas',
             deleteMultipleFiles: 'Excluir {count} arquivos',
             moveNoteToFolder: 'Mover nota para...',
@@ -1654,10 +1652,6 @@ export const STRINGS_PT_BR = {
             calendarHighlightToday: {
                 name: 'Destacar a data de hoje',
                 desc: 'Destacar a data de hoje com uma cor de fundo e texto em negrito.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Mostrar imagem de destaque',
-                desc: 'Mostrar imagens de destaque das notas no calendário.'
             },
             calendarShowTasks: {
                 name: 'Mostrar tarefas',

@@ -353,8 +353,6 @@ export const STRINGS_ZH_TW = {
             duplicateMultipleFiles: '複製 {count} 個檔案',
             renameFile: '重新命名檔案',
             deleteFile: '刪除檔案',
-            setCalendarHighlight: '設定醒目提示',
-            removeCalendarHighlight: '移除醒目提示',
             deleteMultipleFiles: '刪除 {count} 個檔案'
         },
         folder: {
@@ -1637,10 +1635,6 @@ export const STRINGS_ZH_TW = {
             calendarHighlightToday: {
                 name: '醒目顯示今天日期',
                 desc: '使用背景顏色和粗體文字醒目顯示今天日期。'
-            },
-            calendarShowFeatureImage: {
-                name: '顯示特色圖片',
-                desc: '在日曆中顯示筆記的特色圖片。'
             },
             calendarShowTasks: {
                 name: '顯示任務',

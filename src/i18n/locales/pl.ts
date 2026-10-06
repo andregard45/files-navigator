@@ -333,8 +333,6 @@ export const STRINGS_PL = {
             renameFile: 'Zmień nazwę pliku',
             deleteNote: 'Usuń notatkę',
             deleteFile: 'Usuń plik',
-            setCalendarHighlight: 'Ustaw podświetlenie',
-            removeCalendarHighlight: 'Usuń podświetlenie',
             deleteMultipleNotes: 'Usuń notatki: {count}',
             deleteMultipleFiles: 'Usuń pliki: {count}',
             moveNoteToFolder: 'Przenieś notatkę do...',
@@ -1654,10 +1652,6 @@ export const STRINGS_PL = {
             calendarHighlightToday: {
                 name: 'Wyróżnij dzisiejszą datę',
                 desc: 'Wyróżnij dzisiejszą datę kolorem tła i pogrubioną czcionką.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Pokaż wyróżniony obraz',
-                desc: 'Wyświetla wyróżnione obrazy notatek w kalendarzu.'
             },
             calendarShowTasks: {
                 name: 'Pokaż zadania',

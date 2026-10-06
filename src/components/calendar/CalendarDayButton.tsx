@@ -28,7 +28,6 @@ export interface CalendarDayButtonProps {
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
     onMouseDown: (event: React.MouseEvent<HTMLButtonElement>) => void;
     onContextMenu: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    style: React.CSSProperties | undefined;
     tooltipEnabled: boolean;
     tooltipData: CalendarHoverTooltipData;
     onHideTooltip: (element: HTMLElement) => void;
@@ -45,7 +44,6 @@ export const CalendarDayButton = React.memo(function CalendarDayButton({
     onClick,
     onMouseDown,
     onContextMenu,
-    style,
     tooltipEnabled,
     tooltipData,
     onHideTooltip,
@@ -141,7 +139,6 @@ export const CalendarDayButton = React.memo(function CalendarDayButton({
             ref={buttonRef}
             type="button"
             className={className}
-            style={style}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseDown={handleMouseDown}
