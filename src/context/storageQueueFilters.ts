@@ -31,11 +31,7 @@ import {
     getDrawingSourceProviderIdWithFrontmatter,
     getNonMarkdownDrawingFeatureImageProviderId
 } from '../utils/drawingFeatureImages';
-import {
-    hasMarkdownFeatureImageConsumer,
-    hasMarkdownPipelineContent,
-    hasMarkdownPreviewConsumer
-} from '../utils/markdownPipelineContentTypes';
+import { hasMarkdownFeatureImageConsumer, hasMarkdownPipelineContent } from '../utils/markdownPipelineContentTypes';
 
 type MetadataSourceFilterOptions = {
     /**
@@ -72,7 +68,6 @@ export function filterFilesRequiringMetadataSources(
     const featureImageExcludeMatcher = createCaseInsensitiveKeyMatcher(settings.featureImageExcludeProperties);
     const hiddenFilePropertyMatcher = requiresHiddenState ? createFrontmatterPropertyExclusionMatcher(hiddenFileProperties) : null;
     const markdownPipelineEnabled = hasMarkdownPipelineContent(settings);
-    const previewEnabled = hasMarkdownPreviewConsumer(settings);
     const featureImageEnabled = hasMarkdownFeatureImageConsumer(settings);
 
     return files.filter(file => {
@@ -101,7 +96,6 @@ export function filterFilesRequiringMetadataSources(
                 return true;
             }
 
-            const needsPreview = previewEnabled && record.previewStatus === 'unprocessed';
             let needsFeatureImage = featureImageEnabled && (record.featureImageKey === null || record.featureImageStatus === 'unprocessed');
             if (featureImageEnabled && !needsFeatureImage && app) {
                 const frontmatter = getCachedMetadata()?.frontmatter;
@@ -116,7 +110,7 @@ export function filterFilesRequiringMetadataSources(
                 }
             }
             const needsProperties = record.properties === null;
-            if (needsPreview || needsFeatureImage || needsProperties) {
+            if (needsFeatureImage || needsProperties) {
                 return true;
             }
         }

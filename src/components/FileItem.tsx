@@ -183,7 +183,6 @@ export interface FileItemStorageHelpers {
     getFileDisplayName: (file: TFile) => string;
     getDB: () => FileItemContentDb;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
-    hasPreview: (path: string) => boolean;
     regenerateFeatureImageForFile: (file: TFile) => Promise<void>;
 }
 
@@ -309,7 +308,7 @@ export const FileItem = React.memo(function FileItem({
     const { app, isMobile, plugin, commandQueue, fileSystemOps, tagOperations } = useServices();
     const settings = useSettingsState();
     const metadataService = useMetadataService();
-    const { getFileDisplayName, getDB, getFileTimestamps, hasPreview, regenerateFeatureImageForFile } = fileItemStorage;
+    const { getFileDisplayName, getDB, getFileTimestamps, regenerateFeatureImageForFile } = fileItemStorage;
     const isCompactMode = appearanceSettings.mode === 'compact';
     const isMarkdownFile = file.extension === 'md';
     const canShowPropertyPills = isMarkdownFile && (!isCompactMode || settings.showFilePropertiesInCompactMode);
@@ -322,7 +321,6 @@ export const FileItem = React.memo(function FileItem({
     const drawingFeatureImageSource = getDrawingFeatureImageSource(app, file);
     const isDrawingFeatureImageRow = drawingFeatureImageSource !== null;
     const {
-        previewText,
         featureImageKey,
         featureImageStatus,
         featureImageUrl,
@@ -331,14 +329,12 @@ export const FileItem = React.memo(function FileItem({
     } = useFileItemContentState({
         app,
         file,
-        showPreview: appearanceSettings.showPreview,
         showImage: appearanceSettings.showImage,
         skipFeatureImage: isDrawingFeatureImageRow,
         fileStatMtime,
         getDB,
         regenerateFeatureImageForFile,
         loadOptions: {
-            loadPreviewText: appearanceSettings.showPreview && isMarkdownFile && !searchMeta?.excerpt,
             loadFeatureImage: appearanceSettings.showImage && !isDrawingFeatureImageRow,
             loadProperties: shouldLoadProperties
         },
@@ -613,15 +609,15 @@ export const FileItem = React.memo(function FileItem({
         );
     })();
 
-    const effectivePreviewText = searchMeta?.excerpt ? searchMeta.excerpt : previewText;
-    const hasPreviewAccordingToStatus = appearanceSettings.showPreview && file.extension === 'md' ? hasPreview(file.path) : false;
-    const hasPreviewContent = hasPreviewAccordingToStatus || effectivePreviewText.length > 0;
+    // Omnisearch excerpts only: file-display markdown previews were removed.
+    const searchExcerpt = typeof searchMeta?.excerpt === 'string' ? searchMeta.excerpt : '';
+    const hasSearchExcerptContent = appearanceSettings.showSearchExcerpt === true && searchExcerpt.length > 0;
     const highlightedPreview = useMemo(
-        // Only Omnisearch triggers highlighting in preview, not regular filter
-        () => (searchMeta ? renderHighlightedText(effectivePreviewText, undefined, searchMeta) : effectivePreviewText),
-        [effectivePreviewText, searchMeta]
+        // Only Omnisearch triggers highlighting in the excerpt line, not regular filter
+        () => (searchMeta ? renderHighlightedText(searchExcerpt, undefined, searchMeta) : searchExcerpt),
+        [searchExcerpt, searchMeta]
     );
-    const pinnedPreviewRows = isPinned ? 1 : appearanceSettings.previewRows;
+    const excerptRows = isPinned ? 1 : appearanceSettings.previewRows;
 
     // Determine if we should show the feature image area (either with an image or extension badge)
     const showFeatureImageArea = shouldShowFeatureImageArea({
@@ -644,9 +640,9 @@ export const FileItem = React.memo(function FileItem({
 
     const { shouldShowMultilinePreview } = getFileItemLayoutState({
         isCompactMode,
-        showPreview: appearanceSettings.showPreview,
+        showSearchExcerpt: appearanceSettings.showSearchExcerpt === true,
         isPinned,
-        hasPreviewContent,
+        hasPreviewContent: hasSearchExcerptContent,
         showFeatureImageArea,
         showExtensionBadgeThumbnail,
         hasVisiblePillRows: effectiveHasVisiblePillRows
@@ -1160,7 +1156,7 @@ export const FileItem = React.memo(function FileItem({
                                         {shouldShowMultilinePreview && (
                                             <div
                                                 className="nn-file-preview"
-                                                style={{ '--preview-rows': pinnedPreviewRows } as React.CSSProperties}
+                                                style={{ '--preview-rows': excerptRows } as React.CSSProperties}
                                             >
                                                 {highlightedPreview}
                                             </div>
@@ -1170,7 +1166,7 @@ export const FileItem = React.memo(function FileItem({
 
                                 {/* Non-pinned previews clamp to the configured row count. */}
                                 {!isPinned && shouldShowMultilinePreview && (
-                                    <div className="nn-file-preview" style={{ '--preview-rows': pinnedPreviewRows } as React.CSSProperties}>
+                                    <div className="nn-file-preview" style={{ '--preview-rows': excerptRows } as React.CSSProperties}>
                                         {highlightedPreview}
                                     </div>
                                 )}

@@ -436,11 +436,6 @@ export const STRINGS_ID = {
             label: 'Baris judul',
             option: (rows: number) => `${rows} baris judul`
         },
-        previewRows: {
-            label: 'Baris pratinjau',
-            none: 'Tidak ada',
-            option: (rows: number) => `${rows} baris pratinjau`
-        },
         groupBy: 'Kelompokkan berdasarkan',
         properties: 'Properti',
         resetAppearance: 'Atur ulang tampilan',
@@ -1098,7 +1093,6 @@ export const STRINGS_ID = {
                 groups: {
                     icon: 'Ikon',
                     title: 'Judul',
-                    previewText: 'Teks pratinjau',
                     featureImage: 'Gambar unggulan',
                     properties: 'Properti'
                 }
@@ -1912,50 +1906,6 @@ export const STRINGS_ID = {
                 help: 'Format umum:\nHH:mm = 14:30 (24 jam)\nh:mm a = 2:30 PM (12 jam)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nToken:\nHH/H = 24 jam\nhh/h = 12 jam\nmm = menit\nss = detik\na = AM/PM',
                 helpTooltip: 'Format menggunakan Moment',
                 momentLinkText: 'format Moment'
-            },
-            showNotePreview: {
-                name: 'Tampilkan pratinjau catatan',
-                desc: 'Tampilkan teks pratinjau di bawah nama catatan.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Lewati judul dalam pratinjau',
-                desc: 'Lewati baris judul saat menghasilkan teks pratinjau.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Lewati blok kode dalam pratinjau',
-                desc: 'Lewati blok kode saat menghasilkan teks pratinjau.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Lewati callout dalam pratinjau',
-                desc: 'Lewati blok callout saat menghasilkan teks pratinjau.'
-            },
-            stripHtmlInPreview: {
-                name: 'Hapus HTML di pratinjau',
-                desc: 'Hapus tag HTML dari teks pratinjau. Dapat memengaruhi kinerja pada catatan besar.'
-            },
-            stripLatexInPreview: {
-                name: 'Hapus LaTeX di pratinjau',
-                desc: 'Hapus ekspresi LaTeX inline dan blok dari teks pratinjau.'
-            },
-            previewProperties: {
-                name: 'Properti pratinjau',
-                desc: 'Daftar properti frontmatter yang dipisahkan koma untuk memeriksa teks pratinjau. Properti pertama dengan teks akan digunakan.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Gunakan konten catatan sebagai cadangan',
-                desc: 'Tampilkan konten catatan sebagai pratinjau saat tidak ada properti yang ditentukan berisi teks.'
-            },
-            previewRows: {
-                name: 'Baris pratinjau',
-                desc: 'Jumlah baris yang ditampilkan untuk teks pratinjau.',
-                options: {
-                    '1': '1 baris',
-                    '2': '2 baris',
-                    '3': '3 baris',
-                    '4': '4 baris',
-                    '5': '5 baris'
-                }
             },
             titleRows: {
                 name: 'Baris judul',

@@ -236,7 +236,7 @@ export function showListPaneAppearanceMenu({
         item.setIcon('lucide-align-left')
             .setChecked(effectiveMode === 'compact')
             .onClick(() => {
-                // Preview and content preferences remain stored because they become active again in Standard mode.
+                // Content preferences remain stored because they become active again in Standard mode.
                 updateAppearance({ mode: defaultMode === 'compact' ? undefined : 'compact' });
             });
     });
@@ -262,34 +262,6 @@ export function showListPaneAppearanceMenu({
         })),
         onSelect: titleRows => updateAppearance({ titleRows: titleRows === settings.fileNameRows ? undefined : titleRows })
     });
-
-    if (settings.showFilePreview && !isCompact) {
-        const storedPreviewRows = storedFields?.previewRows;
-        const effectivePreviewRows = storedPreviewRows ?? settings.previewRows;
-        addChoiceSection<number>({
-            title: `${strings.folderAppearance.previewRows.label}: ${
-                effectivePreviewRows === 0 ? strings.folderAppearance.previewRows.none : effectivePreviewRows
-            }`,
-            isCustom: storedPreviewRows !== undefined,
-            icon: 'lucide-file-text',
-            options: [
-                {
-                    value: 0,
-                    title: strings.folderAppearance.previewRows.none,
-                    checked: effectivePreviewRows === 0
-                },
-                ...rowCounts.map(rows => ({
-                    value: rows,
-                    title: withSuffix(
-                        strings.folderAppearance.previewRows.option(rows),
-                        rows === settings.previewRows ? strings.folderAppearance.defaultSuffix : null
-                    ),
-                    checked: effectivePreviewRows === rows
-                }))
-            ],
-            onSelect: previewRows => updateAppearance({ previewRows: previewRows === settings.previewRows ? undefined : previewRows })
-        });
-    }
 
     const contentToggles: ContentToggle[] = [
         {

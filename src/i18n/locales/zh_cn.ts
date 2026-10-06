@@ -434,11 +434,6 @@ export const STRINGS_ZH_CN = {
             label: '标题行数',
             option: (rows: number) => `标题${rows}行`
         },
-        previewRows: {
-            label: '预览行数',
-            none: '无',
-            option: (rows: number) => `预览${rows}行`
-        },
         groupBy: '分组依据',
         properties: '属性',
         resetAppearance: '重置外观',
@@ -1088,7 +1083,6 @@ export const STRINGS_ZH_CN = {
                 groups: {
                     icon: '图标',
                     title: '标题',
-                    previewText: '预览文本',
                     featureImage: '特色图片',
                     properties: '属性'
                 }
@@ -1895,50 +1889,6 @@ export const STRINGS_ZH_CN = {
                 help: '常用格式：\nHH:mm = 14:30（24小时制）\nAh:mm = 下午2:30（12小时制）\nHH:mm:ss = 14:30:45\nAh:mm:ss = 下午2:30:45\n\n标记：\nHH/H = 24小时制\nhh/h = 12小时制\nmm = 分钟\nss = 秒\nA = 上午/下午',
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式'
-            },
-            showNotePreview: {
-                name: '显示笔记预览',
-                desc: '在笔记名称下方显示预览文本。'
-            },
-            skipHeadingsInPreview: {
-                name: '预览中跳过标题',
-                desc: '生成预览文本时跳过标题行。'
-            },
-            skipCodeBlocksInPreview: {
-                name: '预览中跳过代码块',
-                desc: '生成预览文本时跳过代码块。'
-            },
-            skipCalloutsInPreview: {
-                name: '预览中跳过标注',
-                desc: '生成预览文本时跳过标注块。'
-            },
-            stripHtmlInPreview: {
-                name: '移除预览中的 HTML',
-                desc: '从预览文本中移除 HTML 标签。可能会影响大型笔记的性能。'
-            },
-            stripLatexInPreview: {
-                name: '移除预览中的 LaTeX',
-                desc: '从预览文本中移除行内和块级 LaTeX 表达式。'
-            },
-            previewProperties: {
-                name: '预览属性',
-                desc: '用于查找预览文本的前置属性的逗号分隔列表。将使用第一个包含文本的属性。',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: '回退到笔记内容',
-                desc: '当指定的属性都不包含文本时，显示笔记内容作为预览。'
-            },
-            previewRows: {
-                name: '预览行数',
-                desc: '预览文本显示的行数。',
-                options: {
-                    '1': '1 行',
-                    '2': '2 行',
-                    '3': '3 行',
-                    '4': '4 行',
-                    '5': '5 行'
-                }
             },
             titleRows: {
                 name: '标题行数',

@@ -83,7 +83,6 @@ class TestNonMarkdownFeatureImageContentProvider extends FeatureImageContentProv
 function createSettings(overrides?: Partial<NotebookNavigatorSettings>): NotebookNavigatorSettings {
     return {
         ...DEFAULT_SETTINGS,
-        showFilePreview: false,
         featureImageProperties: ['thumbnail'],
         downloadExternalFeatureImages: true,
         ...overrides

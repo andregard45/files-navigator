@@ -142,66 +142,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 desc: strings.settings.items.useFolderColor.desc
             })
         ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.previewText, [
-            createToggleDefinition('showFilePreview', {
-                name: strings.settings.items.showNotePreview.name,
-                desc: strings.settings.items.showNotePreview.desc
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.previewRows.name,
-                desc: strings.settings.items.previewRows.desc,
-                aliases: Object.values(strings.settings.items.previewRows.options),
-                visible: () => plugin.settings.showFilePreview,
-                render: setting => renderPreviewRowsSetting(setting, context)
-            }),
-            createToggleDefinition('skipHeadingsInPreview', {
-                name: strings.settings.items.skipHeadingsInPreview.name,
-                desc: strings.settings.items.skipHeadingsInPreview.desc,
-                visible: () => plugin.settings.showFilePreview
-            }),
-            createToggleDefinition('skipCodeBlocksInPreview', {
-                name: strings.settings.items.skipCodeBlocksInPreview.name,
-                desc: strings.settings.items.skipCodeBlocksInPreview.desc,
-                visible: () => plugin.settings.showFilePreview
-            }),
-            createToggleDefinition('skipCalloutsInPreview', {
-                name: strings.settings.items.skipCalloutsInPreview.name,
-                desc: strings.settings.items.skipCalloutsInPreview.desc,
-                visible: () => plugin.settings.showFilePreview
-            }),
-            createToggleDefinition('stripHtmlInPreview', {
-                name: strings.settings.items.stripHtmlInPreview.name,
-                desc: strings.settings.items.stripHtmlInPreview.desc,
-                visible: () => plugin.settings.showFilePreview
-            }),
-            createToggleDefinition('stripLatexInPreview', {
-                name: strings.settings.items.stripLatexInPreview.name,
-                desc: strings.settings.items.stripLatexInPreview.desc,
-                visible: () => plugin.settings.showFilePreview
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.previewProperties.name,
-                desc: strings.settings.items.previewProperties.desc,
-                aliases: [strings.settings.items.previewProperties.placeholder],
-                visible: () => plugin.settings.showFilePreview,
-                render: setting =>
-                    renderCommaSeparatedTextSetting(setting, context, {
-                        name: strings.settings.items.previewProperties.name,
-                        desc: strings.settings.items.previewProperties.desc,
-                        placeholder: strings.settings.items.previewProperties.placeholder,
-                        getValue: () => formatCommaSeparatedList(plugin.settings.previewProperties),
-                        setValue: value => {
-                            plugin.settings.previewProperties = parseCommaSeparatedList(value);
-                        },
-                        onAfterUpdate: () => context.refreshSettingsDomState()
-                    })
-            }),
-            createToggleDefinition('previewPropertiesFallback', {
-                name: strings.settings.items.fallbackToNoteContent.name,
-                desc: strings.settings.items.fallbackToNoteContent.desc,
-                visible: () => plugin.settings.showFilePreview && plugin.settings.previewProperties.length > 0
-            })
-        ]),
         createGroupDefinition(strings.settings.pages.fileDisplay.groups.featureImage, [
             createToggleDefinition('showFeatureImage', {
                 name: strings.settings.items.showFeatureImage.name,
@@ -436,27 +376,6 @@ function renderFileNameRowsSetting(setting: Setting, context: SettingsTabContext
                 .setValue(plugin.settings.fileNameRows.toString())
                 .onChange(async value => {
                     plugin.settings.fileNameRows = parseInt(value, 10);
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
-}
-
-function renderPreviewRowsSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.previewRows.name)
-        .setDesc(strings.settings.items.previewRows.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('1', strings.settings.items.previewRows.options['1'])
-                .addOption('2', strings.settings.items.previewRows.options['2'])
-                .addOption('3', strings.settings.items.previewRows.options['3'])
-                .addOption('4', strings.settings.items.previewRows.options['4'])
-                .addOption('5', strings.settings.items.previewRows.options['5'])
-                .setValue(plugin.settings.previewRows.toString())
-                .onChange(async value => {
-                    plugin.settings.previewRows = parseInt(value, 10);
                     await plugin.saveSettingsAndUpdate();
                 })
         );

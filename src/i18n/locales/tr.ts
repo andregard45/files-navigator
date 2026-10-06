@@ -436,11 +436,6 @@ export const STRINGS_TR = {
             label: 'Başlık satırları',
             option: (rows: number) => `${rows} başlık satırı`
         },
-        previewRows: {
-            label: 'Önizleme satırları',
-            none: 'Yok',
-            option: (rows: number) => `${rows} önizleme satırı`
-        },
         groupBy: 'Gruplama ölçütü',
         properties: 'Özellikler',
         resetAppearance: 'Görünümü sıfırla',
@@ -1096,7 +1091,6 @@ export const STRINGS_TR = {
                 groups: {
                     icon: 'Simge',
                     title: 'Başlık',
-                    previewText: 'Önizleme metni',
                     featureImage: 'Öne çıkan görsel',
                     properties: 'Özellikler'
                 }
@@ -1910,50 +1904,6 @@ export const STRINGS_TR = {
                 help: 'Yaygın formatlar:\nh:mm a = 2:30 PM (12 saat)\nHH:mm = 14:30 (24 saat)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nBelirteçler:\nHH/H = 24 saat\nhh/h = 12 saat\nmm = dakika\nss = saniye\na = ÖÖ/ÖS',
                 helpTooltip: 'Moment formatı',
                 momentLinkText: 'Moment formatı'
-            },
-            showNotePreview: {
-                name: 'Not önizlemesini göster',
-                desc: 'Not adlarının altında önizleme metni görüntüle.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Önizlemede başlıkları atla',
-                desc: 'Önizleme metni oluştururken başlık satırlarını atla.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Önizlemede kod bloklarını atla',
-                desc: 'Önizleme metni oluştururken kod bloklarını atla.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Önizlemede callout bloklarını atla',
-                desc: 'Önizleme metni oluştururken callout bloklarını atla.'
-            },
-            stripHtmlInPreview: {
-                name: 'Önizlemelerde HTML kaldır',
-                desc: 'Önizleme metninden HTML etiketlerini kaldırır. Büyük notlarda performansı etkileyebilir.'
-            },
-            stripLatexInPreview: {
-                name: 'Önizlemelerde LaTeX kaldır',
-                desc: 'Önizleme metninden satır içi ve blok LaTeX ifadelerini kaldırır.'
-            },
-            previewProperties: {
-                name: 'Önizleme özellikleri',
-                desc: 'Önizleme metni için kontrol edilecek virgülle ayrılmış frontmatter özellikleri listesi. Metni olan ilk özellik kullanılacak.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Not içeriğine geri dön',
-                desc: 'Belirtilen özelliklerin hiçbiri metin içermediğinde not içeriğini önizleme olarak göster.'
-            },
-            previewRows: {
-                name: 'Önizleme satırları',
-                desc: 'Önizleme metni için görüntülenecek satır sayısı.',
-                options: {
-                    '1': '1 satır',
-                    '2': '2 satır',
-                    '3': '3 satır',
-                    '4': '4 satır',
-                    '5': '5 satır'
-                }
             },
             titleRows: {
                 name: 'Başlık satırları',

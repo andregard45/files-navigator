@@ -75,7 +75,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const createGroup = createSettingGroupFactory(containerEl);
     const iconGroup = createGroup(strings.settings.pages.fileDisplay.groups.icon);
     const titleGroup = createGroup(strings.settings.pages.fileDisplay.groups.title);
-    const previewTextGroup = createGroup(strings.settings.pages.fileDisplay.groups.previewText);
     const featureImageGroup = createGroup(strings.settings.pages.fileDisplay.groups.featureImage);
     const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
 
@@ -312,117 +311,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
                 })
             );
     });
-
-    const showPreviewSetting = previewTextGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showNotePreview.name).setDesc(strings.settings.items.showNotePreview.desc);
-    });
-
-    const previewSettingsEl = wireToggleSettingWithDependentSection(
-        showPreviewSetting,
-        () => plugin.settings.showFilePreview,
-        async value => {
-            plugin.settings.showFilePreview = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    new Setting(previewSettingsEl)
-        .setName(strings.settings.items.previewRows.name)
-        .setDesc(strings.settings.items.previewRows.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('1', strings.settings.items.previewRows.options['1'])
-                .addOption('2', strings.settings.items.previewRows.options['2'])
-                .addOption('3', strings.settings.items.previewRows.options['3'])
-                .addOption('4', strings.settings.items.previewRows.options['4'])
-                .addOption('5', strings.settings.items.previewRows.options['5'])
-                .setValue(plugin.settings.previewRows.toString())
-                .onChange(async value => {
-                    plugin.settings.previewRows = parseInt(value, 10);
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
-
-    new Setting(previewSettingsEl)
-        .setName(strings.settings.items.skipHeadingsInPreview.name)
-        .setDesc(strings.settings.items.skipHeadingsInPreview.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.skipHeadingsInPreview).onChange(async value => {
-                plugin.settings.skipHeadingsInPreview = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(previewSettingsEl)
-        .setName(strings.settings.items.skipCodeBlocksInPreview.name)
-        .setDesc(strings.settings.items.skipCodeBlocksInPreview.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.skipCodeBlocksInPreview).onChange(async value => {
-                plugin.settings.skipCodeBlocksInPreview = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(previewSettingsEl)
-        .setName(strings.settings.items.skipCalloutsInPreview.name)
-        .setDesc(strings.settings.items.skipCalloutsInPreview.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.skipCalloutsInPreview).onChange(async value => {
-                plugin.settings.skipCalloutsInPreview = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(previewSettingsEl)
-        .setName(strings.settings.items.stripHtmlInPreview.name)
-        .setDesc(strings.settings.items.stripHtmlInPreview.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.stripHtmlInPreview).onChange(async value => {
-                plugin.settings.stripHtmlInPreview = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(previewSettingsEl)
-        .setName(strings.settings.items.stripLatexInPreview.name)
-        .setDesc(strings.settings.items.stripLatexInPreview.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.stripLatexInPreview).onChange(async value => {
-                plugin.settings.stripLatexInPreview = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    const previewPropertiesSetting = context.createDebouncedTextSetting(
-        previewSettingsEl,
-        strings.settings.items.previewProperties.name,
-        strings.settings.items.previewProperties.desc,
-        strings.settings.items.previewProperties.placeholder,
-        () => formatCommaSeparatedList(plugin.settings.previewProperties),
-        value => {
-            plugin.settings.previewProperties = parseCommaSeparatedList(value);
-        },
-        undefined,
-        () => {
-            updatePreviewFallbackVisibility();
-        }
-    );
-    previewPropertiesSetting.controlEl.addClass('nn-setting-wide-input');
-
-    const previewFallbackSetting = new Setting(previewSettingsEl)
-        .setName(strings.settings.items.fallbackToNoteContent.name)
-        .setDesc(strings.settings.items.fallbackToNoteContent.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.previewPropertiesFallback).onChange(async value => {
-                plugin.settings.previewPropertiesFallback = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    const updatePreviewFallbackVisibility = () => {
-        setElementVisible(previewFallbackSetting.settingEl, plugin.settings.previewProperties.length > 0);
-    };
-    updatePreviewFallbackVisibility();
 
     const showFeatureImageSetting = featureImageGroup.addSetting(setting => {
         setting.setName(strings.settings.items.showFeatureImage.name).setDesc(strings.settings.items.showFeatureImage.desc);

@@ -435,11 +435,6 @@ export const STRINGS_IT = {
             label: 'Righe titolo',
             option: (rows: number) => `${rows} ${rows === 1 ? 'riga' : 'righe'} titolo`
         },
-        previewRows: {
-            label: 'Righe anteprima',
-            none: 'Nessuno',
-            option: (rows: number) => `${rows} ${rows === 1 ? 'riga' : 'righe'} anteprima`
-        },
         groupBy: 'Raggruppa per',
         properties: 'Proprietà',
         resetAppearance: 'Reimposta aspetto',
@@ -1097,7 +1092,6 @@ export const STRINGS_IT = {
                 groups: {
                     icon: 'Icona',
                     title: 'Titolo',
-                    previewText: 'Testo anteprima',
                     featureImage: 'Immagine in evidenza',
                     properties: 'Proprietà'
                 }
@@ -1915,50 +1909,6 @@ export const STRINGS_IT = {
                 help: 'Formati comuni:\nh:mm a = 2:30 PM (12 ore)\nHH:mm = 14:30 (24 ore)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nToken:\nHH/H = 24 ore\nhh/h = 12 ore\nmm = minuti\nss = secondi\na = AM/PM',
                 helpTooltip: 'Formato con Moment',
                 momentLinkText: 'formato Moment'
-            },
-            showNotePreview: {
-                name: 'Mostra anteprima nota',
-                desc: 'Visualizza testo anteprima sotto i nomi note.'
-            },
-            skipHeadingsInPreview: {
-                name: "Salta intestazioni nell'anteprima",
-                desc: 'Salta righe intestazione quando generi testo anteprima.'
-            },
-            skipCodeBlocksInPreview: {
-                name: "Salta blocchi codice nell'anteprima",
-                desc: 'Salta blocchi codice quando generi testo anteprima.'
-            },
-            skipCalloutsInPreview: {
-                name: "Salta callout nell'anteprima",
-                desc: 'Salta blocchi callout quando generi testo anteprima.'
-            },
-            stripHtmlInPreview: {
-                name: 'Rimuovi HTML nelle anteprime',
-                desc: 'Rimuove i tag HTML dal testo di anteprima. Potrebbe influire sulle prestazioni nelle note lunghe.'
-            },
-            stripLatexInPreview: {
-                name: 'Rimuovi LaTeX nelle anteprime',
-                desc: 'Rimuove le espressioni LaTeX inline e a blocco dal testo di anteprima.'
-            },
-            previewProperties: {
-                name: 'Proprietà anteprima',
-                desc: 'Lista di proprietà frontmatter separate da virgola da controllare per testo anteprima. La prima proprietà con testo sarà usata.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Ricorri al contenuto della nota',
-                desc: 'Mostra il contenuto della nota come anteprima quando nessuna delle proprietà specificate contiene testo.'
-            },
-            previewRows: {
-                name: 'Righe anteprima',
-                desc: 'Numero di righe da visualizzare per il testo anteprima.',
-                options: {
-                    '1': '1 riga',
-                    '2': '2 righe',
-                    '3': '3 righe',
-                    '4': '4 righe',
-                    '5': '5 righe'
-                }
             },
             titleRows: {
                 name: 'Righe titolo',

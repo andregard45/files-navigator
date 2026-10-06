@@ -38,7 +38,6 @@ vi.mock('../../src/storage/fileOperations', () => ({
 function createSettings(overrides: Partial<NotebookNavigatorSettings> & { propertyFields?: string }): NotebookNavigatorSettings {
     const { propertyFields: rawPropertyFields, ...restOverrides } = overrides;
     const settings = structuredClone(DEFAULT_SETTINGS);
-    settings.showFilePreview = false;
     settings.showFeatureImage = false;
     Object.assign(settings, restOverrides);
 

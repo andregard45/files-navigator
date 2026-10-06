@@ -38,7 +38,7 @@ describe('listPaneMeasurements layout helpers', () => {
         expect(
             getFileItemLayoutState({
                 isCompactMode: false,
-                showPreview: false,
+                showSearchExcerpt: false,
                 showImage: false,
                 isPinned: false,
                 hasPreviewContent: false,
@@ -50,7 +50,7 @@ describe('listPaneMeasurements layout helpers', () => {
         expect(
             getFileItemLayoutState({
                 isCompactMode: true,
-                showPreview: false,
+                showSearchExcerpt: false,
                 showImage: false,
                 isPinned: false,
                 hasPreviewContent: false,
@@ -63,7 +63,7 @@ describe('listPaneMeasurements layout helpers', () => {
     it('keeps the multiline preview slot when the feature image area is visible', () => {
         expect(
             getFileItemLayoutState({
-                showPreview: true,
+                showSearchExcerpt: true,
                 showImage: true,
                 isPinned: false,
                 hasPreviewContent: false,
@@ -79,7 +79,7 @@ describe('listPaneMeasurements layout helpers', () => {
     it('collapses empty preview space when pills are visible and no image is shown', () => {
         expect(
             getFileItemLayoutState({
-                showPreview: true,
+                showSearchExcerpt: true,
                 showImage: false,
                 isPinned: false,
                 hasPreviewContent: false,
@@ -93,7 +93,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses a title-only row height when normal rows render no content or image', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: false,
             isPinned: false,
             hasPreviewContent: false,
@@ -116,7 +116,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses the thumbnail minimum row height for base and canvas extension badges without note content', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -139,7 +139,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('does not reserve an empty preview slot for base and canvas extension badges', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -164,7 +164,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('does not add a metadata line for multi-row base and canvas extension badge titles', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -188,7 +188,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('sizes base and canvas extension badge rows from actual pill rows', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -214,7 +214,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('does not reserve a hidden metadata row for base and canvas extension badges', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -251,7 +251,7 @@ describe('listPaneMeasurements layout helpers', () => {
                     titleRows: 2,
                     previewRows: 3,
                     isCompactMode: true,
-                    showPreview: false,
+                    showSearchExcerpt: false,
                     showImage: false,
                     compactPaddingTotal: 18
                 }
@@ -274,7 +274,7 @@ describe('listPaneMeasurements layout helpers', () => {
                     titleRows: 1,
                     previewRows: 3,
                     isCompactMode: false,
-                    showPreview: false,
+                    showSearchExcerpt: false,
                     showImage: false,
                     compactPaddingTotal: 18
                 }
@@ -291,7 +291,7 @@ describe('listPaneMeasurements layout helpers', () => {
             visiblePillRowCount: 1
         };
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: inputs.isPinned,
             hasPreviewContent: inputs.hasPreviewContent,
@@ -306,7 +306,7 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: 4,
                 isCompactMode: false,
-                showPreview: true,
+                showSearchExcerpt: true,
                 showImage: true,
                 compactPaddingTotal: 18
             })
@@ -332,7 +332,7 @@ describe('listPaneMeasurements layout helpers', () => {
             visiblePillRowCount: 2
         };
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -347,7 +347,7 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: 3,
                 isCompactMode: false,
-                showPreview: true,
+                showSearchExcerpt: true,
                 showImage: true,
                 compactPaddingTotal: 18
             })
@@ -366,7 +366,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses the thumbnail minimum row height for short feature image rows', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -389,7 +389,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses a fixed rich row height for feature image rows', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,
@@ -417,7 +417,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses configured preview rows without a feature image', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: true,
@@ -445,7 +445,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses one preview row for pinned items', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: false,
             isPinned: true,
             hasPreviewContent: true,
@@ -470,7 +470,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('keeps pinned task progress and preview in one secondary row', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: false,
             isPinned: true,
             hasPreviewContent: true,
@@ -493,7 +493,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('does not show the pinned preview slot when preview text is disabled', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: false,
             isPinned: true,
             hasPreviewContent: true,
@@ -506,7 +506,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('uses the thumbnail minimum row height for pinned feature image rows', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: true,
             hasPreviewContent: true,
@@ -541,7 +541,7 @@ describe('listPaneMeasurements layout helpers', () => {
             visiblePillRowCount: 0
         };
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: true,
@@ -564,7 +564,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('lets pill rows use the reserved image metadata line', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: true,
@@ -604,7 +604,7 @@ describe('listPaneMeasurements layout helpers', () => {
 
     it('lets replacement pill rows use the rich preview slot before growing the row', () => {
         const layoutState = getFileItemLayoutState({
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             isPinned: false,
             hasPreviewContent: false,

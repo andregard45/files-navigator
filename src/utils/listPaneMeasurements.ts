@@ -214,16 +214,18 @@ export interface FileRowHeightInputs {
 export interface FileRowHeightConfig {
     heights: ListPaneMeasurements;
     titleRows: number;
+    /** Row count reserved for the Omnisearch excerpt area in search result rows. */
     previewRows: number;
     isCompactMode: boolean;
-    showPreview: boolean;
+    /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
+    showSearchExcerpt: boolean;
     showImage: boolean;
     compactPaddingTotal: number;
 }
 
 export function getFileItemLayoutState({
     isCompactMode = false,
-    showPreview,
+    showSearchExcerpt,
     isPinned,
     hasPreviewContent,
     showFeatureImageArea,
@@ -231,7 +233,7 @@ export function getFileItemLayoutState({
     hasVisiblePillRows
 }: {
     isCompactMode?: boolean;
-    showPreview: boolean;
+    showSearchExcerpt: boolean;
     showImage?: boolean;
     isPinned: boolean;
     hasPreviewContent: boolean;
@@ -242,7 +244,7 @@ export function getFileItemLayoutState({
     const hasImageTextArea = showFeatureImageArea && !showExtensionBadgeThumbnail;
     const isPinnedImageRow = isPinned && hasImageTextArea;
     const shouldReplaceEmptyPreviewWithPills = !hasPreviewContent && hasVisiblePillRows;
-    const shouldShowMultilinePreview = showPreview && !shouldReplaceEmptyPreviewWithPills && (hasPreviewContent || hasImageTextArea);
+    const shouldShowMultilinePreview = showSearchExcerpt && !shouldReplaceEmptyPreviewWithPills && (hasPreviewContent || hasImageTextArea);
 
     return {
         isCompactMode,
@@ -307,7 +309,7 @@ export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileR
     const visiblePillRowCount = Math.max(0, inputs.visiblePillRowCount);
     const layoutState = getFileItemLayoutState({
         isCompactMode: config.isCompactMode,
-        showPreview: config.showPreview,
+        showSearchExcerpt: config.showSearchExcerpt,
         isPinned: inputs.isPinned,
         hasPreviewContent: inputs.hasPreviewContent,
         showFeatureImageArea: inputs.showFeatureImageArea,

@@ -19,10 +19,6 @@
 import type { FileContentType } from '../interfaces/IContentProvider';
 import type { NotebookNavigatorSettings } from '../settings/types';
 
-export function hasMarkdownPreviewConsumer(settings: NotebookNavigatorSettings): boolean {
-    return settings.showFilePreview;
-}
-
 export function hasMarkdownFeatureImageConsumer(settings: NotebookNavigatorSettings): boolean {
     return settings.showFeatureImage;
 }
@@ -30,9 +26,6 @@ export function hasMarkdownFeatureImageConsumer(settings: NotebookNavigatorSetti
 export function getMarkdownPipelineContentTypes(settings: NotebookNavigatorSettings): FileContentType[] {
     const types: FileContentType[] = [];
 
-    if (hasMarkdownPreviewConsumer(settings)) {
-        types.push('preview');
-    }
     if (hasMarkdownFeatureImageConsumer(settings)) {
         types.push('featureImage');
     }

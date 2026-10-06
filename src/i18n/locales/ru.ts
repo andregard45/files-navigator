@@ -436,11 +436,6 @@ export const STRINGS_RU = {
             label: 'Строки заголовка',
             option: (rows: number) => `${rows} ${rows === 1 ? 'строка' : rows < 5 ? 'строки' : 'строк'} заголовка`
         },
-        previewRows: {
-            label: 'Строки превью',
-            none: 'Нет',
-            option: (rows: number) => `${rows} ${rows === 1 ? 'строка' : rows < 5 ? 'строки' : 'строк'} превью`
-        },
         groupBy: 'Группировать по',
         properties: 'Свойства',
         resetAppearance: 'Сбросить оформление',
@@ -1096,7 +1091,6 @@ export const STRINGS_RU = {
                 groups: {
                     icon: 'Иконка',
                     title: 'Заголовок',
-                    previewText: 'Текст превью',
                     featureImage: 'Изображение-обложка',
                     properties: 'Свойства'
                 }
@@ -1910,50 +1904,6 @@ export const STRINGS_RU = {
                 help: 'Распространённые форматы:\nHH:mm = 14:30 (24-часовой)\nh:mm a = 2:30 PM (12-часовой)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nТокены:\nHH/H = 24-часовой\nhh/h = 12-часовой\nmm = минуты\nss = секунды\na = AM/PM',
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment'
-            },
-            showNotePreview: {
-                name: 'Показывать превью заметки',
-                desc: 'Отображать текст превью под названиями заметок.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Пропускать заголовки в превью',
-                desc: 'Пропускать строки заголовков при генерации текста превью.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Пропускать блоки кода в превью',
-                desc: 'Пропускать блоки кода при генерации текста превью.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Пропускать выноски в превью',
-                desc: 'Пропускать блоки выносок при генерации текста превью.'
-            },
-            stripHtmlInPreview: {
-                name: 'Удалять HTML в превью',
-                desc: 'Удалять HTML-теги из текста превью. Может влиять на производительность при больших заметках.'
-            },
-            stripLatexInPreview: {
-                name: 'Удалять LaTeX в превью',
-                desc: 'Удалять встроенные и блочные выражения LaTeX из текста превью.'
-            },
-            previewProperties: {
-                name: 'Свойства превью',
-                desc: 'Список свойств frontmatter через запятую для проверки текста превью. Используется первое свойство с текстом.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Использовать содержимое заметки',
-                desc: 'Показывать содержимое заметки как превью, когда ни одно из указанных свойств не содержит текста.'
-            },
-            previewRows: {
-                name: 'Строки превью',
-                desc: 'Количество строк для отображения текста превью.',
-                options: {
-                    '1': '1 строка',
-                    '2': '2 строки',
-                    '3': '3 строки',
-                    '4': '4 строки',
-                    '5': '5 строк'
-                }
             },
             titleRows: {
                 name: 'Строки заголовка',

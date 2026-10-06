@@ -50,7 +50,7 @@ function createFileItem(file: TFile, overrides: Partial<ListPaneItem> = {}): Lis
 }
 
 function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {}): ListFileRowSizingConfig {
-    const showPreview = overrides.showPreview ?? true;
+    const showSearchExcerpt = overrides.showSearchExcerpt ?? true;
     const showImage = overrides.showImage ?? false;
 
     return {
@@ -58,7 +58,7 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         titleRows: 1,
         previewRows: 3,
         showDate: true,
-        showPreview,
+        showSearchExcerpt,
         showImage,
         compactPaddingTotal: 18,
         isCompactMode: false,
@@ -137,7 +137,7 @@ describe('isListRowHeightAffectingContentChange', () => {
         overrides: Partial<ListRowHeightAffectingContentChangeConfig> = {}
     ): ListRowHeightAffectingContentChangeConfig {
         return {
-            showPreview: true,
+            showSearchExcerpt: true,
             showImage: true,
             frontmatterPropertyRowsPossible: true,
             ...overrides
@@ -147,8 +147,6 @@ describe('isListRowHeightAffectingContentChange', () => {
     it('detects content fields that can change estimated list row height', () => {
         const config = createHeightChangeConfig();
 
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'has' } }), config)).toBe(true);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'none' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageKey: 'key' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageStatus: 'has' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(true);
@@ -156,7 +154,7 @@ describe('isListRowHeightAffectingContentChange', () => {
 
     it('ignores content fields disabled by the active row sizing config', () => {
         const config = createHeightChangeConfig({
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: false,
             frontmatterPropertyRowsPossible: false
         });
@@ -202,16 +200,13 @@ describe('resolveListFileRowHeightInputs', () => {
         app.metadataCache.getFileCache = getFileCache;
         const file = createTestTFile('Notes/Daily.md');
         const db = createDb();
-        const hasPreview = vi.fn(() => true);
-
         const inputs = resolveListFileRowHeightInputs({
             app,
             db: db as unknown as IndexedDBStorage,
-            hasPreview,
             item: createFileItem(file),
             file,
             config: createRowSizingConfig({
-                showPreview: false,
+                showSearchExcerpt: false,
                 showImage: false,
                         propertyRowsPossible: false
             })
@@ -220,7 +215,6 @@ describe('resolveListFileRowHeightInputs', () => {
         expect(inputs.visiblePillRowCount).toBe(0);
         expect(inputs.showFeatureImageArea).toBe(false);
         expect(db.getFile).not.toHaveBeenCalled();
-        expect(hasPreview).not.toHaveBeenCalled();
         expect(getFileCache).not.toHaveBeenCalled();
     });
 
@@ -234,7 +228,6 @@ describe('resolveListFileRowHeightInputs', () => {
         resolveListFileRowHeightInputs({
             app,
             db: db as unknown as IndexedDBStorage,
-            hasPreview: () => false,
             item: createFileItem(file),
             file,
             config: createRowSizingConfig({
@@ -256,11 +249,10 @@ describe('resolveListFileRowHeightInputs', () => {
         const inputs = resolveListFileRowHeightInputs({
             app,
             db: db as unknown as IndexedDBStorage,
-            hasPreview: () => false,
             item: createFileItem(file),
             file,
             config: createRowSizingConfig({
-                showPreview: false,
+                showSearchExcerpt: false,
                 showFileProperties: true,
                 visiblePropertyKeys: new Set(),
                 propertyRowsPossible: false
@@ -281,11 +273,10 @@ describe('resolveListFileRowHeightInputs', () => {
         const inputs = resolveListFileRowHeightInputs({
             app,
             db: db as unknown as IndexedDBStorage,
-            hasPreview: () => false,
             item: createFileItem(file),
             file,
             config: createRowSizingConfig({
-                showPreview: false,
+                showSearchExcerpt: false,
                 propertyRowsPossible: true,
                 showFileProperties: true,
                 visiblePropertyKeys: new Set(['status'])

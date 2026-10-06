@@ -434,11 +434,6 @@ export const STRINGS_KO = {
             label: '제목 행',
             option: (rows: number) => `${rows}개 제목 행`
         },
-        previewRows: {
-            label: '미리보기 행',
-            none: '없음',
-            option: (rows: number) => `${rows}개 미리보기 행`
-        },
         groupBy: '그룹화 기준',
         properties: '속성',
         resetAppearance: '모양 재설정',
@@ -1094,7 +1089,6 @@ export const STRINGS_KO = {
                 groups: {
                     icon: '아이콘',
                     title: '제목',
-                    previewText: '미리보기 텍스트',
                     featureImage: '대표 이미지',
                     properties: '속성'
                 }
@@ -1906,50 +1900,6 @@ export const STRINGS_KO = {
                 help: '일반적인 형식:\na h:mm = 오후 2:30 (12시간)\nHH:mm = 14:30 (24시간)\na h:mm:ss = 오후 2:30:45\nHH:mm:ss = 14:30:45\n\n토큰:\nHH/H = 24시간\nhh/h = 12시간\nmm = 분\nss = 초\na = 오전/오후',
                 helpTooltip: 'Moment 형식',
                 momentLinkText: 'Moment 형식'
-            },
-            showNotePreview: {
-                name: '노트 미리보기 표시',
-                desc: '노트 이름 아래에 미리보기 텍스트를 표시합니다.'
-            },
-            skipHeadingsInPreview: {
-                name: '미리보기에서 제목 건너뛰기',
-                desc: '미리보기 텍스트를 생성할 때 제목 줄을 건너뜁니다.'
-            },
-            skipCodeBlocksInPreview: {
-                name: '미리보기에서 코드 블록 건너뛰기',
-                desc: '미리보기 텍스트를 생성할 때 코드 블록을 건너뜁니다.'
-            },
-            skipCalloutsInPreview: {
-                name: '미리보기에서 콜아웃 건너뛰기',
-                desc: '미리보기 텍스트를 생성할 때 콜아웃 블록을 건너뜁니다.'
-            },
-            stripHtmlInPreview: {
-                name: '미리보기에서 HTML 제거',
-                desc: '미리보기 텍스트에서 HTML 태그를 제거합니다. 큰 노트에서는 성능에 영향을 줄 수 있습니다.'
-            },
-            stripLatexInPreview: {
-                name: '미리보기에서 LaTeX 제거',
-                desc: '미리보기 텍스트에서 인라인 및 블록 LaTeX 수식을 제거합니다.'
-            },
-            previewProperties: {
-                name: '미리보기 속성',
-                desc: '미리보기 텍스트를 확인할 frontmatter 속성의 쉼표로 구분된 목록입니다. 텍스트가 있는 첫 번째 속성이 사용됩니다.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: '노트 내용으로 대체',
-                desc: '지정된 속성에 텍스트가 없을 때 노트 내용을 미리보기로 표시합니다.'
-            },
-            previewRows: {
-                name: '미리보기 행',
-                desc: '미리보기 텍스트에 표시할 행 수입니다.',
-                options: {
-                    '1': '1행',
-                    '2': '2행',
-                    '3': '3행',
-                    '4': '4행',
-                    '5': '5행'
-                }
             },
             titleRows: {
                 name: '제목 행',

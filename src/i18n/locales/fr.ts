@@ -439,11 +439,6 @@ export const STRINGS_FR = {
             label: 'Lignes de titre',
             option: (rows: number) => `${rows} ligne${rows === 1 ? '' : 's'} de titre`
         },
-        previewRows: {
-            label: "Lignes d'aperçu",
-            none: 'Aucun',
-            option: (rows: number) => `${rows} ligne${rows === 1 ? '' : 's'} d'aperçu`
-        },
         groupBy: 'Grouper par',
         properties: 'Propriétés',
         resetAppearance: 'Réinitialiser l’apparence',
@@ -1104,7 +1099,6 @@ export const STRINGS_FR = {
                 groups: {
                     icon: 'Icône',
                     title: 'Titre',
-                    previewText: "Texte d'aperçu",
                     featureImage: 'Image vedette',
                     properties: 'Propriétés'
                 }
@@ -1922,50 +1916,6 @@ export const STRINGS_FR = {
                 help: 'Formats courants :\nHH:mm = 14:30 (24 heures)\nh:mm a = 2:30 PM (12 heures)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nJetons :\nHH/H = 24 heures\nhh/h = 12 heures\nmm = minutes\nss = secondes\na = AM/PM',
                 helpTooltip: 'Format avec Moment',
                 momentLinkText: 'format Moment'
-            },
-            showNotePreview: {
-                name: "Afficher l'aperçu de la note",
-                desc: "Afficher le texte d'aperçu sous les noms des notes."
-            },
-            skipHeadingsInPreview: {
-                name: "Ignorer les en-têtes dans l'aperçu",
-                desc: "Ignorer les lignes d'en-tête lors de la génération du texte d'aperçu."
-            },
-            skipCodeBlocksInPreview: {
-                name: "Ignorer les blocs de code dans l'aperçu",
-                desc: "Ignorer les blocs de code lors de la génération du texte d'aperçu."
-            },
-            skipCalloutsInPreview: {
-                name: "Ignorer les callouts dans l'aperçu",
-                desc: "Ignorer les blocs de callout lors de la génération du texte d'aperçu."
-            },
-            stripHtmlInPreview: {
-                name: 'Supprimer le HTML dans les aperçus',
-                desc: "Supprimer les balises HTML du texte d'aperçu. Peut affecter les performances sur les longues notes."
-            },
-            stripLatexInPreview: {
-                name: 'Supprimer le LaTeX dans les aperçus',
-                desc: "Supprimer les expressions LaTeX en ligne et en bloc du texte d'aperçu."
-            },
-            previewProperties: {
-                name: "Propriétés d'aperçu",
-                desc: "Liste séparée par des virgules de propriétés frontmatter pour le texte d'aperçu. La première propriété avec du texte sera utilisée.",
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Revenir au contenu de la note',
-                desc: "Afficher le contenu de la note en aperçu lorsqu'aucune des propriétés spécifiées ne contient de texte."
-            },
-            previewRows: {
-                name: "Lignes d'aperçu",
-                desc: "Nombre de lignes à afficher pour le texte d'aperçu.",
-                options: {
-                    '1': '1 ligne',
-                    '2': '2 lignes',
-                    '3': '3 lignes',
-                    '4': '4 lignes',
-                    '5': '5 lignes'
-                }
             },
             titleRows: {
                 name: 'Lignes de titre',

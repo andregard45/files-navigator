@@ -435,11 +435,6 @@ export const STRINGS_EN = {
             label: 'Title rows',
             option: (rows: number) => `${rows} title row${rows === 1 ? '' : 's'}`
         },
-        previewRows: {
-            label: 'Preview rows',
-            none: 'None',
-            option: (rows: number) => `${rows} preview row${rows === 1 ? '' : 's'}`
-        },
         groupBy: 'Group by',
         properties: 'Properties',
         resetAppearance: 'Reset appearance',
@@ -1091,7 +1086,6 @@ export const STRINGS_EN = {
                 groups: {
                     icon: 'Icon',
                     title: 'Title',
-                    previewText: 'Preview text',
                     featureImage: 'Feature image',
                     properties: 'Properties'
                 }
@@ -1904,50 +1898,6 @@ export const STRINGS_EN = {
                 help: 'Common formats:\nh:mm a = 2:30 PM (12-hour)\nHH:mm = 14:30 (24-hour)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nTokens:\nHH/H = 24-hour\nhh/h = 12-hour\nmm = minutes\nss = seconds\na = AM/PM',
                 helpTooltip: 'Format using Moment',
                 momentLinkText: 'Moment format'
-            },
-            showNotePreview: {
-                name: 'Show note preview',
-                desc: 'Display preview text beneath note names.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Skip headings in preview',
-                desc: 'Skip heading lines when generating preview text.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Skip code blocks in preview',
-                desc: 'Skip code blocks when generating preview text.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Skip callouts in preview',
-                desc: 'Skip callout blocks when generating preview text.'
-            },
-            stripHtmlInPreview: {
-                name: 'Strip HTML in previews',
-                desc: 'Remove HTML tags from preview text. May affect performance on large notes.'
-            },
-            stripLatexInPreview: {
-                name: 'Strip LaTeX in previews',
-                desc: 'Remove inline and block LaTeX expressions from preview text.'
-            },
-            previewProperties: {
-                name: 'Preview properties',
-                desc: 'Comma-separated list of frontmatter properties to check for preview text. The first property with text will be used.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Fall back to note content',
-                desc: 'Show note content as preview when none of the specified properties contain text.'
-            },
-            previewRows: {
-                name: 'Preview rows',
-                desc: 'Number of rows to display for preview text.',
-                options: {
-                    '1': '1 row',
-                    '2': '2 rows',
-                    '3': '3 rows',
-                    '4': '4 rows',
-                    '5': '5 rows'
-                }
             },
             titleRows: {
                 name: 'Title rows',

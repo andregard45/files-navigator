@@ -435,11 +435,6 @@ export const STRINGS_ZH_TW = {
             label: '標題行數',
             option: (rows: number) => `標題${rows}行`
         },
-        previewRows: {
-            label: '預覽行數',
-            none: '無',
-            option: (rows: number) => `預覽${rows}行`
-        },
         groupBy: '分組依據',
         properties: '屬性',
         resetAppearance: '重設外觀',
@@ -1089,7 +1084,6 @@ export const STRINGS_ZH_TW = {
                 groups: {
                     icon: '圖示',
                     title: '標題',
-                    previewText: '預覽文字',
                     featureImage: '特色圖片',
                     properties: '屬性'
                 }
@@ -1896,50 +1890,6 @@ export const STRINGS_ZH_TW = {
                 help: '常用格式：\nHH:mm = 14:30（24小時制）\nAh:mm = 下午2:30（12小時制）\nHH:mm:ss = 14:30:45\nAh:mm:ss = 下午2:30:45\n\n標記：\nHH/H = 24小時制\nhh/h = 12小時制\nmm = 分鐘\nss = 秒\nA = 上午/下午',
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式'
-            },
-            showNotePreview: {
-                name: '顯示筆記預覽',
-                desc: '在筆記名稱下方顯示預覽文字。'
-            },
-            skipHeadingsInPreview: {
-                name: '預覽中跳過標題',
-                desc: '產生預覽文字時跳過標題行。'
-            },
-            skipCodeBlocksInPreview: {
-                name: '預覽中跳過程式碼區塊',
-                desc: '產生預覽文字時跳過程式碼區塊。'
-            },
-            skipCalloutsInPreview: {
-                name: '預覽中跳過標註',
-                desc: '產生預覽文字時跳過標註區塊。'
-            },
-            stripHtmlInPreview: {
-                name: '移除預覽中的 HTML',
-                desc: '從預覽文字中移除 HTML 標籤。可能會影響大型筆記的效能。'
-            },
-            stripLatexInPreview: {
-                name: '移除預覽中的 LaTeX',
-                desc: '從預覽文字中移除行內和區塊 LaTeX 運算式。'
-            },
-            previewProperties: {
-                name: '預覽屬性',
-                desc: '用於尋找預覽文字的前置屬性的逗號分隔列表。將使用第一個包含文字的屬性。',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: '回退到筆記內容',
-                desc: '當指定的屬性都不包含文字時，顯示筆記內容作為預覽。'
-            },
-            previewRows: {
-                name: '預覽行數',
-                desc: '預覽文字顯示的行數。',
-                options: {
-                    '1': '1 行',
-                    '2': '2 行',
-                    '3': '3 行',
-                    '4': '4 行',
-                    '5': '5 行'
-                }
             },
             titleRows: {
                 name: '標題行數',
