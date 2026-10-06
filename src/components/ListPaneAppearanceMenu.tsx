@@ -307,13 +307,6 @@ export function showListPaneAppearanceMenu({
             icon: 'lucide-calendar',
             globalDefault: settings.showFileDate,
             available: !isCompact
-        },
-        {
-            key: 'showParentFolder',
-            title: strings.folderAppearance.parentFolder,
-            icon: resolveUXIconForMenu(settings.interfaceIcons, 'nav-folder-closed'),
-            globalDefault: settings.showParentFolder,
-            available: !isCompact
         }
     ];
 

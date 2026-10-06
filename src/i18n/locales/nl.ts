@@ -448,7 +448,6 @@ export const STRINGS_NL = {
         groupBy: 'Groeperen op',
         properties: 'Eigenschappen',
         date: 'Datum',
-        parentFolder: 'Bovenliggende map',
         resetAppearance: 'Uiterlijk herstellen',
         openPluginSettings: 'Plugin-instellingen openen…'
     },
@@ -1108,8 +1107,7 @@ export const STRINGS_NL = {
                     previewText: 'Voorbeeldtekst',
                     featureImage: 'Uitgelichte afbeelding',
                     properties: 'Eigenschappen',
-                    date: 'Datum',
-                    parentFolder: 'Bovenliggende map'
+                    date: 'Datum'
                 }
             },
             calendar: {
@@ -1355,26 +1353,6 @@ export const STRINGS_NL = {
             compactItemHeightScaleText: {
                 name: 'Tekst schalen met compacte itemhoogte',
                 desc: 'Compacte lijsttekst schalen wanneer de itemhoogte wordt verminderd.'
-            },
-            showParentFolder: {
-                name: 'Bovenliggende map tonen',
-                desc: 'De naam van de bovenliggende map weergeven voor notities in submappen, tags of eigenschappen.'
-            },
-            showFolderPath: {
-                name: 'Mappad tonen',
-                desc: 'Het pad ten opzichte van de geselecteerde map weergeven in plaats van alleen de mapnaam. Tags en eigenschappen tonen het volledige pad.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Klik op bovenliggende map opent map',
-                desc: 'Klik op het label van de bovenliggende map om de map te openen in het lijstpaneel.'
-            },
-            showParentFolderColor: {
-                name: 'Bovenliggende mapkleur tonen',
-                desc: 'Mapkleuren gebruiken voor labels van bovenliggende mappen.'
-            },
-            showParentFolderIcon: {
-                name: 'Bovenliggend mappictogram tonen',
-                desc: 'Mappictogrammen tonen naast labels van bovenliggende mappen.'
             },
             showQuickActions: {
                 name: 'Snelle acties tonen',

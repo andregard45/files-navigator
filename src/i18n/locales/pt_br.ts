@@ -446,7 +446,6 @@ export const STRINGS_PT_BR = {
         groupBy: 'Agrupar por',
         properties: 'Propriedades',
         date: 'Data',
-        parentFolder: 'Pasta pai',
         resetAppearance: 'Redefinir aparência',
         openPluginSettings: 'Abrir configurações do plugin…'
     },
@@ -1107,8 +1106,7 @@ export const STRINGS_PT_BR = {
                     previewText: 'Texto de visualização',
                     featureImage: 'Imagem de destaque',
                     properties: 'Propriedades',
-                    date: 'Data',
-                    parentFolder: 'Pasta pai'
+                    date: 'Data'
                 }
             },
             calendar: {
@@ -1354,26 +1352,6 @@ export const STRINGS_PT_BR = {
             compactItemHeightScaleText: {
                 name: 'Dimensionar texto com altura do item compacto',
                 desc: 'Dimensionar texto da lista compacta quando a altura do item é reduzida.'
-            },
-            showParentFolder: {
-                name: 'Mostrar pasta pai',
-                desc: 'Exibir o nome da pasta pai para notas em subpastas, etiquetas ou propriedades.'
-            },
-            showFolderPath: {
-                name: 'Mostrar caminho da pasta',
-                desc: 'Exibir o caminho relativo à pasta selecionada em vez de apenas o nome da pasta. Etiquetas e propriedades mostram o caminho completo.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Clique na pasta pai abre pasta',
-                desc: 'Clicar no rótulo da pasta pai abre a pasta no painel de lista.'
-            },
-            showParentFolderColor: {
-                name: 'Mostrar cor de pasta pai',
-                desc: 'Usar cores de pasta em rótulos de pastas pai.'
-            },
-            showParentFolderIcon: {
-                name: 'Mostrar ícone da pasta pai',
-                desc: 'Mostrar ícones de pasta ao lado dos rótulos de pastas pai.'
             },
             showQuickActions: {
                 name: 'Mostrar ações rápidas',

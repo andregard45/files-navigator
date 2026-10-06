@@ -374,11 +374,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showFileDate: true,
     // Default to showing modified date when sorting alphabetically
     alphabeticalDateMode: 'modified',
-    showParentFolder: true,
-    showParentFolderFullPath: false,
-    parentFolderClickRevealsFile: false,
-    showParentFolderColor: false,
-    showParentFolderIcon: false,
 
     // Calendar tab - Calendar (always enabled)
     calendarPlacement: 'left-sidebar',

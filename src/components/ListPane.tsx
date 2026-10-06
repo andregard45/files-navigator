@@ -1783,7 +1783,6 @@ export const ListPane = React.memo(
                             propertyKey={manualSortEditState.propertyKey}
                             manualSortGroupHeaderPropertyKey={manualSortGroupHeaderPropertyKey}
                             rankByPath={manualSortEditRankByPath}
-                            selectedFolderPath={selectedFolder?.path ?? null}
                             isSaving={manualSortEditState.isSaving}
                             isDoneDisabled={isManualSortEditDoneDisabled}
                             selectionType={selectionType}

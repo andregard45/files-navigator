@@ -133,11 +133,6 @@ const BOOLEAN_SETTING_KEYS = [
     'enablePropertyInternalLinks',
     'enablePropertyExternalLinks',
     'showFileDate',
-    'showParentFolder',
-    'showParentFolderFullPath',
-    'parentFolderClickRevealsFile',
-    'showParentFolderColor',
-    'showParentFolderIcon',
     'showSelectedNavigationPills',
     'colorListPaneTitle',
     'stickyGroupHeaders',
@@ -223,7 +218,6 @@ export const NATIVE_SETTING_DOM_STATE_REFRESH_KEYS: ReadonlySet<NativeSettingCon
     'showFileProperties',
     'colorFileProperties',
     'showFileDate',
-    'showParentFolder',
     'showNoteCount',
     'springLoadedFolders'
 ]);

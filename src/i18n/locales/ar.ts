@@ -443,7 +443,6 @@ export const STRINGS_AR = {
         groupBy: 'تجميع حسب',
         properties: 'الخصائص',
         date: 'التاريخ',
-        parentFolder: 'المجلد الأصلي',
         resetAppearance: 'إعادة تعيين المظهر',
         openPluginSettings: 'فتح إعدادات الإضافة…'
     },
@@ -1098,8 +1097,7 @@ export const STRINGS_AR = {
                     previewText: 'نص المعاينة',
                     featureImage: 'الصورة المميزة',
                     properties: 'الخصائص',
-                    date: 'التاريخ',
-                    parentFolder: 'المجلد الأصلي'
+                    date: 'التاريخ'
                 }
             },
             calendar: {
@@ -1345,26 +1343,6 @@ export const STRINGS_AR = {
             compactItemHeightScaleText: {
                 name: 'تحجيم النص مع ارتفاع العنصر المضغوط',
                 desc: 'تحجيم نص القائمة المضغوطة عند تقليل ارتفاع العنصر.'
-            },
-            showParentFolder: {
-                name: 'إظهار المجلد الأصلي',
-                desc: 'عرض اسم المجلد الأصلي للملاحظات في المجلدات الفرعية أو الوسوم أو الخصائص.'
-            },
-            showFolderPath: {
-                name: 'إظهار مسار المجلد',
-                desc: 'اعرض المسار نسبةً إلى المجلد المحدد بدلاً من اسم المجلد فقط. تعرض الوسوم والخصائص المسار الكامل.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'النقر على المجلد الأصلي يفتح المجلد',
-                desc: 'النقر على تسمية المجلد الأصلي يفتح المجلد في لوحة القائمة.'
-            },
-            showParentFolderColor: {
-                name: 'إظهار لون المجلد الأصلي',
-                desc: 'استخدام ألوان المجلدات على تسميات المجلد الأصلي.'
-            },
-            showParentFolderIcon: {
-                name: 'إظهار أيقونة المجلد الأصلي',
-                desc: 'إظهار أيقونات المجلدات بجانب تسميات المجلد الأصلي.'
             },
             showQuickActions: {
                 name: 'إظهار الإجراءات السريعة',

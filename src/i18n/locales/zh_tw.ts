@@ -443,7 +443,6 @@ export const STRINGS_ZH_TW = {
         groupBy: '分組依據',
         properties: '屬性',
         date: '日期',
-        parentFolder: '父資料夾',
         resetAppearance: '重設外觀',
         openPluginSettings: '開啟外掛程式設定…'
     },
@@ -1094,8 +1093,7 @@ export const STRINGS_ZH_TW = {
                     previewText: '預覽文字',
                     featureImage: '特色圖片',
                     properties: '屬性',
-                    date: '日期',
-                    parentFolder: '父資料夾'
+                    date: '日期'
                 }
             },
             calendar: {
@@ -1338,26 +1336,6 @@ export const STRINGS_ZH_TW = {
             compactItemHeightScaleText: {
                 name: '隨精簡高度縮放文字',
                 desc: '當減小精簡列表項目高度時同步縮放文字。'
-            },
-            showParentFolder: {
-                name: '顯示父資料夾',
-                desc: '為子資料夾、標籤或屬性中的筆記顯示父資料夾名稱。'
-            },
-            showFolderPath: {
-                name: '顯示資料夾路徑',
-                desc: '顯示相對於所選資料夾的路徑，而不是僅顯示資料夾名稱。標籤和屬性顯示完整路徑。'
-            },
-            parentFolderClickOpensFolder: {
-                name: '點按父資料夾開啟資料夾',
-                desc: '點按父資料夾名稱時，在列表窗格中開啟該資料夾。'
-            },
-            showParentFolderColor: {
-                name: '顯示父資料夾顏色',
-                desc: '在父資料夾標籤上使用資料夾顏色。'
-            },
-            showParentFolderIcon: {
-                name: '顯示父資料夾圖示',
-                desc: '在父資料夾標籤旁顯示資料夾圖示。'
             },
             showQuickActions: {
                 name: '顯示快速操作',

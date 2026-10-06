@@ -544,7 +544,6 @@ const ListPaneRow = React.memo(function ListPaneRow({
                     showQuickActionsPanel={showQuickActionsPanel}
                     fileIndex={item.fileIndex}
                     groupHeaderLabel={groupHeaderLabel}
-                    parentFolder={item.parentFolder}
                     isPinned={item.isPinned}
                     matchedAliases={item.matchedAliases}
                     matchedProperties={item.matchedProperties}

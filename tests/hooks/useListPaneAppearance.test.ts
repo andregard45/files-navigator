@@ -38,46 +38,40 @@ describe('resolveListPaneAppearance', () => {
     it('lets a selection hide globally shown content', () => {
         const settings = createSettings({
             showFileProperties: true,
-            showFileDate: true,
-            showParentFolder: true
+            showFileDate: true
         });
         const result = resolveListPaneAppearance({
             settings,
             appearance: {
                 showProperties: false,
-                showDate: false,
-                showParentFolder: false
+                showDate: false
             },
             selectionType: ItemType.FOLDER
         });
 
         expect(result).toMatchObject({
             showProperties: false,
-            showDate: false,
-            showParentFolder: false
+            showDate: false
         });
     });
 
     it('lets a selection enable content that global settings turn off', () => {
         const settings = createSettings({
             showFileProperties: false,
-            showFileDate: false,
-            showParentFolder: false
+            showFileDate: false
         });
         const result = resolveListPaneAppearance({
             settings,
             appearance: {
                 showProperties: true,
-                showDate: true,
-                showParentFolder: true
+                showDate: true
             },
             selectionType: ItemType.FOLDER
         });
 
         expect(result).toMatchObject({
             showProperties: true,
-            showDate: true,
-            showParentFolder: true
+            showDate: true
         });
     });
 
@@ -88,9 +82,8 @@ describe('resolveListPaneAppearance', () => {
                 showFilePreview: true,
                 showFeatureImage: true,
                 showFileDate: true,
-                showParentFolder: true,
             }),
-            appearance: { mode: 'compact', previewRows: 4, showDate: true, showParentFolder: true },
+            appearance: { mode: 'compact', previewRows: 4, showDate: true },
             selectionType: ItemType.PROPERTY
         });
 
@@ -100,7 +93,6 @@ describe('resolveListPaneAppearance', () => {
             showPreview: false,
             showImage: false,
             showDate: false,
-            showParentFolder: false,
         });
     });
 
@@ -139,7 +131,6 @@ describe('stored list appearance intent', () => {
             previewRows: 9,
             showProperties: true,
             showDate: false,
-            showParentFolder: true,
             showFilePreview: false
         } as unknown as ListPaneAppearance);
 
@@ -147,8 +138,7 @@ describe('stored list appearance intent', () => {
             mode: 'standard',
             titleRows: 2,
             showProperties: true,
-            showDate: false,
-            showParentFolder: true
+            showDate: false
         });
         expect(hasStoredListPaneAppearanceOverride(stored ?? undefined)).toBe(true);
     });

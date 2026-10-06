@@ -445,7 +445,6 @@ export const STRINGS_JA = {
         groupBy: 'グループ化',
         properties: 'プロパティ',
         date: '日付',
-        parentFolder: '親フォルダ',
         resetAppearance: '外観をリセット',
         openPluginSettings: 'プラグイン設定を開く…'
     },
@@ -1103,8 +1102,7 @@ export const STRINGS_JA = {
                     previewText: 'プレビューテキスト',
                     featureImage: 'アイキャッチ画像',
                     properties: 'プロパティ',
-                    date: '日付',
-                    parentFolder: '親フォルダ'
+                    date: '日付'
                 }
             },
             calendar: {
@@ -1350,26 +1348,6 @@ export const STRINGS_JA = {
             compactItemHeightScaleText: {
                 name: 'コンパクト表示の文字サイズを高さに合わせる',
                 desc: '項目の高さを下げたときにコンパクト表示の文字サイズを調整します。'
-            },
-            showParentFolder: {
-                name: '親フォルダを表示',
-                desc: 'サブフォルダ、タグ、またはプロパティ内のノートに親フォルダ名を表示します。'
-            },
-            showFolderPath: {
-                name: 'フォルダパスを表示',
-                desc: 'フォルダ名のみではなく、選択中のフォルダからの相対パスを表示します。タグとプロパティではフルパスを表示します。'
-            },
-            parentFolderClickOpensFolder: {
-                name: '親フォルダクリックでフォルダを開く',
-                desc: '親フォルダラベルをクリックするとリストペインでフォルダを開きます。'
-            },
-            showParentFolderColor: {
-                name: '親フォルダの色を表示',
-                desc: '親フォルダラベルにフォルダの色を使用します。'
-            },
-            showParentFolderIcon: {
-                name: '親フォルダのアイコンを表示',
-                desc: '親フォルダラベルの横にフォルダアイコンを表示します。'
             },
             showQuickActions: {
                 name: 'クイックアクションを表示',

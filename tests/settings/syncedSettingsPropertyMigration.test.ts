@@ -44,10 +44,17 @@ describe('applyExistingUserDefaults', () => {
 });
 
 describe('migrateLegacySyncedSettings defaults', () => {
-    it('defaults parent folder labels to the closest folder when the full path setting is missing', () => {
+    it('drops persisted parent folder file-display settings (feature removed)', () => {
         const settings = createSettings();
         const settingsRecord = settings as unknown as Record<string, unknown>;
-        delete settingsRecord['showParentFolderFullPath'];
+
+        settingsRecord['showParentFolder'] = true;
+        settingsRecord['showParentFolderFullPath'] = true;
+        settingsRecord['parentFolderClickRevealsFile'] = true;
+        settingsRecord['showParentFolderColor'] = true;
+        settingsRecord['showParentFolderIcon'] = true;
+        settingsRecord['showParentFolderNames'] = true;
+        settingsRecord['showParentFolderColors'] = true;
 
         migrateLegacySyncedSettings({
             settings,
@@ -56,7 +63,17 @@ describe('migrateLegacySyncedSettings defaults', () => {
             defaultSettings: DEFAULT_SETTINGS
         });
 
-        expect(settings.showParentFolderFullPath).toBe(false);
+        for (const key of [
+            'showParentFolder',
+            'showParentFolderFullPath',
+            'parentFolderClickRevealsFile',
+            'showParentFolderColor',
+            'showParentFolderIcon',
+            'showParentFolderNames',
+            'showParentFolderColors'
+        ]) {
+            expect(Object.prototype.hasOwnProperty.call(settingsRecord, key)).toBe(false);
+        }
     });
 });
 

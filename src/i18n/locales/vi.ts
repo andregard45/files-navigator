@@ -443,7 +443,6 @@ export const STRINGS_VI = {
         groupBy: 'Nhóm theo',
         properties: 'Thuộc tính',
         date: 'Ngày',
-        parentFolder: 'Thư mục cha',
         resetAppearance: 'Đặt lại giao diện',
         openPluginSettings: 'Mở cài đặt plugin…'
     },
@@ -1101,8 +1100,7 @@ export const STRINGS_VI = {
                     previewText: 'Văn bản xem trước',
                     featureImage: 'Hình ảnh nổi bật',
                     properties: 'Thuộc tính',
-                    date: 'Ngày',
-                    parentFolder: 'Thư mục cha'
+                    date: 'Ngày'
                 }
             },
             calendar: {
@@ -1348,26 +1346,6 @@ export const STRINGS_VI = {
             compactItemHeightScaleText: {
                 name: 'Co chữ theo chiều cao mục gọn',
                 desc: 'Co chữ danh sách gọn khi giảm chiều cao mục.'
-            },
-            showParentFolder: {
-                name: 'Hiện thư mục cha',
-                desc: 'Hiển thị tên thư mục cha cho ghi chú trong thư mục con, thẻ hoặc thuộc tính.'
-            },
-            showFolderPath: {
-                name: 'Hiện đường dẫn thư mục',
-                desc: 'Hiển thị đường dẫn tương đối với thư mục đã chọn thay vì chỉ tên thư mục. Thẻ và thuộc tính hiển thị đường dẫn đầy đủ.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Nhấn thư mục cha để mở thư mục',
-                desc: 'Nhấn nhãn thư mục cha sẽ mở thư mục trong ngăn danh sách.'
-            },
-            showParentFolderColor: {
-                name: 'Hiện màu thư mục cha',
-                desc: 'Dùng màu thư mục trên nhãn thư mục cha.'
-            },
-            showParentFolderIcon: {
-                name: 'Hiện biểu tượng thư mục cha',
-                desc: 'Hiện biểu tượng thư mục bên cạnh nhãn thư mục cha.'
             },
             showQuickActions: {
                 name: 'Hiện thao tác nhanh',

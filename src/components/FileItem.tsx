@@ -46,7 +46,7 @@ import type { FolderDecorationModel } from '../utils/folderDecoration';
 import type { ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
 import { strings } from '../i18n';
 import type { SortOption } from '../settings/types';
-import { ItemType, type NavigationItemType } from '../types';
+import { type NavigationItemType } from '../types';
 import { DateUtils } from '../utils/dateUtils';
 import { runAsyncAction } from '../utils/async';
 import { openFileInContext } from '../utils/openFileInContext';
@@ -56,12 +56,7 @@ import { resolveFileDragIconId, resolveFileIconId } from '../utils/fileIconUtils
 import { isInsideNativeTooltipTarget, useTooltip } from '../context/TooltipContext';
 import { FileTooltipContent } from './FileTooltipContent';
 import { getFoldedSearchHighlightRanges } from '../utils/searchHighlight';
-import {
-    getFileItemLayoutState,
-    shouldShowExtensionBadgeThumbnail,
-    shouldShowFeatureImageArea,
-    shouldShowFileItemParentFolderLine
-} from '../utils/listPaneMeasurements';
+import { getFileItemLayoutState, shouldShowExtensionBadgeThumbnail, shouldShowFeatureImageArea } from '../utils/listPaneMeasurements';
 import { getIconService, useIconServiceVersion } from '../services/icons';
 import type { AliasSearchMatch, PropertySearchMatch, SearchResultMeta } from '../types/search';
 import { mergeRanges, NumericRange } from '../utils/arrayUtils';
@@ -71,7 +66,6 @@ import { resolveUXIcon } from '../utils/uxIcons';
 import type { InclusionOperator } from '../utils/filterSearch';
 import { getNavigatorPinContext } from '../utils/selectionUtils';
 import { resolveDefaultDateField } from '../utils/sortUtils';
-import { resolveFolderDisplayPath } from '../utils/folderDisplayName';
 import type { FileNameIconNeedle } from '../utils/fileIconUtils';
 import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
@@ -147,7 +141,6 @@ export interface FileItemPaneProps {
     /** Icon size for rendering file icons */
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
-    includeDescendantNotes: boolean;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     /** Visible frontmatter property keys for file list pills (normalized keys) */
     visiblePropertyKeys: ReadonlySet<string>;
@@ -177,7 +170,6 @@ interface FileItemProps {
     showQuickActionsPanel: boolean;
     fileIndex?: number;
     groupHeaderLabel?: string | null;
-    parentFolder?: string | null;
     isPinned?: boolean;
     /** Search metadata from Omnisearch provider */
     searchMeta?: SearchResultMeta;
@@ -269,94 +261,6 @@ function renderPropertySearchEvidenceKey(group: PropertySearchEvidenceGroup): Re
     return renderTextWithHighlightRanges(group.propertyKey, ranges);
 }
 
-interface ParentFolderLabelProps {
-    iconId: string;
-    label: string;
-    iconVersion: number;
-    color?: string;
-    backgroundColor?: string;
-    showIcon: boolean;
-    applyColorToName: boolean;
-    onReveal?: () => void;
-}
-
-/**
- * Renders a parent folder label with icon for display in file items.
- */
-function ParentFolderLabel({
-    iconId,
-    label,
-    iconVersion,
-    color,
-    backgroundColor,
-    showIcon,
-    applyColorToName,
-    onReveal
-}: ParentFolderLabelProps) {
-    const iconRef = useRef<HTMLSpanElement | null>(null);
-    const hasColor = Boolean(color);
-    const hasBackground = Boolean(backgroundColor);
-    const iconStyle: React.CSSProperties | undefined = color ? { color } : undefined;
-    const labelStyle: React.CSSProperties | undefined = applyColorToName && color ? { color } : undefined;
-    const contentStyle: React.CSSProperties | undefined = backgroundColor ? { backgroundColor } : undefined;
-    const labelClassName = applyColorToName ? 'nn-parent-folder-label nn-parent-folder-label--colored' : 'nn-parent-folder-label';
-    const isRevealEnabled = Boolean(onReveal);
-
-    // Handles click on parent folder label to reveal the file when enabled
-    const handleClick = useCallback(
-        (event: React.MouseEvent<HTMLDivElement>) => {
-            if (!onReveal) {
-                return;
-            }
-            event.preventDefault();
-            event.stopPropagation();
-            onReveal();
-        },
-        [onReveal]
-    );
-
-    // Render the folder icon when iconId or iconVersion changes
-    useEffect(() => {
-        const iconContainer = iconRef.current;
-        if (!iconContainer) {
-            return;
-        }
-
-        iconContainer.innerHTML = '';
-        if (!iconId || !showIcon) {
-            return;
-        }
-
-        const iconService = getIconService();
-        iconService.renderIcon(iconContainer, iconId);
-    }, [iconId, iconVersion, showIcon]);
-
-    return (
-        <div className="nn-parent-folder" data-dot-separator={showIcon ? 'false' : 'true'}>
-            <div
-                className="nn-parent-folder-content"
-                data-has-background={hasBackground ? 'true' : 'false'}
-                data-reveal={isRevealEnabled ? 'true' : 'false'}
-                style={contentStyle}
-                onClick={isRevealEnabled ? handleClick : undefined}
-            >
-                {showIcon ? (
-                    <span
-                        className="nn-parent-folder-icon"
-                        ref={iconRef}
-                        aria-hidden="true"
-                        data-has-color={hasColor ? 'true' : 'false'}
-                        style={iconStyle}
-                    />
-                ) : null}
-                <span className={labelClassName} style={labelStyle} data-has-color={applyColorToName ? 'true' : 'false'}>
-                    {label}
-                </span>
-            </div>
-        </div>
-    );
-}
-
 /**
  * Memoized FileItem component.
  * Renders an individual file item in the file list with preview text and metadata.
@@ -378,7 +282,6 @@ export const FileItem = React.memo(function FileItem({
     showQuickActionsPanel,
     fileIndex,
     groupHeaderLabel,
-    parentFolder,
     isPinned = false,
     searchMeta,
     matchedAliases,
@@ -397,7 +300,6 @@ export const FileItem = React.memo(function FileItem({
         localDayReference,
         fileIconSize,
         appearanceSettings,
-        includeDescendantNotes,
         fileNameIconNeedles,
         visiblePropertyKeys,
         visibleNavigationPropertyKeys,
@@ -480,8 +382,7 @@ export const FileItem = React.memo(function FileItem({
     // Check which quick actions should be shown
     const shouldShowOpenInNewTab = settings.showQuickActions && settings.quickActionOpenInNewTab;
     const shouldShowPinNote = settings.showQuickActions && settings.quickActionPinNote;
-    const shouldShowRevealIcon =
-        settings.showQuickActions && settings.quickActionRevealInFolder && file.parent && file.parent.path !== parentFolder;
+    const shouldShowRevealIcon = settings.showQuickActions && settings.quickActionRevealInFolder && file.parent;
     const canAddTagsToFile = file.extension === 'md';
     const shouldShowAddTagAction = settings.showQuickActions && settings.quickActionAddTag && canAddTagsToFile && Boolean(tagOperations);
     const shouldShowShortcutAction = settings.showQuickActions && settings.quickActionAddToShortcuts;
@@ -506,18 +407,6 @@ export const FileItem = React.memo(function FileItem({
     const fileColor = metadataService.getFileColor(file.path);
     const parentFolderSource = file.parent;
     const hasParentFolderSource = parentFolderSource instanceof TFolder;
-    const shouldShowParentFolderLine = shouldShowFileItemParentFolderLine({
-        showParentFolder: appearanceSettings.showParentFolder,
-        isPinned,
-        selectionType,
-        includeDescendantNotes,
-        parentFolder,
-        fileParentPath: parentFolderSource?.path ?? null
-    });
-    const shouldBuildParentFolderMeta = shouldShowParentFolderLine && hasParentFolderSource && parentFolderSource.path !== '/';
-    const shouldShowParentFolderIcon = shouldBuildParentFolderMeta && settings.showParentFolderIcon;
-    const shouldShowParentFolderColor = shouldBuildParentFolderMeta && settings.showParentFolderColor;
-    const shouldResolveParentFolderDisplayName = shouldBuildParentFolderMeta && !settings.showParentFolderFullPath;
     const shouldResolveFolderIcon = settings.useFolderIconForFiles && !fileIconId && hasParentFolderSource;
     const shouldResolveFolderColorForFileDecoration =
         !fileColor && hasParentFolderSource && (settings.useFolderColorForTitles || settings.useFolderIconForFiles);
@@ -525,18 +414,13 @@ export const FileItem = React.memo(function FileItem({
         !settings.colorIconOnly && settings.useFolderColorForTitles && !fileColor && hasParentFolderSource;
     const shouldResolveFolderColor = shouldResolveFolderColorForFileDecoration || shouldResolveFolderColorForTitle;
     const parentFolderDisplayData =
-        hasParentFolderSource &&
-        (shouldResolveFolderIcon ||
-            shouldResolveFolderColor ||
-            shouldResolveParentFolderDisplayName ||
-            shouldShowParentFolderIcon ||
-            shouldShowParentFolderColor)
+        hasParentFolderSource && (shouldResolveFolderIcon || shouldResolveFolderColor)
             ? metadataService.getFolderDisplayData(parentFolderSource.path, {
-                  includeDisplayName: shouldResolveParentFolderDisplayName,
-                  includeColor: shouldResolveFolderColor || shouldShowParentFolderColor,
-                  includeBackgroundColor: shouldShowParentFolderColor,
-                  includeIcon: shouldResolveFolderIcon || shouldShowParentFolderIcon,
-                  includeInheritedColors: shouldResolveFolderColor || shouldShowParentFolderColor
+                  includeDisplayName: false,
+                  includeColor: shouldResolveFolderColor,
+                  includeBackgroundColor: false,
+                  includeIcon: shouldResolveFolderIcon,
+                  includeInheritedColors: shouldResolveFolderColor
               })
             : null;
     const folderIconId = shouldResolveFolderIcon ? parentFolderDisplayData?.icon : undefined;
@@ -814,60 +698,7 @@ export const FileItem = React.memo(function FileItem({
         hasVisiblePillRows: effectiveHasVisiblePillRows
     });
 
-    let parentFolderMeta: {
-        name: string;
-        iconId: string;
-        color?: string;
-        backgroundColor?: string;
-        applyColorToName: boolean;
-        showIcon: boolean;
-    } | null = null;
-    if (shouldBuildParentFolderMeta && hasParentFolderSource) {
-        const customParentIcon = shouldShowParentFolderIcon ? parentFolderDisplayData?.icon : undefined;
-        const fallbackParentIcon = 'lucide-folder-closed';
-
-        const parentFolderDecorationColors = shouldShowParentFolderColor
-            ? resolveFolderDecorationColors({
-                  model: folderDecorationModel,
-                  folderPath: parentFolderSource.path,
-                  color: parentFolderDisplayData?.color,
-                  backgroundColor: parentFolderDisplayData?.backgroundColor
-              })
-            : { color: undefined, backgroundColor: undefined };
-        const parentFolderColor = parentFolderDecorationColors.color;
-        const shouldApplyParentFolderColor = Boolean(parentFolderColor);
-        // Tag and property selections can retain the last selected folder, but only a folder selection establishes the
-        // path base. Using that stale folder elsewhere would produce a label unrelated to the files in the current view.
-        const baseFolderPath = selectionType === ItemType.FOLDER ? parentFolder : null;
-        const parentFolderLabel = settings.showParentFolderFullPath
-            ? resolveFolderDisplayPath({ metadataService, folderPath: parentFolderSource.path, baseFolderPath })
-            : parentFolderDisplayData?.displayName || parentFolderSource.name;
-        parentFolderMeta = {
-            name: parentFolderLabel,
-            iconId: customParentIcon ?? fallbackParentIcon,
-            color: shouldApplyParentFolderColor ? parentFolderColor : undefined,
-            backgroundColor: parentFolderDecorationColors.backgroundColor,
-            applyColorToName: shouldApplyParentFolderColor && !settings.colorIconOnly,
-            showIcon: shouldShowParentFolderIcon
-        };
-    }
-
-    // Render parent folder label if metadata is available
-    const renderParentFolder = () =>
-        parentFolderMeta ? (
-            <ParentFolderLabel
-                iconId={parentFolderMeta.iconId}
-                label={parentFolderMeta.name}
-                iconVersion={iconServiceVersion}
-                color={parentFolderMeta.color}
-                backgroundColor={parentFolderMeta.backgroundColor}
-                showIcon={parentFolderMeta.showIcon}
-                applyColorToName={parentFolderMeta.applyColorToName}
-                onReveal={settings.parentFolderClickRevealsFile ? revealFileInNavigation : undefined}
-            />
-        ) : null;
-
-    const shouldShowMetadataLine = shouldShowDateForItem || parentFolderMeta !== null;
+    const shouldShowMetadataLine = shouldShowDateForItem;
     const shouldShowPinnedSecondaryLine = isPinned && shouldShowMultilinePreview;
 
     // Reset image hidden state when the feature image URL changes
@@ -1394,11 +1225,10 @@ export const FileItem = React.memo(function FileItem({
                                 {/* Pills */}
                                 {renderedPillRows}
 
-                                {/* Date + Parent folder share the metadata line */}
+                                {/* Date metadata line */}
                                 {!isPinned && shouldShowMetadataLine && (
                                     <div className="nn-file-second-line">
                                         {shouldShowDateForItem && <div className="nn-file-date">{displayDate}</div>}
-                                        {renderParentFolder()}
                                     </div>
                                 )}
                             </div>

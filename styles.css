@@ -248,8 +248,6 @@ body {
     --nn-theme-file-preview-font-weight: 400;
     --nn-theme-file-date-color: var(--nn-theme-foreground-faded);
     --nn-theme-file-date-font-weight: 400;
-    --nn-theme-file-parent-color: var(--nn-theme-foreground-faded);
-    --nn-theme-file-parent-font-weight: 400;
     --nn-theme-file-feature-border-radius: 4px;
     --nn-theme-file-border-radius: 8px;
 
@@ -260,13 +258,11 @@ body {
     --nn-theme-file-selected-name-color: var(--nn-theme-file-name-color);
     --nn-theme-file-selected-preview-color: var(--nn-theme-file-preview-color);
     --nn-theme-file-selected-date-color: var(--nn-theme-foreground-muted);
-    --nn-theme-file-selected-parent-color: var(--nn-theme-foreground-muted);
     --nn-theme-file-selected-inactive-bg: var(--background-modifier-hover);
     --nn-theme-file-selected-inactive-border-color: var(--nn-theme-file-selected-border-color);
     --nn-theme-file-selected-inactive-name-color: var(--nn-theme-file-selected-name-color);
     --nn-theme-file-selected-inactive-preview-color: var(--nn-theme-file-selected-preview-color);
     --nn-theme-file-selected-inactive-date-color: var(--nn-theme-file-selected-date-color);
-    --nn-theme-file-selected-inactive-parent-color: var(--nn-theme-file-selected-parent-color);
 
     /* -- Tag and property pills -- */
     --nn-theme-file-tag-color: var(--nn-theme-foreground-faded);
@@ -415,7 +411,6 @@ body {
     --nn-selected-file-name-color: var(--nn-theme-file-selected-name-color);
     --nn-selected-file-preview-color: var(--nn-theme-file-selected-preview-color);
     --nn-selected-file-date-color: var(--nn-theme-file-selected-date-color);
-    --nn-selected-file-parent-color: var(--nn-theme-file-selected-parent-color);
     --nn-selected-file-tag-color: var(--nn-theme-file-selected-tag-color);
     --nn-selected-file-tag-bg: var(--nn-theme-file-selected-tag-bg);
     --nn-selected-file-property-color: var(--nn-theme-file-selected-property-color);
@@ -436,7 +431,6 @@ body {
     --nn-selected-file-name-color: var(--nn-theme-file-selected-inactive-name-color);
     --nn-selected-file-preview-color: var(--nn-theme-file-selected-inactive-preview-color);
     --nn-selected-file-date-color: var(--nn-theme-file-selected-inactive-date-color);
-    --nn-selected-file-parent-color: var(--nn-theme-file-selected-inactive-parent-color);
     --nn-selected-file-tag-color: var(--nn-theme-file-selected-inactive-tag-color);
     --nn-selected-file-tag-bg: var(--nn-theme-file-selected-inactive-tag-bg);
     --nn-selected-file-property-color: var(--nn-theme-file-selected-inactive-property-color);
@@ -3982,23 +3976,6 @@ button.nn-navigation-calendar-day {
     line-height: var(--nn-file-single-text-line-height);
 }
 
-/* Parent folder after date (same line): match legacy spacing when dot separator is disabled. */
-.nn-file-second-line > .nn-file-date + .nn-parent-folder[data-dot-separator='false'] {
-    margin-inline-start: 8px;
-}
-
-/* Parent folder after date (same line): dot separator */
-.nn-file-second-line > .nn-file-date + .nn-parent-folder[data-dot-separator='true']::before {
-    content: '•';
-    flex-shrink: 0;
-    margin-inline-end: 4px;
-    font-size: 0.65em;
-}
-
-.nn-file-second-line .nn-parent-folder {
-    flex: 0 1 auto;
-}
-
 /* File preview text - secondary line showing file content */
 .nn-file-preview {
     font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
@@ -4024,76 +4001,6 @@ button.nn-navigation-calendar-day {
     flex: 1 1 auto;
     min-width: 0;
     white-space: nowrap;
-}
-
-/* Parent folder indicator shown under file names */
-.nn-parent-folder {
-    font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
-    font-weight: var(--nn-theme-file-parent-font-weight);
-    color: var(--nn-theme-file-parent-color);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    line-height: var(--nn-file-single-text-line-height); /* Use second line height for consistent spacing */
-    flex: 1;
-    min-width: 0;
-}
-
-.nn-parent-folder-content {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    flex: 0 1 auto;
-    max-width: 100%;
-    min-width: 0;
-}
-
-.nn-parent-folder-content[data-has-background='true'] {
-    box-sizing: border-box;
-    height: var(--nn-file-single-text-line-height);
-    line-height: calc(var(--nn-file-single-text-line-height) - 2px);
-    border-radius: 4px;
-    padding: 1px 4px;
-}
-
-.nn-parent-folder-content[data-reveal='true'] {
-    cursor: pointer;
-    user-select: none;
-}
-
-.nn-parent-folder-content[data-reveal='true']:hover .nn-parent-folder-label,
-.nn-parent-folder-content[data-reveal='true']:focus-visible .nn-parent-folder-label {
-    text-decoration: underline;
-}
-
-.nn-parent-folder-content[data-reveal='true']:focus-visible {
-    outline: 1px solid var(--interactive-accent);
-    outline-offset: 2px;
-}
-
-/* Folder indicator text */
-.nn-parent-folder span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Folder icon styling */
-.nn-parent-folder-icon {
-    width: calc(var(--icon-size) * 0.8);
-    height: calc(var(--icon-size) * 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.nn-parent-folder-label {
-    font-weight: var(--nn-theme-file-parent-font-weight);
-}
-
-.nn-parent-folder-label.nn-parent-folder-label--colored {
-    font-weight: var(--nn-theme-navitem-custom-color-name-font-weight);
 }
 /* Source: src/styles/sections/list-tags.css */
 
@@ -4215,10 +4122,6 @@ button.nn-navigation-calendar-day {
 
 .nn-file.nn-selected .nn-file-date {
     color: var(--nn-selected-file-date-color);
-}
-
-.nn-file.nn-selected .nn-parent-folder {
-    color: var(--nn-selected-file-parent-color);
 }
 /* Source: src/styles/sections/list-compact-mode.css */
 
@@ -5214,19 +5117,16 @@ body.nn-resizing {
     --nn-theme-file-name-color: var(--nn-theme-foreground);
     --nn-theme-file-preview-color: var(--nn-theme-foreground);
     --nn-theme-file-date-color: var(--nn-theme-foreground);
-    --nn-theme-file-parent-color: var(--nn-theme-foreground);
     --nn-theme-file-tag-color: var(--nn-theme-foreground);
     --nn-theme-file-property-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-name-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-preview-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-date-color: var(--nn-theme-foreground);
-    --nn-theme-file-selected-parent-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-tag-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-property-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-inactive-name-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-inactive-preview-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-inactive-date-color: var(--nn-theme-foreground);
-    --nn-theme-file-selected-inactive-parent-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-inactive-tag-color: var(--nn-theme-foreground);
     --nn-theme-file-selected-inactive-property-color: var(--nn-theme-foreground);
     --nn-theme-navitem-icon-color: var(--nn-theme-foreground);
@@ -8292,7 +8192,6 @@ body.is-phone .notebook-navigator-android .nn-split-container {
 .nn-file-name,
 .nn-file-preview,
 .nn-file-date,
-.nn-parent-folder,
 .nn-list-group-header {
     unicode-bidi: plaintext;
 }
@@ -9067,23 +8966,6 @@ settings:
         max: 900
         step: 100
     -
-        id: nn-theme-file-parent-color
-        title: File parent folder color
-        description: Text color for parent folder path (when showing subfolders).
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
-        id: nn-theme-file-parent-font-weight
-        title: File parent folder font weight
-        description: Font weight for parent folder path.
-        type: variable-number-slider
-        default: 400
-        min: 100
-        max: 900
-        step: 100
-    -
         id: nn-theme-file-feature-border-radius
         title: Feature image border radius
         description: Corner radius for feature images.
@@ -9161,14 +9043,6 @@ settings:
         default-light: '#'
         default-dark: '#'
     -
-        id: nn-theme-file-selected-parent-color
-        title: Selected file parent folder color
-        description: Text color for parent folder path when selected.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
         id: nn-theme-file-selected-inactive-bg
         title: Selected file background (inactive)
         description: Selected file background color when pane is inactive.
@@ -9205,14 +9079,6 @@ settings:
         id: nn-theme-file-selected-inactive-date-color
         title: Selected file date color (inactive)
         description: File date color when selected and pane is inactive.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
-        id: nn-theme-file-selected-inactive-parent-color
-        title: Selected file parent folder color (inactive)
-        description: Parent folder color when file is selected and pane is inactive.
         type: variable-themed-color
         format: hex
         default-light: '#'

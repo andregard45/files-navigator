@@ -65,8 +65,7 @@ import {
     getListPaneMeasurements,
     getPropertyRowCount,
     shouldShowExtensionBadgeThumbnail,
-    shouldShowFeatureImageArea,
-    shouldShowFileItemParentFolderLine
+    shouldShowFeatureImageArea
 } from '../utils/listPaneMeasurements';
 import type { PropertySelectionNodeId } from '../utils/propertyTree';
 import { getDrawingFeatureImageSource, resolveDrawingFeatureImageFileForProvider } from '../utils/drawingFeatureImages';
@@ -170,7 +169,6 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     showFileProperties: boolean;
     showPropertiesOnSeparateRows: boolean;
     showFilePropertiesInCompactMode: boolean;
-    showParentFolder: boolean;
     selectionType: SelectionState['selectionType'];
     includeDescendantNotes: boolean;
     selectedPropertyValueNodeIdToHide: string | null;
@@ -278,7 +276,6 @@ function getListLayoutSignature({
             previewRows: folderSettings.previewRows,
             groupBy: folderSettings.groupBy,
             showDate: folderSettings.showDate,
-            showParentFolder: folderSettings.showParentFolder,
             showPreview: folderSettings.showPreview,
             showImage: folderSettings.showImage,
             showProperties: folderSettings.showProperties
@@ -449,15 +446,6 @@ export function resolveListFileRowHeightInputs({
         showDrawingMissingFeatureImage
     });
 
-    const showParentFolderLine = shouldShowFileItemParentFolderLine({
-        showParentFolder: config.showParentFolder,
-        isPinned: Boolean(item.isPinned),
-        selectionType: config.selectionType,
-        includeDescendantNotes: config.includeDescendantNotes,
-        parentFolder: item.parentFolder,
-        fileParentPath: file.parent?.path ?? null
-    });
-
     const propertyRowCount =
         !showDrawingMissingFeatureImage && config.propertyRowsPossible
             ? getPropertyRowCount({
@@ -477,7 +465,6 @@ export function resolveListFileRowHeightInputs({
         hasPreviewContent,
         showFeatureImageArea,
         showExtensionBadgeThumbnail,
-        showParentFolderLine,
         visiblePillRowCount: propertyRowCount
     };
 }
@@ -618,7 +605,6 @@ export function useListPaneScroll({
             showFileProperties: folderSettings.showProperties,
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
-            showParentFolder: folderSettings.showParentFolder,
             selectionType: selectionState.selectionType,
             includeDescendantNotes,
             selectedPropertyValueNodeIdToHide,
@@ -631,7 +617,6 @@ export function useListPaneScroll({
         folderSettings.previewRows,
         folderSettings.showDate,
         folderSettings.showImage,
-        folderSettings.showParentFolder,
         folderSettings.showPreview,
         folderSettings.showProperties,
         folderSettings.titleRows,

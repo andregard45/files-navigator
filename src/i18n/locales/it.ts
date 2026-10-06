@@ -443,7 +443,6 @@ export const STRINGS_IT = {
         groupBy: 'Raggruppa per',
         properties: 'Proprietà',
         date: 'Data',
-        parentFolder: 'Cartella superiore',
         resetAppearance: 'Reimposta aspetto',
         openPluginSettings: 'Apri impostazioni del plugin…'
     },
@@ -1102,8 +1101,7 @@ export const STRINGS_IT = {
                     previewText: 'Testo anteprima',
                     featureImage: 'Immagine in evidenza',
                     properties: 'Proprietà',
-                    date: 'Data',
-                    parentFolder: 'Cartella superiore'
+                    date: 'Data'
                 }
             },
             calendar: {
@@ -1349,26 +1347,6 @@ export const STRINGS_IT = {
             compactItemHeightScaleText: {
                 name: 'Scala testo con altezza elemento compatto',
                 desc: "Scala il testo della lista compatta quando l'altezza elemento è ridotta."
-            },
-            showParentFolder: {
-                name: 'Mostra cartella genitore',
-                desc: 'Visualizza il nome della cartella genitore per note in sottocartelle, etichette o proprietà.'
-            },
-            showFolderPath: {
-                name: 'Mostra percorso cartella',
-                desc: 'Mostra il percorso relativo alla cartella selezionata invece del solo nome della cartella. Etichette e proprietà mostrano il percorso completo.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Fai clic sulla cartella genitore per aprirla',
-                desc: 'Facendo clic sulla didascalia della cartella genitore si apre la cartella nel pannello lista.'
-            },
-            showParentFolderColor: {
-                name: 'Mostra colore cartella genitore',
-                desc: 'Usa i colori cartella sulle didascalie della cartella genitore.'
-            },
-            showParentFolderIcon: {
-                name: 'Mostra icona cartella genitore',
-                desc: 'Mostra le icone delle cartelle accanto alle didascalie della cartella genitore.'
             },
             showQuickActions: {
                 name: 'Mostra azioni rapide',
