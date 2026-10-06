@@ -68,8 +68,7 @@ import {
     getPropertyRowCount,
     shouldShowExtensionBadgeThumbnail,
     shouldShowFeatureImageArea,
-    shouldShowFileItemParentFolderLine,
-    shouldShowFileItemTaskProgress
+    shouldShowFileItemParentFolderLine
 } from '../utils/listPaneMeasurements';
 import type { PropertySelectionNodeId } from '../utils/propertyTree';
 import { getCachedFileTags } from '../utils/tagUtils';
@@ -167,7 +166,6 @@ type ListLayoutSignatureSettings = Pick<
     | 'compactItemHeightScaleText'
     | 'showFilePropertiesInCompactMode'
     | 'showPropertiesOnSeparateRows'
-    | 'hideFileTaskProgressWhenComplete'
     | 'showSelectedNavigationPills'
 >;
 
@@ -180,8 +178,6 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     showPropertiesOnSeparateRows: boolean;
     showFilePropertiesInCompactMode: boolean;
     showParentFolder: boolean;
-    showTaskProgress: boolean;
-    hideTaskProgressWhenComplete: boolean;
     selectionType: SelectionState['selectionType'];
     includeDescendantNotes: boolean;
     selectedTagToHide: string | null;
@@ -197,8 +193,6 @@ export type ListRowHeightAffectingContentChangeConfig = Pick<
     | 'showImage'
     | 'tagsBaseEnabled'
     | 'frontmatterPropertyRowsPossible'
-    | 'showTaskProgress'
-    | 'hideTaskProgressWhenComplete'
 >;
 
 interface ResolveListFileRowHeightInputsParams {
@@ -315,15 +309,13 @@ function getListLayoutSignature({
             showPreview: folderSettings.showPreview,
             showImage: folderSettings.showImage,
             showTags: folderSettings.showTags,
-            showProperties: folderSettings.showProperties,
-            showTaskProgress: folderSettings.showTaskProgress
+            showProperties: folderSettings.showProperties
         },
         rowContent: {
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
             showSelectedNavigationPills: settings.showSelectedNavigationPills,
             visiblePropertyKeySignature,
-            hideFileTaskProgressWhenComplete: settings.hideFileTaskProgressWhenComplete,
             selectionType: selectionType ?? null,
             selectedTagToHide,
             selectedPropertyValueNodeIdToHide,
@@ -382,27 +374,6 @@ export function isListRowHeightAffectingContentChange(
         return true;
     }
 
-    if (config.showTaskProgress && change.previousTaskCounters) {
-        const previousTaskCounters = change.previousTaskCounters;
-        // Notifications publish only changed counters, so retain the previous value when a field is absent. Null is
-        // an explicit pending state and must not be treated as an absent field.
-        const nextTaskTotal = changes.taskTotal !== undefined ? changes.taskTotal : previousTaskCounters.taskTotal;
-        const nextTaskUnfinished = changes.taskUnfinished !== undefined ? changes.taskUnfinished : previousTaskCounters.taskUnfinished;
-        const wasTaskProgressVisible = shouldShowFileItemTaskProgress({
-            showTaskProgress: true,
-            hideWhenComplete: config.hideTaskProgressWhenComplete,
-            taskTotal: previousTaskCounters.taskTotal,
-            taskUnfinished: previousTaskCounters.taskUnfinished
-        });
-        const isTaskProgressVisible = shouldShowFileItemTaskProgress({
-            showTaskProgress: true,
-            hideWhenComplete: config.hideTaskProgressWhenComplete,
-            taskTotal: nextTaskTotal,
-            taskUnfinished: nextTaskUnfinished
-        });
-        return wasTaskProgressVisible !== isTaskProgressVisible;
-    }
-
     return false;
 }
 
@@ -457,10 +428,6 @@ function shouldReadFileRecordForRowEstimate(item: ListPaneItem, config: ListFile
     }
 
     if (config.propertyRowsPossible) {
-        return true;
-    }
-
-    if (config.showTaskProgress) {
         return true;
     }
 
@@ -538,14 +505,6 @@ export function resolveListFileRowHeightInputs({
         fileParentPath: file.parent?.path ?? null
     });
 
-    // Task counts are only produced for markdown files; other extensions never show the progress element.
-    const showTaskProgressLine = shouldShowFileItemTaskProgress({
-        showTaskProgress: config.showTaskProgress,
-        hideWhenComplete: config.hideTaskProgressWhenComplete,
-        taskTotal: file.extension === 'md' ? (fileRecord?.taskTotal ?? null) : null,
-        taskUnfinished: file.extension === 'md' ? (fileRecord?.taskUnfinished ?? null) : null
-    });
-
     const propertyRowCount =
         !showDrawingMissingFeatureImage && config.propertyRowsPossible
             ? getPropertyRowCount({
@@ -566,7 +525,6 @@ export function resolveListFileRowHeightInputs({
         showFeatureImageArea,
         showExtensionBadgeThumbnail,
         showParentFolderLine,
-        showTaskProgressLine,
         visiblePillRowCount: (hasTagRow ? 1 : 0) + propertyRowCount
     };
 }
@@ -719,10 +677,6 @@ export function useListPaneScroll({
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
             showParentFolder: folderSettings.showParentFolder,
-            // Compact mode never renders the metadata line, so disabling the flag there skips
-            // per-row record reads during height estimation and task-driven remeasurements.
-            showTaskProgress: folderSettings.showTaskProgress,
-            hideTaskProgressWhenComplete: settings.hideFileTaskProgressWhenComplete,
             selectionType: selectionState.selectionType,
             includeDescendantNotes,
             selectedTagToHide,
@@ -741,7 +695,6 @@ export function useListPaneScroll({
         folderSettings.showPreview,
         folderSettings.showProperties,
         folderSettings.showTags,
-        folderSettings.showTaskProgress,
         folderSettings.titleRows,
         hiddenTagVisibility,
         includeDescendantNotes,
@@ -752,7 +705,6 @@ export function useListPaneScroll({
         selectedTagToHide,
         selectionState.selectionType,
         settings.showFilePropertiesInCompactMode,
-        settings.hideFileTaskProgressWhenComplete,
         settings.showPropertiesOnSeparateRows,
         themeMode,
         visiblePropertyKeys
@@ -917,7 +869,6 @@ export function useListPaneScroll({
             compactItemHeightScaleText: settings.compactItemHeightScaleText,
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
-            hideFileTaskProgressWhenComplete: settings.hideFileTaskProgressWhenComplete,
             showSelectedNavigationPills: settings.showSelectedNavigationPills
         }),
         [
@@ -925,7 +876,6 @@ export function useListPaneScroll({
             settings.compactItemHeightScaleText,
             settings.showFilePropertiesInCompactMode,
             settings.showPropertiesOnSeparateRows,
-            settings.hideFileTaskProgressWhenComplete,
             settings.showSelectedNavigationPills
         ]
     );

@@ -246,8 +246,6 @@ export const STRINGS_IT = {
                 tasks: {
                     title: 'Filtri',
                     items: [
-                        '`has:task` Includi note con attività non completate.',
-                        '`-has:task` Escludi note con attività non completate.',
                         '`folder:meetings` Includi note in cui un nome di cartella contiene `meetings`.',
                         '`folder:/work/meetings` Includi note solo in `work/meetings` (non sottocartelle).',
                         '`folder:/` Includi note solo nella radice del vault.',
@@ -263,7 +261,7 @@ export const STRINGS_IT = {
                     items: [
                         '`AND` e `OR` sono operatori solo nelle query composte esclusivamente da etichette e proprietà.',
                         'Le query esclusive di etichette e proprietà contengono solo filtri di etichette e proprietà: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Se una query include nomi, date (`@...`), filtri attività (`has:task`), filtri cartella (`folder:...`) o filtri estensione (`ext:...`), `AND` e `OR` vengono cercati come parole.',
+                        'Se una query include nomi, date (`@...`), filtri cartella (`folder:...`) o filtri estensione (`ext:...`), `AND` e `OR` vengono cercati come parole.',
                         'Esempio di query con operatori: `#work OR .status=started`.',
                         'Esempio di query mista: `#work OR ext:md` (`OR` viene cercato nei nomi dei file).'
                     ]
@@ -445,7 +443,6 @@ export const STRINGS_IT = {
         groupBy: 'Raggruppa per',
         tags: 'Etichette',
         properties: 'Proprietà',
-        tasks: 'Attività',
         date: 'Data',
         parentFolder: 'Cartella superiore',
         resetAppearance: 'Reimposta aspetto',
@@ -994,8 +991,7 @@ export const STRINGS_IT = {
         file: 'file',
         files: 'file',
         folder: 'cartella',
-        folders: 'cartelle',
-        unfinishedTasks: 'Attività incomplete'
+        folders: 'cartelle'
     },
 
     // Settings
@@ -1108,7 +1104,6 @@ export const STRINGS_IT = {
                     featureImage: 'Immagine in evidenza',
                     tags: 'Etichette',
                     properties: 'Proprietà',
-                    tasks: 'Attività',
                     date: 'Data',
                     parentFolder: 'Cartella superiore'
                 }
@@ -1317,42 +1312,9 @@ export const STRINGS_IT = {
                 name: 'Mostra icone file',
                 desc: "Visualizza icone file con spaziatura allineata a sinistra. Quando disabilitato, vengono rimosse sia le icone che l'indentazione. Priorità: icona attività incomplete > icona personalizzata > icona cartella > icona nome file > icona tipo file > icona predefinita."
             },
-            unfinishedTaskIcon: {
-                name: 'Icona attività incomplete',
-                desc: "Sostituisci l'icona del file quando una nota contiene attività incomplete.",
-                options: {
-                    disabled: 'Disabilitato',
-                    compact: 'Modalità compatta',
-                    standardAndCompact: 'Standard e compatta'
-                }
-            },
             useFolderIcon: {
                 name: 'Usa icona cartella',
                 desc: "Visualizza l'icona della cartella genitore quando non è impostata un'icona file personalizzata. Il colore della cartella viene usato quando non è impostato un colore file personalizzato."
-            },
-            showFileTaskProgress: {
-                name: 'Avanzamento attività',
-                desc: 'Mostra lo stato delle attività con barra di avanzamento e numero di attività opzionali. I colori delle attività incomplete e completate possono essere impostati separatamente con il plugin Style Settings.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Avanzamento attività: barra di avanzamento',
-                desc: "Mostra una barra di avanzamento accanto all'icona attività."
-            },
-            showFileTaskProgressCount: {
-                name: 'Avanzamento attività: numero di attività',
-                desc: 'Mostra il numero di attività completate e totali, ad esempio 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Avanzamento attività: nascondi al completamento',
-                desc: "Nasconde l'avanzamento delle attività quando tutte le attività di una nota sono completate."
-            },
-            unfinishedTaskBackground: {
-                name: 'Sfondo attività incomplete',
-                desc: 'Applica un colore di sfondo quando una nota ha attività incomplete.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Colore sfondo attività incomplete',
-                desc: 'Imposta il colore di sfondo usato quando una nota ha attività incomplete.'
             },
             showFileNameIcons: {
                 name: 'Icone per nome file',

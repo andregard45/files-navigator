@@ -27,10 +27,6 @@ export function hasMarkdownFeatureImageConsumer(settings: NotebookNavigatorSetti
     return settings.showFeatureImage;
 }
 
-export function hasMarkdownTaskConsumer(_settings: NotebookNavigatorSettings): boolean {
-    return true;
-}
-
 export function getMarkdownPipelineContentTypes(settings: NotebookNavigatorSettings): FileContentType[] {
     const types: FileContentType[] = [];
 
@@ -39,9 +35,6 @@ export function getMarkdownPipelineContentTypes(settings: NotebookNavigatorSetti
     }
     if (hasMarkdownFeatureImageConsumer(settings)) {
         types.push('featureImage');
-    }
-    if (hasMarkdownTaskConsumer(settings)) {
-        types.push('tasks');
     }
     types.push('properties');
 

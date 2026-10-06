@@ -402,14 +402,8 @@ function ManualSortGroup({
             return cached;
         }
 
-        const taskUnfinished = settings.showFileBackgroundUnfinishedTask
-            ? fileItemStorage.getDB().getFile(entry.file.path)?.taskUnfinished
-            : undefined;
         const hasBackground = hasSolidFileRowBackground({
             customBackgroundColor: metadataService.getFileBackgroundColor(entry.file.path),
-            taskUnfinished,
-            showUnfinishedTaskBackground: settings.showFileBackgroundUnfinishedTask,
-            unfinishedTaskBackgroundColor: settings.unfinishedTaskBackgroundColor,
             getSolidBackground
         });
         backgroundCache.set(entry.file.path, hasBackground);

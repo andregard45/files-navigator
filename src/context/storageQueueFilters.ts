@@ -34,10 +34,8 @@ import {
 import {
     hasMarkdownFeatureImageConsumer,
     hasMarkdownPipelineContent,
-    hasMarkdownPreviewConsumer,
-    hasMarkdownTaskConsumer
+    hasMarkdownPreviewConsumer
 } from '../utils/markdownPipelineContentTypes';
-import { areMarkdownTaskCountsEqual, countMarkdownTasksFromMetadata, hasMarkdownTaskMetadata } from '../utils/markdownTaskCounts';
 
 type MetadataSourceFilterOptions = {
     /**
@@ -45,11 +43,6 @@ type MetadataSourceFilterOptions = {
      * This avoids false negatives when the provider's hidden-state logic can change without a stat.mtime update.
      */
     conservativeMetadata?: boolean;
-    /**
-     * When true, task metadata is compared even if the markdown pipeline mtime is current.
-     * Used by metadata-change events before provider mtimes are reset.
-     */
-    compareCurrentTaskMetadata?: boolean;
     app?: App;
 };
 
@@ -72,7 +65,6 @@ export function filterFilesRequiringMetadataSources(
     const hiddenFileProperties = getActiveHiddenFileProperties(settings);
     const requiresHiddenState = hiddenFileProperties.length > 0;
     const conservativeMetadata = options?.conservativeMetadata ?? false;
-    const compareCurrentTaskMetadata = options?.compareCurrentTaskMetadata ?? false;
     const needsMarkdownPipeline = types.includes('markdownPipeline');
     const needsTags = types.includes('tags');
     const needsMetadata = types.includes('metadata');
@@ -82,7 +74,6 @@ export function filterFilesRequiringMetadataSources(
     const markdownPipelineEnabled = hasMarkdownPipelineContent(settings);
     const previewEnabled = hasMarkdownPreviewConsumer(settings);
     const featureImageEnabled = hasMarkdownFeatureImageConsumer(settings);
-    const tasksEnabled = hasMarkdownTaskConsumer(settings);
 
     return files.filter(file => {
         const record = records.get(file.path);
@@ -125,22 +116,7 @@ export function filterFilesRequiringMetadataSources(
                 }
             }
             const needsProperties = record.properties === null;
-            const needsTasks = tasksEnabled && (record.taskTotal === null || record.taskUnfinished === null);
-            let hasTaskCountChanges = false;
-            if (tasksEnabled && (needsTasks || compareCurrentTaskMetadata)) {
-                const metadata = getCachedMetadata();
-                const taskCountsFromMetadata = metadata === null ? null : countMarkdownTasksFromMetadata(metadata);
-                const hasTaskMetadata = metadata !== null && hasMarkdownTaskMetadata(metadata);
-                hasTaskCountChanges =
-                    taskCountsFromMetadata !== null ? !areMarkdownTaskCountsEqual(record, taskCountsFromMetadata) : hasTaskMetadata;
-            }
-            if (
-                needsPreview ||
-                needsFeatureImage ||
-                needsProperties ||
-                needsTasks ||
-                hasTaskCountChanges
-            ) {
+            if (needsPreview || needsFeatureImage || needsProperties) {
                 return true;
             }
         }

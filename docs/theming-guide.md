@@ -243,10 +243,6 @@ Search icon and supporting text use the shared variables under [Pane headers and
 | `--nn-theme-file-compact-name-font-weight` | `400` | File name font weight in compact mode |
 | `--nn-theme-file-preview-color` | `var(--nn-theme-foreground-muted)` | File preview color |
 | `--nn-theme-file-preview-font-weight` | `400` | File preview font weight |
-| `--nn-theme-file-task-color` | unset, falls back to location-specific icon or date colors | Task display and unfinished-task replacement file icon color; set values also apply on selected rows |
-| `--nn-theme-file-task-font-weight` | `400` | File task count and icon weight |
-| `--nn-theme-file-task-complete-color` | unset, falls back to `--nn-theme-file-task-color` | File task color when all tasks are complete; set values also apply on selected rows |
-| `--nn-theme-file-task-complete-font-weight` | `400` | File task count and icon weight when all tasks are complete |
 | `--nn-theme-file-date-color` | `var(--nn-theme-foreground-faded)` | File date color |
 | `--nn-theme-file-date-font-weight` | `400` | File date font weight |
 | `--nn-theme-file-parent-color` | `var(--nn-theme-foreground-faded)` | File parent folder color |
@@ -482,10 +478,6 @@ supported by Notebook Navigator:
   --nn-theme-file-compact-name-font-weight: 400;
   --nn-theme-file-preview-color: #7f8b91;
   --nn-theme-file-preview-font-weight: 400;
-  --nn-theme-file-task-color: #afb1b3;
-  --nn-theme-file-task-font-weight: 400;
-  --nn-theme-file-task-complete-color: #6a8759;
-  --nn-theme-file-task-complete-font-weight: 400;
   --nn-theme-file-date-color: #6a8759;
   --nn-theme-file-date-font-weight: 400;
   --nn-theme-file-parent-color: #cc7832;

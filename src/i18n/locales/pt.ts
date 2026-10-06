@@ -247,8 +247,6 @@ export const STRINGS_PT = {
                 tasks: {
                     title: 'Filtros',
                     items: [
-                        '`has:task` Incluir notas com tarefas por concluir.',
-                        '`-has:task` Excluir notas com tarefas por concluir.',
                         '`folder:meetings` Incluir notas onde um nome de pasta contém `meetings`.',
                         '`folder:/work/meetings` Incluir notas apenas em `work/meetings` (não subpastas).',
                         '`folder:/` Incluir notas apenas na raiz do cofre.',
@@ -264,7 +262,7 @@ export const STRINGS_PT = {
                     items: [
                         '`AND` e `OR` são operadores apenas em consultas exclusivas de etiquetas e propriedades.',
                         'As consultas exclusivas de etiquetas e propriedades contêm apenas filtros de etiquetas e propriedades: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Se uma consulta incluir nomes, datas (`@...`), filtros de tarefas (`has:task`), filtros de pasta (`folder:...`) ou filtros de extensão (`ext:...`), `AND` e `OR` são pesquisados como palavras.',
+                        'Se uma consulta incluir nomes, datas (`@...`), filtros de pasta (`folder:...`) ou filtros de extensão (`ext:...`), `AND` e `OR` são pesquisados como palavras.',
                         'Exemplo de consulta com operadores: `#work OR .status=started`.',
                         'Exemplo de consulta mista: `#work OR ext:md` (`OR` é pesquisado nos nomes dos ficheiros).'
                     ]
@@ -446,7 +444,6 @@ export const STRINGS_PT = {
         groupBy: 'Agrupar por',
         tags: 'Etiquetas',
         properties: 'Propriedades',
-        tasks: 'Tarefas',
         date: 'Data',
         parentFolder: 'Pasta pai',
         resetAppearance: 'Repor aparência',
@@ -996,8 +993,7 @@ export const STRINGS_PT = {
         file: 'ficheiro',
         files: 'ficheiros',
         folder: 'pasta',
-        folders: 'pastas',
-        unfinishedTasks: 'Tarefas inacabadas'
+        folders: 'pastas'
     },
 
     // Settings
@@ -1110,7 +1106,6 @@ export const STRINGS_PT = {
                     featureImage: 'Imagem de destaque',
                     tags: 'Etiquetas',
                     properties: 'Propriedades',
-                    tasks: 'Tarefas',
                     date: 'Data',
                     parentFolder: 'Pasta pai'
                 }
@@ -1319,42 +1314,9 @@ export const STRINGS_PT = {
                 name: 'Mostrar ícones de ficheiros',
                 desc: 'Exibir ícones de ficheiros com espaçamento alinhado à esquerda. Desativar remove ícones e indentação. Prioridade: ícone de tarefas inacabadas > ícone personalizado > ícone de pasta > ícone de nome de ficheiro > ícone de tipo de ficheiro > ícone predefinido.'
             },
-            unfinishedTaskIcon: {
-                name: 'Ícone de tarefas inacabadas',
-                desc: 'Substituir o ícone do ficheiro quando uma nota tem tarefas inacabadas.',
-                options: {
-                    disabled: 'Desativado',
-                    compact: 'Modo compacto',
-                    standardAndCompact: 'Padrão e compacto'
-                }
-            },
             useFolderIcon: {
                 name: 'Usar ícone de pasta',
                 desc: 'Exibir o ícone da pasta pai quando não está definido um ícone de ficheiro personalizado. A cor da pasta é usada quando não está definida uma cor de ficheiro personalizada.'
-            },
-            showFileTaskProgress: {
-                name: 'Progresso das tarefas',
-                desc: 'Apresentar o estado das tarefas com barra de progresso e contagem de tarefas opcionais. As cores das tarefas inacabadas e concluídas podem ser definidas separadamente com o plugin Style Settings.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Progresso das tarefas: barra de progresso',
-                desc: 'Apresentar uma barra de progresso junto ao ícone de tarefas.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Progresso das tarefas: contagem de tarefas',
-                desc: 'Apresentar o número de tarefas concluídas e o total de tarefas, por exemplo 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Progresso das tarefas: ocultar quando concluídas',
-                desc: 'Ocultar o progresso das tarefas quando todas as tarefas de uma nota estão concluídas.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Fundo de tarefas inacabadas',
-                desc: 'Aplicar uma cor de fundo quando uma nota tem tarefas inacabadas.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Cor de fundo de tarefas inacabadas',
-                desc: 'Definir a cor de fundo usada quando uma nota tem tarefas inacabadas.'
             },
             showFileNameIcons: {
                 name: 'Ícones por nome de ficheiro',

@@ -502,13 +502,6 @@ export function isListDisplayMode(value: unknown): value is ListDisplayMode {
     return value === 'standard' || value === 'compact';
 }
 
-/** List modes where unfinished tasks replace the file icon. */
-export type UnfinishedTaskIconMode = 'none' | 'compact' | 'all';
-
-export function isUnfinishedTaskIconMode(value: unknown): value is UnfinishedTaskIconMode {
-    return value === 'none' || value === 'compact' || value === 'all';
-}
-
 /** Built-in grouping modes for list pane notes */
 export type ListNoteGroupingBaseOption = 'none' | 'custom' | 'date' | 'folder';
 
@@ -540,7 +533,6 @@ export interface ListPaneAppearance {
     groupBy?: ListNoteGroupingOption;
     showTags?: boolean;
     showProperties?: boolean;
-    showTaskProgress?: boolean;
     showDate?: boolean;
     showParentFolder?: boolean;
 }
@@ -859,15 +851,7 @@ export interface NotebookNavigatorSettings {
     frontmatterDateFormat: string;
 
     // Notes tab
-    showFileTaskProgress: boolean;
-    showFileTaskProgressBar: boolean;
-    showFileTaskProgressCount: boolean;
-    hideFileTaskProgressWhenComplete: boolean;
-    showFileBackgroundUnfinishedTask: boolean;
-    unfinishedTaskBackgroundColor: string;
-    unfinishedTaskBackgroundColorDark: string;
     showFileIcons: boolean;
-    unfinishedTaskIcon: UnfinishedTaskIconMode;
     useFolderIconForFiles: boolean;
     showFilenameMatchIcons: boolean;
     fileNameIconMap: Record<string, string>;

@@ -34,8 +34,6 @@ interface ContentJob {
 export type ContentProviderUpdate = {
     path: string;
     tags?: string[] | null;
-    taskTotal?: number | null;
-    taskUnfinished?: number | null;
     preview?: string;
     featureImage?: Blob | null;
     featureImageKey?: string | null;

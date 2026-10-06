@@ -65,8 +65,6 @@ vi.mock('../../src/storage/fileOperations', () => ({
                 fileThumbnailsMtime: 0,
                 tags: entry.tags,
                 wordCount: null,
-                taskTotal: 0,
-                taskUnfinished: 0,
                 properties: entry.properties,
                 previewStatus: 'unprocessed',
                 featureImage: null,

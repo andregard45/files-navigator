@@ -74,8 +74,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: ['old-tag'],
             wordCount: null,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: null,
             previewStatus: 'none',
             featureImage: null,
@@ -120,8 +118,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: ['old-tag'],
             wordCount: null,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: null,
             previewStatus: 'none',
             featureImage: null,
@@ -154,8 +150,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: null,
             wordCount: null,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: null,
             previewStatus: 'none',
             featureImage: null,
@@ -195,8 +189,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: null,
             wordCount: null,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: null,
             previewStatus: 'none',
             featureImage: null,
@@ -277,8 +269,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: [],
             wordCount: 10,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: null,
             previewStatus: 'has',
             featureImage: null,
@@ -320,8 +310,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: [],
             wordCount: 2,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: [{ fieldKey: 'status', value: 'Active', valueKind: 'string' }],
             previewStatus: 'none',
             featureImage: null,
@@ -363,8 +351,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: [],
             wordCount: 2,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: [],
             previewStatus: 'none',
             featureImage: null,
@@ -406,8 +392,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: [],
             wordCount: 12,
-            taskTotal: 3,
-            taskUnfinished: 2,
             properties: [],
             previewStatus: 'unprocessed',
             featureImage: null,
@@ -422,8 +406,6 @@ describe('Content provider retry-later semantics', () => {
         expect(result.update?.path).toBe(file.path);
         expect(result.update?.preview).toBe('');
         expect(result.update?.wordCount).toBe(0);
-        expect(result.update?.taskTotal).toBe(0);
-        expect(result.update?.taskUnfinished).toBe(0);
         expect(result.update?.featureImageKey).toBe(getDrawingDirectFeatureImageKey(file, 'excalidraw'));
         expect(result.update?.featureImage).toBeInstanceOf(Blob);
     });
@@ -455,8 +437,6 @@ describe('Content provider retry-later semantics', () => {
             fileThumbnailsMtime: file.stat.mtime,
             tags: [],
             wordCount: 0,
-            taskTotal: 0,
-            taskUnfinished: 0,
             properties: [],
             previewStatus: 'none',
             featureImage: null,

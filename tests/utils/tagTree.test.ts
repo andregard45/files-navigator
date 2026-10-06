@@ -58,8 +58,6 @@ function createFileData(tags: string[] | null): FileData {
         fileThumbnailsMtime: 0,
         tags,
         wordCount: null,
-        taskTotal: 0,
-        taskUnfinished: 0,
         properties: null,
         previewStatus: 'unprocessed',
         featureImage: null,

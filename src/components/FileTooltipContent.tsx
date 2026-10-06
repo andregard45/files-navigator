@@ -36,7 +36,6 @@ interface FileTooltipContentProps {
     settings: Pick<NotebookNavigatorSettings, 'dateFormat' | 'timeFormat' | 'showTooltipPath'>;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
     sortOption?: string | null;
-    unfinishedTaskTooltipText?: string | null;
     /** Tag pill row placed between the folder path and the date lines */
     tagRow?: React.ReactNode;
 }
@@ -54,7 +53,6 @@ export function FileTooltipContent({
     settings,
     getFileTimestamps,
     sortOption,
-    unfinishedTaskTooltipText,
     tagRow
 }: FileTooltipContentProps) {
     const topLine = extensionSuffix.length > 0 ? file.name : displayName;
@@ -66,7 +64,6 @@ export function FileTooltipContent({
             <div>{topLine}</div>
             {parentPath !== null ? <div className="nn-tooltip-muted">{parentPath}</div> : null}
             {tagRow}
-            {unfinishedTaskTooltipText ? <div>{unfinishedTaskTooltipText}</div> : null}
             <div className="nn-tooltip-dates nn-tooltip-muted">
                 <div>{dateLines[0]}</div>
                 <div>{dateLines[1]}</div>

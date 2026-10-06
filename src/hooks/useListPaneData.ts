@@ -173,9 +173,6 @@ export function useListPaneData({
 
         return tokens;
     }, [trimmedQuery, useOmnisearch, searchTokens]);
-    const hasTaskSearchFilters =
-        activeFilterSearchTokens !== null &&
-        (activeFilterSearchTokens.requireUnfinishedTasks || activeFilterSearchTokens.excludeUnfinishedTasks);
     const hasPropertySearchFilters = activeFilterSearchTokens !== null && filterSearchNeedsPropertyLookup(activeFilterSearchTokens);
     const hasDateSearchFilters =
         activeFilterSearchTokens !== null &&
@@ -534,7 +531,6 @@ export function useListPaneData({
         groupBy,
         hasDateSearchFilters,
         hasPropertySearchFilters,
-        hasTaskSearchFilters,
         hiddenFilePropertyMatcher,
         hiddenFileTags,
         includeDescendantNotes,

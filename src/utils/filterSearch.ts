@@ -34,8 +34,6 @@ const EMPTY_TOKENS: FilterSearchTokens = {
     hasInclusions: false,
     requiresTags: false,
     allRequireTags: false,
-    requireUnfinishedTasks: false,
-    excludeUnfinishedTasks: false,
     includedTagTokens: [],
     nameTokens: [],
     tagTokens: [],
@@ -58,7 +56,6 @@ const EMPTY_PROPERTY_VALUE_MAP = new Map<string, string[]>();
 
 // Set of recognized connector words in search queries
 const CONNECTOR_TOKEN_SET = new Set(['and', 'or']);
-const UNFINISHED_TASK_FILTER_TOKEN_SET = new Set(['has:task', 'has:tasks']);
 
 const PROPERTY_FILTER_PREFIX = '.';
 
@@ -326,12 +323,6 @@ type ClassifiedToken =
           value: string;
       }
     | {
-          kind: 'unfinishedTask';
-      }
-    | {
-          kind: 'unfinishedTaskNegation';
-      }
-    | {
           kind: 'name';
           value: string;
       }
@@ -352,7 +343,7 @@ interface TokenClassificationResult {
 const canUseTagMode = (classification: TokenClassificationResult): boolean => {
     // Tag expression mode is intentionally strict:
     // - Requires at least one tag operand
-    // - Rejects any non-tag operand (name/date/task tokens)
+    // - Rejects any non-tag operand (name/date tokens)
     // - Rejects malformed/dangling syntax
     //
     // This keeps AND/OR operator behavior scoped to tag-only queries.
@@ -375,9 +366,6 @@ const getNegationPrefix = (token: string): '-' | null => {
     return null;
 };
 
-const isUnfinishedTaskFilterToken = (token: string): boolean => {
-    return UNFINISHED_TASK_FILTER_TOKEN_SET.has(token);
-};
 
 const FOLDER_FILTER_PREFIX = 'folder:';
 const EXT_FILTER_PREFIX = 'ext:';
@@ -567,13 +555,6 @@ const classifyRawTokens = (rawTokens: RawSearchToken[]): TokenClassificationResu
                 continue;
             }
 
-            if (isUnfinishedTaskFilterToken(negatedToken)) {
-                tokens.push({ kind: 'unfinishedTaskNegation' });
-                // Task filters make the query non-tag, so AND/OR must not
-                // be interpreted as tag-expression operators.
-                hasNonTagOperand = true;
-                continue;
-            }
 
             if (negatedToken.startsWith('@')) {
                 if (isDateFilterCandidate(negatedToken)) {
@@ -642,12 +623,6 @@ const classifyRawTokens = (rawTokens: RawSearchToken[]): TokenClassificationResu
             continue;
         }
 
-        if (isUnfinishedTaskFilterToken(lowercaseToken)) {
-            tokens.push({ kind: 'unfinishedTask' });
-            // Task filters are non-tag operands.
-            hasNonTagOperand = true;
-            continue;
-        }
 
         if (lowercaseToken.startsWith('@')) {
             if (isDateFilterCandidate(lowercaseToken)) {
@@ -735,8 +710,6 @@ const parseFilterModeTokens = (
     const excludeFolderTokens: FolderFilterToken[] = [];
     const excludeExtensionTokens: string[] = [];
     const excludeDateRanges: DateFilterRange[] = [];
-    let requireUnfinishedTasks = false;
-    let excludeUnfinishedTasks = false;
     let requireTagged = false;
 
     // Extract name and tag tokens, treating operators as potential name tokens
@@ -766,12 +739,7 @@ const parseFilterModeTokens = (
             case 'date':
                 dateRanges.push(token.range);
                 break;
-            case 'unfinishedTask':
-                requireUnfinishedTasks = true;
-                break;
-            case 'unfinishedTaskNegation':
-                excludeUnfinishedTasks = true;
-                break;
+
             case 'operator':
                 connectorCandidates.push(token.operator.toLowerCase());
                 break;
@@ -805,8 +773,7 @@ const parseFilterModeTokens = (
         folderTokens.length > 0 ||
         extensionTokens.length > 0 ||
         dateRanges.length > 0 ||
-        requireTagged ||
-        requireUnfinishedTasks;
+        requireTagged;
     const requiresTags = requireTagged || tagTokens.length > 0;
     const requiresProperties = propertyTokens.length > 0;
     const allRequireTags = hasInclusions ? requiresTags : false;
@@ -818,8 +785,6 @@ const parseFilterModeTokens = (
         hasInclusions,
         requiresTags,
         allRequireTags,
-        requireUnfinishedTasks,
-        excludeUnfinishedTasks,
         includedTagTokens,
         propertyTokens,
         excludePropertyTokens,
@@ -856,7 +821,6 @@ const parseFilterModeTokens = (
  * - @YYYY-Qq - Include notes matching the default date field inside a calendar quarter
  * - @YYYY-MM-DD..YYYY-MM-DD - Include notes matching the default date field inside an inclusive day range (open ends supported)
  * - @c:... / @m:... - Target created/modified date field for a date token
- * - has:task - Include notes with unfinished tasks
  * - folder:meetings - Include notes where any folder segment contains "meetings"
  * - folder:/work/meetings - Include notes whose parent folder path is exactly "work/meetings"
  * - folder:/ - Include notes in the vault root
@@ -870,7 +834,6 @@ const parseFilterModeTokens = (
  * - -.key - Exclude notes with property key
  * - -.key=value - Exclude notes where the property value contains "value"
  * - -@... - Exclude notes matching a date token or range
- * - -has:task - Exclude notes with unfinished tasks
  * - -folder:archive - Exclude notes where any folder segment contains "archive"
  * - -folder:/archive - Exclude notes whose parent folder path is exactly "archive"
  * - -ext:pdf - Exclude notes with extension "pdf"
@@ -927,7 +890,7 @@ export function parseFilterSearchTokens(query: string): FilterSearchTokens {
 
     if (canUseTagMode(classification)) {
         // Tag mode is only allowed for pure tag expressions.
-        // Once a query includes any non-tag operand (name/date/task),
+        // Once a query includes any non-tag operand (name/date),
         // we intentionally stay in filter mode so connector words are
         // evaluated as literal name tokens.
         const tagTokens = parseTagModeTokens(classifiedTokens, excludeTagTokens, excludePropertyTokens);
@@ -1403,7 +1366,6 @@ export function filterSearchHasActiveCriteria(tokens: FilterSearchTokens): boole
         tokens.excludeFolderTokens.length > 0 ||
         tokens.excludeExtensionTokens.length > 0 ||
         tokens.excludeDateRanges.length > 0 ||
-        tokens.excludeUnfinishedTasks ||
         tokens.excludeTagged
     );
 }
@@ -1430,7 +1392,6 @@ export function filterSearchRequiresTagsForEveryMatch(tokens: FilterSearchTokens
 }
 
 export interface FilterSearchMatchOptions {
-    hasUnfinishedTasks: boolean;
     foldedAliases?: readonly string[];
     foldedFolderPath?: string;
     foldedExtension?: string;
@@ -1528,7 +1489,6 @@ export function getFileFilterSearchMatch(
     tokens: FilterSearchTokens,
     options?: FilterSearchMatchOptions
 ): FilterSearchFileMatch {
-    const hasUnfinishedTasks = options?.hasUnfinishedTasks ?? false;
     // Callers provide pre-folded aliases/folder/extension values so this matcher can use direct comparisons.
     const foldedAliases = options?.foldedAliases ?? [];
     const foldedFolderPath = options?.foldedFolderPath ?? '';
@@ -1536,13 +1496,6 @@ export function getFileFilterSearchMatch(
     // Property map keys and values are expected in folded form.
     const propertyValuesByKey = options?.propertyValuesByKey ?? EMPTY_PROPERTY_VALUE_MAP;
 
-    if (tokens.excludeUnfinishedTasks && hasUnfinishedTasks) {
-        return FILTER_SEARCH_NO_MATCH;
-    }
-
-    if (tokens.requireUnfinishedTasks && !hasUnfinishedTasks) {
-        return FILTER_SEARCH_NO_MATCH;
-    }
 
     if (tokens.mode === 'filter') {
         let nameMatch: FilterSearchNameMatch | null = null;

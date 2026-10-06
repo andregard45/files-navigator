@@ -963,25 +963,14 @@ export function createSolidBackgroundResolver(surfaceColor: RGBA | null, getCont
 
 interface ResolveFileRowBackgroundColorParams {
     customBackgroundColor?: string;
-    taskUnfinished?: number | null;
-    showUnfinishedTaskBackground: boolean;
-    unfinishedTaskBackgroundColor: string;
     getSolidBackground: (color?: string | null) => string | undefined;
 }
 
 export function resolveFileRowBackgroundColor({
     customBackgroundColor,
-    taskUnfinished,
-    showUnfinishedTaskBackground,
-    unfinishedTaskBackgroundColor,
     getSolidBackground
 }: ResolveFileRowBackgroundColorParams): string | undefined {
-    const taskBackgroundColor =
-        showUnfinishedTaskBackground && typeof taskUnfinished === 'number' && taskUnfinished > 0
-            ? unfinishedTaskBackgroundColor
-            : undefined;
-
-    return getSolidBackground(taskBackgroundColor ?? customBackgroundColor);
+    return getSolidBackground(customBackgroundColor);
 }
 
 export function hasSolidFileRowBackground(params: ResolveFileRowBackgroundColorParams): boolean {

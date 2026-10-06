@@ -399,7 +399,6 @@ export function filterListPaneFiles({
     }
 
     const hasDateFilters = tokens.dateRanges.length > 0 || tokens.excludeDateRanges.length > 0;
-    const hasTaskFilters = tokens.requireUnfinishedTasks || tokens.excludeUnfinishedTasks;
     const hasFolderFilters = tokens.folderTokens.length > 0 || tokens.excludeFolderTokens.length > 0;
     const hasExtensionFilters = tokens.extensionTokens.length > 0 || tokens.excludeExtensionTokens.length > 0;
     const defaultDateField = resolveDefaultDateField(sortOption, settings.alphabeticalDateMode ?? 'modified');
@@ -417,9 +416,8 @@ export function filterListPaneFiles({
         const searchableName = searchableNames.get(file.path);
         const foldedName = searchableName?.foldedDisplayName ?? '';
         const foldedAliases = searchableName?.foldedAliases ?? emptyTags;
-        const fileData = hasTaskFilters || needsTagLookup || needsPropertyLookup ? db.getFile(file.path) : null;
-        const hasUnfinishedTasks = hasTaskFilters && typeof fileData?.taskUnfinished === 'number' && fileData.taskUnfinished > 0;
-        const matchOptions: FilterSearchMatchOptions = { hasUnfinishedTasks, foldedAliases };
+        const fileData = needsTagLookup || needsPropertyLookup ? db.getFile(file.path) : null;
+        const matchOptions: FilterSearchMatchOptions = { foldedAliases };
 
         if (hasFolderFilters) {
             matchOptions.foldedFolderPath = foldSearchText(file.parent?.path ?? '');

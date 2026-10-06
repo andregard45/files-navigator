@@ -312,8 +312,6 @@ export async function recordFileChanges(
                 metadataMtime: renamed.metadataMtime,
                 fileThumbnailsMtime: renamed.fileThumbnailsMtime,
                 tags: renamed.tags,
-                taskTotal: renamed.taskTotal,
-                taskUnfinished: renamed.taskUnfinished,
                 properties: renamed.properties,
                 previewStatus: renamed.previewStatus,
                 featureImageStatus: renamed.featureImageStatus,

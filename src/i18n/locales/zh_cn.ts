@@ -244,8 +244,6 @@ export const STRINGS_ZH_CN = {
                 tasks: {
                     title: '过滤器',
                     items: [
-                        '`has:task` 包含有未完成任务的笔记。',
-                        '`-has:task` 排除有未完成任务的笔记。',
                         '`folder:meetings` 包含文件夹名称含有 `meetings` 的笔记。',
                         '`folder:/work/meetings` 仅包含 `work/meetings` 中的笔记（不含子文件夹）。',
                         '`folder:/` 仅包含仓库根目录中的笔记。',
@@ -261,7 +259,7 @@ export const STRINGS_ZH_CN = {
                     items: [
                         '`AND` 和 `OR` 仅在纯标签/属性查询中作为运算符。',
                         '纯标签/属性查询仅包含标签和属性过滤器：`#tag`、`-#tag`、`#`、`-#`、`.key`、`-.key`、`.key=value`、`-.key=value`。',
-                        '如果查询包含名称、日期（`@...`）、任务过滤器（`has:task`）、文件夹过滤器（`folder:...`）或扩展名过滤器（`ext:...`），`AND` 和 `OR` 将作为词语进行匹配。',
+                        '如果查询包含名称、日期（`@...`）、文件夹过滤器（`folder:...`）或扩展名过滤器（`ext:...`），`AND` 和 `OR` 将作为词语进行匹配。',
                         '运算符查询示例：`#work OR .status=started`。',
                         '混合查询示例：`#work OR ext:md`（`OR` 在文件名中进行匹配）。'
                     ]
@@ -444,7 +442,6 @@ export const STRINGS_ZH_CN = {
         groupBy: '分组依据',
         tags: '标签',
         properties: '属性',
-        tasks: '任务',
         date: '日期',
         parentFolder: '父文件夹',
         resetAppearance: '重置外观',
@@ -987,8 +984,7 @@ export const STRINGS_ZH_CN = {
         file: '个文件',
         files: '个文件',
         folder: '个文件夹',
-        folders: '个文件夹',
-        unfinishedTasks: '未完成任务'
+        folders: '个文件夹'
     },
 
     // Settings
@@ -1099,7 +1095,6 @@ export const STRINGS_ZH_CN = {
                     featureImage: '特色图片',
                     tags: '标签',
                     properties: '属性',
-                    tasks: '任务',
                     date: '日期',
                     parentFolder: '父文件夹'
                 }
@@ -1305,42 +1300,9 @@ export const STRINGS_ZH_CN = {
                 name: '显示文件图标',
                 desc: '显示文件图标并保留左对齐间距。禁用后将移除图标和缩进。优先级：未完成任务图标 > 自定义图标 > 文件夹图标 > 文件名图标 > 文件类型图标 > 默认图标。'
             },
-            unfinishedTaskIcon: {
-                name: '未完成任务图标',
-                desc: '当笔记包含未完成任务时替换文件图标。',
-                options: {
-                    disabled: '已禁用',
-                    compact: '紧凑模式',
-                    standardAndCompact: '标准和紧凑'
-                }
-            },
             useFolderIcon: {
                 name: '使用文件夹图标',
                 desc: '当未设置自定义文件图标时显示父文件夹图标。当未设置自定义文件颜色时使用文件夹颜色。'
-            },
-            showFileTaskProgress: {
-                name: '任务进度',
-                desc: '显示任务状态，进度条和任务数量可选。未完成任务和已完成任务的颜色可通过 Style Settings 插件分别设置。'
-            },
-            showFileTaskProgressBar: {
-                name: '任务进度：进度条',
-                desc: '在任务图标旁边显示进度条。'
-            },
-            showFileTaskProgressCount: {
-                name: '任务进度：任务数量',
-                desc: '显示已完成任务数和任务总数，例如 3/7。'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: '任务进度：全部完成时隐藏',
-                desc: '当笔记中的所有任务都已完成时隐藏任务进度。'
-            },
-            unfinishedTaskBackground: {
-                name: '未完成任务背景',
-                desc: '当笔记包含未完成任务时应用背景颜色。'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: '未完成任务背景颜色',
-                desc: '设置笔记包含未完成任务时使用的背景颜色。'
             },
             showFileNameIcons: {
                 name: '按文件名设置图标',

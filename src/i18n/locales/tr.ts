@@ -247,8 +247,6 @@ export const STRINGS_TR = {
                 tasks: {
                     title: 'Filtreler',
                     items: [
-                        '`has:task` Tamamlanmamış görevleri olan notları dahil et.',
-                        '`-has:task` Tamamlanmamış görevleri olan notları hariç tut.',
                         '`folder:meetings` Klasör adı `meetings` içeren notları dahil et.',
                         '`folder:/work/meetings` Yalnızca `work/meetings` içindeki notları dahil et (alt klasörler hariç).',
                         '`folder:/` Yalnızca kasa kök dizinindeki notları dahil et.',
@@ -264,7 +262,7 @@ export const STRINGS_TR = {
                     items: [
                         '`AND` ve `OR` yalnızca etiket ve özellik sorgularında operatör olarak çalışır.',
                         'Etiket ve özellik sorguları yalnızca etiket ve özellik filtrelerini içerir: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Bir sorgu adlar, tarihler (`@...`), görev filtreleri (`has:task`), klasör filtreleri (`folder:...`) veya uzantı filtreleri (`ext:...`) içeriyorsa, `AND` ve `OR` kelime olarak aranır.',
+                        'Bir sorgu adlar, tarihler (`@...`), klasör filtreleri (`folder:...`) veya uzantı filtreleri (`ext:...`) içeriyorsa, `AND` ve `OR` kelime olarak aranır.',
                         'Örnek operatör sorgusu: `#work OR .status=started`.',
                         'Karma sorgu örneği: `#work OR ext:md` (`OR` dosya adlarında aranır).'
                     ]
@@ -446,7 +444,6 @@ export const STRINGS_TR = {
         groupBy: 'Gruplama ölçütü',
         tags: 'Etiketler',
         properties: 'Özellikler',
-        tasks: 'Görevler',
         date: 'Tarih',
         parentFolder: 'Üst klasör',
         resetAppearance: 'Görünümü sıfırla',
@@ -994,8 +991,7 @@ export const STRINGS_TR = {
         file: 'dosya',
         files: 'dosya',
         folder: 'klasör',
-        folders: 'klasör',
-        unfinishedTasks: 'Tamamlanmamış görevler'
+        folders: 'klasör'
     },
 
     // Settings
@@ -1107,7 +1103,6 @@ export const STRINGS_TR = {
                     featureImage: 'Öne çıkan görsel',
                     tags: 'Etiketler',
                     properties: 'Özellikler',
-                    tasks: 'Görevler',
                     date: 'Tarih',
                     parentFolder: 'Üst klasör'
                 }
@@ -1316,42 +1311,9 @@ export const STRINGS_TR = {
                 name: 'Dosya simgelerini göster',
                 desc: 'Dosya simgelerini sol hizalı boşlukla göster. Devre dışı bırakma hem simgeleri hem de girintiyi kaldırır. Öncelik: tamamlanmamış görev simgesi > özel simge > klasör simgesi > dosya adı simgesi > dosya türü simgesi > varsayılan simge.'
             },
-            unfinishedTaskIcon: {
-                name: 'Tamamlanmamış görev simgesi',
-                desc: 'Bir notta tamamlanmamış görevler olduğunda dosya simgesini değiştir.',
-                options: {
-                    disabled: 'Devre dışı',
-                    compact: 'Kompakt mod',
-                    standardAndCompact: 'Standart ve kompakt'
-                }
-            },
             useFolderIcon: {
                 name: 'Klasör simgesini kullan',
                 desc: 'Özel dosya simgesi ayarlanmadığında üst klasörün simgesini görüntüler. Özel dosya rengi ayarlanmadığında klasör rengi kullanılır.'
-            },
-            showFileTaskProgress: {
-                name: 'Görev ilerlemesi',
-                desc: 'Görev durumunu isteğe bağlı ilerleme çubuğu ve görev sayısıyla gösterir. Tamamlanmamış ve tamamlanmış görevlerin renkleri Style Settings eklentisiyle ayrı ayrı ayarlanabilir.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Görev ilerlemesi: ilerleme çubuğu',
-                desc: 'Görev simgesinin yanında ilerleme çubuğu gösterir.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Görev ilerlemesi: görev sayısı',
-                desc: 'Tamamlanan ve toplam görev sayısını gösterir, örneğin 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Görev ilerlemesi: tamamlanınca gizle',
-                desc: 'Bir nottaki tüm görevler tamamlandığında görev ilerlemesini gizler.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Tamamlanmamış görev arka planı',
-                desc: 'Bir notta tamamlanmamış görevler olduğunda arka plan rengi uygular.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Tamamlanmamış görev arka plan rengi',
-                desc: 'Bir notta tamamlanmamış görevler olduğunda kullanılacak arka plan rengini ayarlar.'
             },
             showFileNameIcons: {
                 name: 'Dosya adına göre simgeler',

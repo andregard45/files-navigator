@@ -63,8 +63,6 @@ function createFileData(properties: PropertyItem[] | null): FileData {
         fileThumbnailsMtime: 0,
         tags: null,
         wordCount: null,
-        taskTotal: 0,
-        taskUnfinished: 0,
         properties,
         previewStatus: 'unprocessed',
         featureImage: null,

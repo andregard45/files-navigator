@@ -251,8 +251,6 @@ export const STRINGS_NL = {
                 tasks: {
                     title: 'Filters',
                     items: [
-                        '`has:task` Notities met onvoltooide taken opnemen.',
-                        '`-has:task` Notities met onvoltooide taken uitsluiten.',
                         '`folder:meetings` Notities opnemen waarvan een mapnaam `meetings` bevat.',
                         '`folder:/work/meetings` Notities alleen in `work/meetings` opnemen (geen submappen).',
                         '`folder:/` Notities alleen in de kluisroot opnemen.',
@@ -268,7 +266,7 @@ export const STRINGS_NL = {
                     items: [
                         "`AND` en `OR` zijn alleen operatoren in query's met uitsluitend tags en eigenschappen.",
                         "Query's met uitsluitend tags en eigenschappen bevatten alleen tag- en eigenschapsfilters: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.",
-                        'Als een zoekopdracht namen, datums (`@...`), taakfilters (`has:task`), mapfilters (`folder:...`) of extensiefilters (`ext:...`) bevat, worden `AND` en `OR` als woorden gezocht.',
+                        'Als een zoekopdracht namen, datums (`@...`), mapfilters (`folder:...`) of extensiefilters (`ext:...`) bevat, worden `AND` en `OR` als woorden gezocht.',
                         'Voorbeeld operatorquery: `#work OR .status=started`.',
                         'Voorbeeld gemengde zoekopdracht: `#work OR ext:md` (`OR` wordt gezocht in bestandsnamen).'
                     ]
@@ -450,7 +448,6 @@ export const STRINGS_NL = {
         groupBy: 'Groeperen op',
         tags: 'Tags',
         properties: 'Eigenschappen',
-        tasks: 'Taken',
         date: 'Datum',
         parentFolder: 'Bovenliggende map',
         resetAppearance: 'Uiterlijk herstellen',
@@ -1000,8 +997,7 @@ export const STRINGS_NL = {
         file: 'bestand',
         files: 'bestanden',
         folder: 'map',
-        folders: 'mappen',
-        unfinishedTasks: 'Onvoltooide taken'
+        folders: 'mappen'
     },
 
     // Settings
@@ -1114,7 +1110,6 @@ export const STRINGS_NL = {
                     featureImage: 'Uitgelichte afbeelding',
                     tags: 'Tags',
                     properties: 'Eigenschappen',
-                    tasks: 'Taken',
                     date: 'Datum',
                     parentFolder: 'Bovenliggende map'
                 }
@@ -1323,42 +1318,9 @@ export const STRINGS_NL = {
                 name: 'Bestandspictogrammen tonen',
                 desc: 'Bestandspictogrammen tonen met links uitgelijnde ruimte. Uitschakelen verwijdert zowel pictogrammen als inspringing. Prioriteit: onvoltooide taken-pictogram > aangepast pictogram > mappictogram > bestandsnaam-pictogram > bestandstype-pictogram > standaardpictogram.'
             },
-            unfinishedTaskIcon: {
-                name: 'Onvoltooide taken-pictogram',
-                desc: 'Het bestandspictogram vervangen wanneer een notitie onvoltooide taken bevat.',
-                options: {
-                    disabled: 'Uitgeschakeld',
-                    compact: 'Compacte modus',
-                    standardAndCompact: 'Standaard en compact'
-                }
-            },
             useFolderIcon: {
                 name: 'Mappictogram gebruiken',
                 desc: 'Het pictogram van de bovenliggende map weergeven wanneer er geen aangepast bestandspictogram is ingesteld. De mapkleur wordt gebruikt wanneer er geen aangepaste bestandskleur is ingesteld.'
-            },
-            showFileTaskProgress: {
-                name: 'Taakvoortgang',
-                desc: 'De taakstatus weergeven met optionele voortgangsbalk en optioneel aantal taken. Kleuren voor onvoltooide en voltooide taken kunnen afzonderlijk worden ingesteld met de Style Settings-plugin.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Taakvoortgang: voortgangsbalk',
-                desc: 'Een voortgangsbalk naast het taakpictogram weergeven.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Taakvoortgang: aantal taken',
-                desc: 'Het aantal voltooide en totale taken weergeven, bijvoorbeeld 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Taakvoortgang: verbergen wanneer voltooid',
-                desc: 'De taakvoortgang verbergen wanneer alle taken in een notitie voltooid zijn.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Onvoltooide taken-achtergrond',
-                desc: 'Een achtergrondkleur toepassen wanneer een notitie onvoltooide taken bevat.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Achtergrondkleur voor onvoltooide taken',
-                desc: 'De achtergrondkleur instellen die wordt gebruikt wanneer een notitie onvoltooide taken bevat.'
             },
             showFileNameIcons: {
                 name: 'Pictogrammen op bestandsnaam',

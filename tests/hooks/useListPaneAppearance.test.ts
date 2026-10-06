@@ -40,7 +40,6 @@ describe('resolveListPaneAppearance', () => {
             showTags: true,
             showFileTags: true,
             showFileProperties: true,
-            showFileTaskProgress: true,
             showFileDate: true,
             showParentFolder: true,
             textCountDisplay: 'both'
@@ -50,7 +49,6 @@ describe('resolveListPaneAppearance', () => {
             appearance: {
                 showTags: false,
                 showProperties: false,
-                showTaskProgress: false,
                 showDate: false,
                 showParentFolder: false,
                 textCount: 'none'
@@ -61,7 +59,6 @@ describe('resolveListPaneAppearance', () => {
         expect(result).toMatchObject({
             showTags: false,
             showProperties: false,
-            showTaskProgress: false,
             showDate: false,
             showParentFolder: false,
             textCountDisplay: 'none'
@@ -73,7 +70,6 @@ describe('resolveListPaneAppearance', () => {
             showTags: true,
             showFileTags: false,
             showFileProperties: false,
-            showFileTaskProgress: false,
             showFileDate: false,
             showParentFolder: false,
             textCountDisplay: 'none'
@@ -83,7 +79,6 @@ describe('resolveListPaneAppearance', () => {
             appearance: {
                 showTags: true,
                 showProperties: true,
-                showTaskProgress: true,
                 showDate: true,
                 showParentFolder: true,
                 textCount: 'words'
@@ -94,7 +89,6 @@ describe('resolveListPaneAppearance', () => {
         expect(result).toMatchObject({
             showTags: true,
             showProperties: true,
-            showTaskProgress: true,
             showDate: true,
             showParentFolder: true,
             textCountDisplay: 'words'
@@ -141,9 +135,8 @@ describe('resolveListPaneAppearance', () => {
                 showFeatureImage: true,
                 showFileDate: true,
                 showParentFolder: true,
-                showFileTaskProgress: true
             }),
-            appearance: { mode: 'compact', previewRows: 4, showTaskProgress: true, showDate: true, showParentFolder: true },
+            appearance: { mode: 'compact', previewRows: 4, showDate: true, showParentFolder: true },
             selectionType: ItemType.PROPERTY
         });
 
@@ -154,7 +147,6 @@ describe('resolveListPaneAppearance', () => {
             showImage: false,
             showDate: false,
             showParentFolder: false,
-            showTaskProgress: false
         });
     });
 

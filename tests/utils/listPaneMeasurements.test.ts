@@ -28,8 +28,7 @@ import {
     getPropertyRowCount,
     shouldShowExtensionBadgeThumbnail,
     shouldShowFeatureImageArea,
-    shouldShowFileItemParentFolderLine,
-    shouldShowFileItemTaskProgress
+    shouldShowFileItemParentFolderLine
 } from '../../src/utils/listPaneMeasurements';
 import { ItemType } from '../../src/types';
 import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
@@ -537,29 +536,9 @@ describe('listPaneMeasurements layout helpers', () => {
                 showFeatureImageArea: false,
                 showExtensionBadgeThumbnail: false,
                 showParentFolderLine: false,
-                showTaskProgressLine: true,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.singleTextLineHeight);
-    });
-
-    it('shows task progress for positive task counts and respects the completed-task setting', () => {
-        expect(
-            shouldShowFileItemTaskProgress({
-                showTaskProgress: true,
-                hideWhenComplete: false,
-                taskTotal: 4,
-                taskUnfinished: 2
-            })
-        ).toBe(true);
-        expect(
-            shouldShowFileItemTaskProgress({
-                showTaskProgress: true,
-                hideWhenComplete: true,
-                taskTotal: 4,
-                taskUnfinished: 0
-            })
-        ).toBe(false);
     });
 
     it('does not show the pinned preview slot when preview text is disabled', () => {
