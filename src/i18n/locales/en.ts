@@ -332,8 +332,6 @@ export const STRINGS_EN = {
             renameFile: 'Rename file',
             deleteNote: 'Delete note',
             deleteFile: 'Delete file',
-            setCalendarHighlight: 'Set highlight',
-            removeCalendarHighlight: 'Remove highlight',
             deleteMultipleNotes: 'Delete {count} notes',
             deleteMultipleFiles: 'Delete {count} files',
             moveNoteToFolder: 'Move note to...',
@@ -1642,10 +1640,6 @@ export const STRINGS_EN = {
             calendarHighlightToday: {
                 name: "Highlight today's date",
                 desc: "Highlight today's date with a background color and bold text."
-            },
-            calendarShowFeatureImage: {
-                name: 'Show feature image',
-                desc: 'Display feature images for notes in the calendar.'
             },
             calendarShowTasks: {
                 name: 'Show tasks',

@@ -119,8 +119,6 @@ describe('calendar active editor state', () => {
                 displayLocale: 'en',
                 todayIso: null,
                 unfinishedTaskCountByIso: new Map(),
-                featureImageUrls: {},
-                featureImageKeysByIso: new Map(),
                 frontmatterTitlesByPath: new Map(),
                 dateFormat: 'YYYY-MM-DD',
                 isMobile: false,
@@ -140,7 +138,7 @@ describe('calendar active editor state', () => {
         expect(html).toContain('nn-navigation-calendar-weeknumber-button has-period-note is-active-editor-file');
     });
 
-    it('does not render a stale feature image for a hidden daily note', () => {
+    it('does not render content for a hidden daily note', () => {
         const dayFile = createTestTFile('Periodic/2026-06-14.md');
         const dayIso = '2026-06-14';
         const html = renderToStaticMarkup(
@@ -176,8 +174,6 @@ describe('calendar active editor state', () => {
                 displayLocale: 'en',
                 todayIso: null,
                 unfinishedTaskCountByIso: new Map([[dayIso, 1]]),
-                featureImageUrls: { [dayIso]: 'blob:stale-calendar-image' },
-                featureImageKeysByIso: new Map([[dayIso, 'cover']]),
                 frontmatterTitlesByPath: new Map([[dayFile.path, 'Hidden title']]),
                 dateFormat: 'YYYY-MM-DD',
                 isMobile: false,
@@ -194,8 +190,6 @@ describe('calendar active editor state', () => {
             })
         );
 
-        expect(html).not.toContain('blob:stale-calendar-image');
-        expect(html).not.toContain('has-feature-image');
         expect(html).not.toContain('has-daily-note');
         expect(html).not.toContain('has-unfinished-tasks');
         expect(html).not.toContain('Hidden title');
@@ -228,8 +222,6 @@ describe('calendar active editor state', () => {
                 displayLocale: 'en',
                 todayIso: null,
                 unfinishedTaskCountByIso: new Map(),
-                featureImageUrls: {},
-                featureImageKeysByIso: new Map(),
                 frontmatterTitlesByPath: new Map(),
                 dateFormat: 'YYYY-MM-DD',
                 isMobile: false,
@@ -271,8 +263,6 @@ describe('calendar active editor state', () => {
                 hasYearPeriodNote: true,
                 isYearPeriodActive: true,
                 yearMonthEntries: [yearEntry],
-                highlightedMonthFeatureImageKeys: new Set<string>(),
-                highlightedMonthImageUrls: {},
                 onNavigateYear: () => {},
                 onYearPeriodClick: () => {},
                 onYearPeriodMouseDown: () => {},

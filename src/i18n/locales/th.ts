@@ -332,8 +332,6 @@ export const STRINGS_TH = {
             renameFile: 'เปลี่ยนชื่อไฟล์',
             deleteNote: 'ลบโน้ต',
             deleteFile: 'ลบไฟล์',
-            setCalendarHighlight: 'ตั้งค่าไฮไลต์',
-            removeCalendarHighlight: 'ลบไฮไลต์',
             deleteMultipleNotes: 'ลบ {count} โน้ต',
             deleteMultipleFiles: 'ลบ {count} ไฟล์',
             moveNoteToFolder: 'ย้ายโน้ตไปยัง...',
@@ -1642,10 +1640,6 @@ export const STRINGS_TH = {
             calendarHighlightToday: {
                 name: 'ไฮไลต์วันที่วันนี้',
                 desc: 'ไฮไลต์วันที่วันนี้ด้วยสีพื้นหลังและข้อความตัวหนา'
-            },
-            calendarShowFeatureImage: {
-                name: 'แสดงรูปภาพเด่น',
-                desc: 'แสดงรูปภาพเด่นของโน้ตในปฏิทิน'
             },
             calendarShowTasks: {
                 name: 'แสดงงาน',

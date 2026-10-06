@@ -47,8 +47,6 @@ describe('CalendarYearPanel', () => {
                 hasYearPeriodNote: false,
                 isYearPeriodActive: false,
                 yearMonthEntries: [createEntry({ hasDailyNote: true, hasUnfinishedTasks: true })],
-                highlightedMonthFeatureImageKeys: new Set<string>(),
-                highlightedMonthImageUrls: {},
                 onNavigateYear: () => {},
                 onYearPeriodClick: () => {},
                 onYearPeriodMouseDown: () => {},
@@ -64,32 +62,6 @@ describe('CalendarYearPanel', () => {
         expect(html).toContain('nn-navigation-calendar-year-month-unfinished-task-indicator');
     });
 
-    it('renders feature-image month state through the same month button classes', () => {
-        const html = renderToStaticMarkup(
-            React.createElement(CalendarYearPanel, {
-                showYearCalendar: true,
-                currentMonthKey: null,
-                displayedYearValue: 2026,
-                activeYearValue: 2026,
-                activeMonthIndex: 0,
-                hasYearPeriodNote: false,
-                isYearPeriodActive: false,
-                yearMonthEntries: [createEntry({ hasDailyNote: true, hasUnfinishedTasks: true })],
-                highlightedMonthFeatureImageKeys: new Set<string>(['2026-01']),
-                highlightedMonthImageUrls: { '2026-01': 'blob:month-image' },
-                onNavigateYear: () => {},
-                onYearPeriodClick: () => {},
-                onYearPeriodMouseDown: () => {},
-                onYearPeriodContextMenu: () => {},
-                onSelectYearMonth: () => {}
-            })
-        );
-
-        expect(html).toMatch(/class="[^"]*has-feature-image-key[^"]*has-feature-image[^"]*"/);
-        expect(html).toContain('background-image:url(blob:month-image)');
-        expect(html).not.toContain('(1)');
-    });
-
     it('does not keep the selected-month outline when browsing a different year', () => {
         const html = renderToStaticMarkup(
             React.createElement(CalendarYearPanel, {
@@ -101,8 +73,6 @@ describe('CalendarYearPanel', () => {
                 hasYearPeriodNote: false,
                 isYearPeriodActive: false,
                 yearMonthEntries: [createEntry()],
-                highlightedMonthFeatureImageKeys: new Set<string>(),
-                highlightedMonthImageUrls: {},
                 onNavigateYear: () => {},
                 onYearPeriodClick: () => {},
                 onYearPeriodMouseDown: () => {},

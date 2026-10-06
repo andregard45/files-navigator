@@ -159,19 +159,6 @@ export function renderCalendarDisplaySections(
 
     appearanceGroup
         .addSetting(setting => {
-            setting
-                .setName(strings.settings.items.calendarShowFeatureImage.name)
-                .setDesc(strings.settings.items.calendarShowFeatureImage.desc);
-        })
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.calendarShowFeatureImage).onChange(async value => {
-                plugin.settings.calendarShowFeatureImage = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    appearanceGroup
-        .addSetting(setting => {
             setting.setName(strings.settings.items.calendarShowTasks.name).setDesc(strings.settings.items.calendarShowTasks.desc);
         })
         .addToggle(toggle =>

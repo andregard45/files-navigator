@@ -332,8 +332,6 @@ export const STRINGS_VI = {
             renameFile: 'Đổi tên tệp',
             deleteNote: 'Xóa ghi chú',
             deleteFile: 'Xóa tệp',
-            setCalendarHighlight: 'Đặt đánh dấu',
-            removeCalendarHighlight: 'Xóa đánh dấu',
             deleteMultipleNotes: 'Xóa {count} ghi chú',
             deleteMultipleFiles: 'Xóa {count} tệp',
             moveNoteToFolder: 'Di chuyển ghi chú...',
@@ -1648,10 +1646,6 @@ export const STRINGS_VI = {
             calendarHighlightToday: {
                 name: 'Làm nổi bật ngày hôm nay',
                 desc: 'Làm nổi bật ngày hôm nay bằng màu nền và chữ in đậm.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Hiển thị hình ảnh nổi bật',
-                desc: 'Hiển thị hình ảnh nổi bật của ghi chú trong lịch.'
             },
             calendarShowTasks: {
                 name: 'Hiển thị nhiệm vụ',

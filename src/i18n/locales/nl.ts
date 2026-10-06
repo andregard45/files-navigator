@@ -337,8 +337,6 @@ export const STRINGS_NL = {
             renameFile: 'Bestand hernoemen',
             deleteNote: 'Notitie verwijderen',
             deleteFile: 'Bestand verwijderen',
-            setCalendarHighlight: 'Markering instellen',
-            removeCalendarHighlight: 'Markering verwijderen',
             deleteMultipleNotes: '{count} notities verwijderen',
             deleteMultipleFiles: '{count} bestanden verwijderen',
             moveNoteToFolder: 'Notitie verplaatsen naar...',
@@ -1655,10 +1653,6 @@ export const STRINGS_NL = {
             calendarHighlightToday: {
                 name: 'Datum van vandaag markeren',
                 desc: 'Markeer de datum van vandaag met een achtergrondkleur en vetgedrukte tekst.'
-            },
-            calendarShowFeatureImage: {
-                name: 'Uitgelichte afbeelding tonen',
-                desc: 'Toon uitgelichte afbeeldingen voor notities in de kalender.'
             },
             calendarShowTasks: {
                 name: 'Taken tonen',

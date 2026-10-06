@@ -352,8 +352,6 @@ export const STRINGS_ZH_CN = {
             duplicateMultipleFiles: '复制 {count} 个文件',
             renameFile: '重命名文件',
             deleteFile: '删除文件',
-            setCalendarHighlight: '设置高亮',
-            removeCalendarHighlight: '移除高亮',
             deleteMultipleFiles: '删除 {count} 个文件'
         },
         folder: {
@@ -1636,10 +1634,6 @@ export const STRINGS_ZH_CN = {
             calendarHighlightToday: {
                 name: '高亮今天日期',
                 desc: '使用背景颜色和加粗文本高亮今天日期。'
-            },
-            calendarShowFeatureImage: {
-                name: '显示特色图片',
-                desc: '在日历中显示笔记的特色图片。'
             },
             calendarShowTasks: {
                 name: '显示任务',

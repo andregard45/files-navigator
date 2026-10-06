@@ -331,8 +331,6 @@ export const STRINGS_KO = {
             renameFile: '파일 이름 변경',
             deleteNote: '노트 삭제',
             deleteFile: '파일 삭제',
-            setCalendarHighlight: '하이라이트 설정',
-            removeCalendarHighlight: '하이라이트 제거',
             deleteMultipleNotes: '{count}개의 노트 삭제',
             deleteMultipleFiles: '{count}개의 파일 삭제',
             moveNoteToFolder: '노트 이동...',
@@ -1645,10 +1643,6 @@ export const STRINGS_KO = {
             calendarHighlightToday: {
                 name: '오늘 날짜 강조 표시',
                 desc: '오늘 날짜를 배경색과 굵은 텍스트로 강조 표시합니다.'
-            },
-            calendarShowFeatureImage: {
-                name: '대표 이미지 표시',
-                desc: '캘린더에서 노트의 대표 이미지를 표시합니다.'
             },
             calendarShowTasks: {
                 name: '작업 표시',

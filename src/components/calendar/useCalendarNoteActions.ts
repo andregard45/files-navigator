@@ -52,9 +52,6 @@ interface UseCalendarNoteActionsOptions {
     openFile: (file: TFile | null, options?: { active?: boolean }) => void;
     clearHoverTooltip: () => void;
     onVaultChange: () => void;
-    showMonthHighlightActions: boolean;
-    setCalendarMonthHighlight: (monthKey: string, dayIso: string) => Promise<void>;
-    removeCalendarMonthHighlight: (monthKey: string) => Promise<void>;
     resolveNoteTarget: (targetPath: string | null, existingFile: TFile | null) => CalendarNoteTarget;
 }
 
@@ -83,9 +80,6 @@ export function useCalendarNoteActions({
     openFile,
     clearHoverTooltip,
     onVaultChange,
-    showMonthHighlightActions,
-    setCalendarMonthHighlight,
-    removeCalendarMonthHighlight,
     resolveNoteTarget
 }: UseCalendarNoteActionsOptions): UseCalendarNoteActionsResult {
     // Confirmation callbacks can outlive the render that opened the modal, so they must read the current profile resolver.
@@ -312,7 +306,6 @@ export function useCalendarNoteActions({
             }
 
             const menu = new Menu();
-            const isCurrentMonthHighlight = target.currentMonthHighlightDayIso === target.dayIso;
             const existingFile = target.note.visibleFile;
 
             if (existingFile) {
@@ -320,37 +313,7 @@ export function useCalendarNoteActions({
                 menu.addSeparator();
             }
 
-            let hasHighlightMenuItem = false;
-
-            if (showMonthHighlightActions && target.kind === 'day' && target.hasFeatureImage && target.monthKey && target.dayIso) {
-                const { monthKey, dayIso } = target;
-                if (!isCurrentMonthHighlight) {
-                    hasHighlightMenuItem = true;
-                    menu.addItem(item => {
-                        item.setTitle(strings.contextMenu.file.setCalendarHighlight)
-                            .setIcon('lucide-image')
-                            .onClick(() => {
-                                runAsyncAction(() => setCalendarMonthHighlight(monthKey, dayIso));
-                            });
-                    });
-                }
-
-                if (isCurrentMonthHighlight) {
-                    hasHighlightMenuItem = true;
-                    menu.addItem(item => {
-                        item.setTitle(strings.contextMenu.file.removeCalendarHighlight)
-                            .setIcon('lucide-image-off')
-                            .onClick(() => {
-                                runAsyncAction(() => removeCalendarMonthHighlight(monthKey));
-                            });
-                    });
-                }
-            }
-
             if (existingFile) {
-                if (hasHighlightMenuItem) {
-                    menu.addSeparator();
-                }
                 menu.addItem(item => {
                     item.setTitle(strings.contextMenu.file.deleteNote)
                         .setIcon('lucide-trash')
@@ -394,9 +357,6 @@ export function useCalendarNoteActions({
             onVaultChange,
             openOrCreateCustomCalendarNote,
             openOrCreateDailyNote,
-            removeCalendarMonthHighlight,
-            setCalendarMonthHighlight,
-            showMonthHighlightActions,
             settings.confirmBeforeDelete,
             settings.interfaceIcons
         ]
