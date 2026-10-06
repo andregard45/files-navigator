@@ -52,7 +52,6 @@ const MANUAL_SORT_TOUCH_CONSTRAINT = { distance: 4 };
 
 interface ManualSortFileInfo {
     fileIndex?: number;
-    parentFolder?: string | null;
     isHidden?: boolean;
 }
 
@@ -63,7 +62,6 @@ interface ManualSortListContentProps {
     propertyKey: string;
     manualSortGroupHeaderPropertyKey: string | null;
     rankByPath: ReadonlyMap<string, number>;
-    selectedFolderPath: string | null;
     isSaving: boolean;
     isDoneDisabled: boolean;
     selectionType: NavigationItemType | null;
@@ -203,7 +201,6 @@ function ManualSortRowContent({
                     hasSelectedBelow={hasSelectedBelow}
                     showQuickActionsPanel={false}
                     fileIndex={entry.info.fileIndex}
-                    parentFolder={entry.info.parentFolder}
                     isPinned={false}
                     isHidden={entry.info.isHidden}
                     shortcutKey={shortcutKey}
@@ -482,7 +479,6 @@ function buildFileInfoMap(listItems: readonly ListPaneItem[]): Map<string, Manua
 
         map.set(item.data.path, {
             fileIndex: item.fileIndex,
-            parentFolder: item.parentFolder,
             isHidden: item.isHidden
         });
     });
@@ -496,7 +492,6 @@ export function ManualSortListContent({
     propertyKey,
     manualSortGroupHeaderPropertyKey,
     rankByPath,
-    selectedFolderPath,
     isSaving,
     isDoneDisabled,
     selectionType,
@@ -548,12 +543,11 @@ export function ManualSortListContent({
                     info: {
                         ...info,
                         fileIndex: manualFileIndexByPath.get(file.path) ?? info.fileIndex,
-                        parentFolder: info.parentFolder ?? selectedFolderPath,
                         isHidden: info.isHidden ?? hiddenFileState.get(file.path)
                     }
                 };
             }),
-        [fileInfoByPath, hiddenFileState, manualFileIndexByPath, selectedFolderPath]
+        [fileInfoByPath, hiddenFileState, manualFileIndexByPath]
     );
     const rankedEntries = useMemo<ManualSortEntry[]>(() => buildEntries(rankedMarkdownFiles), [buildEntries, rankedMarkdownFiles]);
     const unsortedEntries = useMemo<ManualSortEntry[]>(() => buildEntries(unsortedMarkdownFiles), [buildEntries, unsortedMarkdownFiles]);

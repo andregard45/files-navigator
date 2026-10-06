@@ -443,7 +443,6 @@ export const STRINGS_FA = {
         groupBy: 'گروه‌بندی بر اساس',
         properties: 'ویژگی‌ها',
         date: 'تاریخ',
-        parentFolder: 'پوشه والد',
         resetAppearance: 'بازنشانی ظاهر',
         openPluginSettings: 'باز کردن تنظیمات افزونه…'
     },
@@ -1102,8 +1101,7 @@ export const STRINGS_FA = {
                     previewText: 'متن پیش‌نمایش',
                     featureImage: 'تصویر ویژه',
                     properties: 'ویژگی‌ها',
-                    date: 'تاریخ',
-                    parentFolder: 'پوشه والد'
+                    date: 'تاریخ'
                 }
             },
             calendar: {
@@ -1349,26 +1347,6 @@ export const STRINGS_FA = {
             compactItemHeightScaleText: {
                 name: 'مقیاس‌بندی متن با ارتفاع آیتم فشرده',
                 desc: 'متن لیست فشرده را هنگام کاهش ارتفاع آیتم مقیاس‌بندی کنید.'
-            },
-            showParentFolder: {
-                name: 'نمایش پوشه والد',
-                desc: 'نام پوشه والد را برای یادداشت‌ها در زیرپوشه‌ها، برچسب‌ها یا ویژگی‌ها نمایش دهید.'
-            },
-            showFolderPath: {
-                name: 'نمایش مسیر پوشه',
-                desc: 'مسیر را نسبت به پوشه انتخاب‌شده به جای فقط نام پوشه نمایش دهید. برچسب‌ها و ویژگی‌ها مسیر کامل را نشان می‌دهند.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'کلیک روی پوشه والد پوشه را باز می‌کند',
-                desc: 'کلیک روی برچسب پوشه والد پوشه را در پنل لیست باز می‌کند.'
-            },
-            showParentFolderColor: {
-                name: 'نمایش رنگ پوشه والد',
-                desc: 'از رنگ‌های پوشه روی برچسب‌های پوشه والد استفاده کنید.'
-            },
-            showParentFolderIcon: {
-                name: 'نمایش آیکون پوشه والد',
-                desc: 'آیکون‌های پوشه را کنار برچسب‌های پوشه والد نمایش دهید.'
             },
             showQuickActions: {
                 name: 'نمایش اقدامات سریع',

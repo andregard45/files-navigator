@@ -533,7 +533,6 @@ export interface ListPaneAppearance {
     groupBy?: ListNoteGroupingOption;
     showProperties?: boolean;
     showDate?: boolean;
-    showParentFolder?: boolean;
 }
 
 const PROPERTY_GROUPING_PREFIX = 'property:';
@@ -884,11 +883,6 @@ export interface NotebookNavigatorSettings {
     enablePropertyExternalLinks: boolean;
     showFileDate: boolean;
     alphabeticalDateMode: AlphabeticalDateMode;
-    showParentFolder: boolean;
-    showParentFolderFullPath: boolean;
-    parentFolderClickRevealsFile: boolean;
-    showParentFolderColor: boolean;
-    showParentFolderIcon: boolean;
 
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
     calendarPlacement: CalendarPlacement;

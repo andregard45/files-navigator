@@ -446,7 +446,6 @@ export const STRINGS_ES = {
         groupBy: 'Agrupar por',
         properties: 'Propiedades',
         date: 'Fecha',
-        parentFolder: 'Carpeta superior',
         resetAppearance: 'Restablecer apariencia',
         openPluginSettings: 'Abrir ajustes del plugin…'
     },
@@ -1107,8 +1106,7 @@ export const STRINGS_ES = {
                     previewText: 'Texto de vista previa',
                     featureImage: 'Imagen destacada',
                     properties: 'Propiedades',
-                    date: 'Fecha',
-                    parentFolder: 'Carpeta superior'
+                    date: 'Fecha'
                 }
             },
             calendar: {
@@ -1355,26 +1353,6 @@ export const STRINGS_ES = {
             compactItemHeightScaleText: {
                 name: 'Escalar texto con altura compacta',
                 desc: 'Escala el texto de los elementos compactos cuando se reduce la altura.'
-            },
-            showParentFolder: {
-                name: 'Mostrar carpeta principal',
-                desc: 'Muestra el nombre de la carpeta principal para las notas en subcarpetas, etiquetas o propiedades.'
-            },
-            showFolderPath: {
-                name: 'Mostrar ruta de carpeta',
-                desc: 'Muestra la ruta relativa a la carpeta seleccionada en lugar de solo el nombre de la carpeta. Las etiquetas y propiedades muestran la ruta completa.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Clic en carpeta principal abre carpeta',
-                desc: 'Al hacer clic en la etiqueta de la carpeta principal se abre la carpeta en el panel de lista.'
-            },
-            showParentFolderColor: {
-                name: 'Mostrar color de carpeta principal',
-                desc: 'Usar colores de carpeta en etiquetas de carpetas principales.'
-            },
-            showParentFolderIcon: {
-                name: 'Mostrar icono de carpeta principal',
-                desc: 'Mostrar iconos de carpeta junto a las etiquetas de carpetas principales.'
             },
             showQuickActions: {
                 name: 'Mostrar acciones rápidas',

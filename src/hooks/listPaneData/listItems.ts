@@ -247,7 +247,6 @@ function buildListItemsInternal(
         const baseItem: ListPaneItem = {
             type: ListPaneItemType.FILE,
             data: file,
-            parentFolder: selectedFolder?.path,
             key: file.path,
             fileIndex: fileIndexCounter++,
             matchedAliases: matchedAliases?.get(file.path),

@@ -443,7 +443,6 @@ export const STRINGS_TH = {
         groupBy: 'จัดกลุ่มตาม',
         properties: 'คุณสมบัติ',
         date: 'วันที่',
-        parentFolder: 'โฟลเดอร์หลัก',
         resetAppearance: 'รีเซ็ตลักษณะ',
         openPluginSettings: 'เปิดการตั้งค่าปลั๊กอิน…'
     },
@@ -1095,8 +1094,7 @@ export const STRINGS_TH = {
                     previewText: 'ข้อความตัวอย่าง',
                     featureImage: 'รูปภาพเด่น',
                     properties: 'คุณสมบัติ',
-                    date: 'วันที่',
-                    parentFolder: 'โฟลเดอร์หลัก'
+                    date: 'วันที่'
                 }
             },
             calendar: {
@@ -1342,26 +1340,6 @@ export const STRINGS_TH = {
             compactItemHeightScaleText: {
                 name: 'ปรับขนาดข้อความตามความสูงรายการกะทัดรัด',
                 desc: 'ปรับขนาดข้อความรายการกะทัดรัดเมื่อความสูงรายการลดลง'
-            },
-            showParentFolder: {
-                name: 'แสดงโฟลเดอร์หลัก',
-                desc: 'แสดงชื่อโฟลเดอร์หลักสำหรับโน้ตในโฟลเดอร์ย่อย แท็ก หรือคุณสมบัติ'
-            },
-            showFolderPath: {
-                name: 'แสดงเส้นทางโฟลเดอร์',
-                desc: 'แสดงเส้นทางที่สัมพันธ์กับโฟลเดอร์ที่เลือกแทนการแสดงเฉพาะชื่อโฟลเดอร์ แท็กและคุณสมบัติจะแสดงเส้นทางแบบเต็ม'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'คลิกโฟลเดอร์หลักเพื่อเปิดโฟลเดอร์',
-                desc: 'การคลิกป้ายโฟลเดอร์หลักจะเปิดโฟลเดอร์ในแผงรายการ'
-            },
-            showParentFolderColor: {
-                name: 'แสดงสีโฟลเดอร์หลัก',
-                desc: 'ใช้สีโฟลเดอร์บนป้ายโฟลเดอร์หลัก'
-            },
-            showParentFolderIcon: {
-                name: 'แสดงไอคอนโฟลเดอร์หลัก',
-                desc: 'แสดงไอคอนโฟลเดอร์ข้างป้ายโฟลเดอร์หลัก'
             },
             showQuickActions: {
                 name: 'แสดงการกระทำด่วน',

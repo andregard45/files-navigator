@@ -447,7 +447,6 @@ export const STRINGS_FR = {
         groupBy: 'Grouper par',
         properties: 'Propriétés',
         date: 'Date',
-        parentFolder: 'Dossier parent',
         resetAppearance: 'Réinitialiser l’apparence',
         openPluginSettings: 'Ouvrir les paramètres du plugin…'
     },
@@ -1109,8 +1108,7 @@ export const STRINGS_FR = {
                     previewText: "Texte d'aperçu",
                     featureImage: 'Image vedette',
                     properties: 'Propriétés',
-                    date: 'Date',
-                    parentFolder: 'Dossier parent'
+                    date: 'Date'
                 }
             },
             calendar: {
@@ -1356,26 +1354,6 @@ export const STRINGS_FR = {
             compactItemHeightScaleText: {
                 name: 'Adapter le texte à la hauteur compacte',
                 desc: 'Adapte le texte des éléments compacts lorsque la hauteur est réduite.'
-            },
-            showParentFolder: {
-                name: 'Afficher le dossier parent',
-                desc: 'Afficher le nom du dossier parent pour les notes dans les sous-dossiers, mots-clés ou propriétés.'
-            },
-            showFolderPath: {
-                name: 'Afficher le chemin du dossier',
-                desc: 'Afficher le chemin relatif au dossier sélectionné au lieu du seul nom de dossier. Les mots-clés et propriétés affichent le chemin complet.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Clic sur dossier parent ouvre le dossier',
-                desc: "Cliquer sur l'étiquette du dossier parent ouvre le dossier dans le panneau de liste."
-            },
-            showParentFolderColor: {
-                name: 'Afficher la couleur du dossier parent',
-                desc: 'Utiliser les couleurs des dossiers sur les étiquettes des dossiers parents.'
-            },
-            showParentFolderIcon: {
-                name: "Afficher l'icône du dossier parent",
-                desc: 'Afficher les icônes de dossier à côté des étiquettes des dossiers parents.'
             },
             showQuickActions: {
                 name: 'Afficher les actions rapides',

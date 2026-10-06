@@ -442,7 +442,6 @@ export const STRINGS_KO = {
         groupBy: '그룹화 기준',
         properties: '속성',
         date: '날짜',
-        parentFolder: '상위 폴더',
         resetAppearance: '모양 재설정',
         openPluginSettings: '플러그인 설정 열기…'
     },
@@ -1099,8 +1098,7 @@ export const STRINGS_KO = {
                     previewText: '미리보기 텍스트',
                     featureImage: '대표 이미지',
                     properties: '속성',
-                    date: '날짜',
-                    parentFolder: '상위 폴더'
+                    date: '날짜'
                 }
             },
             calendar: {
@@ -1346,26 +1344,6 @@ export const STRINGS_KO = {
             compactItemHeightScaleText: {
                 name: '컴팩트 항목 높이에 맞춰 텍스트 크기 조정',
                 desc: '항목 높이를 줄이면 컴팩트 목록 텍스트 크기를 조정합니다.'
-            },
-            showParentFolder: {
-                name: '상위 폴더 표시',
-                desc: '하위 폴더, 태그 또는 속성의 노트에 상위 폴더 이름을 표시합니다.'
-            },
-            showFolderPath: {
-                name: '폴더 경로 표시',
-                desc: '폴더 이름만 표시하는 대신 선택한 폴더를 기준으로 한 상대 경로를 표시합니다. 태그와 속성에서는 전체 경로를 표시합니다.'
-            },
-            parentFolderClickOpensFolder: {
-                name: '상위 폴더 클릭 시 폴더 열기',
-                desc: '상위 폴더 레이블을 클릭하면 목록 창에서 폴더를 엽니다.'
-            },
-            showParentFolderColor: {
-                name: '상위 폴더 색상 표시',
-                desc: '상위 폴더 레이블에 폴더 색상을 사용합니다.'
-            },
-            showParentFolderIcon: {
-                name: '상위 폴더 아이콘 표시',
-                desc: '상위 폴더 레이블 옆에 폴더 아이콘을 표시합니다.'
             },
             showQuickActions: {
                 name: '빠른 작업 표시',

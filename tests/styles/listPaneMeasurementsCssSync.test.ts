@@ -183,16 +183,4 @@ describe('List pane measurements stay in sync with CSS', () => {
         expect(previewRule).not.toMatch(/(^|\n)\s*min-height:\s*/m);
         expect(previewRule).not.toMatch(/(^|\n)\s*height:\s*/m);
     });
-
-    test('parent folder background stays inside the fixed metadata line height', () => {
-        const listFilesCss = readTextFile('src/styles/sections/list-files.css');
-        const parentFolderBackgroundRule = extractRuleBlock(listFilesCss, ".nn-parent-folder-content[data-has-background='true']");
-
-        expect(parentFolderBackgroundRule).toMatch(/(^|\n)\s*box-sizing:\s*border-box\s*;/m);
-        expect(parentFolderBackgroundRule).toMatch(/(^|\n)\s*height:\s*var\(--nn-file-single-text-line-height\)\s*;/m);
-        expect(parentFolderBackgroundRule).toMatch(
-            /(^|\n)\s*line-height:\s*calc\(var\(--nn-file-single-text-line-height\)\s*-\s*2px\)\s*;/m
-        );
-        expect(parentFolderBackgroundRule).toMatch(/(^|\n)\s*padding:\s*1px 4px\s*;/m);
-    });
 });

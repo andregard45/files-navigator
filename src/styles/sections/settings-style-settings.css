@@ -572,23 +572,6 @@ settings:
         max: 900
         step: 100
     -
-        id: nn-theme-file-parent-color
-        title: File parent folder color
-        description: Text color for parent folder path (when showing subfolders).
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
-        id: nn-theme-file-parent-font-weight
-        title: File parent folder font weight
-        description: Font weight for parent folder path.
-        type: variable-number-slider
-        default: 400
-        min: 100
-        max: 900
-        step: 100
-    -
         id: nn-theme-file-feature-border-radius
         title: Feature image border radius
         description: Corner radius for feature images.
@@ -666,14 +649,6 @@ settings:
         default-light: '#'
         default-dark: '#'
     -
-        id: nn-theme-file-selected-parent-color
-        title: Selected file parent folder color
-        description: Text color for parent folder path when selected.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
         id: nn-theme-file-selected-inactive-bg
         title: Selected file background (inactive)
         description: Selected file background color when pane is inactive.
@@ -710,14 +685,6 @@ settings:
         id: nn-theme-file-selected-inactive-date-color
         title: Selected file date color (inactive)
         description: File date color when selected and pane is inactive.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
-        id: nn-theme-file-selected-inactive-parent-color
-        title: Selected file parent folder color (inactive)
-        description: Parent folder color when file is selected and pane is inactive.
         type: variable-themed-color
         format: hex
         default-light: '#'

@@ -445,7 +445,6 @@ export const STRINGS_DE = {
         groupBy: 'Gruppieren nach',
         properties: 'Eigenschaften',
         date: 'Datum',
-        parentFolder: 'Übergeordneter Ordner',
         resetAppearance: 'Darstellung zurücksetzen',
         openPluginSettings: 'Plugin-Einstellungen öffnen…'
     },
@@ -1107,8 +1106,7 @@ export const STRINGS_DE = {
                     previewText: 'Vorschautext',
                     featureImage: 'Feature-Bild',
                     properties: 'Eigenschaften',
-                    date: 'Datum',
-                    parentFolder: 'Übergeordneter Ordner'
+                    date: 'Datum'
                 }
             },
             calendar: {
@@ -1354,26 +1352,6 @@ export const STRINGS_DE = {
             compactItemHeightScaleText: {
                 name: 'Text an kompakte Elementhöhe anpassen',
                 desc: 'Skaliert den Text kompakter Listenelemente bei reduzierter Höhe.'
-            },
-            showParentFolder: {
-                name: 'Übergeordneten Ordner anzeigen',
-                desc: 'Den übergeordneten Ordnernamen für Notizen in Unterordnern, Tags oder Eigenschaften anzeigen.'
-            },
-            showFolderPath: {
-                name: 'Ordnerpfad anzeigen',
-                desc: 'Den Pfad relativ zum ausgewählten Ordner statt nur den Ordnernamen anzeigen. Tags und Eigenschaften zeigen den vollständigen Pfad.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Klick auf übergeordneten Ordner öffnet Ordner',
-                desc: 'Klicken auf den übergeordneten Ordner öffnet den Ordner im Listenbereich.'
-            },
-            showParentFolderColor: {
-                name: 'Übergeordnete Ordnerfarbe anzeigen',
-                desc: 'Ordnerfarben auf übergeordnete Ordnerlabels anwenden.'
-            },
-            showParentFolderIcon: {
-                name: 'Übergeordnetes Ordnersymbol anzeigen',
-                desc: 'Ordnersymbole neben übergeordneten Ordnerlabels anzeigen.'
             },
             showQuickActions: {
                 name: 'Schnellaktionen anzeigen',

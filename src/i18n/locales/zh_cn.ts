@@ -442,7 +442,6 @@ export const STRINGS_ZH_CN = {
         groupBy: '分组依据',
         properties: '属性',
         date: '日期',
-        parentFolder: '父文件夹',
         resetAppearance: '重置外观',
         openPluginSettings: '打开插件设置…'
     },
@@ -1093,8 +1092,7 @@ export const STRINGS_ZH_CN = {
                     previewText: '预览文本',
                     featureImage: '特色图片',
                     properties: '属性',
-                    date: '日期',
-                    parentFolder: '父文件夹'
+                    date: '日期'
                 }
             },
             calendar: {
@@ -1337,26 +1335,6 @@ export const STRINGS_ZH_CN = {
             compactItemHeightScaleText: {
                 name: '随精简高度缩放文本',
                 desc: '当减小紧凑列表项高度时同步缩放文本。'
-            },
-            showParentFolder: {
-                name: '显示父文件夹',
-                desc: '为子文件夹、标签或属性中的笔记显示父文件夹名称。'
-            },
-            showFolderPath: {
-                name: '显示文件夹路径',
-                desc: '显示相对于所选文件夹的路径，而不是仅显示文件夹名称。标签和属性显示完整路径。'
-            },
-            parentFolderClickOpensFolder: {
-                name: '点击父文件夹打开文件夹',
-                desc: '点击父文件夹名称时，在列表窗格中打开该文件夹。'
-            },
-            showParentFolderColor: {
-                name: '显示父文件夹颜色',
-                desc: '在父文件夹标签上使用文件夹颜色。'
-            },
-            showParentFolderIcon: {
-                name: '显示父文件夹图标',
-                desc: '在父文件夹标签旁显示文件夹图标。'
             },
             showQuickActions: {
                 name: '显示快速操作',

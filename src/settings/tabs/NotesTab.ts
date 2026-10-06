@@ -315,32 +315,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                     modified: strings.settings.items.dateWhenSortingByName.options.modified
                 }
             })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.parentFolder, [
-            createToggleDefinition('showParentFolder', {
-                name: strings.settings.items.showParentFolder.name,
-                desc: strings.settings.items.showParentFolder.desc
-            }),
-            createToggleDefinition('showParentFolderFullPath', {
-                name: strings.settings.items.showFolderPath.name,
-                desc: strings.settings.items.showFolderPath.desc,
-                visible: () => plugin.settings.showParentFolder
-            }),
-            createToggleDefinition('parentFolderClickRevealsFile', {
-                name: strings.settings.items.parentFolderClickOpensFolder.name,
-                desc: strings.settings.items.parentFolderClickOpensFolder.desc,
-                visible: () => plugin.settings.showParentFolder
-            }),
-            createToggleDefinition('showParentFolderColor', {
-                name: strings.settings.items.showParentFolderColor.name,
-                desc: strings.settings.items.showParentFolderColor.desc,
-                visible: () => plugin.settings.showParentFolder
-            }),
-            createToggleDefinition('showParentFolderIcon', {
-                name: strings.settings.items.showParentFolderIcon.name,
-                desc: strings.settings.items.showParentFolderIcon.desc,
-                visible: () => plugin.settings.showParentFolder
-            })
         ])
     ];
 }

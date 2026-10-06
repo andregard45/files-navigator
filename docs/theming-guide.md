@@ -163,7 +163,7 @@ Not currently exposed in the Style Settings UI:
 
 #### Navigation items
 
-Custom-color weight also applies to list pane group headers, parent folder paths, and tag or property pills. Folder-note
+Custom-color weight also applies to list pane group headers and tag or property pills. Folder-note
 decoration also applies to list pane titles, breadcrumbs, and folder group headers.
 
 | Variable | Default | Description |
@@ -245,8 +245,6 @@ Search icon and supporting text use the shared variables under [Pane headers and
 | `--nn-theme-file-preview-font-weight` | `400` | File preview font weight |
 | `--nn-theme-file-date-color` | `var(--nn-theme-foreground-faded)` | File date color |
 | `--nn-theme-file-date-font-weight` | `400` | File date font weight |
-| `--nn-theme-file-parent-color` | `var(--nn-theme-foreground-faded)` | File parent folder color |
-| `--nn-theme-file-parent-font-weight` | `400` | File parent folder font weight |
 | `--nn-theme-file-feature-border-radius` | `4px` | Feature image corner radius (0-32px) |
 | `--nn-theme-file-border-radius` | `8px` | File item corner radius (0-16px) |
 
@@ -260,13 +258,11 @@ Search icon and supporting text use the shared variables under [Pane headers and
 | `--nn-theme-file-selected-name-color` | `var(--nn-theme-file-name-color)` | Selected file name color |
 | `--nn-theme-file-selected-preview-color` | `var(--nn-theme-file-preview-color)` | Selected file preview color |
 | `--nn-theme-file-selected-date-color` | `var(--nn-theme-foreground-muted)` | Selected file date color |
-| `--nn-theme-file-selected-parent-color` | `var(--nn-theme-foreground-muted)` | Selected file parent folder color |
 | `--nn-theme-file-selected-inactive-bg` | `var(--background-modifier-hover)` | Selected file background when the pane is inactive |
 | `--nn-theme-file-selected-inactive-border-color` | `var(--nn-theme-file-selected-border-color)` | Selected file border color when the pane is inactive |
 | `--nn-theme-file-selected-inactive-name-color` | `var(--nn-theme-file-selected-name-color)` | Selected file name color when the pane is inactive |
 | `--nn-theme-file-selected-inactive-preview-color` | `var(--nn-theme-file-selected-preview-color)` | Selected file preview color when the pane is inactive |
 | `--nn-theme-file-selected-inactive-date-color` | `var(--nn-theme-file-selected-date-color)` | Selected file date color when the pane is inactive |
-| `--nn-theme-file-selected-inactive-parent-color` | `var(--nn-theme-file-selected-parent-color)` | Selected file parent folder color when the pane is inactive |
 
 #### Tag and property pills
 
@@ -480,8 +476,6 @@ supported by Notebook Navigator:
   --nn-theme-file-preview-font-weight: 400;
   --nn-theme-file-date-color: #6a8759;
   --nn-theme-file-date-font-weight: 400;
-  --nn-theme-file-parent-color: #cc7832;
-  --nn-theme-file-parent-font-weight: 400;
   --nn-theme-file-feature-border-radius: 3px;
   --nn-theme-file-border-radius: 4px;
 
@@ -492,13 +486,11 @@ supported by Notebook Navigator:
   --nn-theme-file-selected-name-color: #ffffff;
   --nn-theme-file-selected-preview-color: #c5c5c5;
   --nn-theme-file-selected-date-color: #a5dc86;
-  --nn-theme-file-selected-parent-color: #ffd580;
   --nn-theme-file-selected-inactive-bg: #383c45;
   --nn-theme-file-selected-inactive-border-color: rgba(255, 255, 255, 0.14);
   --nn-theme-file-selected-inactive-name-color: #dfe3e8;
   --nn-theme-file-selected-inactive-preview-color: #b9bec6;
   --nn-theme-file-selected-inactive-date-color: #8fb275;
-  --nn-theme-file-selected-inactive-parent-color: #e3b173;
 
   /* Tag and property pills */
   --nn-theme-file-tag-color: #9876aa;

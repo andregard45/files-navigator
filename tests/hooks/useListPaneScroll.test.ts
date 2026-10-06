@@ -67,7 +67,6 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         showFileProperties: false,
         showPropertiesOnSeparateRows: false,
         showFilePropertiesInCompactMode: false,
-        showParentFolder: false,
         selectionType: ItemType.FOLDER,
         includeDescendantNotes: false,
         selectedPropertyValueNodeIdToHide: null,

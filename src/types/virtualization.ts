@@ -41,7 +41,6 @@ export interface ListPaneFolderPathSegment {
 export interface ListPaneItem {
     type: ListPaneItemType;
     data: TFile | string; // File, header text, or spacer payload
-    parentFolder?: string | null;
     // Folder path associated with a folder-group header.
     // Present only when grouping by folder in the list pane.
     headerFolderPath?: string | null;

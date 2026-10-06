@@ -25,8 +25,7 @@ import {
     getSelectedPropertyValuePillToHide,
     getPropertyRowCount,
     shouldShowExtensionBadgeThumbnail,
-    shouldShowFeatureImageArea,
-    shouldShowFileItemParentFolderLine
+    shouldShowFeatureImageArea
 } from '../../src/utils/listPaneMeasurements';
 import { ItemType } from '../../src/types';
 import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
@@ -119,7 +118,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: false,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
@@ -144,7 +142,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: true,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
@@ -171,7 +168,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: true,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
@@ -197,7 +193,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: true,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight * 3);
@@ -225,7 +220,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: true,
-                showParentFolderLine: false,
                 visiblePillRowCount: 1
             })
         ).toBe(
@@ -253,7 +247,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: true,
-                showParentFolderLine: false,
                 visiblePillRowCount: 2
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.tagRowHeight * 2);
@@ -267,7 +260,6 @@ describe('listPaneMeasurements layout helpers', () => {
                     hasPreviewContent: false,
                     showFeatureImageArea: false,
                     showExtensionBadgeThumbnail: false,
-                    showParentFolderLine: false,
                     visiblePillRowCount: 2
                 },
                 {
@@ -284,7 +276,7 @@ describe('listPaneMeasurements layout helpers', () => {
         ).toBe(18 + desktopHeights.titleLineHeight * 2 + desktopHeights.tagRowHeight * 2);
     });
 
-    it('keeps the parent folder metadata line in standard mode when date, preview, and image are hidden', () => {
+    it('uses a title-only row height in standard mode when date, preview, and image are hidden', () => {
         expect(
             estimateFileRowHeight(
                 {
@@ -292,7 +284,6 @@ describe('listPaneMeasurements layout helpers', () => {
                     hasPreviewContent: false,
                     showFeatureImageArea: false,
                     showExtensionBadgeThumbnail: false,
-                    showParentFolderLine: true,
                     visiblePillRowCount: 0
                 },
                 {
@@ -306,7 +297,7 @@ describe('listPaneMeasurements layout helpers', () => {
                     compactPaddingTotal: 18
                 }
             )
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.singleTextLineHeight);
+        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
     });
 
     it('estimates pinned image rows with the pinned preview row count', () => {
@@ -315,7 +306,6 @@ describe('listPaneMeasurements layout helpers', () => {
             hasPreviewContent: true,
             showFeatureImageArea: true,
             showExtensionBadgeThumbnail: false,
-            showParentFolderLine: false,
             visiblePillRowCount: 1
         };
         const layoutState = getFileItemLayoutState({
@@ -348,7 +338,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 1
             })
         );
@@ -360,7 +349,6 @@ describe('listPaneMeasurements layout helpers', () => {
             hasPreviewContent: false,
             showFeatureImageArea: true,
             showExtensionBadgeThumbnail: true,
-            showParentFolderLine: true,
             visiblePillRowCount: 2
         };
         const layoutState = getFileItemLayoutState({
@@ -393,7 +381,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: true,
-                showParentFolderLine: true,
                 visiblePillRowCount: 2
             })
         );
@@ -418,7 +405,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
@@ -443,7 +429,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(
@@ -474,7 +459,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: false,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(
@@ -507,7 +491,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: false,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.multilineTextLineHeight);
@@ -532,7 +515,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: false,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.singleTextLineHeight);
@@ -574,13 +556,12 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
     });
 
-    it('keeps date and parent folder in one metadata row after preview rows', () => {
+    it('keeps date in one metadata row after preview rows', () => {
         const layoutState = getFileItemLayoutState({
             showDate: true,
             showPreview: true,
@@ -599,7 +580,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: false,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: true,
                 visiblePillRowCount: 0
             })
         ).toBe(
@@ -617,7 +597,6 @@ describe('listPaneMeasurements layout helpers', () => {
             previewRows: 2,
             showFeatureImageArea: true,
             showExtensionBadgeThumbnail: false,
-            showParentFolderLine: false,
             visiblePillRowCount: 0
         };
         const layoutStateWithDate = getFileItemLayoutState({
@@ -681,7 +660,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 1
             })
         ).toBe(richBaseHeight + desktopHeights.tagRowHeight - desktopHeights.singleTextLineHeight);
@@ -694,7 +672,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 3
             })
         ).toBe(richBaseHeight + desktopHeights.tagRowHeight * 3 - desktopHeights.singleTextLineHeight);
@@ -724,7 +701,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 1
             })
         ).toBe(richBaseHeight);
@@ -737,67 +713,9 @@ describe('listPaneMeasurements layout helpers', () => {
                 layoutState,
                 showFeatureImageArea: true,
                 showExtensionBadgeThumbnail: false,
-                showParentFolderLine: false,
                 visiblePillRowCount: 3
             })
         ).toBe(richBaseHeight + desktopHeights.tagRowHeight * 3 - desktopHeights.multilineTextLineHeight * 2);
-    });
-
-    it('matches the parent folder line rules for tag, property, and descendant views', () => {
-        expect(
-            shouldShowFileItemParentFolderLine({
-                showParentFolder: true,
-                isPinned: false,
-                selectionType: 'tag',
-                includeDescendantNotes: false,
-                parentFolder: 'Projects',
-                fileParentPath: 'Projects/Archive'
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowFileItemParentFolderLine({
-                showParentFolder: true,
-                isPinned: false,
-                selectionType: 'property',
-                includeDescendantNotes: false,
-                parentFolder: null,
-                fileParentPath: 'Projects/Archive'
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowFileItemParentFolderLine({
-                showParentFolder: true,
-                isPinned: false,
-                selectionType: 'folder',
-                includeDescendantNotes: true,
-                parentFolder: 'Projects',
-                fileParentPath: 'Projects/Archive'
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowFileItemParentFolderLine({
-                showParentFolder: true,
-                isPinned: false,
-                selectionType: 'folder',
-                includeDescendantNotes: true,
-                parentFolder: 'Projects',
-                fileParentPath: 'Projects'
-            })
-        ).toBe(false);
-
-        expect(
-            shouldShowFileItemParentFolderLine({
-                showParentFolder: true,
-                isPinned: false,
-                selectionType: 'tag',
-                includeDescendantNotes: false,
-                parentFolder: null,
-                fileParentPath: '/'
-            })
-        ).toBe(false);
     });
 
     it('keeps feature image visibility aligned for image files and cached thumbnails', () => {

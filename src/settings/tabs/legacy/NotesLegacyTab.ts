@@ -79,7 +79,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const featureImageGroup = createGroup(strings.settings.pages.fileDisplay.groups.featureImage);
     const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
     const dateGroup = createGroup(strings.settings.pages.fileDisplay.groups.date);
-    const parentFolderGroup = createGroup(strings.settings.pages.fileDisplay.groups.parentFolder);
 
     const createColorSetting = (params: {
         containerEl: HTMLElement;
@@ -621,58 +620,5 @@ export function renderNotesTab(context: SettingsTabContext): void {
                     plugin.settings.alphabeticalDateMode = value === 'modified' ? 'modified' : 'created';
                     await plugin.saveSettingsAndUpdate();
                 })
-        );
-
-    const showParentFolderSetting = parentFolderGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showParentFolder.name).setDesc(strings.settings.items.showParentFolder.desc);
-    });
-
-    const parentFolderSettingsEl = wireToggleSettingWithDependentSection(
-        showParentFolderSetting,
-        () => plugin.settings.showParentFolder,
-        async value => {
-            plugin.settings.showParentFolder = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    new Setting(parentFolderSettingsEl)
-        .setName(strings.settings.items.showFolderPath.name)
-        .setDesc(strings.settings.items.showFolderPath.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showParentFolderFullPath).onChange(async value => {
-                plugin.settings.showParentFolderFullPath = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(parentFolderSettingsEl)
-        .setName(strings.settings.items.parentFolderClickOpensFolder.name)
-        .setDesc(strings.settings.items.parentFolderClickOpensFolder.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.parentFolderClickRevealsFile).onChange(async value => {
-                plugin.settings.parentFolderClickRevealsFile = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(parentFolderSettingsEl)
-        .setName(strings.settings.items.showParentFolderColor.name)
-        .setDesc(strings.settings.items.showParentFolderColor.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showParentFolderColor).onChange(async value => {
-                plugin.settings.showParentFolderColor = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(parentFolderSettingsEl)
-        .setName(strings.settings.items.showParentFolderIcon.name)
-        .setDesc(strings.settings.items.showParentFolderIcon.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showParentFolderIcon).onChange(async value => {
-                plugin.settings.showParentFolderIcon = value;
-                await plugin.saveSettingsAndUpdate();
-            })
         );
 }

@@ -444,7 +444,6 @@ export const STRINGS_ID = {
         groupBy: 'Kelompokkan berdasarkan',
         properties: 'Properti',
         date: 'Tanggal',
-        parentFolder: 'Folder induk',
         resetAppearance: 'Atur ulang tampilan',
         openPluginSettings: 'Buka pengaturan plugin…'
     },
@@ -1103,8 +1102,7 @@ export const STRINGS_ID = {
                     previewText: 'Teks pratinjau',
                     featureImage: 'Gambar unggulan',
                     properties: 'Properti',
-                    date: 'Tanggal',
-                    parentFolder: 'Folder induk'
+                    date: 'Tanggal'
                 }
             },
             calendar: {
@@ -1350,26 +1348,6 @@ export const STRINGS_ID = {
             compactItemHeightScaleText: {
                 name: 'Skalakan teks dengan tinggi item kompak',
                 desc: 'Skalakan teks daftar kompak saat tinggi item dikurangi.'
-            },
-            showParentFolder: {
-                name: 'Tampilkan folder induk',
-                desc: 'Tampilkan nama folder induk untuk catatan di subfolder, tag, atau properti.'
-            },
-            showFolderPath: {
-                name: 'Tampilkan jalur folder',
-                desc: 'Tampilkan jalur relatif terhadap folder yang dipilih alih-alih hanya nama folder. Tag dan properti menampilkan jalur lengkap.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Klik folder induk untuk membuka folder',
-                desc: 'Mengklik label folder induk membuka folder di panel daftar.'
-            },
-            showParentFolderColor: {
-                name: 'Tampilkan warna folder induk',
-                desc: 'Gunakan warna folder pada label folder induk.'
-            },
-            showParentFolderIcon: {
-                name: 'Tampilkan ikon folder induk',
-                desc: 'Tampilkan ikon folder di samping label folder induk.'
             },
             showQuickActions: {
                 name: 'Tampilkan aksi cepat',

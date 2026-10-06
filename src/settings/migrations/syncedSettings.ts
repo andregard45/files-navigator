@@ -111,18 +111,8 @@ export function migrateLegacySyncedSettings(params: {
     }
     delete mutableSettings.showIcons;
 
-    // Migrate legacy parent folder visibility flag
-    const legacyShowParentFolderNames = mutableSettings['showParentFolderNames'];
-    if (typeof legacyShowParentFolderNames === 'boolean' && typeof storedData?.['showParentFolder'] === 'undefined') {
-        settings.showParentFolder = legacyShowParentFolderNames;
-    }
+    // Remove legacy parent folder feature flags (feature removed)
     delete mutableSettings['showParentFolderNames'];
-
-    // Migrate legacy parent folder color toggle
-    const legacyShowParentFolderColors = mutableSettings['showParentFolderColors'];
-    if (typeof legacyShowParentFolderColors === 'boolean' && typeof storedData?.['showParentFolderColor'] === 'undefined') {
-        settings.showParentFolderColor = legacyShowParentFolderColors;
-    }
     delete mutableSettings['showParentFolderColors'];
 
     // Migrate legacy groupByDate boolean to noteGrouping dropdown
@@ -258,9 +248,12 @@ export function migrateLegacySyncedSettings(params: {
         settings.showFilePropertiesInCompactMode = defaultSettings.showFilePropertiesInCompactMode;
     }
 
-    if (typeof settings.showParentFolderFullPath !== 'boolean') {
-        settings.showParentFolderFullPath = defaultSettings.showParentFolderFullPath;
-    }
+    // Parent folder feature in file display was removed; drop any persisted keys.
+    delete mutableSettings['showParentFolder'];
+    delete mutableSettings['showParentFolderFullPath'];
+    delete mutableSettings['parentFolderClickRevealsFile'];
+    delete mutableSettings['showParentFolderColor'];
+    delete mutableSettings['showParentFolderIcon'];
 
     const previousUseFolderColorForTitles = mutableSettings['useFolderColorForFileTitles'];
     if (typeof storedData?.['useFolderColorForTitles'] === 'undefined' && typeof previousUseFolderColorForTitles === 'boolean') {

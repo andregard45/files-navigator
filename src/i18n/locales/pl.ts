@@ -446,7 +446,6 @@ export const STRINGS_PL = {
         groupBy: 'Grupuj według',
         properties: 'Atrybuty',
         date: 'Data',
-        parentFolder: 'Folder nadrzędny',
         resetAppearance: 'Zresetuj wygląd',
         openPluginSettings: 'Otwórz ustawienia wtyczki…'
     },
@@ -1107,8 +1106,7 @@ export const STRINGS_PL = {
                     previewText: 'Tekst podglądu',
                     featureImage: 'Wyróżniony obraz',
                     properties: 'Atrybuty',
-                    date: 'Data',
-                    parentFolder: 'Folder nadrzędny'
+                    date: 'Data'
                 }
             },
             calendar: {
@@ -1354,26 +1352,6 @@ export const STRINGS_PL = {
             compactItemHeightScaleText: {
                 name: 'Skalowanie tekstu z wysokością trybu kompaktowego',
                 desc: 'Skaluje tekst na kompaktowej liście, gdy wysokość elementu zostanie zmniejszona.'
-            },
-            showParentFolder: {
-                name: 'Pokaż folder nadrzędny',
-                desc: 'Wyświetla nazwę folderu nadrzędnego dla notatek w podfolderach, tagach lub atrybutach.'
-            },
-            showFolderPath: {
-                name: 'Pokaż ścieżkę folderu',
-                desc: 'Wyświetla ścieżkę względem wybranego folderu zamiast samej nazwy folderu. Tagi i atrybuty pokazują pełną ścieżkę.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Kliknięcie folderu nadrzędnego otwiera folder',
-                desc: 'Kliknięcie etykiety folderu nadrzędnego otwiera folder w panelu listy.'
-            },
-            showParentFolderColor: {
-                name: 'Pokaż kolor folderu nadrzędnego',
-                desc: 'Używa kolorów folderów na etykietach folderów nadrzędnych.'
-            },
-            showParentFolderIcon: {
-                name: 'Pokaż ikonkę folderu nadrzędnego',
-                desc: 'Wyświetla ikonki folderów obok etykiet folderów nadrzędnych.'
             },
             showQuickActions: {
                 name: 'Pokaż szybkie czynności',

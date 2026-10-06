@@ -443,7 +443,6 @@ export const STRINGS_EN = {
         groupBy: 'Group by',
         properties: 'Properties',
         date: 'Date',
-        parentFolder: 'Parent folder',
         resetAppearance: 'Reset appearance',
         openPluginSettings: 'Open plugin settings…'
     },
@@ -1096,8 +1095,7 @@ export const STRINGS_EN = {
                     previewText: 'Preview text',
                     featureImage: 'Feature image',
                     properties: 'Properties',
-                    date: 'Date',
-                    parentFolder: 'Parent folder'
+                    date: 'Date'
                 }
             },
             calendar: {
@@ -1343,26 +1341,6 @@ export const STRINGS_EN = {
             compactItemHeightScaleText: {
                 name: 'Scale text with compact item height',
                 desc: 'Scale compact list text when the item height is reduced.'
-            },
-            showParentFolder: {
-                name: 'Show parent folder',
-                desc: 'Display the parent folder name for notes in subfolders, tags, or properties.'
-            },
-            showFolderPath: {
-                name: 'Show folder path',
-                desc: 'Display the path relative to the selected folder instead of only the folder name. Tags and properties show the full path.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Click parent folder to go to folder',
-                desc: 'Clicking the parent folder label opens the folder in list pane.'
-            },
-            showParentFolderColor: {
-                name: 'Show parent folder color',
-                desc: 'Use folder colors on parent folder labels.'
-            },
-            showParentFolderIcon: {
-                name: 'Show parent folder icon',
-                desc: 'Show folder icons next to parent folder labels.'
             },
             showQuickActions: {
                 name: 'Show quick actions',

@@ -209,7 +209,6 @@ export interface FileRowHeightInputs {
     hasPreviewContent: boolean;
     showFeatureImageArea: boolean;
     showExtensionBadgeThumbnail: boolean;
-    showParentFolderLine: boolean;
     visiblePillRowCount: number;
 }
 
@@ -267,7 +266,6 @@ export function calculateNormalListFileRowHeightEstimate({
     layoutState,
     showFeatureImageArea,
     showExtensionBadgeThumbnail,
-    showParentFolderLine,
     visiblePillRowCount
 }: {
     heights: ListPaneMeasurements;
@@ -276,7 +274,6 @@ export function calculateNormalListFileRowHeightEstimate({
     layoutState: FileItemLayoutState;
     showFeatureImageArea: boolean;
     showExtensionBadgeThumbnail: boolean;
-    showParentFolderLine: boolean;
     visiblePillRowCount: number;
 }): number {
     const titleContentHeight = heights.titleLineHeight * titleRows;
@@ -284,8 +281,7 @@ export function calculateNormalListFileRowHeightEstimate({
     const hasPillRows = pillRowCount > 0;
     const hasPreviewSlot = layoutState.shouldShowMultilinePreview;
     const previewSlotHeight = hasPreviewSlot ? heights.multilineTextLineHeight * previewRows : 0;
-    const metadataLineHeight =
-        layoutState.shouldShowDateForItem || showParentFolderLine ? heights.singleTextLineHeight : 0;
+    const metadataLineHeight = layoutState.shouldShowDateForItem ? heights.singleTextLineHeight : 0;
     const singleTextLineCount = metadataLineHeight > 0 ? 1 : 0;
     const contentLineCount = singleTextLineCount + pillRowCount;
     const hasImageTextArea = showFeatureImageArea && !showExtensionBadgeThumbnail;
@@ -346,36 +342,8 @@ export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileR
         layoutState,
         showFeatureImageArea: inputs.showFeatureImageArea,
         showExtensionBadgeThumbnail: inputs.showExtensionBadgeThumbnail,
-        showParentFolderLine: inputs.showParentFolderLine,
         visiblePillRowCount
     });
-}
-
-
-export function shouldShowFileItemParentFolderLine({
-    showParentFolder,
-    isPinned,
-    selectionType,
-    includeDescendantNotes,
-    parentFolder,
-    fileParentPath
-}: {
-    showParentFolder: boolean;
-    isPinned: boolean;
-    selectionType: NavigationItemType | null | undefined;
-    includeDescendantNotes: boolean;
-    parentFolder: string | null | undefined;
-    fileParentPath: string | null | undefined;
-}): boolean {
-    if (!showParentFolder || isPinned || !fileParentPath || fileParentPath === '/') {
-        return false;
-    }
-
-    if (selectionType === 'tag' || selectionType === 'property') {
-        return true;
-    }
-
-    return includeDescendantNotes && Boolean(parentFolder) && fileParentPath !== parentFolder;
 }
 
 /**

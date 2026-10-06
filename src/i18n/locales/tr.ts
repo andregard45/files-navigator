@@ -444,7 +444,6 @@ export const STRINGS_TR = {
         groupBy: 'Gruplama ölçütü',
         properties: 'Özellikler',
         date: 'Tarih',
-        parentFolder: 'Üst klasör',
         resetAppearance: 'Görünümü sıfırla',
         openPluginSettings: 'Eklenti ayarlarını aç…'
     },
@@ -1101,8 +1100,7 @@ export const STRINGS_TR = {
                     previewText: 'Önizleme metni',
                     featureImage: 'Öne çıkan görsel',
                     properties: 'Özellikler',
-                    date: 'Tarih',
-                    parentFolder: 'Üst klasör'
+                    date: 'Tarih'
                 }
             },
             calendar: {
@@ -1348,26 +1346,6 @@ export const STRINGS_TR = {
             compactItemHeightScaleText: {
                 name: 'Metni kompakt öğe yüksekliğiyle ölçekle',
                 desc: 'Öğe yüksekliği azaltıldığında kompakt liste metnini ölçekle.'
-            },
-            showParentFolder: {
-                name: 'Üst klasörü göster',
-                desc: 'Alt klasörlerdeki, etiketlerdeki veya özelliklerdeki notlar için üst klasör adını görüntüle.'
-            },
-            showFolderPath: {
-                name: 'Klasör yolunu göster',
-                desc: 'Yalnızca klasör adı yerine seçili klasöre göre yolu görüntüle. Etiketler ve özellikler tam yolu gösterir.'
-            },
-            parentFolderClickOpensFolder: {
-                name: 'Üst klasöre tıklayarak klasörü aç',
-                desc: 'Üst klasör etiketine tıklamak liste bölmesinde klasörü açar.'
-            },
-            showParentFolderColor: {
-                name: 'Üst klasör rengini göster',
-                desc: 'Üst klasör etiketlerinde klasör renklerini kullan.'
-            },
-            showParentFolderIcon: {
-                name: 'Üst klasör simgesini göster',
-                desc: 'Üst klasör etiketlerinin yanında klasör simgelerini göster.'
             },
             showQuickActions: {
                 name: 'Hızlı eylemleri göster',
