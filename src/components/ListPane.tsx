@@ -84,7 +84,6 @@ import { useSurfaceColorVariables } from '../hooks/useSurfaceColorVariables';
 import { LIST_PANE_SURFACE_COLOR_MAPPINGS } from '../constants/surfaceColorMappings';
 import { getListPaneMeasurements } from '../utils/listPaneMeasurements';
 import { usesMobileChrome } from '../utils/paneLayout';
-import { createHiddenTagVisibility } from '../utils/tagPrefixMatcher';
 import { getPropertyKeySet } from '../utils/vaultProfiles';
 import { DateUtils } from '../utils/dateUtils';
 import type { NavigateToFolderOptions, RevealPropertyOptions, RevealTagOptions } from '../hooks/useNavigatorReveal';
@@ -705,7 +704,6 @@ export const ListPane = React.memo(
             settings,
             activeProfile,
             groupBy: effectiveAppearanceSettings.groupBy,
-            showFileTags: effectiveAppearanceSettings.showTags,
             showFileDate: effectiveAppearanceSettings.showDate,
             pinnedGroupExpanded,
             collapsedListGroups,
@@ -813,10 +811,6 @@ export const ListPane = React.memo(
                 regenerateFeatureImageForFile
             }),
             [getFileDisplayName, getDB, getFileTimestamps, hasPreview, regenerateFeatureImageForFile]
-        );
-        const hiddenTagVisibility = useMemo(
-            () => createHiddenTagVisibility(activeProfile.hiddenTags, showHiddenItems),
-            [activeProfile.hiddenTags, showHiddenItems]
         );
         const syncHoveredFilePathToPointer = React.useCallback((scrollElement: HTMLDivElement | null) => {
             const nextHoveredFilePath = getHoveredFilePathAtPointer(scrollElement, hoverPointerClientPositionRef.current);
@@ -940,7 +934,6 @@ export const ListPane = React.memo(
                 groupCollapseStateSignature,
                 visiblePropertyKeys: visibleListPropertyKeys,
                 visiblePropertyKeySignature: visibleListPropertyKeySignature,
-                hiddenTagVisibility,
                 scrollMargin: 0,
                 scrollPaddingEnd,
                 onVirtualizerScrollingChange: handleVirtualizerScrollingChange,
@@ -1799,7 +1792,6 @@ export const ListPane = React.memo(
                             fileIconSize={listMeasurements.fileIconSize}
                             appearanceSettings={effectiveAppearanceSettings}
                             includeDescendantNotes={effectiveIncludeDescendantNotes}
-                            hiddenTagVisibility={hiddenTagVisibility}
                             fileNameIconNeedles={fileNameIconNeedles}
                             visibleListPropertyKeys={visibleListPropertyKeys}
                             visibleNavigationPropertyKeys={visibleNavigationPropertyKeys}
@@ -1844,13 +1836,11 @@ export const ListPane = React.memo(
                             suppressRowHover={isListScrolling}
                             onHoveredFilePathChange={handleHoveredFilePathChange}
                             onFileClick={handleFileItemClick}
-                            onModifySearchWithTag={modifySearchWithTagWithDefaultScope}
                             onModifySearchWithProperty={modifySearchWithPropertyWithDefaultScope}
                             localDayReference={localDayReference}
                             fileIconSize={listMeasurements.fileIconSize}
                             appearanceSettings={effectiveAppearanceSettings}
                             includeDescendantNotes={effectiveIncludeDescendantNotes}
-                            hiddenTagVisibility={hiddenTagVisibility}
                             fileNameIconNeedles={fileNameIconNeedles}
                             visibleListPropertyKeys={visibleListPropertyKeys}
                             visibleNavigationPropertyKeys={visibleNavigationPropertyKeys}

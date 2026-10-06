@@ -33,7 +33,6 @@ import type { FileNameIconNeedle } from '../../utils/fileIconUtils';
 import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 import type { FolderDecorationModel } from '../../utils/folderDecoration';
-import type { HiddenTagVisibility } from '../../utils/tagPrefixMatcher';
 import { typeFilteredCollisionDetection, verticalAxisOnly } from '../../utils/dndConfig';
 import {
     getCachedManualSortGroupHeader,
@@ -73,7 +72,6 @@ interface ManualSortListContentProps {
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
     includeDescendantNotes: boolean;
-    hiddenTagVisibility: HiddenTagVisibility;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     visibleListPropertyKeys: ReadonlySet<string>;
     visibleNavigationPropertyKeys: ReadonlySet<string>;
@@ -507,7 +505,6 @@ export function ManualSortListContent({
     fileIconSize,
     appearanceSettings,
     includeDescendantNotes,
-    hiddenTagVisibility,
     fileNameIconNeedles,
     visibleListPropertyKeys,
     visibleNavigationPropertyKeys,
@@ -586,13 +583,11 @@ export function ManualSortListContent({
             onFileClick,
             selectionType,
             sortOption,
-            onModifySearchWithTag: noopModifySearch,
             onModifySearchWithProperty: noopModifySearch,
             localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,
-            hiddenTagVisibility,
             fileNameIconNeedles,
             visiblePropertyKeys: visibleListPropertyKeys,
             visibleNavigationPropertyKeys,
@@ -612,7 +607,6 @@ export function ManualSortListContent({
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,
-            hiddenTagVisibility,
             fileNameIconNeedles,
             visibleListPropertyKeys,
             visibleNavigationPropertyKeys,

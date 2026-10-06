@@ -440,7 +440,6 @@ export const STRINGS_ZH_CN = {
             option: (rows: number) => `预览${rows}行`
         },
         groupBy: '分组依据',
-        tags: '标签',
         properties: '属性',
         date: '日期',
         parentFolder: '父文件夹',
@@ -1093,7 +1092,6 @@ export const STRINGS_ZH_CN = {
                     title: '标题',
                     previewText: '预览文本',
                     featureImage: '特色图片',
-                    tags: '标签',
                     properties: '属性',
                     date: '日期',
                     parentFolder: '父文件夹'
@@ -1881,26 +1879,6 @@ export const STRINGS_ZH_CN = {
                     created: '创建日期',
                     modified: '修改日期'
                 }
-            },
-            showFileTags: {
-                name: '显示文件标签',
-                desc: '在文件项中显示可点击的标签。'
-            },
-            showFullTagPaths: {
-                name: '显示完整标签路径',
-                desc: "显示完整的标签层级路径。启用：'ai/openai'，'工作/项目/2024'。禁用：'openai'，'2024'。"
-            },
-            colorFileTags: {
-                name: '为文件标签着色',
-                desc: '将标签颜色应用于文件项中的标签徽章。'
-            },
-            showColoredTagsFirst: {
-                name: '优先显示彩色标签',
-                desc: '将彩色标签排列在其他标签之前。'
-            },
-            showFileTagsInCompactMode: {
-                name: '在精简模式中显示文件标签',
-                desc: '当日期、预览和图像被隐藏时显示标签。'
             },
             showFileProperties: {
                 name: '显示文件属性',

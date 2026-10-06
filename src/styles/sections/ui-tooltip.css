@@ -84,7 +84,7 @@
     border-bottom: 5px solid transparent;
 }
 
-/* Secondary lines (folder path, dates) sit back so the title and pills read first */
+/* Secondary lines (folder path, dates) sit back so the title reads first */
 .nn-tooltip-muted {
     color: color-mix(in srgb, #fafafa 75%, transparent);
 }
@@ -92,26 +92,4 @@
 /* Date block separated from the lines above like the blank line in built-in tooltips */
 .nn-tooltip-dates {
     margin-top: var(--size-4-2);
-}
-
-/* Tag pills wrap to the tooltip width; the tooltip grows in height to fit all tags */
-.nn-tooltip-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--size-4-1);
-    margin-top: var(--size-4-1);
-    margin-bottom: var(--size-4-1);
-}
-
-/* Compact pill sizing inside the tooltip; custom tag colors come from the shared tag
-   pill rules, while uncustomized pills switch to light text and border because the
-   list-pane defaults are unreadable on the dark tooltip background in light themes */
-.nn-tooltip .nn-file-tag {
-    height: 18px;
-    font-size: 11px;
-    padding: 0 6px;
-    --nn-theme-file-tag-color: color-mix(in srgb, #fafafa 85%, transparent);
-    --nn-theme-file-tag-border-color: color-mix(in srgb, #fafafa 40%, transparent);
-    --nn-theme-file-tag-bg: transparent;
 }

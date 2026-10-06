@@ -369,10 +369,6 @@ export function migrateLegacySyncedSettings(params: {
     migrateLegacyAppearances(settings.folderAppearances);
     migrateLegacyAppearances(settings.tagAppearances);
 
-    const legacyColorFileTags = mutableSettings['applyTagColorsToFileTags'];
-    if (typeof legacyColorFileTags === 'boolean') {
-        settings.colorFileTags = legacyColorFileTags;
-    }
     delete mutableSettings['applyTagColorsToFileTags'];
 
     const legacySlimItemHeight = mutableSettings['slimItemHeight'];
@@ -393,12 +389,6 @@ export function migrateLegacySyncedSettings(params: {
     }
     delete mutableSettings['slimItemHeightScaleText'];
 
-    const legacyShowFileTagsInSlimMode = mutableSettings['showFileTagsInSlimMode'];
-    if (typeof legacyShowFileTagsInSlimMode === 'boolean') {
-        if (typeof storedData?.['showFileTagsInCompactMode'] === 'undefined') {
-            settings.showFileTagsInCompactMode = legacyShowFileTagsInSlimMode;
-        }
-    }
     delete mutableSettings['showFileTagsInSlimMode'];
 }
 

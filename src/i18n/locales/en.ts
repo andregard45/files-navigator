@@ -441,7 +441,6 @@ export const STRINGS_EN = {
             option: (rows: number) => `${rows} preview row${rows === 1 ? '' : 's'}`
         },
         groupBy: 'Group by',
-        tags: 'Tags',
         properties: 'Properties',
         date: 'Date',
         parentFolder: 'Parent folder',
@@ -1096,7 +1095,6 @@ export const STRINGS_EN = {
                     title: 'Title',
                     previewText: 'Preview text',
                     featureImage: 'Feature image',
-                    tags: 'Tags',
                     properties: 'Properties',
                     date: 'Date',
                     parentFolder: 'Parent folder'
@@ -1890,26 +1888,6 @@ export const STRINGS_EN = {
                     created: 'Created date',
                     modified: 'Modified date'
                 }
-            },
-            showFileTags: {
-                name: 'Show file tags',
-                desc: 'Display clickable tags in file items.'
-            },
-            showFullTagPaths: {
-                name: 'Show full tag paths',
-                desc: "Display complete tag hierarchy paths. When enabled: 'ai/openai', 'work/projects/2024'. When disabled: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Color file tags',
-                desc: 'Apply tag colors to tag badges on file items.'
-            },
-            showColoredTagsFirst: {
-                name: 'Show colored tags first',
-                desc: 'Sort colored tags before other tags on file items.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Show file tags in compact mode',
-                desc: 'Display tags when date, preview, and image are hidden.'
             },
             showFileProperties: {
                 name: 'Show file properties',

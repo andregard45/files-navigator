@@ -63,8 +63,7 @@ function createListConfig(pinnedNotes: ListPaneConfig['pinnedNotes']): ListPaneC
         pinnedGroupExpanded: true,
         pinnedNotes,
         showCurrentFolderFilesAtBottom: DEFAULT_SETTINGS.showCurrentFolderFilesAtBottom,
-        showFolderGroupPaths: DEFAULT_SETTINGS.showFolderGroupPaths,
-        showFileTags: false
+        showFolderGroupPaths: DEFAULT_SETTINGS.showFolderGroupPaths
     };
 }
 
@@ -240,35 +239,6 @@ describe('resolveListGroupExpansionToggleState', () => {
 });
 
 describe('buildListItems pinned display scope', () => {
-    it('records tag rows when tags are enabled by the active list appearance', () => {
-        const app = createApp();
-        const file = createTestTFile('Notes/Tagged.md');
-        const db = createDb({
-            [file.path]: { tags: ['writing'], properties: null }
-        });
-
-        const items = buildListItems({
-            app,
-            dayKey: '2026-03-07',
-            fileVisibility: FILE_VISIBILITY.DOCUMENTS,
-            files: [file],
-            getDB: () => db,
-            getFileTimestamps: () => ({ created: 0, modified: 0 }),
-            hiddenFileState: new Map(),
-            hiddenTags: [],
-            listConfig: { ...createListConfig({}), showFileTags: true },
-            searchMetaMap: new Map(),
-            selectedFolder: null,
-            selectedTag: null,
-            selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
-            sortOption: 'alphabetical-asc'
-        });
-
-        const fileItem = items.find(item => item.type === ListPaneItemType.FILE);
-        expect(fileItem?.hasTags).toBe(true);
-    });
-
     it('attaches internal search evidence to its file row', () => {
         const app = createApp();
         const file = createTestTFile('Notes/Notebook Navigator.md');
@@ -284,7 +254,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({}),
             matchedAliases: new Map([
                 [
@@ -311,7 +280,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -353,13 +321,11 @@ describe('buildListItems pinned display scope', () => {
                 return { created: timestamp, modified: timestamp };
             },
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({}),
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -397,14 +363,12 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: file => ({ created: file.stat.ctime, modified: file.stat.mtime }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig,
             collapsedListGroups: new Set([collapseKey]),
             searchMetaMap: new Map(),
             selectedFolder: createFolder('/'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -441,14 +405,12 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder' },
             collapsedListGroups: new Set([currentFolderCollapseKey]),
             searchMetaMap: new Map(),
             selectedFolder: createFolder('Projects'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -494,7 +456,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -505,7 +466,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: createFolder('Projects'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -556,13 +516,11 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder', showCurrentFolderFilesAtBottom: true },
             searchMetaMap: new Map(),
             selectedFolder: createFolder('Projects'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -619,14 +577,12 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder', showCurrentFolderFilesAtBottom: true },
             collapsedListGroups: new Set([childCollapseKey]),
             searchMetaMap: new Map(),
             selectedFolder: createFolder('Projects'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -656,7 +612,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -668,7 +623,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: createFolder('Projects'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -714,13 +668,11 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder', showCurrentFolderFilesAtBottom: true },
             searchMetaMap: new Map(),
             selectedFolder: createFolder('Projects'),
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -750,12 +702,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder' },
             searchMetaMap: new Map(),
             selectedFolder: createFolder('Folder 1'),
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -828,12 +778,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder' },
             searchMetaMap: new Map(),
             selectedFolder: createFolder('/'),
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -883,12 +831,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder', showFolderGroupPaths: false },
             searchMetaMap: new Map(),
             selectedFolder: createFolder('/'),
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -929,12 +875,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder', showFolderGroupPaths: false },
             searchMetaMap: new Map(),
             selectedFolder: createFolder('/'),
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'alphabetical-asc'
         });
 
@@ -976,12 +920,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' },
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true
@@ -1038,7 +980,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -1048,7 +989,6 @@ describe('buildListItems pinned display scope', () => {
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1092,12 +1032,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'none' },
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.TAG,
-            showHiddenItems: false,
             sortOption: 'title-asc',
             manualSortGroupHeaderPropertyKey: 'group_header'
         });
@@ -1162,12 +1100,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' },
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1208,12 +1144,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' },
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1243,12 +1177,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' },
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'author',
             isManualSortActive: false
@@ -1286,12 +1218,10 @@ describe('buildListItems pinned display scope', () => {
                 return { created: timestamp, modified: timestamp };
             },
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({}),
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1325,12 +1255,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps,
             hiddenFileState: new Map<string, boolean>(),
-            hiddenTags: [],
             listConfig,
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc' as const
         };
         const groupItemCountData = buildListGroupItemCountData({
@@ -1381,12 +1309,10 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map<string, boolean>(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' as const },
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc' as const,
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1440,13 +1366,11 @@ describe('buildListItems pinned display scope', () => {
                 return { created: timestamp, modified: timestamp };
             },
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'date' },
             collapsedListGroups: new Set([createCollapseKey('date', 'date:mtime:relative:today')]),
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1475,13 +1399,11 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder' },
             collapsedListGroups: new Set([createCollapseKey('folder', 'folder:/Alpha')]),
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1509,7 +1431,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -1520,7 +1441,6 @@ describe('buildListItems pinned display scope', () => {
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1557,13 +1477,11 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' },
             collapsedListGroups: new Set([createCollapseKey('custom', 'section:unsorted')]),
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true
@@ -1598,7 +1516,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -1608,7 +1525,6 @@ describe('buildListItems pinned display scope', () => {
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1651,7 +1567,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -1661,7 +1576,6 @@ describe('buildListItems pinned display scope', () => {
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1701,13 +1615,11 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'folder' },
             collapsedListGroups: new Set([createCollapseKey('folder', 'folder:/Alpha')]),
             searchMetaMap: new Map(),
             selectedFolder: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1739,13 +1651,11 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: { ...createListConfig({}), groupBy: 'custom' },
             collapsedListGroups: new Set([createCollapseKey('custom', `manual-sort-custom:${groupedFile.path}`)]),
             searchMetaMap: new Map(),
             selectedFolder: createFolder('/'),
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'property-asc',
             propertySortKey: 'index',
             isManualSortActive: true,
@@ -1773,7 +1683,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({
                 [childFile.path]: { folder: false, tag: true, property: false }
             }),
@@ -1781,7 +1690,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: null,
             selectedTag: 'work',
             selectionType: ItemType.TAG,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1809,7 +1717,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({
                 [childFile.path]: { folder: false, tag: true, property: false }
             }),
@@ -1817,7 +1724,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: null,
             selectedTag: 'work/anthropic',
             selectionType: ItemType.TAG,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1851,7 +1757,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({
                 [valueFile.path]: { folder: false, tag: false, property: true }
             }),
@@ -1859,7 +1764,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.PROPERTY,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1893,7 +1797,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: createListConfig({
                 [valueFile.path]: { folder: false, tag: false, property: true }
             }),
@@ -1901,7 +1804,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.PROPERTY,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1929,7 +1831,6 @@ describe('buildListItems pinned display scope', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({
                     [pinnedFile.path]: { folder: true, tag: false, property: false }
@@ -1941,7 +1842,6 @@ describe('buildListItems pinned display scope', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'modified-desc'
         });
 
@@ -1988,7 +1888,6 @@ describe('buildListItems property grouping', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({}),
                 groupBy: 'property:status'
@@ -1997,7 +1896,6 @@ describe('buildListItems property grouping', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'title-asc'
         });
 
@@ -2036,7 +1934,6 @@ describe('buildListItems property grouping', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({}),
                 groupBy: 'property-desc:status'
@@ -2045,7 +1942,6 @@ describe('buildListItems property grouping', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'title-asc'
         });
 
@@ -2083,7 +1979,6 @@ describe('buildListItems property grouping', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({}),
                 groupBy: 'property:status'
@@ -2093,7 +1988,6 @@ describe('buildListItems property grouping', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'title-asc'
         });
 
@@ -2131,7 +2025,6 @@ describe('buildListItems property grouping', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({}),
                 groupBy: 'property:related'
@@ -2140,7 +2033,6 @@ describe('buildListItems property grouping', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'title-asc'
         });
 
@@ -2190,8 +2082,7 @@ describe('buildListItems property grouping', () => {
                 getDB: () => db,
                 getFileTimestamps: () => ({ created: 0, modified: 0 }),
                 hiddenFileState: new Map(),
-                hiddenTags: [],
-                listConfig: {
+                    listConfig: {
                     ...createListConfig({}),
                     groupBy
                 },
@@ -2199,8 +2090,7 @@ describe('buildListItems property grouping', () => {
                 selectedFolder: null,
                 selectedTag: null,
                 selectionType: ItemType.FOLDER,
-                showHiddenItems: false,
-                sortOption: 'title-asc'
+                    sortOption: 'title-asc'
             });
 
         // A pure string collator would order '-2' after '-10'; numeric group keys compare numerically.
@@ -2240,8 +2130,7 @@ describe('buildListItems property grouping', () => {
                 getDB: () => db,
                 getFileTimestamps: () => ({ created: 0, modified: 0 }),
                 hiddenFileState: new Map(),
-                hiddenTags: [],
-                listConfig: {
+                    listConfig: {
                     ...createListConfig({}),
                     groupBy
                 },
@@ -2249,8 +2138,7 @@ describe('buildListItems property grouping', () => {
                 selectedFolder: null,
                 selectedTag: null,
                 selectionType: ItemType.FOLDER,
-                showHiddenItems: false,
-                sortOption: 'title-asc'
+                    sortOption: 'title-asc'
             });
 
         const permutations: TFile[][] = [
@@ -2295,8 +2183,7 @@ describe('buildListItems property grouping', () => {
                 getDB: () => db,
                 getFileTimestamps: () => ({ created: 0, modified: 0 }),
                 hiddenFileState: new Map(),
-                hiddenTags: [],
-                listConfig: {
+                    listConfig: {
                     ...createListConfig({}),
                     groupBy
                 },
@@ -2304,8 +2191,7 @@ describe('buildListItems property grouping', () => {
                 selectedFolder: null,
                 selectedTag: null,
                 selectionType: ItemType.FOLDER,
-                showHiddenItems: false,
-                sortOption: 'title-asc'
+                    sortOption: 'title-asc'
             });
 
         for (const files of [
@@ -2343,7 +2229,6 @@ describe('buildListItems property grouping', () => {
             getDB: () => db,
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             hiddenFileState: new Map(),
-            hiddenTags: [],
             listConfig: {
                 ...createListConfig({}),
                 groupBy: 'property:status'
@@ -2352,7 +2237,6 @@ describe('buildListItems property grouping', () => {
             selectedFolder: null,
             selectedTag: null,
             selectionType: ItemType.FOLDER,
-            showHiddenItems: false,
             sortOption: 'title-asc'
         });
 

@@ -440,7 +440,6 @@ export const STRINGS_KO = {
             option: (rows: number) => `${rows}개 미리보기 행`
         },
         groupBy: '그룹화 기준',
-        tags: '태그',
         properties: '속성',
         date: '날짜',
         parentFolder: '상위 폴더',
@@ -1099,7 +1098,6 @@ export const STRINGS_KO = {
                     title: '제목',
                     previewText: '미리보기 텍스트',
                     featureImage: '대표 이미지',
-                    tags: '태그',
                     properties: '속성',
                     date: '날짜',
                     parentFolder: '상위 폴더'
@@ -1892,26 +1890,6 @@ export const STRINGS_KO = {
                     created: '생성일',
                     modified: '수정일'
                 }
-            },
-            showFileTags: {
-                name: '파일 태그 표시',
-                desc: '파일 항목에 클릭 가능한 태그를 표시합니다.'
-            },
-            showFullTagPaths: {
-                name: '전체 태그 경로 표시',
-                desc: "태그의 전체 계층 경로를 표시합니다. 활성화: 'ai/openai', 'work/projects/2024'. 비활성화: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: '파일 태그 색상 지정',
-                desc: '파일 항목의 태그 배지에 태그 색상을 적용합니다.'
-            },
-            showColoredTagsFirst: {
-                name: '색상 태그 우선 표시',
-                desc: '색상 태그를 다른 태그보다 먼저 정렬합니다.'
-            },
-            showFileTagsInCompactMode: {
-                name: '컴팩트 모드에서 파일 태그 표시',
-                desc: '날짜, 미리보기, 이미지가 숨겨져 있을 때 태그를 표시합니다.'
             },
             showFileProperties: {
                 name: '파일 속성 표시',

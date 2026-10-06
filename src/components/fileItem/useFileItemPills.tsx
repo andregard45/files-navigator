@@ -28,7 +28,6 @@ import { runAsyncAction } from '../../utils/async';
 import {
     forEachVisibleFrontmatterProperty,
     getSelectedPropertyValuePillToHide,
-    getSelectedTagPillToHide,
     type VisibleFrontmatterPropertyEntry
 } from '../../utils/listPaneMeasurements';
 import { naturalCompare } from '../../utils/sortUtils';
@@ -51,10 +50,8 @@ import {
     normalizePropertyNodeId,
     parsePropertyNodeId
 } from '../../utils/propertyTree';
-import type { HiddenTagVisibility } from '../../utils/tagPrefixMatcher';
 import { resolveFileItemPropertyDecorationColors, type FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
 import { compareFileItemPropertyKeysByNavigationOrder, type FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
-import { useFileItemTagPills } from './useFileItemTagPills';
 import { renderTextWithHighlightRanges } from './searchHighlightRendering';
 import { ServiceIcon } from '../ServiceIcon';
 
@@ -78,33 +75,22 @@ type PropertyPill = {
 export interface UseFileItemPillsParams {
     file: TFile;
     isCompactMode: boolean;
-    tags: string[];
     properties: PropertyItem[] | null;
     settings: NotebookNavigatorSettings;
-    showTags: boolean;
     showProperties: boolean;
     visiblePropertyKeys: ReadonlySet<string>;
     visibleNavigationPropertyKeys: ReadonlySet<string>;
     matchedProperties?: readonly PropertySearchMatch[];
-    hiddenTagVisibility: HiddenTagVisibility;
-    onModifySearchWithTag?: (tag: string, operator: InclusionOperator) => void;
     onModifySearchWithProperty?: (key: string, value: string | null, operator: InclusionOperator) => void;
     fileItemPillDecorationModel: FileItemPillDecorationModel;
     fileItemPillOrderModel: FileItemPillOrderModel;
 }
 
 export interface FileItemPillsState {
-    shouldShowFileTags: boolean;
     shouldShowProperty: boolean;
     hasVisiblePillRows: boolean;
     propertySearchEvidenceGroups: readonly PropertySearchEvidenceGroup[];
     propertySearchEvidenceHiddenGroupCount: number;
-    /**
-     * Non-clickable tag pill row for the file hover tooltip, matching the rendered tag
-     * pills in filtering, order, display name, colors, and icons. Null when tooltip tags
-     * are disabled or the file has no visible tags.
-     */
-    tooltipTagRow: React.ReactNode;
     pillRows: React.ReactNode;
 }
 
@@ -212,31 +198,20 @@ function resolveNormalizedPropertyKeyNodeId(fieldKey: string | undefined): strin
 export function useFileItemPills({
     file,
     isCompactMode,
-    tags,
     properties,
     settings,
-    showTags,
     showProperties,
     visiblePropertyKeys,
     visibleNavigationPropertyKeys,
     matchedProperties,
-    hiddenTagVisibility,
-    onModifySearchWithTag,
     onModifySearchWithProperty,
     fileItemPillDecorationModel,
     fileItemPillOrderModel
 }: UseFileItemPillsParams): FileItemPillsState {
     const { app } = useServices();
     const metadataService = useMetadataService();
-    const { selectionType, selectedTag, selectedProperty } = useNavigationSelection();
-    const { navigateToTag, navigateToProperty } = useTagNavigation();
-    const selectedTagToHide = useMemo(() => {
-        return getSelectedTagPillToHide({
-            selectionType,
-            selectedTag,
-            showSelectedNavigationPills: settings.showSelectedNavigationPills
-        });
-    }, [selectedTag, selectionType, settings.showSelectedNavigationPills]);
+    const { selectionType, selectedProperty } = useNavigationSelection();
+    const { navigateToProperty } = useTagNavigation();
     const selectedPropertyValueNodeIdToHide = useMemo(() => {
         return getSelectedPropertyValuePillToHide({
             selectionType,
@@ -244,24 +219,6 @@ export function useFileItemPills({
             showSelectedNavigationPills: settings.showSelectedNavigationPills
         });
     }, [selectedProperty, selectionType, settings.showSelectedNavigationPills]);
-
-    const handleTagClick = useCallback(
-        (event: React.MouseEvent, tag: string) => {
-            event.stopPropagation();
-
-            if (onModifySearchWithTag) {
-                const operator = getTagSearchModifierOperator(event, settings.multiSelectModifier);
-                if (operator) {
-                    event.preventDefault();
-                    onModifySearchWithTag(tag, operator);
-                    return;
-                }
-            }
-
-            navigateToTag(tag, { preserveNavigationFocus: false });
-        },
-        [navigateToTag, onModifySearchWithTag, settings.multiSelectModifier]
-    );
 
     const handlePropertyClick = useCallback(
         (event: React.MouseEvent, pill: PropertyPill) => {
@@ -312,27 +269,6 @@ export function useFileItemPills({
             settings.multiSelectModifier
         ]
     );
-
-    const { categorizedTags, tagColorData, tagPillIcons, getTagDisplayName, tooltipTagRow } = useFileItemTagPills({
-        tags,
-        settings,
-        hiddenTagVisibility,
-        selectedTagToHide,
-        fileItemPillDecorationModel,
-        fileItemPillOrderModel
-    });
-
-    const shouldShowFileTags = useMemo(() => {
-        if (!showTags) {
-            return false;
-        }
-
-        if (categorizedTags.length === 0) {
-            return false;
-        }
-
-        return true;
-    }, [categorizedTags, showTags]);
 
     const visibleFrontmatterProperties = useMemo(() => {
         const entries: VisibleFrontmatterPropertyEntry[] = [];
@@ -803,49 +739,6 @@ export function useFileItemPills({
         ]
     );
 
-    const tagRows = useMemo(() => {
-        if (!shouldShowFileTags) {
-            return null;
-        }
-
-        return (
-            <div className="nn-file-tags">
-                {categorizedTags.map((tag, index) => {
-                    const tagColors = tagColorData.get(tag);
-                    const tagColor = tagColors?.color;
-                    const tagBackground = tagColors?.background;
-                    const displayTag = getTagDisplayName(tag);
-                    const tagIconId = tagPillIcons.get(tag);
-                    const tagStyle: React.CSSProperties & { '--nn-file-tag-custom-bg'?: string } = {};
-
-                    if (tagBackground) {
-                        tagStyle['--nn-file-tag-custom-bg'] = tagBackground;
-                    }
-
-                    if (tagColor) {
-                        tagStyle.color = tagColor;
-                    }
-
-                    return (
-                        <span
-                            key={index}
-                            className="nn-file-tag nn-clickable-tag"
-                            data-has-color={tagColor ? 'true' : undefined}
-                            data-has-background={tagBackground ? 'true' : undefined}
-                            onClick={event => handleTagClick(event, tag)}
-                            role="button"
-                            tabIndex={0}
-                            style={tagColor || tagBackground ? tagStyle : undefined}
-                        >
-                            {tagIconId ? <ServiceIcon iconId={tagIconId} className="nn-file-pill-inline-icon" aria-hidden={true} /> : null}
-                            {displayTag}
-                        </span>
-                    );
-                })}
-            </div>
-        );
-    }, [categorizedTags, getTagDisplayName, handleTagClick, shouldShowFileTags, tagColorData, tagPillIcons]);
-
     const propertyRowsNode = useMemo(() => {
         if (!shouldShowProperty) {
             return null;
@@ -866,22 +759,13 @@ export function useFileItemPills({
         );
     }, [propertyPills, propertyRows, renderPropertyPill, settings.showPropertiesOnSeparateRows, shouldShowProperty]);
 
-    const pillRows = useMemo(() => {
-        return (
-            <>
-                {tagRows}
-                {propertyRowsNode}
-            </>
-        );
-    }, [propertyRowsNode, tagRows]);
+    const pillRows = propertyRowsNode;
 
     return {
-        shouldShowFileTags,
         shouldShowProperty,
-        hasVisiblePillRows: shouldShowFileTags || shouldShowProperty,
+        hasVisiblePillRows: shouldShowProperty,
         propertySearchEvidenceGroups: propertySearchEvidence.groups,
         propertySearchEvidenceHiddenGroupCount: propertySearchEvidence.hiddenGroupCount,
-        tooltipTagRow,
         pillRows
     };
 }

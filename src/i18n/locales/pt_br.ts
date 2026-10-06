@@ -444,7 +444,6 @@ export const STRINGS_PT_BR = {
             option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de visualização`
         },
         groupBy: 'Agrupar por',
-        tags: 'Etiquetas',
         properties: 'Propriedades',
         date: 'Data',
         parentFolder: 'Pasta pai',
@@ -1107,7 +1106,6 @@ export const STRINGS_PT_BR = {
                     title: 'Título',
                     previewText: 'Texto de visualização',
                     featureImage: 'Imagem de destaque',
-                    tags: 'Etiquetas',
                     properties: 'Propriedades',
                     date: 'Data',
                     parentFolder: 'Pasta pai'
@@ -1905,26 +1903,6 @@ export const STRINGS_PT_BR = {
                     created: 'Data de criação',
                     modified: 'Data de modificação'
                 }
-            },
-            showFileTags: {
-                name: 'Mostrar etiquetas de arquivo',
-                desc: 'Exibir etiquetas clicáveis em itens de arquivo.'
-            },
-            showFullTagPaths: {
-                name: 'Mostrar caminhos completos de etiquetas',
-                desc: "Exibir caminhos completos da hierarquia de etiquetas. Ativado: 'ai/openai', 'trabalho/projetos/2024'. Desativado: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Colorir etiquetas de arquivo',
-                desc: 'Aplicar cores de etiqueta aos emblemas de etiqueta em itens de arquivo.'
-            },
-            showColoredTagsFirst: {
-                name: 'Mostrar etiquetas coloridas primeiro',
-                desc: 'Ordenar as etiquetas coloridas antes das outras etiquetas nos itens de arquivo.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Mostrar etiquetas de arquivo no modo compacto',
-                desc: 'Exibir etiquetas quando data, visualização e imagem estão ocultas.'
             },
             showFileProperties: {
                 name: 'Mostrar propriedades de arquivo',

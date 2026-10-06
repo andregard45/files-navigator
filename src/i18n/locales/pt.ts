@@ -442,7 +442,6 @@ export const STRINGS_PT = {
             option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de pré-visualização`
         },
         groupBy: 'Agrupar por',
-        tags: 'Etiquetas',
         properties: 'Propriedades',
         date: 'Data',
         parentFolder: 'Pasta pai',
@@ -1104,7 +1103,6 @@ export const STRINGS_PT = {
                     title: 'Título',
                     previewText: 'Texto de pré-visualização',
                     featureImage: 'Imagem de destaque',
-                    tags: 'Etiquetas',
                     properties: 'Propriedades',
                     date: 'Data',
                     parentFolder: 'Pasta pai'
@@ -1902,26 +1900,6 @@ export const STRINGS_PT = {
                     created: 'Data de criação',
                     modified: 'Data de modificação'
                 }
-            },
-            showFileTags: {
-                name: 'Mostrar etiquetas de ficheiros',
-                desc: 'Exibir etiquetas clicáveis nos itens de ficheiros.'
-            },
-            showFullTagPaths: {
-                name: 'Mostrar caminhos completos de etiquetas',
-                desc: "Exibir caminhos completos da hierarquia de etiquetas. Quando ativado: 'ai/openai', 'trabalho/projetos/2024'. Quando desativado: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Colorir etiquetas de ficheiros',
-                desc: 'Aplicar cores de etiquetas aos emblemas de etiquetas nos itens de ficheiros.'
-            },
-            showColoredTagsFirst: {
-                name: 'Mostrar etiquetas coloridas primeiro',
-                desc: 'Ordenar etiquetas coloridas antes de outras etiquetas nos itens de ficheiros.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Mostrar etiquetas de ficheiros no modo compacto',
-                desc: 'Exibir etiquetas quando data, pré-visualização e imagem estão ocultas.'
             },
             showFileProperties: {
                 name: 'Mostrar propriedades de ficheiros',

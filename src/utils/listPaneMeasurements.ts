@@ -31,8 +31,6 @@ import {
     parsePropertyNodeId
 } from './propertyTree';
 import { casefold } from './recordUtils';
-import type { HiddenTagVisibility } from './tagPrefixMatcher';
-import { normalizeTagPath } from './tagUtils';
 
 /**
  * Layout measurements used by the list pane virtualizer.
@@ -105,22 +103,6 @@ export function getListPaneHeaderHeight(_item: ListPaneItem | undefined, measure
     return measurements.groupHeaderHeight;
 }
 
-export function getSelectedTagPillToHide({
-    selectionType,
-    selectedTag,
-    showSelectedNavigationPills
-}: {
-    selectionType: NavigationItemType | null | undefined;
-    selectedTag: string | null | undefined;
-    showSelectedNavigationPills: boolean;
-}): string | null {
-    if (showSelectedNavigationPills || selectionType !== ItemType.TAG) {
-        return null;
-    }
-
-    return normalizeTagPath(selectedTag);
-}
-
 export function getSelectedPropertyValuePillToHide({
     selectionType,
     selectedProperty,
@@ -140,30 +122,6 @@ export function getSelectedPropertyValuePillToHide({
     }
 
     return normalizePropertyNodeId(selectedProperty) ?? selectedProperty;
-}
-
-export function hasVisibleTagPills({
-    tags,
-    hiddenTagVisibility,
-    selectedTagToHide
-}: {
-    tags: readonly string[];
-    hiddenTagVisibility?: HiddenTagVisibility | null;
-    selectedTagToHide?: string | null;
-}): boolean {
-    for (const tag of tags) {
-        if (hiddenTagVisibility?.shouldFilterHiddenTags && !hiddenTagVisibility.isTagVisible(tag)) {
-            continue;
-        }
-
-        if (selectedTagToHide && normalizeTagPath(tag) === selectedTagToHide) {
-            continue;
-        }
-
-        return true;
-    }
-
-    return false;
 }
 
 type FrontmatterPropertyEntry = NonNullable<FileData['properties']>[number];
@@ -235,19 +193,6 @@ export function forEachVisibleFrontmatterProperty({
             return;
         }
     }
-}
-
-export function getTagPillDisplayName(tag: string, showFileTagAncestors: boolean): string {
-    if (showFileTagAncestors) {
-        return tag;
-    }
-
-    const segments = tag.split('/').filter(segment => segment.length > 0);
-    if (segments.length === 0) {
-        return tag;
-    }
-
-    return segments[segments.length - 1];
 }
 
 export interface FileItemLayoutState {

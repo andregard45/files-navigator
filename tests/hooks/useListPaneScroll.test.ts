@@ -21,7 +21,6 @@ import { App, TFile } from 'obsidian';
 import { ItemType, ListPaneItemType } from '../../src/types';
 import type { ListPaneItem } from '../../src/types/virtualization';
 import { getListPaneMeasurements } from '../../src/utils/listPaneMeasurements';
-import { createHiddenTagVisibility } from '../../src/utils/tagPrefixMatcher';
 import type { FileContentChange, IndexedDBStorage } from '../../src/storage/IndexedDBStorage';
 import {
     createRemeasureScheduler,
@@ -46,7 +45,6 @@ function createFileItem(file: TFile, overrides: Partial<ListPaneItem> = {}): Lis
         type: ListPaneItemType.FILE,
         data: file,
         key: file.path,
-        hasTags: false,
         ...overrides
     };
 }
@@ -64,22 +62,15 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         showImage,
         compactPaddingTotal: 18,
         isCompactMode: false,
-        tagsBaseEnabled: false,
         frontmatterPropertyRowsPossible: false,
         propertyRowsPossible: false,
-        showTextCountProperty: false,
-        showWordCountProperty: false,
-        showCharacterCountProperty: false,
         showFileProperties: false,
         showPropertiesOnSeparateRows: false,
         showFilePropertiesInCompactMode: false,
-        characterCountSpaces: 'include',
         showParentFolder: false,
         selectionType: ItemType.FOLDER,
         includeDescendantNotes: false,
-        selectedTagToHide: null,
         selectedPropertyValueNodeIdToHide: null,
-        hiddenTagVisibility: createHiddenTagVisibility([], false),
         visiblePropertyKeys: new Set(),
         themeMode: 'light',
         ...overrides
@@ -149,54 +140,32 @@ describe('isListRowHeightAffectingContentChange', () => {
         return {
             showPreview: true,
             showImage: true,
-            tagsBaseEnabled: true,
             frontmatterPropertyRowsPossible: true,
-            showWordCountProperty: true,
-            showCharacterCountProperty: true,
-            characterCountSpaces: 'include',
             ...overrides
         };
     }
 
     it('detects content fields that can change estimated list row height', () => {
-        const config = createHeightChangeConfig({
-            characterCountSpaces: 'exclude'
-        });
+        const config = createHeightChangeConfig();
 
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'has' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'none' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageKey: 'key' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageStatus: 'has' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(true);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { tags: ['work'] } }), config)).toBe(true);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { wordCount: 123 } }), config)).toBe(true);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { characterCountWithoutSpaces: 400 } }), config)).toBe(
-            true
-        );
     });
 
     it('ignores content fields disabled by the active row sizing config', () => {
         const config = createHeightChangeConfig({
             showPreview: false,
             showImage: false,
-            tagsBaseEnabled: false,
-            frontmatterPropertyRowsPossible: false,
-            showWordCountProperty: false,
-            showCharacterCountProperty: false
+            frontmatterPropertyRowsPossible: false
         });
 
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'has' } }), config)).toBe(false);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageKey: 'key' } }), config)).toBe(false);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageStatus: 'has' } }), config)).toBe(false);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { tags: ['work'] } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { wordCount: 123 } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { characterCountWithSpaces: 456 } }), config)).toBe(
-            false
-        );
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { characterCountWithoutSpaces: 400 } }), config)).toBe(
-            false
-        );
     });
 
     it('ignores property changes when only text-count property rows can be shown', () => {
@@ -245,8 +214,7 @@ describe('resolveListFileRowHeightInputs', () => {
             config: createRowSizingConfig({
                 showPreview: false,
                 showImage: false,
-                tagsBaseEnabled: false,
-                propertyRowsPossible: false
+                        propertyRowsPossible: false
             })
         });
 
@@ -277,53 +245,6 @@ describe('resolveListFileRowHeightInputs', () => {
 
         expect(db.getFile).toHaveBeenCalledWith(file.path);
         expect(getFileCache).toHaveBeenCalledWith(file);
-    });
-
-    it('uses item tag presence without reading the file record when no selected tag is hidden', () => {
-        const app = new App();
-        const getFileCache = vi.fn(() => null);
-        app.metadataCache.getFileCache = getFileCache;
-        const file = createTestTFile('Notes/Daily.md');
-        const db = createDb({ tags: ['work'] });
-
-        const inputs = resolveListFileRowHeightInputs({
-            app,
-            db: db as unknown as IndexedDBStorage,
-            hasPreview: () => false,
-            item: createFileItem(file, { hasTags: true }),
-            file,
-            config: createRowSizingConfig({
-                showPreview: false,
-                tagsBaseEnabled: true,
-                selectedTagToHide: null
-            })
-        });
-
-        expect(inputs.visiblePillRowCount).toBe(1);
-        expect(db.getFile).not.toHaveBeenCalled();
-        expect(getFileCache).not.toHaveBeenCalled();
-    });
-
-    it('reads live tags when selected navigation pills can hide the only tag row', () => {
-        const app = new App();
-        const file = createTestTFile('Notes/Daily.md');
-        const db = createDb({ tags: ['work', 'project'] });
-
-        const inputs = resolveListFileRowHeightInputs({
-            app,
-            db: db as unknown as IndexedDBStorage,
-            hasPreview: () => false,
-            item: createFileItem(file, { hasTags: true }),
-            file,
-            config: createRowSizingConfig({
-                showPreview: false,
-                tagsBaseEnabled: true,
-                selectedTagToHide: 'work'
-            })
-        });
-
-        expect(inputs.visiblePillRowCount).toBe(1);
-        expect(db.getFile).toHaveBeenCalledWith(file.path);
     });
 
     it('skips db reads when frontmatter properties are enabled without visible list property keys', () => {

@@ -39,12 +39,9 @@ import {
     getCachedManualSortRank,
     type ManualSortGroupHeaderData
 } from '../../utils/manualSort';
-import { createHiddenTagVisibility } from '../../utils/tagPrefixMatcher';
-import { getCachedFileTags } from '../../utils/tagUtils';
 import { DateUtils } from '../../utils/dateUtils';
 import { buildListGroupCollapseKey } from '../../utils/listGroupCollapse';
 import type { AliasSearchMatch, PropertySearchMatch, SearchResultMeta } from '../../types/search';
-import type { IndexedDBStorage } from '../../storage/IndexedDBStorage';
 import type { PropertySelectionNodeId } from '../../utils/propertyTree';
 import type { ListPaneFolderPathSegment } from '../../types/virtualization';
 
@@ -56,8 +53,6 @@ export interface ListPaneConfig {
     pinnedNotes: NotebookNavigatorSettings['pinnedNotes'];
     showCurrentFolderFilesAtBottom: boolean;
     showFolderGroupPaths: boolean;
-    /** Effective tag visibility for the active list selection. */
-    showFileTags: boolean;
 }
 
 interface BuildListItemsArgs {
@@ -65,10 +60,8 @@ interface BuildListItemsArgs {
     dayKey: string;
     fileVisibility: FileVisibility;
     files: TFile[];
-    getDB: () => IndexedDBStorage;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
     hiddenFileState: ReadonlyMap<string, boolean>;
-    hiddenTags: string[];
     listConfig: ListPaneConfig;
     collapsedListGroups?: ReadonlySet<string>;
     matchedAliases?: ReadonlyMap<string, readonly AliasSearchMatch[]>;
@@ -78,7 +71,6 @@ interface BuildListItemsArgs {
     selectedTag?: string | null;
     selectedProperty?: PropertySelectionNodeId | null;
     selectionType: ItemType | null;
-    showHiddenItems: boolean;
     sortOption: SortOption;
     propertySortKey?: string;
     isManualSortActive?: boolean;
@@ -157,10 +149,8 @@ function buildListItemsInternal(
         dayKey,
         fileVisibility,
         files,
-        getDB,
         getFileTimestamps,
         hiddenFileState,
-        hiddenTags,
         listConfig,
         collapsedListGroups,
         matchedAliases,
@@ -170,7 +160,6 @@ function buildListItemsInternal(
         selectedTag = null,
         selectedProperty = null,
         selectionType,
-        showHiddenItems,
         sortOption,
         propertySortKey = '',
         isManualSortActive = false,
@@ -198,23 +187,11 @@ function buildListItemsInternal(
               : selectionType === ItemType.PROPERTY
                 ? ItemType.PROPERTY
                 : undefined;
-    const db = getDB();
     const pinnedDisplayScope =
         listConfig.filterPinnedByFolder && selectionType === ItemType.FOLDER && selectedFolder
             ? { restrictToFolderPath: selectedFolder.path }
             : undefined;
     const { pinnedFiles, unpinnedFiles } = partitionPinnedFiles(files, listConfig.pinnedNotes, contextFilter, pinnedDisplayScope);
-    const shouldDetectTags = includeFileItems && listConfig.showFileTags;
-    const hiddenTagVisibility = shouldDetectTags ? createHiddenTagVisibility(hiddenTags, showHiddenItems) : null;
-    const fileHasTags = shouldDetectTags
-        ? (file: TFile) => {
-              const tags = getCachedFileTags({ app, file, db });
-              if (!hiddenTagVisibility) {
-                  return tags.length > 0;
-              }
-              return hiddenTagVisibility.hasVisibleTags(tags);
-          }
-        : () => false;
 
     const groupingMode = listConfig.groupBy;
     const selectedFolderPath = selectedFolder?.path ?? null;
@@ -251,7 +228,7 @@ function buildListItemsInternal(
     type FileItemOverrides = Partial<
         Omit<
             ListPaneItem,
-            'type' | 'data' | 'fileIndex' | 'hasTags' | 'isHidden' | 'key' | 'matchedAliases' | 'matchedProperties' | 'searchMeta'
+            'type' | 'data' | 'fileIndex' | 'isHidden' | 'key' | 'matchedAliases' | 'matchedProperties' | 'searchMeta'
         >
     >;
     const pushFileItem = (file: TFile, overrides: FileItemOverrides = {}) => {
@@ -276,7 +253,6 @@ function buildListItemsInternal(
             matchedAliases: matchedAliases?.get(file.path),
             matchedProperties: matchedProperties?.get(file.path),
             searchMeta: searchMetaMap.get(file.path),
-            hasTags: fileHasTags(file),
             isHidden: hiddenFileState.get(file.path) ?? false
         };
         items.push({ ...baseItem, ...overrides });

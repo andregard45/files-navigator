@@ -81,8 +81,6 @@ interface UseListPaneDataParams {
     activeProfile: ActiveProfileState;
     /** Effective grouping for the current list selection */
     groupBy: ListNoteGroupingOption;
-    /** Effective tag visibility for the current list selection */
-    showFileTags: boolean;
     /** Effective date visibility for the current list selection */
     showFileDate: boolean;
     /** Whether the pinned section is expanded in the current context */
@@ -140,7 +138,6 @@ export function useListPaneData({
     settings,
     activeProfile,
     groupBy,
-    showFileTags,
     showFileDate,
     pinnedGroupExpanded,
     collapsedListGroups,
@@ -191,7 +188,7 @@ export function useListPaneData({
         }
         return selectedFolder.path;
     }, [selectionType, selectedFolder]);
-    const { hiddenFolders, descendantExcludedFolders, hiddenFileProperties, hiddenFileNames, hiddenTags, hiddenFileTags, fileVisibility } =
+    const { hiddenFolders, descendantExcludedFolders, hiddenFileProperties, hiddenFileNames, hiddenFileTags, fileVisibility } =
         activeProfile;
     const hiddenFilePropertyMatcher = useMemo(
         () => createFrontmatterPropertyExclusionMatcher(hiddenFileProperties),
@@ -205,7 +202,6 @@ export function useListPaneData({
             pinnedNotes: settings.pinnedNotes,
             filterPinnedByFolder: settings.filterPinnedByFolder,
             pinnedGroupExpanded,
-            showFileTags,
             showFolderGroupPaths: settings.showFolderGroupPaths,
             showCurrentFolderFilesAtBottom: settings.showCurrentFolderFilesAtBottom,
             groupBy,
@@ -218,8 +214,7 @@ export function useListPaneData({
             pinnedGroupExpanded,
             settings.pinnedNotes,
             settings.showCurrentFolderFilesAtBottom,
-            settings.showFolderGroupPaths,
-            showFileTags
+            settings.showFolderGroupPaths
         ]
     );
 
@@ -388,10 +383,8 @@ export function useListPaneData({
             dayKey,
             fileVisibility,
             files: groupCountFiles,
-            getDB,
             getFileTimestamps,
             hiddenFileState: EMPTY_HIDDEN_FILE_STATE,
-            hiddenTags: [],
             listConfig,
             collapsedListGroups,
             searchMetaMap: EMPTY_SEARCH_META,
@@ -399,7 +392,6 @@ export function useListPaneData({
             selectedTag,
             selectedProperty,
             selectionType,
-            showHiddenItems: false,
             sortOption,
             propertySortKey: sortSpec.propertyKey,
             isManualSortActive,
@@ -410,7 +402,6 @@ export function useListPaneData({
         collapsedListGroups,
         dayKey,
         fileVisibility,
-        getDB,
         getFileTimestamps,
         groupCountFiles,
         isManualSortActive,
@@ -443,10 +434,8 @@ export function useListPaneData({
             dayKey,
             fileVisibility,
             files,
-            getDB,
             getFileTimestamps,
             hiddenFileState,
-            hiddenTags,
             listConfig,
             collapsedListGroups,
             matchedAliases: filterResult.matchedAliases,
@@ -456,7 +445,6 @@ export function useListPaneData({
             selectedTag,
             selectedProperty,
             selectionType,
-            showHiddenItems,
             sortOption,
             propertySortKey: sortSpec.propertyKey,
             isManualSortActive,
@@ -468,10 +456,8 @@ export function useListPaneData({
         dayKey,
         fileVisibility,
         files,
-        getDB,
         getFileTimestamps,
         hiddenFileState,
-        hiddenTags,
         listConfig,
         collapsedListGroups,
         filterResult.matchedAliases,
@@ -481,7 +467,6 @@ export function useListPaneData({
         selectedProperty,
         selectionType,
         searchMetaMap,
-        showHiddenItems,
         sortOption,
         sortSpec.propertyKey,
         isManualSortActive,

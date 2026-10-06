@@ -35,7 +35,6 @@ export interface ListPaneAppearanceSettings {
     showParentFolder: boolean;
     showPreview: boolean;
     showImage: boolean;
-    showTags: boolean;
     showProperties: boolean;
     groupBy: ListNoteGroupingOption;
 }
@@ -45,7 +44,7 @@ export interface ListPaneAppearanceSettings {
  * Both `true` and `false` are persisted so a selection can enable content that
  * the global setting turns off, and hide content that the global setting shows.
  */
-export const LIST_PANE_TOGGLE_KEYS = ['showTags', 'showProperties', 'showDate', 'showParentFolder'] as const;
+export const LIST_PANE_TOGGLE_KEYS = ['showProperties', 'showDate', 'showParentFolder'] as const;
 
 export type ListPaneToggleKey = (typeof LIST_PANE_TOGGLE_KEYS)[number];
 
@@ -187,8 +186,7 @@ function resolveListMode({ appearance, defaultMode }: { appearance?: ListPaneApp
  * Resolves the effective list pane appearance for a selection.
  *
  * Per-selection toggles replace the global per-file display setting, but structural gates stay
- * global: tags require the master tag setting because tag content is only extracted when it is on,
- * compact mode keeps its own global tag/property visibility, and the compact row layout never
+ * global: compact mode keeps its own global property visibility, and the compact row layout never
  * renders previews, images, dates, or parent folders.
  */
 export function resolveListPaneAppearance({
@@ -202,8 +200,6 @@ export function resolveListPaneAppearance({
 }): ListPaneAppearanceSettings {
     const mode = resolveListMode({ appearance, defaultMode: getDefaultListMode(settings) });
     const isCompact = mode === 'compact';
-    const showTags =
-        settings.showTags && (appearance?.showTags ?? settings.showFileTags) && (!isCompact || settings.showFileTagsInCompactMode);
     const showProperties =
         (appearance?.showProperties ?? settings.showFileProperties) && (!isCompact || settings.showFilePropertiesInCompactMode);
     const previewRowsOverride = isValidPreviewRows(appearance?.previewRows) ? appearance.previewRows : undefined;
@@ -222,7 +218,6 @@ export function resolveListPaneAppearance({
         showParentFolder: !isCompact && (appearance?.showParentFolder ?? settings.showParentFolder),
         showPreview: !isCompact && settings.showFilePreview && previewRowsOverride !== 0,
         showImage: !isCompact && settings.showFeatureImage,
-        showTags,
         showProperties,
         groupBy: grouping.effectiveGrouping
     };

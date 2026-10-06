@@ -61,8 +61,6 @@ import {
     type FileRowHeightConfig,
     type FileRowHeightInputs,
     getSelectedPropertyValuePillToHide,
-    getSelectedTagPillToHide,
-    hasVisibleTagPills,
     getListPaneHeaderHeight,
     getListPaneMeasurements,
     getPropertyRowCount,
@@ -71,8 +69,6 @@ import {
     shouldShowFileItemParentFolderLine
 } from '../utils/listPaneMeasurements';
 import type { PropertySelectionNodeId } from '../utils/propertyTree';
-import { getCachedFileTags } from '../utils/tagUtils';
-import type { HiddenTagVisibility } from '../utils/tagPrefixMatcher';
 import { getDrawingFeatureImageSource, resolveDrawingFeatureImageFileForProvider } from '../utils/drawingFeatureImages';
 import { useThemeMode } from './useThemeMode';
 import type { ThemeMode } from '../utils/themeMode';
@@ -121,8 +117,6 @@ interface UseListPaneScrollParams {
     visiblePropertyKeys: ReadonlySet<string>;
     /** Stable key signature for visible frontmatter property keys */
     visiblePropertyKeySignature: string;
-    /** Hidden tag filter rules shared with file-item pill rendering */
-    hiddenTagVisibility: HiddenTagVisibility;
     /** Scroll margin used to offset the visible range and scrollToIndex alignment */
     scrollMargin?: number;
     /**
@@ -171,7 +165,6 @@ type ListLayoutSignatureSettings = Pick<
 
 export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     isCompactMode: boolean;
-    tagsBaseEnabled: boolean;
     frontmatterPropertyRowsPossible: boolean;
     propertyRowsPossible: boolean;
     showFileProperties: boolean;
@@ -180,9 +173,7 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     showParentFolder: boolean;
     selectionType: SelectionState['selectionType'];
     includeDescendantNotes: boolean;
-    selectedTagToHide: string | null;
     selectedPropertyValueNodeIdToHide: string | null;
-    hiddenTagVisibility: HiddenTagVisibility;
     visiblePropertyKeys: ReadonlySet<string>;
     themeMode: ThemeMode;
 }
@@ -191,7 +182,6 @@ export type ListRowHeightAffectingContentChangeConfig = Pick<
     ListFileRowSizingConfig,
     | 'showPreview'
     | 'showImage'
-    | 'tagsBaseEnabled'
     | 'frontmatterPropertyRowsPossible'
 >;
 
@@ -242,10 +232,8 @@ interface ListLayoutSignatureParams {
     settings: ListLayoutSignatureSettings;
     themeMode: ThemeMode;
     selectionType: SelectionState['selectionType'];
-    selectedTagToHide: string | null;
     selectedPropertyValueNodeIdToHide: string | null;
     includeDescendantNotes: boolean;
-    hiddenTagVisibilitySignature: string;
     visiblePropertyKeySignature: string;
     listMeasurements: ReturnType<typeof getListPaneMeasurements>;
 }
@@ -266,29 +254,14 @@ interface PreviousScrollPreservationConfig {
     includeDescendantNotes: boolean;
 }
 
-function getHiddenTagVisibilitySignature(hiddenTagVisibility: HiddenTagVisibility): string {
-    const { matcher } = hiddenTagVisibility;
-    return JSON.stringify({
-        shouldFilterHiddenTags: hiddenTagVisibility.shouldFilterHiddenTags,
-        matcher: {
-            prefixes: matcher.prefixes,
-            startsWithNames: matcher.startsWithNames,
-            endsWithNames: matcher.endsWithNames,
-            pathPatterns: matcher.pathPatterns
-        }
-    });
-}
-
 function getListLayoutSignature({
     topSpacerHeight,
     folderSettings,
     settings,
     themeMode,
     selectionType,
-    selectedTagToHide,
     selectedPropertyValueNodeIdToHide,
     includeDescendantNotes,
-    hiddenTagVisibilitySignature,
     visiblePropertyKeySignature,
     listMeasurements
 }: ListLayoutSignatureParams): string {
@@ -308,7 +281,6 @@ function getListLayoutSignature({
             showParentFolder: folderSettings.showParentFolder,
             showPreview: folderSettings.showPreview,
             showImage: folderSettings.showImage,
-            showTags: folderSettings.showTags,
             showProperties: folderSettings.showProperties
         },
         rowContent: {
@@ -317,10 +289,8 @@ function getListLayoutSignature({
             showSelectedNavigationPills: settings.showSelectedNavigationPills,
             visiblePropertyKeySignature,
             selectionType: selectionType ?? null,
-            selectedTagToHide,
             selectedPropertyValueNodeIdToHide,
-            includeDescendantNotes,
-            hiddenTagVisibilitySignature
+            includeDescendantNotes
         },
         rowSizing: {
             compactItemHeight: settings.compactItemHeight,
@@ -363,10 +333,6 @@ export function isListRowHeightAffectingContentChange(
     }
 
     if ((changes.featureImageKey !== undefined || changes.featureImageStatus !== undefined) && config.showImage) {
-        return true;
-    }
-
-    if (changes.tags !== undefined && config.tagsBaseEnabled) {
         return true;
     }
 
@@ -431,7 +397,7 @@ function shouldReadFileRecordForRowEstimate(item: ListPaneItem, config: ListFile
         return true;
     }
 
-    return config.tagsBaseEnabled && Boolean(item.hasTags) && config.selectedTagToHide !== null;
+    return false;
 }
 
 export function resolveListFileRowHeightInputs({
@@ -483,19 +449,6 @@ export function resolveListFileRowHeightInputs({
         showDrawingMissingFeatureImage
     });
 
-    let hasTagRow = false;
-    if (!showDrawingMissingFeatureImage && config.tagsBaseEnabled && item.hasTags) {
-        if (!config.selectedTagToHide) {
-            hasTagRow = true;
-        } else {
-            hasTagRow = hasVisibleTagPills({
-                tags: getCachedFileTags({ app, file, db, fileData: fileRecord }),
-                hiddenTagVisibility: config.hiddenTagVisibility,
-                selectedTagToHide: config.selectedTagToHide
-            });
-        }
-    }
-
     const showParentFolderLine = shouldShowFileItemParentFolderLine({
         showParentFolder: config.showParentFolder,
         isPinned: Boolean(item.isPinned),
@@ -525,7 +478,7 @@ export function resolveListFileRowHeightInputs({
         showFeatureImageArea,
         showExtensionBadgeThumbnail,
         showParentFolderLine,
-        visiblePillRowCount: (hasTagRow ? 1 : 0) + propertyRowCount
+        visiblePillRowCount: propertyRowCount
     };
 }
 
@@ -556,7 +509,6 @@ export function useListPaneScroll({
     groupCollapseStateSignature,
     visiblePropertyKeys,
     visiblePropertyKeySignature,
-    hiddenTagVisibility,
     scrollMargin = 0,
     scrollPaddingEnd = 0,
     onVirtualizerScrollingChange,
@@ -638,15 +590,6 @@ export function useListPaneScroll({
     const isCompactMode = folderSettings.mode === 'compact';
     const revealFileOnListChanges = settings.revealFileOnListChanges;
     const hasSelectedFile = Boolean(selectedFile);
-    const selectedTagToHide = useMemo(
-        () =>
-            getSelectedTagPillToHide({
-                selectionType: selectionState.selectionType,
-                selectedTag: selectionState.selectedTag,
-                showSelectedNavigationPills: settings.showSelectedNavigationPills
-            }),
-        [selectionState.selectedTag, selectionState.selectionType, settings.showSelectedNavigationPills]
-    );
     const selectedPropertyValueNodeIdToHide = useMemo(
         () =>
             getSelectedPropertyValuePillToHide({
@@ -670,7 +613,6 @@ export function useListPaneScroll({
             showImage: folderSettings.showImage,
             compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
             isCompactMode,
-            tagsBaseEnabled: folderSettings.showTags,
             frontmatterPropertyRowsPossible,
             propertyRowsPossible: canShowPropertiesInCurrentMode && showFrontmatterPropertyRows,
             showFileProperties: folderSettings.showProperties,
@@ -679,9 +621,7 @@ export function useListPaneScroll({
             showParentFolder: folderSettings.showParentFolder,
             selectionType: selectionState.selectionType,
             includeDescendantNotes,
-            selectedTagToHide,
             selectedPropertyValueNodeIdToHide,
-            hiddenTagVisibility,
             visiblePropertyKeys,
             themeMode
         };
@@ -694,15 +634,12 @@ export function useListPaneScroll({
         folderSettings.showParentFolder,
         folderSettings.showPreview,
         folderSettings.showProperties,
-        folderSettings.showTags,
         folderSettings.titleRows,
-        hiddenTagVisibility,
         includeDescendantNotes,
         isCompactMode,
         isMobile,
         listMeasurements,
         selectedPropertyValueNodeIdToHide,
-        selectedTagToHide,
         selectionState.selectionType,
         settings.showFilePropertiesInCompactMode,
         settings.showPropertiesOnSeparateRows,
@@ -861,8 +798,6 @@ export function useListPaneScroll({
     // Container is ready when both the list pane and the physical container are visible
     const isScrollContainerReady = enabled && isVisible && containerVisible;
 
-    // Tracks inputs that affect estimated row heights.
-    const hiddenTagVisibilitySignature = useMemo(() => getHiddenTagVisibilitySignature(hiddenTagVisibility), [hiddenTagVisibility]);
     const listLayoutSettings = useMemo<ListLayoutSignatureSettings>(
         () => ({
             compactItemHeight: settings.compactItemHeight,
@@ -887,10 +822,8 @@ export function useListPaneScroll({
                 settings: listLayoutSettings,
                 themeMode,
                 selectionType: selectionState.selectionType,
-                selectedTagToHide,
                 selectedPropertyValueNodeIdToHide,
                 includeDescendantNotes,
-                hiddenTagVisibilitySignature,
                 visiblePropertyKeySignature,
                 listMeasurements
             }),
@@ -900,10 +833,8 @@ export function useListPaneScroll({
             listLayoutSettings,
             themeMode,
             selectionState.selectionType,
-            selectedTagToHide,
             selectedPropertyValueNodeIdToHide,
             includeDescendantNotes,
-            hiddenTagVisibilitySignature,
             visiblePropertyKeySignature,
             listMeasurements
         ]

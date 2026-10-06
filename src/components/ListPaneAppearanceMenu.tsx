@@ -293,14 +293,6 @@ export function showListPaneAppearanceMenu({
 
     const contentToggles: ContentToggle[] = [
         {
-            key: 'showTags',
-            title: strings.folderAppearance.tags,
-            icon: resolveUXIconForMenu(settings.interfaceIcons, 'nav-tags'),
-            globalDefault: settings.showFileTags,
-            // Tag content is only extracted while the master tag setting is on.
-            available: settings.showTags && (!isCompact || settings.showFileTagsInCompactMode)
-        },
-        {
             key: 'showProperties',
             title: strings.folderAppearance.properties,
             icon: resolveUXIconForMenu(settings.interfaceIcons, 'nav-properties'),

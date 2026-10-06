@@ -35,7 +35,6 @@ import { FileItem, type FileItemInlineRenameHandlers, type FileItemPaneProps, ty
 import { ServiceIcon } from '../ServiceIcon';
 import type { ListPaneAppearanceSettings } from '../../settings/listPaneAppearance';
 import type { FileNameIconNeedle } from '../../utils/fileIconUtils';
-import type { HiddenTagVisibility } from '../../utils/tagPrefixMatcher';
 import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 import { resolveUXIcon } from '../../utils/uxIcons';
@@ -131,13 +130,11 @@ interface ListPaneVirtualContentProps {
     suppressRowHover: boolean;
     onHoveredFilePathChange: (path: string | null, pointerClientPosition: PointerClientPosition | null) => void;
     onFileClick: (file: TFile, fileIndex: number | undefined, event: React.MouseEvent) => void;
-    onModifySearchWithTag: (tag: string, operator: InclusionOperator) => void;
     onModifySearchWithProperty: (key: string, value: string | null, operator: InclusionOperator) => void;
     localDayReference: Date | null;
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
     includeDescendantNotes: boolean;
-    hiddenTagVisibility: HiddenTagVisibility;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     visibleListPropertyKeys: ReadonlySet<string>;
     visibleNavigationPropertyKeys: ReadonlySet<string>;
@@ -619,13 +616,11 @@ export function ListPaneVirtualContent({
     suppressRowHover,
     onHoveredFilePathChange,
     onFileClick,
-    onModifySearchWithTag,
     onModifySearchWithProperty,
     localDayReference,
     fileIconSize,
     appearanceSettings,
     includeDescendantNotes,
-    hiddenTagVisibility,
     fileNameIconNeedles,
     visibleListPropertyKeys,
     visibleNavigationPropertyKeys,
@@ -973,13 +968,11 @@ export function ListPaneVirtualContent({
             selectionType,
             sortOption,
             searchHighlightTerms,
-            onModifySearchWithTag,
             onModifySearchWithProperty,
             localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,
-            hiddenTagVisibility,
             fileNameIconNeedles,
             visiblePropertyKeys: visibleListPropertyKeys,
             visibleNavigationPropertyKeys,
@@ -995,13 +988,11 @@ export function ListPaneVirtualContent({
             selectionType,
             sortOption,
             searchHighlightTerms,
-            onModifySearchWithTag,
             onModifySearchWithProperty,
             localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,
-            hiddenTagVisibility,
             fileNameIconNeedles,
             visibleListPropertyKeys,
             visibleNavigationPropertyKeys,

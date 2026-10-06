@@ -441,7 +441,6 @@ export const STRINGS_FA = {
             option: (rows: number) => `${rows} ردیف پیش‌نمایش`
         },
         groupBy: 'گروه‌بندی بر اساس',
-        tags: 'برچسب‌ها',
         properties: 'ویژگی‌ها',
         date: 'تاریخ',
         parentFolder: 'پوشه والد',
@@ -1102,7 +1101,6 @@ export const STRINGS_FA = {
                     title: 'عنوان',
                     previewText: 'متن پیش‌نمایش',
                     featureImage: 'تصویر ویژه',
-                    tags: 'برچسب‌ها',
                     properties: 'ویژگی‌ها',
                     date: 'تاریخ',
                     parentFolder: 'پوشه والد'
@@ -1897,26 +1895,6 @@ export const STRINGS_FA = {
                     created: 'تاریخ ایجاد',
                     modified: 'تاریخ تغییر'
                 }
-            },
-            showFileTags: {
-                name: 'نمایش برچسب‌های فایل',
-                desc: 'برچسب‌های قابل کلیک را در آیتم‌های فایل نمایش دهید.'
-            },
-            showFullTagPaths: {
-                name: 'نمایش مسیرهای کامل برچسب',
-                desc: 'مسیرهای کامل سلسله‌مراتب برچسب را نمایش دهید. وقتی فعال: «ai/openai»، «کار/پروژه‌ها/۲۰۲۴». وقتی غیرفعال: «openai»، «۲۰۲۴».'
-            },
-            colorFileTags: {
-                name: 'رنگ‌آمیزی برچسب‌های فایل',
-                desc: 'رنگ‌های برچسب را به نشان‌های برچسب روی آیتم‌های فایل اعمال کنید.'
-            },
-            showColoredTagsFirst: {
-                name: 'نمایش اول برچسب‌های رنگی',
-                desc: 'برچسب‌های رنگی را قبل از برچسب‌های دیگر روی آیتم‌های فایل مرتب کنید.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'نمایش برچسب‌های فایل در حالت فشرده',
-                desc: 'برچسب‌ها را هنگامی که تاریخ، پیش‌نمایش و تصویر مخفی هستند نمایش دهید.'
             },
             showFileProperties: {
                 name: 'نمایش ویژگی‌های فایل',
