@@ -441,7 +441,6 @@ export const STRINGS_VI = {
             option: (rows: number) => `${rows} dòng xem trước`
         },
         groupBy: 'Nhóm theo',
-        tags: 'Thẻ',
         properties: 'Thuộc tính',
         date: 'Ngày',
         parentFolder: 'Thư mục cha',
@@ -1101,7 +1100,6 @@ export const STRINGS_VI = {
                     title: 'Tiêu đề',
                     previewText: 'Văn bản xem trước',
                     featureImage: 'Hình ảnh nổi bật',
-                    tags: 'Thẻ',
                     properties: 'Thuộc tính',
                     date: 'Ngày',
                     parentFolder: 'Thư mục cha'
@@ -1896,26 +1894,6 @@ export const STRINGS_VI = {
                     created: 'Ngày tạo',
                     modified: 'Ngày sửa'
                 }
-            },
-            showFileTags: {
-                name: 'Hiện thẻ tệp',
-                desc: 'Hiển thị thẻ có thể nhấn trong mục tệp.'
-            },
-            showFullTagPaths: {
-                name: 'Hiện đường dẫn thẻ đầy đủ',
-                desc: "Hiển thị đường dẫn phân cấp thẻ đầy đủ. Khi bật: 'ai/openai', 'công việc/dự án/2024'. Khi tắt: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Tô màu thẻ tệp',
-                desc: 'Áp dụng màu thẻ cho huy hiệu thẻ trên mục tệp.'
-            },
-            showColoredTagsFirst: {
-                name: 'Hiện thẻ có màu trước',
-                desc: 'Sắp xếp thẻ có màu trước các thẻ khác trên mục tệp.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Hiện thẻ tệp ở chế độ gọn',
-                desc: 'Hiển thị thẻ khi ngày, xem trước và ảnh bị ẩn.'
             },
             showFileProperties: {
                 name: 'Hiện thuộc tính tệp',

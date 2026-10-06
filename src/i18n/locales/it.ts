@@ -441,7 +441,6 @@ export const STRINGS_IT = {
             option: (rows: number) => `${rows} ${rows === 1 ? 'riga' : 'righe'} anteprima`
         },
         groupBy: 'Raggruppa per',
-        tags: 'Etichette',
         properties: 'Proprietà',
         date: 'Data',
         parentFolder: 'Cartella superiore',
@@ -1102,7 +1101,6 @@ export const STRINGS_IT = {
                     title: 'Titolo',
                     previewText: 'Testo anteprima',
                     featureImage: 'Immagine in evidenza',
-                    tags: 'Etichette',
                     properties: 'Proprietà',
                     date: 'Data',
                     parentFolder: 'Cartella superiore'
@@ -1901,26 +1899,6 @@ export const STRINGS_IT = {
                     created: 'Data creazione',
                     modified: 'Data modifica'
                 }
-            },
-            showFileTags: {
-                name: 'Mostra etichette file',
-                desc: 'Visualizza etichette cliccabili negli elementi file.'
-            },
-            showFullTagPaths: {
-                name: 'Mostra percorsi completi delle etichette',
-                desc: "Visualizza i percorsi completi della gerarchia delle etichette. Quando abilitato: 'ai/openai', 'lavoro/progetti/2024'. Quando disabilitato: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Colora etichette file',
-                desc: 'Applica i colori delle etichette ai loro badge sugli elementi file.'
-            },
-            showColoredTagsFirst: {
-                name: 'Mostra prima le etichette colorate',
-                desc: 'Ordina le etichette colorate prima delle altre etichette sugli elementi file.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Mostra etichette file in modalità compatta',
-                desc: 'Visualizza le etichette quando data, anteprima e immagine sono nascoste.'
             },
             showFileProperties: {
                 name: 'Mostra proprietà file',

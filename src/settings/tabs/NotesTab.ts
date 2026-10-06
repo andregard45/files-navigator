@@ -264,36 +264,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 visible: () => plugin.settings.showFeatureImage
             })
         ]),
-        createGroupDefinition(
-            strings.settings.pages.fileDisplay.groups.tags,
-            [
-                createToggleDefinition('showFileTags', {
-                    name: strings.settings.items.showFileTags.name,
-                    desc: strings.settings.items.showFileTags.desc
-                }),
-                createToggleDefinition('colorFileTags', {
-                    name: strings.settings.items.colorFileTags.name,
-                    desc: strings.settings.items.colorFileTags.desc,
-                    visible: () => plugin.settings.showFileTags
-                }),
-                createToggleDefinition('prioritizeColoredFileTags', {
-                    name: strings.settings.items.showColoredTagsFirst.name,
-                    desc: strings.settings.items.showColoredTagsFirst.desc,
-                    visible: () => plugin.settings.showFileTags && plugin.settings.colorFileTags
-                }),
-                createToggleDefinition('showFileTagAncestors', {
-                    name: strings.settings.items.showFullTagPaths.name,
-                    desc: strings.settings.items.showFullTagPaths.desc,
-                    visible: () => plugin.settings.showFileTags
-                }),
-                createToggleDefinition('showFileTagsInCompactMode', {
-                    name: strings.settings.items.showFileTagsInCompactMode.name,
-                    desc: strings.settings.items.showFileTagsInCompactMode.desc,
-                    visible: () => plugin.settings.showFileTags
-                })
-            ],
-            { visible: () => plugin.settings.showTags }
-        ),
         createGroupDefinition(strings.settings.pages.fileDisplay.groups.properties, [
             createToggleDefinition('showFileProperties', {
                 name: strings.settings.items.showFileProperties.name,

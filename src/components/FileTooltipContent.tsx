@@ -16,17 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import type { TFile } from 'obsidian';
-import { useActiveProfile, useSettingsState } from '../context/SettingsContext';
-import { useFileCache } from '../context/StorageContext';
-import { useUXPreferences } from '../context/UXPreferencesContext';
 import type { NotebookNavigatorSettings } from '../settings/types';
-import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
-import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
 import { buildFileTooltipDateLines } from '../utils/navigationTooltipUtils';
-import { createHiddenTagVisibility } from '../utils/tagPrefixMatcher';
-import { useFileItemTagPills } from './fileItem/useFileItemTagPills';
 
 interface FileTooltipContentProps {
     file: TFile;
@@ -36,8 +29,6 @@ interface FileTooltipContentProps {
     settings: Pick<NotebookNavigatorSettings, 'dateFormat' | 'timeFormat' | 'showTooltipPath'>;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
     sortOption?: string | null;
-    /** Tag pill row placed between the folder path and the date lines */
-    tagRow?: React.ReactNode;
 }
 
 /**
@@ -52,8 +43,7 @@ export function FileTooltipContent({
     extensionSuffix,
     settings,
     getFileTimestamps,
-    sortOption,
-    tagRow
+    sortOption
 }: FileTooltipContentProps) {
     const topLine = extensionSuffix.length > 0 ? file.name : displayName;
     const parentPath = settings.showTooltipPath ? (file.parent?.path ?? '/') : null;
@@ -63,44 +53,10 @@ export function FileTooltipContent({
         <>
             <div>{topLine}</div>
             {parentPath !== null ? <div className="nn-tooltip-muted">{parentPath}</div> : null}
-            {tagRow}
             <div className="nn-tooltip-dates nn-tooltip-muted">
                 <div>{dateLines[0]}</div>
                 <div>{dateLines[1]}</div>
             </div>
         </>
     );
-}
-
-interface FileTooltipTagRowProps {
-    file: TFile;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
-    fileItemPillOrderModel: FileItemPillOrderModel;
-}
-
-const EMPTY_TAGS: string[] = [];
-
-/**
- * Tag pill row for file tooltips outside the list pane (shortcuts, recent notes). Cached tags
- * are read at render time so the row reflects the cache whenever the tooltip opens or
- * refreshes. Hidden tags follow the active profile like list-pane pills; nothing is hidden
- * for the navigation selection because these rows are not scoped to it.
- */
-export function FileTooltipTagRow({ file, fileItemPillDecorationModel, fileItemPillOrderModel }: FileTooltipTagRowProps) {
-    const settings = useSettingsState();
-    const { hiddenTags } = useActiveProfile();
-    const { showHiddenItems } = useUXPreferences();
-    const { getFile } = useFileCache();
-    const hiddenTagVisibility = useMemo(() => createHiddenTagVisibility(hiddenTags, showHiddenItems), [hiddenTags, showHiddenItems]);
-    const tags = getFile(file.path)?.tags ?? EMPTY_TAGS;
-    const { tooltipTagRow } = useFileItemTagPills({
-        tags,
-        settings,
-        hiddenTagVisibility,
-        selectedTagToHide: null,
-        fileItemPillDecorationModel,
-        fileItemPillOrderModel
-    });
-
-    return <>{tooltipTagRow}</>;
 }

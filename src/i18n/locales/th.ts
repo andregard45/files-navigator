@@ -441,7 +441,6 @@ export const STRINGS_TH = {
             option: (rows: number) => `${rows} แถวตัวอย่าง`
         },
         groupBy: 'จัดกลุ่มตาม',
-        tags: 'แท็ก',
         properties: 'คุณสมบัติ',
         date: 'วันที่',
         parentFolder: 'โฟลเดอร์หลัก',
@@ -1095,7 +1094,6 @@ export const STRINGS_TH = {
                     title: 'ชื่อเรื่อง',
                     previewText: 'ข้อความตัวอย่าง',
                     featureImage: 'รูปภาพเด่น',
-                    tags: 'แท็ก',
                     properties: 'คุณสมบัติ',
                     date: 'วันที่',
                     parentFolder: 'โฟลเดอร์หลัก'
@@ -1889,26 +1887,6 @@ export const STRINGS_TH = {
                     created: 'วันที่สร้าง',
                     modified: 'วันที่แก้ไข'
                 }
-            },
-            showFileTags: {
-                name: 'แสดงแท็กไฟล์',
-                desc: 'แสดงแท็กที่คลิกได้ในรายการไฟล์'
-            },
-            showFullTagPaths: {
-                name: 'แสดงเส้นทางแท็กเต็ม',
-                desc: "แสดงเส้นทางลำดับชั้นแท็กเต็ม เมื่อเปิด: 'ai/openai', 'work/projects/2024' เมื่อปิด: 'openai', '2024'"
-            },
-            colorFileTags: {
-                name: 'ลงสีแท็กไฟล์',
-                desc: 'ใช้สีแท็กกับป้ายแท็กบนรายการไฟล์'
-            },
-            showColoredTagsFirst: {
-                name: 'แสดงแท็กที่มีสีก่อน',
-                desc: 'เรียงแท็กที่มีสีก่อนแท็กอื่นบนรายการไฟล์'
-            },
-            showFileTagsInCompactMode: {
-                name: 'แสดงแท็กไฟล์ในโหมดกะทัดรัด',
-                desc: 'แสดงแท็กเมื่อวันที่ ตัวอย่าง และรูปภาพถูกซ่อน'
             },
             showFileProperties: {
                 name: 'แสดงคุณสมบัติไฟล์',

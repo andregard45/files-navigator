@@ -443,7 +443,6 @@ export const STRINGS_DE = {
             option: (rows: number) => `${rows} Vorschauzeile${rows === 1 ? '' : 'n'}`
         },
         groupBy: 'Gruppieren nach',
-        tags: 'Tags',
         properties: 'Eigenschaften',
         date: 'Datum',
         parentFolder: 'Übergeordneter Ordner',
@@ -1107,7 +1106,6 @@ export const STRINGS_DE = {
                     title: 'Titel',
                     previewText: 'Vorschautext',
                     featureImage: 'Feature-Bild',
-                    tags: 'Tags',
                     properties: 'Eigenschaften',
                     date: 'Datum',
                     parentFolder: 'Übergeordneter Ordner'
@@ -1906,26 +1904,6 @@ export const STRINGS_DE = {
                     created: 'Erstelldatum',
                     modified: 'Änderungsdatum'
                 }
-            },
-            showFileTags: {
-                name: 'Datei-Tags anzeigen',
-                desc: 'Zeigt klickbare Tags in Datei-Elementen an.'
-            },
-            showFullTagPaths: {
-                name: 'Vollständige Tag-Pfade anzeigen',
-                desc: "Vollständige Tag-Hierarchiepfade anzeigen. Aktiviert: 'ai/openai', 'arbeit/projekte/2024'. Deaktiviert: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Datei-Tags einfärben',
-                desc: 'Tag-Farben auf Tag-Abzeichen in Datei-Elementen anwenden.'
-            },
-            showColoredTagsFirst: {
-                name: 'Farbige Tags zuerst anzeigen',
-                desc: 'Farbige Tags vor anderen Tags in Datei-Elementen sortieren.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Datei-Tags im Kompaktmodus anzeigen',
-                desc: 'Tags anzeigen, wenn Datum, Vorschau und Bild ausgeblendet sind.'
             },
             showFileProperties: {
                 name: 'Datei-Eigenschaften anzeigen',

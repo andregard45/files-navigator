@@ -442,7 +442,6 @@ export const STRINGS_TR = {
             option: (rows: number) => `${rows} önizleme satırı`
         },
         groupBy: 'Gruplama ölçütü',
-        tags: 'Etiketler',
         properties: 'Özellikler',
         date: 'Tarih',
         parentFolder: 'Üst klasör',
@@ -1101,7 +1100,6 @@ export const STRINGS_TR = {
                     title: 'Başlık',
                     previewText: 'Önizleme metni',
                     featureImage: 'Öne çıkan görsel',
-                    tags: 'Etiketler',
                     properties: 'Özellikler',
                     date: 'Tarih',
                     parentFolder: 'Üst klasör'
@@ -1896,26 +1894,6 @@ export const STRINGS_TR = {
                     created: 'Oluşturma tarihi',
                     modified: 'Değiştirme tarihi'
                 }
-            },
-            showFileTags: {
-                name: 'Dosya etiketlerini göster',
-                desc: 'Dosya öğelerinde tıklanabilir etiketleri görüntüle.'
-            },
-            showFullTagPaths: {
-                name: 'Tam etiket yollarını göster',
-                desc: "Tam etiket hiyerarşi yollarını görüntüle. Etkinken: 'ai/openai', 'iş/projeler/2024'. Devre dışıyken: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Dosya etiketlerini renklendir',
-                desc: 'Dosya öğelerindeki etiket rozetlerine etiket renklerini uygula.'
-            },
-            showColoredTagsFirst: {
-                name: 'Renkli etiketleri önce göster',
-                desc: 'Dosya öğelerinde renkli etiketleri diğer etiketlerden önce sırala.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Kompakt modda dosya etiketlerini göster',
-                desc: 'Tarih, önizleme ve görsel gizlendiğinde etiketleri görüntüle.'
             },
             showFileProperties: {
                 name: 'Dosya özelliklerini göster',

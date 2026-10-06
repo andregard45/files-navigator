@@ -75,7 +75,6 @@ import { resolveFolderDisplayPath } from '../utils/folderDisplayName';
 import type { FileNameIconNeedle } from '../utils/fileIconUtils';
 import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
-import type { HiddenTagVisibility } from '../utils/tagPrefixMatcher';
 import { useFileItemContentState, type FileItemContentDb } from './fileItem/useFileItemContentState';
 import { useFileItemPills } from './fileItem/useFileItemPills';
 import { renderTextWithHighlightRanges } from './fileItem/searchHighlightRendering';
@@ -141,8 +140,6 @@ export interface FileItemPaneProps {
     sortOption?: SortOption;
     /** Folded name tokens from the active internal filter search for highlighting the file name */
     searchHighlightTerms?: readonly string[];
-    /** Modifies the active search query with a tag token when modifier clicking */
-    onModifySearchWithTag?: (tag: string, operator: InclusionOperator) => void;
     /** Modifies the active search query with a property token when modifier clicking */
     onModifySearchWithProperty?: (key: string, value: string | null, operator: InclusionOperator) => void;
     /** Local day reference date used for relative date group calculations */
@@ -151,7 +148,6 @@ export interface FileItemPaneProps {
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
     includeDescendantNotes: boolean;
-    hiddenTagVisibility: HiddenTagVisibility;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     /** Visible frontmatter property keys for file list pills (normalized keys) */
     visiblePropertyKeys: ReadonlySet<string>;
@@ -397,13 +393,11 @@ export const FileItem = React.memo(function FileItem({
         selectionType,
         sortOption,
         searchHighlightTerms,
-        onModifySearchWithTag,
         onModifySearchWithProperty,
         localDayReference,
         fileIconSize,
         appearanceSettings,
         includeDescendantNotes,
-        hiddenTagVisibility,
         fileNameIconNeedles,
         visiblePropertyKeys,
         visibleNavigationPropertyKeys,
@@ -423,12 +417,6 @@ export const FileItem = React.memo(function FileItem({
     const isCompactMode = appearanceSettings.mode === 'compact';
     const isMarkdownFile = file.extension === 'md';
     const canShowPropertyPills = isMarkdownFile && (!isCompactMode || settings.showFilePropertiesInCompactMode);
-    // Tooltip tags reuse the pill tag data, so tags load even when tag pills are hidden. The tag
-    // cache only exists while the navigation tags section is enabled, so the tooltip branch checks
-    // that setting instead of acting as a separate tag consumer.
-    const shouldLoadTags =
-        isMarkdownFile &&
-        (appearanceSettings.showTags || (!isMobile && settings.showTags && settings.showTooltips && settings.showTooltipTags));
     const shouldLoadProperties =
         isMarkdownFile &&
         ((canShowPropertyPills && appearanceSettings.showProperties && visiblePropertyKeys.size > 0) ||
@@ -439,7 +427,6 @@ export const FileItem = React.memo(function FileItem({
     const isDrawingFeatureImageRow = drawingFeatureImageSource !== null;
     const {
         previewText,
-        tags,
         featureImageKey,
         featureImageStatus,
         featureImageUrl,
@@ -456,7 +443,6 @@ export const FileItem = React.memo(function FileItem({
         regenerateFeatureImageForFile,
         loadOptions: {
             loadPreviewText: appearanceSettings.showPreview && isMarkdownFile && !searchMeta?.excerpt,
-            loadTags: shouldLoadTags,
             loadFeatureImage: appearanceSettings.showImage && !isDrawingFeatureImageRow,
             loadProperties: shouldLoadProperties
         },
@@ -645,25 +631,19 @@ export const FileItem = React.memo(function FileItem({
     );
     const propertySearchEvidenceIconId = resolveUXIcon(settings.interfaceIcons, 'nav-property');
     const {
-        shouldShowFileTags,
         hasVisiblePillRows,
         propertySearchEvidenceGroups,
         propertySearchEvidenceHiddenGroupCount,
-        tooltipTagRow,
         pillRows
     } = useFileItemPills({
         file,
         isCompactMode,
-        tags,
         properties,
         settings,
-        showTags: appearanceSettings.showTags,
         showProperties: appearanceSettings.showProperties,
         visiblePropertyKeys,
         visibleNavigationPropertyKeys,
         matchedProperties,
-        hiddenTagVisibility,
-        onModifySearchWithTag,
         onModifySearchWithProperty,
         fileItemPillDecorationModel,
         fileItemPillOrderModel
@@ -820,7 +800,6 @@ export const FileItem = React.memo(function FileItem({
         showDrawingMissingFeatureImage
     });
     const shouldShowPillRows = !showDrawingMissingFeatureImage;
-    const effectiveShouldShowFileTags = shouldShowPillRows && shouldShowFileTags;
     const effectiveHasVisiblePillRows = shouldShowPillRows && hasVisiblePillRows;
     const renderedPillRows = shouldShowPillRows ? pillRows : null;
 
@@ -1031,7 +1010,6 @@ export const FileItem = React.memo(function FileItem({
                 }}
                 getFileTimestamps={getFileTimestamps}
                 sortOption={sortOption}
-                tagRow={tooltipTagRow}
             />
         );
     }, [
@@ -1048,7 +1026,6 @@ export const FileItem = React.memo(function FileItem({
         settings.showTooltipPath,
         getFileTimestamps,
         sortOption,
-        tooltipTagRow,
         metadataVersion
     ]);
 
@@ -1347,7 +1324,6 @@ export const FileItem = React.memo(function FileItem({
                     <div
                         className={`nn-quick-actions-panel ${isCompactMode ? 'nn-compact-mode' : ''}`}
                         data-title-rows={appearanceSettings.titleRows}
-                        data-has-tags={effectiveShouldShowFileTags ? 'true' : 'false'}
                     >
                         {quickActionItems.map((action, index) => (
                             <React.Fragment key={action.key}>

@@ -444,7 +444,6 @@ export const STRINGS_PL = {
                 `${rows} ${rows === 1 ? 'wiersz' : rows === 2 || rows === 3 || rows === 4 ? 'wiersze' : 'wierszy'} podglądu`
         },
         groupBy: 'Grupuj według',
-        tags: 'Tagi',
         properties: 'Atrybuty',
         date: 'Data',
         parentFolder: 'Folder nadrzędny',
@@ -1107,7 +1106,6 @@ export const STRINGS_PL = {
                     title: 'Tytuł',
                     previewText: 'Tekst podglądu',
                     featureImage: 'Wyróżniony obraz',
-                    tags: 'Tagi',
                     properties: 'Atrybuty',
                     date: 'Data',
                     parentFolder: 'Folder nadrzędny'
@@ -1904,26 +1902,6 @@ export const STRINGS_PL = {
                     created: 'Data utworzenia',
                     modified: 'Data modyfikacji'
                 }
-            },
-            showFileTags: {
-                name: 'Pokaż tagi plików',
-                desc: 'Wyświetla klikalne tagi w elementach plików.'
-            },
-            showFullTagPaths: {
-                name: 'Pokaż kompletne ścieżki tagów',
-                desc: "Wyświetla kompletne ścieżki hierarchii tagów. Po włączeniu: 'ai/openai', 'praca/projekty/2024'. Po wyłączeniu: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Koloruj tagi plików',
-                desc: 'Zastosuj kolory do tagów w elementach plików.'
-            },
-            showColoredTagsFirst: {
-                name: 'Pokaż kolorowe tagi jako pierwsze',
-                desc: 'Wyświetla kolorowe tagi przed innymi w elementach plików.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Pokaż tagi plików w trybie kompaktowym',
-                desc: 'Wyświetla tagi, gdy data, podgląd i obraz są ukryte.'
             },
             showFileProperties: {
                 name: 'Pokaż atrybuty plików',

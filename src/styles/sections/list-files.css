@@ -562,14 +562,13 @@
     flex-shrink: 0;
 }
 
-/* Compact mode with 1 title row and no tags: center vertically */
-.nn-quick-actions-panel.nn-compact-mode[data-title-rows='1'][data-has-tags='false'] {
+/* Compact mode with 1 title row: center the quick actions vertically */
+.nn-quick-actions-panel.nn-compact-mode[data-title-rows='1'] {
     top: max(0px, calc((var(--nn-file-title-line-height) + var(--nn-file-padding-vertical-compact) * 2 - 20px) / 2));
 }
 
-/* Compact mode with tags or more than 1 title row: align with compact padding */
-.nn-quick-actions-panel.nn-compact-mode:not([data-title-rows='1']),
-.nn-quick-actions-panel.nn-compact-mode[data-has-tags='true'] {
+/* Compact mode with more than 1 title row: align with compact padding */
+.nn-quick-actions-panel.nn-compact-mode:not([data-title-rows='1']) {
     top: var(--nn-file-padding-vertical-compact);
 }
 

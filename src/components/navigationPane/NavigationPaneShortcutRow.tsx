@@ -29,7 +29,7 @@ import { getExtensionSuffix, shouldShowExtensionSuffix } from '../../utils/fileT
 import { shouldExcludeFolderFromDescendants } from '../../utils/fileFilters';
 import { getPathBaseName } from '../../utils/pathUtils';
 import { buildFolderTooltip } from '../../utils/navigationTooltipUtils';
-import { FileTooltipContent, FileTooltipTagRow } from '../FileTooltipContent';
+import { FileTooltipContent } from '../FileTooltipContent';
 import { ShortcutItem } from '../ShortcutItem';
 import type { NavigationPaneRowProps } from './NavigationPaneItemRenderer.types';
 
@@ -197,15 +197,6 @@ export function NavigationPaneShortcutRow({ item, context, adjacentFilledClassNa
                         extensionSuffix={extensionSuffix}
                         settings={settings}
                         getFileTimestamps={context.getFileTimestamps}
-                        tagRow={
-                            settings.showTooltipTags ? (
-                                <FileTooltipTagRow
-                                    file={note}
-                                    fileItemPillDecorationModel={context.fileItemPillDecorationModel}
-                                    fileItemPillOrderModel={context.fileItemPillOrderModel}
-                                />
-                            ) : undefined
-                        }
                     />
                 ) : undefined;
             const shortcutProps = {
@@ -419,15 +410,6 @@ export function NavigationPaneShortcutRow({ item, context, adjacentFilledClassNa
                     extensionSuffix={extensionSuffix}
                     settings={settings}
                     getFileTimestamps={context.getFileTimestamps}
-                    tagRow={
-                        settings.showTooltipTags ? (
-                            <FileTooltipTagRow
-                                file={note}
-                                fileItemPillDecorationModel={context.fileItemPillDecorationModel}
-                                fileItemPillOrderModel={context.fileItemPillOrderModel}
-                            />
-                        ) : undefined
-                    }
                 />
             ) : undefined;
 

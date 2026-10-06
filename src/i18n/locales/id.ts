@@ -442,7 +442,6 @@ export const STRINGS_ID = {
             option: (rows: number) => `${rows} baris pratinjau`
         },
         groupBy: 'Kelompokkan berdasarkan',
-        tags: 'Tag',
         properties: 'Properti',
         date: 'Tanggal',
         parentFolder: 'Folder induk',
@@ -1103,7 +1102,6 @@ export const STRINGS_ID = {
                     title: 'Judul',
                     previewText: 'Teks pratinjau',
                     featureImage: 'Gambar unggulan',
-                    tags: 'Tag',
                     properties: 'Properti',
                     date: 'Tanggal',
                     parentFolder: 'Folder induk'
@@ -1898,26 +1896,6 @@ export const STRINGS_ID = {
                     created: 'Tanggal dibuat',
                     modified: 'Tanggal dimodifikasi'
                 }
-            },
-            showFileTags: {
-                name: 'Tampilkan tag file',
-                desc: 'Tampilkan tag yang dapat diklik di item file.'
-            },
-            showFullTagPaths: {
-                name: 'Tampilkan path tag lengkap',
-                desc: "Tampilkan path hierarki tag lengkap. Saat diaktifkan: 'ai/openai', 'kerja/proyek/2024'. Saat dinonaktifkan: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Warnai tag file',
-                desc: 'Terapkan warna tag ke badge tag di item file.'
-            },
-            showColoredTagsFirst: {
-                name: 'Tampilkan tag berwarna terlebih dahulu',
-                desc: 'Urutkan tag berwarna sebelum tag lain di item file.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Tampilkan tag file dalam mode kompak',
-                desc: 'Tampilkan tag saat tanggal, pratinjau, dan gambar disembunyikan.'
             },
             showFileProperties: {
                 name: 'Tampilkan properti file',

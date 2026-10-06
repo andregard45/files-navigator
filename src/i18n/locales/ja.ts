@@ -443,7 +443,6 @@ export const STRINGS_JA = {
             option: (rows: number) => `プレビュー${rows}行`
         },
         groupBy: 'グループ化',
-        tags: 'タグ',
         properties: 'プロパティ',
         date: '日付',
         parentFolder: '親フォルダ',
@@ -1103,7 +1102,6 @@ export const STRINGS_JA = {
                     title: 'タイトル',
                     previewText: 'プレビューテキスト',
                     featureImage: 'アイキャッチ画像',
-                    tags: 'タグ',
                     properties: 'プロパティ',
                     date: '日付',
                     parentFolder: '親フォルダ'
@@ -1897,26 +1895,6 @@ export const STRINGS_JA = {
                     created: '作成日',
                     modified: '更新日'
                 }
-            },
-            showFileTags: {
-                name: 'ファイルタグを表示',
-                desc: 'ファイル項目にクリック可能なタグを表示します。'
-            },
-            showFullTagPaths: {
-                name: '完全なタグパスを表示',
-                desc: "タグの完全な階層パスを表示します。有効時: 'ai/openai', 'work/projects/2024'。無効時: 'openai', '2024'。"
-            },
-            colorFileTags: {
-                name: 'ファイルタグに色を付ける',
-                desc: 'ファイル項目のタグバッジにタグの色を適用します。'
-            },
-            showColoredTagsFirst: {
-                name: '色付きタグを先頭に配置',
-                desc: '色付きタグを他のタグより前に並べ替えます。'
-            },
-            showFileTagsInCompactMode: {
-                name: 'コンパクトモードでファイルタグを表示',
-                desc: '日付、プレビュー、画像が非表示のときにタグを表示します。'
             },
             showFileProperties: {
                 name: 'ファイルプロパティを表示',

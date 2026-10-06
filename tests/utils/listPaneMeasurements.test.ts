@@ -23,8 +23,6 @@ import {
     getFileItemLayoutState,
     getListPaneMeasurements,
     getSelectedPropertyValuePillToHide,
-    getSelectedTagPillToHide,
-    hasVisibleTagPills,
     getPropertyRowCount,
     shouldShowExtensionBadgeThumbnail,
     shouldShowFeatureImageArea,
@@ -32,7 +30,6 @@ import {
 } from '../../src/utils/listPaneMeasurements';
 import { ItemType } from '../../src/types';
 import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
-import { createHiddenTagVisibility } from '../../src/utils/tagPrefixMatcher';
 import { createTestTFile } from './createTestTFile';
 
 describe('listPaneMeasurements layout helpers', () => {
@@ -962,31 +959,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 visiblePropertyKeys: new Set<string>(['topic', 'priority'])
             })
         ).toBe(2);
-    });
-
-    it('hides the selected tag from tag-row visibility checks', () => {
-        const selectedTagToHide = getSelectedTagPillToHide({
-            selectionType: ItemType.TAG,
-            selectedTag: 'ai',
-            showSelectedNavigationPills: false
-        });
-        const hiddenTagVisibility = createHiddenTagVisibility([], false);
-
-        expect(
-            hasVisibleTagPills({
-                tags: ['ai'],
-                hiddenTagVisibility,
-                selectedTagToHide
-            })
-        ).toBe(false);
-
-        expect(
-            hasVisibleTagPills({
-                tags: ['ai', 'ml'],
-                hiddenTagVisibility,
-                selectedTagToHide
-            })
-        ).toBe(true);
     });
 
     it('reduces property row counts when the selected property value pill is hidden', () => {

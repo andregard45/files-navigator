@@ -442,7 +442,6 @@ export const STRINGS_RU = {
             option: (rows: number) => `${rows} ${rows === 1 ? 'строка' : rows < 5 ? 'строки' : 'строк'} превью`
         },
         groupBy: 'Группировать по',
-        tags: 'Теги',
         properties: 'Свойства',
         date: 'Дата',
         parentFolder: 'Родительская папка',
@@ -1101,7 +1100,6 @@ export const STRINGS_RU = {
                     title: 'Заголовок',
                     previewText: 'Текст превью',
                     featureImage: 'Изображение-обложка',
-                    tags: 'Теги',
                     properties: 'Свойства',
                     date: 'Дата',
                     parentFolder: 'Родительская папка'
@@ -1896,26 +1894,6 @@ export const STRINGS_RU = {
                     created: 'Дата создания',
                     modified: 'Дата изменения'
                 }
-            },
-            showFileTags: {
-                name: 'Показывать теги файлов',
-                desc: 'Отображать кликабельные теги в элементах файлов.'
-            },
-            showFullTagPaths: {
-                name: 'Показывать полные пути тегов',
-                desc: 'Отображать полные пути иерархии тегов. При включении: «ai/openai», «work/projects/2024». При отключении: «openai», «2024».'
-            },
-            colorFileTags: {
-                name: 'Цветные теги файлов',
-                desc: 'Применять цвета тегов к значкам тегов на элементах файлов.'
-            },
-            showColoredTagsFirst: {
-                name: 'Показывать цветные теги первыми',
-                desc: 'Сортировать цветные теги перед другими тегами на элементах файлов.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Показывать теги файлов в компактном режиме',
-                desc: 'Отображать теги, когда дата, превью и изображение скрыты.'
             },
             showFileProperties: {
                 name: 'Показывать свойства файлов',

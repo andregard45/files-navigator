@@ -22,17 +22,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DEFAULT_SETTINGS } from '../../../src/settings/defaultSettings';
 import { useFileItemPills, type UseFileItemPillsParams } from '../../../src/components/fileItem/useFileItemPills';
 import { buildPropertyKeyNodeId, buildPropertyValueNodeId } from '../../../src/utils/propertyTree';
-import { createHiddenTagVisibility, type HiddenTagVisibility } from '../../../src/utils/tagPrefixMatcher';
 import { formatTextCount } from '../../../src/utils/wordCountUtils';
 import type { FileItemPillDecorationModel } from '../../../src/utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../../../src/utils/fileItemPillOrder';
-import type { TagTreeNode } from '../../../src/types/storage';
 import { createTestTFile } from '../../utils/createTestTFile';
 import { ItemType } from '../../../src/types';
 import type { NotebookNavigatorSettings } from '../../../src/settings/types';
 
 const mockOpenLinkText = vi.fn();
-const mockNavigateToTag = vi.fn();
 const mockNavigateToProperty = vi.fn();
 const mockSelectionState: {
     selectionType: (typeof ItemType)[keyof typeof ItemType];
@@ -40,7 +37,6 @@ const mockSelectionState: {
     selectedProperty: string | null;
 } = {
     selectionType: ItemType.FOLDER,
-    selectedTag: null,
     selectedProperty: null
 };
 const mockMetadataService = {
@@ -69,7 +65,7 @@ vi.mock('../../../src/context/SelectionContext', () => ({
 
 vi.mock('../../../src/hooks/useTagNavigation', () => ({
     useTagNavigation: () => ({
-        navigateToTag: mockNavigateToTag,
+        navigateToTag: vi.fn(),
         navigateToProperty: mockNavigateToProperty
     })
 }));
@@ -79,40 +75,22 @@ vi.mock('../../../src/components/ServiceIcon', () => ({
         React.createElement('span', { 'data-icon-id': iconId, className })
 }));
 
-function createTagNode(path: string, children: TagTreeNode[] = []): TagTreeNode {
-    const node: TagTreeNode = {
-        name: path.split('/').pop() ?? path,
-        path,
-        displayPath: path,
-        children: new Map(),
-        notesWithTag: new Set()
-    };
-    children.forEach(child => {
-        node.children.set(child.path, child);
-    });
-    return node;
-}
-
 function renderPillRows(
     params: Omit<
         UseFileItemPillsParams,
-        | 'hiddenTagVisibility'
         | 'fileItemPillDecorationModel'
         | 'fileItemPillOrderModel'
         | 'wordCountDisplayText'
         | 'characterCount'
         | 'characterCountDisplayText'
-        | 'showTags'
         | 'showProperties'
         | 'textCountDisplay'
     > & {
-        hiddenTagVisibility?: HiddenTagVisibility;
         fileItemPillDecorationModel?: FileItemPillDecorationModel;
         fileItemPillOrderModel?: FileItemPillOrderModel;
         wordCountDisplayText?: string | null;
         characterCount?: number | null;
         characterCountDisplayText?: string | null;
-        showTags?: boolean;
         showProperties?: boolean;
         textCountDisplay?: NotebookNavigatorSettings['textCountDisplay'];
     }
@@ -141,7 +119,6 @@ function renderPillRows(
     function Host() {
         const state = useFileItemPills({
             ...params,
-            showTags: params.showTags ?? (params.settings.showTags && params.settings.showFileTags),
             showProperties: params.showProperties ?? params.settings.showFileProperties,
             textCountDisplay: params.textCountDisplay ?? params.settings.textCountDisplay,
             wordCountDisplayText:
@@ -150,14 +127,12 @@ function renderPillRows(
             characterCountDisplayText:
                 params.characterCountDisplayText ??
                 (typeof params.characterCount === 'number' ? formatTextCount(params.characterCount) : null),
-            hiddenTagVisibility: params.hiddenTagVisibility ?? createHiddenTagVisibility([], false),
             fileItemPillDecorationModel: params.fileItemPillDecorationModel ?? emptyDecorationModel,
             fileItemPillOrderModel: params.fileItemPillOrderModel ?? emptyOrderModel
         });
         return React.createElement(
             'div',
             {
-                'data-show-tags': state.shouldShowFileTags ? 'true' : 'false',
                 'data-show-properties': state.shouldShowProperty ? 'true' : 'false',
                 'data-show-text-count': state.shouldShowTextCountProperty ? 'true' : 'false',
                 'data-property-search-evidence': JSON.stringify(state.propertySearchEvidenceGroups)
@@ -172,7 +147,6 @@ function renderPillRows(
 describe('useFileItemPills', () => {
     beforeEach(() => {
         mockOpenLinkText.mockReset();
-        mockNavigateToTag.mockReset();
         mockNavigateToProperty.mockReset();
         mockSelectionState.selectionType = ItemType.FOLDER;
         mockSelectionState.selectedTag = null;
@@ -188,153 +162,10 @@ describe('useFileItemPills', () => {
         mockMetadataService.getPropertyIcon.mockImplementation(() => undefined);
     });
 
-    it('renders custom-colored tags before uncolored tags when custom-color priority is enabled', () => {
-        mockMetadataService.getTagColorData.mockImplementation(tag => {
-            if (tag === 'beta') {
-                return { color: '#ff0000' };
-            }
-
-            return {};
-        });
-
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/Daily.md'),
-            isCompactMode: false,
-            tags: ['alpha', 'beta'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                colorFileTags: true,
-                prioritizeColoredFileTags: true,
-                tagColors: { beta: '#ff0000' }
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>()
-        });
-
-        expect(markup).toContain('data-show-tags="true"');
-        expect(markup.indexOf('beta')).toBeLessThan(markup.indexOf('alpha'));
-        expect(markup).toContain('style="color:#ff0000"');
-    });
-
-    it('does not prioritize tags that only have rainbow colors', () => {
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/RainbowPriority.md'),
-            isCompactMode: false,
-            tags: ['alpha', 'beta'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                colorFileTags: true,
-                prioritizeColoredFileTags: true
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>(),
-            fileItemPillDecorationModel: {
-                navRainbowMode: 'foreground',
-                tagRainbowColors: {
-                    colorsByPath: new Map([['beta', '#00ff00']]),
-                    rootColor: undefined,
-                    getInheritedColor: () => undefined
-                },
-                propertyRainbowColors: {
-                    colorsByNodeId: new Map(),
-                    rootColor: undefined,
-                    rootColorsByKey: new Map()
-                },
-                inheritPropertyColors: false
-            }
-        });
-
-        expect(markup.indexOf('>alpha<')).toBeLessThan(markup.indexOf('>beta<'));
-        expect(markup).toContain('style="color:#00ff00"');
-    });
-
-    it('orders file tags by navigation order inside color priority buckets', () => {
-        const alphaIdeaNode = createTagNode('alpha/idea');
-        const alphaTaskNode = createTagNode('alpha/task');
-        const alphaNode = createTagNode('alpha', [alphaIdeaNode, alphaTaskNode]);
-        const betaTaskNode = createTagNode('beta/task');
-        const betaNode = createTagNode('beta', [betaTaskNode]);
-
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/OrderedTags.md'),
-            isCompactMode: false,
-            tags: ['alpha/idea', 'alpha/task', 'beta/task'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                showFileTagAncestors: true,
-                tagTreeSortOverrides: { alpha: 'alpha-desc' }
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>(),
-            fileItemPillOrderModel: {
-                tagTree: new Map([
-                    ['alpha', alphaNode],
-                    ['beta', betaNode]
-                ]),
-                rootTagOrderMap: new Map([
-                    ['beta', 0],
-                    ['alpha', 1]
-                ]),
-                tagComparator: undefined,
-                rootPropertyNavigationOrderMap: new Map()
-            }
-        });
-
-        expect(markup.indexOf('>beta/task<')).toBeLessThan(markup.indexOf('>alpha/task<'));
-        expect(markup.indexOf('>alpha/task<')).toBeLessThan(markup.indexOf('>alpha/idea<'));
-    });
-
-    it('applies rainbow tag colors in file list pills', () => {
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/Rainbow.md'),
-            isCompactMode: false,
-            tags: ['Alpha'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                colorFileTags: true
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>(),
-            fileItemPillDecorationModel: {
-                navRainbowMode: 'foreground',
-                tagRainbowColors: {
-                    colorsByPath: new Map([['alpha', '#00ff00']]),
-                    rootColor: undefined,
-                    getInheritedColor: () => undefined
-                },
-                propertyRainbowColors: {
-                    colorsByNodeId: new Map(),
-                    rootColor: undefined,
-                    rootColorsByKey: new Map()
-                },
-                inheritPropertyColors: false
-            }
-        });
-
-        expect(markup).toContain('style="color:#00ff00"');
-    });
-
     it('renders word count pill rows for markdown notes when word count is active', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Counted.md'),
             isCompactMode: false,
-            tags: [],
             properties: null,
             wordCount: 1234,
             settings: {
@@ -355,7 +186,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Characters.md'),
             isCompactMode: false,
-            tags: [],
             properties: null,
             wordCount: null,
             characterCount: 2048,
@@ -379,7 +209,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Target.md'),
             isCompactMode: false,
-            tags: [],
             properties: [{ fieldKey: 'word-goal', value: '5000', valueKind: 'number' }],
             wordCount: 1250,
             wordCountDisplayText: '25%',
@@ -396,105 +225,10 @@ describe('useFileItemPills', () => {
         expect(markup).toContain('25%');
     });
 
-    it('filters hidden tags using the provided visibility helper', () => {
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/Hidden.md'),
-            isCompactMode: false,
-            tags: ['visible', 'archive/private'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>(),
-            hiddenTagVisibility: createHiddenTagVisibility(['archive'], false)
-        });
-
-        expect(markup).toContain('visible');
-        expect(markup).not.toContain('archive/private');
-    });
-
-    it('hides only the exact selected tag pill in tag context', () => {
-        mockSelectionState.selectionType = ItemType.TAG;
-        mockSelectionState.selectedTag = 'ai';
-
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/Tags.md'),
-            isCompactMode: false,
-            tags: ['ai', 'ai/openai', 'ml'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                showFileTagAncestors: true
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>()
-        });
-
-        expect(markup).not.toContain('>ai<');
-        expect(markup).toContain('ai/openai');
-        expect(markup).toContain('ml');
-    });
-
-    it('hides nested selected tag pills only on exact matches', () => {
-        mockSelectionState.selectionType = ItemType.TAG;
-        mockSelectionState.selectedTag = 'ai/openai';
-
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/Tags.md'),
-            isCompactMode: false,
-            tags: ['ai', 'ai/openai'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                showFileTagAncestors: true
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>()
-        });
-
-        expect(markup).toContain('>ai<');
-        expect(markup).not.toContain('ai/openai');
-    });
-
-    it('shows the selected tag pill when the list setting is enabled', () => {
-        mockSelectionState.selectionType = ItemType.TAG;
-        mockSelectionState.selectedTag = 'ai';
-
-        const markup = renderPillRows({
-            file: createTestTFile('Notes/Tags.md'),
-            isCompactMode: false,
-            tags: ['ai', 'ml'],
-            properties: null,
-            wordCount: null,
-            settings: {
-                ...DEFAULT_SETTINGS,
-                showTags: true,
-                showFileTags: true,
-                showSelectedNavigationPills: true
-            },
-            visiblePropertyKeys: new Set<string>(),
-            visibleNavigationPropertyKeys: new Set<string>()
-        });
-
-        expect(markup).toContain('>ai<');
-        expect(markup).toContain('>ml<');
-    });
-
     it('renders external property links using their display text', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -523,7 +257,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Numbers.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'rating',
@@ -548,7 +281,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Search.md'),
             isCompactMode: false,
-            tags: [],
             properties: [{ fieldKey: 'Workflow', value: 'Waiting for review', valueKind: 'string' }],
             wordCount: null,
             settings: {
@@ -575,7 +307,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/SelectedSearch.md'),
             isCompactMode: false,
-            tags: [],
             properties: [{ fieldKey: 'status', value: 'done', valueKind: 'string' }],
             wordCount: null,
             settings: {
@@ -600,7 +331,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/AliasSearch.md'),
             isCompactMode: false,
-            tags: [],
             properties: [{ fieldKey: 'Aliases', value: 'Best project', valueKind: 'string' }],
             wordCount: null,
             settings: {
@@ -625,7 +355,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/OrderedProperties.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -672,7 +401,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Status.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -705,7 +433,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Status.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -732,7 +459,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Status.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -760,7 +486,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Properties.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -794,7 +519,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/RainbowProperties.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -841,7 +565,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Status.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status',
@@ -880,7 +603,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/EscapedStatus.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'status=final%',
@@ -923,7 +645,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Flags.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'flag',
@@ -950,7 +671,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -978,7 +698,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1006,7 +725,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1035,7 +753,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1062,7 +779,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1091,7 +807,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1119,7 +834,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1147,7 +861,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1175,7 +888,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1204,7 +916,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',
@@ -1233,7 +944,6 @@ describe('useFileItemPills', () => {
         const markup = renderPillRows({
             file: createTestTFile('Notes/Links.md'),
             isCompactMode: false,
-            tags: [],
             properties: [
                 {
                     fieldKey: 'Reference',

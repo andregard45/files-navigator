@@ -441,7 +441,6 @@ export const STRINGS_ZH_TW = {
             option: (rows: number) => `預覽${rows}行`
         },
         groupBy: '分組依據',
-        tags: '標籤',
         properties: '屬性',
         date: '日期',
         parentFolder: '父資料夾',
@@ -1094,7 +1093,6 @@ export const STRINGS_ZH_TW = {
                     title: '標題',
                     previewText: '預覽文字',
                     featureImage: '特色圖片',
-                    tags: '標籤',
                     properties: '屬性',
                     date: '日期',
                     parentFolder: '父資料夾'
@@ -1882,26 +1880,6 @@ export const STRINGS_ZH_TW = {
                     created: '建立日期',
                     modified: '修改日期'
                 }
-            },
-            showFileTags: {
-                name: '顯示檔案標籤',
-                desc: '在檔案項目中顯示可點按的標籤。'
-            },
-            showFullTagPaths: {
-                name: '顯示完整標籤路徑',
-                desc: "顯示完整的標籤層級路徑。啟用：'ai/openai'，'工作/專案/2024'。停用：'openai'，'2024'。"
-            },
-            colorFileTags: {
-                name: '為檔案標籤著色',
-                desc: '將標籤顏色套用於檔案項目中的標籤徽章。'
-            },
-            showColoredTagsFirst: {
-                name: '優先顯示彩色標籤',
-                desc: '將彩色標籤排列在其他標籤之前。'
-            },
-            showFileTagsInCompactMode: {
-                name: '在精簡模式中顯示檔案標籤',
-                desc: '當日期、預覽和圖片被隱藏時顯示標籤。'
             },
             showFileProperties: {
                 name: '顯示檔案屬性',

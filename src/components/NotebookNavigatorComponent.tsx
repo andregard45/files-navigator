@@ -1524,17 +1524,9 @@ export const NotebookNavigatorComponent = React.memo(
         });
         const fileItemPillOrderModel = useMemo<FileItemPillOrderModel>(
             () => ({
-                tagTree: navigationSourceState.tagTreeForOrdering,
-                rootTagOrderMap: navigationSourceState.rootTagOrderMap,
-                tagComparator: navigationSourceState.tagComparator,
                 rootPropertyNavigationOrderMap: createIndexMap(navigationTreeSections.resolvedRootPropertyKeys)
             }),
-            [
-                navigationTreeSections.resolvedRootPropertyKeys,
-                navigationSourceState.rootTagOrderMap,
-                navigationSourceState.tagComparator,
-                navigationSourceState.tagTreeForOrdering
-            ]
+            [navigationTreeSections.resolvedRootPropertyKeys]
         );
 
         return (

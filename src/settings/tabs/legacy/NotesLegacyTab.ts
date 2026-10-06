@@ -77,19 +77,9 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const titleGroup = createGroup(strings.settings.pages.fileDisplay.groups.title);
     const previewTextGroup = createGroup(strings.settings.pages.fileDisplay.groups.previewText);
     const featureImageGroup = createGroup(strings.settings.pages.fileDisplay.groups.featureImage);
-    const tagsGroup = createGroup(strings.settings.pages.fileDisplay.groups.tags);
     const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
     const dateGroup = createGroup(strings.settings.pages.fileDisplay.groups.date);
     const parentFolderGroup = createGroup(strings.settings.pages.fileDisplay.groups.parentFolder);
-
-    const setGroupVisible = (groupRootEl: HTMLElement, visible: boolean) => {
-        setElementVisible(groupRootEl, visible);
-
-        const headingEl = groupRootEl.previousElementSibling;
-        if (headingEl instanceof HTMLElement && headingEl.classList.contains('setting-item-heading')) {
-            setElementVisible(headingEl, visible);
-        }
-    };
 
     const createColorSetting = (params: {
         containerEl: HTMLElement;
@@ -529,61 +519,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
             })
         );
 
-    const showFileTagsSetting = tagsGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showFileTags.name).setDesc(strings.settings.items.showFileTags.desc);
-    });
-
-    const fileTagsDependentSettingsEl = wireToggleSettingWithDependentSection(
-        showFileTagsSetting,
-        () => plugin.settings.showFileTags,
-        async value => {
-            plugin.settings.showFileTags = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    const colorFileTagsSetting = new Setting(fileTagsDependentSettingsEl)
-        .setName(strings.settings.items.colorFileTags.name)
-        .setDesc(strings.settings.items.colorFileTags.desc);
-    const colorFileTagsDependentSettingsEl = wireToggleSettingWithDependentSection(
-        colorFileTagsSetting,
-        () => plugin.settings.colorFileTags,
-        async value => {
-            plugin.settings.colorFileTags = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    new Setting(colorFileTagsDependentSettingsEl)
-        .setName(strings.settings.items.showColoredTagsFirst.name)
-        .setDesc(strings.settings.items.showColoredTagsFirst.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.prioritizeColoredFileTags).onChange(async value => {
-                plugin.settings.prioritizeColoredFileTags = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(fileTagsDependentSettingsEl)
-        .setName(strings.settings.items.showFullTagPaths.name)
-        .setDesc(strings.settings.items.showFullTagPaths.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showFileTagAncestors).onChange(async value => {
-                plugin.settings.showFileTagAncestors = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(fileTagsDependentSettingsEl)
-        .setName(strings.settings.items.showFileTagsInCompactMode.name)
-        .setDesc(strings.settings.items.showFileTagsInCompactMode.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showFileTagsInCompactMode).onChange(async value => {
-                plugin.settings.showFileTagsInCompactMode = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
     const showFilePropertiesSetting = notePropertyGroup.addSetting(setting => {
         setting.setName(strings.settings.items.showFileProperties.name).setDesc(strings.settings.items.showFileProperties.desc);
     });
@@ -740,8 +675,4 @@ export function renderNotesTab(context: SettingsTabContext): void {
                 await plugin.saveSettingsAndUpdate();
             })
         );
-
-    context.registerShowTagsListener(visible => {
-        setGroupVisible(tagsGroup.rootEl, visible);
-    });
 }

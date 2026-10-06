@@ -441,7 +441,6 @@ export const STRINGS_AR = {
             option: (rows: number) => (rows === 1 ? 'صف معاينة واحد' : rows === 2 ? 'صفا معاينة' : `${rows} صفوف معاينة`)
         },
         groupBy: 'تجميع حسب',
-        tags: 'وسوم',
         properties: 'الخصائص',
         date: 'التاريخ',
         parentFolder: 'المجلد الأصلي',
@@ -1098,7 +1097,6 @@ export const STRINGS_AR = {
                     title: 'العنوان',
                     previewText: 'نص المعاينة',
                     featureImage: 'الصورة المميزة',
-                    tags: 'الوسوم',
                     properties: 'الخصائص',
                     date: 'التاريخ',
                     parentFolder: 'المجلد الأصلي'
@@ -1892,26 +1890,6 @@ export const STRINGS_AR = {
                     created: 'تاريخ الإنشاء',
                     modified: 'تاريخ التعديل'
                 }
-            },
-            showFileTags: {
-                name: 'إظهار وسوم الملفات',
-                desc: 'عرض وسوم قابلة للنقر في عناصر الملفات.'
-            },
-            showFullTagPaths: {
-                name: 'إظهار مسارات الوسوم الكاملة',
-                desc: "عرض مسارات تسلسل الوسوم الكاملة. عند التمكين: 'ai/openai'، 'work/projects/2024'. عند التعطيل: 'openai'، '2024'."
-            },
-            colorFileTags: {
-                name: 'تلوين وسوم الملفات',
-                desc: 'تطبيق ألوان الوسوم على شارات الوسوم في عناصر الملفات.'
-            },
-            showColoredTagsFirst: {
-                name: 'إظهار الوسوم الملونة أولاً',
-                desc: 'ترتيب الوسوم الملونة قبل الوسوم الأخرى في عناصر الملفات.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'إظهار وسوم الملفات في الوضع المضغوط',
-                desc: 'عرض الوسوم عند إخفاء التاريخ والمعاينة والصورة.'
             },
             showFileProperties: {
                 name: 'إظهار خصائص الملفات',

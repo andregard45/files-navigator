@@ -446,7 +446,6 @@ export const STRINGS_NL = {
             option: (rows: number) => `${rows} voorbeeldrij${rows === 1 ? '' : 'en'}`
         },
         groupBy: 'Groeperen op',
-        tags: 'Tags',
         properties: 'Eigenschappen',
         date: 'Datum',
         parentFolder: 'Bovenliggende map',
@@ -1108,7 +1107,6 @@ export const STRINGS_NL = {
                     title: 'Titel',
                     previewText: 'Voorbeeldtekst',
                     featureImage: 'Uitgelichte afbeelding',
-                    tags: 'Tags',
                     properties: 'Eigenschappen',
                     date: 'Datum',
                     parentFolder: 'Bovenliggende map'
@@ -1905,26 +1903,6 @@ export const STRINGS_NL = {
                     created: 'Aanmaakdatum',
                     modified: 'Wijzigingsdatum'
                 }
-            },
-            showFileTags: {
-                name: 'Bestandstags tonen',
-                desc: 'Klikbare tags weergeven in bestandsitems.'
-            },
-            showFullTagPaths: {
-                name: 'Volledige tagpaden tonen',
-                desc: "Volledige tag-hiërarchie paden weergeven. Ingeschakeld: 'ai/openai', 'werk/projecten/2024'. Uitgeschakeld: 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Bestandstags kleuren',
-                desc: 'Tagkleuren toepassen op tagbadges op bestandsitems.'
-            },
-            showColoredTagsFirst: {
-                name: 'Gekleurde tags eerst tonen',
-                desc: 'Sorteert gekleurde tags vóór andere tags in bestandsitems.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Bestandstags tonen in compacte modus',
-                desc: 'Tags weergeven wanneer datum, voorbeeld en afbeelding verborgen zijn.'
             },
             showFileProperties: {
                 name: 'Bestandseigenschappen tonen',

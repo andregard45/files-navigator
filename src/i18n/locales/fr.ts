@@ -445,7 +445,6 @@ export const STRINGS_FR = {
             option: (rows: number) => `${rows} ligne${rows === 1 ? '' : 's'} d'aperçu`
         },
         groupBy: 'Grouper par',
-        tags: 'Mots-clés',
         properties: 'Propriétés',
         date: 'Date',
         parentFolder: 'Dossier parent',
@@ -1109,7 +1108,6 @@ export const STRINGS_FR = {
                     title: 'Titre',
                     previewText: "Texte d'aperçu",
                     featureImage: 'Image vedette',
-                    tags: 'Mots-clés',
                     properties: 'Propriétés',
                     date: 'Date',
                     parentFolder: 'Dossier parent'
@@ -1908,26 +1906,6 @@ export const STRINGS_FR = {
                     created: 'Date de création',
                     modified: 'Date de modification'
                 }
-            },
-            showFileTags: {
-                name: 'Afficher les mots-clés de fichier',
-                desc: 'Affiche les mots-clés cliquables dans les éléments de fichier.'
-            },
-            showFullTagPaths: {
-                name: 'Afficher les chemins complets des mots-clés',
-                desc: "Afficher les chemins complets de la hiérarchie des mots-clés. Activé : 'ai/openai', 'travail/projets/2024'. Désactivé : 'openai', '2024'."
-            },
-            colorFileTags: {
-                name: 'Colorer les mots-clés de fichier',
-                desc: 'Appliquer les couleurs de mots-clés aux badges de mots-clés sur les éléments de fichier.'
-            },
-            showColoredTagsFirst: {
-                name: 'Afficher les mots-clés colorés en premier',
-                desc: 'Trie les mots-clés colorés avant les autres mots-clés dans les éléments de fichier.'
-            },
-            showFileTagsInCompactMode: {
-                name: 'Afficher les mots-clés de fichier en mode compact',
-                desc: "Afficher les mots-clés lorsque la date, l'aperçu et l'image sont masqués."
             },
             showFileProperties: {
                 name: 'Afficher les propriétés de fichier',

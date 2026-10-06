@@ -531,7 +531,6 @@ export interface ListPaneAppearance {
     /** Zero hides preview text for this selection; undefined inherits the global row count. */
     previewRows?: number;
     groupBy?: ListNoteGroupingOption;
-    showTags?: boolean;
     showProperties?: boolean;
     showDate?: boolean;
     showParentFolder?: boolean;
@@ -876,11 +875,6 @@ export interface NotebookNavigatorSettings {
     featureImagePixelSize: FeatureImagePixelSizeSetting;
     forceSquareFeatureImage: boolean;
     downloadExternalFeatureImages: boolean;
-    showFileTags: boolean;
-    colorFileTags: boolean;
-    prioritizeColoredFileTags: boolean;
-    showFileTagAncestors: boolean;
-    showFileTagsInCompactMode: boolean;
     showFileProperties: boolean;
     colorFileProperties: boolean;
     prioritizeColoredFileProperties: boolean;
