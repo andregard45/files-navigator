@@ -23,7 +23,6 @@
  *
  * 2. Render-path work:
  *    - displayName: Read from the storage-backed display-name cache
- *    - displayDate: Uses shared date formatting caches
  *    - feature image state: Hydrated from content storage and object URL lifecycle effects
  *    - className/style values: Built directly from row state
  *
@@ -47,7 +46,6 @@ import type { ListPaneAppearanceSettings } from '../settings/listPaneAppearance'
 import { strings } from '../i18n';
 import type { SortOption } from '../settings/types';
 import { type NavigationItemType } from '../types';
-import { DateUtils } from '../utils/dateUtils';
 import { runAsyncAction } from '../utils/async';
 import { openFileInContext } from '../utils/openFileInContext';
 import { FILE_VISIBILITY, getExtensionSuffix, isRasterImageFile, shouldDisplayFile } from '../utils/fileTypeUtils';
@@ -65,7 +63,6 @@ import { openAddTagToFilesModal } from '../utils/tagModalHelpers';
 import { resolveUXIcon } from '../utils/uxIcons';
 import type { InclusionOperator } from '../utils/filterSearch';
 import { getNavigatorPinContext } from '../utils/selectionUtils';
-import { resolveDefaultDateField } from '../utils/sortUtils';
 import type { FileNameIconNeedle } from '../utils/fileIconUtils';
 import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
@@ -136,8 +133,6 @@ export interface FileItemPaneProps {
     searchHighlightTerms?: readonly string[];
     /** Modifies the active search query with a property token when modifier clicking */
     onModifySearchWithProperty?: (key: string, value: string | null, operator: InclusionOperator) => void;
-    /** Local day reference date used for relative date group calculations */
-    localDayReference: Date | null;
     /** Icon size for rendering file icons */
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
@@ -297,7 +292,6 @@ export const FileItem = React.memo(function FileItem({
         sortOption,
         searchHighlightTerms,
         onModifySearchWithProperty,
-        localDayReference,
         fileIconSize,
         appearanceSettings,
         fileNameIconNeedles,
@@ -619,45 +613,6 @@ export const FileItem = React.memo(function FileItem({
         );
     })();
 
-    // Format display date based on current sort
-    const displayDate = useMemo(() => {
-        if (!appearanceSettings.showDate || !sortOption) return '';
-
-        const timestamps = getFileTimestamps(file);
-        const defaultDateField = resolveDefaultDateField(sortOption, settings.alphabeticalDateMode ?? 'modified');
-        const timestamp = defaultDateField === 'created' ? timestamps.created : timestamps.modified;
-
-        // Pinned items are all grouped under "📌 Pinned" section regardless of their actual dates
-        // We need to calculate the actual date group to show smart formatting
-        if (isPinned) {
-            const actualDateGroup = DateUtils.getDateGroup(timestamp, localDayReference ?? undefined);
-            return DateUtils.formatDateForGroup(timestamp, actualDateGroup, settings.dateFormat, settings.timeFormat);
-        }
-
-        // Date group labels use relative formatting; folder group labels fall back to the default date format.
-        if (groupHeaderLabel && groupHeaderLabel !== strings.listPane.pinnedSection) {
-            return DateUtils.formatDateForGroup(timestamp, groupHeaderLabel, settings.dateFormat, settings.timeFormat);
-        }
-
-        // Otherwise format as absolute date
-        return DateUtils.formatDate(timestamp, settings.dateFormat);
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- file.stat timestamps refresh dates when Obsidian mutates TFile objects.
-    }, [
-        file,
-        file.stat.mtime,
-        file.stat.ctime,
-        sortOption,
-        groupHeaderLabel,
-        isPinned,
-        appearanceSettings.showDate,
-        settings.dateFormat,
-        settings.timeFormat,
-        settings.alphabeticalDateMode,
-        getFileTimestamps,
-        metadataVersion,
-        localDayReference
-    ]);
-
     const effectivePreviewText = searchMeta?.excerpt ? searchMeta.excerpt : previewText;
     const hasPreviewAccordingToStatus = appearanceSettings.showPreview && file.extension === 'md' ? hasPreview(file.path) : false;
     const hasPreviewContent = hasPreviewAccordingToStatus || effectivePreviewText.length > 0;
@@ -687,9 +642,8 @@ export const FileItem = React.memo(function FileItem({
     const effectiveHasVisiblePillRows = shouldShowPillRows && hasVisiblePillRows;
     const renderedPillRows = shouldShowPillRows ? pillRows : null;
 
-    const { shouldShowMultilinePreview, shouldShowDateForItem } = getFileItemLayoutState({
+    const { shouldShowMultilinePreview } = getFileItemLayoutState({
         isCompactMode,
-        showDate: appearanceSettings.showDate,
         showPreview: appearanceSettings.showPreview,
         isPinned,
         hasPreviewContent,
@@ -698,7 +652,6 @@ export const FileItem = React.memo(function FileItem({
         hasVisiblePillRows: effectiveHasVisiblePillRows
     });
 
-    const shouldShowMetadataLine = shouldShowDateForItem;
     const shouldShowPinnedSecondaryLine = isPinned && shouldShowMultilinePreview;
 
     // Reset image hidden state when the feature image URL changes
@@ -1224,13 +1177,6 @@ export const FileItem = React.memo(function FileItem({
 
                                 {/* Pills */}
                                 {renderedPillRows}
-
-                                {/* Date metadata line */}
-                                {!isPinned && shouldShowMetadataLine && (
-                                    <div className="nn-file-second-line">
-                                        {shouldShowDateForItem && <div className="nn-file-date">{displayDate}</div>}
-                                    </div>
-                                )}
                             </div>
                             {/* ========== FEATURE IMAGE AREA ========== */}
                             {/* Shows either actual image or extension badge for non-markdown files */}

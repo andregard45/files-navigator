@@ -300,15 +300,6 @@ export function showListPaneAppearanceMenu({
             available: !isCompact || settings.showFilePropertiesInCompactMode
         }
     ];
-    const metadataToggles: ContentToggle[] = [
-        {
-            key: 'showDate',
-            title: strings.folderAppearance.date,
-            icon: 'lucide-calendar',
-            globalDefault: settings.showFileDate,
-            available: !isCompact
-        }
-    ];
 
     // Each group opens with a separator. A group whose toggles are all unavailable is skipped
     // entirely so the menu never renders a separator with nothing below it.
@@ -336,7 +327,6 @@ export function showListPaneAppearanceMenu({
         });
     };
     addToggleGroup(contentToggles);
-    addToggleGroup(metadataToggles);
 
     if (descendantAction) {
         menu.addSeparator();

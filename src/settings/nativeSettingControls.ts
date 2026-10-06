@@ -132,7 +132,6 @@ const BOOLEAN_SETTING_KEYS = [
     'showPropertiesOnSeparateRows',
     'enablePropertyInternalLinks',
     'enablePropertyExternalLinks',
-    'showFileDate',
     'showSelectedNavigationPills',
     'colorListPaneTitle',
     'stickyGroupHeaders',
@@ -167,7 +166,6 @@ const STRING_SETTING_KEYS = [
     'calendarTemplateFolder',
     'templateEngine',
     'navCountLeaderStyle',
-    'alphabeticalDateMode',
     'listPaneTitle',
     'defaultListMode',
     'propertySortSecondary',
@@ -194,7 +192,6 @@ const STRING_SETTING_OPTIONS: Partial<Record<NativeStringControlKey, readonly st
     hideRecentNotes: ['none', 'folder-notes'],
     calendarMonthHeadingFormat: ['full', 'short'],
     navCountLeaderStyle: ['none', 'dots', 'dashes', 'line'],
-    alphabeticalDateMode: ['created', 'modified'],
     listPaneTitle: ['header', 'list', 'hidden'],
     defaultListMode: ['standard', 'compact'],
     propertySortSecondary: ['title', 'filename', 'created', 'modified'],
@@ -217,7 +214,6 @@ export const NATIVE_SETTING_DOM_STATE_REFRESH_KEYS: ReadonlySet<NativeSettingCon
     'showFeatureImage',
     'showFileProperties',
     'colorFileProperties',
-    'showFileDate',
     'showNoteCount',
     'springLoadedFolders'
 ]);

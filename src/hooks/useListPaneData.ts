@@ -81,8 +81,6 @@ interface UseListPaneDataParams {
     activeProfile: ActiveProfileState;
     /** Effective grouping for the current list selection */
     groupBy: ListNoteGroupingOption;
-    /** Effective date visibility for the current list selection */
-    showFileDate: boolean;
     /** Whether the pinned section is expanded in the current context */
     pinnedGroupExpanded: boolean;
     /** Collapsed list group keys for the current vault */
@@ -138,7 +136,6 @@ export function useListPaneData({
     settings,
     activeProfile,
     groupBy,
-    showFileDate,
     pinnedGroupExpanded,
     collapsedListGroups,
     searchProvider,
@@ -286,7 +283,6 @@ export function useListPaneData({
         useOmnisearch
     });
     const searchableNames = useSearchableNames({ app, baseFiles, getFileDisplayName });
-    const filterSettings = useMemo(() => ({ alphabeticalDateMode: settings.alphabeticalDateMode }), [settings.alphabeticalDateMode]);
 
     const filterResult = useMemo(() => {
         return filterListPaneFiles({
@@ -297,7 +293,6 @@ export function useListPaneData({
             omnisearchResult,
             searchTokens,
             searchableNames,
-            settings: filterSettings,
             sortOption,
             trimmedQuery,
             useOmnisearch
@@ -307,7 +302,6 @@ export function useListPaneData({
         baseFiles,
         getDB,
         getFileTimestamps,
-        filterSettings,
         omnisearchResult,
         searchTokens,
         searchableNames,
@@ -529,7 +523,6 @@ export function useListPaneData({
         selectionType,
         settings,
         shouldRefreshOnCustomGroupHeaderMetadataChange,
-        showFileDate,
         showHiddenItems,
         sortOption,
         propertySortKey: sortSpec.propertyKey,

@@ -443,7 +443,6 @@ export const STRINGS_TR = {
         },
         groupBy: 'Gruplama ölçütü',
         properties: 'Özellikler',
-        date: 'Tarih',
         resetAppearance: 'Görünümü sıfırla',
         openPluginSettings: 'Eklenti ayarlarını aç…'
     },
@@ -1099,8 +1098,7 @@ export const STRINGS_TR = {
                     title: 'Başlık',
                     previewText: 'Önizleme metni',
                     featureImage: 'Öne çıkan görsel',
-                    properties: 'Özellikler',
-                    date: 'Tarih'
+                    properties: 'Özellikler'
                 }
             },
             calendar: {
@@ -1860,18 +1858,6 @@ export const STRINGS_TR = {
                 name: 'Klasörleri alt klasör notlarından hariç tut (kasa profili)',
                 desc: 'Alt klasörlerden notlar toplanırken atlanacak klasörlerin virgülle ayrılmış listesi. Klasörler görünür kalır ve birini seçmek yine notlarını gösterir. Klasörleri gizle ile aynı desenleri kullanır.',
                 placeholder: 'günlük, kaynaklar, /arşiv'
-            },
-            showFileDate: {
-                name: 'Tarihi göster',
-                desc: 'Not adlarının altında tarihi görüntüle.'
-            },
-            dateWhenSortingByName: {
-                name: 'Ada göre sıralarken',
-                desc: 'Notlar alfabetik olarak sıralandığında gösterilecek tarih.',
-                options: {
-                    created: 'Oluşturma tarihi',
-                    modified: 'Değiştirme tarihi'
-                }
             },
             showFileProperties: {
                 name: 'Dosya özelliklerini göster',

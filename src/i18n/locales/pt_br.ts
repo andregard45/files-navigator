@@ -445,7 +445,6 @@ export const STRINGS_PT_BR = {
         },
         groupBy: 'Agrupar por',
         properties: 'Propriedades',
-        date: 'Data',
         resetAppearance: 'Redefinir aparência',
         openPluginSettings: 'Abrir configurações do plugin…'
     },
@@ -1105,8 +1104,7 @@ export const STRINGS_PT_BR = {
                     title: 'Título',
                     previewText: 'Texto de visualização',
                     featureImage: 'Imagem de destaque',
-                    properties: 'Propriedades',
-                    date: 'Data'
+                    properties: 'Propriedades'
                 }
             },
             calendar: {
@@ -1869,18 +1867,6 @@ export const STRINGS_PT_BR = {
                 name: 'Excluir pastas das notas de subpastas (perfil do cofre)',
                 desc: 'Lista separada por vírgulas de pastas a omitir ao coletar notas de subpastas. As pastas permanecem visíveis, e selecionar uma ainda mostra suas notas. Usa os mesmos padrões de Ocultar pastas.',
                 placeholder: 'diário, recursos, /arquivo'
-            },
-            showFileDate: {
-                name: 'Mostrar data',
-                desc: 'Exibir a data abaixo dos nomes das notas.'
-            },
-            dateWhenSortingByName: {
-                name: 'Ao ordenar por nome',
-                desc: 'Data a mostrar quando as notas são ordenadas alfabeticamente.',
-                options: {
-                    created: 'Data de criação',
-                    modified: 'Data de modificação'
-                }
             },
             showFileProperties: {
                 name: 'Mostrar propriedades de arquivo',

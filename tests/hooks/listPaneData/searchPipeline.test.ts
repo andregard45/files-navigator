@@ -65,7 +65,6 @@ describe('filterListPaneFiles omnisearch pending states', () => {
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             omnisearchResult: null,
             searchableNames: new Map(),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: 'meeting',
             useOmnisearch: true
@@ -89,7 +88,6 @@ describe('filterListPaneFiles omnisearch pending states', () => {
             getFileTimestamps: () => ({ created: 0, modified: 0 }),
             omnisearchResult: { files: [matching], meta: new Map() },
             searchableNames: new Map(),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: 'meeting notes',
             useOmnisearch: true
@@ -116,7 +114,6 @@ describe('filterListPaneFiles alias metadata', () => {
             omnisearchResult: null,
             searchTokens: parseFilterSearchTokens('nn'),
             searchableNames: new Map([[file.path, searchableName]]),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: 'nn',
             useOmnisearch: false
@@ -147,7 +144,6 @@ describe('filterListPaneFiles alias metadata', () => {
             omnisearchResult: null,
             searchTokens: parseFilterSearchTokens('no1 fav'),
             searchableNames: new Map([[file.path, searchableName]]),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: 'no1 fav',
             useOmnisearch: false
@@ -182,7 +178,6 @@ describe('filterListPaneFiles alias metadata', () => {
             omnisearchResult: null,
             searchTokens: parseFilterSearchTokens('notebook'),
             searchableNames: new Map([[file.path, searchableName]]),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: 'notebook',
             useOmnisearch: false
@@ -215,7 +210,6 @@ describe('filterListPaneFiles property metadata', () => {
             omnisearchResult: null,
             searchTokens: parseFilterSearchTokens('.alias'),
             searchableNames: new Map([[file.path, searchableName]]),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: '.alias',
             useOmnisearch: false
@@ -247,7 +241,6 @@ describe('filterListPaneFiles property metadata', () => {
             omnisearchResult: null,
             searchTokens: parseFilterSearchTokens('.workflow=waiting'),
             searchableNames: new Map([[file.path, searchableName]]),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: '.workflow=waiting',
             useOmnisearch: false
@@ -285,7 +278,6 @@ describe('filterListPaneFiles property metadata', () => {
                 omnisearchResult: null,
                 searchTokens: parseFilterSearchTokens(query),
                 searchableNames: new Map([[file.path, searchableName]]),
-                settings: { alphabeticalDateMode: 'modified' },
                 sortOption: 'alphabetical-asc',
                 trimmedQuery: query,
                 useOmnisearch: false
@@ -319,7 +311,6 @@ describe('filterListPaneFiles property metadata', () => {
             omnisearchResult: null,
             searchTokens: parseFilterSearchTokens(query),
             searchableNames: new Map([[file.path, searchableName]]),
-            settings: { alphabeticalDateMode: 'modified' },
             sortOption: 'alphabetical-asc',
             trimmedQuery: query,
             useOmnisearch: false
@@ -347,7 +338,6 @@ describe('filterListPaneFiles property metadata', () => {
                 omnisearchResult: null,
                 searchTokens: parseFilterSearchTokens(query),
                 searchableNames: new Map([[file.path, searchableName]]),
-                settings: { alphabeticalDateMode: 'modified' },
                 sortOption: 'alphabetical-asc',
                 trimmedQuery: query,
                 useOmnisearch: false

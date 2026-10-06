@@ -445,7 +445,6 @@ export const STRINGS_PL = {
         },
         groupBy: 'Grupuj według',
         properties: 'Atrybuty',
-        date: 'Data',
         resetAppearance: 'Zresetuj wygląd',
         openPluginSettings: 'Otwórz ustawienia wtyczki…'
     },
@@ -1105,8 +1104,7 @@ export const STRINGS_PL = {
                     title: 'Tytuł',
                     previewText: 'Tekst podglądu',
                     featureImage: 'Wyróżniony obraz',
-                    properties: 'Atrybuty',
-                    date: 'Data'
+                    properties: 'Atrybuty'
                 }
             },
             calendar: {
@@ -1868,18 +1866,6 @@ export const STRINGS_PL = {
                 name: 'Wyklucz foldery z notatek z podfolderów (profil sejfu)',
                 desc: 'Lista folderów oddzielonych przecinkami, które mają być pomijane podczas zbierania notatek z podfolderów. Foldery pozostają widoczne, a wybranie folderu nadal pokazuje jego notatki. Używa tych samych wzorców co Ukryj foldery.',
                 placeholder: 'dzienne, zasoby, /archiwum'
-            },
-            showFileDate: {
-                name: 'Pokaż datę',
-                desc: 'Wyświetla datę pod nazwami notatek.'
-            },
-            dateWhenSortingByName: {
-                name: 'Podczas sortowania według nazwy',
-                desc: 'Data widoczna, gdy notatki są sortowane alfabetycznie.',
-                options: {
-                    created: 'Data utworzenia',
-                    modified: 'Data modyfikacji'
-                }
             },
             showFileProperties: {
                 name: 'Pokaż atrybuty plików',

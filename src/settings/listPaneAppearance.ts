@@ -31,7 +31,6 @@ export interface ListPaneAppearanceSettings {
     mode: ListDisplayMode;
     titleRows: number;
     previewRows: number;
-    showDate: boolean;
     showPreview: boolean;
     showImage: boolean;
     showProperties: boolean;
@@ -43,7 +42,7 @@ export interface ListPaneAppearanceSettings {
  * Both `true` and `false` are persisted so a selection can enable content that
  * the global setting turns off, and hide content that the global setting shows.
  */
-export const LIST_PANE_TOGGLE_KEYS = ['showProperties', 'showDate'] as const;
+export const LIST_PANE_TOGGLE_KEYS = ['showProperties'] as const;
 
 export type ListPaneToggleKey = (typeof LIST_PANE_TOGGLE_KEYS)[number];
 
@@ -213,7 +212,6 @@ export function resolveListPaneAppearance({
         titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
         // Zero hides preview text, but the configured row count still sizes feature-image and pill layouts.
         previewRows: previewRowsOverride && previewRowsOverride > 0 ? previewRowsOverride : settings.previewRows,
-        showDate: !isCompact && (appearance?.showDate ?? settings.showFileDate),
         showPreview: !isCompact && settings.showFilePreview && previewRowsOverride !== 0,
         showImage: !isCompact && settings.showFeatureImage,
         showProperties,

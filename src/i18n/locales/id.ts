@@ -443,7 +443,6 @@ export const STRINGS_ID = {
         },
         groupBy: 'Kelompokkan berdasarkan',
         properties: 'Properti',
-        date: 'Tanggal',
         resetAppearance: 'Atur ulang tampilan',
         openPluginSettings: 'Buka pengaturan plugin…'
     },
@@ -1101,8 +1100,7 @@ export const STRINGS_ID = {
                     title: 'Judul',
                     previewText: 'Teks pratinjau',
                     featureImage: 'Gambar unggulan',
-                    properties: 'Properti',
-                    date: 'Tanggal'
+                    properties: 'Properti'
                 }
             },
             calendar: {
@@ -1862,18 +1860,6 @@ export const STRINGS_ID = {
                 name: 'Kecualikan folder dari catatan subfolder (profil vault)',
                 desc: 'Daftar folder yang dipisahkan koma untuk dilewati saat mengumpulkan catatan dari subfolder. Folder tetap terlihat, dan memilih folder tetap menampilkan catatannya. Menggunakan pola yang sama seperti Sembunyikan folder.',
                 placeholder: 'harian, sumber-daya, /arsip'
-            },
-            showFileDate: {
-                name: 'Tampilkan tanggal',
-                desc: 'Tampilkan tanggal di bawah nama catatan.'
-            },
-            dateWhenSortingByName: {
-                name: 'Saat mengurutkan berdasarkan nama',
-                desc: 'Tanggal yang ditampilkan saat catatan diurutkan secara alfabetis.',
-                options: {
-                    created: 'Tanggal dibuat',
-                    modified: 'Tanggal dimodifikasi'
-                }
             },
             showFileProperties: {
                 name: 'Tampilkan properti file',

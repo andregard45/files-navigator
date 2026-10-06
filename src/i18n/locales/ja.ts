@@ -444,7 +444,6 @@ export const STRINGS_JA = {
         },
         groupBy: 'グループ化',
         properties: 'プロパティ',
-        date: '日付',
         resetAppearance: '外観をリセット',
         openPluginSettings: 'プラグイン設定を開く…'
     },
@@ -1101,8 +1100,7 @@ export const STRINGS_JA = {
                     title: 'タイトル',
                     previewText: 'プレビューテキスト',
                     featureImage: 'アイキャッチ画像',
-                    properties: 'プロパティ',
-                    date: '日付'
+                    properties: 'プロパティ'
                 }
             },
             calendar: {
@@ -1860,18 +1858,6 @@ export const STRINGS_JA = {
                 createMissing: {
                     name: 'ホームページ: ノートが存在しない場合に作成',
                     desc: '起動時またはコマンド実行時に、定期ノートが存在しなければ作成します。'
-                }
-            },
-            showFileDate: {
-                name: '日付を表示',
-                desc: 'ノート名の下に日付を表示します。'
-            },
-            dateWhenSortingByName: {
-                name: '名前でソート時',
-                desc: 'ノートが名前でソートされている場合に表示する日付。',
-                options: {
-                    created: '作成日',
-                    modified: '更新日'
                 }
             },
             showFileProperties: {

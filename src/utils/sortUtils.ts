@@ -19,7 +19,6 @@
 import { TFile, TFolder } from 'obsidian';
 import {
     normalizeListSortOverride,
-    type AlphabeticalDateMode,
     type AlphaSortOrder,
     type ListSortOverrideValue,
     type SortOption,
@@ -34,10 +33,6 @@ import type { UXIconId } from './uxIcons';
 
 export function isDateSortOption(sortOption: SortOption): boolean {
     return sortOption.startsWith('modified') || sortOption.startsWith('created');
-}
-
-function isAlphabeticalSortOption(sortOption: SortOption): boolean {
-    return !isDateSortOption(sortOption);
 }
 
 export function isPropertySortOption(sortOption: SortOption): sortOption is 'property-asc' | 'property-desc' {
@@ -808,16 +803,4 @@ export function getSortIcon(sortOption: SortOption): string {
  */
 export function getDateField(sortOption: SortOption): 'ctime' | 'mtime' {
     return sortOption.startsWith('created') ? 'ctime' : 'mtime';
-}
-
-/**
- * Resolves which date field to use based on sort option and alphabetical date mode setting.
- * For date sorts, uses the sort field; for alphabetical sorts, uses the user preference.
- */
-export function resolveDefaultDateField(sortOption: SortOption, alphabeticalDateMode: AlphabeticalDateMode): 'created' | 'modified' {
-    if (isAlphabeticalSortOption(sortOption)) {
-        return alphabeticalDateMode === 'created' ? 'created' : 'modified';
-    }
-
-    return getDateField(sortOption) === 'ctime' ? 'created' : 'modified';
 }

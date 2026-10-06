@@ -442,7 +442,6 @@ export const STRINGS_EN = {
         },
         groupBy: 'Group by',
         properties: 'Properties',
-        date: 'Date',
         resetAppearance: 'Reset appearance',
         openPluginSettings: 'Open plugin settings…'
     },
@@ -1094,8 +1093,7 @@ export const STRINGS_EN = {
                     title: 'Title',
                     previewText: 'Preview text',
                     featureImage: 'Feature image',
-                    properties: 'Properties',
-                    date: 'Date'
+                    properties: 'Properties'
                 }
             },
             calendar: {
@@ -1854,18 +1852,6 @@ export const STRINGS_EN = {
                 name: 'Exclude folders from descendants (vault profile)',
                 desc: 'Comma-separated list of folders to omit when collecting notes from subfolders. Folders remain visible, and selecting one still shows its notes. Uses the same patterns as Hide folders.',
                 placeholder: 'daily, resources, /archive'
-            },
-            showFileDate: {
-                name: 'Show date',
-                desc: 'Display the date below note names.'
-            },
-            dateWhenSortingByName: {
-                name: 'When sorting by name',
-                desc: 'Date to show when notes are alphabetically sorted.',
-                options: {
-                    created: 'Created date',
-                    modified: 'Modified date'
-                }
             },
             showFileProperties: {
                 name: 'Show file properties',
