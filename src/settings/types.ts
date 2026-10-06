@@ -532,7 +532,6 @@ export interface ListPaneAppearance {
     previewRows?: number;
     groupBy?: ListNoteGroupingOption;
     showProperties?: boolean;
-    showDate?: boolean;
 }
 
 const PROPERTY_GROUPING_PREFIX = 'property:';
@@ -610,9 +609,6 @@ export function normalizeAppearanceGroupBy<T extends AppearanceGroupingValue>(ap
 
     delete appearance.groupBy;
 }
-
-/** Date source to display when alphabetical sorting is active */
-export type AlphabeticalDateMode = 'created' | 'modified';
 
 /** Buttons available in the navigation toolbar */
 export type NavigationToolbarButtonId = 'toggleDualPane' | 'expandCollapse' | 'calendar' | 'hiddenItems' | 'rootReorder' | 'newFolder';
@@ -881,8 +877,6 @@ export interface NotebookNavigatorSettings {
     showPropertiesOnSeparateRows: boolean;
     enablePropertyInternalLinks: boolean;
     enablePropertyExternalLinks: boolean;
-    showFileDate: boolean;
-    alphabeticalDateMode: AlphabeticalDateMode;
 
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
     calendarPlacement: CalendarPlacement;

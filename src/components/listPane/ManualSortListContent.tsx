@@ -66,7 +66,6 @@ interface ManualSortListContentProps {
     isDoneDisabled: boolean;
     selectionType: NavigationItemType | null;
     sortOption?: SortOption;
-    localDayReference: Date | null;
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
     includeDescendantNotes: boolean;
@@ -496,7 +495,6 @@ export function ManualSortListContent({
     isDoneDisabled,
     selectionType,
     sortOption,
-    localDayReference,
     fileIconSize,
     appearanceSettings,
     includeDescendantNotes,
@@ -578,7 +576,6 @@ export function ManualSortListContent({
             selectionType,
             sortOption,
             onModifySearchWithProperty: noopModifySearch,
-            localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,
@@ -597,7 +594,6 @@ export function ManualSortListContent({
             onFileClick,
             selectionType,
             sortOption,
-            localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,

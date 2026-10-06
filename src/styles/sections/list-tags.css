@@ -115,7 +115,3 @@
 .nn-file.nn-selected .nn-file-preview {
     color: var(--nn-selected-file-preview-color);
 }
-
-.nn-file.nn-selected .nn-file-date {
-    color: var(--nn-selected-file-date-color);
-}

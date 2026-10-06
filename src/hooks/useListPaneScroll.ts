@@ -275,7 +275,6 @@ function getListLayoutSignature({
             titleRows: folderSettings.titleRows,
             previewRows: folderSettings.previewRows,
             groupBy: folderSettings.groupBy,
-            showDate: folderSettings.showDate,
             showPreview: folderSettings.showPreview,
             showImage: folderSettings.showImage,
             showProperties: folderSettings.showProperties
@@ -595,7 +594,6 @@ export function useListPaneScroll({
             heights: listMeasurements,
             titleRows: folderSettings.titleRows || 1,
             previewRows: folderSettings.previewRows,
-            showDate: folderSettings.showDate,
             showPreview: folderSettings.showPreview,
             showImage: folderSettings.showImage,
             compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
@@ -615,7 +613,6 @@ export function useListPaneScroll({
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
         folderSettings.previewRows,
-        folderSettings.showDate,
         folderSettings.showImage,
         folderSettings.showPreview,
         folderSettings.showProperties,

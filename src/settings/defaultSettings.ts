@@ -371,9 +371,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showPropertiesOnSeparateRows: false,
     enablePropertyInternalLinks: true,
     enablePropertyExternalLinks: true,
-    showFileDate: true,
-    // Default to showing modified date when sorting alphabetically
-    alphabeticalDateMode: 'modified',
 
     // Calendar tab - Calendar (always enabled)
     calendarPlacement: 'left-sidebar',

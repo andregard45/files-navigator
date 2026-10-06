@@ -441,7 +441,6 @@ export const STRINGS_ZH_CN = {
         },
         groupBy: '分组依据',
         properties: '属性',
-        date: '日期',
         resetAppearance: '重置外观',
         openPluginSettings: '打开插件设置…'
     },
@@ -1091,8 +1090,7 @@ export const STRINGS_ZH_CN = {
                     title: '标题',
                     previewText: '预览文本',
                     featureImage: '特色图片',
-                    properties: '属性',
-                    date: '日期'
+                    properties: '属性'
                 }
             },
             calendar: {
@@ -1844,18 +1842,6 @@ export const STRINGS_ZH_CN = {
                 createMissing: {
                     name: '主页：不存在时创建笔记',
                     desc: '启动或执行命令时，如果定期笔记不存在则创建。'
-                }
-            },
-            showFileDate: {
-                name: '显示日期',
-                desc: '在笔记名称下方显示日期。'
-            },
-            dateWhenSortingByName: {
-                name: '按名称排序时',
-                desc: '笔记按字母顺序排序时显示的日期。',
-                options: {
-                    created: '创建日期',
-                    modified: '修改日期'
                 }
             },
             showFileProperties: {

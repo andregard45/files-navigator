@@ -447,7 +447,6 @@ export const STRINGS_NL = {
         },
         groupBy: 'Groeperen op',
         properties: 'Eigenschappen',
-        date: 'Datum',
         resetAppearance: 'Uiterlijk herstellen',
         openPluginSettings: 'Plugin-instellingen openen…'
     },
@@ -1106,8 +1105,7 @@ export const STRINGS_NL = {
                     title: 'Titel',
                     previewText: 'Voorbeeldtekst',
                     featureImage: 'Uitgelichte afbeelding',
-                    properties: 'Eigenschappen',
-                    date: 'Datum'
+                    properties: 'Eigenschappen'
                 }
             },
             calendar: {
@@ -1869,18 +1867,6 @@ export const STRINGS_NL = {
                 name: 'Mappen uitsluiten van notities uit submappen (kluisprofiel)',
                 desc: 'Kommagescheiden lijst met mappen die worden overgeslagen bij het verzamelen van notities uit submappen. Mappen blijven zichtbaar, en het selecteren van een map toont nog steeds de notities. Gebruikt dezelfde patronen als Mappen verbergen.',
                 placeholder: 'dagelijks, bronnen, /archief'
-            },
-            showFileDate: {
-                name: 'Datum tonen',
-                desc: 'De datum onder notitienamen weergeven.'
-            },
-            dateWhenSortingByName: {
-                name: 'Bij sorteren op naam',
-                desc: 'Weer te geven datum wanneer notities alfabetisch zijn gesorteerd.',
-                options: {
-                    created: 'Aanmaakdatum',
-                    modified: 'Wijzigingsdatum'
-                }
             },
             showFileProperties: {
                 name: 'Bestandseigenschappen tonen',

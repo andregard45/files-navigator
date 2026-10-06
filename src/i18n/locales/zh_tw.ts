@@ -442,7 +442,6 @@ export const STRINGS_ZH_TW = {
         },
         groupBy: '分組依據',
         properties: '屬性',
-        date: '日期',
         resetAppearance: '重設外觀',
         openPluginSettings: '開啟外掛程式設定…'
     },
@@ -1092,8 +1091,7 @@ export const STRINGS_ZH_TW = {
                     title: '標題',
                     previewText: '預覽文字',
                     featureImage: '特色圖片',
-                    properties: '屬性',
-                    date: '日期'
+                    properties: '屬性'
                 }
             },
             calendar: {
@@ -1845,18 +1843,6 @@ export const STRINGS_ZH_TW = {
                 createMissing: {
                     name: '首頁：不存在時建立筆記',
                     desc: '啟動或執行命令時，如果週期筆記不存在則建立。'
-                }
-            },
-            showFileDate: {
-                name: '顯示日期',
-                desc: '在筆記名稱下方顯示日期。'
-            },
-            dateWhenSortingByName: {
-                name: '按名稱排序時',
-                desc: '筆記按字母順序排序時顯示的日期。',
-                options: {
-                    created: '建立日期',
-                    modified: '修改日期'
                 }
             },
             showFileProperties: {

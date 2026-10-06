@@ -442,7 +442,6 @@ export const STRINGS_AR = {
         },
         groupBy: 'تجميع حسب',
         properties: 'الخصائص',
-        date: 'التاريخ',
         resetAppearance: 'إعادة تعيين المظهر',
         openPluginSettings: 'فتح إعدادات الإضافة…'
     },
@@ -1096,8 +1095,7 @@ export const STRINGS_AR = {
                     title: 'العنوان',
                     previewText: 'نص المعاينة',
                     featureImage: 'الصورة المميزة',
-                    properties: 'الخصائص',
-                    date: 'التاريخ'
+                    properties: 'الخصائص'
                 }
             },
             calendar: {
@@ -1856,18 +1854,6 @@ export const STRINGS_AR = {
                 name: 'استبعاد المجلدات من ملاحظات المجلدات الفرعية (ملف تعريف الخزنة)',
                 desc: 'قائمة مفصولة بفواصل للمجلدات التي يتم تجاهلها عند جمع الملاحظات من المجلدات الفرعية. تبقى المجلدات مرئية، ويظل تحديدها يعرض ملاحظاتها. تستخدم نفس أنماط إخفاء المجلدات.',
                 placeholder: 'يوميات, موارد, /archive'
-            },
-            showFileDate: {
-                name: 'إظهار التاريخ',
-                desc: 'عرض التاريخ أسفل أسماء الملاحظات.'
-            },
-            dateWhenSortingByName: {
-                name: 'عند الترتيب حسب الاسم',
-                desc: 'التاريخ المعروض عند ترتيب الملاحظات أبجديًا.',
-                options: {
-                    created: 'تاريخ الإنشاء',
-                    modified: 'تاريخ التعديل'
-                }
             },
             showFileProperties: {
                 name: 'إظهار خصائص الملفات',

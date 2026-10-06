@@ -442,7 +442,6 @@ export const STRINGS_VI = {
         },
         groupBy: 'Nhóm theo',
         properties: 'Thuộc tính',
-        date: 'Ngày',
         resetAppearance: 'Đặt lại giao diện',
         openPluginSettings: 'Mở cài đặt plugin…'
     },
@@ -1099,8 +1098,7 @@ export const STRINGS_VI = {
                     title: 'Tiêu đề',
                     previewText: 'Văn bản xem trước',
                     featureImage: 'Hình ảnh nổi bật',
-                    properties: 'Thuộc tính',
-                    date: 'Ngày'
+                    properties: 'Thuộc tính'
                 }
             },
             calendar: {
@@ -1860,18 +1858,6 @@ export const STRINGS_VI = {
                 name: 'Loại trừ thư mục khỏi ghi chú thư mục con (hồ sơ vault)',
                 desc: 'Danh sách thư mục phân cách bằng dấu phẩy sẽ được bỏ qua khi thu thập ghi chú từ thư mục con. Các thư mục vẫn hiển thị, và khi chọn một thư mục thì ghi chú của thư mục đó vẫn được hiển thị. Dùng cùng mẫu với Ẩn thư mục.',
                 placeholder: 'hàng ngày, tài nguyên, /lưu trữ'
-            },
-            showFileDate: {
-                name: 'Hiện ngày',
-                desc: 'Hiển thị ngày bên dưới tên ghi chú.'
-            },
-            dateWhenSortingByName: {
-                name: 'Khi sắp xếp theo tên',
-                desc: 'Ngày hiển thị khi ghi chú được sắp xếp theo bảng chữ cái.',
-                options: {
-                    created: 'Ngày tạo',
-                    modified: 'Ngày sửa'
-                }
             },
             showFileProperties: {
                 name: 'Hiện thuộc tính tệp',

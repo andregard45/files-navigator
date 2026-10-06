@@ -442,7 +442,6 @@ export const STRINGS_IT = {
         },
         groupBy: 'Raggruppa per',
         properties: 'Proprietà',
-        date: 'Data',
         resetAppearance: 'Reimposta aspetto',
         openPluginSettings: 'Apri impostazioni del plugin…'
     },
@@ -1100,8 +1099,7 @@ export const STRINGS_IT = {
                     title: 'Titolo',
                     previewText: 'Testo anteprima',
                     featureImage: 'Immagine in evidenza',
-                    properties: 'Proprietà',
-                    date: 'Data'
+                    properties: 'Proprietà'
                 }
             },
             calendar: {
@@ -1865,18 +1863,6 @@ export const STRINGS_IT = {
                 name: 'Escludi cartelle dalle note delle sottocartelle (profilo vault)',
                 desc: 'Lista di cartelle separate da virgola da ignorare quando vengono raccolte le note dalle sottocartelle. Le cartelle restano visibili e selezionandone una vengono comunque mostrate le sue note. Usa gli stessi pattern di Nascondi cartelle.',
                 placeholder: 'giornaliere, risorse, /archivio'
-            },
-            showFileDate: {
-                name: 'Mostra data',
-                desc: 'Visualizza la data sotto i nomi note.'
-            },
-            dateWhenSortingByName: {
-                name: 'Quando ordini per nome',
-                desc: 'Data da mostrare quando le note sono ordinate alfabeticamente.',
-                options: {
-                    created: 'Data creazione',
-                    modified: 'Data modifica'
-                }
             },
             showFileProperties: {
                 name: 'Mostra proprietà file',

@@ -38,40 +38,34 @@ describe('resolveListPaneAppearance', () => {
     it('lets a selection hide globally shown content', () => {
         const settings = createSettings({
             showFileProperties: true,
-            showFileDate: true
         });
         const result = resolveListPaneAppearance({
             settings,
             appearance: {
                 showProperties: false,
-                showDate: false
             },
             selectionType: ItemType.FOLDER
         });
 
         expect(result).toMatchObject({
             showProperties: false,
-            showDate: false
         });
     });
 
     it('lets a selection enable content that global settings turn off', () => {
         const settings = createSettings({
             showFileProperties: false,
-            showFileDate: false
         });
         const result = resolveListPaneAppearance({
             settings,
             appearance: {
                 showProperties: true,
-                showDate: true
             },
             selectionType: ItemType.FOLDER
         });
 
         expect(result).toMatchObject({
             showProperties: true,
-            showDate: true
         });
     });
 
@@ -81,9 +75,8 @@ describe('resolveListPaneAppearance', () => {
                 defaultListMode: 'standard',
                 showFilePreview: true,
                 showFeatureImage: true,
-                showFileDate: true,
             }),
-            appearance: { mode: 'compact', previewRows: 4, showDate: true },
+            appearance: { mode: 'compact', previewRows: 4 },
             selectionType: ItemType.PROPERTY
         });
 
@@ -92,7 +85,6 @@ describe('resolveListPaneAppearance', () => {
             previewRows: 4,
             showPreview: false,
             showImage: false,
-            showDate: false,
         });
     });
 
@@ -130,7 +122,6 @@ describe('stored list appearance intent', () => {
             titleRows: 2,
             previewRows: 9,
             showProperties: true,
-            showDate: false,
             showFilePreview: false
         } as unknown as ListPaneAppearance);
 
@@ -138,7 +129,6 @@ describe('stored list appearance intent', () => {
             mode: 'standard',
             titleRows: 2,
             showProperties: true,
-            showDate: false
         });
         expect(hasStoredListPaneAppearanceOverride(stored ?? undefined)).toBe(true);
     });

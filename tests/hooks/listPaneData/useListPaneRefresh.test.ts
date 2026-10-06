@@ -112,7 +112,7 @@ describe('getModifiedSortBoundaryRefreshKey', () => {
         expect(todayKey).not.toBe(yesterdayKey);
     });
 
-    it('skips unchanged boundary refreshes only when dates, tooltips, and date filters are inactive', () => {
+    it('skips unchanged boundary refreshes only when tooltips and date filters are inactive', () => {
         const boundaryRefreshKey = 'modified-desc\u0000date\u0000relative:today\u00002';
 
         expect(
@@ -120,7 +120,6 @@ describe('getModifiedSortBoundaryRefreshKey', () => {
                 previousBoundaryRefreshKey: boundaryRefreshKey,
                 boundaryRefreshKey,
                 hasDateSearchFilters: false,
-                showFileDate: false,
                 showTooltips: false
             })
         ).toBe(true);
@@ -130,17 +129,6 @@ describe('getModifiedSortBoundaryRefreshKey', () => {
                 previousBoundaryRefreshKey: boundaryRefreshKey,
                 boundaryRefreshKey,
                 hasDateSearchFilters: false,
-                showFileDate: true,
-                showTooltips: false
-            })
-        ).toBe(false);
-
-        expect(
-            shouldSkipModifiedSortBoundaryRefresh({
-                previousBoundaryRefreshKey: boundaryRefreshKey,
-                boundaryRefreshKey,
-                hasDateSearchFilters: false,
-                showFileDate: false,
                 showTooltips: true
             })
         ).toBe(false);
@@ -150,7 +138,6 @@ describe('getModifiedSortBoundaryRefreshKey', () => {
                 previousBoundaryRefreshKey: boundaryRefreshKey,
                 boundaryRefreshKey,
                 hasDateSearchFilters: true,
-                showFileDate: false,
                 showTooltips: false
             })
         ).toBe(false);

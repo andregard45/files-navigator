@@ -200,7 +200,6 @@ export interface FileItemLayoutState {
     isPinned: boolean;
     shouldShowMultilinePreview: boolean;
     shouldReplaceEmptyPreviewWithPills: boolean;
-    shouldShowDateForItem: boolean;
     isPinnedImageRow: boolean;
 }
 
@@ -217,7 +216,6 @@ export interface FileRowHeightConfig {
     titleRows: number;
     previewRows: number;
     isCompactMode: boolean;
-    showDate: boolean;
     showPreview: boolean;
     showImage: boolean;
     compactPaddingTotal: number;
@@ -225,7 +223,6 @@ export interface FileRowHeightConfig {
 
 export function getFileItemLayoutState({
     isCompactMode = false,
-    showDate,
     showPreview,
     isPinned,
     hasPreviewContent,
@@ -234,7 +231,6 @@ export function getFileItemLayoutState({
     hasVisiblePillRows
 }: {
     isCompactMode?: boolean;
-    showDate: boolean;
     showPreview: boolean;
     showImage?: boolean;
     isPinned: boolean;
@@ -246,7 +242,6 @@ export function getFileItemLayoutState({
     const hasImageTextArea = showFeatureImageArea && !showExtensionBadgeThumbnail;
     const isPinnedImageRow = isPinned && hasImageTextArea;
     const shouldReplaceEmptyPreviewWithPills = !hasPreviewContent && hasVisiblePillRows;
-    const shouldShowDateForItem = showDate && !isPinned;
     const shouldShowMultilinePreview = showPreview && !shouldReplaceEmptyPreviewWithPills && (hasPreviewContent || hasImageTextArea);
 
     return {
@@ -254,7 +249,6 @@ export function getFileItemLayoutState({
         isPinned,
         shouldShowMultilinePreview,
         shouldReplaceEmptyPreviewWithPills,
-        shouldShowDateForItem,
         isPinnedImageRow
     };
 }
@@ -281,9 +275,7 @@ export function calculateNormalListFileRowHeightEstimate({
     const hasPillRows = pillRowCount > 0;
     const hasPreviewSlot = layoutState.shouldShowMultilinePreview;
     const previewSlotHeight = hasPreviewSlot ? heights.multilineTextLineHeight * previewRows : 0;
-    const metadataLineHeight = layoutState.shouldShowDateForItem ? heights.singleTextLineHeight : 0;
-    const singleTextLineCount = metadataLineHeight > 0 ? 1 : 0;
-    const contentLineCount = singleTextLineCount + pillRowCount;
+    const contentLineCount = pillRowCount;
     const hasImageTextArea = showFeatureImageArea && !showExtensionBadgeThumbnail;
     const fillsPreviewSlotWithPills = layoutState.shouldReplaceEmptyPreviewWithPills && hasImageTextArea;
     const replacementPreviewSlotHeight = fillsPreviewSlotWithPills ? heights.multilineTextLineHeight * previewRows : 0;
@@ -296,21 +288,15 @@ export function calculateNormalListFileRowHeightEstimate({
     }
 
     if (canUseBaseHeight && contentLineCount <= 1) {
-        const contentLineHeight = Math.max(
-            singleTextLineCount > 0 ? heights.singleTextLineHeight : 0,
-            hasPillRows ? heights.tagRowHeight : 0
-        );
-
-        return heights.basePadding + applyFeatureImageFloor(titleContentHeight + contentLineHeight);
+        return heights.basePadding + applyFeatureImageFloor(titleContentHeight + (hasPillRows ? heights.tagRowHeight : 0));
     }
 
     const reservedPreviewSlotHeight = Math.max(previewSlotHeight, replacementPreviewSlotHeight);
     const reserveImageMetadataLine = hasImageTextArea && !layoutState.isPinnedImageRow;
-    const reservedMetadataLineHeight = reserveImageMetadataLine ? heights.singleTextLineHeight : metadataLineHeight;
-    const reservedEmptyMetadataLineHeight = reserveImageMetadataLine && metadataLineHeight === 0 ? reservedMetadataLineHeight : 0;
+    const reservedMetadataLineHeight = reserveImageMetadataLine ? heights.singleTextLineHeight : 0;
     const richContentHeight = titleContentHeight + reservedPreviewSlotHeight + reservedMetadataLineHeight;
     const pillRowsHeight = heights.tagRowHeight * pillRowCount;
-    const pillRowsReservedHeight = replacementPreviewSlotHeight + reservedEmptyMetadataLineHeight;
+    const pillRowsReservedHeight = replacementPreviewSlotHeight + (reserveImageMetadataLine ? reservedMetadataLineHeight : 0);
     const pillRowsExtraHeight = Math.max(0, pillRowsHeight - pillRowsReservedHeight);
 
     return heights.basePadding + applyFeatureImageFloor(richContentHeight + pillRowsExtraHeight);
@@ -321,7 +307,6 @@ export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileR
     const visiblePillRowCount = Math.max(0, inputs.visiblePillRowCount);
     const layoutState = getFileItemLayoutState({
         isCompactMode: config.isCompactMode,
-        showDate: config.showDate,
         showPreview: config.showPreview,
         isPinned: inputs.isPinned,
         hasPreviewContent: inputs.hasPreviewContent,

@@ -3962,20 +3962,6 @@ button.nn-navigation-calendar-day {
     gap: 4px;
 }
 
-/* File date - modification date display */
-.nn-file-date {
-    font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
-    font-weight: var(--nn-theme-file-date-font-weight);
-    color: var(--nn-theme-file-date-color);
-    flex-shrink: 0;
-    white-space: nowrap;
-    margin-inline-end: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: auto;
-    line-height: var(--nn-file-single-text-line-height);
-}
-
 /* File preview text - secondary line showing file content */
 .nn-file-preview {
     font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
@@ -4118,10 +4104,6 @@ button.nn-navigation-calendar-day {
 
 .nn-file.nn-selected .nn-file-preview {
     color: var(--nn-selected-file-preview-color);
-}
-
-.nn-file.nn-selected .nn-file-date {
-    color: var(--nn-selected-file-date-color);
 }
 /* Source: src/styles/sections/list-compact-mode.css */
 
@@ -8191,7 +8173,6 @@ body.is-phone .notebook-navigator-android .nn-split-container {
 .nn-navitem-name,
 .nn-file-name,
 .nn-file-preview,
-.nn-file-date,
 .nn-list-group-header {
     unicode-bidi: plaintext;
 }

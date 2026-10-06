@@ -316,6 +316,7 @@ export function migrateLegacySyncedSettings(params: {
     type LegacyAppearance = ListPaneAppearance & {
         showPreview?: boolean;
         showImage?: boolean;
+        showDate?: boolean;
     };
 
     const migrateLegacyAppearanceMode = (appearance: LegacyAppearance | undefined): ListPaneAppearance | undefined => {
@@ -323,9 +324,8 @@ export function migrateLegacySyncedSettings(params: {
             return appearance;
         }
 
-        // Only the full slim-preset trio identifies the legacy compact mode. A stored showDate
-        // outside this trio stays untouched because showDate is a live per-selection toggle;
-        // current records never store showPreview or showImage, so the trio cannot match them.
+        // Only the full slim-preset trio identifies the legacy compact mode.
+        // Current records never store showPreview or showImage, so the trio cannot match them.
         const isLegacyCompact =
             appearance.mode === undefined &&
             appearance.showDate === false &&
@@ -333,10 +333,10 @@ export function migrateLegacySyncedSettings(params: {
             appearance.showImage === false;
 
         if (isLegacyCompact) {
-            const migrated: ListPaneAppearance = { ...appearance, mode: 'compact' };
+            const migrated: LegacyAppearance = { ...appearance, mode: 'compact' };
             delete migrated.showDate;
-            delete (migrated as LegacyAppearance).showPreview;
-            delete (migrated as LegacyAppearance).showImage;
+            delete migrated.showPreview;
+            delete migrated.showImage;
             return migrated;
         }
 

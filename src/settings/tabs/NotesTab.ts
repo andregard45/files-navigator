@@ -299,22 +299,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 desc: strings.settings.items.linkPropertyPillsToUrls.desc,
                 visible: () => plugin.settings.showFileProperties
             })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.date, [
-            createToggleDefinition('showFileDate', {
-                name: strings.settings.items.showFileDate.name,
-                desc: strings.settings.items.showFileDate.desc
-            }),
-            createDropdownDefinition('alphabeticalDateMode', {
-                name: strings.settings.items.dateWhenSortingByName.name,
-                desc: strings.settings.items.dateWhenSortingByName.desc,
-                aliases: Object.values(strings.settings.items.dateWhenSortingByName.options),
-                visible: () => plugin.settings.showFileDate,
-                options: {
-                    created: strings.settings.items.dateWhenSortingByName.options.created,
-                    modified: strings.settings.items.dateWhenSortingByName.options.modified
-                }
-            })
         ])
     ];
 }

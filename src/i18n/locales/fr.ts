@@ -446,7 +446,6 @@ export const STRINGS_FR = {
         },
         groupBy: 'Grouper par',
         properties: 'Propriétés',
-        date: 'Date',
         resetAppearance: 'Réinitialiser l’apparence',
         openPluginSettings: 'Ouvrir les paramètres du plugin…'
     },
@@ -1107,8 +1106,7 @@ export const STRINGS_FR = {
                     title: 'Titre',
                     previewText: "Texte d'aperçu",
                     featureImage: 'Image vedette',
-                    properties: 'Propriétés',
-                    date: 'Date'
+                    properties: 'Propriétés'
                 }
             },
             calendar: {
@@ -1871,18 +1869,6 @@ export const STRINGS_FR = {
                 createMissing: {
                     name: 'Page d’accueil : Créer la note si absente',
                     desc: "Crée la note périodique au démarrage ou via la commande si elle n'existe pas."
-                }
-            },
-            showFileDate: {
-                name: 'Afficher la date',
-                desc: 'Afficher la date sous les noms des notes.'
-            },
-            dateWhenSortingByName: {
-                name: 'Lors du tri par nom',
-                desc: 'Date affichée lorsque les notes sont triées alphabétiquement.',
-                options: {
-                    created: 'Date de création',
-                    modified: 'Date de modification'
                 }
             },
             showFileProperties: {

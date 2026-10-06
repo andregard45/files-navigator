@@ -19,7 +19,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { parseFrontMatterAliases, TFile, TFolder } from 'obsidian';
 import type { App, FrontMatterCache } from 'obsidian';
-import type { NotebookNavigatorSettings, SortOption } from '../../settings/types';
+import type { SortOption } from '../../settings/types';
 import type { FilterSearchMatchOptions, FilterSearchTokens } from '../../utils/filterSearch';
 import {
     fileMatchesDateFilterTokens,
@@ -30,7 +30,7 @@ import {
     getFileFilterSearchMatch,
     parseFilterSearchTokens
 } from '../../utils/filterSearch';
-import { resolveDefaultDateField } from '../../utils/sortUtils';
+import { getDateField } from '../../utils/sortUtils';
 import { PreviewTextUtils } from '../../utils/previewTextUtils';
 import { getCachedFileTags } from '../../utils/tagUtils';
 import { createOmnisearchHighlightQueryTokenContext, sanitizeOmnisearchHighlightTokens } from '../../utils/omnisearchHighlight';
@@ -97,7 +97,6 @@ interface FilterListPaneFilesArgs {
     omnisearchResult: OmnisearchListResult | null;
     searchTokens?: FilterSearchTokens;
     searchableNames: ReadonlyMap<string, SearchableNameData>;
-    settings: Pick<NotebookNavigatorSettings, 'alphabeticalDateMode'>;
     sortOption: SortOption;
     trimmedQuery: string;
     useOmnisearch: boolean;
@@ -362,7 +361,6 @@ export function filterListPaneFiles({
     omnisearchResult,
     searchTokens,
     searchableNames,
-    settings,
     sortOption,
     trimmedQuery,
     useOmnisearch
@@ -401,7 +399,7 @@ export function filterListPaneFiles({
     const hasDateFilters = tokens.dateRanges.length > 0 || tokens.excludeDateRanges.length > 0;
     const hasFolderFilters = tokens.folderTokens.length > 0 || tokens.excludeFolderTokens.length > 0;
     const hasExtensionFilters = tokens.extensionTokens.length > 0 || tokens.excludeExtensionTokens.length > 0;
-    const defaultDateField = resolveDefaultDateField(sortOption, settings.alphabeticalDateMode ?? 'modified');
+    const defaultDateField = getDateField(sortOption) === 'ctime' ? 'created' : 'modified';
     const needsTagLookup = filterSearchNeedsTagLookup(tokens);
     const needsPropertyLookup = filterSearchNeedsPropertyLookup(tokens);
     const requireTaggedMatches = filterSearchRequiresTagsForEveryMatch(tokens);

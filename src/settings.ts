@@ -897,6 +897,5 @@ export type {
     FeatureImagePixelSizeSetting,
     FeatureImageSizeSetting,
     ListPaneTitleOption,
-    PropertySortSecondaryOption,
-    AlphabeticalDateMode
+    PropertySortSecondaryOption
 } from './settings/types';

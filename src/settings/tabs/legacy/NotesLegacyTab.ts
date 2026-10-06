@@ -78,7 +78,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const previewTextGroup = createGroup(strings.settings.pages.fileDisplay.groups.previewText);
     const featureImageGroup = createGroup(strings.settings.pages.fileDisplay.groups.featureImage);
     const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
-    const dateGroup = createGroup(strings.settings.pages.fileDisplay.groups.date);
 
     const createColorSetting = (params: {
         containerEl: HTMLElement;
@@ -592,33 +591,5 @@ export function renderNotesTab(context: SettingsTabContext): void {
                 plugin.settings.enablePropertyExternalLinks = value;
                 await plugin.saveSettingsAndUpdate();
             })
-        );
-
-    const showFileDateSetting = dateGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showFileDate.name).setDesc(strings.settings.items.showFileDate.desc);
-    });
-
-    const fileDateDependentSettingsEl = wireToggleSettingWithDependentSection(
-        showFileDateSetting,
-        () => plugin.settings.showFileDate,
-        async value => {
-            plugin.settings.showFileDate = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    // Dropdown to choose which date to display when sorting alphabetically
-    new Setting(fileDateDependentSettingsEl)
-        .setName(strings.settings.items.dateWhenSortingByName.name)
-        .setDesc(strings.settings.items.dateWhenSortingByName.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('created', strings.settings.items.dateWhenSortingByName.options.created)
-                .addOption('modified', strings.settings.items.dateWhenSortingByName.options.modified)
-                .setValue(plugin.settings.alphabeticalDateMode)
-                .onChange(async value => {
-                    plugin.settings.alphabeticalDateMode = value === 'modified' ? 'modified' : 'created';
-                    await plugin.saveSettingsAndUpdate();
-                })
         );
 }

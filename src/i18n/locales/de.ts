@@ -444,7 +444,6 @@ export const STRINGS_DE = {
         },
         groupBy: 'Gruppieren nach',
         properties: 'Eigenschaften',
-        date: 'Datum',
         resetAppearance: 'Darstellung zurücksetzen',
         openPluginSettings: 'Plugin-Einstellungen öffnen…'
     },
@@ -1105,8 +1104,7 @@ export const STRINGS_DE = {
                     title: 'Titel',
                     previewText: 'Vorschautext',
                     featureImage: 'Feature-Bild',
-                    properties: 'Eigenschaften',
-                    date: 'Datum'
+                    properties: 'Eigenschaften'
                 }
             },
             calendar: {
@@ -1869,18 +1867,6 @@ export const STRINGS_DE = {
                 createMissing: {
                     name: 'Startseite: Notiz erstellen, falls nicht vorhanden',
                     desc: 'Erstellt die periodische Notiz beim Start oder per Befehl, falls sie nicht existiert.'
-                }
-            },
-            showFileDate: {
-                name: 'Datum anzeigen',
-                desc: 'Das Datum unter Notizennamen anzeigen.'
-            },
-            dateWhenSortingByName: {
-                name: 'Bei Sortierung nach Name',
-                desc: 'Datum, das angezeigt wird, wenn Notizen alphabetisch sortiert sind.',
-                options: {
-                    created: 'Erstelldatum',
-                    modified: 'Änderungsdatum'
                 }
             },
             showFileProperties: {

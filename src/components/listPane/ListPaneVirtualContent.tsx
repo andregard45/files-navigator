@@ -131,7 +131,6 @@ interface ListPaneVirtualContentProps {
     onHoveredFilePathChange: (path: string | null, pointerClientPosition: PointerClientPosition | null) => void;
     onFileClick: (file: TFile, fileIndex: number | undefined, event: React.MouseEvent) => void;
     onModifySearchWithProperty: (key: string, value: string | null, operator: InclusionOperator) => void;
-    localDayReference: Date | null;
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
     includeDescendantNotes: boolean;
@@ -616,7 +615,6 @@ export function ListPaneVirtualContent({
     onHoveredFilePathChange,
     onFileClick,
     onModifySearchWithProperty,
-    localDayReference,
     fileIconSize,
     appearanceSettings,
     includeDescendantNotes,
@@ -968,7 +966,6 @@ export function ListPaneVirtualContent({
             sortOption,
             searchHighlightTerms,
             onModifySearchWithProperty,
-            localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,
@@ -988,7 +985,6 @@ export function ListPaneVirtualContent({
             sortOption,
             searchHighlightTerms,
             onModifySearchWithProperty,
-            localDayReference,
             fileIconSize,
             appearanceSettings,
             includeDescendantNotes,

@@ -696,7 +696,7 @@ export const ListPane = React.memo(
         const isVisible = !uiState.singlePane || uiState.currentSinglePaneView === 'files';
 
         // Use the new data hook
-        const { listItems, orderedFiles, orderedFileIndexMap, filePathToIndex, files, hiddenFileState, localDayKey } = useListPaneData({
+        const { listItems, orderedFiles, orderedFileIndexMap, filePathToIndex, files, hiddenFileState } = useListPaneData({
             selectionType,
             selectedFolder,
             selectedTag,
@@ -704,7 +704,6 @@ export const ListPane = React.memo(
             settings,
             activeProfile,
             groupBy: effectiveAppearanceSettings.groupBy,
-            showFileDate: effectiveAppearanceSettings.showDate,
             pinnedGroupExpanded,
             collapsedListGroups,
             searchProvider,
@@ -752,7 +751,6 @@ export const ListPane = React.memo(
         const listStartsWithGroupHeader =
             listItems[0]?.type === ListPaneItemType.TOP_SPACER && listItems[1]?.type === ListPaneItemType.HEADER;
         const effectiveTopSpacerHeight = settings.stickyGroupHeaders && listStartsWithGroupHeader ? 0 : topSpacerHeight;
-        const localDayReference = useMemo(() => DateUtils.parseLocalDayKey(localDayKey), [localDayKey]);
 
         useEffect(() => {
             if (!propertyKeyboardReorderState || propertyKeyboardReorderState.isSaving) {
@@ -1787,7 +1785,6 @@ export const ListPane = React.memo(
                             isDoneDisabled={isManualSortEditDoneDisabled}
                             selectionType={selectionType}
                             sortOption={effectiveSortOption}
-                            localDayReference={localDayReference}
                             fileIconSize={listMeasurements.fileIconSize}
                             appearanceSettings={effectiveAppearanceSettings}
                             includeDescendantNotes={effectiveIncludeDescendantNotes}
@@ -1836,7 +1833,6 @@ export const ListPane = React.memo(
                             onHoveredFilePathChange={handleHoveredFilePathChange}
                             onFileClick={handleFileItemClick}
                             onModifySearchWithProperty={modifySearchWithPropertyWithDefaultScope}
-                            localDayReference={localDayReference}
                             fileIconSize={listMeasurements.fileIconSize}
                             appearanceSettings={effectiveAppearanceSettings}
                             includeDescendantNotes={effectiveIncludeDescendantNotes}

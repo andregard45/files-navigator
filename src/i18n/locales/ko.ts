@@ -441,7 +441,6 @@ export const STRINGS_KO = {
         },
         groupBy: '그룹화 기준',
         properties: '속성',
-        date: '날짜',
         resetAppearance: '모양 재설정',
         openPluginSettings: '플러그인 설정 열기…'
     },
@@ -1097,8 +1096,7 @@ export const STRINGS_KO = {
                     title: '제목',
                     previewText: '미리보기 텍스트',
                     featureImage: '대표 이미지',
-                    properties: '속성',
-                    date: '날짜'
+                    properties: '속성'
                 }
             },
             calendar: {
@@ -1856,18 +1854,6 @@ export const STRINGS_KO = {
                 name: '하위 폴더 노트에서 폴더 제외 (보관함 프로필)',
                 desc: '하위 폴더에서 노트를 모을 때 제외할 폴더의 쉼표로 구분된 목록입니다. 폴더는 계속 표시되며, 선택하면 해당 노트가 계속 표시됩니다. 폴더 숨기기와 같은 패턴을 사용합니다.',
                 placeholder: '일지, 자료, /아카이브'
-            },
-            showFileDate: {
-                name: '날짜 표시',
-                desc: '노트 이름 아래에 날짜를 표시합니다.'
-            },
-            dateWhenSortingByName: {
-                name: '이름 정렬 시',
-                desc: '노트가 이름순으로 정렬될 때 표시할 날짜.',
-                options: {
-                    created: '생성일',
-                    modified: '수정일'
-                }
             },
             showFileProperties: {
                 name: '파일 속성 표시',
