@@ -16,9 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { TFile } from 'obsidian';
 import type { MultiSelectModifier } from '../../settings/types';
-import type { IndexedDBStorage } from '../../storage/IndexedDBStorage';
 import type { CalendarNoteKind } from '../../utils/calendarNotes';
 import { isMultiSelectModifierPressed } from '../../utils/keyboardOpenContext';
 import { supportsKeyboardInteractions } from '../../utils/paneLayout';
@@ -123,25 +121,4 @@ export function resolveCalendarWeekWindow(params: {
         windowStart: cursorWeekStart.clone().subtract(offset, 'week'),
         weekCount: weeksToShow
     };
-}
-
-function getUnfinishedTaskCountForPath(db: IndexedDBStorage, path: string): number | null {
-    const taskUnfinished = db.getFile(path)?.taskUnfinished;
-    if (typeof taskUnfinished !== 'number' || taskUnfinished <= 0) {
-        return null;
-    }
-    return taskUnfinished;
-}
-
-export function setUnfinishedTaskCount<TKey>(counts: Map<TKey, number>, key: TKey, file: TFile | null, db: IndexedDBStorage): void {
-    if (!file) {
-        return;
-    }
-
-    const taskUnfinished = getUnfinishedTaskCountForPath(db, file.path);
-    if (taskUnfinished === null) {
-        return;
-    }
-
-    counts.set(key, taskUnfinished);
 }

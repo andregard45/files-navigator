@@ -1654,10 +1654,6 @@ export const STRINGS_NL = {
                 name: 'Datum van vandaag markeren',
                 desc: 'Markeer de datum van vandaag met een achtergrondkleur en vetgedrukte tekst.'
             },
-            calendarShowTasks: {
-                name: 'Taken tonen',
-                desc: 'Een indicator weergeven op dagen, weken en maanden met onvoltooide taken.'
-            },
             calendarShowWeekNumber: {
                 name: 'Weeknummer tonen',
                 desc: 'Voeg een kolom toe met het weeknummer.'

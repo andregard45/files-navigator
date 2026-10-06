@@ -66,10 +66,6 @@ export function createCalendarSettingDefinitions(context: SettingsTabContext): S
                 name: strings.settings.items.calendarShowOutsideMonthDays.name,
                 desc: strings.settings.items.calendarShowOutsideMonthDays.desc
             }),
-            createToggleDefinition('calendarShowTasks', {
-                name: strings.settings.items.calendarShowTasks.name,
-                desc: strings.settings.items.calendarShowTasks.desc
-            }),
             createToggleDefinition('calendarShowWeekNumber', {
                 name: strings.settings.items.calendarShowWeekNumber.name,
                 desc: strings.settings.items.calendarShowWeekNumber.desc

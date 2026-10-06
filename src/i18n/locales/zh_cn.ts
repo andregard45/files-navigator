@@ -1635,10 +1635,6 @@ export const STRINGS_ZH_CN = {
                 name: '高亮今天日期',
                 desc: '使用背景颜色和加粗文本高亮今天日期。'
             },
-            calendarShowTasks: {
-                name: '显示任务',
-                desc: '在包含未完成任务的日、周和月上显示指示器。'
-            },
             calendarShowWeekNumber: {
                 name: '显示周号',
                 desc: '在每行开头显示周号。'

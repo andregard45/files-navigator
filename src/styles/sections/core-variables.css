@@ -317,7 +317,6 @@ body {
 
     /* Indicators and feature images */
     --nn-theme-calendar-note-indicator-color: var(--nn-theme-foreground-faded);
-    --nn-theme-calendar-unfinished-task-indicator-color: var(--nn-theme-calendar-note-indicator-color);
     --nn-theme-calendar-feature-image-text-color: white;
     --nn-theme-calendar-feature-image-overlay-color: rgb(0 0 0 / 0.05);
 

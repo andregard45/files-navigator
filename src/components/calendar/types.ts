@@ -66,7 +66,6 @@ export interface CalendarYearMonthEntry {
     date: MomentInstance;
     fullLabel: string;
     hasDailyNote: boolean;
-    hasUnfinishedTasks: boolean;
     key: string;
     monthIndex: number;
     shortLabel: string;

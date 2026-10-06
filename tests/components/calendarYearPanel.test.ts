@@ -27,7 +27,6 @@ function createEntry(patch?: Partial<CalendarYearMonthEntry>): CalendarYearMonth
         date: {} as CalendarYearMonthEntry['date'],
         fullLabel: 'January',
         hasDailyNote: false,
-        hasUnfinishedTasks: false,
         key: '2026-01',
         monthIndex: 0,
         shortLabel: 'Jan',
@@ -46,7 +45,7 @@ describe('CalendarYearPanel', () => {
                 activeMonthIndex: 2,
                 hasYearPeriodNote: false,
                 isYearPeriodActive: false,
-                yearMonthEntries: [createEntry({ hasDailyNote: true, hasUnfinishedTasks: true })],
+                yearMonthEntries: [createEntry({ hasDailyNote: true })],
                 onNavigateYear: () => {},
                 onYearPeriodClick: () => {},
                 onYearPeriodMouseDown: () => {},
@@ -58,8 +57,9 @@ describe('CalendarYearPanel', () => {
         expect(html).toContain('aria-label="January 2026"');
         expect(html).toContain('>Jan<');
         expect(html).not.toContain('Jan (');
-        expect(html).toMatch(/class="[^"]*has-daily-note[^"]*has-unfinished-tasks[^"]*"/);
-        expect(html).toContain('nn-navigation-calendar-year-month-unfinished-task-indicator');
+        expect(html).toMatch(/class="[^"]*has-daily-note[^"]*"/);
+        expect(html).not.toContain('has-unfinished-tasks');
+        expect(html).not.toContain('nn-navigation-calendar-year-month-unfinished-task-indicator');
     });
 
     it('does not keep the selected-month outline when browsing a different year', () => {

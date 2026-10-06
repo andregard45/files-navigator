@@ -957,7 +957,6 @@ export interface NotebookNavigatorSettings {
     calendarLocale: string;
     calendarMonthHeadingFormat: CalendarMonthHeadingFormat;
     calendarHighlightToday: boolean;
-    calendarShowTasks: boolean;
     calendarMonthHighlights: Record<string, string>;
     calendarShowWeekNumber: boolean;
     calendarShowQuarter: boolean;

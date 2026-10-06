@@ -1257,14 +1257,6 @@ settings:
         default-light: '#'
         default-dark: '#'
     -
-        id: nn-theme-calendar-unfinished-task-indicator-color
-        title: Unfinished task indicator color
-        description: Color for the hollow indicator shown on dates with unfinished tasks.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
         id: nn-theme-calendar-feature-image-text-color
         title: Feature image text color
         description: Text color for dates with feature images.

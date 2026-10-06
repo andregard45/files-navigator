@@ -1653,10 +1653,6 @@ export const STRINGS_DE = {
                 name: 'Heutiges Datum hervorheben',
                 desc: 'Das heutige Datum mit einer Hintergrundfarbe und fettem Text hervorheben.'
             },
-            calendarShowTasks: {
-                name: 'Aufgaben anzeigen',
-                desc: 'Einen Indikator an Tagen, Wochen und Monaten mit unerledigten Aufgaben anzeigen.'
-            },
             calendarShowWeekNumber: {
                 name: 'Wochennummer anzeigen',
                 desc: 'Spalte mit der Wochennummer hinzufügen.'

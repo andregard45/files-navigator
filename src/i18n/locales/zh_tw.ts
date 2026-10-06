@@ -1636,10 +1636,6 @@ export const STRINGS_ZH_TW = {
                 name: '醒目顯示今天日期',
                 desc: '使用背景顏色和粗體文字醒目顯示今天日期。'
             },
-            calendarShowTasks: {
-                name: '顯示任務',
-                desc: '在包含未完成任務的日、週和月上顯示指示器。'
-            },
             calendarShowWeekNumber: {
                 name: '顯示週號',
                 desc: '在每行開頭顯示週號。'

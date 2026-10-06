@@ -1653,10 +1653,6 @@ export const STRINGS_PL = {
                 name: 'Wyróżnij dzisiejszą datę',
                 desc: 'Wyróżnij dzisiejszą datę kolorem tła i pogrubioną czcionką.'
             },
-            calendarShowTasks: {
-                name: 'Pokaż zadania',
-                desc: 'Wyświetla wskaźnik przy dniach, tygodniach i miesiącach z niezakończonymi zadaniami.'
-            },
             calendarShowWeekNumber: {
                 name: 'Pokaż numer tygodnia',
                 desc: 'Dodaje kolumnę z numerem tygodnia.'

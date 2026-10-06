@@ -109,8 +109,7 @@ export const CalendarYearPanel = React.memo(function CalendarYearPanel({
                                 'nn-navigation-calendar-year-month',
                                 isCurrentMonth ? 'is-current-month' : '',
                                 isSelectedMonth ? 'is-selected-month' : '',
-                                entry.hasDailyNote ? 'has-daily-note' : '',
-                                entry.hasUnfinishedTasks ? 'has-unfinished-tasks' : ''
+                                entry.hasDailyNote ? 'has-daily-note' : ''
                             ]
                                 .filter(Boolean)
                                 .join(' ')}
@@ -119,9 +118,6 @@ export const CalendarYearPanel = React.memo(function CalendarYearPanel({
                         >
                             <span className="nn-navigation-calendar-active-outline" aria-hidden="true" />
                             <span className="nn-navigation-calendar-year-month-label">{entry.shortLabel}</span>
-                            {entry.hasUnfinishedTasks ? (
-                                <span className="nn-navigation-calendar-year-month-unfinished-task-indicator" aria-hidden="true" />
-                            ) : null}
                         </button>
                     );
                 })}

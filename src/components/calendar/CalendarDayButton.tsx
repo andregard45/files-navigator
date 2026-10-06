@@ -24,7 +24,6 @@ export interface CalendarDayButtonProps {
     ariaText: string;
     dayNumber: number;
     isMobile: boolean;
-    showUnfinishedTaskIndicator: boolean;
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
     onMouseDown: (event: React.MouseEvent<HTMLButtonElement>) => void;
     onContextMenu: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -40,7 +39,6 @@ export const CalendarDayButton = React.memo(function CalendarDayButton({
     ariaText,
     dayNumber,
     isMobile,
-    showUnfinishedTaskIndicator,
     onClick,
     onMouseDown,
     onContextMenu,
@@ -149,9 +147,6 @@ export const CalendarDayButton = React.memo(function CalendarDayButton({
             <span className="nn-navigation-calendar-day-number" aria-hidden="true">
                 {dayNumber}
             </span>
-            {showUnfinishedTaskIndicator ? (
-                <span className="nn-navigation-calendar-day-unfinished-task-indicator" aria-hidden="true" />
-            ) : null}
             <span className="nn-visually-hidden">{ariaText}</span>
         </button>
     );

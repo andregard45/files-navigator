@@ -1655,10 +1655,6 @@ export const STRINGS_FR = {
                 name: "Mettre en évidence la date d'aujourd'hui",
                 desc: "Mettre en évidence la date d'aujourd'hui avec une couleur de fond et du texte en gras."
             },
-            calendarShowTasks: {
-                name: 'Afficher les tâches',
-                desc: 'Afficher un indicateur sur les jours, semaines et mois avec des tâches inachevées.'
-            },
             calendarShowWeekNumber: {
                 name: 'Afficher le numéro de semaine',
                 desc: 'Ajouter une colonne avec le numéro de semaine.'
