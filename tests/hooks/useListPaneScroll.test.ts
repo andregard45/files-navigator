@@ -75,8 +75,6 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         showFilePropertiesInCompactMode: false,
         characterCountSpaces: 'include',
         showParentFolder: false,
-        showTaskProgress: false,
-        hideTaskProgressWhenComplete: false,
         selectionType: ItemType.FOLDER,
         includeDescendantNotes: false,
         selectedTagToHide: null,
@@ -156,8 +154,6 @@ describe('isListRowHeightAffectingContentChange', () => {
             showWordCountProperty: true,
             showCharacterCountProperty: true,
             characterCountSpaces: 'include',
-            showTaskProgress: false,
-            hideTaskProgressWhenComplete: false,
             ...overrides
         };
     }
@@ -211,40 +207,12 @@ describe('isListRowHeightAffectingContentChange', () => {
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(false);
     });
 
-    it('uses the selected character count variant when deciding whether to remeasure', () => {
-        expect(
-            isListRowHeightAffectingContentChange(
-                createContentChange({ changes: { characterCountWithSpaces: 456 } }),
-                createHeightChangeConfig({ characterCountSpaces: 'include' })
-            )
-        ).toBe(true);
-        expect(
-            isListRowHeightAffectingContentChange(
-                createContentChange({ changes: { characterCountWithoutSpaces: 400 } }),
-                createHeightChangeConfig({ characterCountSpaces: 'include' })
-            )
-        ).toBe(false);
-        expect(
-            isListRowHeightAffectingContentChange(
-                createContentChange({ changes: { characterCountWithSpaces: 456 } }),
-                createHeightChangeConfig({ characterCountSpaces: 'exclude' })
-            )
-        ).toBe(false);
-        expect(
-            isListRowHeightAffectingContentChange(
-                createContentChange({ changes: { characterCountWithoutSpaces: 400 } }),
-                createHeightChangeConfig({ characterCountSpaces: 'exclude' })
-            )
-        ).toBe(true);
-    });
 
     it('ignores content fields that do not change estimated row height', () => {
         const config = createHeightChangeConfig();
 
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { preview: 'Preview' } }), config)).toBe(false);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { preview: null } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { taskTotal: 4 } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { taskUnfinished: 2 } }), config)).toBe(false);
         expect(
             isListRowHeightAffectingContentChange(
                 createContentChange({
@@ -257,40 +225,6 @@ describe('isListRowHeightAffectingContentChange', () => {
         ).toBe(false);
     });
 
-    it('remeasures only when task progress crosses its visibility boundary', () => {
-        const showCompletedConfig = createHeightChangeConfig({ showTaskProgress: true });
-        const hideCompletedConfig = createHeightChangeConfig({
-            showTaskProgress: true,
-            hideTaskProgressWhenComplete: true
-        });
-
-        const progressOnlyChange = createContentChange({
-            changes: { taskUnfinished: 2 },
-            previousTaskCounters: { taskTotal: 4, taskUnfinished: 3 }
-        });
-        expect(isListRowHeightAffectingContentChange(progressOnlyChange, showCompletedConfig)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(progressOnlyChange, hideCompletedConfig)).toBe(false);
-
-        const completedTaskAdded = createContentChange({
-            changes: { taskTotal: 1 },
-            previousTaskCounters: { taskTotal: 0, taskUnfinished: 0 }
-        });
-        expect(isListRowHeightAffectingContentChange(completedTaskAdded, showCompletedConfig)).toBe(true);
-        expect(isListRowHeightAffectingContentChange(completedTaskAdded, hideCompletedConfig)).toBe(false);
-
-        const completedNoteBecameIncomplete = createContentChange({
-            changes: { taskUnfinished: 1 },
-            previousTaskCounters: { taskTotal: 4, taskUnfinished: 0 }
-        });
-        expect(isListRowHeightAffectingContentChange(completedNoteBecameIncomplete, showCompletedConfig)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(completedNoteBecameIncomplete, hideCompletedConfig)).toBe(true);
-
-        const countersCleared = createContentChange({
-            changes: { taskTotal: null, taskUnfinished: null },
-            previousTaskCounters: { taskTotal: 4, taskUnfinished: 1 }
-        });
-        expect(isListRowHeightAffectingContentChange(countersCleared, showCompletedConfig)).toBe(true);
-    });
 });
 
 describe('resolveListFileRowHeightInputs', () => {
@@ -442,23 +376,6 @@ describe('resolveListFileRowHeightInputs', () => {
         expect(db.getFile).toHaveBeenCalledWith(file.path);
     });
 
-    it('includes task progress in pinned markdown row measurements', () => {
-        const app = new App();
-        const file = createTestTFile('Notes/Pinned.md');
-        const db = createDb({ taskTotal: 4, taskUnfinished: 2 });
-
-        const inputs = resolveListFileRowHeightInputs({
-            app,
-            db: db as unknown as IndexedDBStorage,
-            hasPreview: () => true,
-            item: createFileItem(file, { isPinned: true }),
-            file,
-            config: createRowSizingConfig({ showTaskProgress: true })
-        });
-
-        expect(inputs.showTaskProgressLine).toBe(true);
-        expect(db.getFile).toHaveBeenCalledWith(file.path);
-    });
 });
 
 describe('createRemeasureScheduler', () => {

@@ -247,8 +247,6 @@ export const STRINGS_JA = {
                 tasks: {
                     title: 'フィルター',
                     items: [
-                        '`has:task` 未完了のタスクを含むノートを表示。',
-                        '`-has:task` 未完了のタスクを含むノートを除外。',
                         '`folder:meetings` フォルダ名に `meetings` を含むノートを表示。',
                         '`folder:/work/meetings` `work/meetings` 内のノートのみを表示（サブフォルダを除く）。',
                         '`folder:/` 保管庫のルート内のノートのみを表示。',
@@ -264,7 +262,7 @@ export const STRINGS_JA = {
                     items: [
                         '`AND`と`OR`はタグ/プロパティのみのクエリでのみ演算子として機能します。',
                         'タグ/プロパティのみのクエリにはタグとプロパティのフィルターのみが含まれます: `#tag`、`-#tag`、`#`、`-#`、`.key`、`-.key`、`.key=value`、`-.key=value`。',
-                        'クエリに名前、日付（`@...`）、タスクフィルター（`has:task`）、フォルダフィルター（`folder:...`）、または拡張子フィルター（`ext:...`）が含まれる場合、`AND`と`OR`は単語として検索されます。',
+                        'クエリに名前、日付（`@...`）、フォルダフィルター（`folder:...`）、または拡張子フィルター（`ext:...`）が含まれる場合、`AND`と`OR`は単語として検索されます。',
                         '演算子クエリの例: `#work OR .status=started`。',
                         '混合クエリの例: `#work OR ext:md`（`OR`はファイル名で検索されます）。'
                     ]
@@ -447,7 +445,6 @@ export const STRINGS_JA = {
         groupBy: 'グループ化',
         tags: 'タグ',
         properties: 'プロパティ',
-        tasks: 'タスク',
         date: '日付',
         parentFolder: '親フォルダ',
         resetAppearance: '外観をリセット',
@@ -997,8 +994,7 @@ export const STRINGS_JA = {
         file: 'ファイル',
         files: 'ファイル',
         folder: 'フォルダ',
-        folders: 'フォルダ',
-        unfinishedTasks: '未完了タスク'
+        folders: 'フォルダ'
     },
 
     // Settings
@@ -1109,7 +1105,6 @@ export const STRINGS_JA = {
                     featureImage: 'アイキャッチ画像',
                     tags: 'タグ',
                     properties: 'プロパティ',
-                    tasks: 'タスク',
                     date: '日付',
                     parentFolder: '親フォルダ'
                 }
@@ -1318,42 +1313,9 @@ export const STRINGS_JA = {
                 name: 'ファイルアイコンを表示',
                 desc: 'ファイルアイコンを左寄せ間隔で表示。無効化するとアイコンとインデントの両方が削除されます。優先順位: 未完了タスクアイコン > カスタムアイコン > フォルダアイコン > ファイル名アイコン > ファイルタイプアイコン > デフォルトアイコン。'
             },
-            unfinishedTaskIcon: {
-                name: '未完了タスクアイコン',
-                desc: 'ノートに未完了のタスクがある場合にファイルアイコンを置き換えます。',
-                options: {
-                    disabled: '無効',
-                    compact: 'コンパクトモード',
-                    standardAndCompact: '標準とコンパクト'
-                }
-            },
             useFolderIcon: {
                 name: 'フォルダアイコンを使用',
                 desc: 'カスタムファイルアイコンが設定されていない場合に親フォルダのアイコンを表示します。カスタムファイル色が設定されていない場合はフォルダの色が使用されます。'
-            },
-            showFileTaskProgress: {
-                name: 'タスクの進捗',
-                desc: 'タスクの状態を表示します。進捗バーとタスク数は任意で表示できます。未完了タスクと完了タスクの色はStyle Settingsプラグインで個別に設定できます。'
-            },
-            showFileTaskProgressBar: {
-                name: 'タスクの進捗: 進捗バー',
-                desc: 'タスクアイコンの横に進捗バーを表示します。'
-            },
-            showFileTaskProgressCount: {
-                name: 'タスクの進捗: タスク数',
-                desc: '完了タスク数と総タスク数を表示します（例: 3/7）。'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'タスクの進捗: 完了時に非表示',
-                desc: 'ノートのすべてのタスクが完了したらタスク進捗を非表示にします。'
-            },
-            unfinishedTaskBackground: {
-                name: '未完了タスク背景',
-                desc: 'ノートに未完了のタスクがある場合に背景色を適用します。'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: '未完了タスクの背景色',
-                desc: 'ノートに未完了のタスクがある場合に使用する背景色を設定します。'
             },
             showFileNameIcons: {
                 name: 'ファイル名でアイコン設定',

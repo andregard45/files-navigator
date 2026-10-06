@@ -37,7 +37,6 @@ export interface ListPaneAppearanceSettings {
     showImage: boolean;
     showTags: boolean;
     showProperties: boolean;
-    showTaskProgress: boolean;
     groupBy: ListNoteGroupingOption;
 }
 
@@ -46,7 +45,7 @@ export interface ListPaneAppearanceSettings {
  * Both `true` and `false` are persisted so a selection can enable content that
  * the global setting turns off, and hide content that the global setting shows.
  */
-export const LIST_PANE_TOGGLE_KEYS = ['showTags', 'showProperties', 'showTaskProgress', 'showDate', 'showParentFolder'] as const;
+export const LIST_PANE_TOGGLE_KEYS = ['showTags', 'showProperties', 'showDate', 'showParentFolder'] as const;
 
 export type ListPaneToggleKey = (typeof LIST_PANE_TOGGLE_KEYS)[number];
 
@@ -190,7 +189,7 @@ function resolveListMode({ appearance, defaultMode }: { appearance?: ListPaneApp
  * Per-selection toggles replace the global per-file display setting, but structural gates stay
  * global: tags require the master tag setting because tag content is only extracted when it is on,
  * compact mode keeps its own global tag/property visibility, and the compact row layout never
- * renders previews, images, dates, parent folders, or task progress.
+ * renders previews, images, dates, or parent folders.
  */
 export function resolveListPaneAppearance({
     settings,
@@ -207,7 +206,6 @@ export function resolveListPaneAppearance({
         settings.showTags && (appearance?.showTags ?? settings.showFileTags) && (!isCompact || settings.showFileTagsInCompactMode);
     const showProperties =
         (appearance?.showProperties ?? settings.showFileProperties) && (!isCompact || settings.showFilePropertiesInCompactMode);
-    const showTaskProgress = (appearance?.showTaskProgress ?? settings.showFileTaskProgress) && !isCompact;
     const previewRowsOverride = isValidPreviewRows(appearance?.previewRows) ? appearance.previewRows : undefined;
     const grouping = resolveListGroupingOverride({
         noteGrouping: settings.noteGrouping,
@@ -226,7 +224,6 @@ export function resolveListPaneAppearance({
         showImage: !isCompact && settings.showFeatureImage,
         showTags,
         showProperties,
-        showTaskProgress,
         groupBy: grouping.effectiveGrouping
     };
 }

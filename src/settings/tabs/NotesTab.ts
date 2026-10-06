@@ -67,17 +67,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 name: strings.settings.items.showFileIcons.name,
                 desc: strings.settings.items.showFileIcons.desc
             }),
-            createDropdownDefinition('unfinishedTaskIcon', {
-                name: strings.settings.items.unfinishedTaskIcon.name,
-                desc: strings.settings.items.unfinishedTaskIcon.desc,
-                aliases: Object.values(strings.settings.items.unfinishedTaskIcon.options),
-                options: {
-                    none: strings.settings.items.unfinishedTaskIcon.options.disabled,
-                    compact: strings.settings.items.unfinishedTaskIcon.options.compact,
-                    all: strings.settings.items.unfinishedTaskIcon.options.standardAndCompact
-                },
-                visible: () => plugin.settings.showFileIcons
-            }),
             createToggleDefinition('useFolderIconForFiles', {
                 name: strings.settings.items.useFolderIcon.name,
                 desc: strings.settings.items.useFolderIcon.desc,
@@ -339,55 +328,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 name: strings.settings.items.linkPropertyPillsToUrls.name,
                 desc: strings.settings.items.linkPropertyPillsToUrls.desc,
                 visible: () => plugin.settings.showFileProperties
-            })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.tasks, [
-            createToggleDefinition('showFileTaskProgress', {
-                name: strings.settings.items.showFileTaskProgress.name,
-                desc: strings.settings.items.showFileTaskProgress.desc
-            }),
-            createToggleDefinition('showFileTaskProgressCount', {
-                name: strings.settings.items.showFileTaskProgressCount.name,
-                desc: strings.settings.items.showFileTaskProgressCount.desc,
-                visible: () => plugin.settings.showFileTaskProgress
-            }),
-            createToggleDefinition('showFileTaskProgressBar', {
-                name: strings.settings.items.showFileTaskProgressBar.name,
-                desc: strings.settings.items.showFileTaskProgressBar.desc,
-                visible: () => plugin.settings.showFileTaskProgress
-            }),
-            createToggleDefinition('hideFileTaskProgressWhenComplete', {
-                name: strings.settings.items.hideFileTaskProgressWhenComplete.name,
-                desc: strings.settings.items.hideFileTaskProgressWhenComplete.desc,
-                visible: () => plugin.settings.showFileTaskProgress
-            }),
-            createToggleDefinition('showFileBackgroundUnfinishedTask', {
-                name: strings.settings.items.unfinishedTaskBackground.name,
-                desc: strings.settings.items.unfinishedTaskBackground.desc
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.unfinishedTaskBackgroundColor.name,
-                desc: strings.settings.items.unfinishedTaskBackgroundColor.desc,
-                visible: () => plugin.settings.showFileBackgroundUnfinishedTask,
-                render: setting =>
-                    renderColorSetting(setting, context, {
-                        name: strings.settings.items.unfinishedTaskBackgroundColor.name,
-                        desc: strings.settings.items.unfinishedTaskBackgroundColor.desc,
-                        access: {
-                            getValue: () => plugin.settings.unfinishedTaskBackgroundColor,
-                            setValue: value => {
-                                plugin.settings.unfinishedTaskBackgroundColor = value;
-                            },
-                            defaultValue: DEFAULT_SETTINGS.unfinishedTaskBackgroundColor
-                        },
-                        darkAccess: {
-                            getValue: () => plugin.settings.unfinishedTaskBackgroundColorDark,
-                            setValue: value => {
-                                plugin.settings.unfinishedTaskBackgroundColorDark = value;
-                            },
-                            defaultValue: DEFAULT_SETTINGS.unfinishedTaskBackgroundColorDark
-                        }
-                    })
             })
         ]),
         createGroupDefinition(strings.settings.pages.fileDisplay.groups.date, [

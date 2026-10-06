@@ -18,7 +18,7 @@
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
-import type { CachedMetadata, ListItemCache } from 'obsidian';
+import type { CachedMetadata } from 'obsidian';
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
 import type { ContentProviderType } from '../../src/interfaces/IContentProvider';
 import type { NotebookNavigatorSettings } from '../../src/settings/types';
@@ -60,8 +60,6 @@ function createFileData(overrides: Partial<FileData>): FileData {
         fileThumbnailsMtime: 0,
         tags: null,
         wordCount: null,
-        taskTotal: 0,
-        taskUnfinished: 0,
         properties: null,
         previewStatus: 'unprocessed',
         featureImage: null,
@@ -69,23 +67,6 @@ function createFileData(overrides: Partial<FileData>): FileData {
         featureImageKey: null,
         metadata: null,
         ...overrides
-    };
-}
-
-function createTaskItem(line: number, task: string): ListItemCache {
-    return {
-        parent: -line,
-        position: {
-            start: { line, col: 0, offset: line },
-            end: { line, col: 10, offset: line + 10 }
-        },
-        task
-    };
-}
-
-function createTaskMetadata(tasks: string[]): CachedMetadata {
-    return {
-        listItems: tasks.map((task, index) => createTaskItem(index, task))
     };
 }
 
@@ -183,8 +164,6 @@ describe('Storage queue filters', () => {
                 mtime: file.stat.mtime,
                 markdownPipelineMtime: file.stat.mtime,
                 wordCount: 0,
-                taskTotal: 0,
-                taskUnfinished: 0,
                 previewStatus: 'none',
                 featureImageStatus: 'none',
                 featureImageKey: ''
@@ -213,8 +192,6 @@ describe('Storage queue filters', () => {
                 mtime: file.stat.mtime,
                 markdownPipelineMtime: file.stat.mtime,
                 wordCount: 0,
-                taskTotal: 0,
-                taskUnfinished: 0,
                 previewStatus: 'none',
                 featureImageStatus: 'none',
                 featureImageKey: getDrawingDirectFeatureImageKey(file, 'tldraw'),
@@ -244,8 +221,6 @@ describe('Storage queue filters', () => {
                 mtime: file.stat.mtime,
                 markdownPipelineMtime: file.stat.mtime,
                 wordCount: 0,
-                taskTotal: 0,
-                taskUnfinished: 0,
                 previewStatus: 'none',
                 featureImageStatus: 'none',
                 featureImageKey: '',
@@ -266,33 +241,6 @@ describe('Storage queue filters', () => {
         expect(result).toEqual([]);
     });
 
-    it('includes markdown files when task counters are pending', () => {
-        const file = new TFile();
-        file.path = 'notes/note.md';
-        file.extension = 'md';
-        file.stat.mtime = 456;
-
-        db.setFile(
-            file.path,
-            createFileData({
-                mtime: file.stat.mtime,
-                markdownPipelineMtime: file.stat.mtime,
-                wordCount: 0,
-                taskTotal: null,
-                taskUnfinished: null,
-                previewStatus: 'none',
-                featureImageStatus: 'none',
-                featureImageKey: ''
-            })
-        );
-
-        settings = { ...settings, showFilePreview: false, showFeatureImage: false };
-
-        const types: ContentProviderType[] = ['markdownPipeline'];
-        const result = filterFilesRequiringMetadataSources([file], types, settings);
-
-        expect(result).toEqual([file]);
-    });
 
     it('includes stale markdown pipeline files so property metadata can refresh', () => {
         const file = new TFile();
@@ -308,8 +256,6 @@ describe('Storage queue filters', () => {
                 mtime: file.stat.mtime,
                 markdownPipelineMtime: 100,
                 wordCount: 0,
-                taskTotal: 0,
-                taskUnfinished: 0,
                 previewStatus: 'none',
                 featureImageStatus: 'none',
                 featureImageKey: '',
@@ -331,119 +277,8 @@ describe('Storage queue filters', () => {
         expect(result).toEqual([file]);
     });
 
-    it('includes stale markdown pipeline files when metadata contains task items', () => {
-        const file = new TFile();
-        file.path = 'notes/note.md';
-        file.extension = 'md';
-        file.stat.mtime = 456;
-        const app = new App();
-        app.metadataCache.getFileCache = () => createTaskMetadata([' ', 'x']);
 
-        db.setFile(
-            file.path,
-            createFileData({
-                mtime: file.stat.mtime,
-                markdownPipelineMtime: 100,
-                wordCount: 0,
-                taskTotal: 2,
-                taskUnfinished: 1,
-                previewStatus: 'none',
-                featureImageStatus: 'none',
-                featureImageKey: '',
-                properties: []
-            })
-        );
 
-        settings = {
-            ...settings,
-            showFilePreview: false,
-            showFeatureImage: false,
-            showTooltips: false,
-            textCountDisplay: 'none',
-        };
-
-        const types: ContentProviderType[] = ['markdownPipeline'];
-        const result = filterFilesRequiringMetadataSources([file], types, settings, { app });
-
-        expect(result).toEqual([file]);
-    });
-
-    it('excludes current markdown pipeline files when task counters are current even if metadata contains task items', () => {
-        const file = new TFile();
-        file.path = 'notes/note.md';
-        file.extension = 'md';
-        file.stat.mtime = 456;
-        const app = new App();
-        app.metadataCache.getFileCache = () => createTaskMetadata([' ']);
-
-        db.setFile(
-            file.path,
-            createFileData({
-                mtime: file.stat.mtime,
-                markdownPipelineMtime: file.stat.mtime,
-                wordCount: 0,
-                taskTotal: 0,
-                taskUnfinished: 0,
-                previewStatus: 'none',
-                featureImageStatus: 'none',
-                featureImageKey: '',
-                properties: []
-            })
-        );
-
-        settings = {
-            ...settings,
-            showFilePreview: false,
-            showFeatureImage: false,
-            showTooltips: false,
-            textCountDisplay: 'none',
-        };
-
-        const types: ContentProviderType[] = ['markdownPipeline'];
-        const result = filterFilesRequiringMetadataSources([file], types, settings, { app });
-
-        expect(result).toEqual([]);
-    });
-
-    it('includes current markdown pipeline files with task metadata when current task comparison is requested', () => {
-        const file = new TFile();
-        file.path = 'notes/note.md';
-        file.extension = 'md';
-        file.stat.mtime = 456;
-        const app = new App();
-        app.metadataCache.getFileCache = () => createTaskMetadata([' ']);
-
-        db.setFile(
-            file.path,
-            createFileData({
-                mtime: file.stat.mtime,
-                markdownPipelineMtime: file.stat.mtime,
-                wordCount: 0,
-                taskTotal: 0,
-                taskUnfinished: 0,
-                previewStatus: 'none',
-                featureImageStatus: 'none',
-                featureImageKey: '',
-                properties: []
-            })
-        );
-
-        settings = {
-            ...settings,
-            showFilePreview: false,
-            showFeatureImage: false,
-            showTooltips: false,
-            textCountDisplay: 'none',
-        };
-
-        const types: ContentProviderType[] = ['markdownPipeline'];
-        const result = filterFilesRequiringMetadataSources([file], types, settings, {
-            app,
-            compareCurrentTaskMetadata: true
-        });
-
-        expect(result).toEqual([file]);
-    });
 
     it('includes markdown files conservatively for metadata when hidden rules are active', () => {
         const file = new TFile();

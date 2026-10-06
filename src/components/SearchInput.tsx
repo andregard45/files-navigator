@@ -322,8 +322,8 @@ export function SearchInput({
             return;
         }
 
-        const { fileNames, tags, properties, tasks, connectors, dates } = helpStrings.sections;
-        const sections: InfoModalSection[] = [fileNames, properties, tags, dates, tasks, connectors];
+        const { fileNames, tags, properties, connectors, dates } = helpStrings.sections;
+        const sections: InfoModalSection[] = [fileNames, properties, tags, dates, connectors];
         new InfoModal(app, {
             title: strings.searchInput.searchHelpTitle,
             intro: isOmnisearchAvailable ? helpStrings.intro : `${helpStrings.intro} ${helpStrings.introInstallOmnisearch}`,

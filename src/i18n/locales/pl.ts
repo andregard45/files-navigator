@@ -247,8 +247,6 @@ export const STRINGS_PL = {
                 tasks: {
                     title: 'Filtry',
                     items: [
-                        '`has:task` Uwzględnij notatki z nieukończonymi zadaniami.',
-                        '`-has:task` Wyklucz notatki z nieukończonymi zadaniami.',
                         '`folder:meetings` Uwzględnij notatki z folderu o nazwie `meetings`.',
                         '`folder:/work/meetings` Uwzględnij notatki tylko z `work/meetings` (bez podfolderów).',
                         '`folder:/` Uwzględnij notatki tylko z folderu głównego sejfu.',
@@ -264,7 +262,7 @@ export const STRINGS_PL = {
                     items: [
                         '`AND` i `OR` są operatorami tylko w zapytaniach zawierających wyłącznie tagi i atrybuty.',
                         'Zapytania zawierające wyłącznie tagi i atrybuty mają tylko filtry tagów i atrybutów: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Jeśli zapytanie zawiera nazwy, daty (`@...`), filtry zadań (`has:task`), filtry folderów (`folder:...`) lub filtry rozszerzeń (`ext:...`), `AND` i `OR` są dopasowywane jako słowa.',
+                        'Jeśli zapytanie zawiera nazwy, daty (`@...`), filtry folderów (`folder:...`) lub filtry rozszerzeń (`ext:...`), `AND` i `OR` są dopasowywane jako słowa.',
                         'Przykładowe zapytanie z operatorem: `#work OR .status=started`.',
                         'Przykładowe zapytanie mieszane: `#work OR ext:md` (`OR` jest wyszukiwane w nazwach plików).'
                     ]
@@ -448,7 +446,6 @@ export const STRINGS_PL = {
         groupBy: 'Grupuj według',
         tags: 'Tagi',
         properties: 'Atrybuty',
-        tasks: 'Zadania',
         date: 'Data',
         parentFolder: 'Folder nadrzędny',
         resetAppearance: 'Zresetuj wygląd',
@@ -1000,8 +997,7 @@ export const STRINGS_PL = {
         file: 'plik',
         files: 'pliki',
         folder: 'folder',
-        folders: 'foldery',
-        unfinishedTasks: 'Nieukończone zadania'
+        folders: 'foldery'
     },
 
     // Settings
@@ -1113,7 +1109,6 @@ export const STRINGS_PL = {
                     featureImage: 'Wyróżniony obraz',
                     tags: 'Tagi',
                     properties: 'Atrybuty',
-                    tasks: 'Zadania',
                     date: 'Data',
                     parentFolder: 'Folder nadrzędny'
                 }
@@ -1322,42 +1317,9 @@ export const STRINGS_PL = {
                 name: 'Pokaż ikonki plików',
                 desc: 'Wyświetla ikonki plików z wyrównaniem do lewej strony. Wyłączenie tej opcji powoduje usunięcie zarówno ikonek, jak i wcięć. Priorytet: ikonka nieukończonych zadań > ikonka niestandardowa > ikonka folderu > ikonka nazwy pliku > ikonka typu pliku > ikonka domyślna.'
             },
-            unfinishedTaskIcon: {
-                name: 'Ikonka nieukończonych zadań',
-                desc: 'Zastępuje ikonkę pliku, gdy notatka zawiera nieukończone zadania.',
-                options: {
-                    disabled: 'Wyłączone',
-                    compact: 'Tryb kompaktowy',
-                    standardAndCompact: 'Standardowy i kompaktowy'
-                }
-            },
             useFolderIcon: {
                 name: 'Użyj ikonki folderu',
                 desc: 'Wyświetla ikonkę folderu nadrzędnego, gdy nie ustawiono niestandardowej ikonki pliku. Kolor folderu jest używany, gdy nie ustawiono niestandardowego koloru pliku.'
-            },
-            showFileTaskProgress: {
-                name: 'Postęp zadań',
-                desc: 'Wyświetla status zadań z opcjonalnym paskiem postępu i liczbą zadań. Kolory zadań nieukończonych i ukończonych można ustawić osobno we wtyczce Style Settings.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Postęp zadań: pasek postępu',
-                desc: 'Wyświetla pasek postępu obok ikonki zadań.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Postęp zadań: liczba zadań',
-                desc: 'Wyświetla liczbę ukończonych i wszystkich zadań, na przykład 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Postęp zadań: ukryj po ukończeniu',
-                desc: 'Ukrywa postęp zadań, gdy wszystkie zadania w notatce są ukończone.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Tło nieukończonych zadań',
-                desc: 'Zastosuj kolor tła, gdy notatka zawiera nieukończone zadania.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Kolor tła nieukończonych zadań',
-                desc: 'Ustaw kolor tła używany, gdy notatka zawiera nieukończone zadania.'
             },
             showFileNameIcons: {
                 name: 'Ikonki na podstawie nazwy pliku',

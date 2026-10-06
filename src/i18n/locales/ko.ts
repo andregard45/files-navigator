@@ -245,8 +245,6 @@ export const STRINGS_KO = {
                 tasks: {
                     title: '필터',
                     items: [
-                        '`has:task` 미완료 작업이 있는 노트를 포함.',
-                        '`-has:task` 미완료 작업이 있는 노트를 제외.',
                         '`folder:meetings` 폴더 이름에 `meetings`를 포함하는 노트를 포함.',
                         '`folder:/work/meetings` `work/meetings` 내의 노트만 포함 (하위 폴더 제외).',
                         '`folder:/` 보관함 루트에 있는 노트만 포함.',
@@ -262,7 +260,7 @@ export const STRINGS_KO = {
                     items: [
                         '`AND`와 `OR`는 태그/속성 전용 쿼리에서만 연산자로 작동합니다.',
                         '태그/속성 전용 쿼리에는 태그 및 속성 필터만 포함됩니다: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        '쿼리에 이름, 날짜(`@...`), 작업 필터(`has:task`), 폴더 필터(`folder:...`), 또는 확장자 필터(`ext:...`)가 포함되면 `AND`와 `OR`는 단어로 검색됩니다.',
+                        '쿼리에 이름, 날짜(`@...`), 폴더 필터(`folder:...`), 또는 확장자 필터(`ext:...`)가 포함되면 `AND`와 `OR`는 단어로 검색됩니다.',
                         '연산자 쿼리 예시: `#work OR .status=started`.',
                         '혼합 쿼리 예시: `#work OR ext:md` (`OR`가 파일 이름에서 검색됩니다).'
                     ]
@@ -444,7 +442,6 @@ export const STRINGS_KO = {
         groupBy: '그룹화 기준',
         tags: '태그',
         properties: '속성',
-        tasks: '작업',
         date: '날짜',
         parentFolder: '상위 폴더',
         resetAppearance: '모양 재설정',
@@ -993,8 +990,7 @@ export const STRINGS_KO = {
         file: '파일',
         files: '파일',
         folder: '폴더',
-        folders: '폴더',
-        unfinishedTasks: '미완료 작업'
+        folders: '폴더'
     },
 
     // Settings
@@ -1105,7 +1101,6 @@ export const STRINGS_KO = {
                     featureImage: '대표 이미지',
                     tags: '태그',
                     properties: '속성',
-                    tasks: '작업',
                     date: '날짜',
                     parentFolder: '상위 폴더'
                 }
@@ -1314,42 +1309,9 @@ export const STRINGS_KO = {
                 name: '파일 아이콘 표시',
                 desc: '파일 아이콘을 왼쪽 정렬 간격과 함께 표시. 비활성화하면 아이콘과 들여쓰기가 모두 제거됩니다. 우선순위: 미완료 작업 아이콘 > 사용자 지정 아이콘 > 폴더 아이콘 > 파일 이름 아이콘 > 파일 유형 아이콘 > 기본값 아이콘.'
             },
-            unfinishedTaskIcon: {
-                name: '미완료 작업 아이콘',
-                desc: '노트에 미완료 작업이 있을 때 파일 아이콘을 바꿉니다.',
-                options: {
-                    disabled: '비활성화',
-                    compact: '컴팩트 모드',
-                    standardAndCompact: '표준 및 컴팩트'
-                }
-            },
             useFolderIcon: {
                 name: '폴더 아이콘 사용',
                 desc: '사용자 지정 파일 아이콘이 설정되지 않은 경우 상위 폴더 아이콘을 표시합니다. 사용자 지정 파일 색상이 설정되지 않은 경우 폴더 색상이 사용됩니다.'
-            },
-            showFileTaskProgress: {
-                name: '작업 진행률',
-                desc: '작업 상태를 표시하며 진행률 표시줄과 작업 수는 선택적으로 표시합니다. 미완료 작업과 완료된 작업의 색상은 Style Settings 플러그인에서 개별적으로 설정할 수 있습니다.'
-            },
-            showFileTaskProgressBar: {
-                name: '작업 진행률: 진행률 표시줄',
-                desc: '작업 아이콘 옆에 진행률 표시줄을 표시합니다.'
-            },
-            showFileTaskProgressCount: {
-                name: '작업 진행률: 작업 수',
-                desc: '완료된 작업 수와 전체 작업 수를 표시합니다(예: 3/7).'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: '작업 진행률: 완료 시 숨기기',
-                desc: '노트의 모든 작업이 완료되면 작업 진행률을 숨깁니다.'
-            },
-            unfinishedTaskBackground: {
-                name: '미완료 작업 배경',
-                desc: '노트에 미완료 작업이 있을 때 배경색을 적용합니다.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: '미완료 작업 배경색',
-                desc: '노트에 미완료 작업이 있을 때 사용할 배경색을 설정합니다.'
             },
             showFileNameIcons: {
                 name: '파일 이름으로 아이콘 설정',

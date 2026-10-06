@@ -247,8 +247,6 @@ export const STRINGS_ID = {
                 tasks: {
                     title: 'Filter',
                     items: [
-                        '`has:task` Sertakan catatan dengan tugas yang belum selesai.',
-                        '`-has:task` Kecualikan catatan dengan tugas yang belum selesai.',
                         '`folder:meetings` Sertakan catatan yang nama foldernya mengandung `meetings`.',
                         '`folder:/work/meetings` Sertakan catatan hanya di `work/meetings` (tidak termasuk subfolder).',
                         '`folder:/` Sertakan catatan hanya di root vault.',
@@ -264,7 +262,7 @@ export const STRINGS_ID = {
                     items: [
                         '`AND` dan `OR` adalah operator hanya dalam kueri yang khusus berisi tag dan properti.',
                         'Kueri khusus tag dan properti hanya berisi filter tag dan properti: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Jika kueri menyertakan nama, tanggal (`@...`), filter tugas (`has:task`), filter folder (`folder:...`), atau filter ekstensi (`ext:...`), `AND` dan `OR` dicocokkan sebagai kata.',
+                        'Jika kueri menyertakan nama, tanggal (`@...`), filter folder (`folder:...`), atau filter ekstensi (`ext:...`), `AND` dan `OR` dicocokkan sebagai kata.',
                         'Contoh kueri operator: `#work OR .status=started`.',
                         'Contoh kueri campuran: `#work OR ext:md` (`OR` dicocokkan dalam nama file).'
                     ]
@@ -446,7 +444,6 @@ export const STRINGS_ID = {
         groupBy: 'Kelompokkan berdasarkan',
         tags: 'Tag',
         properties: 'Properti',
-        tasks: 'Tugas',
         date: 'Tanggal',
         parentFolder: 'Folder induk',
         resetAppearance: 'Atur ulang tampilan',
@@ -996,8 +993,7 @@ export const STRINGS_ID = {
         file: 'file',
         files: 'file',
         folder: 'folder',
-        folders: 'folder',
-        unfinishedTasks: 'Tugas belum selesai'
+        folders: 'folder'
     },
 
     // Settings
@@ -1109,7 +1105,6 @@ export const STRINGS_ID = {
                     featureImage: 'Gambar unggulan',
                     tags: 'Tag',
                     properties: 'Properti',
-                    tasks: 'Tugas',
                     date: 'Tanggal',
                     parentFolder: 'Folder induk'
                 }
@@ -1318,42 +1313,9 @@ export const STRINGS_ID = {
                 name: 'Tampilkan ikon file',
                 desc: 'Tampilkan ikon file dengan spasi rata kiri. Menonaktifkan menghapus ikon dan indentasi. Prioritas: ikon tugas belum selesai > ikon kustom > ikon folder > ikon nama file > ikon tipe file > ikon default.'
             },
-            unfinishedTaskIcon: {
-                name: 'Ikon tugas belum selesai',
-                desc: 'Ganti ikon file saat catatan memiliki tugas yang belum selesai.',
-                options: {
-                    disabled: 'Dinonaktifkan',
-                    compact: 'Mode kompak',
-                    standardAndCompact: 'Standar dan kompak'
-                }
-            },
             useFolderIcon: {
                 name: 'Gunakan ikon folder',
                 desc: 'Tampilkan ikon folder induk saat tidak ada ikon file kustom yang ditetapkan. Warna folder digunakan saat tidak ada warna file kustom yang ditetapkan.'
-            },
-            showFileTaskProgress: {
-                name: 'Kemajuan tugas',
-                desc: 'Tampilkan status tugas dengan bilah progres dan jumlah tugas opsional. Warna untuk tugas yang belum selesai dan tugas yang selesai dapat diatur secara terpisah dengan plugin Style Settings.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Kemajuan tugas: bilah progres',
-                desc: 'Tampilkan bilah progres di samping ikon tugas.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Kemajuan tugas: jumlah tugas',
-                desc: 'Tampilkan jumlah tugas yang selesai dan total tugas, misalnya 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Kemajuan tugas: sembunyikan saat selesai',
-                desc: 'Sembunyikan progres tugas saat semua tugas dalam catatan selesai.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Latar belakang tugas belum selesai',
-                desc: 'Terapkan warna latar belakang saat catatan memiliki tugas yang belum selesai.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Warna latar belakang tugas belum selesai',
-                desc: 'Atur warna latar belakang yang digunakan saat catatan memiliki tugas yang belum selesai.'
             },
             showFileNameIcons: {
                 name: 'Ikon berdasarkan nama file',

@@ -952,24 +952,12 @@ export function ListPaneVirtualContent({
             }
 
             const file = item.data;
-            const taskUnfinished = settings.showFileBackgroundUnfinishedTask
-                ? fileItemStorage.getDB().getFile(file.path)?.taskUnfinished
-                : undefined;
             return hasSolidFileRowBackground({
                 customBackgroundColor: metadataService.getFileBackgroundColor(file.path),
-                taskUnfinished,
-                showUnfinishedTaskBackground: settings.showFileBackgroundUnfinishedTask,
-                unfinishedTaskBackgroundColor: settings.unfinishedTaskBackgroundColor,
                 getSolidBackground
             });
         },
-        [
-            fileItemStorage,
-            getSolidBackground,
-            metadataService,
-            settings.showFileBackgroundUnfinishedTask,
-            settings.unfinishedTaskBackgroundColor
-        ]
+        [getSolidBackground, metadataService]
     );
     const isFileVisuallySelected = useCallback(
         (file: TFile): boolean => {

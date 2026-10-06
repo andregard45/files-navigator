@@ -246,8 +246,6 @@ export const STRINGS_VI = {
                 tasks: {
                     title: 'Bộ lọc',
                     items: [
-                        '`has:task` Bao gồm ghi chú có nhiệm vụ chưa hoàn thành.',
-                        '`-has:task` Loại trừ ghi chú có nhiệm vụ chưa hoàn thành.',
                         '`folder:meetings` Bao gồm ghi chú có tên thư mục chứa `meetings`.',
                         '`folder:/work/meetings` Bao gồm ghi chú chỉ trong `work/meetings` (không bao gồm thư mục con).',
                         '`folder:/` Bao gồm ghi chú chỉ trong thư mục gốc của kho.',
@@ -263,7 +261,7 @@ export const STRINGS_VI = {
                     items: [
                         '`AND` và `OR` là toán tử chỉ trong các truy vấn chỉ chứa thẻ và thuộc tính.',
                         'Truy vấn chỉ chứa thẻ và thuộc tính chỉ bao gồm bộ lọc thẻ và thuộc tính: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Nếu truy vấn bao gồm tên, ngày (`@...`), bộ lọc nhiệm vụ (`has:task`), bộ lọc thư mục (`folder:...`) hoặc bộ lọc phần mở rộng (`ext:...`), `AND` và `OR` được tìm kiếm như từ.',
+                        'Nếu truy vấn bao gồm tên, ngày (`@...`), bộ lọc thư mục (`folder:...`) hoặc bộ lọc phần mở rộng (`ext:...`), `AND` và `OR` được tìm kiếm như từ.',
                         'Ví dụ truy vấn toán tử: `#work OR .status=started`.',
                         'Ví dụ truy vấn hỗn hợp: `#work OR ext:md` (`OR` được tìm kiếm trong tên tệp).'
                     ]
@@ -445,7 +443,6 @@ export const STRINGS_VI = {
         groupBy: 'Nhóm theo',
         tags: 'Thẻ',
         properties: 'Thuộc tính',
-        tasks: 'Nhiệm vụ',
         date: 'Ngày',
         parentFolder: 'Thư mục cha',
         resetAppearance: 'Đặt lại giao diện',
@@ -995,8 +992,7 @@ export const STRINGS_VI = {
         file: 'tệp',
         files: 'tệp',
         folder: 'thư mục',
-        folders: 'thư mục',
-        unfinishedTasks: 'Nhiệm vụ chưa hoàn thành'
+        folders: 'thư mục'
     },
 
     // Settings
@@ -1107,7 +1103,6 @@ export const STRINGS_VI = {
                     featureImage: 'Hình ảnh nổi bật',
                     tags: 'Thẻ',
                     properties: 'Thuộc tính',
-                    tasks: 'Nhiệm vụ',
                     date: 'Ngày',
                     parentFolder: 'Thư mục cha'
                 }
@@ -1316,42 +1311,9 @@ export const STRINGS_VI = {
                 name: 'Hiện biểu tượng tệp',
                 desc: 'Hiển thị biểu tượng tệp với khoảng cách căn trái. Tắt sẽ gỡ cả biểu tượng và thụt lề. Ưu tiên: biểu tượng nhiệm vụ chưa hoàn thành > biểu tượng tùy chỉnh > biểu tượng thư mục > biểu tượng tên tệp > biểu tượng loại tệp > biểu tượng mặc định.'
             },
-            unfinishedTaskIcon: {
-                name: 'Biểu tượng nhiệm vụ chưa hoàn thành',
-                desc: 'Thay thế biểu tượng tệp khi ghi chú có nhiệm vụ chưa hoàn thành.',
-                options: {
-                    disabled: 'Đã tắt',
-                    compact: 'Chế độ gọn',
-                    standardAndCompact: 'Tiêu chuẩn và gọn'
-                }
-            },
             useFolderIcon: {
                 name: 'Dùng biểu tượng thư mục',
                 desc: 'Hiển thị biểu tượng của thư mục cha khi không có biểu tượng tệp tùy chỉnh được đặt. Màu thư mục được dùng khi không có màu tệp tùy chỉnh được đặt.'
-            },
-            showFileTaskProgress: {
-                name: 'Tiến độ nhiệm vụ',
-                desc: 'Hiển thị trạng thái nhiệm vụ với thanh tiến độ và số nhiệm vụ tùy chọn. Màu cho nhiệm vụ chưa hoàn thành và nhiệm vụ đã hoàn thành có thể được đặt riêng bằng plugin Style Settings.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Tiến độ nhiệm vụ: thanh tiến độ',
-                desc: 'Hiển thị thanh tiến độ bên cạnh biểu tượng nhiệm vụ.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Tiến độ nhiệm vụ: số nhiệm vụ',
-                desc: 'Hiển thị số nhiệm vụ đã hoàn thành và tổng số nhiệm vụ, ví dụ 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Tiến độ nhiệm vụ: ẩn khi hoàn thành',
-                desc: 'Ẩn tiến độ nhiệm vụ khi tất cả nhiệm vụ trong ghi chú đã hoàn thành.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Nền nhiệm vụ chưa hoàn thành',
-                desc: 'Áp dụng màu nền khi ghi chú có nhiệm vụ chưa hoàn thành.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Màu nền nhiệm vụ chưa hoàn thành',
-                desc: 'Đặt màu nền được sử dụng khi ghi chú có nhiệm vụ chưa hoàn thành.'
             },
             showFileNameIcons: {
                 name: 'Biểu tượng theo tên tệp',

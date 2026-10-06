@@ -306,13 +306,6 @@ export function showListPaneAppearanceMenu({
             icon: resolveUXIconForMenu(settings.interfaceIcons, 'nav-properties'),
             globalDefault: settings.showFileProperties,
             available: !isCompact || settings.showFilePropertiesInCompactMode
-        },
-        {
-            key: 'showTaskProgress',
-            title: strings.folderAppearance.tasks,
-            icon: resolveUXIconForMenu(settings.interfaceIcons, 'file-unfinished-task'),
-            globalDefault: settings.showFileTaskProgress,
-            available: !isCompact
         }
     ];
     const metadataToggles: ContentToggle[] = [

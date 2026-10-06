@@ -248,8 +248,6 @@ export const STRINGS_ES = {
                 tasks: {
                     title: 'Filtros',
                     items: [
-                        '`has:task` Incluir notas con tareas pendientes.',
-                        '`-has:task` Excluir notas con tareas pendientes.',
                         '`folder:meetings` Incluir notas donde un nombre de carpeta contiene `meetings`.',
                         '`folder:/work/meetings` Incluir notas solo en `work/meetings` (no subcarpetas).',
                         '`folder:/` Incluir notas solo en la raíz de la bóveda.',
@@ -265,7 +263,7 @@ export const STRINGS_ES = {
                     items: [
                         '`AND` y `OR` son operadores solo en consultas exclusivas de etiquetas/propiedades.',
                         'Las consultas exclusivas de etiquetas/propiedades contienen solo filtros de etiquetas y propiedades: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Si una consulta incluye nombres, fechas (`@...`), filtros de tareas (`has:task`), filtros de carpetas (`folder:...`) o filtros de extensión (`ext:...`), `AND` y `OR` se buscan como palabras.',
+                        'Si una consulta incluye nombres, fechas (`@...`), filtros de carpetas (`folder:...`) o filtros de extensión (`ext:...`), `AND` y `OR` se buscan como palabras.',
                         'Ejemplo de consulta con operadores: `#work OR .status=started`.',
                         'Ejemplo de consulta mixta: `#work OR ext:md` (`OR` se busca en los nombres de archivos).'
                     ]
@@ -448,7 +446,6 @@ export const STRINGS_ES = {
         groupBy: 'Agrupar por',
         tags: 'Etiquetas',
         properties: 'Propiedades',
-        tasks: 'Tareas',
         date: 'Fecha',
         parentFolder: 'Carpeta superior',
         resetAppearance: 'Restablecer apariencia',
@@ -999,8 +996,7 @@ export const STRINGS_ES = {
         file: 'archivo',
         files: 'archivos',
         folder: 'carpeta',
-        folders: 'carpetas',
-        unfinishedTasks: 'Tareas pendientes'
+        folders: 'carpetas'
     },
 
     // Settings
@@ -1113,7 +1109,6 @@ export const STRINGS_ES = {
                     featureImage: 'Imagen destacada',
                     tags: 'Etiquetas',
                     properties: 'Propiedades',
-                    tasks: 'Tareas',
                     date: 'Fecha',
                     parentFolder: 'Carpeta superior'
                 }
@@ -1323,42 +1318,9 @@ export const STRINGS_ES = {
                 name: 'Mostrar iconos de archivo',
                 desc: 'Mostrar iconos de archivo con espaciado alineado a la izquierda. Desactivar elimina tanto iconos como sangría. Prioridad: icono de tareas pendientes > icono personalizado > icono de carpeta > icono de nombre de archivo > icono de tipo de archivo > icono predeterminado.'
             },
-            unfinishedTaskIcon: {
-                name: 'Icono de tareas pendientes',
-                desc: 'Reemplazar el icono del archivo cuando una nota tiene tareas pendientes.',
-                options: {
-                    disabled: 'Desactivado',
-                    compact: 'Modo compacto',
-                    standardAndCompact: 'Estándar y compacto'
-                }
-            },
             useFolderIcon: {
                 name: 'Usar icono de carpeta',
                 desc: 'Mostrar el icono de la carpeta principal cuando no hay un icono de archivo personalizado. El color de la carpeta se usa cuando no hay un color de archivo personalizado.'
-            },
-            showFileTaskProgress: {
-                name: 'Progreso de tareas',
-                desc: 'Mostrar el estado de las tareas con una barra de progreso y un número de tareas, ambos opcionales. Los colores de las tareas pendientes y completadas se pueden definir por separado con el plugin Style Settings.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Progreso de tareas: barra de progreso',
-                desc: 'Mostrar una barra de progreso junto al icono de tarea.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Progreso de tareas: número de tareas',
-                desc: 'Mostrar el número de tareas completadas y el total de tareas, por ejemplo 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Progreso de tareas: ocultar al completar',
-                desc: 'Ocultar el progreso de tareas cuando todas las tareas de una nota están completadas.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Fondo de tareas pendientes',
-                desc: 'Aplicar un color de fondo cuando una nota tiene tareas pendientes.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Color de fondo de tareas pendientes',
-                desc: 'Establecer el color de fondo usado cuando una nota tiene tareas pendientes.'
             },
             showFileNameIcons: {
                 name: 'Iconos por nombre de archivo',

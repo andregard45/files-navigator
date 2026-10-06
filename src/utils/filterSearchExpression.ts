@@ -433,8 +433,6 @@ export const parseTagModeTokens = (
         hasInclusions,
         requiresTags,
         allRequireTags,
-        requireUnfinishedTasks: false,
-        excludeUnfinishedTasks: false,
         includedTagTokens,
         propertyTokens: includedPropertyTokens,
         excludePropertyTokens,

@@ -47,7 +47,6 @@ interface UseListPaneRefreshArgs {
     groupBy: ListNoteGroupingOption;
     hasDateSearchFilters: boolean;
     hasPropertySearchFilters: boolean;
-    hasTaskSearchFilters: boolean;
     hiddenFilePropertyMatcher: ReturnType<typeof createFrontmatterPropertyExclusionMatcher>;
     hiddenFileTags: string[];
     includeDescendantNotes: boolean;
@@ -194,7 +193,6 @@ export function useListPaneRefresh({
     groupBy,
     hasDateSearchFilters,
     hasPropertySearchFilters,
-    hasTaskSearchFilters,
     hiddenFilePropertyMatcher,
     hiddenFileTags,
     includeDescendantNotes,
@@ -527,9 +525,6 @@ export function useListPaneRefresh({
                 shouldRefresh = changes.some(change => change.metadataHiddenChanged === true && basePathSet.has(change.path));
             }
 
-            if (!shouldRefresh && (hasTaskSearchFilters || settings.showFileBackgroundUnfinishedTask)) {
-                shouldRefresh = changes.some(change => change.changes.taskUnfinished !== undefined && basePathSet.has(change.path));
-            }
 
             if (shouldRefresh) {
                 queueRefresh();
@@ -557,7 +552,6 @@ export function useListPaneRefresh({
         groupBy,
         hasDateSearchFilters,
         hasPropertySearchFilters,
-        hasTaskSearchFilters,
         hiddenFilePropertyMatcher,
         hiddenFileTags,
         includeDescendantNotes,
@@ -574,7 +568,6 @@ export function useListPaneRefresh({
         settings.frontmatterNameField,
         propertySortKey,
         propertySortSecondary,
-        settings.showFileBackgroundUnfinishedTask,
         showFileDate,
         settings.showTooltips,
         settings.useFrontmatterMetadata,

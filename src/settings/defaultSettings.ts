@@ -50,7 +50,6 @@ const NAV_RAINBOW_FIRST_COLOR_DEFAULT = '#ef4444';
 const NAV_RAINBOW_LAST_COLOR_DEFAULT = '#8b5cf6';
 const NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT = '#fb7185';
 const NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT = '#c084fc';
-const UNFINISHED_TASK_BACKGROUND_COLOR_DEFAULT = '#ef000050';
 
 export const NAV_RAINBOW_DEFAULTS: NavRainbowSettings = {
     mode: 'none',
@@ -340,15 +339,7 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     frontmatterDateFormat: '',
 
     // Notes tab
-    showFileTaskProgress: true,
-    showFileTaskProgressBar: true,
-    showFileTaskProgressCount: true,
-    hideFileTaskProgressWhenComplete: false,
-    showFileBackgroundUnfinishedTask: false,
-    unfinishedTaskBackgroundColor: UNFINISHED_TASK_BACKGROUND_COLOR_DEFAULT,
-    unfinishedTaskBackgroundColorDark: UNFINISHED_TASK_BACKGROUND_COLOR_DEFAULT,
     showFileIcons: true,
-    unfinishedTaskIcon: 'compact',
     useFolderIconForFiles: false,
     showFilenameMatchIcons: false,
     fileNameIconMap: sanitizeRecord<string>(undefined),

@@ -92,27 +92,21 @@ describe('filterSearch property evaluation', () => {
         const noProperties = new Map<string, string[]>();
 
         expect(
-            fileMatchesFilterTokens('note', [], keyOnlyTokens, { hasUnfinishedTasks: false, propertyValuesByKey: statusProperties })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('note', [], keyOnlyTokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['status', []]])
             })
         ).toBe(true);
-        expect(fileMatchesFilterTokens('note', [], keyOnlyTokens, { hasUnfinishedTasks: false, propertyValuesByKey: noProperties })).toBe(
             false
         );
 
-        expect(fileMatchesFilterTokens('note', [], valueTokens, { hasUnfinishedTasks: false, propertyValuesByKey: statusProperties })).toBe(
             true
         );
         expect(
-            fileMatchesFilterTokens('note', [], valueTokens, { hasUnfinishedTasks: false, propertyValuesByKey: exactStatusProperties })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('note', [], valueTokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['status', ['done']]])
             })
         ).toBe(false);
@@ -123,10 +117,8 @@ describe('filterSearch property evaluation', () => {
         const valueTokens = parseFilterSearchTokens('.alias=best');
         const properties = new Map<string, string[]>([['aliases', ['best note']]]);
 
-        expect(fileMatchesFilterTokens('note', [], keyOnlyTokens, { hasUnfinishedTasks: false, propertyValuesByKey: properties })).toBe(
             true
         );
-        expect(fileMatchesFilterTokens('note', [], valueTokens, { hasUnfinishedTasks: false, propertyValuesByKey: properties })).toBe(
             false
         );
     });
@@ -140,13 +132,11 @@ describe('filterSearch property evaluation', () => {
 
         expect(
             fileMatchesFilterTokens('note', [], fullNameTokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: fullNameAuthorProperties
             })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('note', [], surnameTokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: etAlAuthorProperties
             })
         ).toBe(true);
@@ -157,13 +147,11 @@ describe('filterSearch property evaluation', () => {
 
         expect(
             fileMatchesFilterTokens('note', [], tokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['author', [foldSearchText('Avram Noam Chomsky')]]])
             })
         ).toBe(false);
         expect(
             fileMatchesFilterTokens('note', [], tokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['author', [foldSearchText('Ursula K. Le Guin')]]])
             })
         ).toBe(true);
@@ -174,10 +162,8 @@ describe('filterSearch property evaluation', () => {
         const excludeTokens = parseFilterSearchTokens('-.hidefeature=');
         const properties = new Map<string, string[]>([['hidefeature', ['true']]]);
 
-        expect(fileMatchesFilterTokens('note', [], includeTokens, { hasUnfinishedTasks: false, propertyValuesByKey: properties })).toBe(
             true
         );
-        expect(fileMatchesFilterTokens('note', [], excludeTokens, { hasUnfinishedTasks: false, propertyValuesByKey: properties })).toBe(
             false
         );
     });
@@ -188,19 +174,16 @@ describe('filterSearch property evaluation', () => {
 
         expect(
             fileMatchesFilterTokens('note', [], tokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['status', ['started']]])
             })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('note', [], tokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['status', ['finished']]])
             })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('note', [], tokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([['status', ['paused']]])
             })
         ).toBe(false);
@@ -210,7 +193,6 @@ describe('filterSearch property evaluation', () => {
         const tokens = parseFilterSearchTokens('.status=accion');
         expect(
             fileMatchesFilterTokens('note', [], tokens, {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map<string, string[]>([[foldSearchText('Státus'), [foldSearchText('Plan de acción')]]])
             })
         ).toBe(true);
@@ -295,7 +277,6 @@ describe('updateFilterQueryWithProperty', () => {
         expect(parseFilterSearchTokens(`.reference="${rawValue}"`).propertyTokens).toEqual([{ key: 'reference', value: 'project alpha' }]);
         expect(
             fileMatchesFilterTokens('note', [], parseFilterSearchTokens(added.query), {
-                hasUnfinishedTasks: false,
                 propertyValuesByKey: new Map([['reference', ['project alpha']]])
             })
         ).toBe(true);

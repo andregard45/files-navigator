@@ -555,40 +555,6 @@ settings:
         max: 900
         step: 100
     -
-        id: nn-theme-file-task-color
-        title: File task color
-        description: Color for the task display and replacement file icon in notes with unfinished tasks.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
-        id: nn-theme-file-task-font-weight
-        title: File task weight
-        description: Weight for task counts and icons in notes with unfinished tasks.
-        type: variable-number-slider
-        default: 400
-        min: 100
-        max: 900
-        step: 100
-    -
-        id: nn-theme-file-task-complete-color
-        title: File task color (complete)
-        description: Icon, bar, and count color when all tasks in a note are completed.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
-        id: nn-theme-file-task-complete-font-weight
-        title: File task weight (complete)
-        description: Weight for task counts and icons when all tasks in a note are completed.
-        type: variable-number-slider
-        default: 400
-        min: 100
-        max: 900
-        step: 100
-    -
         id: nn-theme-file-date-color
         title: File date color
         description: Text color for creation or modification dates.

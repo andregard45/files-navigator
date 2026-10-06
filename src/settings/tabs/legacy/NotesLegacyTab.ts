@@ -28,8 +28,7 @@ import { createDependentSettingsSection, setElementVisible, wireToggleSettingWit
 import { DEFAULT_SETTINGS } from '../../defaultSettings';
 import {
     isFeatureImagePixelSizeSetting,
-    isFeatureImageSizeSetting,
-    isUnfinishedTaskIconMode
+    isFeatureImageSizeSetting
 } from '../../types';
 import {
     normalizeFileNameIconMapKey,
@@ -80,7 +79,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const featureImageGroup = createGroup(strings.settings.pages.fileDisplay.groups.featureImage);
     const tagsGroup = createGroup(strings.settings.pages.fileDisplay.groups.tags);
     const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
-    const tasksGroup = createGroup(strings.settings.pages.fileDisplay.groups.tasks);
     const dateGroup = createGroup(strings.settings.pages.fileDisplay.groups.date);
     const parentFolderGroup = createGroup(strings.settings.pages.fileDisplay.groups.parentFolder);
 
@@ -112,82 +110,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
         });
     };
 
-    const showFileTaskProgressSetting = tasksGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showFileTaskProgress.name).setDesc(strings.settings.items.showFileTaskProgress.desc);
-    });
-
-    const taskProgressSettingsEl = wireToggleSettingWithDependentSection(
-        showFileTaskProgressSetting,
-        () => plugin.settings.showFileTaskProgress,
-        async value => {
-            plugin.settings.showFileTaskProgress = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    new Setting(taskProgressSettingsEl)
-        .setName(strings.settings.items.showFileTaskProgressCount.name)
-        .setDesc(strings.settings.items.showFileTaskProgressCount.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showFileTaskProgressCount).onChange(async value => {
-                plugin.settings.showFileTaskProgressCount = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(taskProgressSettingsEl)
-        .setName(strings.settings.items.showFileTaskProgressBar.name)
-        .setDesc(strings.settings.items.showFileTaskProgressBar.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showFileTaskProgressBar).onChange(async value => {
-                plugin.settings.showFileTaskProgressBar = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(taskProgressSettingsEl)
-        .setName(strings.settings.items.hideFileTaskProgressWhenComplete.name)
-        .setDesc(strings.settings.items.hideFileTaskProgressWhenComplete.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.hideFileTaskProgressWhenComplete).onChange(async value => {
-                plugin.settings.hideFileTaskProgressWhenComplete = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    const showFileBackgroundUnfinishedTaskSetting = tasksGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.unfinishedTaskBackground.name).setDesc(strings.settings.items.unfinishedTaskBackground.desc);
-    });
-
-    const unfinishedTaskBackgroundSettingsEl = wireToggleSettingWithDependentSection(
-        showFileBackgroundUnfinishedTaskSetting,
-        () => plugin.settings.showFileBackgroundUnfinishedTask,
-        async value => {
-            plugin.settings.showFileBackgroundUnfinishedTask = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    createColorSetting({
-        containerEl: unfinishedTaskBackgroundSettingsEl,
-        name: strings.settings.items.unfinishedTaskBackgroundColor.name,
-        desc: strings.settings.items.unfinishedTaskBackgroundColor.desc,
-        access: {
-            getValue: () => plugin.settings.unfinishedTaskBackgroundColor,
-            setValue: value => {
-                plugin.settings.unfinishedTaskBackgroundColor = value;
-            },
-            defaultValue: DEFAULT_SETTINGS.unfinishedTaskBackgroundColor
-        },
-        darkAccess: {
-            getValue: () => plugin.settings.unfinishedTaskBackgroundColorDark,
-            setValue: value => {
-                plugin.settings.unfinishedTaskBackgroundColorDark = value;
-            },
-            defaultValue: DEFAULT_SETTINGS.unfinishedTaskBackgroundColorDark
-        }
-    });
-
     const showFileIconsSetting = iconGroup.addSetting(setting => {
         setting.setName(strings.settings.items.showFileIcons.name).setDesc(strings.settings.items.showFileIcons.desc);
     });
@@ -200,24 +122,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
             await plugin.saveSettingsAndUpdate();
         }
     );
-
-    new Setting(fileIconDependentSettingsEl)
-        .setName(strings.settings.items.unfinishedTaskIcon.name)
-        .setDesc(strings.settings.items.unfinishedTaskIcon.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('none', strings.settings.items.unfinishedTaskIcon.options.disabled)
-                .addOption('compact', strings.settings.items.unfinishedTaskIcon.options.compact)
-                .addOption('all', strings.settings.items.unfinishedTaskIcon.options.standardAndCompact)
-                .setValue(plugin.settings.unfinishedTaskIcon)
-                .onChange(async value => {
-                    if (!isUnfinishedTaskIconMode(value)) {
-                        return;
-                    }
-                    plugin.settings.unfinishedTaskIcon = value;
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
 
     let updateFileNameIconMapVisibility: (() => void) | null = null;
     let updateFileTypeIconMapVisibility: (() => void) | null = null;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { type FeatureImageStatus, type FileData, getDefaultPreviewStatusForPath, isPropertyData, normalizeTaskCounters } from './fileData';
+import { type FeatureImageStatus, type FileData, getDefaultPreviewStatusForPath, isPropertyData } from './fileData';
 
 type MutableFileData = Partial<FileData> & { preview?: string | null; customProperty?: unknown };
 
@@ -50,9 +50,6 @@ export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?
     data.metadataMtime = typeof data.metadataMtime === 'number' ? data.metadataMtime : data.mtime;
     data.fileThumbnailsMtime = typeof data.fileThumbnailsMtime === 'number' ? data.fileThumbnailsMtime : data.mtime;
     data.tags = Array.isArray(data.tags) ? data.tags : null;
-    const normalizedTaskCounters = normalizeTaskCounters(data.taskTotal, data.taskUnfinished);
-    data.taskTotal = normalizedTaskCounters.taskTotal;
-    data.taskUnfinished = normalizedTaskCounters.taskUnfinished;
     const rawProperties = data.properties ?? data.customProperty;
     data.properties = isPropertyData(rawProperties) ? rawProperties : null;
     if ('customProperty' in data) {

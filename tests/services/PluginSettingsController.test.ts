@@ -190,25 +190,6 @@ describe('PluginSettingsController.loadSettings', () => {
         expect(savedSettings.openFolderNotesInNewTab).toBeUndefined();
     });
 
-    it('migrates the legacy unfinished task icon toggle to both list modes', async () => {
-        const saveData = vi.fn().mockResolvedValue(undefined);
-        const controller = new PluginSettingsController({
-            keys: STORAGE_KEYS,
-            loadData: vi.fn(async () => ({
-                showFileIconUnfinishedTask: true
-            })),
-            saveData,
-            mirrorUXPreferences: vi.fn()
-        });
-
-        await controller.loadSettings();
-
-        expect(controller.settings.unfinishedTaskIcon).toBe('all');
-        expect(saveData).toHaveBeenCalledTimes(1);
-        const savedSettings = saveData.mock.calls[0][0] as Record<string, unknown>;
-        expect(savedSettings.unfinishedTaskIcon).toBe('all');
-        expect(savedSettings.showFileIconUnfinishedTask).toBeUndefined();
-    });
 
     it('persists cleanup when legacy folder color title setting is migrated', async () => {
         const saveData = vi.fn().mockResolvedValue(undefined);
@@ -578,7 +559,6 @@ describe('PluginSettingsController.loadSettingsAtStartup', () => {
                 ? null
                 : {
                       recentNotesCount: 17,
-                      unfinishedTaskBackgroundColorDark: DEFAULT_SETTINGS.unfinishedTaskBackgroundColorDark,
                       propertyGroupKey: ''
                   };
         });
@@ -636,7 +616,6 @@ describe('PluginSettingsController.loadSettingsAtStartup', () => {
             undefined,
             {
                 recentNotesCount: 23,
-                unfinishedTaskBackgroundColorDark: DEFAULT_SETTINGS.unfinishedTaskBackgroundColorDark,
                 propertyGroupKey: ''
             }
         ];
@@ -652,7 +631,6 @@ describe('PluginSettingsController.loadSettingsAtStartup', () => {
     it('seeds the grouping property list from the sorting list for pre-split settings files', async () => {
         const { controller, saveData } = createController(async () => ({
             propertySortKey: 'status, priority',
-            unfinishedTaskBackgroundColorDark: DEFAULT_SETTINGS.unfinishedTaskBackgroundColorDark
         }));
 
         await expect(controller.loadSettingsAtStartup({ maxAttempts: 1, retryDelayMs: 0 })).resolves.toBe('loaded');
@@ -725,25 +703,7 @@ describe('PluginSettingsController.applySettingsRecord', () => {
         expect(saveData).not.toHaveBeenCalled();
     });
 
-    it('seeds the dark task background color from the light color when the stored key is missing', () => {
-        const { controller } = createController();
 
-        const needsCleanup = controller.applySettingsRecord({ unfinishedTaskBackgroundColor: '#336699' }, { isFirstLaunch: false });
-
-        expect(controller.settings.unfinishedTaskBackgroundColorDark).toBe('#336699');
-        expect(needsCleanup).toBe(true);
-    });
-
-    it('keeps a stored dark task background color independent of the light color', () => {
-        const { controller } = createController();
-
-        controller.applySettingsRecord(
-            { unfinishedTaskBackgroundColor: '#336699', unfinishedTaskBackgroundColorDark: '#112233' },
-            { isFirstLaunch: false }
-        );
-
-        expect(controller.settings.unfinishedTaskBackgroundColorDark).toBe('#112233');
-    });
 
     it('applies an empty record as defaults for reset', () => {
         const { controller, saveData } = createController();

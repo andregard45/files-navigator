@@ -109,35 +109,6 @@ export function getChangedPropertyKeys(previous: readonly PropertyItem[] | null,
         .sort();
 }
 
-// Task counters are stored and updated as a pair.
-//
-// Valid states:
-// - `null/null`: pending extraction (or tasks disabled upstream)
-// - `number/number`: extracted values (finite integers, >= 0)
-//
-// Callers must not send partial updates (only `taskTotal` or only `taskUnfinished`).
-// Partial/invalid values are normalized to `null/null` so the counters can re-converge.
-export function normalizeTaskCounters(
-    taskTotal: unknown,
-    taskUnfinished: unknown
-): { taskTotal: number | null; taskUnfinished: number | null } {
-    const hasValidTaskTotal = typeof taskTotal === 'number' && Number.isFinite(taskTotal) && taskTotal >= 0;
-    const hasValidTaskUnfinished = typeof taskUnfinished === 'number' && Number.isFinite(taskUnfinished) && taskUnfinished >= 0;
-
-    if (taskTotal === null && taskUnfinished === null) {
-        return { taskTotal: null, taskUnfinished: null };
-    }
-
-    if (hasValidTaskTotal && hasValidTaskUnfinished) {
-        return {
-            taskTotal: Math.trunc(taskTotal),
-            taskUnfinished: Math.trunc(taskUnfinished)
-        };
-    }
-
-    return { taskTotal: null, taskUnfinished: null };
-}
-
 export function getDefaultPreviewStatusForPath(path: string): PreviewStatus {
     return isMarkdownPath(path) ? 'unprocessed' : 'none';
 }
@@ -151,8 +122,6 @@ export function createDefaultFileData(params: { mtime: number; path: string }): 
         metadataMtime: 0,
         fileThumbnailsMtime: 0,
         tags: isMarkdown ? null : [],
-        taskTotal: isMarkdown ? null : 0,
-        taskUnfinished: isMarkdown ? null : 0,
         properties: null,
         previewStatus: getDefaultPreviewStatusForPath(params.path),
         featureImage: null,
@@ -200,8 +169,6 @@ export interface FileData {
      */
     fileThumbnailsMtime: number;
     tags: string[] | null; // null = not extracted yet (e.g. when tags disabled)
-    taskTotal: number | null; // null = not generated yet
-    taskUnfinished: number | null; // null = not generated yet
     properties: PropertyItem[] | null; // null = not generated yet
     /**
      * Preview text processing state.
@@ -260,13 +227,9 @@ export interface FileContentChange {
         featureImageStatus?: FeatureImageStatus;
         metadata?: FileData['metadata'] | null;
         tags?: string[] | null;
-        taskTotal?: number | null;
-        taskUnfinished?: number | null;
         properties?: FileData['properties'];
     };
     changeType?: 'metadata' | 'content' | 'both';
-    /** Normalized counters before this update; present whenever either task counter is published in changes. */
-    previousTaskCounters?: Pick<FileData, 'taskTotal' | 'taskUnfinished'>;
     /** Normalized property keys whose tree membership changed; omitted when the writer cannot provide a projection. */
     changedPropertyKeys?: string[];
     /** True when metadata.name changes between persisted values */

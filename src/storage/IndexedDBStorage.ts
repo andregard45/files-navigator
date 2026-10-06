@@ -989,7 +989,6 @@ export class IndexedDBStorage {
                 // Feature images need processing when they are unprocessed or missing a key marker.
                 (type === 'featureImage' && (data.featureImageKey === null || data.featureImageStatus === 'unprocessed')) ||
                 (type === 'metadata' && isMarkdownPath(path) && data.metadata === null) ||
-                (type === 'tasks' && isMarkdownPath(path) && (data.taskTotal === null || data.taskUnfinished === null)) ||
                 (type === 'properties' && isMarkdownPath(path) && data.properties === null)
             ) {
                 result.add(path);
@@ -1007,7 +1006,6 @@ export class IndexedDBStorage {
         const needsPreview = types.includes('preview');
         const needsFeatureImage = types.includes('featureImage');
         const needsMetadata = types.includes('metadata');
-        const needsTasks = types.includes('tasks');
         const needsProperties = types.includes('properties');
 
         const result = new Set<string>();
@@ -1018,7 +1016,6 @@ export class IndexedDBStorage {
                 (needsPreview && isMarkdown && data.previewStatus === 'unprocessed') ||
                 (needsFeatureImage && (data.featureImageKey === null || data.featureImageStatus === 'unprocessed')) ||
                 (needsMetadata && isMarkdown && data.metadata === null) ||
-                (needsTasks && isMarkdown && (data.taskTotal === null || data.taskUnfinished === null)) ||
                 (needsProperties && isMarkdown && data.properties === null)
             ) {
                 result.add(path);

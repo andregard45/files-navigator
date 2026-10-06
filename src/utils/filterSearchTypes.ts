@@ -85,8 +85,6 @@ export interface FilterSearchTokens {
     hasInclusions: boolean;
     requiresTags: boolean;
     allRequireTags: boolean;
-    requireUnfinishedTasks: boolean;
-    excludeUnfinishedTasks: boolean;
     includedTagTokens: string[];
     propertyTokens: PropertySearchToken[];
     excludePropertyTokens: PropertySearchToken[];

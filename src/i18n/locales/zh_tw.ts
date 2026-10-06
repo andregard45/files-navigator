@@ -245,8 +245,6 @@ export const STRINGS_ZH_TW = {
                 tasks: {
                     title: '篩選器',
                     items: [
-                        '`has:task` 包含有未完成任務的筆記。',
-                        '`-has:task` 排除有未完成任務的筆記。',
                         '`folder:meetings` 包含資料夾名稱含有 `meetings` 的筆記。',
                         '`folder:/work/meetings` 僅包含 `work/meetings` 中的筆記（不含子資料夾）。',
                         '`folder:/` 僅包含儲存庫根目錄中的筆記。',
@@ -262,7 +260,7 @@ export const STRINGS_ZH_TW = {
                     items: [
                         '`AND` 和 `OR` 僅在純標籤/屬性查詢中作為運算子。',
                         '純標籤/屬性查詢僅包含標籤和屬性篩選器：`#tag`、`-#tag`、`#`、`-#`、`.key`、`-.key`、`.key=value`、`-.key=value`。',
-                        '如果查詢包含名稱、日期（`@...`）、任務篩選器（`has:task`）、資料夾篩選器（`folder:...`）或副檔名篩選器（`ext:...`），`AND` 和 `OR` 將作為詞語進行比對。',
+                        '如果查詢包含名稱、日期（`@...`）、資料夾篩選器（`folder:...`）或副檔名篩選器（`ext:...`），`AND` 和 `OR` 將作為詞語進行比對。',
                         '運算子查詢範例：`#work OR .status=started`。',
                         '混合查詢範例：`#work OR ext:md`（`OR` 在檔案名稱中進行比對）。'
                     ]
@@ -445,7 +443,6 @@ export const STRINGS_ZH_TW = {
         groupBy: '分組依據',
         tags: '標籤',
         properties: '屬性',
-        tasks: '任務',
         date: '日期',
         parentFolder: '父資料夾',
         resetAppearance: '重設外觀',
@@ -988,8 +985,7 @@ export const STRINGS_ZH_TW = {
         file: '個檔案',
         files: '個檔案',
         folder: '個資料夾',
-        folders: '個資料夾',
-        unfinishedTasks: '未完成任務'
+        folders: '個資料夾'
     },
 
     // Settings
@@ -1100,7 +1096,6 @@ export const STRINGS_ZH_TW = {
                     featureImage: '特色圖片',
                     tags: '標籤',
                     properties: '屬性',
-                    tasks: '任務',
                     date: '日期',
                     parentFolder: '父資料夾'
                 }
@@ -1306,42 +1301,9 @@ export const STRINGS_ZH_TW = {
                 name: '顯示檔案圖示',
                 desc: '顯示檔案圖示並保留左對齊間距。停用後將移除圖示和縮排。優先順序：未完成任務圖示 > 自訂圖示 > 資料夾圖示 > 檔名圖示 > 檔案類型圖示 > 預設圖示。'
             },
-            unfinishedTaskIcon: {
-                name: '未完成任務圖示',
-                desc: '當筆記包含未完成任務時取代檔案圖示。',
-                options: {
-                    disabled: '已停用',
-                    compact: '精簡模式',
-                    standardAndCompact: '標準和精簡'
-                }
-            },
             useFolderIcon: {
                 name: '使用資料夾圖示',
                 desc: '當未設定自訂檔案圖示時顯示父資料夾圖示。當未設定自訂檔案顏色時使用資料夾顏色。'
-            },
-            showFileTaskProgress: {
-                name: '任務進度',
-                desc: '顯示任務狀態，進度條和任務數量為可選。未完成任務和已完成任務的顏色可透過 Style Settings 外掛程式分別設定。'
-            },
-            showFileTaskProgressBar: {
-                name: '任務進度：進度條',
-                desc: '在任務圖示旁邊顯示進度條。'
-            },
-            showFileTaskProgressCount: {
-                name: '任務進度：任務數量',
-                desc: '顯示已完成任務數和任務總數，例如 3/7。'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: '任務進度：全部完成時隱藏',
-                desc: '當筆記中的所有任務都已完成時隱藏任務進度。'
-            },
-            unfinishedTaskBackground: {
-                name: '未完成任務背景',
-                desc: '當筆記包含未完成任務時套用背景顏色。'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: '未完成任務背景顏色',
-                desc: '設定筆記包含未完成任務時使用的背景顏色。'
             },
             showFileNameIcons: {
                 name: '按檔名設定圖示',

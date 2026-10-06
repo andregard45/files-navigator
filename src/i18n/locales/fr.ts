@@ -249,8 +249,6 @@ export const STRINGS_FR = {
                 tasks: {
                     title: 'Filtres',
                     items: [
-                        '`has:task` Inclure les notes avec des tâches inachevées.',
-                        '`-has:task` Exclure les notes avec des tâches inachevées.',
                         '`folder:meetings` Inclure les notes dont un nom de dossier contient `meetings`.',
                         '`folder:/work/meetings` Inclure les notes uniquement dans `work/meetings` (pas les sous-dossiers).',
                         '`folder:/` Inclure les notes uniquement à la racine du coffre.',
@@ -266,7 +264,7 @@ export const STRINGS_FR = {
                     items: [
                         '`AND` et `OR` sont des opérateurs uniquement dans les requêtes composées exclusivement de mots-clés et propriétés.',
                         'Les requêtes exclusives de mots-clés et propriétés ne contiennent que des filtres de mots-clés et propriétés : `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        "Si une requête inclut des noms, des dates (`@...`), des filtres de tâches (`has:task`), des filtres de dossiers (`folder:...`) ou des filtres d'extension (`ext:...`), `AND` et `OR` sont recherchés comme des mots.",
+                        "Si une requête inclut des noms, des dates (`@...`), des filtres de dossiers (`folder:...`) ou des filtres d'extension (`ext:...`), `AND` et `OR` sont recherchés comme des mots.",
                         'Exemple de requête avec opérateurs : `#work OR .status=started`.',
                         'Exemple de requête mixte : `#work OR ext:md` (`OR` est recherché dans les noms de fichiers).'
                     ]
@@ -449,7 +447,6 @@ export const STRINGS_FR = {
         groupBy: 'Grouper par',
         tags: 'Mots-clés',
         properties: 'Propriétés',
-        tasks: 'Tâches',
         date: 'Date',
         parentFolder: 'Dossier parent',
         resetAppearance: 'Réinitialiser l’apparence',
@@ -1001,8 +998,7 @@ export const STRINGS_FR = {
         file: 'fichier',
         files: 'fichiers',
         folder: 'dossier',
-        folders: 'dossiers',
-        unfinishedTasks: 'Tâches inachevées'
+        folders: 'dossiers'
     },
 
     // Settings
@@ -1115,7 +1111,6 @@ export const STRINGS_FR = {
                     featureImage: 'Image vedette',
                     tags: 'Mots-clés',
                     properties: 'Propriétés',
-                    tasks: 'Tâches',
                     date: 'Date',
                     parentFolder: 'Dossier parent'
                 }
@@ -1324,42 +1319,9 @@ export const STRINGS_FR = {
                 name: 'Afficher les icônes de fichier',
                 desc: "Afficher les icônes de fichier avec espacement aligné à gauche. La désactivation supprime les icônes et l'indentation. Priorité : icône de tâches inachevées > icône personnalisée > icône de dossier > icône de nom de fichier > icône de type de fichier > icône par défaut."
             },
-            unfinishedTaskIcon: {
-                name: 'Icône de tâches inachevées',
-                desc: "Remplacer l'icône du fichier lorsqu'une note contient des tâches inachevées.",
-                options: {
-                    disabled: 'Désactivé',
-                    compact: 'Mode compact',
-                    standardAndCompact: 'Standard et compact'
-                }
-            },
             useFolderIcon: {
                 name: "Utiliser l'icône du dossier",
                 desc: "Afficher l'icône du dossier parent lorsqu'aucune icône de fichier personnalisée n'est définie. La couleur du dossier est utilisée lorsqu'aucune couleur de fichier personnalisée n'est définie."
-            },
-            showFileTaskProgress: {
-                name: 'Progression des tâches',
-                desc: "Afficher l'état des tâches avec une barre de progression et un nombre de tâches facultatifs. Les couleurs des tâches inachevées et terminées peuvent être définies séparément avec le plugin Style Settings."
-            },
-            showFileTaskProgressBar: {
-                name: 'Progression des tâches : barre de progression',
-                desc: "Afficher une barre de progression à côté de l'icône de tâche."
-            },
-            showFileTaskProgressCount: {
-                name: 'Progression des tâches : nombre de tâches',
-                desc: 'Afficher le nombre de tâches terminées et le nombre total de tâches, par exemple 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Progression des tâches : masquer une fois terminées',
-                desc: "Masquer la progression des tâches lorsque toutes les tâches d'une note sont terminées."
-            },
-            unfinishedTaskBackground: {
-                name: 'Fond de tâches inachevées',
-                desc: "Appliquer une couleur de fond lorsqu'une note contient des tâches inachevées."
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Couleur de fond des tâches inachevées',
-                desc: "Définir la couleur de fond utilisée lorsqu'une note contient des tâches inachevées."
             },
             showFileNameIcons: {
                 name: 'Icônes par nom de fichier',

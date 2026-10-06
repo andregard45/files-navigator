@@ -39,8 +39,6 @@ export interface FileItemCacheSnapshot {
     featureImageStatus: FeatureImageStatus;
     featureImageUrl: string | null;
     properties: PropertyItem[] | null;
-    taskTotal: number | null;
-    taskUnfinished: number | null;
 }
 
 export interface FileItemContentLoadOptions {
@@ -48,7 +46,6 @@ export interface FileItemContentLoadOptions {
     loadTags?: boolean;
     loadFeatureImage?: boolean;
     loadProperties?: boolean;
-    loadTaskCounts?: boolean;
 }
 
 type ResolvedFileItemContentLoadOptions = Required<FileItemContentLoadOptions>;
@@ -73,8 +70,6 @@ export interface FileItemContentState {
     featureImageStatus: FeatureImageStatus;
     featureImageUrl: string | null;
     properties: PropertyItem[] | null;
-    taskTotal: number | null;
-    taskUnfinished: number | null;
     metadataVersion: number;
 }
 
@@ -113,8 +108,7 @@ function resolveFileItemContentLoadOptions(loadOptions?: FileItemContentLoadOpti
         loadPreviewText: loadOptions?.loadPreviewText ?? true,
         loadTags: loadOptions?.loadTags ?? true,
         loadFeatureImage: loadOptions?.loadFeatureImage ?? true,
-        loadProperties: loadOptions?.loadProperties ?? true,
-        loadTaskCounts: loadOptions?.loadTaskCounts ?? true
+        loadProperties: loadOptions?.loadProperties ?? true
     };
 }
 
@@ -141,14 +135,12 @@ export function loadFileItemCacheSnapshot({
         loadPreviewText: shouldLoadPreviewText,
         loadTags: shouldLoadTags,
         loadFeatureImage: shouldLoadFeatureImage,
-        loadProperties: shouldLoadProperties,
-        loadTaskCounts: shouldLoadTaskCounts
+        loadProperties: shouldLoadProperties
     } = resolveFileItemContentLoadOptions(loadOptions);
     const shouldReadFileRecord =
         shouldLoadTags ||
         shouldLoadFeatureImage ||
-        shouldLoadProperties ||
-        shouldLoadTaskCounts;
+        shouldLoadProperties;
     const preview = shouldLoadPreviewText && showPreview && file.extension === 'md' ? db.getCachedPreviewText(file.path) : '';
     const record = shouldReadFileRecord ? db.getFile(file.path) : null;
     const tags = shouldLoadTags ? [...getCachedFileTags({ app, file, db, fileData: record })] : [];
@@ -161,8 +153,6 @@ export function loadFileItemCacheSnapshot({
               : null;
     const featureImageStatus: FeatureImageStatus = shouldLoadFeatureImage ? (record?.featureImageStatus ?? 'unprocessed') : 'unprocessed';
     const properties = shouldLoadProperties ? clonePropertyItems(record?.properties ?? null) : null;
-    const taskTotal = shouldLoadTaskCounts ? (record?.taskTotal ?? null) : null;
-    const taskUnfinished = shouldLoadTaskCounts ? (record?.taskUnfinished ?? null) : null;
 
     let featureImageUrl: string | null = null;
     if (isDirectImageFile) {
@@ -179,9 +169,7 @@ export function loadFileItemCacheSnapshot({
         featureImageKey,
         featureImageStatus,
         featureImageUrl,
-        properties,
-        taskTotal,
-        taskUnfinished
+        properties
     };
 }
 
@@ -195,8 +183,6 @@ function boxFromSnapshot(snapshot: FileItemCacheSnapshot): FileItemContentBox {
         featureImageKey: snapshot.featureImageKey,
         featureImageStatus: snapshot.featureImageStatus,
         properties: snapshot.properties,
-        taskTotal: snapshot.taskTotal,
-        taskUnfinished: snapshot.taskUnfinished,
         metadataVersion: 0
     };
 }
@@ -210,9 +196,7 @@ function mergeSnapshotIntoBox(prev: FileItemContentBox, snapshot: FileItemCacheS
         tags === prev.tags &&
         prev.featureImageKey === snapshot.featureImageKey &&
         prev.featureImageStatus === snapshot.featureImageStatus &&
-        properties === prev.properties &&
-        prev.taskTotal === snapshot.taskTotal &&
-        prev.taskUnfinished === snapshot.taskUnfinished
+        properties === prev.properties
     ) {
         return prev;
     }
@@ -232,7 +216,6 @@ export function applyFileItemContentChangeToBox({
     shouldLoadTags,
     shouldLoadFeatureImage,
     shouldLoadProperties,
-    shouldLoadTaskCounts,
     showPreview,
     fileExtension,
     shouldRefreshMetadataVersion
@@ -243,7 +226,6 @@ export function applyFileItemContentChangeToBox({
     shouldLoadTags: boolean;
     shouldLoadFeatureImage: boolean;
     shouldLoadProperties: boolean;
-    shouldLoadTaskCounts: boolean;
     showPreview: boolean;
     fileExtension: string;
     shouldRefreshMetadataVersion: boolean;
@@ -283,19 +265,6 @@ export function applyFileItemContentChangeToBox({
         }
     }
 
-    if (changes.taskTotal !== undefined && shouldLoadTaskCounts) {
-        const nextTaskTotal = changes.taskTotal ?? null;
-        if (prev.taskTotal !== nextTaskTotal) {
-            mutate().taskTotal = nextTaskTotal;
-        }
-    }
-
-    if (changes.taskUnfinished !== undefined && shouldLoadTaskCounts) {
-        const nextTaskUnfinished = changes.taskUnfinished ?? null;
-        if (prev.taskUnfinished !== nextTaskUnfinished) {
-            mutate().taskUnfinished = nextTaskUnfinished;
-        }
-    }
 
     if (changes.properties !== undefined && shouldLoadProperties) {
         const nextProperties = changes.properties ?? null;
@@ -327,30 +296,26 @@ export function useFileItemContentState({
     const loadTagsOption = loadOptions?.loadTags;
     const loadFeatureImageOption = loadOptions?.loadFeatureImage;
     const loadPropertiesOption = loadOptions?.loadProperties;
-    const loadTaskCountsOption = loadOptions?.loadTaskCounts;
     const resolvedLoadOptions = useMemo(
         () =>
             resolveFileItemContentLoadOptions({
                 loadPreviewText: loadPreviewTextOption,
                 loadTags: loadTagsOption,
                 loadFeatureImage: loadFeatureImageOption,
-                loadProperties: loadPropertiesOption,
-                loadTaskCounts: loadTaskCountsOption
+                loadProperties: loadPropertiesOption
             }),
         [
             loadFeatureImageOption,
             loadPreviewTextOption,
             loadPropertiesOption,
-            loadTagsOption,
-            loadTaskCountsOption
+            loadTagsOption
         ]
     );
     const {
         loadPreviewText: shouldLoadPreviewText,
         loadTags: shouldLoadTags,
         loadFeatureImage: shouldLoadFeatureImage,
-        loadProperties: shouldLoadProperties,
-        loadTaskCounts: shouldLoadTaskCounts
+        loadProperties: shouldLoadProperties
     } = resolvedLoadOptions;
     const loadSnapshot = useCallback(() => {
         return loadFileItemCacheSnapshot({
@@ -398,7 +363,6 @@ export function useFileItemContentState({
                         shouldLoadTags,
                         shouldLoadFeatureImage,
                         shouldLoadProperties,
-                        shouldLoadTaskCounts,
                         showPreview,
                         fileExtension: file.extension,
                         shouldRefreshMetadataVersion
@@ -423,7 +387,6 @@ export function useFileItemContentState({
         shouldLoadPreviewText,
         shouldLoadProperties,
         shouldLoadTags,
-        shouldLoadTaskCounts,
         refreshMetadataVersionOnFeatureImageChange,
         showPreview
     ]);
@@ -518,8 +481,6 @@ export function useFileItemContentState({
         featureImageStatus: box.featureImageStatus,
         featureImageUrl,
         properties: box.properties,
-        taskTotal: box.taskTotal,
-        taskUnfinished: box.taskUnfinished,
         metadataVersion: box.metadataVersion
     };
 }

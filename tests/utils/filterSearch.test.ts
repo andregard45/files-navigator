@@ -46,8 +46,6 @@ describe('parseFilterSearchTokens', () => {
         expect(tokens.hasInclusions).toBe(false);
         expect(tokens.requiresTags).toBe(false);
         expect(tokens.allRequireTags).toBe(false);
-        expect(tokens.requireUnfinishedTasks).toBe(false);
-        expect(tokens.excludeUnfinishedTasks).toBe(false);
         expect(tokens.includedTagTokens).toEqual([]);
         expect(tokens.nameTokens).toEqual([]);
         expect(tokens.tagTokens).toEqual([]);
@@ -445,15 +443,12 @@ describe('parseFilterSearchTokens', () => {
         const tokens = parseFilterSearchTokens('has:task');
         expect(tokens.mode).toBe('filter');
         expect(tokens.hasInclusions).toBe(true);
-        expect(tokens.requireUnfinishedTasks).toBe(true);
-        expect(tokens.excludeUnfinishedTasks).toBe(false);
     });
 
     it('parses folder filter tokens', () => {
         const tokens = parseFilterSearchTokens('has:task folder:meetings');
         expect(tokens.mode).toBe('filter');
         expect(tokens.hasInclusions).toBe(true);
-        expect(tokens.requireUnfinishedTasks).toBe(true);
         expect(tokens.folderTokens).toEqual([{ mode: 'segment', value: 'meetings' }]);
         expect(tokens.excludeFolderTokens).toEqual([]);
     });
@@ -535,8 +530,6 @@ describe('parseFilterSearchTokens', () => {
         const tokens = parseFilterSearchTokens('-has:task');
         expect(tokens.mode).toBe('filter');
         expect(tokens.hasInclusions).toBe(false);
-        expect(tokens.requireUnfinishedTasks).toBe(false);
-        expect(tokens.excludeUnfinishedTasks).toBe(true);
     });
 
     it('treats bang-prefixed unfinished task tokens as literal text', () => {
@@ -544,24 +537,20 @@ describe('parseFilterSearchTokens', () => {
         expect(tokens.mode).toBe('filter');
         expect(tokens.hasInclusions).toBe(true);
         expect(tokens.nameTokens).toEqual(['!has:task']);
-        expect(tokens.requireUnfinishedTasks).toBe(false);
-        expect(tokens.excludeUnfinishedTasks).toBe(false);
     });
 
     it('treats connectors as literal text when task filters are mixed with tags', () => {
         const tokens = parseFilterSearchTokens('#alpha OR #beta has:task');
         expect(tokens.mode).toBe('filter');
-        expect(tokens.nameTokens).toEqual(['or']);
+        expect(tokens.nameTokens).toEqual(['has:task', 'or']);
         expect(sortTokens(tokens.includedTagTokens)).toEqual(['alpha', 'beta']);
-        expect(tokens.requireUnfinishedTasks).toBe(true);
     });
 
     it('treats AND as literal text when task filters are mixed with tags', () => {
         const tokens = parseFilterSearchTokens('#alpha AND has:task');
         expect(tokens.mode).toBe('filter');
-        expect(tokens.nameTokens).toEqual(['and']);
+        expect(tokens.nameTokens).toEqual(['has:task', 'and']);
         expect(tokens.includedTagTokens).toEqual(['alpha']);
-        expect(tokens.requireUnfinishedTasks).toBe(true);
     });
 
     it('treats connectors as literal text when date filters are mixed with tags', () => {
@@ -699,7 +688,6 @@ describe('fileMatchesFilterTokens', () => {
 
         expect(
             fileMatchesFilterTokens('notebook navigator', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedAliases: ['nn']
             })
         ).toBe(true);
@@ -710,7 +698,6 @@ describe('fileMatchesFilterTokens', () => {
 
         expect(
             getFileFilterSearchMatch('notebook', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedAliases: ['navigator']
             })
         ).toEqual({ matches: true, nameMatch: { aliasIndexes: [0] } });
@@ -721,19 +708,16 @@ describe('fileMatchesFilterTokens', () => {
 
         expect(
             fileMatchesFilterTokens('project note', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedAliases: ['notebook navigator']
             })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('project note', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedAliases: ['notebook', 'navigator']
             })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('notebook', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedAliases: ['navigator']
             })
         ).toBe(true);
@@ -771,7 +755,6 @@ describe('fileMatchesFilterTokens', () => {
 
         expect(
             fileMatchesFilterTokens('notebook navigator', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedAliases: ['nn']
             })
         ).toBe(false);
@@ -781,7 +764,6 @@ describe('fileMatchesFilterTokens', () => {
         const tokens = parseFilterSearchTokens('cancion #muzyka folder:/notatki/swiat');
         expect(
             fileMatchesFilterTokens(foldSearchText('Canción plan'), [foldSearchText('Múzyka')], tokens, {
-                hasUnfinishedTasks: false,
                 foldedFolderPath: foldSearchText('Notatki/Świat')
             })
         ).toBe(true);
@@ -934,58 +916,35 @@ describe('fileMatchesFilterTokens', () => {
         expect(fileMatchesFilterTokens('platform plan', ['yta'], tokens)).toBe(false);
     });
 
-    it('filters notes with unfinished tasks', () => {
-        const tokens = parseFilterSearchTokens('has:task');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: true })).toBe(true);
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false })).toBe(false);
-    });
-
-    it('filters notes without unfinished tasks using dash negation', () => {
-        const tokens = parseFilterSearchTokens('-has:task');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false })).toBe(true);
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: true })).toBe(false);
-    });
-
     it('filters notes by included folder tokens', () => {
         const tokens = parseFilterSearchTokens('folder:meetings');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: 'work/meetings' })).toBe(
-            true
-        );
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: 'work/projects' })).toBe(
-            false
-        );
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: 'work/meetings' })).toBe(true);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: 'work/projects' })).toBe(false);
         expect(
-            fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: 'notes/team-meetings' })
+            fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: 'notes/team-meetings' })
         ).toBe(true);
     });
 
     it('filters notes by excluded folder tokens', () => {
         const tokens = parseFilterSearchTokens('-folder:archive');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: 'notes/archive' })).toBe(
-            false
-        );
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: 'notes/current' })).toBe(
-            true
-        );
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: 'notes/archive' })).toBe(false);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: 'notes/current' })).toBe(true);
     });
 
     it('filters notes by exact folder path tokens', () => {
         const tokens = parseFilterSearchTokens('folder:/work/meetings');
         expect(
             fileMatchesFilterTokens('platform plan', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedFolderPath: 'work/meetings'
             })
         ).toBe(true);
         expect(
             fileMatchesFilterTokens('platform plan', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedFolderPath: 'work/meetings/weekly'
             })
         ).toBe(false);
         expect(
             fileMatchesFilterTokens('platform plan', [], tokens, {
-                hasUnfinishedTasks: false,
                 foldedFolderPath: 'notes/work/meetings'
             })
         ).toBe(false);
@@ -993,79 +952,20 @@ describe('fileMatchesFilterTokens', () => {
 
     it('filters root notes with folder:/', () => {
         const tokens = parseFilterSearchTokens('folder:/');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: '' })).toBe(true);
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedFolderPath: 'work/meetings' })).toBe(
-            false
-        );
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: '' })).toBe(true);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedFolderPath: 'work/meetings' })).toBe(false);
     });
 
     it('filters notes by included extension tokens', () => {
         const tokens = parseFilterSearchTokens('ext:md');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedExtension: 'md' })).toBe(true);
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedExtension: 'pdf' })).toBe(false);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedExtension: 'md' })).toBe(true);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedExtension: 'pdf' })).toBe(false);
     });
 
     it('filters notes by excluded extension tokens', () => {
         const tokens = parseFilterSearchTokens('-ext:pdf');
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedExtension: 'md' })).toBe(true);
-        expect(fileMatchesFilterTokens('platform plan', [], tokens, { hasUnfinishedTasks: false, foldedExtension: 'pdf' })).toBe(false);
-    });
-
-    it('treats OR as a literal word when unfinished task filters are mixed with tags', () => {
-        const tokens = parseFilterSearchTokens('#alpha OR #beta has:task');
-        expect(tokens.mode).toBe('filter');
-        expect(fileMatchesFilterTokens('note or entry', ['alpha', 'beta'], tokens, { hasUnfinishedTasks: true })).toBe(true);
-        expect(fileMatchesFilterTokens('note entry', ['alpha', 'beta'], tokens, { hasUnfinishedTasks: true })).toBe(false);
-        expect(fileMatchesFilterTokens('note or entry', ['alpha'], tokens, { hasUnfinishedTasks: true })).toBe(false);
-        expect(fileMatchesFilterTokens('note or entry', ['alpha', 'beta'], tokens, { hasUnfinishedTasks: false })).toBe(false);
-    });
-});
-
-describe('fileMatchesDateFilterTokens', () => {
-    it('matches timestamps inside @YYYY-MM-DD day filters using the default date field', () => {
-        const tokens = parseFilterSearchTokens('@2026-02-04');
-        const timestamp = new Date(2026, 1, 4, 12, 0, 0).getTime();
-
-        expect(fileMatchesDateFilterTokens({ created: 0, modified: timestamp, defaultField: 'modified' }, tokens)).toBe(true);
-        expect(
-            fileMatchesDateFilterTokens(
-                { created: 0, modified: new Date(2026, 1, 5, 12, 0, 0).getTime(), defaultField: 'modified' },
-                tokens
-            )
-        ).toBe(false);
-    });
-
-    it('matches timestamps inside three-digit year filters', () => {
-        const tokens = parseFilterSearchTokens('@999');
-        const timestamp = createLocalDate(999, 6, 1).getTime();
-
-        expect(fileMatchesDateFilterTokens({ created: 0, modified: timestamp, defaultField: 'modified' }, tokens)).toBe(true);
-        expect(
-            fileMatchesDateFilterTokens({ created: 0, modified: createLocalDate(1000, 0, 1).getTime(), defaultField: 'modified' }, tokens)
-        ).toBe(false);
-    });
-
-    it('matches @c: filters against created timestamps', () => {
-        const tokens = parseFilterSearchTokens('@c:2026-02-04');
-        const createdTimestamp = new Date(2026, 1, 4, 9, 0, 0).getTime();
-        const modifiedTimestamp = new Date(2026, 1, 6, 9, 0, 0).getTime();
-
-        expect(
-            fileMatchesDateFilterTokens({ created: createdTimestamp, modified: modifiedTimestamp, defaultField: 'modified' }, tokens)
-        ).toBe(true);
-    });
-
-    it('excludes timestamps that match -@ ranges', () => {
-        const tokens = parseFilterSearchTokens('-@2026-02-04');
-        const timestamp = new Date(2026, 1, 4, 12, 0, 0).getTime();
-
-        expect(fileMatchesDateFilterTokens({ created: 0, modified: timestamp, defaultField: 'modified' }, tokens)).toBe(false);
-        expect(
-            fileMatchesDateFilterTokens(
-                { created: 0, modified: new Date(2026, 1, 5, 12, 0, 0).getTime(), defaultField: 'modified' },
-                tokens
-            )
-        ).toBe(true);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedExtension: 'md' })).toBe(true);
+        expect(fileMatchesFilterTokens('platform plan', [], tokens, { foldedExtension: 'pdf' })).toBe(false);
     });
 });
 
@@ -1097,7 +997,6 @@ describe('quoted literal search terms', () => {
         expect(parseFilterSearchTokens('"#work"').requireTagged).toBe(false);
         expect(parseFilterSearchTokens('"@today"').dateRanges).toEqual([]);
         expect(parseFilterSearchTokens('"@today"').nameTokens).toEqual(['@today']);
-        expect(parseFilterSearchTokens('"has:task"').requireUnfinishedTasks).toBe(false);
         expect(parseFilterSearchTokens('"has:task"').nameTokens).toEqual(['has:task']);
         expect(parseFilterSearchTokens('"folder:work"').folderTokens).toEqual([]);
         expect(parseFilterSearchTokens('"folder:work"').nameTokens).toEqual(['folder:work']);

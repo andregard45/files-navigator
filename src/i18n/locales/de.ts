@@ -247,8 +247,6 @@ export const STRINGS_DE = {
                 tasks: {
                     title: 'Filter',
                     items: [
-                        '`has:task` Notizen mit unerledigten Aufgaben einbeziehen.',
-                        '`-has:task` Notizen mit unerledigten Aufgaben ausschließen.',
                         '`folder:meetings` Notizen einbeziehen, deren Ordnername `meetings` enthält.',
                         '`folder:/work/meetings` Notizen nur in `work/meetings` einbeziehen (keine Unterordner).',
                         '`folder:/` Notizen nur im Vault-Stammverzeichnis einbeziehen.',
@@ -264,7 +262,7 @@ export const STRINGS_DE = {
                     items: [
                         '`AND` und `OR` sind nur in reinen Tag-/Eigenschafts-Abfragen Operatoren.',
                         'Reine Tag-/Eigenschafts-Abfragen enthalten nur Tag- und Eigenschafts-Filter: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'Wenn eine Abfrage Namen, Daten (`@...`), Aufgabenfilter (`has:task`), Ordnerfilter (`folder:...`) oder Erweiterungsfilter (`ext:...`) enthält, werden `AND` und `OR` als Wörter abgeglichen.',
+                        'Wenn eine Abfrage Namen, Daten (`@...`), Ordnerfilter (`folder:...`) oder Erweiterungsfilter (`ext:...`) enthält, werden `AND` und `OR` als Wörter abgeglichen.',
                         'Beispiel für Operator-Abfrage: `#work OR .status=started`.',
                         'Beispiel für gemischte Abfrage: `#work OR ext:md` (`OR` wird in Dateinamen abgeglichen).'
                     ]
@@ -447,7 +445,6 @@ export const STRINGS_DE = {
         groupBy: 'Gruppieren nach',
         tags: 'Tags',
         properties: 'Eigenschaften',
-        tasks: 'Aufgaben',
         date: 'Datum',
         parentFolder: 'Übergeordneter Ordner',
         resetAppearance: 'Darstellung zurücksetzen',
@@ -1000,8 +997,7 @@ export const STRINGS_DE = {
         file: 'Datei',
         files: 'Dateien',
         folder: 'Ordner',
-        folders: 'Ordner',
-        unfinishedTasks: 'Unerledigte Aufgaben'
+        folders: 'Ordner'
     },
 
     // Settings
@@ -1113,7 +1109,6 @@ export const STRINGS_DE = {
                     featureImage: 'Feature-Bild',
                     tags: 'Tags',
                     properties: 'Eigenschaften',
-                    tasks: 'Aufgaben',
                     date: 'Datum',
                     parentFolder: 'Übergeordneter Ordner'
                 }
@@ -1322,42 +1317,9 @@ export const STRINGS_DE = {
                 name: 'Dateisymbole anzeigen',
                 desc: 'Dateisymbole mit linksbündigem Abstand anzeigen. Deaktivierung entfernt sowohl Symbole als auch Einrückung. Priorität: Unerledigte-Aufgaben-Symbol > Benutzerdefiniertes Symbol > Ordnersymbol > Dateiname-Symbol > Dateityp-Symbol > Standard-Symbol.'
             },
-            unfinishedTaskIcon: {
-                name: 'Unerledigte-Aufgaben-Symbol',
-                desc: 'Das Dateisymbol ersetzen, wenn eine Notiz unerledigte Aufgaben enthält.',
-                options: {
-                    disabled: 'Deaktiviert',
-                    compact: 'Kompaktmodus',
-                    standardAndCompact: 'Standard und kompakt'
-                }
-            },
             useFolderIcon: {
                 name: 'Ordnersymbol verwenden',
                 desc: 'Das Symbol des übergeordneten Ordners anzeigen, wenn kein benutzerdefiniertes Dateisymbol festgelegt ist. Die Ordnerfarbe wird verwendet, wenn keine benutzerdefinierte Dateifarbe festgelegt ist.'
-            },
-            showFileTaskProgress: {
-                name: 'Aufgabenfortschritt',
-                desc: 'Den Aufgabenstatus mit optionalem Fortschrittsbalken und optionaler Aufgabenanzahl anzeigen. Farben für unerledigte und erledigte Aufgaben können im Style-Settings-Plugin einzeln festgelegt werden.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Aufgabenfortschritt: Fortschrittsbalken',
-                desc: 'Einen Fortschrittsbalken neben dem Aufgabensymbol anzeigen.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Aufgabenfortschritt: Aufgabenanzahl',
-                desc: 'Die Anzahl der erledigten und die Gesamtzahl der Aufgaben anzeigen, z. B. 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Aufgabenfortschritt: bei Abschluss ausblenden',
-                desc: 'Den Aufgabenfortschritt ausblenden, wenn alle Aufgaben einer Notiz erledigt sind.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Unerledigte-Aufgaben-Hintergrund',
-                desc: 'Eine Hintergrundfarbe anwenden, wenn eine Notiz unerledigte Aufgaben enthält.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Hintergrundfarbe für unerledigte Aufgaben',
-                desc: 'Die Hintergrundfarbe festlegen, die verwendet wird, wenn eine Notiz unerledigte Aufgaben enthält.'
             },
             showFileNameIcons: {
                 name: 'Symbole nach Dateiname',

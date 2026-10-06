@@ -246,8 +246,6 @@ export const STRINGS_EN = {
                 tasks: {
                     title: 'Filters',
                     items: [
-                        '`has:task` Include notes with unfinished tasks.',
-                        '`-has:task` Exclude notes with unfinished tasks.',
                         '`folder:meetings` Include notes where a folder name contains `meetings`.',
                         '`folder:/work/meetings` Include notes only in `work/meetings` (not subfolders).',
                         '`folder:/` Include notes only in the vault root.',
@@ -263,7 +261,7 @@ export const STRINGS_EN = {
                     items: [
                         '`AND` and `OR` are operators only in tag/property-only queries.',
                         'Tag/property-only queries contain only tag and property filters: `#tag`, `-#tag`, `#`, `-#`, `.key`, `-.key`, `.key=value`, `-.key=value`.',
-                        'If a query includes names, dates (`@...`), task filters (`has:task`), folder filters (`folder:...`), or extension filters (`ext:...`), `AND` and `OR` are matched as words.',
+                        'If a query includes names, dates (`@...`), folder filters (`folder:...`), or extension filters (`ext:...`), `AND` and `OR` are matched as words.',
                         'Example operator query: `#work OR .status=started`.',
                         'Example mixed query: `#work OR ext:md` (`OR` is matched in file names).'
                     ]
@@ -445,7 +443,6 @@ export const STRINGS_EN = {
         groupBy: 'Group by',
         tags: 'Tags',
         properties: 'Properties',
-        tasks: 'Tasks',
         date: 'Date',
         parentFolder: 'Parent folder',
         resetAppearance: 'Reset appearance',
@@ -990,8 +987,7 @@ export const STRINGS_EN = {
         file: 'file',
         files: 'files',
         folder: 'folder',
-        folders: 'folders',
-        unfinishedTasks: 'Unfinished tasks'
+        folders: 'folders'
     },
 
     // Settings
@@ -1102,7 +1098,6 @@ export const STRINGS_EN = {
                     featureImage: 'Feature image',
                     tags: 'Tags',
                     properties: 'Properties',
-                    tasks: 'Tasks',
                     date: 'Date',
                     parentFolder: 'Parent folder'
                 }
@@ -1311,42 +1306,9 @@ export const STRINGS_EN = {
                 name: 'Show file icons',
                 desc: 'Display file icons with left-aligned spacing. Disabling removes both icons and indentation. Priority: unfinished task icon > custom icon > folder icon > file name icon > file type icon > default icon.'
             },
-            unfinishedTaskIcon: {
-                name: 'Unfinished task icon',
-                desc: 'Replace the file icon when a note has unfinished tasks.',
-                options: {
-                    disabled: 'Disabled',
-                    compact: 'Compact mode',
-                    standardAndCompact: 'Standard and compact'
-                }
-            },
             useFolderIcon: {
                 name: 'Use folder icon',
                 desc: 'Display the parent folder icon when no custom file icon is set. Folder color is used when no custom file color is set.'
-            },
-            showFileTaskProgress: {
-                name: 'Task progress',
-                desc: 'Display task status with an optional progress bar and task count. Colors for unfinished and completed tasks can be set individually with the Style Settings plugin.'
-            },
-            showFileTaskProgressBar: {
-                name: 'Task progress: progress bar',
-                desc: 'Display a progress bar next to the task icon.'
-            },
-            showFileTaskProgressCount: {
-                name: 'Task progress: task count',
-                desc: 'Display the number of completed and total tasks, such as 3/7.'
-            },
-            hideFileTaskProgressWhenComplete: {
-                name: 'Task progress: hide when completed',
-                desc: 'Hide the task progress when all tasks in a note are completed.'
-            },
-            unfinishedTaskBackground: {
-                name: 'Unfinished task background',
-                desc: 'Apply a background color when a note has unfinished tasks.'
-            },
-            unfinishedTaskBackgroundColor: {
-                name: 'Unfinished task background color',
-                desc: 'Set the background color used when a note has unfinished tasks.'
             },
             showFileNameIcons: {
                 name: 'Icons by file name',

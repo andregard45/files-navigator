@@ -168,7 +168,7 @@ describe('hasPropertySearchContentChange', () => {
             hasPropertySearchContentChange(
                 [
                     { path: 'notes/outside.md', changes: { properties: [] }, changeType: 'content' },
-                    { path: 'notes/in-scope.md', changes: { taskUnfinished: 1 }, changeType: 'content' }
+                    { path: 'notes/in-scope.md', changes: { preview: 'updated' }, changeType: 'content' }
                 ],
                 basePathSet
             )

@@ -24,14 +24,6 @@ import { type PropertyItem, FileData } from '../../storage/IndexedDBStorage';
 import { getDBInstance } from '../../storage/fileOperations';
 import { areStringArraysEqual } from '../../utils/arrayUtils';
 import { arePropertyItemsEqual, extractFrontmatterPropertyValues } from '../../utils/propertyUtils';
-import {
-    type FenceMarkerChar,
-    isFenceClose,
-    isMarkdownWhitespace,
-    parseBlockquotePrefix,
-    parseFenceOpen,
-    skipMarkdownWhitespace
-} from '../../utils/codeRangeUtils';
 import { PreviewTextUtils } from '../../utils/previewTextUtils';
 import { createCaseInsensitiveKeyMatcher, type CaseInsensitiveKeyMatcher } from '../../utils/recordUtils';
 import {
@@ -39,12 +31,7 @@ import {
     getDrawingSourceProviderIdWithFrontmatter,
     type DrawingFeatureImageProviderId
 } from '../../utils/drawingFeatureImages';
-import {
-    hasMarkdownFeatureImageConsumer,
-    hasMarkdownPreviewConsumer,
-    hasMarkdownTaskConsumer
-} from '../../utils/markdownPipelineContentTypes';
-import { areMarkdownTaskCountsEqual, countMarkdownTasksFromMetadata, type MarkdownTaskCounts } from '../../utils/markdownTaskCounts';
+import { hasMarkdownFeatureImageConsumer, hasMarkdownPreviewConsumer } from '../../utils/markdownPipelineContentTypes';
 import { isGeneratedThumbnailFile } from '../../utils/fileTypeUtils';
 import type { ContentProviderProcessResult } from './BaseContentProvider';
 import { findFeatureImageReference, hasSvgUrlPathExtension, type FeatureImageReference } from './featureImageReferenceResolver';
@@ -63,19 +50,16 @@ type MarkdownPipelineContext = {
     hasContent: boolean;
     featureImageReference: FeatureImageReference | null;
     featureImageExcluded: boolean;
-    taskCountsFromMetadata: MarkdownTaskCounts | null;
 };
 
 type MarkdownPipelineUpdate = {
-    taskTotal?: number | null;
-    taskUnfinished?: number | null;
     preview?: string;
     properties?: FileData['properties'];
     featureImageKey?: string | null;
     featureImage?: Blob | null;
 };
 
-type MarkdownPipelineProcessorId = 'preview' | 'tasks' | 'properties' | 'featureImage';
+type MarkdownPipelineProcessorId = 'preview' | 'properties' | 'featureImage';
 
 type MarkdownPipelineProcessor = {
     id: MarkdownPipelineProcessorId;
@@ -203,123 +187,6 @@ function detectDrawingProviderFromContent(file: TFile, content: string): Drawing
     }
 }
 
-type MarkdownTaskMarker = 'complete' | 'unfinished';
-function parseMarkdownTaskMarker(line: string, startIndex: number): MarkdownTaskMarker | null {
-    let index = skipMarkdownWhitespace(line, startIndex);
-    if (index >= line.length) {
-        return null;
-    }
-
-    const listMarker = line[index];
-    if (listMarker === '-' || listMarker === '*') {
-        index += 1;
-    } else {
-        const firstDigit = line.charCodeAt(index);
-        if (firstDigit < 49 || firstDigit > 57) {
-            return null;
-        }
-
-        index += 1;
-        while (index < line.length) {
-            const digit = line.charCodeAt(index);
-            if (digit < 48 || digit > 57) {
-                break;
-            }
-            index += 1;
-        }
-
-        if (line[index] !== '.') {
-            return null;
-        }
-        index += 1;
-    }
-
-    if (index >= line.length || !isMarkdownWhitespace(line.charCodeAt(index))) {
-        return null;
-    }
-    index = skipMarkdownWhitespace(line, index);
-
-    if (index + 2 >= line.length) {
-        return null;
-    }
-    if (line[index] !== '[' || line[index + 2] !== ']') {
-        return null;
-    }
-
-    if (line.slice(index + 3).trim().length === 0) {
-        return null;
-    }
-
-    const marker = line[index + 1];
-    if (marker === ' ') {
-        return 'unfinished';
-    }
-    if (marker === 'x' || marker === 'X') {
-        return 'complete';
-    }
-    return null;
-}
-
-function countMarkdownTasks(content: string, bodyStartIndex: number): { taskTotal: number; taskUnfinished: number } {
-    const safeBodyStartIndex = Math.min(Math.max(0, bodyStartIndex), content.length);
-    const body = safeBodyStartIndex === 0 ? content : content.slice(safeBodyStartIndex);
-
-    if (body.length === 0) {
-        return { taskTotal: 0, taskUnfinished: 0 };
-    }
-
-    let taskTotal = 0;
-    let taskUnfinished = 0;
-    let lineStart = 0;
-    let inFence = false;
-    let fenceChar: FenceMarkerChar | '' = '';
-    let fenceLength = 0;
-    let fenceDepth = 0;
-
-    while (lineStart < body.length) {
-        const nextLineEnd = body.indexOf('\n', lineStart);
-        const lineEnd = nextLineEnd === -1 ? body.length : nextLineEnd;
-        let line = body.slice(lineStart, lineEnd);
-        if (line.endsWith('\r')) {
-            line = line.slice(0, -1);
-        }
-        const prefix = parseBlockquotePrefix(line);
-
-        if (inFence) {
-            if (fenceChar !== '' && isFenceClose(line, fenceDepth, fenceChar, fenceLength, prefix)) {
-                inFence = false;
-                fenceChar = '';
-                fenceLength = 0;
-                fenceDepth = 0;
-            }
-        } else {
-            const openMatch = parseFenceOpen(line, prefix);
-            if (openMatch) {
-                inFence = true;
-                fenceChar = openMatch.markerChar;
-                fenceLength = openMatch.markerLength;
-                fenceDepth = openMatch.depth;
-            } else {
-                const marker = parseMarkdownTaskMarker(line, prefix.nextIndex);
-                if (marker) {
-                    taskTotal += 1;
-                    if (marker === 'unfinished') {
-                        taskUnfinished += 1;
-                    }
-                }
-            }
-        }
-
-        if (nextLineEnd === -1) {
-            break;
-        }
-
-        lineStart = lineEnd + 1;
-    }
-
-    return { taskTotal, taskUnfinished };
-}
-
 // Builds the indexed property list from every supported frontmatter value. Visibility is applied later by
 // navigation and list consumers, while internal search keeps access to properties hidden from those surfaces.
 function resolvePropertyItemsFromFrontmatter(frontmatter: FrontMatterCache | null): PropertyItem[] {
@@ -365,25 +232,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             run: async context => await this.processPreview(context)
         },
         {
-            id: 'tasks',
-            needsProcessing: context => {
-                if (!hasMarkdownTaskConsumer(context.settings)) {
-                    return false;
-                }
-                if (
-                    !context.fileData ||
-                    context.fileModified ||
-                    context.fileData.taskTotal === null ||
-                    context.fileData.taskUnfinished === null
-                ) {
-                    return context.isDrawing || context.taskCountsFromMetadata !== null || context.hasContent;
-                }
-
-                return false;
-            },
-            run: async context => await this.processTasks(context)
-        },
-        {
             id: 'properties',
             needsProcessing: context => {
                 return !context.fileData || context.fileModified || context.fileData.properties === null;
@@ -420,9 +268,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
     }
 
     getRelevantSettings(): (keyof NotebookNavigatorSettings)[] {
-        // Task display settings (showFileTaskProgress, showFileBackgroundUnfinishedTask) are intentionally
-        // absent: task extraction always runs (hasMarkdownTaskConsumer), so listing them would stop and
-        // requeue the whole pipeline on toggles that cannot change extracted content.
         // defaultFolderSortPropertyKey is intentionally absent: which non-manual property performs the
         // default sort does not change extracted content, and every transition that can flip effective
         // custom grouping also changes defaultFolderSort, propertySortKey, or manualSortPropertyKey,
@@ -537,9 +382,8 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             }
         }
         const needsProperties = fileData.properties === null;
-        const needsTasks = hasMarkdownTaskConsumer(settings) && (fileData.taskTotal === null || fileData.taskUnfinished === null);
 
-        return needsPreview || needsFeatureImage || needsProperties || needsTasks;
+        return needsPreview || needsFeatureImage || needsProperties;
     }
 
     protected async processFile(
@@ -553,7 +397,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
 
         const previewEnabled = hasMarkdownPreviewConsumer(settings);
         const featureImageEnabled = hasMarkdownFeatureImageConsumer(settings);
-        const tasksEnabled = hasMarkdownTaskConsumer(settings);
         const previewPropertiesEnabled = previewEnabled && settings.previewProperties.length > 0;
         const featureImagePropertiesEnabled = featureImageEnabled && settings.featureImageProperties.length > 0;
         const featureImageExcludePropertiesEnabled = featureImageEnabled && settings.featureImageExcludeProperties.length > 0;
@@ -591,13 +434,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         }
         const featureImageExcludeMatcher = this.getFeatureImageExcludeMatcher(settings.featureImageExcludeProperties);
         const featureImageExcluded = featureImageEnabled && frontmatter !== null && featureImageExcludeMatcher.matches(frontmatter);
-        const needsTasks = tasksEnabled && (!fileData || fileModified || fileData.taskTotal === null || fileData.taskUnfinished === null);
-        const taskCountsFromMetadata = needsTasks
-            ? isDrawing
-                ? { taskTotal: 0, taskUnfinished: 0 }
-                : countMarkdownTasksFromMetadata(cachedMetadata)
-            : null;
-        const needsTasksContent = needsTasks && !isDrawing && taskCountsFromMetadata === null;
 
         const frontmatterFeatureImageReference =
             needsFeatureImage && frontmatter && !featureImageExcluded
@@ -611,43 +447,15 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
                   })
                 : null;
 
-        const needsContent =
-            needsPreviewContent ||
-            needsTasksContent ||
-            (needsFeatureImage && !featureImageExcluded && !frontmatterFeatureImageReference);
+        const needsContent = needsPreviewContent || (needsFeatureImage && !featureImageExcluded && !frontmatterFeatureImageReference);
 
         const update: {
             path: string;
-            taskTotal?: number | null;
-            taskUnfinished?: number | null;
             preview?: string;
             featureImage?: Blob | null;
             featureImageKey?: string | null;
             properties?: FileData['properties'];
         } = { path: job.path };
-
-        const applyTaskCountsFromMetadata = (): boolean => {
-            if (!taskCountsFromMetadata) {
-                return false;
-            }
-
-            if (
-                !fileData ||
-                !areMarkdownTaskCountsEqual(
-                    {
-                        taskTotal: fileData.taskTotal,
-                        taskUnfinished: fileData.taskUnfinished
-                    },
-                    taskCountsFromMetadata
-                )
-            ) {
-                update.taskTotal = taskCountsFromMetadata.taskTotal;
-                update.taskUnfinished = taskCountsFromMetadata.taskUnfinished;
-                return true;
-            }
-
-            return false;
-        };
 
         if (needsContent) {
             const maxMarkdownReadBytes = Platform.isMobile ? LIMITS.markdown.maxReadBytes.mobile : LIMITS.markdown.maxReadBytes.desktop;
@@ -667,13 +475,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
                 this.emptyFrontmatterRetryCounts.delete(job.path);
 
                 // Avoid reading full markdown content for large files; only apply updates derived from cached metadata/frontmatter.
-                let hasSafeUpdate = applyTaskCountsFromMetadata();
-
-                if (needsTasksContent && (!fileData || fileData.taskTotal !== 0 || fileData.taskUnfinished !== 0)) {
-                    update.taskTotal = 0;
-                    update.taskUnfinished = 0;
-                    hasSafeUpdate = true;
-                }
+                let hasSafeUpdate = false;
 
                 const nextProperties = resolvePropertyItemsFromFrontmatter(frontmatter);
                 if (!fileData || fileData.properties === null || !arePropertyItemsEqual(fileData.properties, nextProperties)) {
@@ -742,20 +544,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         } catch (error) {
             console.error(`Error reading markdown content for ${job.path}:`, error);
             const { shouldFallback } = this.recordReadFailure(job.path);
-            let hasSafeUpdate = applyTaskCountsFromMetadata();
-
-            if (needsTasksContent) {
-                const shouldSetTasksZero =
-                    !fileData ||
-                    fileData.taskTotal === null ||
-                    fileData.taskUnfinished === null ||
-                    (shouldFallback && (fileData.taskTotal !== 0 || fileData.taskUnfinished !== 0));
-                if (shouldSetTasksZero) {
-                    update.taskTotal = 0;
-                    update.taskUnfinished = 0;
-                    hasSafeUpdate = true;
-                }
-            }
+            let hasSafeUpdate = false;
 
             const nextProperties = resolvePropertyItemsFromFrontmatter(frontmatter);
             if (!fileData || fileData.properties === null || !arePropertyItemsEqual(fileData.properties, nextProperties)) {
@@ -843,8 +632,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             fileModified,
             hasContent,
             featureImageReference: frontmatterFeatureImageReference,
-            featureImageExcluded,
-            taskCountsFromMetadata
+            featureImageExcluded
         };
 
         for (const processor of this.processors) {
@@ -857,12 +645,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
                 continue;
             }
 
-            if (processorUpdate.taskTotal !== undefined) {
-                update.taskTotal = processorUpdate.taskTotal;
-            }
-            if (processorUpdate.taskUnfinished !== undefined) {
-                update.taskUnfinished = processorUpdate.taskUnfinished;
-            }
             if (processorUpdate.preview !== undefined) {
                 update.preview = processorUpdate.preview;
             }
@@ -878,8 +660,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         }
 
         const hasContentUpdate =
-            update.taskTotal !== undefined ||
-            update.taskUnfinished !== undefined ||
             update.preview !== undefined ||
             update.properties !== undefined ||
             update.featureImageKey !== undefined;
@@ -924,35 +704,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             console.error(`Error generating preview for ${context.file.path}:`, error);
             if (!context.fileData || context.fileData.previewStatus === 'unprocessed') {
                 return { preview: '' };
-            }
-            return null;
-        }
-    }
-
-    private async processTasks(context: MarkdownPipelineContext): Promise<MarkdownPipelineUpdate | null> {
-        try {
-            const counts = context.isDrawing
-                ? { taskTotal: 0, taskUnfinished: 0 }
-                : (context.taskCountsFromMetadata ?? countMarkdownTasks(context.content, context.bodyStartIndex));
-
-            if (
-                !context.fileData ||
-                context.fileData.taskTotal === null ||
-                context.fileData.taskUnfinished === null ||
-                context.fileData.taskTotal !== counts.taskTotal ||
-                context.fileData.taskUnfinished !== counts.taskUnfinished
-            ) {
-                return {
-                    taskTotal: counts.taskTotal,
-                    taskUnfinished: counts.taskUnfinished
-                };
-            }
-
-            return null;
-        } catch (error) {
-            console.error(`Error generating tasks for ${context.file.path}:`, error);
-            if (!context.fileData || context.fileData.taskTotal === null || context.fileData.taskUnfinished === null) {
-                return { taskTotal: 0, taskUnfinished: 0 };
             }
             return null;
         }

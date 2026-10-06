@@ -96,7 +96,6 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
             const trackTags = enabledTypes.includes('tags');
             const trackFeatureImage = enabledTypes.includes('featureImage');
             const trackMetadata = enabledTypes.includes('metadata');
-            const trackTasks = enabledTypes.includes('tasks');
             const trackProperties = enabledTypes.includes('properties');
 
             let progressBarEl: HTMLProgressElement | null = null;
@@ -199,7 +198,6 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
                         (data.featureImageKey === null || data.featureImageStatus === 'unprocessed') &&
                         (isMarkdown || supportsFileThumbnail);
                     const needsMetadata = trackMetadata && isMarkdown && data.metadata === null;
-                    const needsTasks = trackTasks && isMarkdown && (data.taskTotal === null || data.taskUnfinished === null);
                     const needsProperties = trackProperties && isMarkdown && data.properties === null;
 
                     if (
@@ -207,7 +205,6 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
                         !needsTags &&
                         !needsFeatureImage &&
                         !needsMetadata &&
-                        !needsTasks &&
                         !needsProperties
                     ) {
                         return;
@@ -232,7 +229,6 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
                     const isMetadataReady =
                         hasMetadataCache &&
                         (needsPreview ||
-                            needsTasks ||
                             needsProperties ||
                             (needsFeatureImage && isMarkdown) ||
                             needsTags ||
