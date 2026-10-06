@@ -17,7 +17,7 @@
  */
 
 import type { App } from 'obsidian';
-import { showsWordCount, type NotebookNavigatorSettings } from '../settings/types';
+import { type NotebookNavigatorSettings } from '../settings/types';
 import type { PropertyItem, PropertyValueKind } from '../storage/IndexedDBStorage';
 import type { PropertySearchValueMatch } from '../types/search';
 import { formatCommaSeparatedList, getCachedCommaSeparatedList } from './commaSeparatedListUtils';
@@ -65,9 +65,7 @@ const EXTERNAL_URI_SCHEME_PATTERN = /^([a-z][a-z0-9+.-]{1,31}):/i;
 const BLOCKED_EXTERNAL_URI_PROTOCOLS = new Set(['data:', 'javascript:', 'vbscript:']);
 const ALLOWED_NON_SLASH_EXTERNAL_URI_PROTOCOLS = new Set(['mailto:', 'sms:', 'tel:']);
 
-export function hasWordCountTargetPropertyConsumer(settings: NotebookNavigatorSettings): boolean {
-    return showsWordCount(settings.textCountDisplay);
-}
+
 
 export interface ExtractedFrontmatterPropertyValue {
     value: string;

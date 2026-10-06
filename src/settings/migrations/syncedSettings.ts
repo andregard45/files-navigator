@@ -25,13 +25,10 @@ import { localStorage } from '../../utils/localStorage';
 import { cloneShortcuts, createPropertyKeysFromPropertyFields, DEFAULT_VAULT_PROFILE_ID } from '../../utils/vaultProfiles';
 import { ShortcutType, type ShortcutEntry } from '../../types/shortcuts';
 import {
-    isCharacterCountSpaces,
     isNarrowSidebarTriggerMode,
     isNavCountLeaderStyle,
     isRecentNotesHideMode,
     isTagSortOrder,
-    isTextCountDisplay,
-    isTextCountPlacement,
     normalizeNarrowSidebarLayout,
     normalizeAppearanceGroupBy,
     normalizeListNoteGroupingOption
@@ -62,38 +59,6 @@ const migrateLegacySearchShortcutQuery = (query: unknown): string => {
     return query.replace(SEARCH_SHORTCUT_LEGACY_NEGATION_PATTERN, '$1-');
 };
 
-function migrateLegacyTextCountDisplay(value: unknown): NotebookNavigatorSettings['textCountDisplay'] | null {
-    if (isTextCountDisplay(value)) {
-        return value;
-    }
-
-    if (value === 'word') {
-        return 'words';
-    }
-    if (value === 'character') {
-        return 'characters';
-    }
-    if (value === 'word-character') {
-        return 'both';
-    }
-
-    return null;
-}
-
-function migrateLegacyCharacterCountSpaces(value: unknown): NotebookNavigatorSettings['characterCountSpaces'] | null {
-    if (isCharacterCountSpaces(value)) {
-        return value;
-    }
-
-    if (value === 'with-spaces') {
-        return 'include';
-    }
-    if (value === 'without-spaces') {
-        return 'exclude';
-    }
-
-    return null;
-}
 
 // Migrates legacy synced settings fields into the current settings schema.
 // This runs before local-only settings are resolved from localStorage.
@@ -234,38 +199,9 @@ export function migrateLegacySyncedSettings(params: {
             ? mutableSettings['customPropertyType']
             : mutableSettings['notePropertyType'];
     const migratedNotePropertyType = typeof legacyNotePropertyType === 'string' ? legacyNotePropertyType : null;
-    if (migratedNotePropertyType === 'wordCount' && typeof storedData?.['textCountDisplay'] === 'undefined') {
-        settings.textCountDisplay = 'words';
-        if (typeof storedData?.['textCountPlacement'] === 'undefined') {
-            settings.textCountPlacement = defaultSettings.textCountPlacement;
-        }
-    }
     delete mutableSettings['customPropertyType'];
     delete mutableSettings['notePropertyType'];
 
-    if (typeof storedData?.['textCountDisplay'] === 'undefined') {
-        const legacyTextCountDisplay = migrateLegacyTextCountDisplay(mutableSettings['wordCharacterCountDisplay']);
-        if (legacyTextCountDisplay !== null) {
-            settings.textCountDisplay = legacyTextCountDisplay;
-        } else if (typeof mutableSettings['showWordCount'] === 'boolean') {
-            settings.textCountDisplay = mutableSettings['showWordCount'] ? 'words' : 'none';
-        }
-    }
-    delete mutableSettings['showWordCount'];
-    delete mutableSettings['wordCharacterCountDisplay'];
-
-    if (typeof storedData?.['textCountPlacement'] === 'undefined' && isTextCountPlacement(mutableSettings['wordCountPlacement'])) {
-        settings.textCountPlacement = mutableSettings['wordCountPlacement'];
-    }
-    delete mutableSettings['wordCountPlacement'];
-
-    if (typeof storedData?.['characterCountSpaces'] === 'undefined') {
-        const legacyCharacterCountSpaces = migrateLegacyCharacterCountSpaces(mutableSettings['characterCountMode']);
-        if (legacyCharacterCountSpaces !== null) {
-            settings.characterCountSpaces = legacyCharacterCountSpaces;
-        }
-    }
-    delete mutableSettings['characterCountMode'];
 
     const currentPropertyFields = mutableSettings['propertyFields'];
     if (typeof currentPropertyFields !== 'string') {
@@ -375,28 +311,6 @@ export function migrateLegacySyncedSettings(params: {
 
     if (typeof settings.enablePropertyExternalLinks !== 'boolean') {
         settings.enablePropertyExternalLinks = defaultSettings.enablePropertyExternalLinks;
-    }
-
-    if (!isTextCountDisplay(settings.textCountDisplay)) {
-        settings.textCountDisplay = defaultSettings.textCountDisplay;
-    }
-
-    if (!isTextCountPlacement(settings.textCountPlacement)) {
-        settings.textCountPlacement = defaultSettings.textCountPlacement;
-    }
-
-    if (!isCharacterCountSpaces(settings.characterCountSpaces)) {
-        settings.characterCountSpaces = defaultSettings.characterCountSpaces;
-    }
-
-    if (typeof settings.wordCountTargetProperty !== 'string') {
-        settings.wordCountTargetProperty = defaultSettings.wordCountTargetProperty;
-    } else {
-        settings.wordCountTargetProperty = settings.wordCountTargetProperty.trim();
-    }
-
-    if (typeof settings.showWordCountPercentage !== 'boolean') {
-        settings.showWordCountPercentage = defaultSettings.showWordCountPercentage;
     }
 
     if (!isTagSortOrder(settings.propertySortOrder)) {
@@ -530,18 +444,6 @@ export function applyExistingUserDefaults(params: { settings: NotebookNavigatorS
     const { settings } = params;
 
 
-    if (!isTextCountDisplay(settings.textCountDisplay)) {
-        settings.textCountDisplay = 'none';
-    }
-
-    if (!isTextCountPlacement(settings.textCountPlacement)) {
-        settings.textCountPlacement = 'title';
-    }
-
-    if (!isCharacterCountSpaces(settings.characterCountSpaces)) {
-        settings.characterCountSpaces = 'include';
-    }
-
     if (!isNavCountLeaderStyle(settings.navCountLeaderStyle)) {
         settings.navCountLeaderStyle = DEFAULT_SETTINGS.navCountLeaderStyle;
     }
@@ -554,16 +456,6 @@ export function applyExistingUserDefaults(params: { settings: NotebookNavigatorS
 
     if (typeof settings.narrowSidebarCustomWidth !== 'number' || !Number.isFinite(settings.narrowSidebarCustomWidth)) {
         settings.narrowSidebarCustomWidth = DEFAULT_SETTINGS.narrowSidebarCustomWidth;
-    }
-
-    if (typeof settings.wordCountTargetProperty !== 'string') {
-        settings.wordCountTargetProperty = DEFAULT_SETTINGS.wordCountTargetProperty;
-    } else {
-        settings.wordCountTargetProperty = settings.wordCountTargetProperty.trim();
-    }
-
-    if (typeof settings.showWordCountPercentage !== 'boolean') {
-        settings.showWordCountPercentage = false;
     }
 
     if (typeof settings.showFolderGroupPaths !== 'boolean') {

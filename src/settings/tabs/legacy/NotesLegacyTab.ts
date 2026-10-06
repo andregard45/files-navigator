@@ -27,14 +27,9 @@ import { attachColorSwatchSetting } from '../../colorSwatchSetting';
 import { createDependentSettingsSection, setElementVisible, wireToggleSettingWithDependentSection } from '../../dependentSettings';
 import { DEFAULT_SETTINGS } from '../../defaultSettings';
 import {
-    isCharacterCountSpaces,
     isFeatureImagePixelSizeSetting,
     isFeatureImageSizeSetting,
-    isUnfinishedTaskIconMode,
-    isTextCountDisplay,
-    isTextCountPlacement,
-    showsCharacterCount,
-    showsWordCount
+    isUnfinishedTaskIconMode
 } from '../../types';
 import {
     normalizeFileNameIconMapKey,
@@ -45,8 +40,6 @@ import {
 } from '../../../utils/iconizeFormat';
 import { formatCommaSeparatedList, parseCommaSeparatedList } from '../../../utils/commaSeparatedListUtils';
 import { isFileTypeIconPreset } from '../../../utils/fileTypeIconPresets';
-import { getMarkdownTextCountDependencies, subscribeMarkdownWordCountConsumerChanges } from '../../../utils/markdownPipelineContentTypes';
-import { renderTextCountActiveNotice } from '../NotesTab';
 
 function parseFileTypeIconMapText(value: string): IconMapParseResult {
     return parseIconMapText(value, normalizeFileTypeIconMapKey);
@@ -90,7 +83,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const tasksGroup = createGroup(strings.settings.pages.fileDisplay.groups.tasks);
     const dateGroup = createGroup(strings.settings.pages.fileDisplay.groups.date);
     const parentFolderGroup = createGroup(strings.settings.pages.fileDisplay.groups.parentFolder);
-    const wordCountGroup = createGroup(strings.settings.pages.fileDisplay.groups.wordAndCharacterCount);
 
     const setGroupVisible = (groupRootEl: HTMLElement, visible: boolean) => {
         setElementVisible(groupRootEl, visible);
@@ -844,113 +836,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
                 await plugin.saveSettingsAndUpdate();
             })
         );
-
-    const textCountDisplaySetting = wordCountGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.textCountType.name).setDesc(strings.settings.items.textCountType.desc);
-    });
-    const textCountSettingsEl = createDependentSettingsSection(textCountDisplaySetting);
-    const wordCountSettingsEl = textCountSettingsEl.createDiv();
-    const characterCountSettingsEl = textCountSettingsEl.createDiv();
-    const refreshTextCountSections = (): void => {
-        setElementVisible(textCountSettingsEl, plugin.settings.textCountDisplay !== 'none');
-        setElementVisible(wordCountSettingsEl, showsWordCount(plugin.settings.textCountDisplay));
-        setElementVisible(characterCountSettingsEl, showsCharacterCount(plugin.settings.textCountDisplay));
-    };
-    refreshTextCountSections();
-
-    textCountDisplaySetting.addDropdown(dropdown =>
-        dropdown
-            .addOption('none', strings.settings.items.textCountType.options.none)
-            .addOption('words', strings.settings.items.textCountType.options.words)
-            .addOption('characters', strings.settings.items.textCountType.options.characters)
-            .addOption('both', strings.settings.items.textCountType.options.both)
-            .setValue(plugin.settings.textCountDisplay)
-            .onChange(async value => {
-                if (!isTextCountDisplay(value)) {
-                    return;
-                }
-
-                plugin.settings.textCountDisplay = value;
-                await plugin.saveSettingsAndUpdate();
-                refreshTextCountSections();
-            })
-    );
-
-    new Setting(textCountSettingsEl)
-        .setName(strings.settings.items.textCountPlacement.name)
-        .setDesc(strings.settings.items.textCountPlacement.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('title', strings.settings.items.textCountPlacement.options.title)
-                .addOption('property', strings.settings.items.textCountPlacement.options.property)
-                .setValue(plugin.settings.textCountPlacement)
-                .onChange(async value => {
-                    if (!isTextCountPlacement(value)) {
-                        return;
-                    }
-
-                    plugin.settings.textCountPlacement = value;
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
-
-    new Setting(characterCountSettingsEl)
-        .setName(strings.settings.items.characterCountSpaces.name)
-        .setDesc(strings.settings.items.characterCountSpaces.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('include', strings.settings.items.characterCountSpaces.options.include)
-                .addOption('exclude', strings.settings.items.characterCountSpaces.options.exclude)
-                .setValue(plugin.settings.characterCountSpaces)
-                .onChange(async value => {
-                    if (!isCharacterCountSpaces(value)) {
-                        return;
-                    }
-
-                    plugin.settings.characterCountSpaces = value;
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
-
-    const wordCountTargetPropertySetting = context.createDebouncedTextSetting(
-        wordCountSettingsEl,
-        strings.settings.items.wordCountTargetProperty.name,
-        strings.settings.items.wordCountTargetProperty.desc,
-        DEFAULT_SETTINGS.wordCountTargetProperty,
-        () => plugin.settings.wordCountTargetProperty,
-        value => {
-            plugin.settings.wordCountTargetProperty = value.trim();
-        }
-    );
-    wordCountTargetPropertySetting.controlEl.addClass('nn-setting-wide-input');
-
-    new Setting(wordCountSettingsEl)
-        .setName(strings.settings.items.showTargetPercentage.name)
-        .setDesc(strings.settings.items.showTargetPercentage.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showWordCountPercentage).onChange(async value => {
-                plugin.settings.showWordCountPercentage = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    const textCountActiveNoticeSetting = wordCountGroup.addSetting(setting => {
-        renderTextCountActiveNotice(setting, context);
-    });
-    const refreshTextCountActiveNotice = (): void => {
-        renderTextCountActiveNotice(textCountActiveNoticeSetting, context);
-        setElementVisible(
-            textCountActiveNoticeSetting.settingEl,
-            getMarkdownTextCountDependencies(context.app, plugin.settings).length > 0
-        );
-    };
-    context.registerSettingsUpdateListener('notes-text-count-active-notice', refreshTextCountActiveNotice);
-    const unsubscribeWordCountConsumerChanges = subscribeMarkdownWordCountConsumerChanges(context.app, () => {
-        refreshTextCountActiveNotice();
-        context.refreshSettingsDomState();
-    });
-    context.registerSettingsRenderCleanup(unsubscribeWordCountConsumerChanges);
-    refreshTextCountActiveNotice();
 
     context.registerShowTagsListener(visible => {
         setGroupVisible(tagsGroup.rootEl, visible);

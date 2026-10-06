@@ -35,14 +35,12 @@ interface AddManualSortGroupHeaderMenuItemsParams {
     metadataService: MetadataService;
 }
 
-type ManualSortGroupHeaderStyleClipboard = Pick<ManualSortGroupHeaderData, 'showWordCount' | 'targetWordCount' | 'iconId' | 'color'>;
+type ManualSortGroupHeaderStyleClipboard = Pick<ManualSortGroupHeaderData, 'iconId' | 'color'>;
 
 let manualSortGroupHeaderStyleClipboard: ManualSortGroupHeaderStyleClipboard | null = null;
 
 function copyManualSortGroupHeaderStyle(header: ManualSortGroupHeaderData): void {
     manualSortGroupHeaderStyleClipboard = {
-        showWordCount: header.showWordCount,
-        targetWordCount: header.showWordCount ? header.targetWordCount : null,
         iconId: header.iconId,
         color: header.color
     };
@@ -55,8 +53,6 @@ function getManualSortGroupHeaderStyleClipboard(): ManualSortGroupHeaderStyleCli
 function createHeaderValueWithStyle(title: string, style: ManualSortGroupHeaderStyleClipboard): ManualSortGroupHeaderWriteValue {
     return {
         title,
-        showWordCount: style.showWordCount,
-        targetWordCount: style.showWordCount ? style.targetWordCount : null,
         iconId: style.iconId,
         color: style.color
     };
@@ -101,8 +97,6 @@ async function openPasteHeaderStyleModal(
         app,
         {
             title: '',
-            showWordCount: style.showWordCount,
-            targetWordCount: style.showWordCount ? style.targetWordCount : null,
             iconId: style.iconId,
             color: style.color
         },

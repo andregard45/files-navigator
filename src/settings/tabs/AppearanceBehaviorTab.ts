@@ -24,7 +24,6 @@ import { HomepageModal } from '../../modals/HomepageModal';
 import { MAX_PANE_TRANSITION_DURATION_MS, MIN_PANE_TRANSITION_DURATION_MS, PANE_TRANSITION_DURATION_STEP_MS } from '../../types';
 import { TIMEOUTS } from '../../types/obsidian-extended';
 import { runAsyncAction } from '../../utils/async';
-import { hasMarkdownWordCountConsumer } from '../../utils/markdownPipelineContentTypes';
 import { showNotice } from '../../utils/noticeUtils';
 import {
     DEFAULT_UI_SCALE,
@@ -343,12 +342,6 @@ function createDesktopAppearanceDefinitionGroup(context: SettingsTabContext): Se
             // Tag data only exists while the navigation tags section is enabled
             visible: () => plugin.settings.showTooltips && plugin.settings.showTags
         }),
-        createToggleDefinition('showTooltipWordCount', {
-            name: strings.settings.items.showTooltipWordCount.name,
-            desc: strings.settings.items.showTooltipWordCount.desc,
-            // Word counts only exist while a list display setting or appearance requests them
-            visible: () => plugin.settings.showTooltips && hasMarkdownWordCountConsumer(plugin.settings, context.app)
-        })
     ]);
 }
 

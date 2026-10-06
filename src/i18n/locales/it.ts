@@ -448,15 +448,6 @@ export const STRINGS_IT = {
         tasks: 'Attività',
         date: 'Data',
         parentFolder: 'Cartella superiore',
-        textCount: {
-            label: 'Conteggio testo',
-            options: {
-                none: 'Nessuno',
-                words: 'Parole',
-                characters: 'Caratteri',
-                both: 'Parole e caratteri'
-            }
-        },
         resetAppearance: 'Reimposta aspetto',
         openPluginSettings: 'Apri impostazioni del plugin…'
     },
@@ -494,11 +485,6 @@ export const STRINGS_IT = {
             placeholder: 'Intestazione gruppo',
             icon: 'Icona',
             color: 'Colore',
-            wordCount: 'Mostra il conteggio parole',
-            wordCountTarget: 'Conteggio parole obiettivo',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                "Quando questo campo è vuoto, l'obiettivo del gruppo usa la proprietà obiettivo impostata in Impostazioni > Visualizzazione file > Conteggio parole e caratteri. Sovrascrivila impostando un valore obiettivo per questo gruppo.",
             description: "Personalizza l'intestazione di gruppo per questa nota. Lascia il titolo vuoto per rimuovere l'intestazione."
         },
         mergeNotes: {
@@ -577,9 +563,7 @@ export const STRINGS_IT = {
                 'nav-properties': 'Proprietà',
                 'nav-property': 'Proprietà',
                 'nav-property-value': 'Valore',
-                'file-unfinished-task': 'Attività',
-                'file-word-count': 'Conteggio parole',
-                'file-character-count': 'Conteggio caratteri'
+                'file-unfinished-task': 'Attività'
             }
         },
         colorPicker: {
@@ -1011,14 +995,7 @@ export const STRINGS_IT = {
         files: 'file',
         folder: 'cartella',
         folders: 'cartelle',
-        wordCount: 'Conteggio parole',
         unfinishedTasks: 'Attività incomplete'
-    },
-
-    fileCounts: {
-        words: '{count} parole',
-        characters: '{count} caratteri',
-        separator: ' · '
     },
 
     // Settings
@@ -1133,8 +1110,7 @@ export const STRINGS_IT = {
                     properties: 'Proprietà',
                     tasks: 'Attività',
                     date: 'Data',
-                    parentFolder: 'Cartella superiore',
-                    wordAndCharacterCount: 'Conteggio parole e caratteri'
+                    parentFolder: 'Cartella superiore'
                 }
             },
             calendar: {
@@ -1783,10 +1759,6 @@ export const STRINGS_IT = {
                 name: 'Mostra etichette nei tooltip',
                 desc: 'Visualizza le etichette delle note nei tooltip quando la sezione etichette è attiva.'
             },
-            showTooltipWordCount: {
-                name: 'Mostra conteggio parole nei tooltip',
-                desc: 'Visualizza il conteggio delle parole nei tooltip quando il conteggio delle parole è attivo.'
-            },
             resetPaneSeparator: {
                 name: 'Ripristina posizione separatore pannelli',
                 desc: 'Ripristina il separatore trascinabile tra pannello navigazione e pannello lista alla posizione predefinita.',
@@ -2003,55 +1975,6 @@ export const STRINGS_IT = {
             showFilePropertiesInCompactMode: {
                 name: 'Mostra proprietà in modalità compatta',
                 desc: 'Visualizza le proprietà quando la modalità compatta è attiva.'
-            },
-            textCountType: {
-                name: 'Tipo di conteggio',
-                desc: 'Scegli quali conteggi del testo mostrare negli elementi file.',
-                options: {
-                    none: 'Nessuno',
-                    words: 'Conteggio parole',
-                    characters: 'Conteggio caratteri',
-                    both: 'Conteggio parole e caratteri'
-                }
-            },
-            textCountPlacement: {
-                name: 'Posizione',
-                desc: 'Scegli dove mostrare i conteggi del testo.',
-                options: {
-                    title: 'Nel titolo',
-                    property: 'Come proprietà'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Conteggio caratteri',
-                desc: 'Scegli se includere gli spazi nel conteggio caratteri.',
-                options: {
-                    include: 'Spazi inclusi',
-                    exclude: 'Spazi esclusi'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Proprietà obiettivo',
-                desc: "Chiave della proprietà frontmatter contenente l'obiettivo di conteggio parole. Lascia vuoto per nascondere gli obiettivi."
-            },
-            showTargetPercentage: {
-                name: 'Mostra percentuale obiettivo',
-                desc: 'Mostra solo la percentuale di avanzamento quando è disponibile un obiettivo di conteggio parole.'
-            },
-            textCountActiveNotice: {
-                title: 'Il conteggio è ancora attivo',
-                summary:
-                    'I conteggi di parole o caratteri vengono ancora calcolati per tutte le note perché sono utilizzati dai seguenti elementi:',
-                more: 'e altri {count}',
-                reasons: {
-                    appearance: 'Aspetto dei file',
-                    'group-header': 'Intestazione di gruppo'
-                },
-                scopes: {
-                    folder: 'Cartella: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Proprietà: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Chiavi proprietà (profilo vault)',

@@ -543,8 +543,6 @@ export interface ListPaneAppearance {
     showTaskProgress?: boolean;
     showDate?: boolean;
     showParentFolder?: boolean;
-    /** Undefined inherits the global count type; `none` explicitly hides counts for this selection. */
-    textCount?: TextCountDisplay;
 }
 
 const PROPERTY_GROUPING_PREFIX = 'property:';
@@ -625,38 +623,6 @@ export function normalizeAppearanceGroupBy<T extends AppearanceGroupingValue>(ap
 
 /** Date source to display when alphabetical sorting is active */
 export type AlphabeticalDateMode = 'created' | 'modified';
-
-/** Placement options for note text counts */
-export type TextCountPlacement = 'title' | 'property';
-
-/** Type guard for validating text count placement values */
-export function isTextCountPlacement(value: unknown): value is TextCountPlacement {
-    return value === 'title' || value === 'property';
-}
-
-/** Display modes for note word and character counts */
-export type TextCountDisplay = 'none' | 'words' | 'characters' | 'both';
-
-/** Type guard for validating word and character count display modes */
-export function isTextCountDisplay(value: unknown): value is TextCountDisplay {
-    return value === 'none' || value === 'words' || value === 'characters' || value === 'both';
-}
-
-/** Whether spaces are included in note character counts */
-export type CharacterCountSpaces = 'include' | 'exclude';
-
-/** Type guard for validating character count space handling */
-export function isCharacterCountSpaces(value: unknown): value is CharacterCountSpaces {
-    return value === 'include' || value === 'exclude';
-}
-
-export function showsWordCount(display: TextCountDisplay): boolean {
-    return display === 'words' || display === 'both';
-}
-
-export function showsCharacterCount(display: TextCountDisplay): boolean {
-    return display === 'characters' || display === 'both';
-}
 
 /** Buttons available in the navigation toolbar */
 export type NavigationToolbarButtonId = 'toggleDualPane' | 'expandCollapse' | 'calendar' | 'hiddenItems' | 'rootReorder' | 'newFolder';
@@ -739,7 +705,6 @@ export interface NotebookNavigatorSettings {
     showTooltips: boolean;
     showTooltipPath: boolean;
     showTooltipTags: boolean;
-    showTooltipWordCount: boolean;
     desktopBackground: BackgroundMode;
     desktopScale: number;
     mobileScale: number;
@@ -939,11 +904,6 @@ export interface NotebookNavigatorSettings {
     showPropertiesOnSeparateRows: boolean;
     enablePropertyInternalLinks: boolean;
     enablePropertyExternalLinks: boolean;
-    textCountDisplay: TextCountDisplay;
-    textCountPlacement: TextCountPlacement;
-    characterCountSpaces: CharacterCountSpaces;
-    wordCountTargetProperty: string;
-    showWordCountPercentage: boolean;
     showFileDate: boolean;
     alphabeticalDateMode: AlphabeticalDateMode;
     showParentFolder: boolean;

@@ -434,11 +434,6 @@
     color: var(--nn-file-name-custom-color);
 }
 
-.nn-file-name-suffix {
-    color: var(--nn-theme-file-word-count-color);
-    font-weight: var(--nn-theme-file-word-count-font-weight);
-}
-
 /* Keep aliases in normal text flow so title clamping can reveal or wrap each value independently. */
 .nn-file-alias-match {
     display: inline;

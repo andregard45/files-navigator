@@ -448,15 +448,6 @@ export const STRINGS_FA = {
         tasks: 'وظایف',
         date: 'تاریخ',
         parentFolder: 'پوشه والد',
-        textCount: {
-            label: 'شمارش متن',
-            options: {
-                none: 'هیچ‌کدام',
-                words: 'کلمات',
-                characters: 'نویسه‌ها',
-                both: 'کلمات و نویسه‌ها'
-            }
-        },
         resetAppearance: 'بازنشانی ظاهر',
         openPluginSettings: 'باز کردن تنظیمات افزونه…'
     },
@@ -493,13 +484,7 @@ export const STRINGS_FA = {
             titleLabel: 'عنوان',
             placeholder: 'هدر گروه',
             icon: 'آیکون',
-            color: 'رنگ',
-            wordCount: 'نمایش تعداد کلمات',
-            wordCountTarget: 'تعداد کلمات هدف',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'وقتی این فیلد خالی است، هدف گروه از ویژگی هدف تنظیم‌شده در تنظیمات > نمایش فایل > تعداد کلمات و نویسه‌ها استفاده می‌کند. با تنظیم مقدار هدف برای این گروه آن را بازنویسی کنید.',
-            description: 'هدر گروه را برای این یادداشت سفارشی کنید. عنوان را خالی بگذارید تا هدر حذف شود.'
+            color: 'رنگ',            description: 'هدر گروه را برای این یادداشت سفارشی کنید. عنوان را خالی بگذارید تا هدر حذف شود.'
         },
         mergeNotes: {
             title: 'ادغام یادداشت‌ها',
@@ -577,9 +562,7 @@ export const STRINGS_FA = {
                 'nav-properties': 'ویژگی‌ها',
                 'nav-property': 'ویژگی',
                 'nav-property-value': 'مقدار',
-                'file-unfinished-task': 'وظایف',
-                'file-word-count': 'تعداد کلمات',
-                'file-character-count': 'تعداد نویسه‌ها'
+                'file-unfinished-task': 'وظایف'
             }
         },
         colorPicker: {
@@ -1014,14 +997,7 @@ export const STRINGS_FA = {
         files: 'فایل',
         folder: 'پوشه',
         folders: 'پوشه',
-        wordCount: 'تعداد کلمات',
         unfinishedTasks: 'وظایف ناتمام'
-    },
-
-    fileCounts: {
-        words: '{count} کلمه',
-        characters: '{count} نویسه',
-        separator: ' · '
     },
 
     // Settings
@@ -1134,8 +1110,7 @@ export const STRINGS_FA = {
                     properties: 'ویژگی‌ها',
                     tasks: 'وظایف',
                     date: 'تاریخ',
-                    parentFolder: 'پوشه والد',
-                    wordAndCharacterCount: 'تعداد کلمات و نویسه‌ها'
+                    parentFolder: 'پوشه والد'
                 }
             },
             calendar: {
@@ -1782,10 +1757,6 @@ export const STRINGS_FA = {
                 name: 'نمایش برچسب‌ها در راهنماها',
                 desc: 'برچسب‌های یادداشت‌ها را در راهنماها نمایش دهید، در صورتی که بخش برچسب‌ها فعال باشد.'
             },
-            showTooltipWordCount: {
-                name: 'نمایش تعداد کلمات در راهنماها',
-                desc: 'تعداد کلمات را در راهنماها نمایش دهید، در صورتی که تعداد کلمات فعال باشد.'
-            },
             resetPaneSeparator: {
                 name: 'بازنشانی موقعیت جداکننده پنل',
                 desc: 'جداکننده قابل کشیدن بین پنل ناوبری و پنل لیست را به موقعیت پیش‌فرض بازنشانی کنید.',
@@ -2000,54 +1971,6 @@ export const STRINGS_FA = {
             showFilePropertiesInCompactMode: {
                 name: 'نمایش ویژگی‌ها در حالت فشرده',
                 desc: 'نمایش ویژگی‌ها هنگام فعال بودن حالت فشرده.'
-            },
-            textCountType: {
-                name: 'نوع شمارش',
-                desc: 'انتخاب کنید کدام شمارش‌های متن در موارد فایل نمایش داده شوند.',
-                options: {
-                    none: 'هیچ‌کدام',
-                    words: 'تعداد کلمات',
-                    characters: 'تعداد نویسه‌ها',
-                    both: 'تعداد کلمات و نویسه‌ها'
-                }
-            },
-            textCountPlacement: {
-                name: 'جایگاه',
-                desc: 'انتخاب کنید شمارش‌های متن کجا نمایش داده شوند.',
-                options: {
-                    title: 'در عنوان',
-                    property: 'به‌عنوان ویژگی'
-                }
-            },
-            characterCountSpaces: {
-                name: 'تعداد نویسه‌ها',
-                desc: 'انتخاب کنید فاصله‌ها در شمارش نویسه‌ها لحاظ شوند یا نه.',
-                options: {
-                    include: 'با فاصله‌ها',
-                    exclude: 'بدون فاصله‌ها'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'ویژگی هدف',
-                desc: 'کلید ویژگی فرانت‌متر که تعداد کلمات هدف را نگه می‌دارد. برای پنهان کردن هدف‌ها خالی بگذارید.'
-            },
-            showTargetPercentage: {
-                name: 'نمایش درصد هدف',
-                desc: 'وقتی تعداد کلمات هدف موجود است، فقط درصد پیشرفت را نمایش دهید.'
-            },
-            textCountActiveNotice: {
-                title: 'شمارش همچنان فعال است',
-                summary: 'شمارش کلمات یا نویسه‌ها همچنان برای همهٔ یادداشت‌ها انجام می‌شود چون موارد زیر از آن استفاده می‌کنند:',
-                more: 'و {count} مورد دیگر',
-                reasons: {
-                    appearance: 'ظاهر فایل',
-                    'group-header': 'سرصفحه گروه'
-                },
-                scopes: {
-                    folder: 'پوشه: {name}',
-                    tag: 'برچسب: #{name}',
-                    property: 'ویژگی: {name}'
-                }
             },
             propertyKeys: {
                 name: 'کلیدهای ویژگی (پروفایل خزانه)',

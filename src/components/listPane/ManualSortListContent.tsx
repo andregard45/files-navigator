@@ -39,18 +39,14 @@ import {
     getCachedManualSortGroupHeader,
     getManualSortSelectedMarkdownPaths,
     moveManualSortMarkdownFiles,
-    normalizeManualSortGroupHeaderWordCount,
     partitionManualSortFiles,
-    shouldShowManualSortGroupHeaderProgress,
-    shouldShowManualSortGroupHeaderWordCount,
     type ManualSortGroupHeaderData
 } from '../../utils/manualSort';
 import { hasSolidFileRowBackground } from '../../utils/colorUtils';
 import { addManualSortGroupHeaderMenuItems } from '../../utils/contextMenu/manualSortGroupHeaderMenuItems';
-import { getCachedWordCountTargetFromFrontmatter, getWordCountTargetFromProperties } from '../../utils/wordCountUtils';
 import { ObsidianIcon } from '../ObsidianIcon';
 import { FileItem, type FileItemPaneProps, type FileItemStorageHelpers } from '../FileItem';
-import { ManualSortGroupHeaderContent, ManualSortGroupHeaderProgress } from './ManualSortGroupHeaderContent';
+import { ManualSortGroupHeaderContent } from './ManualSortGroupHeaderContent';
 
 const MANUAL_SORT_MOUSE_CONSTRAINT = { distance: 2 };
 const MANUAL_SORT_TOUCH_CONSTRAINT = { distance: 4 };
@@ -67,7 +63,6 @@ interface ManualSortListContentProps {
     hiddenFileState: ReadonlyMap<string, boolean>;
     propertyKey: string;
     manualSortGroupHeaderPropertyKey: string | null;
-    wordCountTargetProperty: string;
     rankByPath: ReadonlyMap<string, number>;
     selectedFolderPath: string | null;
     isSaving: boolean;
@@ -110,8 +105,6 @@ interface ManualSortRenderRow {
     entry: ManualSortEntry;
     segmentKey: string;
     header?: ManualSortGroupHeaderData;
-    headerWordCount?: number;
-    headerTargetWordCount?: number | null;
     headerFilePath?: string;
 }
 
@@ -136,8 +129,6 @@ interface ManualSortRowProps extends ManualSortRowContext {
     hasPreviousFilledBackground: boolean;
     hasNextFilledBackground: boolean;
     header?: ManualSortGroupHeaderData;
-    headerWordCount?: number;
-    headerTargetWordCount?: number | null;
     headerFilePath?: string;
     suppressHeaderTopSpacing?: boolean;
     shortcutKey?: string;
@@ -242,8 +233,6 @@ function SortableManualSortRow(props: ManualSortRowProps) {
         hasNextFilledBackground,
         headerFilePath,
         header,
-        headerWordCount,
-        headerTargetWordCount,
         suppressHeaderTopSpacing
     } = props;
     const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isSorting } = useSortable({
@@ -257,7 +246,6 @@ function SortableManualSortRow(props: ManualSortRowProps) {
     };
     const bindRowDrag = canReorder && !isMobile;
     const bindHandleDrag = canReorder && isMobile;
-    const hasManualSortGoal = header ? shouldShowManualSortGroupHeaderProgress(header, headerTargetWordCount) : false;
     const dragHandle = (
         <span
             ref={setActivatorNodeRef}
@@ -278,40 +266,14 @@ function SortableManualSortRow(props: ManualSortRowProps) {
             style={dragStyle}
         >
             {header ? (
-                hasManualSortGoal ? (
-                    <div
-                        className={`nn-manual-sort-group-header-shell nn-manual-sort-custom-header${
-                            suppressHeaderTopSpacing ? '' : ' nn-manual-sort-section-header'
-                        }`}
-                        data-manual-sort-header-file-path={headerFilePath}
-                    >
-                        <div className="nn-list-group-header nn-list-group-header--manual-sort">
-                            <ManualSortGroupHeaderContent
-                                header={header}
-                                wordCount={headerWordCount ?? 0}
-                                targetWordCount={headerTargetWordCount}
-                            />
-                        </div>
-                        <ManualSortGroupHeaderProgress
-                            header={header}
-                            wordCount={headerWordCount ?? 0}
-                            targetWordCount={headerTargetWordCount}
-                        />
-                    </div>
-                ) : (
-                    <div
-                        className={`nn-list-group-header nn-list-group-header--manual-sort nn-manual-sort-custom-header${
-                            suppressHeaderTopSpacing ? '' : ' nn-manual-sort-section-header'
-                        }`}
-                        data-manual-sort-header-file-path={headerFilePath}
-                    >
-                        <ManualSortGroupHeaderContent
-                            header={header}
-                            wordCount={headerWordCount ?? 0}
-                            targetWordCount={headerTargetWordCount}
-                        />
-                    </div>
-                )
+                <div
+                    className={`nn-list-group-header nn-list-group-header--manual-sort nn-manual-sort-custom-header${
+                        suppressHeaderTopSpacing ? '' : ' nn-manual-sort-section-header'
+                    }`}
+                    data-manual-sort-header-file-path={headerFilePath}
+                >
+                    <ManualSortGroupHeaderContent header={header} />
+                </div>
             ) : null}
             <div
                 className={getManualSortRowClassName({
@@ -373,24 +335,10 @@ function buildManualSortRenderRows(
     app: App,
     entries: readonly ManualSortEntry[],
     groupHeaderPropertyKey: string | null,
-    sectionKey: string,
-    getWordCount: (file: TFile) => number,
-    getWordCountTarget: (file: TFile) => number | null
+    sectionKey: string
 ): ManualSortRenderRow[] {
     const rows: ManualSortRenderRow[] = [];
     let segmentIndex = 0;
-    let activeHeaderRow: ManualSortRenderRow | null = null;
-    let activeHeader: ManualSortGroupHeaderData | null = null;
-    let activeWordCount = 0;
-    let activeTargetWordCount: number | null = null;
-    const updateActiveHeaderWordCount = (): void => {
-        if (!activeHeaderRow || !activeHeader) {
-            return;
-        }
-
-        activeHeaderRow.headerWordCount = activeWordCount;
-        activeHeaderRow.headerTargetWordCount = activeTargetWordCount;
-    };
 
     entries.forEach(entry => {
         let headerData: ManualSortGroupHeaderData | undefined;
@@ -399,9 +347,6 @@ function buildManualSortRenderRows(
             if (header) {
                 segmentIndex += 1;
                 headerData = header;
-                activeHeader = header;
-                activeWordCount = 0;
-                activeTargetWordCount = header.targetWordCount;
             }
         }
 
@@ -412,20 +357,8 @@ function buildManualSortRenderRows(
             header: headerData
         };
         rows.push(row);
-        if (activeHeader && headerData) {
-            activeHeaderRow = row;
-            activeHeaderRow.headerFilePath = entry.file.path;
-            updateActiveHeaderWordCount();
-        }
-        if (activeHeader && shouldShowManualSortGroupHeaderWordCount(activeHeader) && entry.file.extension === 'md') {
-            activeWordCount += getWordCount(entry.file);
-            if (activeHeader.targetWordCount === null) {
-                const fileTargetWordCount = getWordCountTarget(entry.file);
-                if (fileTargetWordCount !== null) {
-                    activeTargetWordCount = (activeTargetWordCount ?? 0) + fileTargetWordCount;
-                }
-            }
-            updateActiveHeaderWordCount();
+        if (headerData) {
+            row.headerFilePath = entry.file.path;
         }
     });
 
@@ -521,8 +454,6 @@ function ManualSortGroup({
                 hasNextFilledBackground: nextEntryHasFilledBackground,
                 headerFilePath: row.headerFilePath,
                 header: row.header,
-                headerWordCount: row.headerWordCount,
-                headerTargetWordCount: row.headerTargetWordCount,
                 suppressHeaderTopSpacing: Boolean(row.header && suppressFirstHeaderSpacing && index === 0),
                 shortcutKey: noteShortcutKeysByPath.get(entry.file.path)
             };
@@ -572,7 +503,6 @@ export function ManualSortListContent({
     hiddenFileState,
     propertyKey,
     manualSortGroupHeaderPropertyKey,
-    wordCountTargetProperty,
     rankByPath,
     selectedFolderPath,
     isSaving,
@@ -637,33 +567,17 @@ export function ManualSortListContent({
     const rankedEntries = useMemo<ManualSortEntry[]>(() => buildEntries(rankedMarkdownFiles), [buildEntries, rankedMarkdownFiles]);
     const unsortedEntries = useMemo<ManualSortEntry[]>(() => buildEntries(unsortedMarkdownFiles), [buildEntries, unsortedMarkdownFiles]);
     const nonMarkdownEntries = useMemo<ManualSortEntry[]>(() => buildEntries(nonMarkdownFiles), [buildEntries, nonMarkdownFiles]);
-    const getWordCount = useCallback(
-        (file: TFile): number => {
-            return normalizeManualSortGroupHeaderWordCount(fileItemStorage.getDB().getFile(file.path)?.wordCount);
-        },
-        [fileItemStorage]
-    );
-    const getWordCountTarget = useCallback(
-        (file: TFile): number | null => {
-            return (
-                getWordCountTargetFromProperties(fileItemStorage.getDB().getFile(file.path)?.properties, wordCountTargetProperty) ??
-                getCachedWordCountTargetFromFrontmatter(app, file, wordCountTargetProperty)
-            );
-        },
-        [app, fileItemStorage, wordCountTargetProperty]
-    );
     const rankedRows = useMemo(
-        () => buildManualSortRenderRows(app, rankedEntries, manualSortGroupHeaderPropertyKey, 'ranked', getWordCount, getWordCountTarget),
-        [app, getWordCount, getWordCountTarget, manualSortGroupHeaderPropertyKey, rankedEntries]
+        () => buildManualSortRenderRows(app, rankedEntries, manualSortGroupHeaderPropertyKey, 'ranked'),
+        [app, manualSortGroupHeaderPropertyKey, rankedEntries]
     );
     const unsortedRows = useMemo(
-        () =>
-            buildManualSortRenderRows(app, unsortedEntries, manualSortGroupHeaderPropertyKey, 'unsorted', getWordCount, getWordCountTarget),
-        [app, getWordCount, getWordCountTarget, manualSortGroupHeaderPropertyKey, unsortedEntries]
+        () => buildManualSortRenderRows(app, unsortedEntries, manualSortGroupHeaderPropertyKey, 'unsorted'),
+        [app, manualSortGroupHeaderPropertyKey, unsortedEntries]
     );
     const nonMarkdownRows = useMemo(
-        () => buildManualSortRenderRows(app, nonMarkdownEntries, null, 'non-markdown', getWordCount, getWordCountTarget),
-        [app, getWordCount, getWordCountTarget, nonMarkdownEntries]
+        () => buildManualSortRenderRows(app, nonMarkdownEntries, null, 'non-markdown'),
+        [app, nonMarkdownEntries]
     );
     const entries = useMemo<ManualSortEntry[]>(() => {
         return [...rankedEntries, ...unsortedEntries, ...nonMarkdownEntries];

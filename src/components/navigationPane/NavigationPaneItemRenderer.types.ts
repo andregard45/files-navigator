@@ -69,7 +69,6 @@ export interface NavigationPaneRowContext {
     descendantExcludedFolders: string[];
     getFileDisplayName: (file: TFile) => string;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
-    getFileWordCount: (file: TFile) => number | null;
     /** Pill models shared with the list pane so note tooltips render the same tag pills */
     fileItemPillDecorationModel: FileItemPillDecorationModel;
     fileItemPillOrderModel: FileItemPillOrderModel;

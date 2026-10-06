@@ -32,12 +32,10 @@ import {
     getNonMarkdownDrawingFeatureImageProviderId
 } from '../utils/drawingFeatureImages';
 import {
-    hasMarkdownCharacterCountConsumer,
     hasMarkdownFeatureImageConsumer,
     hasMarkdownPipelineContent,
     hasMarkdownPreviewConsumer,
-    hasMarkdownTaskConsumer,
-    hasMarkdownWordCountConsumer
+    hasMarkdownTaskConsumer
 } from '../utils/markdownPipelineContentTypes';
 import { areMarkdownTaskCountsEqual, countMarkdownTasksFromMetadata, hasMarkdownTaskMetadata } from '../utils/markdownTaskCounts';
 
@@ -81,11 +79,9 @@ export function filterFilesRequiringMetadataSources(
     const app = options?.app;
     const featureImageExcludeMatcher = createCaseInsensitiveKeyMatcher(settings.featureImageExcludeProperties);
     const hiddenFilePropertyMatcher = requiresHiddenState ? createFrontmatterPropertyExclusionMatcher(hiddenFileProperties) : null;
-    const markdownPipelineEnabled = hasMarkdownPipelineContent(settings, app);
+    const markdownPipelineEnabled = hasMarkdownPipelineContent(settings);
     const previewEnabled = hasMarkdownPreviewConsumer(settings);
     const featureImageEnabled = hasMarkdownFeatureImageConsumer(settings);
-    const wordCountEnabled = hasMarkdownWordCountConsumer(settings, app);
-    const characterCountEnabled = hasMarkdownCharacterCountConsumer(settings);
     const tasksEnabled = hasMarkdownTaskConsumer(settings);
 
     return files.filter(file => {
@@ -129,9 +125,6 @@ export function filterFilesRequiringMetadataSources(
                 }
             }
             const needsProperties = record.properties === null;
-            const needsWordCount = wordCountEnabled && record.wordCount === null;
-            const needsCharacterCount =
-                characterCountEnabled && (record.characterCountWithSpaces === null || record.characterCountWithoutSpaces === null);
             const needsTasks = tasksEnabled && (record.taskTotal === null || record.taskUnfinished === null);
             let hasTaskCountChanges = false;
             if (tasksEnabled && (needsTasks || compareCurrentTaskMetadata)) {
@@ -145,8 +138,6 @@ export function filterFilesRequiringMetadataSources(
                 needsPreview ||
                 needsFeatureImage ||
                 needsProperties ||
-                needsWordCount ||
-                needsCharacterCount ||
                 needsTasks ||
                 hasTaskCountChanges
             ) {

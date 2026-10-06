@@ -452,15 +452,6 @@ export const STRINGS_FR = {
         tasks: 'Tâches',
         date: 'Date',
         parentFolder: 'Dossier parent',
-        textCount: {
-            label: 'Comptage du texte',
-            options: {
-                none: 'Aucun',
-                words: 'Mots',
-                characters: 'Caractères',
-                both: 'Mots et caractères'
-            }
-        },
         resetAppearance: 'Réinitialiser l’apparence',
         openPluginSettings: 'Ouvrir les paramètres du plugin…'
     },
@@ -497,13 +488,7 @@ export const STRINGS_FR = {
             titleLabel: 'Titre',
             placeholder: 'En-tête de groupe',
             icon: 'Icône',
-            color: 'Couleur',
-            wordCount: 'Afficher le nombre de mots',
-            wordCountTarget: 'Nombre de mots cible',
-            wordCountTargetPlaceholder: '10 000',
-            wordCountTargetDescription:
-                'Lorsque ce champ est vide, l’objectif du groupe utilise la propriété cible définie dans Paramètres > Affichage des fichiers > Nombre de mots et de caractères. Remplacez-la en définissant une valeur cible pour ce groupe.',
-            description: "Personnalisez l'en-tête de groupe pour cette note. Laissez le titre vide pour supprimer l'en-tête."
+            color: 'Couleur',            description: "Personnalisez l'en-tête de groupe pour cette note. Laissez le titre vide pour supprimer l'en-tête."
         },
         mergeNotes: {
             title: 'Fusionner les notes',
@@ -581,9 +566,7 @@ export const STRINGS_FR = {
                 'nav-properties': 'Propriétés',
                 'nav-property': 'Propriété',
                 'nav-property-value': 'Valeur',
-                'file-unfinished-task': 'Tâches',
-                'file-word-count': 'Nombre de mots',
-                'file-character-count': 'Nombre de caractères'
+                'file-unfinished-task': 'Tâches'
             }
         },
         colorPicker: {
@@ -1019,14 +1002,7 @@ export const STRINGS_FR = {
         files: 'fichiers',
         folder: 'dossier',
         folders: 'dossiers',
-        wordCount: 'Nombre de mots',
         unfinishedTasks: 'Tâches inachevées'
-    },
-
-    fileCounts: {
-        words: '{count} mots',
-        characters: '{count} caractères',
-        separator: ' · '
     },
 
     // Settings
@@ -1141,8 +1117,7 @@ export const STRINGS_FR = {
                     properties: 'Propriétés',
                     tasks: 'Tâches',
                     date: 'Date',
-                    parentFolder: 'Dossier parent',
-                    wordAndCharacterCount: 'Nombre de mots et de caractères'
+                    parentFolder: 'Dossier parent'
                 }
             },
             calendar: {
@@ -1791,10 +1766,6 @@ export const STRINGS_FR = {
                 name: 'Afficher les mots-clés dans les infobulles',
                 desc: 'Affiche les mots-clés des notes dans les infobulles lorsque la section des mots-clés est activée.'
             },
-            showTooltipWordCount: {
-                name: 'Afficher le nombre de mots dans les infobulles',
-                desc: 'Affiche le nombre de mots dans les infobulles lorsque le nombre de mots est activé.'
-            },
             resetPaneSeparator: {
                 name: 'Réinitialiser la position du séparateur de panneaux',
                 desc: 'Réinitialise le séparateur déplaçable entre le panneau de navigation et le panneau de liste à la position par défaut.',
@@ -2011,55 +1982,6 @@ export const STRINGS_FR = {
             showFilePropertiesInCompactMode: {
                 name: 'Afficher les propriétés en mode compact',
                 desc: 'Afficher les propriétés lorsque le mode compact est actif.'
-            },
-            textCountType: {
-                name: 'Type de compteur',
-                desc: 'Choisissez les compteurs de texte affichés dans les éléments de fichier.',
-                options: {
-                    none: 'Aucun',
-                    words: 'Nombre de mots',
-                    characters: 'Nombre de caractères',
-                    both: 'Nombre de mots et de caractères'
-                }
-            },
-            textCountPlacement: {
-                name: 'Emplacement',
-                desc: 'Choisissez où les compteurs de texte apparaissent.',
-                options: {
-                    title: 'Dans le titre',
-                    property: 'Comme propriété'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Nombre de caractères',
-                desc: 'Choisissez si les espaces sont inclus dans le nombre de caractères.',
-                options: {
-                    include: 'Espaces inclus',
-                    exclude: 'Espaces exclus'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Propriété cible',
-                desc: 'Clé de propriété frontmatter contenant l’objectif de nombre de mots. Laissez vide pour masquer les objectifs.'
-            },
-            showTargetPercentage: {
-                name: 'Afficher le pourcentage cible',
-                desc: 'Afficher uniquement le pourcentage de progression lorsqu’un objectif de nombre de mots est disponible.'
-            },
-            textCountActiveNotice: {
-                title: 'Le comptage est toujours actif',
-                summary:
-                    'Le nombre de mots ou de caractères est toujours calculé pour toutes les notes car les éléments suivants l’utilisent :',
-                more: 'et {count} de plus',
-                reasons: {
-                    appearance: 'Apparence des fichiers',
-                    'group-header': 'En-tête de groupe'
-                },
-                scopes: {
-                    folder: 'Dossier : {name}',
-                    tag: 'Tag : #{name}',
-                    property: 'Propriété : {name}'
-                }
             },
             propertyKeys: {
                 name: 'Clés de propriétés (profil du coffre)',

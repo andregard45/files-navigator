@@ -184,7 +184,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showTooltips: false,
     showTooltipPath: true,
     showTooltipTags: false,
-    showTooltipWordCount: false,
     desktopBackground: 'separate',
     desktopScale: DEFAULT_UI_SCALE,
 
@@ -386,11 +385,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showPropertiesOnSeparateRows: false,
     enablePropertyInternalLinks: true,
     enablePropertyExternalLinks: true,
-    textCountDisplay: 'none',
-    textCountPlacement: 'title',
-    characterCountSpaces: 'include',
-    wordCountTargetProperty: 'word-goal',
-    showWordCountPercentage: false,
     showFileDate: true,
     // Default to showing modified date when sorting alphabetically
     alphabeticalDateMode: 'modified',

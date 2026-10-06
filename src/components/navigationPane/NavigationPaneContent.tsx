@@ -39,7 +39,6 @@ import { useNavigationPaneShortcuts } from '../../hooks/navigationPane/useNaviga
 import { useNavigationPaneTreeInteractions } from '../../hooks/navigationPane/useNavigationPaneTreeInteractions';
 import { useNavigationSearchHighlights } from '../../hooks/navigationPane/useNavigationSearchHighlights';
 import { useStableHandlerFacade } from '../../hooks/useStableHandlerFacade';
-import { useMarkdownWordCountConsumerChanges } from '../../hooks/useMarkdownWordCountConsumerChanges';
 import { buildNavigationInlineRenameTarget, matchNavigationInlineRenameTarget, replacePathLeaf } from './navigationRenameTarget';
 import type { SearchNavFilterState } from '../../types/search';
 import type { NoteCountInfo } from '../../types/noteCounts';
@@ -98,7 +97,6 @@ import type { NavigationPaneTreeSectionsResult } from '../../hooks/navigationPan
 import type { FolderDecorationModel } from '../../utils/folderDecoration';
 import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
-import { hasCachedMarkdownWordCountConsumer } from '../../utils/markdownPipelineContentTypes';
 import { focusElementPreventScroll } from '../../utils/domUtils';
 
 const EMPTY_INDENT_GUIDE_MAP = new Map<string, number[]>();
@@ -144,25 +142,12 @@ export const NavigationPane = React.memo(
         const selectionState = useNavigationSelection();
         const selectionDispatch = useSelectionDispatch();
         const settings = useSettingsState();
-        useMarkdownWordCountConsumerChanges(app);
         const activeProfile = useActiveProfile();
         const updateSettings = useSettingsUpdate();
         const uxPreferences = useUXPreferences();
         const uiState = useUIState();
         const uiDispatch = useUIDispatch();
         const { fileData, getFile, getFileDisplayName, getFileTimestamps, isStorageReady } = useFileCache();
-        // Cached word counts are only current while a display setting keeps the markdown
-        // pipeline extracting them; without a consumer a stale count would show after edits.
-        const hasWordCountConsumer = hasCachedMarkdownWordCountConsumer(settings, app);
-        const getFileWordCount = useCallback(
-            (file: TFile): number | null => {
-                if (!hasWordCountConsumer) {
-                    return null;
-                }
-                return getFile(file.path)?.wordCount ?? null;
-            },
-            [getFile, hasWordCountConsumer]
-        );
         const { startPointerDrag } = usePointerDrag();
         const {
             searchNavFilters,
@@ -1037,7 +1022,6 @@ export const NavigationPane = React.memo(
                 descendantExcludedFolders: activeProfile.descendantExcludedFolders,
                 getFileDisplayName,
                 getFileTimestamps,
-                getFileWordCount,
                 fileItemPillDecorationModel,
                 fileItemPillOrderModel,
                 getSolidBackground,
@@ -1063,7 +1047,6 @@ export const NavigationPane = React.memo(
                 activeProfile.descendantExcludedFolders,
                 getFileDisplayName,
                 getFileTimestamps,
-                getFileWordCount,
                 fileItemPillDecorationModel,
                 fileItemPillOrderModel,
                 getSolidBackground,

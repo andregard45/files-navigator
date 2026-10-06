@@ -56,9 +56,7 @@ export type UXIconId =
     | 'list-appearance'
     | 'list-new-note'
     | 'list-pinned'
-    | 'file-unfinished-task'
-    | 'file-word-count'
-    | 'file-character-count';
+    | 'file-unfinished-task';
 
 export type UXIconCategory = 'navigationPane' | 'folders' | 'tags' | 'properties' | 'listPane' | 'fileItems' | 'calendar';
 
@@ -105,8 +103,6 @@ export const UX_ICON_DEFINITIONS: UXIconDefinition[] = [
     { id: 'list-new-note', category: 'listPane', defaultIconId: 'pen-box' },
     { id: 'list-pinned', category: 'listPane', defaultIconId: '' },
     { id: 'file-unfinished-task', category: 'fileItems', defaultIconId: 'square-check' },
-    { id: 'file-word-count', category: 'fileItems', defaultIconId: 'sigma' },
-    { id: 'file-character-count', category: 'fileItems', defaultIconId: 'type' },
     { id: 'nav-calendar', category: 'calendar', defaultIconId: 'calendar-days' }
 ];
 

@@ -453,15 +453,6 @@ export const STRINGS_NL = {
         tasks: 'Taken',
         date: 'Datum',
         parentFolder: 'Bovenliggende map',
-        textCount: {
-            label: 'Teksttelling',
-            options: {
-                none: 'Geen',
-                words: 'Woorden',
-                characters: 'Tekens',
-                both: 'Woorden en tekens'
-            }
-        },
         resetAppearance: 'Uiterlijk herstellen',
         openPluginSettings: 'Plugin-instellingen openen…'
     },
@@ -498,13 +489,7 @@ export const STRINGS_NL = {
             titleLabel: 'Titel',
             placeholder: 'Groepskop',
             icon: 'Pictogram',
-            color: 'Kleur',
-            wordCount: 'Aantal woorden tonen',
-            wordCountTarget: 'Doelaantal woorden',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Wanneer dit veld leeg is, gebruikt het groepsdoel de doeleigenschap die is ingesteld in Instellingen > Bestandsweergave > Aantal woorden en tekens. Overschrijf dit door een doelwaarde voor deze groep in te stellen.',
-            description: 'Pas de groepskop voor deze notitie aan. Laat de titel leeg om de kop te verwijderen.'
+            color: 'Kleur',            description: 'Pas de groepskop voor deze notitie aan. Laat de titel leeg om de kop te verwijderen.'
         },
         mergeNotes: {
             title: 'Notities samenvoegen',
@@ -582,9 +567,7 @@ export const STRINGS_NL = {
                 'nav-properties': 'Eigenschappen',
                 'nav-property': 'Eigenschap',
                 'nav-property-value': 'Waarde',
-                'file-unfinished-task': 'Taken',
-                'file-word-count': 'Aantal woorden',
-                'file-character-count': 'Aantal tekens'
+                'file-unfinished-task': 'Taken'
             }
         },
         colorPicker: {
@@ -1018,14 +1001,7 @@ export const STRINGS_NL = {
         files: 'bestanden',
         folder: 'map',
         folders: 'mappen',
-        wordCount: 'Aantal woorden',
         unfinishedTasks: 'Onvoltooide taken'
-    },
-
-    fileCounts: {
-        words: '{count} woorden',
-        characters: '{count} tekens',
-        separator: ' · '
     },
 
     // Settings
@@ -1140,8 +1116,7 @@ export const STRINGS_NL = {
                     properties: 'Eigenschappen',
                     tasks: 'Taken',
                     date: 'Datum',
-                    parentFolder: 'Bovenliggende map',
-                    wordAndCharacterCount: 'Aantal woorden en tekens'
+                    parentFolder: 'Bovenliggende map'
                 }
             },
             calendar: {
@@ -1789,10 +1764,6 @@ export const STRINGS_NL = {
                 name: 'Tags in tooltips tonen',
                 desc: 'Tags van notities in tooltips weergeven wanneer de tagsectie is ingeschakeld.'
             },
-            showTooltipWordCount: {
-                name: 'Aantal woorden in tooltips tonen',
-                desc: 'Het aantal woorden in tooltips weergeven wanneer het aantal woorden is ingeschakeld.'
-            },
             resetPaneSeparator: {
                 name: 'Paneelscheidingspositie resetten',
                 desc: 'De versleepbare scheiding tussen navigatiepaneel en lijstpaneel resetten naar standaardpositie.',
@@ -2008,54 +1979,6 @@ export const STRINGS_NL = {
             showFilePropertiesInCompactMode: {
                 name: 'Eigenschappen tonen in compacte modus',
                 desc: 'Eigenschappen weergeven wanneer de compacte modus actief is.'
-            },
-            textCountType: {
-                name: 'Type telling',
-                desc: 'Kies welke teksttellingen in bestandsitems verschijnen.',
-                options: {
-                    none: 'Geen',
-                    words: 'Aantal woorden',
-                    characters: 'Aantal tekens',
-                    both: 'Aantal woorden en tekens'
-                }
-            },
-            textCountPlacement: {
-                name: 'Plaatsing',
-                desc: 'Kies waar teksttellingen verschijnen.',
-                options: {
-                    title: 'In titel',
-                    property: 'Als eigenschap'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Aantal tekens',
-                desc: 'Kies of spaties worden meegeteld in het aantal tekens.',
-                options: {
-                    include: 'Inclusief spaties',
-                    exclude: 'Exclusief spaties'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Doeleigenschap',
-                desc: 'Frontmatter-eigenschapssleutel met het doelaantal woorden. Laat leeg om doelen te verbergen.'
-            },
-            showTargetPercentage: {
-                name: 'Doelpercentage tonen',
-                desc: 'Toon alleen het voortgangspercentage wanneer een doelaantal woorden beschikbaar is.'
-            },
-            textCountActiveNotice: {
-                title: 'Tellen is nog actief',
-                summary: 'Woord- of tekenaantallen worden nog steeds voor alle notities berekend omdat de volgende items ze gebruiken:',
-                more: 'en nog {count}',
-                reasons: {
-                    appearance: 'Bestandsweergave',
-                    'group-header': 'Groepskop'
-                },
-                scopes: {
-                    folder: 'Map: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Eigenschap: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Eigenschapssleutels (kluisprofiel)',

@@ -450,15 +450,6 @@ export const STRINGS_DE = {
         tasks: 'Aufgaben',
         date: 'Datum',
         parentFolder: 'Übergeordneter Ordner',
-        textCount: {
-            label: 'Textzählung',
-            options: {
-                none: 'Keine',
-                words: 'Wörter',
-                characters: 'Zeichen',
-                both: 'Wörter und Zeichen'
-            }
-        },
         resetAppearance: 'Darstellung zurücksetzen',
         openPluginSettings: 'Plugin-Einstellungen öffnen…'
     },
@@ -495,13 +486,7 @@ export const STRINGS_DE = {
             titleLabel: 'Titel',
             placeholder: 'Gruppenüberschrift',
             icon: 'Symbol',
-            color: 'Farbe',
-            wordCount: 'Wortzahl anzeigen',
-            wordCountTarget: 'Zielwortzahl',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Wenn dieses Feld leer ist, verwendet das Gruppenziel die Zieleigenschaft aus Einstellungen > Dateianzeige > Wort- und Zeichenanzahl. Überschreibe sie, indem du einen Zielwert für diese Gruppe festlegst.',
-            description: 'Passe die Gruppenüberschrift für diese Notiz an. Lass den Titel leer, um die Überschrift zu entfernen.'
+            color: 'Farbe',            description: 'Passe die Gruppenüberschrift für diese Notiz an. Lass den Titel leer, um die Überschrift zu entfernen.'
         },
         mergeNotes: {
             title: 'Notizen zusammenführen',
@@ -579,9 +564,7 @@ export const STRINGS_DE = {
                 'nav-properties': 'Eigenschaften',
                 'nav-property': 'Eigenschaft',
                 'nav-property-value': 'Wert',
-                'file-unfinished-task': 'Aufgaben',
-                'file-word-count': 'Wortanzahl',
-                'file-character-count': 'Zeichenanzahl'
+                'file-unfinished-task': 'Aufgaben'
             }
         },
         colorPicker: {
@@ -1018,14 +1001,7 @@ export const STRINGS_DE = {
         files: 'Dateien',
         folder: 'Ordner',
         folders: 'Ordner',
-        wordCount: 'Wortanzahl',
         unfinishedTasks: 'Unerledigte Aufgaben'
-    },
-
-    fileCounts: {
-        words: '{count} Wörter',
-        characters: '{count} Zeichen',
-        separator: ' · '
     },
 
     // Settings
@@ -1139,8 +1115,7 @@ export const STRINGS_DE = {
                     properties: 'Eigenschaften',
                     tasks: 'Aufgaben',
                     date: 'Datum',
-                    parentFolder: 'Übergeordneter Ordner',
-                    wordAndCharacterCount: 'Wort- und Zeichenanzahl'
+                    parentFolder: 'Übergeordneter Ordner'
                 }
             },
             calendar: {
@@ -1789,10 +1764,6 @@ export const STRINGS_DE = {
                 name: 'Tags in Tooltips anzeigen',
                 desc: 'Zeigt Tags von Notizen in Tooltips an, wenn der Tag-Bereich aktiviert ist.'
             },
-            showTooltipWordCount: {
-                name: 'Wortanzahl in Tooltips anzeigen',
-                desc: 'Zeigt die Wortanzahl in Tooltips an, wenn die Wortanzahl aktiviert ist.'
-            },
             resetPaneSeparator: {
                 name: 'Position des Fenstertrennelements zurücksetzen',
                 desc: 'Setzt das verschiebbare Trennelement zwischen Navigationsbereich und Listenbereich auf die Standardposition zurück.',
@@ -2009,55 +1980,6 @@ export const STRINGS_DE = {
             showFilePropertiesInCompactMode: {
                 name: 'Eigenschaften im Kompaktmodus anzeigen',
                 desc: 'Eigenschaften anzeigen, wenn der Kompaktmodus aktiv ist.'
-            },
-            textCountType: {
-                name: 'Zähltyp',
-                desc: 'Wähle, welche Textzählungen in Dateielementen angezeigt werden.',
-                options: {
-                    none: 'Keine',
-                    words: 'Wortanzahl',
-                    characters: 'Zeichenanzahl',
-                    both: 'Wort- und Zeichenanzahl'
-                }
-            },
-            textCountPlacement: {
-                name: 'Platzierung',
-                desc: 'Wähle, wo Textzählungen angezeigt werden.',
-                options: {
-                    title: 'Im Titel',
-                    property: 'Als Eigenschaft'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Zeichenanzahl',
-                desc: 'Wähle, ob Leerzeichen in der Zeichenanzahl enthalten sind.',
-                options: {
-                    include: 'Mit Leerzeichen',
-                    exclude: 'Ohne Leerzeichen'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Zieleigenschaft',
-                desc: 'Frontmatter-Eigenschaftsschlüssel mit der Zielwortanzahl. Leer lassen, um Ziele auszublenden.'
-            },
-            showTargetPercentage: {
-                name: 'Zielprozentsatz anzeigen',
-                desc: 'Nur den Fortschrittsprozentsatz anzeigen, wenn eine Zielwortanzahl verfügbar ist.'
-            },
-            textCountActiveNotice: {
-                title: 'Zählung ist weiterhin aktiv',
-                summary:
-                    'Wort- oder Zeichenanzahlen werden weiterhin für alle Notizen berechnet, weil die folgenden Einträge sie verwenden:',
-                more: 'und {count} weitere',
-                reasons: {
-                    appearance: 'Dateidarstellung',
-                    'group-header': 'Gruppenüberschrift'
-                },
-                scopes: {
-                    folder: 'Ordner: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Eigenschaft: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Eigenschaftsschlüssel (Vault-Profil)',

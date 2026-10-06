@@ -1789,7 +1789,6 @@ export const ListPane = React.memo(
                             hiddenFileState={hiddenFileState}
                             propertyKey={manualSortEditState.propertyKey}
                             manualSortGroupHeaderPropertyKey={manualSortGroupHeaderPropertyKey}
-                            wordCountTargetProperty={settings.wordCountTargetProperty}
                             rankByPath={manualSortEditRankByPath}
                             selectedFolderPath={selectedFolder?.path ?? null}
                             isSaving={manualSortEditState.isSaving}

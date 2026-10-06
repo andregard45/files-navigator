@@ -450,15 +450,6 @@ export const STRINGS_UK = {
         tasks: 'Завдання',
         date: 'Дата',
         parentFolder: 'Батьківська тека',
-        textCount: {
-            label: 'Підрахунок тексту',
-            options: {
-                none: 'Немає',
-                words: 'Слова',
-                characters: 'Символи',
-                both: 'Слова і символи'
-            }
-        },
         resetAppearance: 'Скинути оформлення',
         openPluginSettings: 'Відкрити налаштування плагіна…'
     },
@@ -495,13 +486,7 @@ export const STRINGS_UK = {
             titleLabel: 'Заголовок',
             placeholder: 'Заголовок групи',
             icon: 'Значок',
-            color: 'Колір',
-            wordCount: 'Показувати кількість слів',
-            wordCountTarget: 'Цільова кількість слів',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Коли це поле порожнє, ціль групи використовує цільову властивість, задану в Налаштування > Відображення файлів > Кількість слів і символів. Перевизначте її, задавши цільове значення для цієї групи.',
-            description: 'Налаштуйте заголовок групи для цієї нотатки. Залиште заголовок порожнім, щоб видалити його.'
+            color: 'Колір',            description: 'Налаштуйте заголовок групи для цієї нотатки. Залиште заголовок порожнім, щоб видалити його.'
         },
         mergeNotes: {
             title: 'Об’єднати нотатки',
@@ -579,9 +564,7 @@ export const STRINGS_UK = {
                 'nav-properties': 'Властивості',
                 'nav-property': 'Властивість',
                 'nav-property-value': 'Значення',
-                'file-unfinished-task': 'Завдання',
-                'file-word-count': 'Кількість слів',
-                'file-character-count': 'Кількість символів'
+                'file-unfinished-task': 'Завдання'
             }
         },
         colorPicker: {
@@ -1012,14 +995,7 @@ export const STRINGS_UK = {
         files: 'файлів',
         folder: 'тека',
         folders: 'тек',
-        wordCount: 'Кількість слів',
         unfinishedTasks: 'Незавершені завдання'
-    },
-
-    fileCounts: {
-        words: 'слів: {count}',
-        characters: 'символів: {count}',
-        separator: ' · '
     },
 
     // Settings
@@ -1134,8 +1110,7 @@ export const STRINGS_UK = {
                     properties: 'Властивості',
                     tasks: 'Завдання',
                     date: 'Дата',
-                    parentFolder: 'Батьківська тека',
-                    wordAndCharacterCount: 'Кількість слів і символів'
+                    parentFolder: 'Батьківська тека'
                 }
             },
             calendar: {
@@ -1782,10 +1757,6 @@ export const STRINGS_UK = {
                 name: 'Показувати мітки в підказках',
                 desc: 'Відображати мітки нотаток у підказках, коли ввімкнено розділ міток.'
             },
-            showTooltipWordCount: {
-                name: 'Показувати кількість слів у підказках',
-                desc: 'Відображати кількість слів у підказках, коли ввімкнено підрахунок слів.'
-            },
             resetPaneSeparator: {
                 name: 'Скинути позицію роздільника панелей',
                 desc: 'Скинути перетягуваний роздільник між панеллю навігації та панеллю списку до позиції за замовчуванням.',
@@ -2000,54 +1971,6 @@ export const STRINGS_UK = {
             showFilePropertiesInCompactMode: {
                 name: 'Показувати властивості в компактному режимі',
                 desc: 'Відображати властивості при активному компактному режимі.'
-            },
-            textCountType: {
-                name: 'Тип лічильника',
-                desc: 'Виберіть, які лічильники тексту відображаються в елементах файлів.',
-                options: {
-                    none: 'Немає',
-                    words: 'Кількість слів',
-                    characters: 'Кількість символів',
-                    both: 'Кількість слів і символів'
-                }
-            },
-            textCountPlacement: {
-                name: 'Розміщення',
-                desc: 'Виберіть, де відображаються лічильники тексту.',
-                options: {
-                    title: 'У заголовку',
-                    property: 'Як властивість'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Кількість символів',
-                desc: 'Виберіть, чи враховувати пробіли в кількості символів.',
-                options: {
-                    include: 'З пробілами',
-                    exclude: 'Без пробілів'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Цільова властивість',
-                desc: 'Ключ властивості frontmatter із цільовою кількістю слів. Залиште порожнім, щоб приховати цілі.'
-            },
-            showTargetPercentage: {
-                name: 'Показувати відсоток цілі',
-                desc: 'Показувати лише відсоток прогресу, коли доступна цільова кількість слів.'
-            },
-            textCountActiveNotice: {
-                title: 'Підрахунок усе ще увімкнено',
-                summary: 'Кількість слів або символів і далі підраховується для всіх нотаток, оскільки її використовують такі елементи:',
-                more: 'і ще {count}',
-                reasons: {
-                    appearance: 'Вигляд файлів',
-                    'group-header': 'Заголовок групи'
-                },
-                scopes: {
-                    folder: 'Папка: {name}',
-                    tag: 'Тег: #{name}',
-                    property: 'Властивість: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Ключі властивостей (профіль сховища)',

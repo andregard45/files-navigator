@@ -33,7 +33,6 @@ import {
 import { casefold } from './recordUtils';
 import type { HiddenTagVisibility } from './tagPrefixMatcher';
 import { normalizeTagPath } from './tagUtils';
-import { shouldShowManualSortGroupHeaderProgress } from './manualSort';
 
 /**
  * Layout measurements used by the list pane virtualizer.
@@ -47,7 +46,6 @@ export interface ListPaneMeasurements {
     tagRowHeight: number;
     featureImageMinHeight: number;
     groupHeaderHeight: number;
-    manualSortGoalHeaderHeight: number;
     groupHeaderSpacerBefore: number;
     fileIconSize: number;
     topSpacer: number;
@@ -72,7 +70,6 @@ const DESKTOP_MEASUREMENTS: ListPaneMeasurements = Object.freeze({
     tagRowHeight: 26, // 22px row + 4px gap
     featureImageMinHeight: 42,
     groupHeaderHeight: 27,
-    manualSortGoalHeaderHeight: 32,
     groupHeaderSpacerBefore: 20,
     fileIconSize: 16,
     topSpacer: 8,
@@ -87,7 +84,6 @@ const MOBILE_MEASUREMENTS: ListPaneMeasurements = Object.freeze({
     tagRowHeight: 26, // 22px row + 4px gap
     featureImageMinHeight: 42,
     groupHeaderHeight: 35, // 27px + 8px mobile increment
-    manualSortGoalHeaderHeight: 40, // 35px header row + 5px below progress
     groupHeaderSpacerBefore: 20,
     fileIconSize: 20, // 16px + 4px mobile increment
     topSpacer: 8,
@@ -105,16 +101,7 @@ export function getListPaneMeasurements(isMobile: boolean): ListPaneMeasurements
     return isMobile ? MOBILE_MEASUREMENTS : DESKTOP_MEASUREMENTS;
 }
 
-export function getListPaneHeaderHeight(item: ListPaneItem | undefined, measurements: ListPaneMeasurements): number {
-    if (
-        item?.type === ListPaneItemType.HEADER &&
-        item.headerKind === 'manual-sort-custom' &&
-        item.manualSortHeader !== undefined &&
-        shouldShowManualSortGroupHeaderProgress(item.manualSortHeader, item.manualSortHeaderTargetWordCount)
-    ) {
-        return measurements.manualSortGoalHeaderHeight;
-    }
-
+export function getListPaneHeaderHeight(_item: ListPaneItem | undefined, measurements: ListPaneMeasurements): number {
     return measurements.groupHeaderHeight;
 }
 
@@ -637,26 +624,20 @@ function getVisibleFrontmatterPropertySummary({
 }
 
 export function getPropertyRowCount({
-    showTextCountProperty,
     showFileProperties,
     showPropertiesOnSeparateRows,
     showFilePropertiesInCompactMode,
     isCompactMode,
     file,
-    wordCount,
-    characterCount,
     properties,
     visiblePropertyKeys,
     hiddenPropertyValueNodeId
 }: {
-    showTextCountProperty: boolean;
     showFileProperties: boolean;
     showPropertiesOnSeparateRows: boolean;
     showFilePropertiesInCompactMode: boolean;
     isCompactMode: boolean;
     file: TFile | null;
-    wordCount: FileData['wordCount'] | undefined;
-    characterCount: FileData['characterCountWithSpaces'] | undefined;
     properties: FileData['properties'] | undefined;
     visiblePropertyKeys?: ReadonlySet<string>;
     hiddenPropertyValueNodeId?: string | null;
@@ -671,9 +652,6 @@ export function getPropertyRowCount({
         return 0;
     }
 
-    const wordCountEnabled = showTextCountProperty && typeof wordCount === 'number' && Number.isFinite(wordCount) && wordCount > 0;
-    const characterCountEnabled =
-        showTextCountProperty && typeof characterCount === 'number' && Number.isFinite(characterCount) && characterCount > 0;
     const propertySummary = showFileProperties
         ? getVisibleFrontmatterPropertySummary({
               properties,
@@ -682,26 +660,13 @@ export function getPropertyRowCount({
           })
         : EMPTY_VISIBLE_FRONTMATTER_PROPERTY_SUMMARY;
 
-    if (!wordCountEnabled && !characterCountEnabled && !propertySummary.hasVisiblePills) {
+    if (!propertySummary.hasVisiblePills) {
         return 0;
     }
 
-    const textCountRowCount = wordCountEnabled || characterCountEnabled ? 1 : 0;
-
-    let frontmatterPropertyRowCount = 0;
     if (!showPropertiesOnSeparateRows) {
-        frontmatterPropertyRowCount = propertySummary.hasVisiblePills ? 1 : 0;
-    } else if (propertySummary.hasVisiblePills) {
-        frontmatterPropertyRowCount = propertySummary.separateRowCount;
+        return 1;
     }
 
-    if (frontmatterPropertyRowCount === 0) {
-        return textCountRowCount;
-    }
-
-    if (!showPropertiesOnSeparateRows) {
-        return 1 + textCountRowCount;
-    }
-
-    return frontmatterPropertyRowCount + textCountRowCount;
+    return propertySummary.separateRowCount;
 }

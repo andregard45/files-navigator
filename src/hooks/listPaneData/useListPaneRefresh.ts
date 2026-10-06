@@ -46,7 +46,6 @@ interface UseListPaneRefreshArgs {
     getDB: () => IndexedDBStorage;
     groupBy: ListNoteGroupingOption;
     hasDateSearchFilters: boolean;
-    hasManualSortWordCountGroupHeaders: boolean;
     hasPropertySearchFilters: boolean;
     hasTaskSearchFilters: boolean;
     hiddenFilePropertyMatcher: ReturnType<typeof createFrontmatterPropertyExclusionMatcher>;
@@ -194,7 +193,6 @@ export function useListPaneRefresh({
     getDB,
     groupBy,
     hasDateSearchFilters,
-    hasManualSortWordCountGroupHeaders,
     hasPropertySearchFilters,
     hasTaskSearchFilters,
     hiddenFilePropertyMatcher,
@@ -475,16 +473,6 @@ export function useListPaneRefresh({
                 }
             }
 
-            if (
-                hasManualSortWordCountGroupHeaders &&
-                settings.wordCountTargetProperty.trim().length > 0 &&
-                file.extension === 'md' &&
-                basePathSet.has(file.path)
-            ) {
-                queueRefresh();
-                return;
-            }
-
             if (shouldRefreshOnMetadataChange && file.extension === 'md' && basePathSet.has(file.path)) {
                 queueRefresh();
             }
@@ -543,13 +531,6 @@ export function useListPaneRefresh({
                 shouldRefresh = changes.some(change => change.changes.taskUnfinished !== undefined && basePathSet.has(change.path));
             }
 
-            if (!shouldRefresh && hasManualSortWordCountGroupHeaders) {
-                shouldRefresh = changes.some(
-                    change =>
-                        (change.changes.wordCount !== undefined || change.changes.properties !== undefined) && basePathSet.has(change.path)
-                );
-            }
-
             if (shouldRefresh) {
                 queueRefresh();
             }
@@ -575,7 +556,6 @@ export function useListPaneRefresh({
         getDB,
         groupBy,
         hasDateSearchFilters,
-        hasManualSortWordCountGroupHeaders,
         hasPropertySearchFilters,
         hasTaskSearchFilters,
         hiddenFilePropertyMatcher,
@@ -598,7 +578,6 @@ export function useListPaneRefresh({
         showFileDate,
         settings.showTooltips,
         settings.useFrontmatterMetadata,
-        settings.wordCountTargetProperty,
         showHiddenItems,
         sortOption
     ]);

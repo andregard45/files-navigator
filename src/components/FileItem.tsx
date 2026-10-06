@@ -53,7 +53,6 @@ import { openFileInContext } from '../utils/openFileInContext';
 import { FILE_VISIBILITY, getExtensionSuffix, isRasterImageFile, shouldDisplayFile } from '../utils/fileTypeUtils';
 import { resolveFolderDecorationColors } from '../utils/folderDecoration';
 import { resolveFileDragIconId, resolveFileIconId } from '../utils/fileIconUtils';
-import { hasCachedMarkdownWordCountConsumer } from '../utils/markdownPipelineContentTypes';
 import { isInsideNativeTooltipTarget, useTooltip } from '../context/TooltipContext';
 import { FileTooltipContent } from './FileTooltipContent';
 import { getFoldedSearchHighlightRanges } from '../utils/searchHighlight';
@@ -85,10 +84,7 @@ import { ServiceIcon } from './ServiceIcon';
 import { getDrawingFeatureImageSource } from '../utils/drawingFeatureImages';
 import { useDrawingFeatureImage } from '../hooks/useDrawingFeatureImage';
 import { useThemeMode } from '../hooks/useThemeMode';
-import { useMarkdownWordCountConsumerChanges } from '../hooks/useMarkdownWordCountConsumerChanges';
 import { resolveFileRowBackgroundColor } from '../utils/colorUtils';
-import { formatTextCount, getWordCountDisplayText } from '../utils/wordCountUtils';
-import { showsCharacterCount, showsWordCount } from '../settings/types';
 import type { PropertySearchEvidenceGroup, PropertySearchEvidenceValue } from '../utils/propertyUtils';
 import { InlineRenameInput } from './InlineRenameInput';
 import { ObsidianIcon } from './ObsidianIcon';
@@ -112,35 +108,6 @@ export function prepareFileItemMiddleMouseDown(event: FileItemMiddleMouseDownEve
 
     event.preventDefault();
     return true;
-}
-
-function formatCountTextLabel(template: string, countText: string): string {
-    return template.replace('{count}', countText);
-}
-
-function getCharacterCountDisplayText(count: number | null | undefined): string | null {
-    if (typeof count !== 'number' || !Number.isFinite(count) || count <= 0) {
-        return null;
-    }
-
-    return formatTextCount(count);
-}
-
-function getTitleCountDisplayText(params: {
-    wordCountDisplayText: string | null;
-    characterCountDisplayText: string | null;
-}): string | null {
-    const { wordCountDisplayText, characterCountDisplayText } = params;
-    if (wordCountDisplayText && characterCountDisplayText) {
-        const wordText =
-            !wordCountDisplayText.includes('/') && !wordCountDisplayText.includes('%')
-                ? formatCountTextLabel(strings.fileCounts.words, wordCountDisplayText)
-                : wordCountDisplayText;
-        const characterText = formatCountTextLabel(strings.fileCounts.characters, characterCountDisplayText);
-        return `${wordText}${strings.fileCounts.separator}${characterText}`;
-    }
-
-    return wordCountDisplayText ?? characterCountDisplayText;
 }
 
 function useImageFileResourceVersion(app: ReturnType<typeof useServices>['app'], file: TFile, enabled: boolean): number {
@@ -480,12 +447,9 @@ export const FileItem = React.memo(function FileItem({
     // === Hooks (all hooks together at the top) ===
     const { app, isMobile, plugin, commandQueue, fileSystemOps, tagOperations } = useServices();
     const settings = useSettingsState();
-    useMarkdownWordCountConsumerChanges(app);
     const metadataService = useMetadataService();
     const { getFileDisplayName, getDB, getFileTimestamps, hasPreview, regenerateFeatureImageForFile } = fileItemStorage;
     const isCompactMode = appearanceSettings.mode === 'compact';
-    const shouldShowWordCount = showsWordCount(appearanceSettings.textCountDisplay);
-    const shouldShowCharacterCount = showsCharacterCount(appearanceSettings.textCountDisplay);
     const isMarkdownFile = file.extension === 'md';
     const canShowPropertyPills = isMarkdownFile && (!isCompactMode || settings.showFilePropertiesInCompactMode);
     // Tooltip tags reuse the pill tag data, so tags load even when tag pills are hidden. The tag
@@ -494,28 +458,9 @@ export const FileItem = React.memo(function FileItem({
     const shouldLoadTags =
         isMarkdownFile &&
         (appearanceSettings.showTags || (!isMobile && settings.showTags && settings.showTooltips && settings.showTooltipTags));
-    const shouldLoadWordCountForDisplay =
-        isMarkdownFile &&
-        shouldShowWordCount &&
-        (settings.textCountPlacement === 'title' || (settings.textCountPlacement === 'property' && canShowPropertyPills));
-    // The tooltip reads a word count only while a display setting keeps the markdown pipeline
-    // extracting counts, because the tooltip setting is not a pipeline consumer and a cached
-    // count without a consumer would go stale after edits.
-    const shouldLoadWordCount =
-        shouldLoadWordCountForDisplay ||
-        (isMarkdownFile &&
-            !isMobile &&
-            settings.showTooltips &&
-            settings.showTooltipWordCount &&
-            hasCachedMarkdownWordCountConsumer(settings, app));
-    const shouldLoadCharacterCount =
-        isMarkdownFile &&
-        shouldShowCharacterCount &&
-        (settings.textCountPlacement === 'title' || (settings.textCountPlacement === 'property' && canShowPropertyPills));
     const shouldLoadProperties =
         isMarkdownFile &&
         ((canShowPropertyPills && appearanceSettings.showProperties && visiblePropertyKeys.size > 0) ||
-            (shouldLoadWordCountForDisplay && settings.wordCountTargetProperty.trim().length > 0) ||
             (matchedProperties?.length ?? 0) > 0);
     const unfinishedTaskIconAppliesToMode =
         settings.unfinishedTaskIcon === 'all' || (settings.unfinishedTaskIcon === 'compact' && isCompactMode);
@@ -539,9 +484,6 @@ export const FileItem = React.memo(function FileItem({
         featureImageStatus,
         featureImageUrl,
         properties,
-        wordCount,
-        characterCountWithSpaces,
-        characterCountWithoutSpaces,
         taskTotal,
         taskUnfinished,
         metadataVersion
@@ -559,8 +501,6 @@ export const FileItem = React.memo(function FileItem({
             loadTags: shouldLoadTags,
             loadFeatureImage: appearanceSettings.showImage && !isDrawingFeatureImageRow,
             loadProperties: shouldLoadProperties,
-            loadWordCount: shouldLoadWordCount,
-            loadCharacterCount: shouldLoadCharacterCount,
             loadTaskCounts: shouldLoadTaskCounts
         },
         refreshMetadataVersionOnFeatureImageChange: shouldRefreshMetadataVersionOnFeatureImageChange
@@ -762,20 +702,6 @@ export const FileItem = React.memo(function FileItem({
     const fileIconClassName = showFileIconUnfinishedTask ? 'nn-file-icon nn-file-icon-unfinished-task' : 'nn-file-icon';
     const dragIconColor = showFileIconUnfinishedTask ? undefined : (fileIconColor ?? undefined);
     const shouldShowCompactExtensionBadge = isCompactMode && (isBaseFile || isCanvasFile);
-    const wordCountDisplayText =
-        shouldShowWordCount && file.extension === 'md'
-            ? getWordCountDisplayText({
-                  wordCount,
-                  properties,
-                  targetProperty: settings.wordCountTargetProperty,
-                  showTargetPercentage: settings.showWordCountPercentage
-              })
-            : null;
-    const selectedCharacterCount = settings.characterCountSpaces === 'include' ? characterCountWithSpaces : characterCountWithoutSpaces;
-    const characterCountDisplayText =
-        shouldShowCharacterCount && file.extension === 'md' ? getCharacterCountDisplayText(selectedCharacterCount) : null;
-    const titleCountDisplayText = getTitleCountDisplayText({ wordCountDisplayText, characterCountDisplayText });
-    const shouldShowCountInTitle = settings.textCountPlacement === 'title' && titleCountDisplayText !== null;
 
     const renameInputOptions = useMemo(
         () => (inlineRename ? fileSystemOps.getFileDisplayNameRenameInput(file) : null),
@@ -794,14 +720,9 @@ export const FileItem = React.memo(function FileItem({
         isCompactMode,
         tags,
         properties,
-        wordCount,
-        characterCount: selectedCharacterCount,
-        wordCountDisplayText,
-        characterCountDisplayText,
         settings,
         showTags: appearanceSettings.showTags,
         showProperties: appearanceSettings.showProperties,
-        textCountDisplay: appearanceSettings.textCountDisplay,
         visiblePropertyKeys,
         visibleNavigationPropertyKeys,
         matchedProperties,
@@ -894,7 +815,6 @@ export const FileItem = React.memo(function FileItem({
                     ) : null}
                     {extensionSuffix.length > 0 && <span className="nn-file-ext-suffix">{extensionSuffix}</span>}
                 </span>
-                {shouldShowCountInTitle ? <span className="nn-file-name-suffix"> ({titleCountDisplayText})</span> : null}
             </div>
         );
     })();
@@ -1210,13 +1130,11 @@ export const FileItem = React.memo(function FileItem({
                 settings={{
                     dateFormat: settings.dateFormat,
                     timeFormat: settings.timeFormat,
-                    showTooltipPath: settings.showTooltipPath,
-                    showTooltipWordCount: settings.showTooltipWordCount
+                    showTooltipPath: settings.showTooltipPath
                 }}
                 getFileTimestamps={getFileTimestamps}
                 sortOption={sortOption}
                 unfinishedTaskTooltipText={unfinishedTaskTooltipText}
-                wordCount={wordCount}
                 tagRow={tooltipTagRow}
             />
         );
@@ -1227,18 +1145,16 @@ export const FileItem = React.memo(function FileItem({
         fileModifiedTime,
         fileName,
         showTooltips,
+        displayName,
+        extensionSuffix,
         settings.dateFormat,
         settings.timeFormat,
         settings.showTooltipPath,
-        settings.showTooltipWordCount,
-        displayName,
-        extensionSuffix,
         getFileTimestamps,
         sortOption,
-        metadataVersion,
-        tooltipTagRow,
         unfinishedTaskTooltipText,
-        wordCount
+        tooltipTagRow,
+        metadataVersion
     ]);
 
     const tooltip = useTooltip();

@@ -19,12 +19,10 @@
 import { ItemType } from '../types';
 import { resolveListGroupingOverride } from '../utils/listGrouping';
 import {
-    isTextCountDisplay,
     type ListDisplayMode,
     type ListNoteGroupingOption,
     type ListPaneAppearance,
-    type NotebookNavigatorSettings,
-    type TextCountDisplay
+    type NotebookNavigatorSettings
 } from './types';
 
 export type { ListPaneAppearance } from './types';
@@ -40,7 +38,6 @@ export interface ListPaneAppearanceSettings {
     showTags: boolean;
     showProperties: boolean;
     showTaskProgress: boolean;
-    textCountDisplay: TextCountDisplay;
     groupBy: ListNoteGroupingOption;
 }
 
@@ -59,8 +56,7 @@ const LIST_PANE_APPEARANCE_FIELD_KEYS = [
     'mode',
     'titleRows',
     'previewRows',
-    ...LIST_PANE_TOGGLE_KEYS,
-    'textCount'
+    ...LIST_PANE_TOGGLE_KEYS
 ] as const satisfies readonly (keyof ListPaneAppearanceFields)[];
 
 function isValidTitleRows(value: unknown): value is number {
@@ -95,9 +91,6 @@ export function getStoredListPaneAppearanceFields(appearance: ListPaneAppearance
             normalized[key] = appearance[key];
         }
     });
-    if (isTextCountDisplay(appearance.textCount)) {
-        normalized.textCount = appearance.textCount;
-    }
 
     return Object.keys(normalized).length > 0 ? normalized : null;
 }
@@ -216,9 +209,6 @@ export function resolveListPaneAppearance({
         (appearance?.showProperties ?? settings.showFileProperties) && (!isCompact || settings.showFilePropertiesInCompactMode);
     const showTaskProgress = (appearance?.showTaskProgress ?? settings.showFileTaskProgress) && !isCompact;
     const previewRowsOverride = isValidPreviewRows(appearance?.previewRows) ? appearance.previewRows : undefined;
-    // Property-placed counts render as pills, so they are unavailable when compact mode hides pills.
-    const textCountUnavailable = isCompact && settings.textCountPlacement === 'property' && !settings.showFilePropertiesInCompactMode;
-    const textCountDisplay = textCountUnavailable ? 'none' : (appearance?.textCount ?? settings.textCountDisplay);
     const grouping = resolveListGroupingOverride({
         noteGrouping: settings.noteGrouping,
         selectionType,
@@ -237,7 +227,6 @@ export function resolveListPaneAppearance({
         showTags,
         showProperties,
         showTaskProgress,
-        textCountDisplay,
         groupBy: grouping.effectiveGrouping
     };
 }

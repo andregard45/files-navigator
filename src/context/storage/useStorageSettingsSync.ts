@@ -39,7 +39,6 @@ import {
     haveFrontmatterMetadataCacheSettingsChanged,
     markFrontmatterMetadataCacheCurrent
 } from '../../utils/frontmatterMetadataCache';
-import { haveMarkdownCountConsumersChanged } from '../../utils/markdownPipelineContentTypes';
 
 /**
  * Reacts to settings/profile changes that affect storage and derived content.
@@ -147,7 +146,7 @@ export function useStorageSettingsSync(params: {
             const shouldShowIndexNotice = (affectedProviders.length > 0 || enabledFeatureImages) && !stoppedRef.current;
 
             if (shouldShowIndexNotice) {
-                const enabledTypes = getCacheRebuildProgressTypes(newSettings, app);
+                const enabledTypes = getCacheRebuildProgressTypes(newSettings);
                 if (enabledTypes.length > 0) {
                     const state = getCacheRebuildNoticeState();
                     if (state?.source !== 'rebuild') {
@@ -169,7 +168,7 @@ export function useStorageSettingsSync(params: {
                 return;
             }
 
-            const metadataDependentTypes = getMetadataDependentTypes(newSettings, app);
+            const metadataDependentTypes = getMetadataDependentTypes(newSettings);
             const affectedProviderTypeSet = new Set<ContentProviderType>(affectedProviders);
             // Queue only metadata providers that were affected by this settings change.
             const metadataTypesToQueue = metadataDependentTypes.filter(type => affectedProviderTypeSet.has(type));
@@ -273,10 +272,7 @@ export function useStorageSettingsSync(params: {
 
         const registry = contentRegistryRef.current;
         const relevantSettings = registry?.getAllRelevantSettings() ?? [];
-        const hasRelevantSettingsChange =
-            !registry ||
-            relevantSettings.some(settingKey => previousSettings[settingKey] !== settings[settingKey]) ||
-            haveMarkdownCountConsumersChanged(previousSettings, settings, app);
+        const hasRelevantSettingsChange = !registry || relevantSettings.some(settingKey => previousSettings[settingKey] !== settings[settingKey]);
         if (hasRelevantSettingsChange) {
             scheduleSettingsChanges(previousSettings, settings);
         }

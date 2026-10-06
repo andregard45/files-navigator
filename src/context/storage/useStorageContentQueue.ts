@@ -89,7 +89,7 @@ export function useStorageContentQueue(params: {
                 return;
             }
 
-            const metadataDependentTypes = getMetadataDependentTypes(settings, app);
+            const metadataDependentTypes = getMetadataDependentTypes(settings);
 
             let filesToProcess: TFile[] = [];
 
@@ -118,7 +118,7 @@ export function useStorageContentQueue(params: {
                     // no "changed files" but still pending derived content in the database. Fall back to checking
                     // the database for any missing content types.
                     const db = getDBInstance();
-                    const contentTypesToCheck: FileContentType[] = getMarkdownPipelineContentTypes(settings, app);
+                    const contentTypesToCheck: FileContentType[] = getMarkdownPipelineContentTypes(settings);
                     if (metadataDependentTypes.includes('tags')) {
                         contentTypesToCheck.push('tags');
                     }

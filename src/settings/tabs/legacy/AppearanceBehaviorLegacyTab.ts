@@ -28,7 +28,6 @@ import {
 } from '../../../types';
 import { TIMEOUTS } from '../../../types/obsidian-extended';
 import { runAsyncAction } from '../../../utils/async';
-import { hasMarkdownWordCountConsumer } from '../../../utils/markdownPipelineContentTypes';
 import { showNotice } from '../../../utils/noticeUtils';
 import {
     DEFAULT_UI_SCALE,
@@ -553,18 +552,6 @@ function renderDesktopAppearanceSettings(context: SettingsTabContext, createGrou
         );
     // Tag data only exists while the navigation tags section is enabled
     setElementVisible(showTooltipTagsSetting.settingEl, plugin.settings.showTags);
-
-    const showTooltipWordCountSetting = new Setting(showTooltipsDependentSettings)
-        .setName(strings.settings.items.showTooltipWordCount.name)
-        .setDesc(strings.settings.items.showTooltipWordCount.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showTooltipWordCount).onChange(async value => {
-                plugin.settings.showTooltipWordCount = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-    // Word counts only exist while a list display setting or appearance requests them
-    setElementVisible(showTooltipWordCountSetting.settingEl, hasMarkdownWordCountConsumer(plugin.settings, context.app));
 }
 
 function renderMobileAppearanceSettings(context: SettingsTabContext, createGroup: CreateSettingGroup): void {

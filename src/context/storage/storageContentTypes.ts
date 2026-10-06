@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { App, TFile } from 'obsidian';
+import type { TFile } from 'obsidian';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import type { ContentProviderType, FileContentType } from '../../interfaces/IContentProvider';
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
@@ -26,10 +26,10 @@ import { getMarkdownPipelineContentTypes, hasMarkdownPipelineContent } from '../
 /**
  * Returns provider types that require Obsidian's metadata cache to be ready.
  */
-export function getMetadataDependentTypes(settings: NotebookNavigatorSettings, app?: App): ContentProviderType[] {
+export function getMetadataDependentTypes(settings: NotebookNavigatorSettings): ContentProviderType[] {
     const types: ContentProviderType[] = [];
 
-    if (hasMarkdownPipelineContent(settings, app)) {
+    if (hasMarkdownPipelineContent(settings)) {
         types.push('markdownPipeline');
     }
     if (settings.showTags) {
@@ -47,12 +47,12 @@ export function getMetadataDependentTypes(settings: NotebookNavigatorSettings, a
 /**
  * Returns content types expected to be rebuilt during a full cache rebuild.
  */
-export function getCacheRebuildProgressTypes(settings: NotebookNavigatorSettings, app?: App): FileContentType[] {
+export function getCacheRebuildProgressTypes(settings: NotebookNavigatorSettings): FileContentType[] {
     const types = new Set<FileContentType>();
 
-    getMarkdownPipelineContentTypes(settings, app).forEach(type => types.add(type));
+    getMarkdownPipelineContentTypes(settings).forEach(type => types.add(type));
 
-    for (const providerType of getMetadataDependentTypes(settings, app)) {
+    for (const providerType of getMetadataDependentTypes(settings)) {
         if (providerType === 'tags' || providerType === 'metadata') {
             types.add(providerType);
         }
@@ -93,14 +93,13 @@ export function getContentWorkTotal(files: TFile[], types: FileContentType[]): n
  */
 export function resolveMetadataDependentTypes(
     settings: NotebookNavigatorSettings,
-    requested?: ContentProviderType[],
-    app?: App
+    requested?: ContentProviderType[]
 ): ContentProviderType[] {
-    const baseTypes = requested ?? getMetadataDependentTypes(settings, app);
+    const baseTypes = requested ?? getMetadataDependentTypes(settings);
 
     return baseTypes.filter(type => {
         if (type === 'markdownPipeline') {
-            return hasMarkdownPipelineContent(settings, app);
+            return hasMarkdownPipelineContent(settings);
         }
         if (type === 'tags') {
             return settings.showTags;

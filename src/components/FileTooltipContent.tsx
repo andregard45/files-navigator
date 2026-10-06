@@ -24,7 +24,7 @@ import { useUXPreferences } from '../context/UXPreferencesContext';
 import type { NotebookNavigatorSettings } from '../settings/types';
 import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
-import { buildFileTooltipDateLines, buildFileTooltipWordCountLine } from '../utils/navigationTooltipUtils';
+import { buildFileTooltipDateLines } from '../utils/navigationTooltipUtils';
 import { createHiddenTagVisibility } from '../utils/tagPrefixMatcher';
 import { useFileItemTagPills } from './fileItem/useFileItemTagPills';
 
@@ -33,12 +33,11 @@ interface FileTooltipContentProps {
     /** Shown as the first line unless the file carries an extension suffix, in which case the full file name is shown */
     displayName: string;
     extensionSuffix: string;
-    settings: Pick<NotebookNavigatorSettings, 'dateFormat' | 'timeFormat' | 'showTooltipPath' | 'showTooltipWordCount'>;
+    settings: Pick<NotebookNavigatorSettings, 'dateFormat' | 'timeFormat' | 'showTooltipPath'>;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
     sortOption?: string | null;
     unfinishedTaskTooltipText?: string | null;
-    wordCount: number | null;
-    /** Tag pill row placed between the folder path and the count lines */
+    /** Tag pill row placed between the folder path and the date lines */
     tagRow?: React.ReactNode;
 }
 
@@ -56,12 +55,10 @@ export function FileTooltipContent({
     getFileTimestamps,
     sortOption,
     unfinishedTaskTooltipText,
-    wordCount,
     tagRow
 }: FileTooltipContentProps) {
     const topLine = extensionSuffix.length > 0 ? file.name : displayName;
     const parentPath = settings.showTooltipPath ? (file.parent?.path ?? '/') : null;
-    const wordCountLine = buildFileTooltipWordCountLine({ file, settings, wordCount });
     const dateLines = buildFileTooltipDateLines({ file, settings, getFileTimestamps, sortOption });
 
     return (
@@ -70,7 +67,6 @@ export function FileTooltipContent({
             {parentPath !== null ? <div className="nn-tooltip-muted">{parentPath}</div> : null}
             {tagRow}
             {unfinishedTaskTooltipText ? <div>{unfinishedTaskTooltipText}</div> : null}
-            {wordCountLine !== null ? <div>{wordCountLine}</div> : null}
             <div className="nn-tooltip-dates nn-tooltip-muted">
                 <div>{dateLines[0]}</div>
                 <div>{dateLines[1]}</div>

@@ -26,7 +26,7 @@ import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { attachColorSwatchSetting } from '../colorSwatchSetting';
 import { DEFAULT_SETTINGS } from '../defaultSettings';
 import { createDropdownDefinition, createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
-import { isFeatureImagePixelSizeSetting, isFeatureImageSizeSetting, showsCharacterCount, showsWordCount } from '../types';
+import { isFeatureImagePixelSizeSetting, isFeatureImageSizeSetting } from '../types';
 import {
     normalizeFileNameIconMapKey,
     normalizeFileTypeIconMapKey,
@@ -36,14 +36,7 @@ import {
 } from '../../utils/iconizeFormat';
 import { formatCommaSeparatedList, parseCommaSeparatedList } from '../../utils/commaSeparatedListUtils';
 import { isFileTypeIconPreset } from '../../utils/fileTypeIconPresets';
-import {
-    getMarkdownTextCountDependencies,
-    subscribeMarkdownWordCountConsumerChanges,
-    type MarkdownTextCountDependency
-} from '../../utils/markdownPipelineContentTypes';
-import { parsePropertyNodeId } from '../../utils/propertyTree';
 import { ItemType, PROPERTIES_ROOT_VIRTUAL_FOLDER_ID } from '../../types';
-import { getVirtualTagCollection, isVirtualTagCollectionId } from '../../utils/virtualTagCollections';
 
 function parseFileTypeIconMapText(value: string): IconMapParseResult {
     return parseIconMapText(value, normalizeFileTypeIconMapKey);
@@ -62,66 +55,6 @@ interface ColorSettingAccess {
 interface FileTypeIconPresetOption {
     label: string;
     isInstalled: boolean;
-}
-
-const MAX_VISIBLE_TEXT_COUNT_DEPENDENCIES = 3;
-
-export function formatTextCountDependencyScope(dependency: MarkdownTextCountDependency): string {
-    if (dependency.reason === 'group-header') {
-        return dependency.path;
-    }
-
-    const labels = strings.settings.items.textCountActiveNotice.scopes;
-    switch (dependency.selectionType) {
-        case ItemType.FOLDER:
-            return labels.folder.replace('{name}', dependency.key);
-        case ItemType.TAG:
-            if (isVirtualTagCollectionId(dependency.key)) {
-                return getVirtualTagCollection(dependency.key).getLabel();
-            }
-            return labels.tag.replace('{name}', dependency.key);
-        case ItemType.PROPERTY: {
-            if (dependency.key === PROPERTIES_ROOT_VIRTUAL_FOLDER_ID) {
-                return strings.navigationPane.properties;
-            }
-            const parsed = parsePropertyNodeId(dependency.key);
-            const name = parsed ? (parsed.valuePath ? `${parsed.key} = ${parsed.valuePath}` : parsed.key) : dependency.key;
-            return labels.property.replace('{name}', name);
-        }
-        default:
-            return dependency.key;
-    }
-}
-
-/** Renders the explanatory footer shown when non-display settings keep word or character counting active. */
-export function renderTextCountActiveNotice(setting: Setting, context: SettingsTabContext): void {
-    const dependencies = getMarkdownTextCountDependencies(context.app, context.plugin.settings);
-    const copy = strings.settings.items.textCountActiveNotice;
-
-    setting.setName('').setDesc('');
-    setting.settingEl.addClass('nn-setting-info-container');
-    setting.settingEl.addClass('nn-setting-info-list');
-    setting.settingEl.addClass('nn-setting-text-count-warning');
-    setting.descEl.empty();
-
-    const headerEl = setting.descEl.createDiv({ cls: 'nn-setting-text-count-warning-header' });
-    const iconEl = headerEl.createSpan({ cls: 'nn-setting-text-count-warning-icon', attr: { 'aria-hidden': 'true' } });
-    setIcon(iconEl, 'lucide-triangle-alert');
-    headerEl.createEl('strong', { text: copy.title });
-
-    setting.descEl.createDiv({ text: copy.summary });
-
-    const listEl = setting.descEl.createEl('ol');
-    dependencies.slice(0, MAX_VISIBLE_TEXT_COUNT_DEPENDENCIES).forEach(dependency => {
-        const itemEl = listEl.createEl('li');
-        const reason = copy.reasons[dependency.reason];
-        itemEl.createEl('strong', { text: reason });
-        itemEl.appendText(`: ${formatTextCountDependencyScope(dependency)}`);
-    });
-    if (dependencies.length > MAX_VISIBLE_TEXT_COUNT_DEPENDENCIES) {
-        const remainingCount = dependencies.length - MAX_VISIBLE_TEXT_COUNT_DEPENDENCIES;
-        listEl.createEl('li', { text: copy.more.replace('{count}', remainingCount.toString()) });
-    }
 }
 
 /** Builds native 1.13 setting definitions for note appearance and metadata settings. */
@@ -497,78 +430,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 name: strings.settings.items.showParentFolderIcon.name,
                 desc: strings.settings.items.showParentFolderIcon.desc,
                 visible: () => plugin.settings.showParentFolder
-            })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.wordAndCharacterCount, [
-            createDropdownDefinition('textCountDisplay', {
-                name: strings.settings.items.textCountType.name,
-                desc: strings.settings.items.textCountType.desc,
-                aliases: Object.values(strings.settings.items.textCountType.options),
-                options: {
-                    none: strings.settings.items.textCountType.options.none,
-                    words: strings.settings.items.textCountType.options.words,
-                    characters: strings.settings.items.textCountType.options.characters,
-                    both: strings.settings.items.textCountType.options.both
-                }
-            }),
-            createDropdownDefinition('textCountPlacement', {
-                name: strings.settings.items.textCountPlacement.name,
-                desc: strings.settings.items.textCountPlacement.desc,
-                aliases: Object.values(strings.settings.items.textCountPlacement.options),
-                visible: () => plugin.settings.textCountDisplay !== 'none',
-                options: {
-                    title: strings.settings.items.textCountPlacement.options.title,
-                    property: strings.settings.items.textCountPlacement.options.property
-                }
-            }),
-            createDropdownDefinition('characterCountSpaces', {
-                name: strings.settings.items.characterCountSpaces.name,
-                desc: strings.settings.items.characterCountSpaces.desc,
-                aliases: Object.values(strings.settings.items.characterCountSpaces.options),
-                visible: () => showsCharacterCount(plugin.settings.textCountDisplay),
-                options: {
-                    include: strings.settings.items.characterCountSpaces.options.include,
-                    exclude: strings.settings.items.characterCountSpaces.options.exclude
-                }
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.wordCountTargetProperty.name,
-                desc: strings.settings.items.wordCountTargetProperty.desc,
-                aliases: [DEFAULT_SETTINGS.wordCountTargetProperty],
-                visible: () => showsWordCount(plugin.settings.textCountDisplay),
-                render: setting => {
-                    context.configureDebouncedTextSetting(
-                        setting,
-                        strings.settings.items.wordCountTargetProperty.name,
-                        strings.settings.items.wordCountTargetProperty.desc,
-                        DEFAULT_SETTINGS.wordCountTargetProperty,
-                        () => plugin.settings.wordCountTargetProperty,
-                        value => {
-                            plugin.settings.wordCountTargetProperty = value.trim();
-                        }
-                    );
-                    setting.controlEl.addClass('nn-setting-wide-input');
-                }
-            }),
-            createToggleDefinition('showWordCountPercentage', {
-                name: strings.settings.items.showTargetPercentage.name,
-                desc: strings.settings.items.showTargetPercentage.desc,
-                visible: () => showsWordCount(plugin.settings.textCountDisplay)
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.textCountActiveNotice.title,
-                searchable: false,
-                visible: () => getMarkdownTextCountDependencies(context.app, plugin.settings).length > 0,
-                render: setting => {
-                    const refresh = () => renderTextCountActiveNotice(setting, context);
-                    context.registerSettingsUpdateListener('notes-text-count-active-notice', refresh);
-                    const unsubscribe = subscribeMarkdownWordCountConsumerChanges(context.app, () => {
-                        refresh();
-                        context.refreshSettingsDomState();
-                    });
-                    context.registerSettingsRenderCleanup(unsubscribe);
-                    refresh();
-                }
             })
         ])
     ];

@@ -25,13 +25,6 @@ import { getEffectiveFrontmatterExclusions } from './exclusionUtils';
 import { createFrontmatterPropertyExclusionMatcher, shouldExcludeFileWithMatcher, shouldExcludeFolder } from './fileFilters';
 import type { FileVisibility } from './fileTypeUtils';
 import { shouldDisplayFile } from './fileTypeUtils';
-import { formatTextCount } from './wordCountUtils';
-
-interface FileTooltipWordCountLineOptions {
-    file: TFile;
-    settings: Pick<NotebookNavigatorSettings, 'showTooltipWordCount'>;
-    wordCount: number | null | undefined;
-}
 
 interface FileTooltipDateLinesOptions {
     file: TFile;
@@ -71,24 +64,6 @@ export function buildFileTooltipDateLines({
     }
 
     return [`${strings.tooltips.lastModifiedAt} ${modifiedDate}`, `${strings.tooltips.createdAt} ${createdDate}`];
-}
-
-/**
- * Returns the word count line of a file tooltip. Null when the tooltip word count setting is
- * off, the file is not markdown, or no count is cached for it.
- */
-export function buildFileTooltipWordCountLine({ file, settings, wordCount }: FileTooltipWordCountLineOptions): string | null {
-    if (
-        !settings.showTooltipWordCount ||
-        file.extension !== 'md' ||
-        typeof wordCount !== 'number' ||
-        !Number.isFinite(wordCount) ||
-        wordCount < 0
-    ) {
-        return null;
-    }
-
-    return `${strings.tooltips.wordCount}: ${formatTextCount(wordCount)}`;
 }
 
 export function buildFolderTooltip({

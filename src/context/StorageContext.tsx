@@ -70,11 +70,6 @@ import type { NotebookNavigatorAPI } from '../api/NotebookNavigatorAPI';
 import { getCacheRebuildProgressTypes } from './storage/storageContentTypes';
 import { clearCacheRebuildNoticeState, getCacheRebuildNoticeState, setCacheRebuildNoticeState } from './storage/cacheRebuildNoticeStorage';
 import { shouldQueueFileThumbnailProvider } from './storageQueueFilters';
-import {
-    hasMarkdownWordCountConsumer,
-    rescanMarkdownWordCountConsumers,
-    subscribeInitialMarkdownWordCountConsumerResolution
-} from '../utils/markdownPipelineContentTypes';
 import { runAsyncAction } from '../utils/async';
 
 /**
@@ -300,42 +295,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
     });
 
     // Coalesce activation events because a second clear could erase counts being written by the first queued pass.
-    const wordCountActivationInFlightRef = useRef(false);
-    const queueAllMarkdownForWordCountActivation = useCallback(() => {
-        if (wordCountActivationInFlightRef.current || stoppedRef.current) {
-            return;
-        }
-        wordCountActivationInFlightRef.current = true;
-
-        runAsyncAction(
-            async () => {
-                try {
-                    const liveSettings = latestSettingsRef.current;
-                    if (!hasMarkdownWordCountConsumer(liveSettings, app)) {
-                        return;
-                    }
-
-                    // Clearing only this field leaves provider mtimes current, so the markdown pipeline
-                    // processes the newly missing count without rebuilding previews, images, tasks, or properties.
-                    await getDBInstance().batchClearAllFileContent('wordCount');
-                    const nextSettings = latestSettingsRef.current;
-                    if (stoppedRef.current || !hasMarkdownWordCountConsumer(nextSettings, app)) {
-                        return;
-                    }
-
-                    const markdownFiles = getIndexableFiles().filter(file => file.extension === 'md');
-                    queueMetadataContentWhenReady(markdownFiles, ['markdownPipeline'], nextSettings);
-                } finally {
-                    wordCountActivationInFlightRef.current = false;
-                }
-            },
-            {
-                onError: error => {
-                    console.error('Failed to activate word counting for custom group headers:', error);
-                }
-            }
-        );
-    }, [app, getIndexableFiles, latestSettingsRef, queueMetadataContentWhenReady, stoppedRef]);
 
     const { rebuildCache } = useStorageCacheRebuild({
         app,
@@ -371,7 +330,7 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
             return;
         }
 
-        const enabledTypes = getCacheRebuildProgressTypes(latestSettingsRef.current, app);
+        const enabledTypes = getCacheRebuildProgressTypes(latestSettingsRef.current);
         if (enabledTypes.length === 0) {
             clearCacheRebuildNoticeState();
             return;
@@ -586,28 +545,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
 
     // ==================== Effects ====================
 
-    useEffect(() => {
-        const refreshConsumers = () => {
-            // The rescan also prepares the derived snapshot so child renders never resolve vault files or metadata.
-            rescanMarkdownWordCountConsumers(app, latestSettingsRef.current);
-        };
-
-        refreshConsumers();
-        // The one-shot listener catches startup metadata that was unavailable to the immediate scan. Obsidian
-        // emits `resolved` after later edits too, which must stay on the incremental metadata-change path.
-        return subscribeInitialMarkdownWordCountConsumerResolution(app, () => {
-            if (rescanMarkdownWordCountConsumers(app, latestSettingsRef.current).becameActive) {
-                queueAllMarkdownForWordCountActivation();
-            }
-        });
-    }, [
-        app,
-        latestSettingsRef,
-        queueAllMarkdownForWordCountActivation,
-        settings.manualSortGroupHeaderProperty,
-        settings.manualSortPropertyKey
-    ]);
-
     useStorageVaultSync({
         app,
         api,
@@ -638,7 +575,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         getIndexableFiles,
         getVisibleMarkdownFiles,
         queueMetadataContentWhenReady,
-        queueAllMarkdownForWordCountActivation,
         queueIndexableFilesForContentGeneration,
         queueIndexableFilesNeedingContentGeneration,
         disposeMetadataWaitDisposers

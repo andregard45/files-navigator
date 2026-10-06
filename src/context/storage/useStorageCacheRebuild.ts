@@ -161,7 +161,7 @@ export function useStorageCacheRebuild(params: {
 
         try {
             const liveSettings = latestSettingsRef.current;
-            const enabledTypes = getCacheRebuildProgressTypes(liveSettings, app);
+            const enabledTypes = getCacheRebuildProgressTypes(liveSettings);
             const total = getContentWorkTotal(getIndexableFiles(), enabledTypes);
             if (total > 0 && enabledTypes.length > 0) {
                 // Persist a rebuild marker so the progress notice can be restored if Obsidian restarts mid-rebuild.

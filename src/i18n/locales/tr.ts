@@ -449,15 +449,6 @@ export const STRINGS_TR = {
         tasks: 'Görevler',
         date: 'Tarih',
         parentFolder: 'Üst klasör',
-        textCount: {
-            label: 'Metin sayımı',
-            options: {
-                none: 'Yok',
-                words: 'Kelime',
-                characters: 'Karakter',
-                both: 'Kelime ve karakter'
-            }
-        },
         resetAppearance: 'Görünümü sıfırla',
         openPluginSettings: 'Eklenti ayarlarını aç…'
     },
@@ -494,13 +485,7 @@ export const STRINGS_TR = {
             titleLabel: 'Başlık',
             placeholder: 'Grup başlığı',
             icon: 'Simge',
-            color: 'Renk',
-            wordCount: 'Kelime sayısını göster',
-            wordCountTarget: 'Hedef kelime sayısı',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Bu alan boş olduğunda grup hedefi, Ayarlar > Dosya görünümü > Kelime ve karakter sayısı içinde ayarlanan hedef özelliğini kullanır. Bu grup için bir hedef değeri ayarlayarak geçersiz kılın.',
-            description: 'Bu not için grup başlığını özelleştirin. Başlığı kaldırmak için başlığı boş bırakın.'
+            color: 'Renk',            description: 'Bu not için grup başlığını özelleştirin. Başlığı kaldırmak için başlığı boş bırakın.'
         },
         mergeNotes: {
             title: 'Notları birleştir',
@@ -577,9 +562,7 @@ export const STRINGS_TR = {
                 'nav-properties': 'Özellikler',
                 'nav-property': 'Özellik',
                 'nav-property-value': 'Değer',
-                'file-unfinished-task': 'Görevler',
-                'file-word-count': 'Kelime sayısı',
-                'file-character-count': 'Karakter sayısı'
+                'file-unfinished-task': 'Görevler'
             }
         },
         colorPicker: {
@@ -1012,14 +995,7 @@ export const STRINGS_TR = {
         files: 'dosya',
         folder: 'klasör',
         folders: 'klasör',
-        wordCount: 'Kelime sayısı',
         unfinishedTasks: 'Tamamlanmamış görevler'
-    },
-
-    fileCounts: {
-        words: '{count} kelime',
-        characters: '{count} karakter',
-        separator: ' · '
     },
 
     // Settings
@@ -1133,8 +1109,7 @@ export const STRINGS_TR = {
                     properties: 'Özellikler',
                     tasks: 'Görevler',
                     date: 'Tarih',
-                    parentFolder: 'Üst klasör',
-                    wordAndCharacterCount: 'Kelime ve karakter sayısı'
+                    parentFolder: 'Üst klasör'
                 }
             },
             calendar: {
@@ -1781,10 +1756,6 @@ export const STRINGS_TR = {
                 name: 'İpuçlarında etiketleri göster',
                 desc: 'Etiketler bölümü etkinken ipuçlarında not etiketlerini görüntüle.'
             },
-            showTooltipWordCount: {
-                name: 'İpuçlarında kelime sayısını göster',
-                desc: 'Kelime sayısı etkinken ipuçlarında kelime sayısını görüntüle.'
-            },
             resetPaneSeparator: {
                 name: 'Bölme ayırıcı konumunu sıfırla',
                 desc: 'Gezinme bölmesi ve liste bölmesi arasındaki sürüklenebilir ayırıcıyı varsayılan konuma sıfırla.',
@@ -1999,54 +1970,6 @@ export const STRINGS_TR = {
             showFilePropertiesInCompactMode: {
                 name: 'Kompakt modda özellikleri göster',
                 desc: 'Kompakt mod etkinken özellikleri görüntüle.'
-            },
-            textCountType: {
-                name: 'Sayım türü',
-                desc: 'Dosya öğelerinde hangi metin sayımlarının görüneceğini seçin.',
-                options: {
-                    none: 'Yok',
-                    words: 'Kelime sayısı',
-                    characters: 'Karakter sayısı',
-                    both: 'Kelime ve karakter sayısı'
-                }
-            },
-            textCountPlacement: {
-                name: 'Yerleşim',
-                desc: 'Metin sayımlarının nerede görüneceğini seçin.',
-                options: {
-                    title: 'Başlıkta',
-                    property: 'Özellik olarak'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Karakter sayısı',
-                desc: 'Karakter sayısına boşlukların dahil edilip edilmeyeceğini seçin.',
-                options: {
-                    include: 'Boşluklar dahil',
-                    exclude: 'Boşluklar hariç'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Hedef özelliği',
-                desc: 'Hedef kelime sayısını içeren frontmatter özellik anahtarı. Hedefleri gizlemek için boş bırakın.'
-            },
-            showTargetPercentage: {
-                name: 'Hedef yüzdesini göster',
-                desc: 'Hedef kelime sayısı varsa yalnızca ilerleme yüzdesini göster.'
-            },
-            textCountActiveNotice: {
-                title: 'Sayım hâlâ açık',
-                summary: 'Aşağıdaki öğeler kullandığı için kelime veya karakter sayıları tüm notlar için hesaplanmaya devam ediyor:',
-                more: 've {count} tane daha',
-                reasons: {
-                    appearance: 'Dosya görünümü',
-                    'group-header': 'Grup başlığı'
-                },
-                scopes: {
-                    folder: 'Klasör: {name}',
-                    tag: 'Etiket: #{name}',
-                    property: 'Özellik: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Özellik anahtarları (kasa profili)',

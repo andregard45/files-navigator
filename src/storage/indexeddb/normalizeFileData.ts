@@ -20,10 +20,6 @@ import { type FeatureImageStatus, type FileData, getDefaultPreviewStatusForPath,
 
 type MutableFileData = Partial<FileData> & { preview?: string | null; customProperty?: unknown };
 
-function normalizeCount(value: unknown): number | null {
-    return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? Math.trunc(value) : null;
-}
-
 export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?: string): FileData {
     const featureImageKey = typeof data.featureImageKey === 'string' ? data.featureImageKey : null;
     const rawStatus = data.featureImageStatus;
@@ -54,9 +50,6 @@ export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?
     data.metadataMtime = typeof data.metadataMtime === 'number' ? data.metadataMtime : data.mtime;
     data.fileThumbnailsMtime = typeof data.fileThumbnailsMtime === 'number' ? data.fileThumbnailsMtime : data.mtime;
     data.tags = Array.isArray(data.tags) ? data.tags : null;
-    data.wordCount = normalizeCount(data.wordCount);
-    data.characterCountWithSpaces = normalizeCount(data.characterCountWithSpaces);
-    data.characterCountWithoutSpaces = normalizeCount(data.characterCountWithoutSpaces);
     const normalizedTaskCounters = normalizeTaskCounters(data.taskTotal, data.taskUnfinished);
     data.taskTotal = normalizedTaskCounters.taskTotal;
     data.taskUnfinished = normalizedTaskCounters.taskUnfinished;

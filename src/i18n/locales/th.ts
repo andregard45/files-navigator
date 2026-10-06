@@ -448,15 +448,6 @@ export const STRINGS_TH = {
         tasks: 'งาน',
         date: 'วันที่',
         parentFolder: 'โฟลเดอร์หลัก',
-        textCount: {
-            label: 'การนับข้อความ',
-            options: {
-                none: 'ไม่มี',
-                words: 'คำ',
-                characters: 'อักขระ',
-                both: 'คำและอักขระ'
-            }
-        },
         resetAppearance: 'รีเซ็ตลักษณะ',
         openPluginSettings: 'เปิดการตั้งค่าปลั๊กอิน…'
     },
@@ -492,13 +483,7 @@ export const STRINGS_TH = {
             titleLabel: 'ชื่อเรื่อง',
             placeholder: 'ส่วนหัวกลุ่ม',
             icon: 'ไอคอน',
-            color: 'สี',
-            wordCount: 'แสดงจำนวนคำ',
-            wordCountTarget: 'จำนวนคำเป้าหมาย',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'เมื่อฟิลด์นี้ว่าง เป้าหมายกลุ่มจะใช้คุณสมบัติเป้าหมายที่ตั้งไว้ใน การตั้งค่า > การแสดงไฟล์ > จำนวนคำและอักขระ แทนที่ได้โดยตั้งค่าเป้าหมายสำหรับกลุ่มนี้',
-            description: 'ปรับแต่งส่วนหัวกลุ่มสำหรับโน้ตนี้ เว้นชื่อเรื่องว่างเพื่อนำส่วนหัวออก'
+            color: 'สี',            description: 'ปรับแต่งส่วนหัวกลุ่มสำหรับโน้ตนี้ เว้นชื่อเรื่องว่างเพื่อนำส่วนหัวออก'
         },
         mergeNotes: {
             title: 'รวมโน้ต',
@@ -575,9 +560,7 @@ export const STRINGS_TH = {
                 'nav-properties': 'คุณสมบัติ',
                 'nav-property': 'คุณสมบัติ',
                 'nav-property-value': 'ค่า',
-                'file-unfinished-task': 'งาน',
-                'file-word-count': 'จำนวนคำ',
-                'file-character-count': 'จำนวนอักขระ'
+                'file-unfinished-task': 'งาน'
             }
         },
         colorPicker: {
@@ -1007,14 +990,7 @@ export const STRINGS_TH = {
         files: 'ไฟล์',
         folder: 'โฟลเดอร์',
         folders: 'โฟลเดอร์',
-        wordCount: 'จำนวนคำ',
         unfinishedTasks: 'งานที่ยังไม่เสร็จ'
-    },
-
-    fileCounts: {
-        words: '{count} คำ',
-        characters: '{count} อักขระ',
-        separator: ' · '
     },
 
     // Settings
@@ -1127,8 +1103,7 @@ export const STRINGS_TH = {
                     properties: 'คุณสมบัติ',
                     tasks: 'งาน',
                     date: 'วันที่',
-                    parentFolder: 'โฟลเดอร์หลัก',
-                    wordAndCharacterCount: 'จำนวนคำและอักขระ'
+                    parentFolder: 'โฟลเดอร์หลัก'
                 }
             },
             calendar: {
@@ -1775,10 +1750,6 @@ export const STRINGS_TH = {
                 name: 'แสดงแท็กใน tooltips',
                 desc: 'แสดงแท็กของโน้ตใน tooltips เมื่อเปิดใช้ส่วนแท็ก'
             },
-            showTooltipWordCount: {
-                name: 'แสดงจำนวนคำใน tooltips',
-                desc: 'แสดงจำนวนคำใน tooltips เมื่อเปิดใช้จำนวนคำ'
-            },
             resetPaneSeparator: {
                 name: 'รีเซ็ตตำแหน่งตัวคั่นแผง',
                 desc: 'รีเซ็ตตัวคั่นที่ลากได้ระหว่างแผงนำทางและแผงรายการเป็นตำแหน่งเริ่มต้น',
@@ -1992,54 +1963,6 @@ export const STRINGS_TH = {
             showFilePropertiesInCompactMode: {
                 name: 'แสดงคุณสมบัติในโหมดกะทัดรัด',
                 desc: 'แสดงคุณสมบัติเมื่อโหมดกะทัดรัดเปิดใช้งาน'
-            },
-            textCountType: {
-                name: 'ประเภทการนับ',
-                desc: 'เลือกจำนวนของข้อความที่จะแสดงในรายการไฟล์',
-                options: {
-                    none: 'ไม่มี',
-                    words: 'จำนวนคำ',
-                    characters: 'จำนวนอักขระ',
-                    both: 'จำนวนคำและอักขระ'
-                }
-            },
-            textCountPlacement: {
-                name: 'ตำแหน่ง',
-                desc: 'เลือกตำแหน่งที่จะแสดงจำนวนของข้อความ',
-                options: {
-                    title: 'ในชื่อเรื่อง',
-                    property: 'เป็นคุณสมบัติ'
-                }
-            },
-            characterCountSpaces: {
-                name: 'จำนวนอักขระ',
-                desc: 'เลือกว่าจะนับช่องว่างรวมในจำนวนอักขระหรือไม่',
-                options: {
-                    include: 'รวมช่องว่าง',
-                    exclude: 'ไม่รวมช่องว่าง'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'คุณสมบัติเป้าหมาย',
-                desc: 'คีย์คุณสมบัติ frontmatter ที่มีจำนวนคำเป้าหมาย เว้นว่างไว้เพื่อซ่อนเป้าหมาย'
-            },
-            showTargetPercentage: {
-                name: 'แสดงเปอร์เซ็นต์เป้าหมาย',
-                desc: 'แสดงเฉพาะเปอร์เซ็นต์ความคืบหน้าเมื่อมีจำนวนคำเป้าหมาย'
-            },
-            textCountActiveNotice: {
-                title: 'การนับยังเปิดอยู่',
-                summary: 'ระบบยังคำนวณจำนวนคำหรืออักขระสำหรับโน้ตทั้งหมดเพราะรายการต่อไปนี้ใช้งานอยู่:',
-                more: 'และอีก {count} รายการ',
-                reasons: {
-                    appearance: 'ลักษณะไฟล์',
-                    'group-header': 'ส่วนหัวกลุ่ม'
-                },
-                scopes: {
-                    folder: 'โฟลเดอร์: {name}',
-                    tag: 'แท็ก: #{name}',
-                    property: 'คุณสมบัติ: {name}'
-                }
             },
             propertyKeys: {
                 name: 'คีย์คุณสมบัติ (โปรไฟล์ห้องนิรภัย)',

@@ -996,10 +996,6 @@ export class PluginSettingsController {
         delete rest.optimizeNoteHeight;
         delete rest.showPinnedIcon;
         delete rest.showPinnedGroupHeader;
-        delete rest.showWordCount;
-        delete rest.wordCountPlacement;
-        delete rest.wordCharacterCountDisplay;
-        delete rest.characterCountMode;
     }
 
     public refreshMatcherCachesIfNeeded(): void {
@@ -1400,9 +1396,6 @@ export class PluginSettingsController {
                 }
                 if (appearance.previewRows === this.currentSettings.previewRows) {
                     delete appearance.previewRows;
-                }
-                if (appearance.textCount === this.currentSettings.textCountDisplay) {
-                    delete appearance.textCount;
                 }
                 if (Object.keys(appearance).length === 0) {
                     delete appearances[key];

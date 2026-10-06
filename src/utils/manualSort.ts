@@ -23,7 +23,6 @@ import { getErrorMessage } from './errorUtils';
 import { deserializeIconFromFrontmatterCompat, normalizeCanonicalIconId, serializeIconForFrontmatter } from './iconizeFormat';
 import { casefold, findMatchingRecordKey } from './recordUtils';
 import { isRecord } from './typeGuards';
-import { formatTextCount } from './wordCountUtils';
 
 export const MANUAL_SORT_RANK_STEP = 1000;
 
@@ -51,39 +50,15 @@ export interface ManualSortWriteResult {
 
 export interface ManualSortGroupHeaderData {
     title: string;
-    showWordCount: boolean;
-    targetWordCount: number | null;
     iconId: string | null;
     color: string | null;
 }
 
 export interface ManualSortGroupHeaderWriteValue {
     title: string;
-    showWordCount?: boolean;
-    targetWordCount?: number | string | null;
     iconId?: string | null;
     color?: string | null;
 }
-
-interface ManualSortGroupHeaderWordCountConsumerCache {
-    propertyKey: string | null;
-    paths: Set<string>;
-    sortedPaths: readonly string[] | null;
-    version: number;
-}
-
-export interface ManualSortGroupHeaderWordCountConsumerChange {
-    changed: boolean;
-    active: boolean;
-}
-
-export interface ManualSortGroupHeaderWordCountConsumerSnapshot {
-    paths: readonly string[];
-    version: number;
-}
-
-const manualSortGroupHeaderWordCountConsumerCache = new WeakMap<App, ManualSortGroupHeaderWordCountConsumerCache>();
-const EMPTY_MANUAL_SORT_GROUP_HEADER_WORD_COUNT_CONSUMER_PATHS: readonly string[] = [];
 
 export interface CachedManualSortPropertyState {
     hasProperty: boolean;
@@ -523,24 +498,6 @@ export function parseManualSortRank(value: unknown): number | null {
     return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : null;
 }
 
-export function parseManualSortGroupHeaderTargetWordCount(value: unknown): number | null {
-    if (typeof value === 'number') {
-        return Number.isSafeInteger(value) && value > 0 ? value : null;
-    }
-
-    if (typeof value !== 'string') {
-        return null;
-    }
-
-    const normalized = value.replace(/,/g, '').trim();
-    if (!/^\d+$/.test(normalized)) {
-        return null;
-    }
-
-    const parsed = Number(normalized);
-    return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : null;
-}
-
 export function isManualSortValueEqual(value: unknown, order: number): boolean {
     return parseManualSortRank(value) === order;
 }
@@ -596,15 +553,13 @@ function parseManualSortGroupHeaderValue(value: unknown): ManualSortGroupHeaderD
 
         return {
             title,
-            showWordCount: value.show_word_count === true,
-            targetWordCount: parseManualSortGroupHeaderTargetWordCount(value.target_word_count),
             iconId: parseManualSortGroupHeaderIcon(value.icon),
             color: parseManualSortGroupHeaderColor(value.color)
         };
     }
 
     const trimmed = value.trim();
-    return trimmed.length > 0 ? { title: trimmed, showWordCount: false, targetWordCount: null, iconId: null, color: null } : null;
+    return trimmed.length > 0 ? { title: trimmed, iconId: null, color: null } : null;
 }
 
 export function getCachedManualSortGroupHeader(app: App, file: TFile, propertyKey: string): ManualSortGroupHeaderData | null {
@@ -623,280 +578,6 @@ export function getCachedManualSortGroupHeader(app: App, file: TFile, propertyKe
     }
 
     return parseManualSortGroupHeaderValue(frontmatter[targetKey]);
-}
-
-function scanManualSortGroupHeaderWordCountConsumers(
-    app: App,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): ManualSortGroupHeaderWordCountConsumerCache {
-    const propertyKey = getManualSortGroupHeaderPropertyKey(settings);
-    const paths = new Set<string>();
-    if (propertyKey) {
-        app.vault.getMarkdownFiles().forEach(file => {
-            if (getCachedManualSortGroupHeader(app, file, propertyKey)?.showWordCount) {
-                paths.add(file.path);
-            }
-        });
-    }
-
-    const version = (manualSortGroupHeaderWordCountConsumerCache.get(app)?.version ?? 0) + 1;
-    const cache = { propertyKey, paths, sortedPaths: null, version };
-    manualSortGroupHeaderWordCountConsumerCache.set(app, cache);
-    return cache;
-}
-
-function getManualSortGroupHeaderWordCountConsumerCache(
-    app: App,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): ManualSortGroupHeaderWordCountConsumerCache {
-    const propertyKey = getManualSortGroupHeaderPropertyKey(settings);
-    const cached = manualSortGroupHeaderWordCountConsumerCache.get(app);
-    return cached?.propertyKey === propertyKey ? cached : scanManualSortGroupHeaderWordCountConsumers(app, settings);
-}
-
-/** Rebuilds the cached consumers after Obsidian finishes resolving vault metadata. */
-export function rescanManualSortGroupHeaderWordCountConsumers(
-    app: App,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): ManualSortGroupHeaderWordCountConsumerChange {
-    const cached = manualSortGroupHeaderWordCountConsumerCache.get(app);
-    const wasActive = (cached?.paths.size ?? 0) > 0;
-    const next = scanManualSortGroupHeaderWordCountConsumers(app, settings);
-    const active = next.paths.size > 0;
-    return { changed: active !== wasActive, active };
-}
-
-/** Returns the cached consumer paths and revision used by derived consumer filters. */
-export function getManualSortGroupHeaderWordCountConsumerSnapshot(
-    app: App,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>,
-    options?: { scanIfMissing?: boolean }
-): ManualSortGroupHeaderWordCountConsumerSnapshot {
-    const propertyKey = getManualSortGroupHeaderPropertyKey(settings);
-    const cached = manualSortGroupHeaderWordCountConsumerCache.get(app);
-    // Render paths read only a fully prepared snapshot because a miss would scan every markdown file
-    // and an invalidated ordering would sort header paths synchronously. The storage lifecycle prepares both.
-    if (options?.scanIfMissing === false) {
-        return {
-            paths:
-                cached?.propertyKey === propertyKey && cached.sortedPaths !== null
-                    ? cached.sortedPaths
-                    : EMPTY_MANUAL_SORT_GROUP_HEADER_WORD_COUNT_CONSUMER_PATHS,
-            version: cached?.propertyKey === propertyKey ? cached.version : 0
-        };
-    }
-
-    const cache = getManualSortGroupHeaderWordCountConsumerCache(app, settings);
-    cache.sortedPaths ??= Array.from(cache.paths).sort((left, right) => left.localeCompare(right));
-    return {
-        paths: cache.sortedPaths,
-        version: cache.version
-    };
-}
-
-/** Returns note paths whose custom group headers currently request a word count. */
-export function getManualSortGroupHeaderWordCountConsumerPaths(
-    app: App,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): readonly string[] {
-    return getManualSortGroupHeaderWordCountConsumerSnapshot(app, settings).paths;
-}
-
-/** Refreshes one cached header after Obsidian publishes its new frontmatter metadata. */
-export function refreshManualSortGroupHeaderWordCountConsumer(
-    app: App,
-    file: TFile,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): ManualSortGroupHeaderWordCountConsumerChange {
-    const cache = getManualSortGroupHeaderWordCountConsumerCache(app, settings);
-    const wasActive = cache.paths.size > 0;
-    const consumesWordCount = cache.propertyKey
-        ? getCachedManualSortGroupHeader(app, file, cache.propertyKey)?.showWordCount === true
-        : false;
-    const wasConsumer = cache.paths.has(file.path);
-
-    if (consumesWordCount) {
-        if (!wasConsumer) {
-            cache.paths.add(file.path);
-            cache.sortedPaths = null;
-        }
-    } else {
-        if (wasConsumer) {
-            cache.paths.delete(file.path);
-            cache.sortedPaths = null;
-        }
-    }
-    // Metadata changes on an existing header can alter which tag or property contexts contain it,
-    // so invalidate derived filters even when the show-word-count flag itself did not change.
-    if (wasConsumer || consumesWordCount) {
-        cache.version += 1;
-    }
-
-    const active = cache.paths.size > 0;
-    return { changed: active !== wasActive, active };
-}
-
-/** Removes a deleted markdown path from the cached header consumers. */
-export function removeManualSortGroupHeaderWordCountConsumer(
-    app: App,
-    path: string,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): ManualSortGroupHeaderWordCountConsumerChange {
-    const cache = getManualSortGroupHeaderWordCountConsumerCache(app, settings);
-    const wasActive = cache.paths.size > 0;
-    if (cache.paths.delete(path)) {
-        cache.sortedPaths = null;
-        cache.version += 1;
-    }
-    const active = cache.paths.size > 0;
-    return { changed: active !== wasActive, active };
-}
-
-function getPreparedManualSortGroupHeaderWordCountConsumerCache(
-    app: App,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): ManualSortGroupHeaderWordCountConsumerCache | null {
-    const propertyKey = getManualSortGroupHeaderPropertyKey(settings);
-    const cached = manualSortGroupHeaderWordCountConsumerCache.get(app);
-    return cached?.propertyKey === propertyKey ? cached : null;
-}
-
-/**
- * Rewrites cached consumer paths below a renamed folder.
- * Returns false when the storage lifecycle has not prepared a matching cache or the folder contains no consumers.
- * Callers do not fall back to a vault scan because the normal lifecycle scan initializes an unprepared cache.
- */
-export function renameManualSortGroupHeaderWordCountConsumersInFolder(
-    app: App,
-    oldFolderPath: string,
-    newFolderPath: string,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): boolean {
-    const cache = getPreparedManualSortGroupHeaderWordCountConsumerCache(app, settings);
-    if (!cache) {
-        return false;
-    }
-
-    const oldPrefix = `${oldFolderPath}/`;
-    const newPrefix = `${newFolderPath}/`;
-    const renamedPaths: { oldPath: string; newPath: string }[] = [];
-    cache.paths.forEach(path => {
-        if (path.startsWith(oldPrefix)) {
-            renamedPaths.push({ oldPath: path, newPath: `${newPrefix}${path.slice(oldPrefix.length)}` });
-        }
-    });
-    if (renamedPaths.length === 0) {
-        return false;
-    }
-
-    renamedPaths.forEach(({ oldPath, newPath }) => {
-        cache.paths.delete(oldPath);
-        cache.paths.add(newPath);
-    });
-    cache.sortedPaths = null;
-    cache.version += 1;
-    return true;
-}
-
-/**
- * Removes cached consumer paths below a deleted folder without scanning vault metadata.
- * Returns false when no matching prepared cache exists or no cached path uses the folder prefix.
- */
-export function removeManualSortGroupHeaderWordCountConsumersInFolder(
-    app: App,
-    folderPath: string,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): boolean {
-    const cache = getPreparedManualSortGroupHeaderWordCountConsumerCache(app, settings);
-    if (!cache) {
-        return false;
-    }
-
-    const prefix = `${folderPath}/`;
-    let changed = false;
-    cache.paths.forEach(path => {
-        if (path.startsWith(prefix)) {
-            cache.paths.delete(path);
-            changed = true;
-        }
-    });
-    if (!changed) {
-        return false;
-    }
-
-    cache.sortedPaths = null;
-    cache.version += 1;
-    return true;
-}
-
-/** Moves a cached consumer path during a vault rename without changing whether the consumer is active. */
-export function renameManualSortGroupHeaderWordCountConsumer(
-    app: App,
-    oldPath: string,
-    newPath: string,
-    settings: Pick<NotebookNavigatorSettings, 'manualSortGroupHeaderProperty' | 'manualSortPropertyKey'>
-): void {
-    const cache = getManualSortGroupHeaderWordCountConsumerCache(app, settings);
-    if (!cache.paths.delete(oldPath)) {
-        return;
-    }
-    cache.paths.add(newPath);
-    cache.sortedPaths = null;
-    cache.version += 1;
-}
-
-export function shouldShowManualSortGroupHeaderWordCount(header: ManualSortGroupHeaderData): boolean {
-    return header.showWordCount;
-}
-
-export function getManualSortGroupHeaderTargetWordCount(
-    header: ManualSortGroupHeaderData,
-    targetWordCount: number | null | undefined = header.targetWordCount
-): number | null {
-    if (!shouldShowManualSortGroupHeaderWordCount(header)) {
-        return null;
-    }
-
-    const resolvedTargetWordCount = header.targetWordCount ?? targetWordCount;
-    return typeof resolvedTargetWordCount === 'number' && Number.isFinite(resolvedTargetWordCount) && resolvedTargetWordCount > 0
-        ? Math.trunc(resolvedTargetWordCount)
-        : null;
-}
-
-export function shouldShowManualSortGroupHeaderProgress(
-    header: ManualSortGroupHeaderData
-): header is ManualSortGroupHeaderData & { targetWordCount: number };
-export function shouldShowManualSortGroupHeaderProgress(
-    header: ManualSortGroupHeaderData,
-    targetWordCount: number | null | undefined
-): boolean;
-export function shouldShowManualSortGroupHeaderProgress(
-    header: ManualSortGroupHeaderData,
-    targetWordCount: number | null | undefined = header.targetWordCount
-): boolean {
-    return getManualSortGroupHeaderTargetWordCount(header, targetWordCount) !== null;
-}
-
-export function normalizeManualSortGroupHeaderWordCount(value: unknown): number {
-    return typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.trunc(value) : 0;
-}
-
-export function formatManualSortGroupHeaderLabel(
-    header: ManualSortGroupHeaderData,
-    wordCount: number,
-    targetWordCount: number | null | undefined = header.targetWordCount
-): string {
-    if (!shouldShowManualSortGroupHeaderWordCount(header)) {
-        return header.title;
-    }
-
-    const formattedWordCount = formatTextCount(wordCount);
-    const resolvedTargetWordCount = getManualSortGroupHeaderTargetWordCount(header, targetWordCount);
-    if (resolvedTargetWordCount !== null) {
-        return `${header.title} (${formattedWordCount} / ${formatTextCount(resolvedTargetWordCount)})`;
-    }
-
-    return `${header.title} (${formattedWordCount})`;
 }
 
 function parseManualSortGroupHeaderIcon(value: unknown): string | null {
@@ -1433,7 +1114,7 @@ export async function removeManualSortProperty(app: App, files: readonly TFile[]
 function normalizeManualSortGroupHeaderWriteValue(value: string | ManualSortGroupHeaderWriteValue): ManualSortGroupHeaderData | null {
     if (typeof value === 'string') {
         const title = value.trim();
-        return title ? { title, showWordCount: false, targetWordCount: null, iconId: null, color: null } : null;
+        return title ? { title, iconId: null, color: null } : null;
     }
 
     const title = value.title.trim();
@@ -1443,8 +1124,6 @@ function normalizeManualSortGroupHeaderWriteValue(value: string | ManualSortGrou
 
     return {
         title,
-        showWordCount: value.showWordCount === true,
-        targetWordCount: parseManualSortGroupHeaderTargetWordCount(value.targetWordCount),
         iconId: parseManualSortGroupHeaderIcon(value.iconId),
         color: parseManualSortGroupHeaderColor(value.color)
     };
@@ -1452,17 +1131,13 @@ function normalizeManualSortGroupHeaderWriteValue(value: string | ManualSortGrou
 
 function serializeManualSortGroupHeaderValue(header: ManualSortGroupHeaderData): string | Record<string, unknown> {
     const serializedIcon = header.iconId ? serializeIconForFrontmatter(header.iconId) : null;
-    if (!header.showWordCount && header.targetWordCount === null && !serializedIcon && header.color === null) {
+    if (!serializedIcon && header.color === null) {
         return header.title;
     }
 
     const serialized: Record<string, unknown> = {
-        title: header.title,
-        show_word_count: header.showWordCount
+        title: header.title
     };
-    if (header.targetWordCount !== null) {
-        serialized.target_word_count = header.targetWordCount;
-    }
     if (serializedIcon) {
         serialized.icon = serializedIcon;
     }

@@ -449,15 +449,6 @@ export const STRINGS_ID = {
         tasks: 'Tugas',
         date: 'Tanggal',
         parentFolder: 'Folder induk',
-        textCount: {
-            label: 'Hitungan teks',
-            options: {
-                none: 'Tidak ada',
-                words: 'Kata',
-                characters: 'Karakter',
-                both: 'Kata dan karakter'
-            }
-        },
         resetAppearance: 'Atur ulang tampilan',
         openPluginSettings: 'Buka pengaturan plugin…'
     },
@@ -494,13 +485,7 @@ export const STRINGS_ID = {
             titleLabel: 'Judul',
             placeholder: 'Header grup',
             icon: 'Ikon',
-            color: 'Warna',
-            wordCount: 'Tampilkan jumlah kata',
-            wordCountTarget: 'Target jumlah kata',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Saat bidang ini kosong, target grup menggunakan properti target yang diatur di Pengaturan > Tampilan file > Jumlah kata dan karakter. Timpa dengan menetapkan nilai target untuk grup ini.',
-            description: 'Sesuaikan header grup untuk catatan ini. Biarkan judul kosong untuk menghapus header.'
+            color: 'Warna',            description: 'Sesuaikan header grup untuk catatan ini. Biarkan judul kosong untuk menghapus header.'
         },
         mergeNotes: {
             title: 'Gabungkan catatan',
@@ -578,9 +563,7 @@ export const STRINGS_ID = {
                 'nav-properties': 'Properti',
                 'nav-property': 'Properti',
                 'nav-property-value': 'Nilai',
-                'file-unfinished-task': 'Tugas',
-                'file-word-count': 'Jumlah kata',
-                'file-character-count': 'Jumlah karakter'
+                'file-unfinished-task': 'Tugas'
             }
         },
         colorPicker: {
@@ -1014,14 +997,7 @@ export const STRINGS_ID = {
         files: 'file',
         folder: 'folder',
         folders: 'folder',
-        wordCount: 'Jumlah kata',
         unfinishedTasks: 'Tugas belum selesai'
-    },
-
-    fileCounts: {
-        words: '{count} kata',
-        characters: '{count} karakter',
-        separator: ' · '
     },
 
     // Settings
@@ -1135,8 +1111,7 @@ export const STRINGS_ID = {
                     properties: 'Properti',
                     tasks: 'Tugas',
                     date: 'Tanggal',
-                    parentFolder: 'Folder induk',
-                    wordAndCharacterCount: 'Jumlah kata dan karakter'
+                    parentFolder: 'Folder induk'
                 }
             },
             calendar: {
@@ -1783,10 +1758,6 @@ export const STRINGS_ID = {
                 name: 'Tampilkan tag di tooltip',
                 desc: 'Tampilkan tag catatan di tooltip saat bagian tag diaktifkan.'
             },
-            showTooltipWordCount: {
-                name: 'Tampilkan jumlah kata di tooltip',
-                desc: 'Tampilkan jumlah kata di tooltip saat jumlah kata diaktifkan.'
-            },
             resetPaneSeparator: {
                 name: 'Atur ulang posisi pemisah panel',
                 desc: 'Atur ulang pemisah yang dapat diseret antara panel navigasi dan panel daftar ke posisi default.',
@@ -2001,54 +1972,6 @@ export const STRINGS_ID = {
             showFilePropertiesInCompactMode: {
                 name: 'Tampilkan properti dalam mode kompak',
                 desc: 'Tampilkan properti saat mode kompak aktif.'
-            },
-            textCountType: {
-                name: 'Jenis hitungan',
-                desc: 'Pilih hitungan teks yang muncul di item file.',
-                options: {
-                    none: 'Tidak ada',
-                    words: 'Jumlah kata',
-                    characters: 'Jumlah karakter',
-                    both: 'Jumlah kata dan karakter'
-                }
-            },
-            textCountPlacement: {
-                name: 'Penempatan',
-                desc: 'Pilih tempat hitungan teks muncul.',
-                options: {
-                    title: 'Di judul',
-                    property: 'Sebagai properti'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Jumlah karakter',
-                desc: 'Pilih apakah spasi disertakan dalam jumlah karakter.',
-                options: {
-                    include: 'Termasuk spasi',
-                    exclude: 'Tanpa spasi'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Properti target',
-                desc: 'Kunci properti frontmatter yang berisi target jumlah kata. Biarkan kosong untuk menyembunyikan target.'
-            },
-            showTargetPercentage: {
-                name: 'Tampilkan persentase target',
-                desc: 'Tampilkan hanya persentase kemajuan saat target jumlah kata tersedia.'
-            },
-            textCountActiveNotice: {
-                title: 'Penghitungan masih aktif',
-                summary: 'Jumlah kata atau karakter masih dihitung untuk semua catatan karena digunakan oleh item berikut:',
-                more: 'dan {count} lainnya',
-                reasons: {
-                    appearance: 'Tampilan file',
-                    'group-header': 'Header grup'
-                },
-                scopes: {
-                    folder: 'Folder: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Properti: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Kunci properti (profil vault)',

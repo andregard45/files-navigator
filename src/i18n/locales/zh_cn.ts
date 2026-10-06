@@ -447,15 +447,6 @@ export const STRINGS_ZH_CN = {
         tasks: '任务',
         date: '日期',
         parentFolder: '父文件夹',
-        textCount: {
-            label: '文本计数',
-            options: {
-                none: '无',
-                words: '字',
-                characters: '字符',
-                both: '字和字符'
-            }
-        },
         resetAppearance: '重置外观',
         openPluginSettings: '打开插件设置…'
     },
@@ -491,13 +482,7 @@ export const STRINGS_ZH_CN = {
             titleLabel: '标题',
             placeholder: '分组标题',
             icon: '图标',
-            color: '颜色',
-            wordCount: '显示字数',
-            wordCountTarget: '目标字数',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                '此字段为空时，组目标使用“设置 > 文件显示 > 字数和字符数”中设置的目标属性。为此组设置目标值即可覆盖它。',
-            description: '为此笔记自定义分组标题。将标题留空以移除该标题。'
+            color: '颜色',            description: '为此笔记自定义分组标题。将标题留空以移除该标题。'
         },
         mergeNotes: {
             title: '合并笔记',
@@ -574,9 +559,7 @@ export const STRINGS_ZH_CN = {
                 'nav-properties': '属性',
                 'nav-property': '属性',
                 'nav-property-value': '值',
-                'file-unfinished-task': '任务',
-                'file-word-count': '字数统计',
-                'file-character-count': '字符数'
+                'file-unfinished-task': '任务'
             }
         },
         colorPicker: {
@@ -1005,14 +988,7 @@ export const STRINGS_ZH_CN = {
         files: '个文件',
         folder: '个文件夹',
         folders: '个文件夹',
-        wordCount: '字数',
         unfinishedTasks: '未完成任务'
-    },
-
-    fileCounts: {
-        words: '{count} 个词',
-        characters: '{count} 个字符',
-        separator: ' · '
     },
 
     // Settings
@@ -1125,8 +1101,7 @@ export const STRINGS_ZH_CN = {
                     properties: '属性',
                     tasks: '任务',
                     date: '日期',
-                    parentFolder: '父文件夹',
-                    wordAndCharacterCount: '字数和字符数'
+                    parentFolder: '父文件夹'
                 }
             },
             calendar: {
@@ -1767,10 +1742,6 @@ export const STRINGS_ZH_CN = {
                 name: '在工具提示中显示标签',
                 desc: '启用标签部分时，在工具提示中显示笔记的标签。'
             },
-            showTooltipWordCount: {
-                name: '在工具提示中显示字数',
-                desc: '启用字数统计时，在工具提示中显示字数。'
-            },
             resetPaneSeparator: {
                 name: '重置窗格分隔符位置',
                 desc: '将导航窗格和列表窗格之间的可拖动分隔符重置为默认位置。',
@@ -1984,54 +1955,6 @@ export const STRINGS_ZH_CN = {
             showFilePropertiesInCompactMode: {
                 name: '在精简模式中显示属性',
                 desc: '精简模式启用时显示属性。'
-            },
-            textCountType: {
-                name: '计数类型',
-                desc: '选择文件项目中显示哪些文本计数。',
-                options: {
-                    none: '无',
-                    words: '字数',
-                    characters: '字符数',
-                    both: '字数和字符数'
-                }
-            },
-            textCountPlacement: {
-                name: '位置',
-                desc: '选择文本计数的显示位置。',
-                options: {
-                    title: '在标题中',
-                    property: '作为属性'
-                }
-            },
-            characterCountSpaces: {
-                name: '字符数',
-                desc: '选择字符数是否包含空格。',
-                options: {
-                    include: '包含空格',
-                    exclude: '不含空格'
-                }
-            },
-            wordCountTargetProperty: {
-                name: '目标属性',
-                desc: '包含目标字数的前置元数据属性键。留空可隐藏目标。'
-            },
-            showTargetPercentage: {
-                name: '显示目标百分比',
-                desc: '有目标字数时，仅显示进度百分比。'
-            },
-            textCountActiveNotice: {
-                title: '计数仍处于启用状态',
-                summary: '由于以下项目使用字数或字符数，系统仍会为所有笔记计算这些数值：',
-                more: '以及另外 {count} 个',
-                reasons: {
-                    appearance: '文件外观',
-                    'group-header': '分组标题'
-                },
-                scopes: {
-                    folder: '文件夹：{name}',
-                    tag: '标签：#{name}',
-                    property: '属性：{name}'
-                }
             },
             propertyKeys: {
                 name: '属性键（仓库配置文件）',

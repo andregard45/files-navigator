@@ -16,17 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { App, Modal, Setting, setIcon } from 'obsidian';
+import { App, Modal, setIcon } from 'obsidian';
 import { strings } from '../i18n';
 import type { MetadataService } from '../services/MetadataService';
 import { ItemType } from '../types';
 import { runAsyncAction, type MaybePromise } from '../utils/async';
 import { getIconService } from '../services/icons';
-import {
-    parseManualSortGroupHeaderTargetWordCount,
-    type ManualSortGroupHeaderData,
-    type ManualSortGroupHeaderWriteValue
-} from '../utils/manualSort';
+import { type ManualSortGroupHeaderData, type ManualSortGroupHeaderWriteValue } from '../utils/manualSort';
 import { ColorPickerModal } from './ColorPickerModal';
 
 interface ManualSortGroupHeaderModalOptions {
@@ -35,12 +31,10 @@ interface ManualSortGroupHeaderModalOptions {
 
 export class ManualSortGroupHeaderModal extends Modal {
     private headerInputEl: HTMLInputElement | null = null;
-    private targetInputEl: HTMLInputElement | null = null;
     private iconPreviewEl: HTMLSpanElement | null = null;
     private iconButtonTextEl: HTMLSpanElement | null = null;
     private colorPreviewEl: HTMLSpanElement | null = null;
     private colorButtonTextEl: HTMLSpanElement | null = null;
-    private showWordCount = false;
     private iconId: string | null = null;
     private color: string | null = null;
     private isSubmitting = false;
@@ -52,7 +46,6 @@ export class ManualSortGroupHeaderModal extends Modal {
         private readonly options: ManualSortGroupHeaderModalOptions
     ) {
         super(app);
-        this.showWordCount = initialValue?.showWordCount ?? false;
         this.iconId = initialValue?.iconId ?? null;
         this.color = initialValue?.color ?? null;
     }
@@ -97,35 +90,6 @@ export class ManualSortGroupHeaderModal extends Modal {
         this.colorButtonTextEl = colorButtonEl.createSpan({ cls: 'nn-manual-sort-header-style-text' });
         this.updateColorControls();
 
-        const wordCountSectionEl = this.createSection(contentEl);
-        const wordCountSetting = new Setting(wordCountSectionEl).setName(strings.modals.manualSortGroupHeader.wordCount).addToggle(toggle =>
-            toggle.setValue(this.showWordCount).onChange(value => {
-                this.showWordCount = value;
-                if (!value && this.targetInputEl) {
-                    this.targetInputEl.value = '';
-                }
-                this.updateWordCountTargetControl();
-            })
-        );
-        wordCountSetting.settingEl.addClass('nn-manual-sort-header-toggle-setting');
-
-        const targetFieldEl = wordCountSectionEl.createDiv({ cls: 'nn-manual-sort-header-field nn-manual-sort-header-target-field' });
-        targetFieldEl.createDiv({
-            cls: 'nn-manual-sort-header-field-label',
-            text: strings.modals.manualSortGroupHeader.wordCountTarget
-        });
-        this.targetInputEl = targetFieldEl.createEl('input', { cls: 'nn-manual-sort-header-input' });
-        this.targetInputEl.type = 'text';
-        this.targetInputEl.inputMode = 'numeric';
-        this.targetInputEl.placeholder = strings.modals.manualSortGroupHeader.wordCountTargetPlaceholder;
-        this.targetInputEl.value = this.showWordCount ? (this.initialValue?.targetWordCount?.toString() ?? '') : '';
-        this.targetInputEl.addEventListener('input', this.filterTargetInput);
-        targetFieldEl.createDiv({
-            cls: 'nn-input-description nn-manual-sort-header-target-description',
-            text: strings.modals.manualSortGroupHeader.wordCountTargetDescription
-        });
-        this.updateWordCountTargetControl();
-
         const buttonContainer = contentEl.createDiv('nn-button-container');
         const cancelBtn = buttonContainer.createEl('button', { text: strings.common.cancel });
         cancelBtn.addEventListener('click', this.handleCancelClick);
@@ -153,7 +117,6 @@ export class ManualSortGroupHeaderModal extends Modal {
     }
 
     onClose(): void {
-        this.targetInputEl?.removeEventListener('input', this.filterTargetInput);
         this.modalEl.removeClass('nn-manual-sort-group-header-modal');
         this.contentEl.empty();
     }
@@ -228,22 +191,6 @@ export class ManualSortGroupHeaderModal extends Modal {
         }
     }
 
-    private updateWordCountTargetControl(): void {
-        if (!this.targetInputEl) {
-            return;
-        }
-
-        this.targetInputEl.disabled = !this.showWordCount;
-    }
-
-    private readonly filterTargetInput = (): void => {
-        if (!this.targetInputEl) {
-            return;
-        }
-
-        this.targetInputEl.value = this.targetInputEl.value.replace(/[^\d,]/g, '');
-    };
-
     private readonly handleCancelClick = (): void => {
         this.close();
     };
@@ -257,11 +204,8 @@ export class ManualSortGroupHeaderModal extends Modal {
             return;
         }
 
-        const targetWordCount = this.showWordCount ? parseManualSortGroupHeaderTargetWordCount(this.targetInputEl?.value ?? '') : null;
         const value: ManualSortGroupHeaderWriteValue = {
             title: this.headerInputEl?.value ?? '',
-            showWordCount: this.showWordCount,
-            targetWordCount,
             iconId: this.iconId,
             color: this.color
         };
