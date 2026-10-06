@@ -21,7 +21,7 @@ import { LIMITS } from '../../constants/limits';
 export const STORE_NAME = 'keyvaluepairs';
 export const PREVIEW_STORE_NAME = 'filePreviews';
 
-export const DB_SCHEMA_VERSION = 3; // IndexedDB structure version
+export const DB_SCHEMA_VERSION = 4; // IndexedDB structure version (v4 removes the feature image blob store)
 export const DB_CONTENT_VERSION = 7; // Data format version
 
 // Default limits for preview text caching and load batching.
