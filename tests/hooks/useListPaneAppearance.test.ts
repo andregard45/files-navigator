@@ -23,6 +23,7 @@ import {
     hasStoredListPaneAppearanceOverride,
     mergeListPaneAppearanceAndGrouping,
     resolveListPaneAppearance,
+    SEARCH_EXCERPT_ROWS,
     snapshotListPaneAppearanceMap,
     type ListPaneAppearance
 } from '../../src/settings/listPaneAppearance';
@@ -73,30 +74,28 @@ describe('resolveListPaneAppearance', () => {
         const result = resolveListPaneAppearance({
             settings: createSettings({
                 defaultListMode: 'standard',
-                showFilePreview: true,
                 showFeatureImage: true,
             }),
-            appearance: { mode: 'compact', previewRows: 4 },
+            appearance: { mode: 'compact' },
             selectionType: ItemType.PROPERTY
         });
 
         expect(result).toMatchObject({
             mode: 'compact',
-            previewRows: 4,
-            showPreview: false,
+            // The file-display preview feature was removed; excerpt sizing is a fixed internal constant.
+            previewRows: 1,
             showImage: false,
         });
     });
 
-    it('lets a selection hide preview text without changing preview-based layout sizing', () => {
+    it('uses the standard excerpt row constant outside compact mode', () => {
         const result = resolveListPaneAppearance({
-            settings: createSettings({ showFilePreview: true, previewRows: 3 }),
-            appearance: { previewRows: 0 },
+            settings: createSettings({ defaultListMode: 'standard' }),
+            appearance: undefined,
             selectionType: ItemType.FOLDER
         });
 
-        expect(result.previewRows).toBe(3);
-        expect(result.showPreview).toBe(false);
+        expect(result.previewRows).toBe(SEARCH_EXCERPT_ROWS);
     });
 
     it('keeps compact property visibility as a global style choice', () => {
@@ -121,8 +120,7 @@ describe('stored list appearance intent', () => {
             mode: 'standard',
             titleRows: 2,
             previewRows: 9,
-            showProperties: true,
-            showFilePreview: false
+            showProperties: true
         } as unknown as ListPaneAppearance);
 
         expect(stored).toEqual({
@@ -131,10 +129,6 @@ describe('stored list appearance intent', () => {
             showProperties: true,
         });
         expect(hasStoredListPaneAppearanceOverride(stored ?? undefined)).toBe(true);
-    });
-
-    it('retains zero preview rows as an explicit hidden-preview choice', () => {
-        expect(getStoredListPaneAppearanceFields({ previewRows: 0 })).toEqual({ previewRows: 0 });
     });
 
     it('treats toggles stored with different values as different overrides', () => {

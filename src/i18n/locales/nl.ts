@@ -440,11 +440,6 @@ export const STRINGS_NL = {
             label: 'Titelrijen',
             option: (rows: number) => `${rows} titelrij${rows === 1 ? '' : 'en'}`
         },
-        previewRows: {
-            label: 'Voorbeeldrijen',
-            none: 'Geen',
-            option: (rows: number) => `${rows} voorbeeldrij${rows === 1 ? '' : 'en'}`
-        },
         groupBy: 'Groeperen op',
         properties: 'Eigenschappen',
         resetAppearance: 'Uiterlijk herstellen',
@@ -1103,7 +1098,6 @@ export const STRINGS_NL = {
                 groups: {
                     icon: 'Pictogram',
                     title: 'Titel',
-                    previewText: 'Voorbeeldtekst',
                     featureImage: 'Uitgelichte afbeelding',
                     properties: 'Eigenschappen'
                 }
@@ -1919,50 +1913,6 @@ export const STRINGS_NL = {
                 help: 'Veelvoorkomende formaten:\nHH:mm = 14:30 (24-uurs)\nh:mm a = 2:30 PM (12-uurs)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24-uurs\nhh/h = 12-uurs\nmm = minuten\nss = seconden\na = AM/PM',
                 helpTooltip: 'Formaat met Moment',
                 momentLinkText: 'Moment-formaat'
-            },
-            showNotePreview: {
-                name: 'Notitievoorbeeld tonen',
-                desc: 'Voorbeeldtekst onder notitienamen weergeven.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Koppen overslaan in voorbeeld',
-                desc: 'Kopregels overslaan bij het genereren van voorbeeldtekst.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Codeblokken overslaan in voorbeeld',
-                desc: 'Codeblokken overslaan bij het genereren van voorbeeldtekst.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Callouts overslaan in voorbeeld',
-                desc: 'Callout-blokken overslaan bij het genereren van voorbeeldtekst.'
-            },
-            stripHtmlInPreview: {
-                name: 'HTML verwijderen in voorbeelden',
-                desc: 'HTML-tags uit de voorbeeldtekst verwijderen. Kan de prestaties bij grote notities beïnvloeden.'
-            },
-            stripLatexInPreview: {
-                name: 'LaTeX verwijderen in voorbeelden',
-                desc: 'Inline- en blok-LaTeX-expressies uit de voorbeeldtekst verwijderen.'
-            },
-            previewProperties: {
-                name: 'Voorbeeldeigenschappen',
-                desc: 'Kommagescheiden lijst van frontmatter-eigenschappen om te controleren op voorbeeldtekst. De eerste eigenschap met tekst wordt gebruikt.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Terugvallen op notitie-inhoud',
-                desc: 'Toon notitie-inhoud als voorbeeld wanneer geen van de opgegeven eigenschappen tekst bevat.'
-            },
-            previewRows: {
-                name: 'Voorbeeldrijen',
-                desc: 'Aantal weer te geven rijen voor voorbeeldtekst.',
-                options: {
-                    '1': '1 rij',
-                    '2': '2 rijen',
-                    '3': '3 rijen',
-                    '4': '4 rijen',
-                    '5': '5 rijen'
-                }
             },
             titleRows: {
                 name: 'Titelrijen',

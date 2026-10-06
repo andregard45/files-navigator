@@ -27,13 +27,9 @@ import { getVersionedResourcePath } from '../../utils/resourcePath';
 
 const FEATURE_IMAGE_REGEN_THROTTLE_MS = 10000;
 
-export type FileItemContentDb = Pick<
-    IndexedDBStorage,
-    'getCachedPreviewText' | 'getFile' | 'onFileContentChange' | 'ensurePreviewTextLoaded' | 'getFeatureImageBlob'
->;
+export type FileItemContentDb = Pick<IndexedDBStorage, 'getFile' | 'onFileContentChange' | 'getFeatureImageBlob'>;
 
 export interface FileItemCacheSnapshot {
-    previewText: string;
     tags: string[];
     featureImageKey: string | null;
     featureImageStatus: FeatureImageStatus;
@@ -42,7 +38,6 @@ export interface FileItemCacheSnapshot {
 }
 
 export interface FileItemContentLoadOptions {
-    loadPreviewText?: boolean;
     loadTags?: boolean;
     loadFeatureImage?: boolean;
     loadProperties?: boolean;
@@ -53,7 +48,6 @@ type ResolvedFileItemContentLoadOptions = Required<FileItemContentLoadOptions>;
 export interface UseFileItemContentStateParams {
     app: App;
     file: TFile;
-    showPreview: boolean;
     showImage: boolean;
     skipFeatureImage?: boolean;
     fileStatMtime?: number;
@@ -64,7 +58,6 @@ export interface UseFileItemContentStateParams {
 }
 
 export interface FileItemContentState {
-    previewText: string;
     tags: string[];
     featureImageKey: string | null;
     featureImageStatus: FeatureImageStatus;
@@ -105,7 +98,6 @@ export function shouldRefreshFileItemMetadataVersionForContentChange({
 
 function resolveFileItemContentLoadOptions(loadOptions?: FileItemContentLoadOptions): ResolvedFileItemContentLoadOptions {
     return {
-        loadPreviewText: loadOptions?.loadPreviewText ?? true,
         loadTags: loadOptions?.loadTags ?? true,
         loadFeatureImage: loadOptions?.loadFeatureImage ?? true,
         loadProperties: loadOptions?.loadProperties ?? true
@@ -115,7 +107,6 @@ function resolveFileItemContentLoadOptions(loadOptions?: FileItemContentLoadOpti
 export function loadFileItemCacheSnapshot({
     app,
     file,
-    showPreview,
     showImage,
     skipFeatureImage,
     fileStatMtime = file.stat.mtime,
@@ -124,7 +115,6 @@ export function loadFileItemCacheSnapshot({
 }: {
     app: App;
     file: TFile;
-    showPreview: boolean;
     showImage: boolean;
     skipFeatureImage?: boolean;
     fileStatMtime?: number;
@@ -132,16 +122,11 @@ export function loadFileItemCacheSnapshot({
     loadOptions?: FileItemContentLoadOptions;
 }): FileItemCacheSnapshot {
     const {
-        loadPreviewText: shouldLoadPreviewText,
         loadTags: shouldLoadTags,
         loadFeatureImage: shouldLoadFeatureImage,
         loadProperties: shouldLoadProperties
     } = resolveFileItemContentLoadOptions(loadOptions);
-    const shouldReadFileRecord =
-        shouldLoadTags ||
-        shouldLoadFeatureImage ||
-        shouldLoadProperties;
-    const preview = shouldLoadPreviewText && showPreview && file.extension === 'md' ? db.getCachedPreviewText(file.path) : '';
+    const shouldReadFileRecord = shouldLoadTags || shouldLoadFeatureImage || shouldLoadProperties;
     const record = shouldReadFileRecord ? db.getFile(file.path) : null;
     const tags = shouldLoadTags ? [...getCachedFileTags({ app, file, db, fileData: record })] : [];
     const isDirectImageFile = shouldLoadFeatureImage && showImage && !skipFeatureImage && isRasterImageFile(file);
@@ -164,7 +149,6 @@ export function loadFileItemCacheSnapshot({
     }
 
     return {
-        previewText: preview,
         tags,
         featureImageKey,
         featureImageStatus,
@@ -178,7 +162,6 @@ export type FileItemContentBox = Omit<FileItemContentState, 'featureImageUrl'>;
 
 function boxFromSnapshot(snapshot: FileItemCacheSnapshot): FileItemContentBox {
     return {
-        previewText: snapshot.previewText,
         tags: snapshot.tags,
         featureImageKey: snapshot.featureImageKey,
         featureImageStatus: snapshot.featureImageStatus,
@@ -192,7 +175,6 @@ function mergeSnapshotIntoBox(prev: FileItemContentBox, snapshot: FileItemCacheS
     const tags = areStringArraysEqual(prev.tags, snapshot.tags) ? prev.tags : snapshot.tags;
     const properties = arePropertyItemsEqual(prev.properties, snapshot.properties) ? prev.properties : snapshot.properties;
     if (
-        prev.previewText === snapshot.previewText &&
         tags === prev.tags &&
         prev.featureImageKey === snapshot.featureImageKey &&
         prev.featureImageStatus === snapshot.featureImageStatus &&
@@ -212,22 +194,16 @@ function mergeSnapshotIntoBox(prev: FileItemContentBox, snapshot: FileItemCacheS
 export function applyFileItemContentChangeToBox({
     prev,
     changes,
-    shouldLoadPreviewText,
     shouldLoadTags,
     shouldLoadFeatureImage,
     shouldLoadProperties,
-    showPreview,
-    fileExtension,
     shouldRefreshMetadataVersion
 }: {
     prev: FileItemContentBox;
     changes: FileContentChange['changes'];
-    shouldLoadPreviewText: boolean;
     shouldLoadTags: boolean;
     shouldLoadFeatureImage: boolean;
     shouldLoadProperties: boolean;
-    showPreview: boolean;
-    fileExtension: string;
     shouldRefreshMetadataVersion: boolean;
 }): FileItemContentBox {
     let next = prev;
@@ -237,13 +213,6 @@ export function applyFileItemContentChangeToBox({
         }
         return next;
     };
-
-    if (changes.preview !== undefined && shouldLoadPreviewText && showPreview && fileExtension === 'md') {
-        const nextPreview = changes.preview || '';
-        if (prev.previewText !== nextPreview) {
-            mutate().previewText = nextPreview;
-        }
-    }
 
     if (changes.featureImageKey !== undefined && shouldLoadFeatureImage) {
         const nextKey = changes.featureImageKey ?? null;
@@ -283,7 +252,6 @@ export function applyFileItemContentChangeToBox({
 export function useFileItemContentState({
     app,
     file,
-    showPreview,
     showImage,
     skipFeatureImage = false,
     fileStatMtime = file.stat.mtime,
@@ -292,27 +260,19 @@ export function useFileItemContentState({
     loadOptions,
     refreshMetadataVersionOnFeatureImageChange = false
 }: UseFileItemContentStateParams): FileItemContentState {
-    const loadPreviewTextOption = loadOptions?.loadPreviewText;
     const loadTagsOption = loadOptions?.loadTags;
     const loadFeatureImageOption = loadOptions?.loadFeatureImage;
     const loadPropertiesOption = loadOptions?.loadProperties;
     const resolvedLoadOptions = useMemo(
         () =>
             resolveFileItemContentLoadOptions({
-                loadPreviewText: loadPreviewTextOption,
                 loadTags: loadTagsOption,
                 loadFeatureImage: loadFeatureImageOption,
                 loadProperties: loadPropertiesOption
             }),
-        [
-            loadFeatureImageOption,
-            loadPreviewTextOption,
-            loadPropertiesOption,
-            loadTagsOption
-        ]
+        [loadFeatureImageOption, loadPropertiesOption, loadTagsOption]
     );
     const {
-        loadPreviewText: shouldLoadPreviewText,
         loadTags: shouldLoadTags,
         loadFeatureImage: shouldLoadFeatureImage,
         loadProperties: shouldLoadProperties
@@ -321,14 +281,13 @@ export function useFileItemContentState({
         return loadFileItemCacheSnapshot({
             app,
             file,
-            showPreview,
             showImage,
             skipFeatureImage,
             fileStatMtime,
             db: getDB(),
             loadOptions: resolvedLoadOptions
         });
-    }, [app, file, fileStatMtime, getDB, resolvedLoadOptions, showImage, showPreview, skipFeatureImage]);
+    }, [app, file, fileStatMtime, getDB, resolvedLoadOptions, showImage, skipFeatureImage]);
 
     const initialDataRef = useRef<FileItemCacheSnapshot | null>(null);
     const initialData = initialDataRef.current ?? loadSnapshot();
@@ -359,21 +318,14 @@ export function useFileItemContentState({
                     applyFileItemContentChangeToBox({
                         prev,
                         changes,
-                        shouldLoadPreviewText,
                         shouldLoadTags,
                         shouldLoadFeatureImage,
                         shouldLoadProperties,
-                        showPreview,
-                        fileExtension: file.extension,
                         shouldRefreshMetadataVersion
                     })
                 );
             }
         });
-
-        if (shouldLoadPreviewText && showPreview && file.extension === 'md') {
-            void db.ensurePreviewTextLoaded(file.path);
-        }
 
         return () => {
             unsubscribe();
@@ -384,11 +336,9 @@ export function useFileItemContentState({
         getDB,
         loadSnapshot,
         shouldLoadFeatureImage,
-        shouldLoadPreviewText,
         shouldLoadProperties,
         shouldLoadTags,
-        refreshMetadataVersionOnFeatureImageChange,
-        showPreview
+        refreshMetadataVersionOnFeatureImageChange
     ]);
 
     useEffect(() => {
@@ -475,7 +425,6 @@ export function useFileItemContentState({
     ]);
 
     return {
-        previewText: box.previewText,
         tags: box.tags,
         featureImageKey: box.featureImageKey,
         featureImageStatus: box.featureImageStatus,

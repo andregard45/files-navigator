@@ -233,8 +233,6 @@ describe('Content provider retry-later semantics', () => {
         const settings: NotebookNavigatorSettings = {
             ...DEFAULT_SETTINGS,
             showFilePreview: true,
-            previewProperties: ['summary'],
-            previewPropertiesFallback: false
         };
 
         const result = await provider.runProcessFile(file, null, settings);
@@ -258,8 +256,6 @@ describe('Content provider retry-later semantics', () => {
         const settings: NotebookNavigatorSettings = {
             ...DEFAULT_SETTINGS,
             showFilePreview: true,
-            previewProperties: ['summary'],
-            previewPropertiesFallback: false
         };
         const fileData: FileData = {
             mtime: file.stat.mtime,

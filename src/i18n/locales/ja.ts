@@ -437,11 +437,6 @@ export const STRINGS_JA = {
             label: 'タイトル行数',
             option: (rows: number) => `タイトル${rows}行`
         },
-        previewRows: {
-            label: 'プレビュー行数',
-            none: 'なし',
-            option: (rows: number) => `プレビュー${rows}行`
-        },
         groupBy: 'グループ化',
         properties: 'プロパティ',
         resetAppearance: '外観をリセット',
@@ -1098,7 +1093,6 @@ export const STRINGS_JA = {
                 groups: {
                     icon: 'アイコン',
                     title: 'タイトル',
-                    previewText: 'プレビューテキスト',
                     featureImage: 'アイキャッチ画像',
                     properties: 'プロパティ'
                 }
@@ -1911,50 +1905,6 @@ export const STRINGS_JA = {
                 help: '一般的な形式：\nHH:mm = 14:30（24時間制）\nh:mm a = 2:30 PM（12時間制）\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nトークン：\nHH/H = 24時間制\nhh/h = 12時間制\nmm = 分\nss = 秒\na = AM/PM',
                 helpTooltip: 'Moment形式',
                 momentLinkText: 'Moment フォーマット'
-            },
-            showNotePreview: {
-                name: 'ノートプレビューを表示',
-                desc: 'ノート名の下にプレビューテキストを表示します。'
-            },
-            skipHeadingsInPreview: {
-                name: 'プレビューで見出しをスキップ',
-                desc: 'プレビューテキスト生成時に見出し行をスキップします。'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'プレビューでコードブロックをスキップ',
-                desc: 'プレビューテキスト生成時にコードブロックをスキップします。'
-            },
-            skipCalloutsInPreview: {
-                name: 'プレビューでコールアウトをスキップ',
-                desc: 'プレビューテキスト生成時にコールアウトブロックをスキップします。'
-            },
-            stripHtmlInPreview: {
-                name: 'プレビューのHTMLを削除',
-                desc: 'プレビューテキストからHTMLタグを削除します。大きなノートではパフォーマンスに影響する場合があります。'
-            },
-            stripLatexInPreview: {
-                name: 'プレビューのLaTeXを削除',
-                desc: 'プレビューテキストからインラインおよびブロックLaTeX式を削除します。'
-            },
-            previewProperties: {
-                name: 'プレビュープロパティ',
-                desc: 'プレビューテキストを検索するフロントマタープロパティのカンマ区切りリスト。テキストがある最初のプロパティが使用されます。',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'ノート内容にフォールバック',
-                desc: '指定されたプロパティにテキストが含まれていない場合、ノート内容をプレビューとして表示します。'
-            },
-            previewRows: {
-                name: 'プレビュー行数',
-                desc: 'プレビューテキストの表示行数。',
-                options: {
-                    '1': '1行',
-                    '2': '2行',
-                    '3': '3行',
-                    '4': '4行',
-                    '5': '5行'
-                }
             },
             titleRows: {
                 name: 'タイトル行数',

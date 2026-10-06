@@ -326,7 +326,7 @@ export const ListPane = React.memo(
         const showHiddenItems = uxPreferences.showHiddenItems;
         const showCalendar = uxPreferences.showCalendar;
         const appearanceSettings = useListPaneAppearance();
-        const { getFileDisplayName, getDB, getFileTimestamps, hasPreview, regenerateFeatureImageForFile } = useFileCache();
+        const { getFileDisplayName, getDB, getFileTimestamps, regenerateFeatureImageForFile } = useFileCache();
         const { noteShortcutKeysByPath, addNoteShortcut, removeShortcut } = useShortcuts();
         const uiState = useUIState();
         const isVerticalDualPane = !uiState.singlePane && uiState.effectiveDualPaneOrientation === 'vertical';
@@ -553,6 +553,11 @@ export const ListPane = React.memo(
             () =>
                 effectiveGroupBy === appearanceSettings.groupBy ? appearanceSettings : { ...appearanceSettings, groupBy: effectiveGroupBy },
             [appearanceSettings, effectiveGroupBy]
+        );
+        // Omnisearch excerpts render on the file-item secondary line while a search is active.
+        const layoutAppearanceSettings = useMemo(
+            () => ({ ...effectiveAppearanceSettings, showSearchExcerpt: Boolean(isSearchActive) }),
+            [effectiveAppearanceSettings, isSearchActive]
         );
 
         const saveManualSortAssignments = React.useCallback(
@@ -805,10 +810,9 @@ export const ListPane = React.memo(
                 getFileDisplayName,
                 getDB,
                 getFileTimestamps,
-                hasPreview,
                 regenerateFeatureImageForFile
             }),
-            [getFileDisplayName, getDB, getFileTimestamps, hasPreview, regenerateFeatureImageForFile]
+            [getFileDisplayName, getDB, getFileTimestamps, regenerateFeatureImageForFile]
         );
         const syncHoveredFilePathToPointer = React.useCallback((scrollElement: HTMLDivElement | null) => {
             const nextHoveredFilePath = getHoveredFilePathAtPointer(scrollElement, hoverPointerClientPositionRef.current);
@@ -1786,7 +1790,7 @@ export const ListPane = React.memo(
                             selectionType={selectionType}
                             sortOption={effectiveSortOption}
                             fileIconSize={listMeasurements.fileIconSize}
-                            appearanceSettings={effectiveAppearanceSettings}
+                            appearanceSettings={layoutAppearanceSettings}
                             includeDescendantNotes={effectiveIncludeDescendantNotes}
                             fileNameIconNeedles={fileNameIconNeedles}
                             visibleListPropertyKeys={visibleListPropertyKeys}
@@ -1834,7 +1838,7 @@ export const ListPane = React.memo(
                             onFileClick={handleFileItemClick}
                             onModifySearchWithProperty={modifySearchWithPropertyWithDefaultScope}
                             fileIconSize={listMeasurements.fileIconSize}
-                            appearanceSettings={effectiveAppearanceSettings}
+                            appearanceSettings={layoutAppearanceSettings}
                             includeDescendantNotes={effectiveIncludeDescendantNotes}
                             fileNameIconNeedles={fileNameIconNeedles}
                             visibleListPropertyKeys={visibleListPropertyKeys}

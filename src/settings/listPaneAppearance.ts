@@ -27,14 +27,19 @@ import {
 
 export type { ListPaneAppearance } from './types';
 
+/** Number of clamped excerpt rows reserved for Omnisearch search results in file items. */
+export const SEARCH_EXCERPT_ROWS = 2;
+
 export interface ListPaneAppearanceSettings {
     mode: ListDisplayMode;
     titleRows: number;
-    previewRows: number;
-    showPreview: boolean;
     showImage: boolean;
     showProperties: boolean;
     groupBy: ListNoteGroupingOption;
+    /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
+    showSearchExcerpt?: boolean;
+    /** Row count used to reserve/clamp the Omnisearch excerpt line area. */
+    readonly previewRows: number;
 }
 
 /**
@@ -51,16 +56,11 @@ export type ListPaneAppearanceFields = Omit<ListPaneAppearance, 'groupBy'>;
 const LIST_PANE_APPEARANCE_FIELD_KEYS = [
     'mode',
     'titleRows',
-    'previewRows',
     ...LIST_PANE_TOGGLE_KEYS
 ] as const satisfies readonly (keyof ListPaneAppearanceFields)[];
 
 function isValidTitleRows(value: unknown): value is number {
     return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 3;
-}
-
-function isValidPreviewRows(value: unknown): value is number {
-    return typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= 5;
 }
 
 /**
@@ -78,9 +78,6 @@ export function getStoredListPaneAppearanceFields(appearance: ListPaneAppearance
     }
     if (isValidTitleRows(appearance.titleRows)) {
         normalized.titleRows = appearance.titleRows;
-    }
-    if (isValidPreviewRows(appearance.previewRows)) {
-        normalized.previewRows = appearance.previewRows;
     }
     LIST_PANE_TOGGLE_KEYS.forEach(key => {
         if (typeof appearance[key] === 'boolean') {
@@ -200,7 +197,6 @@ export function resolveListPaneAppearance({
     const isCompact = mode === 'compact';
     const showProperties =
         (appearance?.showProperties ?? settings.showFileProperties) && (!isCompact || settings.showFilePropertiesInCompactMode);
-    const previewRowsOverride = isValidPreviewRows(appearance?.previewRows) ? appearance.previewRows : undefined;
     const grouping = resolveListGroupingOverride({
         noteGrouping: settings.noteGrouping,
         selectionType,
@@ -210,11 +206,10 @@ export function resolveListPaneAppearance({
     return {
         mode,
         titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
-        // Zero hides preview text, but the configured row count still sizes feature-image and pill layouts.
-        previewRows: previewRowsOverride && previewRowsOverride > 0 ? previewRowsOverride : settings.previewRows,
-        showPreview: !isCompact && settings.showFilePreview && previewRowsOverride !== 0,
         showImage: !isCompact && settings.showFeatureImage,
         showProperties,
+        // The file-display preview feature was removed; excerpt sizing is a fixed internal constant.
+        previewRows: isCompact ? 1 : SEARCH_EXCERPT_ROWS,
         groupBy: grouping.effectiveGrouping
     };
 }

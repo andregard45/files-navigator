@@ -435,11 +435,6 @@ export const STRINGS_TH = {
             label: 'แถวชื่อเรื่อง',
             option: (rows: number) => `${rows} แถวชื่อเรื่อง`
         },
-        previewRows: {
-            label: 'แถวตัวอย่าง',
-            none: 'ไม่มี',
-            option: (rows: number) => `${rows} แถวตัวอย่าง`
-        },
         groupBy: 'จัดกลุ่มตาม',
         properties: 'คุณสมบัติ',
         resetAppearance: 'รีเซ็ตลักษณะ',
@@ -1090,7 +1085,6 @@ export const STRINGS_TH = {
                 groups: {
                     icon: 'ไอคอน',
                     title: 'ชื่อเรื่อง',
-                    previewText: 'ข้อความตัวอย่าง',
                     featureImage: 'รูปภาพเด่น',
                     properties: 'คุณสมบัติ'
                 }
@@ -1903,50 +1897,6 @@ export const STRINGS_TH = {
                 help: 'รูปแบบทั่วไป:\nHH:mm = 14:30 (24 ชั่วโมง)\nh:mm a = 2:30 PM (12 ชั่วโมง)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nโทเคน:\nHH/H = 24 ชั่วโมง\nhh/h = 12 ชั่วโมง\nmm = นาที\nss = วินาที\na = AM/PM',
                 helpTooltip: 'รูปแบบโดยใช้ Moment',
                 momentLinkText: 'รูปแบบ Moment'
-            },
-            showNotePreview: {
-                name: 'แสดงตัวอย่างโน้ต',
-                desc: 'แสดงข้อความตัวอย่างใต้ชื่อโน้ต'
-            },
-            skipHeadingsInPreview: {
-                name: 'ข้ามหัวข้อในตัวอย่าง',
-                desc: 'ข้ามบรรทัดหัวข้อเมื่อสร้างข้อความตัวอย่าง'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'ข้ามบล็อกโค้ดในตัวอย่าง',
-                desc: 'ข้ามบล็อกโค้ดเมื่อสร้างข้อความตัวอย่าง'
-            },
-            skipCalloutsInPreview: {
-                name: 'ข้ามบล็อกเน้นในตัวอย่าง',
-                desc: 'ข้ามบล็อกเน้นเมื่อสร้างข้อความตัวอย่าง'
-            },
-            stripHtmlInPreview: {
-                name: 'ลบ HTML ในตัวอย่าง',
-                desc: 'ลบแท็ก HTML ออกจากข้อความตัวอย่าง อาจส่งผลต่อประสิทธิภาพในโน้ตขนาดใหญ่'
-            },
-            stripLatexInPreview: {
-                name: 'ลบ LaTeX ในตัวอย่าง',
-                desc: 'ลบนิพจน์ LaTeX แบบอินไลน์และแบบบล็อกออกจากข้อความตัวอย่าง'
-            },
-            previewProperties: {
-                name: 'คุณสมบัติตัวอย่าง',
-                desc: 'รายการคุณสมบัติ frontmatter คั่นด้วยเครื่องหมายจุลภาคเพื่อตรวจสอบข้อความตัวอย่าง คุณสมบัติแรกที่มีข้อความจะถูกใช้',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'ใช้เนื้อหาโน้ตแทน',
-                desc: 'แสดงเนื้อหาโน้ตเป็นตัวอย่างเมื่อไม่มีคุณสมบัติที่ระบุมีข้อความ'
-            },
-            previewRows: {
-                name: 'แถวตัวอย่าง',
-                desc: 'จำนวนแถวที่จะแสดงสำหรับข้อความตัวอย่าง',
-                options: {
-                    '1': '1 แถว',
-                    '2': '2 แถว',
-                    '3': '3 แถว',
-                    '4': '4 แถว',
-                    '5': '5 แถว'
-                }
             },
             titleRows: {
                 name: 'แถวชื่อเรื่อง',

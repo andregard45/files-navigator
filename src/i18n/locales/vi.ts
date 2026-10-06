@@ -435,11 +435,6 @@ export const STRINGS_VI = {
             label: 'Dòng tiêu đề',
             option: (rows: number) => `${rows} dòng tiêu đề`
         },
-        previewRows: {
-            label: 'Dòng xem trước',
-            none: 'Không',
-            option: (rows: number) => `${rows} dòng xem trước`
-        },
         groupBy: 'Nhóm theo',
         properties: 'Thuộc tính',
         resetAppearance: 'Đặt lại giao diện',
@@ -1096,7 +1091,6 @@ export const STRINGS_VI = {
                 groups: {
                     icon: 'Biểu tượng',
                     title: 'Tiêu đề',
-                    previewText: 'Văn bản xem trước',
                     featureImage: 'Hình ảnh nổi bật',
                     properties: 'Thuộc tính'
                 }
@@ -1910,50 +1904,6 @@ export const STRINGS_VI = {
                 help: 'Định dạng phổ biến:\nh:mm a = 2:30 PM (12 giờ)\nHH:mm = 14:30 (24 giờ)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nToken:\nHH/H = 24 giờ\nhh/h = 12 giờ\nmm = phút\nss = giây\na = SA/CH',
                 helpTooltip: 'Định dạng với Moment',
                 momentLinkText: 'định dạng Moment'
-            },
-            showNotePreview: {
-                name: 'Hiện xem trước ghi chú',
-                desc: 'Hiển thị văn bản xem trước bên dưới tên ghi chú.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Bỏ qua tiêu đề trong xem trước',
-                desc: 'Bỏ qua dòng tiêu đề khi tạo văn bản xem trước.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Bỏ qua khối code trong xem trước',
-                desc: 'Bỏ qua khối code khi tạo văn bản xem trước.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Bỏ qua callout trong xem trước',
-                desc: 'Bỏ qua khối callout khi tạo văn bản xem trước.'
-            },
-            stripHtmlInPreview: {
-                name: 'Xóa HTML trong xem trước',
-                desc: 'Xóa thẻ HTML khỏi văn bản xem trước. Có thể ảnh hưởng đến hiệu suất với ghi chú lớn.'
-            },
-            stripLatexInPreview: {
-                name: 'Xóa LaTeX trong xem trước',
-                desc: 'Xóa biểu thức LaTeX nội tuyến và khối khỏi văn bản xem trước.'
-            },
-            previewProperties: {
-                name: 'Thuộc tính xem trước',
-                desc: 'Danh sách thuộc tính frontmatter phân cách bằng dấu phẩy để kiểm tra văn bản xem trước. Thuộc tính đầu tiên có văn bản sẽ được dùng.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Dùng nội dung ghi chú làm dự phòng',
-                desc: 'Hiển thị nội dung ghi chú làm xem trước khi không có thuộc tính nào được chỉ định chứa văn bản.'
-            },
-            previewRows: {
-                name: 'Dòng xem trước',
-                desc: 'Số dòng hiển thị cho văn bản xem trước.',
-                options: {
-                    '1': '1 dòng',
-                    '2': '2 dòng',
-                    '3': '3 dòng',
-                    '4': '4 dòng',
-                    '5': '5 dòng'
-                }
             },
             titleRows: {
                 name: 'Dòng tiêu đề',

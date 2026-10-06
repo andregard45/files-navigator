@@ -99,7 +99,7 @@ export function CalendarRightSidebar() {
             return;
         }
 
-        const { shouldClearFeatureImage, shouldClearPreview } = getMarkdownPipelineClearFlags(
+        const { shouldClearFeatureImage } = getMarkdownPipelineClearFlags(
             {
                 oldSettings,
                 newSettings: settings
@@ -107,7 +107,7 @@ export function CalendarRightSidebar() {
             app
         );
         const enabledFeatureImages = oldSettings.showFeatureImage !== settings.showFeatureImage && settings.showFeatureImage;
-        if (!shouldClearFeatureImage && !shouldClearPreview && !enabledFeatureImages) {
+        if (!shouldClearFeatureImage && !enabledFeatureImages) {
             return;
         }
 
@@ -132,9 +132,6 @@ export function CalendarRightSidebar() {
 
             const db = getDBInstance();
             const paths = files.map(file => file.path);
-            if (shouldClearPreview) {
-                await db.batchClearFileContent(paths, 'preview');
-            }
             if (shouldClearFeatureImage) {
                 await db.batchClearFileContent(paths, 'featureImage');
             }

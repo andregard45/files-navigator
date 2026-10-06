@@ -304,7 +304,6 @@ describe('PluginSettingsController.loadSettings', () => {
                         showTags: true,
                         showProperties: false,
                         textCount: 'characters',
-                        showFilePreview: false,
                         textCountDisplay: 'characters',
                         groupBy: 'folder',
                         unknown: 'discard me'

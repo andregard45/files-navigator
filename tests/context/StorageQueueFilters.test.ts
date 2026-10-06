@@ -199,7 +199,7 @@ describe('Storage queue filters', () => {
             })
         );
 
-        settings = { ...settings, showFilePreview: false, showFeatureImage: true };
+        settings = { ...settings, showFeatureImage: true };
 
         const types: ContentProviderType[] = ['markdownPipeline'];
         const result = filterFilesRequiringMetadataSources([file], types, settings, { app });
@@ -230,8 +230,7 @@ describe('Storage queue filters', () => {
 
         settings = {
             ...settings,
-            showFilePreview: false,
-            showFeatureImage: true,
+                showFeatureImage: true,
             featureImageExcludeProperties: ['private']
         };
 
@@ -265,8 +264,7 @@ describe('Storage queue filters', () => {
 
         settings = {
             ...settings,
-            showFilePreview: false,
-            showFeatureImage: false,
+                showFeatureImage: false,
             showTooltips: false,
             textCountDisplay: 'none',
         };

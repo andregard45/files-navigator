@@ -34,7 +34,6 @@ class TestMarkdownPipelineContentProvider extends MarkdownPipelineContentProvide
 function createSettings(overrides: Partial<NotebookNavigatorSettings> & { propertyFields?: string }): NotebookNavigatorSettings {
     const { propertyFields, ...settingsOverrides } = overrides;
     const settings = structuredClone(DEFAULT_SETTINGS);
-    settings.showFilePreview = false;
     settings.showFeatureImage = false;
     Object.assign(settings, settingsOverrides);
 

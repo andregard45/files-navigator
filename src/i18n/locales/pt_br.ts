@@ -438,11 +438,6 @@ export const STRINGS_PT_BR = {
             label: 'Linhas do título',
             option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de título`
         },
-        previewRows: {
-            label: 'Linhas de visualização',
-            none: 'Nenhuma',
-            option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de visualização`
-        },
         groupBy: 'Agrupar por',
         properties: 'Propriedades',
         resetAppearance: 'Redefinir aparência',
@@ -1102,7 +1097,6 @@ export const STRINGS_PT_BR = {
                 groups: {
                     icon: 'Ícone',
                     title: 'Título',
-                    previewText: 'Texto de visualização',
                     featureImage: 'Imagem de destaque',
                     properties: 'Propriedades'
                 }
@@ -1919,50 +1913,6 @@ export const STRINGS_PT_BR = {
                 help: 'Formatos comuns:\nh:mm a = 2:30 PM (12 horas)\nHH:mm = 14:30 (24 horas)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            showNotePreview: {
-                name: 'Mostrar visualização de nota',
-                desc: 'Exibir texto de visualização abaixo dos nomes das notas.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Pular cabeçalhos na visualização',
-                desc: 'Pular linhas de cabeçalho ao gerar texto de visualização.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Pular blocos de código na visualização',
-                desc: 'Pular blocos de código ao gerar texto de visualização.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Pular callouts na visualização',
-                desc: 'Pular blocos de callout ao gerar texto de visualização.'
-            },
-            stripHtmlInPreview: {
-                name: 'Remover HTML nas visualizações',
-                desc: 'Remover tags HTML do texto de visualização. Pode afetar o desempenho em notas grandes.'
-            },
-            stripLatexInPreview: {
-                name: 'Remover LaTeX nas visualizações',
-                desc: 'Remover expressões LaTeX inline e em bloco do texto de visualização.'
-            },
-            previewProperties: {
-                name: 'Propriedades de visualização',
-                desc: 'Lista separada por vírgulas de propriedades do frontmatter para verificar texto de visualização. A primeira propriedade com texto será usada.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Recorrer ao conteúdo da nota',
-                desc: 'Mostrar o conteúdo da nota como visualização quando nenhuma das propriedades especificadas contém texto.'
-            },
-            previewRows: {
-                name: 'Linhas de visualização',
-                desc: 'Número de linhas a exibir para texto de visualização.',
-                options: {
-                    '1': '1 linha',
-                    '2': '2 linhas',
-                    '3': '3 linhas',
-                    '4': '4 linhas',
-                    '5': '5 linhas'
-                }
             },
             titleRows: {
                 name: 'Linhas de título',

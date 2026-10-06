@@ -437,11 +437,6 @@ export const STRINGS_DE = {
             label: 'Titelzeilen',
             option: (rows: number) => `${rows} Titelzeile${rows === 1 ? '' : 'n'}`
         },
-        previewRows: {
-            label: 'Vorschauzeilen',
-            none: 'Keine',
-            option: (rows: number) => `${rows} Vorschauzeile${rows === 1 ? '' : 'n'}`
-        },
         groupBy: 'Gruppieren nach',
         properties: 'Eigenschaften',
         resetAppearance: 'Darstellung zurücksetzen',
@@ -1102,7 +1097,6 @@ export const STRINGS_DE = {
                 groups: {
                     icon: 'Symbol',
                     title: 'Titel',
-                    previewText: 'Vorschautext',
                     featureImage: 'Feature-Bild',
                     properties: 'Eigenschaften'
                 }
@@ -1920,50 +1914,6 @@ export const STRINGS_DE = {
                 help: 'Gängige Formate:\nHH:mm = 14:30 (24-Stunden)\nh:mm a = 2:30 PM (12-Stunden)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24-Stunden\nhh/h = 12-Stunden\nmm = Minuten\nss = Sekunden\na = AM/PM',
                 helpTooltip: 'Format mit Moment',
                 momentLinkText: 'Moment-Format'
-            },
-            showNotePreview: {
-                name: 'Notizenvorschau anzeigen',
-                desc: 'Vorschautext unter Notizennamen anzeigen.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Überschriften in Vorschau überspringen',
-                desc: 'Überschriftenzeilen bei der Erstellung des Vorschautextes überspringen.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Codeblöcke in Vorschau überspringen',
-                desc: 'Codeblöcke bei der Erstellung des Vorschautextes überspringen.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Callouts in Vorschau überspringen',
-                desc: 'Callout-Blöcke bei der Erstellung des Vorschautextes überspringen.'
-            },
-            stripHtmlInPreview: {
-                name: 'HTML in Vorschauen entfernen',
-                desc: 'HTML-Tags aus dem Vorschautext entfernen. Kann die Leistung bei großen Notizen beeinträchtigen.'
-            },
-            stripLatexInPreview: {
-                name: 'LaTeX in Vorschauen entfernen',
-                desc: 'Inline- und Block-LaTeX-Ausdrücke aus dem Vorschautext entfernen.'
-            },
-            previewProperties: {
-                name: 'Vorschau-Eigenschaften',
-                desc: 'Kommagetrennte Liste von Frontmatter-Eigenschaften für Vorschautext. Die erste Eigenschaft mit Text wird verwendet.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Auf Notizinhalt zurückgreifen',
-                desc: 'Notizinhalt als Vorschau anzeigen, wenn keine der angegebenen Eigenschaften Text enthält.'
-            },
-            previewRows: {
-                name: 'Vorschauzeilen',
-                desc: 'Anzahl der Zeilen für den Vorschautext.',
-                options: {
-                    '1': '1 Zeile',
-                    '2': '2 Zeilen',
-                    '3': '3 Zeilen',
-                    '4': '4 Zeilen',
-                    '5': '5 Zeilen'
-                }
             },
             titleRows: {
                 name: 'Titelzeilen',

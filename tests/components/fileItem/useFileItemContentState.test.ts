@@ -127,7 +127,7 @@ describe('useFileItemContentState helpers', () => {
         const snapshot = loadFileItemCacheSnapshot({
             app,
             file,
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: true,
             db: createContentDb(null)
         });
@@ -145,7 +145,7 @@ describe('useFileItemContentState helpers', () => {
         const snapshot = loadFileItemCacheSnapshot({
             app,
             file,
-            showPreview: false,
+            showSearchExcerpt: false,
             showImage: true,
             db: createContentDb(null)
         });

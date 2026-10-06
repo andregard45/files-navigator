@@ -24,14 +24,13 @@ import { type PropertyItem, FileData } from '../../storage/IndexedDBStorage';
 import { getDBInstance } from '../../storage/fileOperations';
 import { areStringArraysEqual } from '../../utils/arrayUtils';
 import { arePropertyItemsEqual, extractFrontmatterPropertyValues } from '../../utils/propertyUtils';
-import { PreviewTextUtils } from '../../utils/previewTextUtils';
 import { createCaseInsensitiveKeyMatcher, type CaseInsensitiveKeyMatcher } from '../../utils/recordUtils';
 import {
     getDrawingDirectFeatureImageKey,
     getDrawingSourceProviderIdWithFrontmatter,
     type DrawingFeatureImageProviderId
 } from '../../utils/drawingFeatureImages';
-import { hasMarkdownFeatureImageConsumer, hasMarkdownPreviewConsumer } from '../../utils/markdownPipelineContentTypes';
+import { hasMarkdownFeatureImageConsumer } from '../../utils/markdownPipelineContentTypes';
 import { isGeneratedThumbnailFile } from '../../utils/fileTypeUtils';
 import type { ContentProviderProcessResult } from './BaseContentProvider';
 import { findFeatureImageReference, hasSvgUrlPathExtension, type FeatureImageReference } from './featureImageReferenceResolver';
@@ -53,13 +52,12 @@ type MarkdownPipelineContext = {
 };
 
 type MarkdownPipelineUpdate = {
-    preview?: string;
     properties?: FileData['properties'];
     featureImageKey?: string | null;
     featureImage?: Blob | null;
 };
 
-type MarkdownPipelineProcessorId = 'preview' | 'properties' | 'featureImage';
+type MarkdownPipelineProcessorId = 'properties' | 'featureImage';
 
 type MarkdownPipelineProcessor = {
     id: MarkdownPipelineProcessorId;
@@ -68,7 +66,6 @@ type MarkdownPipelineProcessor = {
 };
 
 export type MarkdownPipelineClearFlags = {
-    shouldClearPreview: boolean;
     shouldClearProperties: boolean;
     shouldClearFeatureImage: boolean;
 };
@@ -79,26 +76,12 @@ export function getMarkdownPipelineClearFlags(
 ): MarkdownPipelineClearFlags {
     if (!context) {
         return {
-            shouldClearPreview: true,
             shouldClearProperties: true,
             shouldClearFeatureImage: true
         };
     }
 
     const { oldSettings, newSettings } = context;
-
-    const previewExtractionSettingsChanged =
-        oldSettings.skipHeadingsInPreview !== newSettings.skipHeadingsInPreview ||
-        oldSettings.skipCodeBlocksInPreview !== newSettings.skipCodeBlocksInPreview ||
-        oldSettings.skipCalloutsInPreview !== newSettings.skipCalloutsInPreview ||
-        oldSettings.stripHtmlInPreview !== newSettings.stripHtmlInPreview ||
-        oldSettings.stripLatexInPreview !== newSettings.stripLatexInPreview ||
-        !areStringArraysEqual(oldSettings.previewProperties, newSettings.previewProperties) ||
-        oldSettings.previewPropertiesFallback !== newSettings.previewPropertiesFallback;
-    const shouldClearPreview =
-        previewExtractionSettingsChanged ||
-        // Toggling preview clears stale text while the disabled state hides the intermediate empty rows.
-        oldSettings.showFilePreview !== newSettings.showFilePreview;
 
     const featureImagePropertiesChanged = !areStringArraysEqual(oldSettings.featureImageProperties, newSettings.featureImageProperties);
     const featureImageExcludePropertiesChanged = !areStringArraysEqual(
@@ -114,7 +97,6 @@ export function getMarkdownPipelineClearFlags(
             (featureImagePropertiesChanged || oldSettings.downloadExternalFeatureImages !== newSettings.downloadExternalFeatureImages));
 
     return {
-        shouldClearPreview,
         // Property visibility no longer changes the vault-wide property cache because every supported
         // frontmatter value is indexed for internal search.
         shouldClearProperties: false,
@@ -221,17 +203,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
 
     private readonly processors: MarkdownPipelineProcessor[] = [
         {
-            id: 'preview',
-            needsProcessing: context => {
-                return (
-                    hasMarkdownPreviewConsumer(context.settings) &&
-                    (!context.fileData || context.fileModified || context.fileData.previewStatus === 'unprocessed') &&
-                    (context.hasContent || context.isDrawing)
-                );
-            },
-            run: async context => await this.processPreview(context)
-        },
-        {
             id: 'properties',
             needsProcessing: context => {
                 return !context.fileData || context.fileModified || context.fileData.properties === null;
@@ -275,14 +246,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         // Appearance maps are observed through their effective word/character consumer state in
         // useStorageSettingsSync, so visual-only appearance edits do not restart this provider.
         return [
-            'showFilePreview',
-            'skipHeadingsInPreview',
-            'skipCodeBlocksInPreview',
-            'skipCalloutsInPreview',
-            'stripHtmlInPreview',
-            'stripLatexInPreview',
-            'previewProperties',
-            'previewPropertiesFallback',
             'showFeatureImage',
             'featureImageProperties',
             'featureImageExcludeProperties',
@@ -321,28 +284,24 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
     }
 
     shouldRegenerate(oldSettings: NotebookNavigatorSettings, newSettings: NotebookNavigatorSettings): boolean {
-        const { shouldClearPreview, shouldClearProperties, shouldClearFeatureImage } = getMarkdownPipelineClearFlags(
+        const { shouldClearProperties, shouldClearFeatureImage } = getMarkdownPipelineClearFlags(
             {
                 oldSettings,
                 newSettings
             },
             this.app
         );
-        return shouldClearPreview || shouldClearProperties || shouldClearFeatureImage;
+        return shouldClearProperties || shouldClearFeatureImage;
     }
 
     async clearContent(context?: { oldSettings: NotebookNavigatorSettings; newSettings: NotebookNavigatorSettings }): Promise<void> {
-        const { shouldClearPreview, shouldClearProperties, shouldClearFeatureImage } = getMarkdownPipelineClearFlags(context, this.app);
+        const { shouldClearProperties, shouldClearFeatureImage } = getMarkdownPipelineClearFlags(context, this.app);
 
-        if (!shouldClearPreview && !shouldClearProperties && !shouldClearFeatureImage) {
+        if (!shouldClearProperties && !shouldClearFeatureImage) {
             return;
         }
 
         const db = getDBInstance();
-
-        if (shouldClearPreview) {
-            await db.batchClearAllFileContent('preview');
-        }
 
         if (shouldClearProperties) {
             await db.batchClearAllFileContent('properties');
@@ -368,10 +327,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             return true;
         }
 
-        const needsPreview = hasMarkdownPreviewConsumer(settings) && fileData.previewStatus === 'unprocessed';
-        let needsFeatureImage =
-            hasMarkdownFeatureImageConsumer(settings) &&
-            (fileData.featureImageKey === null || fileData.featureImageStatus === 'unprocessed');
+        let needsFeatureImage = hasMarkdownFeatureImageConsumer(settings) && (fileData.featureImageKey === null || fileData.featureImageStatus === 'unprocessed');
         if (hasMarkdownFeatureImageConsumer(settings) && !needsFeatureImage) {
             const frontmatter = this.app.metadataCache.getFileCache(file)?.frontmatter;
             const featureImageExcluded = this.getFeatureImageExcludeMatcher(settings.featureImageExcludeProperties).matches(frontmatter);
@@ -383,7 +339,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         }
         const needsProperties = fileData.properties === null;
 
-        return needsPreview || needsFeatureImage || needsProperties;
+        return needsFeatureImage || needsProperties;
     }
 
     protected async processFile(
@@ -395,9 +351,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             return { update: null, processed: true };
         }
 
-        const previewEnabled = hasMarkdownPreviewConsumer(settings);
         const featureImageEnabled = hasMarkdownFeatureImageConsumer(settings);
-        const previewPropertiesEnabled = previewEnabled && settings.previewProperties.length > 0;
         const featureImagePropertiesEnabled = featureImageEnabled && settings.featureImageProperties.length > 0;
         const featureImageExcludePropertiesEnabled = featureImageEnabled && settings.featureImageExcludeProperties.length > 0;
 
@@ -411,10 +365,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         let drawingProviderId = getDrawingSourceProviderIdWithFrontmatter(job.file, frontmatter);
         let isDrawing = drawingProviderId !== null;
         const fileModified = fileData !== null && fileData.markdownPipelineMtime !== job.file.stat.mtime;
-        const needsPreview = previewEnabled && (!fileData || fileModified || fileData.previewStatus === 'unprocessed');
-        const needsPreviewContent = needsPreview && !isDrawing;
-        const supportsPreviewProperties = !isDrawing || drawingProviderId === 'excalidraw';
-        const needsPreviewPropertyFrontmatter = previewPropertiesEnabled && supportsPreviewProperties && needsPreview;
         const needsPropertyFrontmatterRetry = fileModified && (fileData?.properties?.length ?? 0) > 0;
         const needsFeatureImage =
             featureImageEnabled &&
@@ -424,7 +374,7 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
         // A null frontmatter cache is the stable state for notes without YAML, so an already-empty property
         // cache proceeds immediately. Existing property values retain the retry window because clearing them
         // before metadata catches up would temporarily remove search results and property-tree membership.
-        if (frontmatter === null && (needsPropertyFrontmatterRetry || needsPreviewPropertyFrontmatter || needsFeatureImageFrontmatter)) {
+        if (frontmatter === null && (needsPropertyFrontmatterRetry || needsFeatureImageFrontmatter)) {
             const attempts = this.emptyFrontmatterRetryCounts.get(job.path) ?? 0;
             const isRecent = Date.now() - job.file.stat.mtime <= LIMITS.contentProvider.metadataCache.recentFileWindowMs;
             if (isRecent && attempts < LIMITS.contentProvider.metadataCache.emptyValueRetryLimit) {
@@ -447,11 +397,10 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
                   })
                 : null;
 
-        const needsContent = needsPreviewContent || (needsFeatureImage && !featureImageExcluded && !frontmatterFeatureImageReference);
+        const needsContent = needsFeatureImage && !featureImageExcluded && !frontmatterFeatureImageReference;
 
         const update: {
             path: string;
-            preview?: string;
             featureImage?: Blob | null;
             featureImageKey?: string | null;
             properties?: FileData['properties'];
@@ -481,14 +430,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
                 if (!fileData || fileData.properties === null || !arePropertyItemsEqual(fileData.properties, nextProperties)) {
                     update.properties = nextProperties;
                     hasSafeUpdate = true;
-                }
-
-                if (needsPreviewContent) {
-                    const shouldClearPreview = !fileData || fileData.previewStatus !== 'none';
-                    if (shouldClearPreview) {
-                        update.preview = '';
-                        hasSafeUpdate = true;
-                    }
                 }
 
                 if (needsFeatureImage && (frontmatterFeatureImageReference || featureImageExcluded)) {
@@ -550,14 +491,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             if (!fileData || fileData.properties === null || !arePropertyItemsEqual(fileData.properties, nextProperties)) {
                 update.properties = nextProperties;
                 hasSafeUpdate = true;
-            }
-
-            if (needsPreviewContent && shouldFallback) {
-                const shouldClearPreview = !fileData || fileData.previewStatus !== 'none';
-                if (shouldClearPreview) {
-                    update.preview = '';
-                    hasSafeUpdate = true;
-                }
             }
 
             if (needsFeatureImage && frontmatterFeatureImageReference) {
@@ -645,9 +578,6 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
                 continue;
             }
 
-            if (processorUpdate.preview !== undefined) {
-                update.preview = processorUpdate.preview;
-            }
             if (processorUpdate.properties !== undefined) {
                 update.properties = processorUpdate.properties;
             }
@@ -659,54 +589,13 @@ export class MarkdownPipelineContentProvider extends FeatureImageContentProvider
             }
         }
 
-        const hasContentUpdate =
-            update.preview !== undefined ||
-            update.properties !== undefined ||
-            update.featureImageKey !== undefined;
+        const hasContentUpdate = update.properties !== undefined || update.featureImageKey !== undefined;
 
         if (hasContentUpdate) {
             return { update, processed: true };
         }
 
         return { update: null, processed: true };
-    }
-
-    private async processPreview(context: MarkdownPipelineContext): Promise<MarkdownPipelineUpdate | null> {
-        try {
-            // Excalidraw bodies contain serialized scene data, so only frontmatter properties can contribute preview text.
-            let previewText: string;
-            if (context.drawingProviderId === 'excalidraw') {
-                previewText = PreviewTextUtils.extractPreviewText('', context.settings, context.frontmatter ?? undefined);
-            } else if (context.isDrawing) {
-                previewText = '';
-            } else {
-                previewText = PreviewTextUtils.extractPreviewText(context.content, context.settings, context.frontmatter ?? undefined);
-            }
-
-            if (!context.fileData) {
-                return { preview: previewText };
-            }
-
-            if (previewText.length === 0 && context.fileData.previewStatus === 'none') {
-                return null;
-            }
-
-            if (context.fileData.previewStatus === 'has') {
-                const db = getDBInstance();
-                const cachedPreview = db.getCachedPreviewText(context.file.path);
-                if (cachedPreview.length > 0 && cachedPreview === previewText) {
-                    return null;
-                }
-            }
-
-            return { preview: previewText };
-        } catch (error) {
-            console.error(`Error generating preview for ${context.file.path}:`, error);
-            if (!context.fileData || context.fileData.previewStatus === 'unprocessed') {
-                return { preview: '' };
-            }
-            return null;
-        }
     }
 
     private async processProperties(context: MarkdownPipelineContext): Promise<MarkdownPipelineUpdate | null> {

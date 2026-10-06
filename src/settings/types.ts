@@ -528,8 +528,6 @@ export type ListNoteGroupingOption =
 export interface ListPaneAppearance {
     mode?: ListDisplayMode;
     titleRows?: number;
-    /** Zero hides preview text for this selection; undefined inherits the global row count. */
-    previewRows?: number;
     groupBy?: ListNoteGroupingOption;
     showProperties?: boolean;
 }
@@ -854,15 +852,6 @@ export interface NotebookNavigatorSettings {
     fileTypeIconPreset: FileTypeIconPreset;
     fileNameRows: number;
     useFolderColorForTitles: boolean;
-    showFilePreview: boolean;
-    skipHeadingsInPreview: boolean;
-    skipCodeBlocksInPreview: boolean;
-    skipCalloutsInPreview: boolean;
-    stripHtmlInPreview: boolean;
-    stripLatexInPreview: boolean;
-    previewRows: number;
-    previewProperties: string[];
-    previewPropertiesFallback: boolean;
     showFeatureImage: boolean;
     featureImageProperties: string[];
     featureImageExcludeProperties: string[];

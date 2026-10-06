@@ -435,11 +435,6 @@ export const STRINGS_FA = {
             label: 'ردیف‌های عنوان',
             option: (rows: number) => `${rows} ردیف عنوان`
         },
-        previewRows: {
-            label: 'ردیف‌های پیش‌نمایش',
-            none: 'هیچ‌کدام',
-            option: (rows: number) => `${rows} ردیف پیش‌نمایش`
-        },
         groupBy: 'گروه‌بندی بر اساس',
         properties: 'ویژگی‌ها',
         resetAppearance: 'بازنشانی ظاهر',
@@ -1097,7 +1092,6 @@ export const STRINGS_FA = {
                 groups: {
                     icon: 'آیکون',
                     title: 'عنوان',
-                    previewText: 'متن پیش‌نمایش',
                     featureImage: 'تصویر ویژه',
                     properties: 'ویژگی‌ها'
                 }
@@ -1911,50 +1905,6 @@ export const STRINGS_FA = {
                 help: 'قالب‌های رایج:\nHH:mm = ۱۴:۳۰ (۲۴ ساعته)\nh:mm a = 2:30 PM (۱۲ ساعته)\nHH:mm:ss = ۱۴:۳۰:۴۵\nh:mm:ss a = 2:30:45 PM\n\nتوکن‌ها:\nHH/H = ۲۴ ساعته\nhh/h = ۱۲ ساعته\nmm = دقیقه\nss = ثانیه\na = صبح/عصر',
                 helpTooltip: 'قالب با استفاده از Moment',
                 momentLinkText: 'قالب Moment'
-            },
-            showNotePreview: {
-                name: 'نمایش پیش‌نمایش یادداشت',
-                desc: 'متن پیش‌نمایش را زیر نام یادداشت نمایش دهید.'
-            },
-            skipHeadingsInPreview: {
-                name: 'رد شدن از سرتیترها در پیش‌نمایش',
-                desc: 'هنگام تولید متن پیش‌نمایش از خطوط سرتیتر رد شوید.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'رد شدن از بلوک‌های کد در پیش‌نمایش',
-                desc: 'هنگام تولید متن پیش‌نمایش از بلوک‌های کد رد شوید.'
-            },
-            skipCalloutsInPreview: {
-                name: 'رد شدن از بلوک‌های callout در پیش‌نمایش',
-                desc: 'هنگام تولید متن پیش‌نمایش از بلوک‌های callout رد شوید.'
-            },
-            stripHtmlInPreview: {
-                name: 'حذف HTML از پیش‌نمایش‌ها',
-                desc: 'حذف تگ‌های HTML از متن پیش‌نمایش. ممکن است بر عملکرد در یادداشت‌های بزرگ تأثیر بگذارد.'
-            },
-            stripLatexInPreview: {
-                name: 'حذف LaTeX از پیش‌نمایش‌ها',
-                desc: 'حذف عبارت‌های LaTeX درون‌خطی و بلوکی از متن پیش‌نمایش.'
-            },
-            previewProperties: {
-                name: 'ویژگی‌های پیش‌نمایش',
-                desc: 'لیست ویژگی‌های فرانت‌متر جدا شده با کاما برای بررسی متن پیش‌نمایش. اولین ویژگی با متن استفاده می‌شود.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'بازگشت به محتوای یادداشت',
-                desc: 'نمایش محتوای یادداشت به عنوان پیش‌نمایش وقتی هیچ‌کدام از ویژگی‌های مشخص‌شده حاوی متن نیستند.'
-            },
-            previewRows: {
-                name: 'ردیف‌های پیش‌نمایش',
-                desc: 'تعداد ردیف‌ها برای نمایش متن پیش‌نمایش.',
-                options: {
-                    '1': '۱ ردیف',
-                    '2': '۲ ردیف',
-                    '3': '۳ ردیف',
-                    '4': '۴ ردیف',
-                    '5': '۵ ردیف'
-                }
             },
             titleRows: {
                 name: 'ردیف‌های عنوان',

@@ -31,7 +31,7 @@ import {
     parseFilterSearchTokens
 } from '../../utils/filterSearch';
 import { getDateField } from '../../utils/sortUtils';
-import { PreviewTextUtils } from '../../utils/previewTextUtils';
+import { normalizeExcerpt } from '../../utils/previewText/previewPipeline';
 import { getCachedFileTags } from '../../utils/tagUtils';
 import { createOmnisearchHighlightQueryTokenContext, sanitizeOmnisearchHighlightTokens } from '../../utils/omnisearchHighlight';
 import { foldSearchText } from '../../utils/recordUtils';
@@ -254,7 +254,7 @@ export function useOmnisearchListResult({
                     files.push(hit.file);
                     const { matches, terms } = sanitizeOmnisearchHighlightTokens(hit.matches, hit.foundWords, queryTokenContext);
                     const excerpt =
-                        typeof hit.excerpt === 'string' ? PreviewTextUtils.normalizeExcerpt(hit.excerpt, { stripHtml: false }) : undefined;
+                        typeof hit.excerpt === 'string' ? normalizeExcerpt(hit.excerpt, { stripHtml: false }) : undefined;
 
                     meta.set(hit.path, {
                         score: hit.score,

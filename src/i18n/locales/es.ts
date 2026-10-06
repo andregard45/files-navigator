@@ -438,11 +438,6 @@ export const STRINGS_ES = {
             label: 'Filas de título',
             option: (rows: number) => `${rows} fila${rows === 1 ? '' : 's'} de título`
         },
-        previewRows: {
-            label: 'Filas de vista previa',
-            none: 'Ninguno',
-            option: (rows: number) => `${rows} fila${rows === 1 ? '' : 's'} de vista previa`
-        },
         groupBy: 'Agrupar por',
         properties: 'Propiedades',
         resetAppearance: 'Restablecer apariencia',
@@ -1102,7 +1097,6 @@ export const STRINGS_ES = {
                 groups: {
                     icon: 'Icono',
                     title: 'Título',
-                    previewText: 'Texto de vista previa',
                     featureImage: 'Imagen destacada',
                     properties: 'Propiedades'
                 }
@@ -1920,50 +1914,6 @@ export const STRINGS_ES = {
                 help: 'Formatos comunes:\nHH:mm = 14:30 (24 horas)\nh:mm a = 2:30 PM (12 horas)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            showNotePreview: {
-                name: 'Mostrar vista previa de nota',
-                desc: 'Muestra texto de vista previa debajo de los nombres de las notas.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Omitir encabezados en vista previa',
-                desc: 'Omite las líneas de encabezado al generar el texto de vista previa.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Omitir bloques de código en vista previa',
-                desc: 'Omite los bloques de código al generar el texto de vista previa.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Omitir llamadas en vista previa',
-                desc: 'Omite los bloques de llamada al generar el texto de vista previa.'
-            },
-            stripHtmlInPreview: {
-                name: 'Eliminar HTML en vistas previas',
-                desc: 'Eliminar etiquetas HTML del texto de vista previa. Puede afectar el rendimiento en notas grandes.'
-            },
-            stripLatexInPreview: {
-                name: 'Eliminar LaTeX en vistas previas',
-                desc: 'Eliminar expresiones LaTeX en línea y en bloque del texto de vista previa.'
-            },
-            previewProperties: {
-                name: 'Propiedades de vista previa',
-                desc: 'Lista separada por comas de propiedades de frontmatter para buscar texto de vista previa. Se usará la primera propiedad con texto.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Recurrir al contenido de la nota',
-                desc: 'Mostrar el contenido de la nota como vista previa cuando ninguna de las propiedades especificadas contiene texto.'
-            },
-            previewRows: {
-                name: 'Filas de vista previa',
-                desc: 'Número de filas a mostrar para el texto de vista previa.',
-                options: {
-                    '1': '1 fila',
-                    '2': '2 filas',
-                    '3': '3 filas',
-                    '4': '4 filas',
-                    '5': '5 filas'
-                }
             },
             titleRows: {
                 name: 'Filas de título',

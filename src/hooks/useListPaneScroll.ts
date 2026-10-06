@@ -178,7 +178,7 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
 
 export type ListRowHeightAffectingContentChangeConfig = Pick<
     ListFileRowSizingConfig,
-    | 'showPreview'
+    | 'showSearchExcerpt'
     | 'showImage'
     | 'frontmatterPropertyRowsPossible'
 >;
@@ -186,7 +186,6 @@ export type ListRowHeightAffectingContentChangeConfig = Pick<
 interface ResolveListFileRowHeightInputsParams {
     app: App;
     db: IndexedDBStorage;
-    hasPreview: (path: string) => boolean;
     item: ListPaneItem;
     file: TFile;
     config: ListFileRowSizingConfig;
@@ -275,7 +274,7 @@ function getListLayoutSignature({
             titleRows: folderSettings.titleRows,
             previewRows: folderSettings.previewRows,
             groupBy: folderSettings.groupBy,
-            showPreview: folderSettings.showPreview,
+            showSearchExcerpt: folderSettings.showSearchExcerpt,
             showImage: folderSettings.showImage,
             showProperties: folderSettings.showProperties
         },
@@ -323,10 +322,6 @@ export function isListRowHeightAffectingContentChange(
     config: ListRowHeightAffectingContentChangeConfig
 ): boolean {
     const { changes } = change;
-
-    if (changes.previewStatus !== undefined && config.showPreview) {
-        return true;
-    }
 
     if ((changes.featureImageKey !== undefined || changes.featureImageStatus !== undefined) && config.showImage) {
         return true;
@@ -399,7 +394,6 @@ function shouldReadFileRecordForRowEstimate(item: ListPaneItem, config: ListFile
 export function resolveListFileRowHeightInputs({
     app,
     db,
-    hasPreview,
     item,
     file,
     config
@@ -409,16 +403,12 @@ export function resolveListFileRowHeightInputs({
         fileRecord = db.getFile(file.path);
     }
 
-    let hasPreviewText = false;
     let hasOmnisearchExcerpt = false;
-    if (config.showPreview) {
-        if (file.extension === 'md') {
-            hasPreviewText = hasPreview(file.path);
-        }
+    if (config.showSearchExcerpt) {
         const excerpt = item.searchMeta?.excerpt;
         hasOmnisearchExcerpt = typeof excerpt === 'string' && excerpt.length > 0;
     }
-    const hasPreviewContent = hasPreviewText || hasOmnisearchExcerpt;
+    const hasPreviewContent = hasOmnisearchExcerpt;
 
     let showDrawingFeatureImage = false;
     let showDrawingMissingFeatureImage = false;
@@ -502,7 +492,7 @@ export function useListPaneScroll({
 }: UseListPaneScrollParams): UseListPaneScrollResult {
     const { app, isMobile } = useServices();
     const listMeasurements = getListPaneMeasurements(isMobile);
-    const { hasPreview, getDB, isStorageReady } = useFileCache();
+    const { getDB, isStorageReady } = useFileCache();
     const themeMode = useThemeMode(app);
     // The list pane only renders after StorageContext marks storage ready.
     const db = getDB();
@@ -594,7 +584,7 @@ export function useListPaneScroll({
             heights: listMeasurements,
             titleRows: folderSettings.titleRows || 1,
             previewRows: folderSettings.previewRows,
-            showPreview: folderSettings.showPreview,
+            showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
             showImage: folderSettings.showImage,
             compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
             isCompactMode,
@@ -614,7 +604,7 @@ export function useListPaneScroll({
         compactListMetrics.mobilePaddingTotal,
         folderSettings.previewRows,
         folderSettings.showImage,
-        folderSettings.showPreview,
+        folderSettings.showSearchExcerpt,
         folderSettings.showProperties,
         folderSettings.titleRows,
         includeDescendantNotes,
@@ -677,7 +667,6 @@ export function useListPaneScroll({
                     resolveListFileRowHeightInputs({
                         app,
                         db,
-                        hasPreview,
                         item,
                         file: item.data,
                         config: rowSizingConfig

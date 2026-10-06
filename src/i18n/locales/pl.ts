@@ -437,12 +437,6 @@ export const STRINGS_PL = {
             option: (rows: number) =>
                 `${rows} ${rows === 1 ? 'wiersz' : rows === 2 || rows === 3 || rows === 4 ? 'wiersze' : 'wierszy'} tytułu`
         },
-        previewRows: {
-            label: 'Wiersze podglądu',
-            none: 'Brak',
-            option: (rows: number) =>
-                `${rows} ${rows === 1 ? 'wiersz' : rows === 2 || rows === 3 || rows === 4 ? 'wiersze' : 'wierszy'} podglądu`
-        },
         groupBy: 'Grupuj według',
         properties: 'Atrybuty',
         resetAppearance: 'Zresetuj wygląd',
@@ -1102,7 +1096,6 @@ export const STRINGS_PL = {
                 groups: {
                     icon: 'Ikonka',
                     title: 'Tytuł',
-                    previewText: 'Tekst podglądu',
                     featureImage: 'Wyróżniony obraz',
                     properties: 'Atrybuty'
                 }
@@ -1918,50 +1911,6 @@ export const STRINGS_PL = {
                 help: 'Popularne formaty:\nHH:mm = 14:30 (24-godzinny)\nh:mm a = 2:30 PM (12-godzinny)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokeny:\nHH/H = 24-godzinny\nhh/h = 12-godzinny\nmm = minuty\nss = sekundy\na = AM/PM',
                 helpTooltip: 'Format z Moment',
                 momentLinkText: 'format Moment'
-            },
-            showNotePreview: {
-                name: 'Pokaż podgląd notatki',
-                desc: 'Wyświetla tekst podglądu pod nazwami notatek.'
-            },
-            skipHeadingsInPreview: {
-                name: 'Pomiń nagłówki w podglądzie',
-                desc: 'Pomija wiersze nagłówków podczas generowania tekstu podglądu.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'Pomiń bloki kodu w podglądzie',
-                desc: 'Pomija bloki kodu podczas generowania tekstu podglądu.'
-            },
-            skipCalloutsInPreview: {
-                name: 'Pomiń bloki callout w podglądzie',
-                desc: 'Pomija bloki callout podczas generowania tekstu podglądu.'
-            },
-            stripHtmlInPreview: {
-                name: 'Usuń HTML w podglądach',
-                desc: 'Usuń znaczniki HTML z tekstu podglądu. Może wpływać na wydajność przy dużych notatkach.'
-            },
-            stripLatexInPreview: {
-                name: 'Usuń LaTeX w podglądach',
-                desc: 'Usuń wyrażenia LaTeX inline i blokowe z tekstu podglądu.'
-            },
-            previewProperties: {
-                name: 'Atrybuty podglądu',
-                desc: 'Lista atrybutów rozdzielonych przecinkami do sprawdzenia dla tekstu podglądu. Zostanie użyty pierwszy atrybut z tekstem.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'Użyj treści notatki zastępczo',
-                desc: 'Wyświetl treść notatki jako podgląd, gdy żaden ze wskazanych atrybutów nie zawiera tekstu.'
-            },
-            previewRows: {
-                name: 'Wiersze podglądu',
-                desc: 'Liczba widocznych wierszy w podglądzie.',
-                options: {
-                    '1': '1 wiersz',
-                    '2': '2 wiersze',
-                    '3': '3 wiersze',
-                    '4': '4 wiersze',
-                    '5': '5 wierszy'
-                }
             },
             titleRows: {
                 name: 'Wiersze tytułu',

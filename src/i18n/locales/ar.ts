@@ -435,11 +435,6 @@ export const STRINGS_AR = {
             label: 'صفوف العنوان',
             option: (rows: number) => (rows === 1 ? 'صف عنوان واحد' : rows === 2 ? 'صفا عنوان' : `${rows} صفوف عنوان`)
         },
-        previewRows: {
-            label: 'صفوف المعاينة',
-            none: 'لا شيء',
-            option: (rows: number) => (rows === 1 ? 'صف معاينة واحد' : rows === 2 ? 'صفا معاينة' : `${rows} صفوف معاينة`)
-        },
         groupBy: 'تجميع حسب',
         properties: 'الخصائص',
         resetAppearance: 'إعادة تعيين المظهر',
@@ -1093,7 +1088,6 @@ export const STRINGS_AR = {
                 groups: {
                     icon: 'الأيقونة',
                     title: 'العنوان',
-                    previewText: 'نص المعاينة',
                     featureImage: 'الصورة المميزة',
                     properties: 'الخصائص'
                 }
@@ -1906,50 +1900,6 @@ export const STRINGS_AR = {
                 help: 'التنسيقات الشائعة:\nh:mm a = 2:30 م (12 ساعة)\nHH:mm = 14:30 (24 ساعة)\nh:mm:ss a = 2:30:45 م\nHH:mm:ss = 14:30:45\n\nالرموز:\nHH/H = 24 ساعة\nhh/h = 12 ساعة\nmm = الدقائق\nss = الثواني\na = ص/م',
                 helpTooltip: 'تنسيق باستخدام Moment',
                 momentLinkText: 'تنسيق Moment'
-            },
-            showNotePreview: {
-                name: 'إظهار معاينة الملاحظة',
-                desc: 'عرض نص المعاينة أسفل أسماء الملاحظات.'
-            },
-            skipHeadingsInPreview: {
-                name: 'تخطي العناوين في المعاينة',
-                desc: 'تخطي سطور العناوين عند إنشاء نص المعاينة.'
-            },
-            skipCodeBlocksInPreview: {
-                name: 'تخطي كتل الكود في المعاينة',
-                desc: 'تخطي كتل الكود عند إنشاء نص المعاينة.'
-            },
-            skipCalloutsInPreview: {
-                name: 'تخطي التنبيهات في المعاينة',
-                desc: 'تخطي كتل التنبيه عند إنشاء نص المعاينة.'
-            },
-            stripHtmlInPreview: {
-                name: 'إزالة HTML من المعاينات',
-                desc: 'إزالة علامات HTML من نص المعاينة. قد يؤثر على الأداء في الملاحظات الكبيرة.'
-            },
-            stripLatexInPreview: {
-                name: 'إزالة LaTeX من المعاينات',
-                desc: 'إزالة تعبيرات LaTeX المضمنة والكتلية من نص المعاينة.'
-            },
-            previewProperties: {
-                name: 'خصائص المعاينة',
-                desc: 'قائمة مفصولة بفاصلة من خصائص البيانات الأمامية للتحقق من نص المعاينة. سيتم استخدام أول خاصية تحتوي على نص.',
-                placeholder: 'summary, description, abstract'
-            },
-            fallbackToNoteContent: {
-                name: 'الرجوع إلى محتوى الملاحظة',
-                desc: 'عرض محتوى الملاحظة كمعاينة عندما لا تحتوي أي من الخصائص المحددة على نص.'
-            },
-            previewRows: {
-                name: 'صفوف المعاينة',
-                desc: 'عدد الصفوف المعروضة لنص المعاينة.',
-                options: {
-                    '1': 'صف واحد',
-                    '2': 'صفان',
-                    '3': '3 صفوف',
-                    '4': '4 صفوف',
-                    '5': '5 صفوف'
-                }
             },
             titleRows: {
                 name: 'صفوف العنوان',

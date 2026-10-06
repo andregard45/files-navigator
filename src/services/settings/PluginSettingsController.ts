@@ -1364,9 +1364,6 @@ export class PluginSettingsController {
                 if (appearance.titleRows === this.currentSettings.fileNameRows) {
                     delete appearance.titleRows;
                 }
-                if (appearance.previewRows === this.currentSettings.previewRows) {
-                    delete appearance.previewRows;
-                }
                 if (Object.keys(appearance).length === 0) {
                     delete appearances[key];
                 }
