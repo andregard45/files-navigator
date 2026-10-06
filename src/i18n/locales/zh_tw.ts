@@ -448,15 +448,6 @@ export const STRINGS_ZH_TW = {
         tasks: '任務',
         date: '日期',
         parentFolder: '父資料夾',
-        textCount: {
-            label: '文字計數',
-            options: {
-                none: '無',
-                words: '字',
-                characters: '字元',
-                both: '字與字元'
-            }
-        },
         resetAppearance: '重設外觀',
         openPluginSettings: '開啟外掛程式設定…'
     },
@@ -492,13 +483,7 @@ export const STRINGS_ZH_TW = {
             titleLabel: '標題',
             placeholder: '群組標題',
             icon: '圖示',
-            color: '顏色',
-            wordCount: '顯示字數',
-            wordCountTarget: '目標字數',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                '此欄位為空時，群組目標會使用「設定 > 檔案顯示 > 字數與字元數」中設定的目標屬性。為此群組設定目標值即可覆寫。',
-            description: '為此筆記自訂群組標題。將標題留空以移除標題。'
+            color: '顏色',            description: '為此筆記自訂群組標題。將標題留空以移除標題。'
         },
         mergeNotes: {
             title: '合併筆記',
@@ -575,9 +560,7 @@ export const STRINGS_ZH_TW = {
                 'nav-properties': '屬性',
                 'nav-property': '屬性',
                 'nav-property-value': '值',
-                'file-unfinished-task': '任務',
-                'file-word-count': '字數統計',
-                'file-character-count': '字元數'
+                'file-unfinished-task': '任務'
             }
         },
         colorPicker: {
@@ -1006,14 +989,7 @@ export const STRINGS_ZH_TW = {
         files: '個檔案',
         folder: '個資料夾',
         folders: '個資料夾',
-        wordCount: '字數',
         unfinishedTasks: '未完成任務'
-    },
-
-    fileCounts: {
-        words: '{count} 個詞',
-        characters: '{count} 個字元',
-        separator: ' · '
     },
 
     // Settings
@@ -1126,8 +1102,7 @@ export const STRINGS_ZH_TW = {
                     properties: '屬性',
                     tasks: '任務',
                     date: '日期',
-                    parentFolder: '父資料夾',
-                    wordAndCharacterCount: '字數與字元數'
+                    parentFolder: '父資料夾'
                 }
             },
             calendar: {
@@ -1768,10 +1743,6 @@ export const STRINGS_ZH_TW = {
                 name: '在工具提示中顯示標籤',
                 desc: '啟用標籤區段時，在工具提示中顯示筆記的標籤。'
             },
-            showTooltipWordCount: {
-                name: '在工具提示中顯示字數',
-                desc: '啟用字數統計時，在工具提示中顯示字數。'
-            },
             resetPaneSeparator: {
                 name: '重設窗格分隔符位置',
                 desc: '將導覽窗格和列表窗格之間的可拖曳分隔符重設為預設位置。',
@@ -1985,54 +1956,6 @@ export const STRINGS_ZH_TW = {
             showFilePropertiesInCompactMode: {
                 name: '在精簡模式中顯示屬性',
                 desc: '精簡模式啟用時顯示屬性。'
-            },
-            textCountType: {
-                name: '計數類型',
-                desc: '選擇檔案項目中要顯示哪些文字計數。',
-                options: {
-                    none: '無',
-                    words: '字數',
-                    characters: '字元數',
-                    both: '字數與字元數'
-                }
-            },
-            textCountPlacement: {
-                name: '位置',
-                desc: '選擇文字計數的顯示位置。',
-                options: {
-                    title: '在標題中',
-                    property: '作為屬性'
-                }
-            },
-            characterCountSpaces: {
-                name: '字元數',
-                desc: '選擇字元數是否包含空格。',
-                options: {
-                    include: '包含空格',
-                    exclude: '不含空格'
-                }
-            },
-            wordCountTargetProperty: {
-                name: '目標屬性',
-                desc: '包含目標字數的前置中繼資料屬性鍵。留空可隱藏目標。'
-            },
-            showTargetPercentage: {
-                name: '顯示目標百分比',
-                desc: '有目標字數時，只顯示進度百分比。'
-            },
-            textCountActiveNotice: {
-                title: '計數仍處於啟用狀態',
-                summary: '由於以下項目使用字數或字元數，系統仍會為所有筆記計算這些數值：',
-                more: '以及另外 {count} 個',
-                reasons: {
-                    appearance: '檔案外觀',
-                    'group-header': '群組標題'
-                },
-                scopes: {
-                    folder: '資料夾：{name}',
-                    tag: '標籤：#{name}',
-                    property: '屬性：{name}'
-                }
             },
             propertyKeys: {
                 name: '屬性鍵（儲存庫設定檔）',

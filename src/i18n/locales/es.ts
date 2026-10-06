@@ -451,15 +451,6 @@ export const STRINGS_ES = {
         tasks: 'Tareas',
         date: 'Fecha',
         parentFolder: 'Carpeta superior',
-        textCount: {
-            label: 'Recuento de texto',
-            options: {
-                none: 'Ninguno',
-                words: 'Palabras',
-                characters: 'Caracteres',
-                both: 'Palabras y caracteres'
-            }
-        },
         resetAppearance: 'Restablecer apariencia',
         openPluginSettings: 'Abrir ajustes del plugin…'
     },
@@ -496,13 +487,7 @@ export const STRINGS_ES = {
             titleLabel: 'Título',
             placeholder: 'Encabezado de grupo',
             icon: 'Icono',
-            color: 'Color',
-            wordCount: 'Mostrar el recuento de palabras',
-            wordCountTarget: 'Recuento de palabras objetivo',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Cuando este campo está vacío, el objetivo del grupo usa la propiedad de objetivo configurada en Ajustes > Visualización de archivos > Recuento de palabras y caracteres. Sobrescríbelo definiendo un valor objetivo para este grupo.',
-            description: 'Personaliza el encabezado de grupo para esta nota. Deja el título vacío para eliminar el encabezado.'
+            color: 'Color',            description: 'Personaliza el encabezado de grupo para esta nota. Deja el título vacío para eliminar el encabezado.'
         },
         mergeNotes: {
             title: 'Combinar notas',
@@ -580,9 +565,7 @@ export const STRINGS_ES = {
                 'nav-properties': 'Propiedades',
                 'nav-property': 'Propiedad',
                 'nav-property-value': 'Valor',
-                'file-unfinished-task': 'Tareas',
-                'file-word-count': 'Recuento de palabras',
-                'file-character-count': 'Recuento de caracteres'
+                'file-unfinished-task': 'Tareas'
             }
         },
         colorPicker: {
@@ -1017,14 +1000,7 @@ export const STRINGS_ES = {
         files: 'archivos',
         folder: 'carpeta',
         folders: 'carpetas',
-        wordCount: 'Recuento de palabras',
         unfinishedTasks: 'Tareas pendientes'
-    },
-
-    fileCounts: {
-        words: '{count} palabras',
-        characters: '{count} caracteres',
-        separator: ' · '
     },
 
     // Settings
@@ -1139,8 +1115,7 @@ export const STRINGS_ES = {
                     properties: 'Propiedades',
                     tasks: 'Tareas',
                     date: 'Fecha',
-                    parentFolder: 'Carpeta superior',
-                    wordAndCharacterCount: 'Recuento de palabras y caracteres'
+                    parentFolder: 'Carpeta superior'
                 }
             },
             calendar: {
@@ -1789,10 +1764,6 @@ export const STRINGS_ES = {
                 name: 'Mostrar etiquetas en tooltips',
                 desc: 'Muestra las etiquetas de las notas en los tooltips cuando la sección de etiquetas está activada.'
             },
-            showTooltipWordCount: {
-                name: 'Mostrar recuento de palabras en tooltips',
-                desc: 'Muestra el recuento de palabras en los tooltips cuando el recuento de palabras está activado.'
-            },
             resetPaneSeparator: {
                 name: 'Restablecer posición del separador de paneles',
                 desc: 'Restablece el separador arrastrable entre el panel de navegación y el panel de lista a la posición predeterminada.',
@@ -2009,55 +1980,6 @@ export const STRINGS_ES = {
             showFilePropertiesInCompactMode: {
                 name: 'Mostrar propiedades en modo compacto',
                 desc: 'Mostrar propiedades cuando el modo compacto está activo.'
-            },
-            textCountType: {
-                name: 'Tipo de recuento',
-                desc: 'Elige qué recuentos de texto aparecen en los elementos de archivo.',
-                options: {
-                    none: 'Ninguno',
-                    words: 'Recuento de palabras',
-                    characters: 'Recuento de caracteres',
-                    both: 'Recuento de palabras y caracteres'
-                }
-            },
-            textCountPlacement: {
-                name: 'Ubicación',
-                desc: 'Elige dónde aparecen los recuentos de texto.',
-                options: {
-                    title: 'En el título',
-                    property: 'Como propiedad'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Recuento de caracteres',
-                desc: 'Elige si los espacios se incluyen en el recuento de caracteres.',
-                options: {
-                    include: 'Incluyendo espacios',
-                    exclude: 'Excluyendo espacios'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Propiedad objetivo',
-                desc: 'Clave de propiedad del frontmatter que contiene el recuento de palabras objetivo. Dejar vacío para ocultar objetivos.'
-            },
-            showTargetPercentage: {
-                name: 'Mostrar porcentaje objetivo',
-                desc: 'Mostrar solo el porcentaje de progreso cuando haya un recuento de palabras objetivo disponible.'
-            },
-            textCountActiveNotice: {
-                title: 'El recuento sigue activado',
-                summary:
-                    'Los recuentos de palabras o caracteres se siguen calculando para todas las notas porque los utilizan los siguientes elementos:',
-                more: 'y {count} más',
-                reasons: {
-                    appearance: 'Apariencia de archivos',
-                    'group-header': 'Encabezado de grupo'
-                },
-                scopes: {
-                    folder: 'Carpeta: {name}',
-                    tag: 'Etiqueta: #{name}',
-                    property: 'Propiedad: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Claves de propiedades (perfil de bóveda)',

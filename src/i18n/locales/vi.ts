@@ -448,15 +448,6 @@ export const STRINGS_VI = {
         tasks: 'Nhiệm vụ',
         date: 'Ngày',
         parentFolder: 'Thư mục cha',
-        textCount: {
-            label: 'Đếm văn bản',
-            options: {
-                none: 'Không',
-                words: 'Từ',
-                characters: 'Ký tự',
-                both: 'Từ và ký tự'
-            }
-        },
         resetAppearance: 'Đặt lại giao diện',
         openPluginSettings: 'Mở cài đặt plugin…'
     },
@@ -493,13 +484,7 @@ export const STRINGS_VI = {
             titleLabel: 'Tiêu đề',
             placeholder: 'Header nhóm',
             icon: 'Biểu tượng',
-            color: 'Màu sắc',
-            wordCount: 'Hiển thị số từ',
-            wordCountTarget: 'Số từ mục tiêu',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Khi trường này trống, mục tiêu nhóm dùng thuộc tính mục tiêu được đặt trong Cài đặt > Hiển thị tệp > Số từ và ký tự. Ghi đè bằng cách đặt giá trị mục tiêu cho nhóm này.',
-            description: 'Tùy chỉnh header nhóm cho ghi chú này. Để trống tiêu đề để xóa header.'
+            color: 'Màu sắc',            description: 'Tùy chỉnh header nhóm cho ghi chú này. Để trống tiêu đề để xóa header.'
         },
         mergeNotes: {
             title: 'Hợp nhất ghi chú',
@@ -577,9 +562,7 @@ export const STRINGS_VI = {
                 'nav-properties': 'Thuộc tính',
                 'nav-property': 'Thuộc tính',
                 'nav-property-value': 'Giá trị',
-                'file-unfinished-task': 'Nhiệm vụ',
-                'file-word-count': 'Số từ',
-                'file-character-count': 'Số ký tự'
+                'file-unfinished-task': 'Nhiệm vụ'
             }
         },
         colorPicker: {
@@ -1013,14 +996,7 @@ export const STRINGS_VI = {
         files: 'tệp',
         folder: 'thư mục',
         folders: 'thư mục',
-        wordCount: 'Số từ',
         unfinishedTasks: 'Nhiệm vụ chưa hoàn thành'
-    },
-
-    fileCounts: {
-        words: '{count} từ',
-        characters: '{count} ký tự',
-        separator: ' · '
     },
 
     // Settings
@@ -1133,8 +1109,7 @@ export const STRINGS_VI = {
                     properties: 'Thuộc tính',
                     tasks: 'Nhiệm vụ',
                     date: 'Ngày',
-                    parentFolder: 'Thư mục cha',
-                    wordAndCharacterCount: 'Số từ và ký tự'
+                    parentFolder: 'Thư mục cha'
                 }
             },
             calendar: {
@@ -1781,10 +1756,6 @@ export const STRINGS_VI = {
                 name: 'Hiện thẻ trong chú thích',
                 desc: 'Hiển thị thẻ của ghi chú trong chú thích khi phần thẻ được bật.'
             },
-            showTooltipWordCount: {
-                name: 'Hiện số từ trong chú thích',
-                desc: 'Hiển thị số từ trong chú thích khi số từ được bật.'
-            },
             resetPaneSeparator: {
                 name: 'Đặt lại vị trí thanh phân cách',
                 desc: 'Đặt lại thanh phân cách kéo được giữa ngăn điều hướng và ngăn danh sách về vị trí mặc định.',
@@ -1999,54 +1970,6 @@ export const STRINGS_VI = {
             showFilePropertiesInCompactMode: {
                 name: 'Hiện thuộc tính ở chế độ gọn',
                 desc: 'Hiển thị thuộc tính khi chế độ gọn đang hoạt động.'
-            },
-            textCountType: {
-                name: 'Loại bộ đếm',
-                desc: 'Chọn số liệu văn bản xuất hiện trong mục tệp.',
-                options: {
-                    none: 'Không',
-                    words: 'Số từ',
-                    characters: 'Số ký tự',
-                    both: 'Số từ và ký tự'
-                }
-            },
-            textCountPlacement: {
-                name: 'Vị trí',
-                desc: 'Chọn nơi hiển thị số liệu văn bản.',
-                options: {
-                    title: 'Trong tiêu đề',
-                    property: 'Dưới dạng thuộc tính'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Số ký tự',
-                desc: 'Chọn có tính khoảng trắng trong số ký tự hay không.',
-                options: {
-                    include: 'Bao gồm khoảng trắng',
-                    exclude: 'Không bao gồm khoảng trắng'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Thuộc tính mục tiêu',
-                desc: 'Khóa thuộc tính frontmatter chứa số từ mục tiêu. Để trống để ẩn mục tiêu.'
-            },
-            showTargetPercentage: {
-                name: 'Hiển thị phần trăm mục tiêu',
-                desc: 'Chỉ hiển thị phần trăm tiến độ khi có số từ mục tiêu.'
-            },
-            textCountActiveNotice: {
-                title: 'Bộ đếm vẫn đang bật',
-                summary: 'Số từ hoặc ký tự vẫn được tính cho tất cả ghi chú vì các mục sau sử dụng chúng:',
-                more: 'và {count} mục khác',
-                reasons: {
-                    appearance: 'Giao diện tệp',
-                    'group-header': 'Tiêu đề nhóm'
-                },
-                scopes: {
-                    folder: 'Thư mục: {name}',
-                    tag: 'Thẻ: #{name}',
-                    property: 'Thuộc tính: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Khóa thuộc tính (hồ sơ vault)',

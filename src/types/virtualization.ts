@@ -55,14 +55,8 @@ export interface ListPaneItem {
     // Item count for the same group before list search filtering.
     // Present only while a non-empty search is active and group header counts are shown.
     groupTotalItemCount?: number;
-    // Whether a manual sort custom header label depends on stored word counts.
-    manualSortHeaderShowsWordCount?: boolean;
     // Parsed manual sort custom header display data.
     manualSortHeader?: ManualSortGroupHeaderData;
-    // Accumulated word count for the manual sort custom header segment.
-    manualSortHeaderWordCount?: number;
-    // Resolved target word count for the manual sort custom header segment.
-    manualSortHeaderTargetWordCount?: number | null;
     headerKind?: ListPaneHeaderKind;
     collapseKey?: string;
     isCollapsed?: boolean;

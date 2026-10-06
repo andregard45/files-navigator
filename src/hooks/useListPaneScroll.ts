@@ -52,7 +52,7 @@ import { useFileCache } from '../context/StorageContext';
 import { ListPaneItemType, OVERSCAN } from '../types';
 import { Align, ListScrollIntent, getListAlign, rankListPending } from '../types/scroll';
 import type { ListPaneItem } from '../types/virtualization';
-import { showsCharacterCount, showsWordCount, type NotebookNavigatorSettings, type SortOption } from '../settings/types';
+import { type NotebookNavigatorSettings, type SortOption } from '../settings/types';
 import type { FileContentChange, FileData, IndexedDBStorage } from '../storage/IndexedDBStorage';
 import type { SelectionDispatch, SelectionState } from '../context/SelectionContext';
 import { calculateCompactListMetrics } from '../utils/listPaneMetrics';
@@ -167,8 +167,6 @@ type ListLayoutSignatureSettings = Pick<
     | 'compactItemHeightScaleText'
     | 'showFilePropertiesInCompactMode'
     | 'showPropertiesOnSeparateRows'
-    | 'textCountPlacement'
-    | 'characterCountSpaces'
     | 'hideFileTaskProgressWhenComplete'
     | 'showSelectedNavigationPills'
 >;
@@ -178,13 +176,9 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     tagsBaseEnabled: boolean;
     frontmatterPropertyRowsPossible: boolean;
     propertyRowsPossible: boolean;
-    showTextCountProperty: boolean;
-    showWordCountProperty: boolean;
-    showCharacterCountProperty: boolean;
     showFileProperties: boolean;
     showPropertiesOnSeparateRows: boolean;
     showFilePropertiesInCompactMode: boolean;
-    characterCountSpaces: NotebookNavigatorSettings['characterCountSpaces'];
     showParentFolder: boolean;
     showTaskProgress: boolean;
     hideTaskProgressWhenComplete: boolean;
@@ -203,9 +197,6 @@ export type ListRowHeightAffectingContentChangeConfig = Pick<
     | 'showImage'
     | 'tagsBaseEnabled'
     | 'frontmatterPropertyRowsPossible'
-    | 'showWordCountProperty'
-    | 'showCharacterCountProperty'
-    | 'characterCountSpaces'
     | 'showTaskProgress'
     | 'hideTaskProgressWhenComplete'
 >;
@@ -325,14 +316,11 @@ function getListLayoutSignature({
             showImage: folderSettings.showImage,
             showTags: folderSettings.showTags,
             showProperties: folderSettings.showProperties,
-            showTaskProgress: folderSettings.showTaskProgress,
-            textCountDisplay: folderSettings.textCountDisplay
+            showTaskProgress: folderSettings.showTaskProgress
         },
         rowContent: {
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
-            textCountPlacement: settings.textCountPlacement,
-            characterCountSpaces: settings.characterCountSpaces,
             showSelectedNavigationPills: settings.showSelectedNavigationPills,
             visiblePropertyKeySignature,
             hideFileTaskProgressWhenComplete: settings.hideFileTaskProgressWhenComplete,
@@ -391,22 +379,6 @@ export function isListRowHeightAffectingContentChange(
     }
 
     if (changes.properties !== undefined && config.frontmatterPropertyRowsPossible) {
-        return true;
-    }
-
-    if (changes.wordCount !== undefined && config.showWordCountProperty) {
-        return true;
-    }
-
-    if (changes.characterCountWithSpaces !== undefined && config.showCharacterCountProperty && config.characterCountSpaces === 'include') {
-        return true;
-    }
-
-    if (
-        changes.characterCountWithoutSpaces !== undefined &&
-        config.showCharacterCountProperty &&
-        config.characterCountSpaces === 'exclude'
-    ) {
         return true;
     }
 
@@ -577,18 +549,11 @@ export function resolveListFileRowHeightInputs({
     const propertyRowCount =
         !showDrawingMissingFeatureImage && config.propertyRowsPossible
             ? getPropertyRowCount({
-                  showTextCountProperty: config.showTextCountProperty,
                   showFileProperties: config.showFileProperties,
                   showPropertiesOnSeparateRows: config.showPropertiesOnSeparateRows,
                   showFilePropertiesInCompactMode: config.showFilePropertiesInCompactMode,
                   isCompactMode: config.isCompactMode,
                   file,
-                  wordCount: config.showWordCountProperty ? (fileRecord?.wordCount ?? undefined) : undefined,
-                  characterCount: config.showCharacterCountProperty
-                      ? config.characterCountSpaces === 'include'
-                          ? (fileRecord?.characterCountWithSpaces ?? undefined)
-                          : (fileRecord?.characterCountWithoutSpaces ?? undefined)
-                      : undefined,
                   properties: fileRecord?.properties ?? undefined,
                   visiblePropertyKeys: config.visiblePropertyKeys,
                   hiddenPropertyValueNodeId: config.selectedPropertyValueNodeIdToHide
@@ -734,9 +699,6 @@ export function useListPaneScroll({
         [selectionState.selectedProperty, selectionState.selectionType, settings.showSelectedNavigationPills]
     );
     const rowSizingConfig = useMemo<ListFileRowSizingConfig>(() => {
-        const showTextCountProperty = folderSettings.textCountDisplay !== 'none' && settings.textCountPlacement === 'property';
-        const showWordCountProperty = showTextCountProperty && showsWordCount(folderSettings.textCountDisplay);
-        const showCharacterCountProperty = showTextCountProperty && showsCharacterCount(folderSettings.textCountDisplay);
         const canShowPropertiesInCurrentMode = !isCompactMode || settings.showFilePropertiesInCompactMode;
         const showFrontmatterPropertyRows = folderSettings.showProperties && visiblePropertyKeys.size > 0;
         const frontmatterPropertyRowsPossible = canShowPropertiesInCurrentMode && showFrontmatterPropertyRows;
@@ -752,14 +714,10 @@ export function useListPaneScroll({
             isCompactMode,
             tagsBaseEnabled: folderSettings.showTags,
             frontmatterPropertyRowsPossible,
-            propertyRowsPossible: canShowPropertiesInCurrentMode && (showFrontmatterPropertyRows || showTextCountProperty),
-            showTextCountProperty,
-            showWordCountProperty,
-            showCharacterCountProperty,
+            propertyRowsPossible: canShowPropertiesInCurrentMode && showFrontmatterPropertyRows,
             showFileProperties: folderSettings.showProperties,
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
-            characterCountSpaces: settings.characterCountSpaces,
             showParentFolder: folderSettings.showParentFolder,
             // Compact mode never renders the metadata line, so disabling the flag there skips
             // per-row record reads during height estimation and task-driven remeasurements.
@@ -784,7 +742,6 @@ export function useListPaneScroll({
         folderSettings.showProperties,
         folderSettings.showTags,
         folderSettings.showTaskProgress,
-        folderSettings.textCountDisplay,
         folderSettings.titleRows,
         hiddenTagVisibility,
         includeDescendantNotes,
@@ -794,11 +751,9 @@ export function useListPaneScroll({
         selectedPropertyValueNodeIdToHide,
         selectedTagToHide,
         selectionState.selectionType,
-        settings.characterCountSpaces,
         settings.showFilePropertiesInCompactMode,
         settings.hideFileTaskProgressWhenComplete,
         settings.showPropertiesOnSeparateRows,
-        settings.textCountPlacement,
         themeMode,
         visiblePropertyKeys
     ]);
@@ -962,8 +917,6 @@ export function useListPaneScroll({
             compactItemHeightScaleText: settings.compactItemHeightScaleText,
             showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
             showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
-            textCountPlacement: settings.textCountPlacement,
-            characterCountSpaces: settings.characterCountSpaces,
             hideFileTaskProgressWhenComplete: settings.hideFileTaskProgressWhenComplete,
             showSelectedNavigationPills: settings.showSelectedNavigationPills
         }),
@@ -972,8 +925,6 @@ export function useListPaneScroll({
             settings.compactItemHeightScaleText,
             settings.showFilePropertiesInCompactMode,
             settings.showPropertiesOnSeparateRows,
-            settings.textCountPlacement,
-            settings.characterCountSpaces,
             settings.hideFileTaskProgressWhenComplete,
             settings.showSelectedNavigationPills
         ]

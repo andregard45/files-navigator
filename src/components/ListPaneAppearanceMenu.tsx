@@ -27,7 +27,7 @@ import {
     type ListPaneToggleKey
 } from '../settings/listPaneAppearance';
 import { strings } from '../i18n';
-import type { ListDisplayMode, NotebookNavigatorSettings, TextCountDisplay } from '../settings/types';
+import type { ListDisplayMode, NotebookNavigatorSettings } from '../settings/types';
 import { ItemType } from '../types';
 import { runAsyncAction } from '../utils/async';
 import { setSubmenuOnClick, tryCreateSubmenu } from '../utils/contextMenu/menuAsyncHelpers';
@@ -164,7 +164,6 @@ export function showListPaneAppearanceMenu({
         fragment.append(createSpan({ cls: 'nn-menu-title-custom', text: title }));
         item.setTitle(fragment);
     };
-    const textCountLabel = (value: TextCountDisplay): string => strings.folderAppearance.textCount.options[value];
     const rowCounts = [1, 2, 3, 4, 5] as const;
 
     /** Obsidian versions without working submenu support receive the same choices as flat indented sections. */
@@ -289,32 +288,6 @@ export function showListPaneAppearanceMenu({
                 }))
             ],
             onSelect: previewRows => updateAppearance({ previewRows: previewRows === settings.previewRows ? undefined : previewRows })
-        });
-    }
-
-    // Property-placed counts render as pills, so the choice is hidden when compact mode hides pills.
-    const textCountAvailable = !isCompact || settings.textCountPlacement !== 'property' || settings.showFilePropertiesInCompactMode;
-    if (textCountAvailable) {
-        const storedTextCount = storedFields?.textCount;
-        const effectiveTextCount = resolved.textCountDisplay;
-        const countIcon = resolveUXIconForMenu(
-            settings.interfaceIcons,
-            effectiveTextCount === 'characters' ? 'file-character-count' : 'file-word-count'
-        );
-        const countOptions = ['none', 'words', 'characters', 'both'] as const;
-        addChoiceSection<TextCountDisplay>({
-            title: `${strings.folderAppearance.textCount.label}: ${textCountLabel(effectiveTextCount)}`,
-            isCustom: storedTextCount !== undefined,
-            icon: countIcon,
-            options: countOptions.map(textCount => ({
-                value: textCount,
-                title: withSuffix(
-                    textCountLabel(textCount),
-                    textCount === settings.textCountDisplay ? strings.folderAppearance.defaultSuffix : null
-                ),
-                checked: effectiveTextCount === textCount
-            })),
-            onSelect: textCount => updateAppearance({ textCount: textCount === settings.textCountDisplay ? undefined : textCount })
         });
     }
 

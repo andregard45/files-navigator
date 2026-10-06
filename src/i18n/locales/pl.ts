@@ -451,15 +451,6 @@ export const STRINGS_PL = {
         tasks: 'Zadania',
         date: 'Data',
         parentFolder: 'Folder nadrzędny',
-        textCount: {
-            label: 'Licznik tekstu',
-            options: {
-                none: 'Brak',
-                words: 'Słowa',
-                characters: 'Znaki',
-                both: 'Słowa i znaki'
-            }
-        },
         resetAppearance: 'Zresetuj wygląd',
         openPluginSettings: 'Otwórz ustawienia wtyczki…'
     },
@@ -496,13 +487,7 @@ export const STRINGS_PL = {
             titleLabel: 'Tytuł',
             placeholder: 'Nagłówek grupy',
             icon: 'Ikona',
-            color: 'Kolor',
-            wordCount: 'Pokaż liczbę słów',
-            wordCountTarget: 'Docelowa liczba słów',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Gdy to pole jest puste, cel grupy używa atrybutu celu ustawionego w Ustawienia > Wyświetlanie plików > Liczba słów i znaków. Nadpisz go, ustawiając wartość celu dla tej grupy.',
-            description: 'Dostosuj nagłówek grupy dla tej notatki. Pozostaw tytuł pusty, aby usunąć nagłówek.'
+            color: 'Kolor',            description: 'Dostosuj nagłówek grupy dla tej notatki. Pozostaw tytuł pusty, aby usunąć nagłówek.'
         },
         mergeNotes: {
             title: 'Scal notatki',
@@ -580,9 +565,7 @@ export const STRINGS_PL = {
                 'nav-properties': 'Atrybuty',
                 'nav-property': 'Atrybut',
                 'nav-property-value': 'Wartość',
-                'file-unfinished-task': 'Zadania',
-                'file-word-count': 'Liczba słów',
-                'file-character-count': 'Liczba znaków'
+                'file-unfinished-task': 'Zadania'
             }
         },
         colorPicker: {
@@ -1018,14 +1001,7 @@ export const STRINGS_PL = {
         files: 'pliki',
         folder: 'folder',
         folders: 'foldery',
-        wordCount: 'Liczba słów',
         unfinishedTasks: 'Nieukończone zadania'
-    },
-
-    fileCounts: {
-        words: 'Słów: {count}',
-        characters: 'Znaków: {count}',
-        separator: ' · '
     },
 
     // Settings
@@ -1139,8 +1115,7 @@ export const STRINGS_PL = {
                     properties: 'Atrybuty',
                     tasks: 'Zadania',
                     date: 'Data',
-                    parentFolder: 'Folder nadrzędny',
-                    wordAndCharacterCount: 'Liczba słów i znaków'
+                    parentFolder: 'Folder nadrzędny'
                 }
             },
             calendar: {
@@ -1788,10 +1763,6 @@ export const STRINGS_PL = {
                 name: 'Pokaż tagi w podpowiedziach',
                 desc: 'Wyświetla tagi notatek w podpowiedziach, gdy sekcja tagów jest włączona.'
             },
-            showTooltipWordCount: {
-                name: 'Pokaż liczbę słów w podpowiedziach',
-                desc: 'Wyświetla liczbę słów w podpowiedziach, gdy liczba słów jest włączona.'
-            },
             resetPaneSeparator: {
                 name: 'Przywróć położenie separatora paneli',
                 desc: 'Przywraca domyślne położenie separatora oddzielającego panel nawigacji i panel listy.',
@@ -2007,55 +1978,6 @@ export const STRINGS_PL = {
             showFilePropertiesInCompactMode: {
                 name: 'Pokaż atrybuty w trybie kompaktowym',
                 desc: 'Wyświetlaj atrybuty, gdy tryb kompaktowy jest aktywny.'
-            },
-            textCountType: {
-                name: 'Typ licznika',
-                desc: 'Wybierz, które liczniki tekstu pojawiają się w elementach plików.',
-                options: {
-                    none: 'Brak',
-                    words: 'Liczba słów',
-                    characters: 'Liczba znaków',
-                    both: 'Liczba słów i znaków'
-                }
-            },
-            textCountPlacement: {
-                name: 'Położenie',
-                desc: 'Wybierz, gdzie pojawiają się liczniki tekstu.',
-                options: {
-                    title: 'W tytule',
-                    property: 'Jako atrybut'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Liczba znaków',
-                desc: 'Wybierz, czy spacje są uwzględniane w liczbie znaków.',
-                options: {
-                    include: 'Ze spacjami',
-                    exclude: 'Bez spacji'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Atrybut celu',
-                desc: 'Klucz atrybutu frontmatter zawierający docelową liczbę słów. Pozostaw puste, aby ukryć cele.'
-            },
-            showTargetPercentage: {
-                name: 'Pokaż procent celu',
-                desc: 'Wyświetlaj tylko procent postępu, gdy dostępna jest docelowa liczba słów.'
-            },
-            textCountActiveNotice: {
-                title: 'Zliczanie jest nadal włączone',
-                summary:
-                    'Liczba słów lub znaków jest nadal obliczana dla wszystkich notatek, ponieważ korzystają z niej następujące elementy:',
-                more: 'i jeszcze {count}',
-                reasons: {
-                    appearance: 'Wygląd plików',
-                    'group-header': 'Nagłówek grupy'
-                },
-                scopes: {
-                    folder: 'Folder: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Właściwość: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Klucze atrybutów (profil sejfu)',

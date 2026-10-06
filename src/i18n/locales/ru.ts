@@ -449,15 +449,6 @@ export const STRINGS_RU = {
         tasks: 'Задачи',
         date: 'Дата',
         parentFolder: 'Родительская папка',
-        textCount: {
-            label: 'Подсчёт текста',
-            options: {
-                none: 'Нет',
-                words: 'Слова',
-                characters: 'Символы',
-                both: 'Слова и символы'
-            }
-        },
         resetAppearance: 'Сбросить оформление',
         openPluginSettings: 'Открыть настройки плагина…'
     },
@@ -494,13 +485,7 @@ export const STRINGS_RU = {
             titleLabel: 'Заголовок',
             placeholder: 'Заголовок группы',
             icon: 'Иконка',
-            color: 'Цвет',
-            wordCount: 'Показывать количество слов',
-            wordCountTarget: 'Целевое количество слов',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Если это поле пустое, цель группы использует целевое свойство, заданное в Настройки > Отображение файлов > Количество слов и символов. Переопределите его, задав целевое значение для этой группы.',
-            description: 'Настройте заголовок группы для этой заметки. Оставьте заголовок пустым, чтобы удалить его.'
+            color: 'Цвет',            description: 'Настройте заголовок группы для этой заметки. Оставьте заголовок пустым, чтобы удалить его.'
         },
         mergeNotes: {
             title: 'Объединить заметки',
@@ -578,9 +563,7 @@ export const STRINGS_RU = {
                 'nav-properties': 'Свойства',
                 'nav-property': 'Свойство',
                 'nav-property-value': 'Значение',
-                'file-unfinished-task': 'Задачи',
-                'file-word-count': 'Количество слов',
-                'file-character-count': 'Количество символов'
+                'file-unfinished-task': 'Задачи'
             }
         },
         colorPicker: {
@@ -1012,14 +995,7 @@ export const STRINGS_RU = {
         files: 'файлов',
         folder: 'папка',
         folders: 'папок',
-        wordCount: 'Количество слов',
         unfinishedTasks: 'Незавершённые задачи'
-    },
-
-    fileCounts: {
-        words: 'Слов: {count}',
-        characters: 'Символов: {count}',
-        separator: ' · '
     },
 
     // Settings
@@ -1133,8 +1109,7 @@ export const STRINGS_RU = {
                     properties: 'Свойства',
                     tasks: 'Задачи',
                     date: 'Дата',
-                    parentFolder: 'Родительская папка',
-                    wordAndCharacterCount: 'Количество слов и символов'
+                    parentFolder: 'Родительская папка'
                 }
             },
             calendar: {
@@ -1781,10 +1756,6 @@ export const STRINGS_RU = {
                 name: 'Показывать теги в подсказках',
                 desc: 'Отображать теги заметок в подсказках, когда включён раздел тегов.'
             },
-            showTooltipWordCount: {
-                name: 'Показывать количество слов в подсказках',
-                desc: 'Отображать количество слов в подсказках, когда включён подсчёт слов.'
-            },
             resetPaneSeparator: {
                 name: 'Сбросить положение разделителя панелей',
                 desc: 'Сбросить перетаскиваемый разделитель между панелью навигации и панелью списка в положение по умолчанию.',
@@ -1999,55 +1970,6 @@ export const STRINGS_RU = {
             showFilePropertiesInCompactMode: {
                 name: 'Показывать свойства в компактном режиме',
                 desc: 'Отображать свойства при активном компактном режиме.'
-            },
-            textCountType: {
-                name: 'Тип счётчика',
-                desc: 'Выберите, какие счётчики текста отображаются в элементах файлов.',
-                options: {
-                    none: 'Нет',
-                    words: 'Количество слов',
-                    characters: 'Количество символов',
-                    both: 'Количество слов и символов'
-                }
-            },
-            textCountPlacement: {
-                name: 'Размещение',
-                desc: 'Выберите, где отображаются счётчики текста.',
-                options: {
-                    title: 'В заголовке',
-                    property: 'Как свойство'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Количество символов',
-                desc: 'Выберите, учитывать ли пробелы в количестве символов.',
-                options: {
-                    include: 'С пробелами',
-                    exclude: 'Без пробелов'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Целевое свойство',
-                desc: 'Ключ свойства frontmatter с целевым количеством слов. Оставьте пустым, чтобы скрыть цели.'
-            },
-            showTargetPercentage: {
-                name: 'Показывать процент цели',
-                desc: 'Показывать только процент выполнения, когда доступно целевое количество слов.'
-            },
-            textCountActiveNotice: {
-                title: 'Подсчёт всё ещё включён',
-                summary:
-                    'Количество слов или символов по-прежнему подсчитывается для всех заметок, потому что его используют следующие элементы:',
-                more: 'и ещё {count}',
-                reasons: {
-                    appearance: 'Оформление файлов',
-                    'group-header': 'Заголовок группы'
-                },
-                scopes: {
-                    folder: 'Папка: {name}',
-                    tag: 'Тег: #{name}',
-                    property: 'Свойство: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Ключи свойств (профиль хранилища)',

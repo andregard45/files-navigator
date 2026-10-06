@@ -87,7 +87,6 @@ import { showNotice } from './utils/noticeUtils';
 import { strings } from './i18n';
 import { LanguageService } from './i18n/LanguageService';
 import { LanguageDatabase } from './i18n/LanguageCache';
-import { refreshMarkdownWordCountConsumerSettings } from './utils/markdownPipelineContentTypes';
 
 interface ObsidianSettingsModal {
     open(): void;
@@ -1578,10 +1577,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     public onSettingsUpdate() {
         if (this.isUnloading) return;
-
-        // Settings controls mutate the plugin settings object in place, so rebuild identity-based
-        // consumer caches before any settings or view listener reads the newly published values.
-        refreshMarkdownWordCountConsumerSettings(this.app, this.settings);
 
         // Update API caches with new settings
         if (this.api) {

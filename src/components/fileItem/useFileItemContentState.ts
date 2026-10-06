@@ -39,9 +39,6 @@ export interface FileItemCacheSnapshot {
     featureImageStatus: FeatureImageStatus;
     featureImageUrl: string | null;
     properties: PropertyItem[] | null;
-    wordCount: number | null;
-    characterCountWithSpaces: number | null;
-    characterCountWithoutSpaces: number | null;
     taskTotal: number | null;
     taskUnfinished: number | null;
 }
@@ -51,8 +48,6 @@ export interface FileItemContentLoadOptions {
     loadTags?: boolean;
     loadFeatureImage?: boolean;
     loadProperties?: boolean;
-    loadWordCount?: boolean;
-    loadCharacterCount?: boolean;
     loadTaskCounts?: boolean;
 }
 
@@ -78,9 +73,6 @@ export interface FileItemContentState {
     featureImageStatus: FeatureImageStatus;
     featureImageUrl: string | null;
     properties: PropertyItem[] | null;
-    wordCount: number | null;
-    characterCountWithSpaces: number | null;
-    characterCountWithoutSpaces: number | null;
     taskTotal: number | null;
     taskUnfinished: number | null;
     metadataVersion: number;
@@ -122,8 +114,6 @@ function resolveFileItemContentLoadOptions(loadOptions?: FileItemContentLoadOpti
         loadTags: loadOptions?.loadTags ?? true,
         loadFeatureImage: loadOptions?.loadFeatureImage ?? true,
         loadProperties: loadOptions?.loadProperties ?? true,
-        loadWordCount: loadOptions?.loadWordCount ?? true,
-        loadCharacterCount: loadOptions?.loadCharacterCount ?? true,
         loadTaskCounts: loadOptions?.loadTaskCounts ?? true
     };
 }
@@ -152,16 +142,12 @@ export function loadFileItemCacheSnapshot({
         loadTags: shouldLoadTags,
         loadFeatureImage: shouldLoadFeatureImage,
         loadProperties: shouldLoadProperties,
-        loadWordCount: shouldLoadWordCount,
-        loadCharacterCount: shouldLoadCharacterCount,
         loadTaskCounts: shouldLoadTaskCounts
     } = resolveFileItemContentLoadOptions(loadOptions);
     const shouldReadFileRecord =
         shouldLoadTags ||
         shouldLoadFeatureImage ||
         shouldLoadProperties ||
-        shouldLoadWordCount ||
-        shouldLoadCharacterCount ||
         shouldLoadTaskCounts;
     const preview = shouldLoadPreviewText && showPreview && file.extension === 'md' ? db.getCachedPreviewText(file.path) : '';
     const record = shouldReadFileRecord ? db.getFile(file.path) : null;
@@ -175,9 +161,6 @@ export function loadFileItemCacheSnapshot({
               : null;
     const featureImageStatus: FeatureImageStatus = shouldLoadFeatureImage ? (record?.featureImageStatus ?? 'unprocessed') : 'unprocessed';
     const properties = shouldLoadProperties ? clonePropertyItems(record?.properties ?? null) : null;
-    const wordCount = shouldLoadWordCount ? (record?.wordCount ?? null) : null;
-    const characterCountWithSpaces = shouldLoadCharacterCount ? (record?.characterCountWithSpaces ?? null) : null;
-    const characterCountWithoutSpaces = shouldLoadCharacterCount ? (record?.characterCountWithoutSpaces ?? null) : null;
     const taskTotal = shouldLoadTaskCounts ? (record?.taskTotal ?? null) : null;
     const taskUnfinished = shouldLoadTaskCounts ? (record?.taskUnfinished ?? null) : null;
 
@@ -197,9 +180,6 @@ export function loadFileItemCacheSnapshot({
         featureImageStatus,
         featureImageUrl,
         properties,
-        wordCount,
-        characterCountWithSpaces,
-        characterCountWithoutSpaces,
         taskTotal,
         taskUnfinished
     };
@@ -215,9 +195,6 @@ function boxFromSnapshot(snapshot: FileItemCacheSnapshot): FileItemContentBox {
         featureImageKey: snapshot.featureImageKey,
         featureImageStatus: snapshot.featureImageStatus,
         properties: snapshot.properties,
-        wordCount: snapshot.wordCount,
-        characterCountWithSpaces: snapshot.characterCountWithSpaces,
-        characterCountWithoutSpaces: snapshot.characterCountWithoutSpaces,
         taskTotal: snapshot.taskTotal,
         taskUnfinished: snapshot.taskUnfinished,
         metadataVersion: 0
@@ -234,9 +211,6 @@ function mergeSnapshotIntoBox(prev: FileItemContentBox, snapshot: FileItemCacheS
         prev.featureImageKey === snapshot.featureImageKey &&
         prev.featureImageStatus === snapshot.featureImageStatus &&
         properties === prev.properties &&
-        prev.wordCount === snapshot.wordCount &&
-        prev.characterCountWithSpaces === snapshot.characterCountWithSpaces &&
-        prev.characterCountWithoutSpaces === snapshot.characterCountWithoutSpaces &&
         prev.taskTotal === snapshot.taskTotal &&
         prev.taskUnfinished === snapshot.taskUnfinished
     ) {
@@ -258,8 +232,6 @@ export function applyFileItemContentChangeToBox({
     shouldLoadTags,
     shouldLoadFeatureImage,
     shouldLoadProperties,
-    shouldLoadWordCount,
-    shouldLoadCharacterCount,
     shouldLoadTaskCounts,
     showPreview,
     fileExtension,
@@ -271,8 +243,6 @@ export function applyFileItemContentChangeToBox({
     shouldLoadTags: boolean;
     shouldLoadFeatureImage: boolean;
     shouldLoadProperties: boolean;
-    shouldLoadWordCount: boolean;
-    shouldLoadCharacterCount: boolean;
     shouldLoadTaskCounts: boolean;
     showPreview: boolean;
     fileExtension: string;
@@ -310,27 +280,6 @@ export function applyFileItemContentChangeToBox({
         const nextTags = changes.tags ?? [];
         if (!areStringArraysEqual(prev.tags, nextTags)) {
             mutate().tags = [...nextTags];
-        }
-    }
-
-    if (changes.wordCount !== undefined && shouldLoadWordCount) {
-        const nextWordCount = changes.wordCount ?? null;
-        if (prev.wordCount !== nextWordCount) {
-            mutate().wordCount = nextWordCount;
-        }
-    }
-
-    if (changes.characterCountWithSpaces !== undefined && shouldLoadCharacterCount) {
-        const nextCount = changes.characterCountWithSpaces ?? null;
-        if (prev.characterCountWithSpaces !== nextCount) {
-            mutate().characterCountWithSpaces = nextCount;
-        }
-    }
-
-    if (changes.characterCountWithoutSpaces !== undefined && shouldLoadCharacterCount) {
-        const nextCount = changes.characterCountWithoutSpaces ?? null;
-        if (prev.characterCountWithoutSpaces !== nextCount) {
-            mutate().characterCountWithoutSpaces = nextCount;
         }
     }
 
@@ -378,8 +327,6 @@ export function useFileItemContentState({
     const loadTagsOption = loadOptions?.loadTags;
     const loadFeatureImageOption = loadOptions?.loadFeatureImage;
     const loadPropertiesOption = loadOptions?.loadProperties;
-    const loadWordCountOption = loadOptions?.loadWordCount;
-    const loadCharacterCountOption = loadOptions?.loadCharacterCount;
     const loadTaskCountsOption = loadOptions?.loadTaskCounts;
     const resolvedLoadOptions = useMemo(
         () =>
@@ -388,18 +335,14 @@ export function useFileItemContentState({
                 loadTags: loadTagsOption,
                 loadFeatureImage: loadFeatureImageOption,
                 loadProperties: loadPropertiesOption,
-                loadWordCount: loadWordCountOption,
-                loadCharacterCount: loadCharacterCountOption,
                 loadTaskCounts: loadTaskCountsOption
             }),
         [
-            loadCharacterCountOption,
             loadFeatureImageOption,
             loadPreviewTextOption,
             loadPropertiesOption,
             loadTagsOption,
-            loadTaskCountsOption,
-            loadWordCountOption
+            loadTaskCountsOption
         ]
     );
     const {
@@ -407,8 +350,6 @@ export function useFileItemContentState({
         loadTags: shouldLoadTags,
         loadFeatureImage: shouldLoadFeatureImage,
         loadProperties: shouldLoadProperties,
-        loadWordCount: shouldLoadWordCount,
-        loadCharacterCount: shouldLoadCharacterCount,
         loadTaskCounts: shouldLoadTaskCounts
     } = resolvedLoadOptions;
     const loadSnapshot = useCallback(() => {
@@ -457,8 +398,6 @@ export function useFileItemContentState({
                         shouldLoadTags,
                         shouldLoadFeatureImage,
                         shouldLoadProperties,
-                        shouldLoadWordCount,
-                        shouldLoadCharacterCount,
                         shouldLoadTaskCounts,
                         showPreview,
                         fileExtension: file.extension,
@@ -480,13 +419,11 @@ export function useFileItemContentState({
         file.path,
         getDB,
         loadSnapshot,
-        shouldLoadCharacterCount,
         shouldLoadFeatureImage,
         shouldLoadPreviewText,
         shouldLoadProperties,
         shouldLoadTags,
         shouldLoadTaskCounts,
-        shouldLoadWordCount,
         refreshMetadataVersionOnFeatureImageChange,
         showPreview
     ]);
@@ -581,9 +518,6 @@ export function useFileItemContentState({
         featureImageStatus: box.featureImageStatus,
         featureImageUrl,
         properties: box.properties,
-        wordCount: box.wordCount,
-        characterCountWithSpaces: box.characterCountWithSpaces,
-        characterCountWithoutSpaces: box.characterCountWithoutSpaces,
         taskTotal: box.taskTotal,
         taskUnfinished: box.taskUnfinished,
         metadataVersion: box.metadataVersion

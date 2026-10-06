@@ -448,15 +448,6 @@ export const STRINGS_AR = {
         tasks: 'المهام',
         date: 'التاريخ',
         parentFolder: 'المجلد الأصلي',
-        textCount: {
-            label: 'عدد النص',
-            options: {
-                none: 'لا شيء',
-                words: 'الكلمات',
-                characters: 'الأحرف',
-                both: 'الكلمات والأحرف'
-            }
-        },
         resetAppearance: 'إعادة تعيين المظهر',
         openPluginSettings: 'فتح إعدادات الإضافة…'
     },
@@ -493,13 +484,7 @@ export const STRINGS_AR = {
             titleLabel: 'العنوان',
             placeholder: 'عنوان المجموعة',
             icon: 'الأيقونة',
-            color: 'اللون',
-            wordCount: 'إظهار عدد الكلمات',
-            wordCountTarget: 'عدد الكلمات المستهدف',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'عندما يكون هذا الحقل فارغًا، يستخدم هدف المجموعة خاصية الهدف المحددة في الإعدادات > عرض الملفات > عدد الكلمات والأحرف. يمكنك تجاوزه بتعيين قيمة هدف لهذه المجموعة.',
-            description: 'خصص عنوان المجموعة لهذه الملاحظة. اترك العنوان فارغًا لإزالة العنوان.'
+            color: 'اللون',            description: 'خصص عنوان المجموعة لهذه الملاحظة. اترك العنوان فارغًا لإزالة العنوان.'
         },
         mergeNotes: {
             title: 'دمج الملاحظات',
@@ -576,9 +561,7 @@ export const STRINGS_AR = {
                 'nav-properties': 'الخصائص',
                 'nav-property': 'خاصية',
                 'nav-property-value': 'قيمة',
-                'file-unfinished-task': 'المهام',
-                'file-word-count': 'عدد الكلمات',
-                'file-character-count': 'عدد الأحرف'
+                'file-unfinished-task': 'المهام'
             }
         },
         colorPicker: {
@@ -1010,14 +993,7 @@ export const STRINGS_AR = {
         files: 'ملفات',
         folder: 'مجلد',
         folders: 'مجلدات',
-        wordCount: 'عدد الكلمات',
         unfinishedTasks: 'مهام غير مكتملة'
-    },
-
-    fileCounts: {
-        words: '{count} من الكلمات',
-        characters: '{count} من الأحرف',
-        separator: ' · '
     },
 
     // Settings
@@ -1130,8 +1106,7 @@ export const STRINGS_AR = {
                     properties: 'الخصائص',
                     tasks: 'المهام',
                     date: 'التاريخ',
-                    parentFolder: 'المجلد الأصلي',
-                    wordAndCharacterCount: 'عدد الكلمات والأحرف'
+                    parentFolder: 'المجلد الأصلي'
                 }
             },
             calendar: {
@@ -1777,10 +1752,6 @@ export const STRINGS_AR = {
                 name: 'إظهار الوسوم في التلميحات',
                 desc: 'عرض وسوم الملاحظات في التلميحات عند تفعيل قسم الوسوم.'
             },
-            showTooltipWordCount: {
-                name: 'إظهار عدد الكلمات في التلميحات',
-                desc: 'عرض عدد الكلمات في التلميحات عند تفعيل عدد الكلمات.'
-            },
             resetPaneSeparator: {
                 name: 'إعادة تعيين موضع فاصل اللوحة',
                 desc: 'إعادة تعيين الفاصل القابل للسحب بين لوحة التنقل ولوحة القائمة إلى الموضع الافتراضي.',
@@ -1995,54 +1966,6 @@ export const STRINGS_AR = {
             showFilePropertiesInCompactMode: {
                 name: 'إظهار الخصائص في الوضع المضغوط',
                 desc: 'عرض الخصائص عند تفعيل الوضع المضغوط.'
-            },
-            textCountType: {
-                name: 'نوع العدد',
-                desc: 'اختر أي أعداد نصية تظهر في عناصر الملفات.',
-                options: {
-                    none: 'لا شيء',
-                    words: 'عدد الكلمات',
-                    characters: 'عدد الأحرف',
-                    both: 'عدد الكلمات والأحرف'
-                }
-            },
-            textCountPlacement: {
-                name: 'الموضع',
-                desc: 'اختر مكان ظهور الأعداد النصية.',
-                options: {
-                    title: 'في العنوان',
-                    property: 'كخاصية'
-                }
-            },
-            characterCountSpaces: {
-                name: 'عدد الأحرف',
-                desc: 'اختر ما إذا كانت المسافات تُحتسب ضمن عدد الأحرف.',
-                options: {
-                    include: 'مع المسافات',
-                    exclude: 'بدون المسافات'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'خاصية الهدف',
-                desc: 'مفتاح خاصية البيانات الأمامية الذي يحتوي على عدد الكلمات المستهدف. اتركه فارغًا لإخفاء الأهداف.'
-            },
-            showTargetPercentage: {
-                name: 'إظهار نسبة الهدف',
-                desc: 'عرض نسبة التقدم فقط عند توفر عدد كلمات مستهدف.'
-            },
-            textCountActiveNotice: {
-                title: 'العدّ لا يزال مفعّلًا',
-                summary: 'لا يزال عدد الكلمات أو الأحرف يُحسب لجميع الملاحظات لأن العناصر التالية تستخدمه:',
-                more: 'و{count} أخرى',
-                reasons: {
-                    appearance: 'مظهر الملفات',
-                    'group-header': 'رأس مجموعة'
-                },
-                scopes: {
-                    folder: 'المجلد: {name}',
-                    tag: 'الوسم: #{name}',
-                    property: 'الخاصية: {name}'
-                }
             },
             propertyKeys: {
                 name: 'مفاتيح الخصائص (ملف تعريف الخزنة)',

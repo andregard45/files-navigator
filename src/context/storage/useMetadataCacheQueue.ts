@@ -134,7 +134,7 @@ export function useMetadataCacheQueue(params: {
      * no longer be scheduled.
      */
     useEffect(() => {
-        const activeMask = getPendingMetadataWaitMaskForTypes(getMetadataDependentTypes(settings, app));
+        const activeMask = getPendingMetadataWaitMaskForTypes(getMetadataDependentTypes(settings));
         pendingMetadataWaitPathsRef.current.forEach((mask, path) => {
             // Clear bits for providers that are disabled by the latest settings.
             const nextMask = mask & activeMask;
@@ -154,7 +154,7 @@ export function useMetadataCacheQueue(params: {
      * When all metadata-dependent providers are disabled, there is no reason to keep event listeners alive.
      */
     useEffect(() => {
-        if (getMetadataDependentTypes(settings, app).length > 0) {
+        if (getMetadataDependentTypes(settings).length > 0) {
             return;
         }
 
@@ -254,7 +254,7 @@ export function useMetadataCacheQueue(params: {
         }
 
         const latestSettings = latestSettingsRef.current;
-        const activeMask = getPendingMetadataWaitMaskForTypes(getMetadataDependentTypes(latestSettings, app));
+        const activeMask = getPendingMetadataWaitMaskForTypes(getMetadataDependentTypes(latestSettings));
         if (activeMask === 0) {
             pendingReadyFilesByMaskRef.current.clear();
             return;
@@ -495,7 +495,7 @@ export function useMetadataCacheQueue(params: {
     const queueMetadataContentWhenReady = useCallback(
         (files: TFile[], includeTypes?: ContentProviderType[], settingsOverride?: NotebookNavigatorSettings) => {
             const baseSettings = settingsOverride ?? latestSettingsRef.current;
-            const requestedTypes = resolveMetadataDependentTypes(baseSettings, includeTypes, app);
+            const requestedTypes = resolveMetadataDependentTypes(baseSettings, includeTypes);
             const requestedMask = getPendingMetadataWaitMaskForTypes(requestedTypes);
 
             if (requestedTypes.length === 0 || requestedMask === 0) {
@@ -555,7 +555,7 @@ export function useMetadataCacheQueue(params: {
                     return;
                 }
                 const latestSettings = latestSettingsRef.current;
-                const activeTypes = resolveMetadataDependentTypes(latestSettings, includeTypes, app);
+                const activeTypes = resolveMetadataDependentTypes(latestSettings, includeTypes);
                 if (activeTypes.length === 0 || !contentRegistryRef.current) {
                     return;
                 }

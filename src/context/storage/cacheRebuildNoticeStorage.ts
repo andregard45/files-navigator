@@ -37,8 +37,6 @@ function isFileContentType(value: unknown): value is FileContentType {
         value === 'tags' ||
         value === 'featureImage' ||
         value === 'metadata' ||
-        value === 'wordCount' ||
-        value === 'characterCount' ||
         value === 'tasks' ||
         value === 'properties'
     );

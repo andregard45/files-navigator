@@ -32,7 +32,6 @@ export type AppearanceBehaviorToggleKey =
     | 'showTooltips'
     | 'showTooltipPath'
     | 'showTooltipTags'
-    | 'showTooltipWordCount'
     | 'showInfoButtons'
     | 'colorIconOnly';
 
@@ -59,7 +58,6 @@ const CONTROL_KEYS: ReadonlySet<AppearanceBehaviorControlKey> = new Set([
     'showTooltips',
     'showTooltipPath',
     'showTooltipTags',
-    'showTooltipWordCount',
     'startView',
     'showInfoButtons',
     'colorIconOnly'
@@ -94,7 +92,6 @@ export function applyAppearanceBehaviorControlValue(
         case 'showTooltips':
         case 'showTooltipPath':
         case 'showTooltipTags':
-        case 'showTooltipWordCount':
         case 'showInfoButtons':
         case 'colorIconOnly':
             return applyToggleValue(settings, key, value);

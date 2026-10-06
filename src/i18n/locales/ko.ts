@@ -447,15 +447,6 @@ export const STRINGS_KO = {
         tasks: '작업',
         date: '날짜',
         parentFolder: '상위 폴더',
-        textCount: {
-            label: '텍스트 수',
-            options: {
-                none: '없음',
-                words: '단어',
-                characters: '문자',
-                both: '단어 및 문자'
-            }
-        },
         resetAppearance: '모양 재설정',
         openPluginSettings: '플러그인 설정 열기…'
     },
@@ -492,13 +483,7 @@ export const STRINGS_KO = {
             titleLabel: '제목',
             placeholder: '그룹 머리글',
             icon: '아이콘',
-            color: '색상',
-            wordCount: '단어 수 표시',
-            wordCountTarget: '목표 단어 수',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                '이 필드가 비어 있으면 그룹 목표는 설정 > 파일 표시 > 단어 및 문자 수에 설정된 목표 속성을 사용합니다. 이 그룹의 목표 값을 설정하여 재정의하세요.',
-            description: '이 노트의 그룹 머리글을 사용자 지정합니다. 머리글을 제거하려면 제목을 비워 두세요.'
+            color: '색상',            description: '이 노트의 그룹 머리글을 사용자 지정합니다. 머리글을 제거하려면 제목을 비워 두세요.'
         },
         mergeNotes: {
             title: '노트 병합',
@@ -575,9 +560,7 @@ export const STRINGS_KO = {
                 'nav-properties': '속성',
                 'nav-property': '속성',
                 'nav-property-value': '값',
-                'file-unfinished-task': '작업',
-                'file-word-count': '단어 수',
-                'file-character-count': '문자 수'
+                'file-unfinished-task': '작업'
             }
         },
         colorPicker: {
@@ -1011,14 +994,7 @@ export const STRINGS_KO = {
         files: '파일',
         folder: '폴더',
         folders: '폴더',
-        wordCount: '단어 수',
         unfinishedTasks: '미완료 작업'
-    },
-
-    fileCounts: {
-        words: '{count}개 단어',
-        characters: '{count}자',
-        separator: ' · '
     },
 
     // Settings
@@ -1131,8 +1107,7 @@ export const STRINGS_KO = {
                     properties: '속성',
                     tasks: '작업',
                     date: '날짜',
-                    parentFolder: '상위 폴더',
-                    wordAndCharacterCount: '단어 및 문자 수'
+                    parentFolder: '상위 폴더'
                 }
             },
             calendar: {
@@ -1777,10 +1752,6 @@ export const STRINGS_KO = {
                 name: '도구 설명에 태그 표시',
                 desc: '태그 섹션이 활성화된 경우 도구 설명에 노트의 태그를 표시합니다.'
             },
-            showTooltipWordCount: {
-                name: '도구 설명에 단어 수 표시',
-                desc: '단어 수가 활성화된 경우 도구 설명에 단어 수를 표시합니다.'
-            },
             resetPaneSeparator: {
                 name: '창 구분선 위치 초기화',
                 desc: '탐색 창과 목록 창 사이의 드래그 가능한 구분선을 기본 위치로 초기화합니다.',
@@ -1995,54 +1966,6 @@ export const STRINGS_KO = {
             showFilePropertiesInCompactMode: {
                 name: '컴팩트 모드에서 속성 표시',
                 desc: '컴팩트 모드가 활성화되면 속성을 표시합니다.'
-            },
-            textCountType: {
-                name: '카운트 유형',
-                desc: '파일 항목에 표시할 텍스트 카운트를 선택합니다.',
-                options: {
-                    none: '없음',
-                    words: '단어 수',
-                    characters: '문자 수',
-                    both: '단어 및 문자 수'
-                }
-            },
-            textCountPlacement: {
-                name: '배치',
-                desc: '텍스트 카운트가 표시될 위치를 선택합니다.',
-                options: {
-                    title: '제목 안',
-                    property: '속성으로'
-                }
-            },
-            characterCountSpaces: {
-                name: '문자 수',
-                desc: '문자 수에 공백을 포함할지 선택합니다.',
-                options: {
-                    include: '공백 포함',
-                    exclude: '공백 제외'
-                }
-            },
-            wordCountTargetProperty: {
-                name: '목표 속성',
-                desc: '목표 단어 수가 들어 있는 frontmatter 속성 키입니다. 목표를 숨기려면 비워 두세요.'
-            },
-            showTargetPercentage: {
-                name: '목표 백분율 표시',
-                desc: '목표 단어 수가 있을 때 진행률 백분율만 표시합니다.'
-            },
-            textCountActiveNotice: {
-                title: '카운트 계산이 계속 활성화되어 있습니다',
-                summary: '다음 항목에서 사용하므로 모든 노트의 단어 수 또는 문자 수를 계속 계산합니다:',
-                more: '외 {count}개',
-                reasons: {
-                    appearance: '파일 모양',
-                    'group-header': '그룹 머리글'
-                },
-                scopes: {
-                    folder: '폴더: {name}',
-                    tag: '태그: #{name}',
-                    property: '속성: {name}'
-                }
             },
             propertyKeys: {
                 name: '속성 키 (보관함 프로필)',

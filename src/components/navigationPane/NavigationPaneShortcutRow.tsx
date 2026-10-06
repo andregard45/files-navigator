@@ -197,7 +197,6 @@ export function NavigationPaneShortcutRow({ item, context, adjacentFilledClassNa
                         extensionSuffix={extensionSuffix}
                         settings={settings}
                         getFileTimestamps={context.getFileTimestamps}
-                        wordCount={context.getFileWordCount(note)}
                         tagRow={
                             settings.showTooltipTags ? (
                                 <FileTooltipTagRow
@@ -420,7 +419,6 @@ export function NavigationPaneShortcutRow({ item, context, adjacentFilledClassNa
                     extensionSuffix={extensionSuffix}
                     settings={settings}
                     getFileTimestamps={context.getFileTimestamps}
-                    wordCount={context.getFileWordCount(note)}
                     tagRow={
                         settings.showTooltipTags ? (
                             <FileTooltipTagRow

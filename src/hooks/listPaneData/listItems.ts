@@ -35,14 +35,10 @@ import { resolvePropertyGroupingDirection } from '../../utils/listGrouping';
 import { partitionPinnedFiles } from '../../utils/fileFinder';
 import { resolvePropertyDisplayText } from '../../utils/propertyUtils';
 import {
-    formatManualSortGroupHeaderLabel,
     getCachedManualSortGroupHeader,
     getCachedManualSortRank,
-    normalizeManualSortGroupHeaderWordCount,
-    shouldShowManualSortGroupHeaderWordCount,
     type ManualSortGroupHeaderData
 } from '../../utils/manualSort';
-import { getCachedWordCountTargetFromFrontmatter, getWordCountTargetFromProperties } from '../../utils/wordCountUtils';
 import { createHiddenTagVisibility } from '../../utils/tagPrefixMatcher';
 import { getCachedFileTags } from '../../utils/tagUtils';
 import { DateUtils } from '../../utils/dateUtils';
@@ -87,7 +83,6 @@ interface BuildListItemsArgs {
     propertySortKey?: string;
     isManualSortActive?: boolean;
     manualSortGroupHeaderPropertyKey?: string | null;
-    wordCountTargetProperty?: string;
     groupItemCountData?: ListGroupItemCountData;
 }
 
@@ -180,7 +175,6 @@ function buildListItemsInternal(
         propertySortKey = '',
         isManualSortActive = false,
         manualSortGroupHeaderPropertyKey = null,
-        wordCountTargetProperty = '',
         groupItemCountData
     }: BuildListItemsArgs,
     includeFileItems: boolean,
@@ -240,15 +234,6 @@ function buildListItemsInternal(
     let activeGroupHeaderKey: string | null = null;
     let activeManualSortGroupHeaderFile: TFile | null = null;
     let fileIndexCounter = 0;
-    const getFileWordCount = (file: TFile): number => {
-        return normalizeManualSortGroupHeaderWordCount(db.getFile(file.path)?.wordCount);
-    };
-    const getFileWordCountTarget = (file: TFile): number | null => {
-        return (
-            getWordCountTargetFromProperties(db.getFile(file.path)?.properties, wordCountTargetProperty) ??
-            getCachedWordCountTargetFromFrontmatter(app, file, wordCountTargetProperty)
-        );
-    };
     const manualSortCustomHeaderByPath = new Map<string, ManualSortGroupHeaderData | null>();
     const getManualSortCustomHeaderValue = (file: TFile): ManualSortGroupHeaderData | null => {
         if (groupingMode !== 'custom' || !manualSortGroupHeaderPropertyKey || file.extension !== 'md') {
@@ -263,25 +248,6 @@ function buildListItemsInternal(
         manualSortCustomHeaderByPath.set(file.path, header);
         return header;
     };
-    let activeManualSortHeader: {
-        item: ListPaneItem;
-        header: ManualSortGroupHeaderData;
-        wordCount: number;
-        targetWordCount: number | null;
-    } | null = null;
-    const updateActiveManualSortHeaderLabel = (): void => {
-        if (!activeManualSortHeader) {
-            return;
-        }
-
-        activeManualSortHeader.item.data = formatManualSortGroupHeaderLabel(
-            activeManualSortHeader.header,
-            activeManualSortHeader.wordCount,
-            activeManualSortHeader.targetWordCount
-        );
-        activeManualSortHeader.item.manualSortHeaderWordCount = activeManualSortHeader.wordCount;
-        activeManualSortHeader.item.manualSortHeaderTargetWordCount = activeManualSortHeader.targetWordCount;
-    };
     type FileItemOverrides = Partial<
         Omit<
             ListPaneItem,
@@ -295,22 +261,6 @@ function buildListItemsInternal(
         }
         if (activeManualSortGroupHeaderFile && manualSortGroupHeaderFileByMemberPath) {
             manualSortGroupHeaderFileByMemberPath.set(file.path, activeManualSortGroupHeaderFile);
-        }
-
-        if (
-            includeFileItems &&
-            activeManualSortHeader &&
-            shouldShowManualSortGroupHeaderWordCount(activeManualSortHeader.header) &&
-            file.extension === 'md'
-        ) {
-            activeManualSortHeader.wordCount += getFileWordCount(file);
-            if (activeManualSortHeader.header.targetWordCount === null) {
-                const fileTargetWordCount = getFileWordCountTarget(file);
-                if (fileTargetWordCount !== null) {
-                    activeManualSortHeader.targetWordCount = (activeManualSortHeader.targetWordCount ?? 0) + fileTargetWordCount;
-                }
-            }
-            updateActiveManualSortHeaderLabel();
         }
 
         if (activeListGroupCollapsed || !includeFileItems) {
@@ -376,10 +326,7 @@ function buildListItemsInternal(
             manualSortHeaderFilePath,
             groupFilePaths: collectGroupItemCounts ? undefined : groupFiles ? groupFiles.map(file => file.path) : [],
             groupTotalItemCount: groupItemCountData?.groupItemCountByKey.get(key),
-            manualSortHeaderShowsWordCount: manualSortHeader ? shouldShowManualSortGroupHeaderWordCount(manualSortHeader) : undefined,
             manualSortHeader,
-            manualSortHeaderWordCount: manualSortHeader ? 0 : undefined,
-            manualSortHeaderTargetWordCount: manualSortHeader ? manualSortHeader.targetWordCount : undefined,
             headerKind,
             collapseKey,
             isCollapsed,
@@ -391,16 +338,6 @@ function buildListItemsInternal(
             groupItemCountByKey.set(key, groupFiles?.length ?? 0);
         }
         activeGroupHeaderKey = groupFiles || !groupItemCountByKey ? null : key;
-        activeManualSortHeader = null;
-        if (includeFileItems && headerKind === 'manual-sort-custom' && manualSortHeader) {
-            activeManualSortHeader = {
-                item: headerItem,
-                header: manualSortHeader,
-                wordCount: 0,
-                targetWordCount: manualSortHeader.targetWordCount
-            };
-            updateActiveManualSortHeaderLabel();
-        }
     };
     const getManualSortGroupHeaderFile = (file: TFile): TFile | null => {
         if (groupItemCountData) {

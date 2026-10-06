@@ -448,15 +448,6 @@ export const STRINGS_EN = {
         tasks: 'Tasks',
         date: 'Date',
         parentFolder: 'Parent folder',
-        textCount: {
-            label: 'Text count',
-            options: {
-                none: 'None',
-                words: 'Word',
-                characters: 'Character',
-                both: 'Word and character'
-            }
-        },
         resetAppearance: 'Reset appearance',
         openPluginSettings: 'Open plugin settings…'
     },
@@ -493,13 +484,7 @@ export const STRINGS_EN = {
             titleLabel: 'Title',
             placeholder: 'Group header',
             icon: 'Icon',
-            color: 'Color',
-            wordCount: 'Show word count',
-            wordCountTarget: 'Target word count',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'When this field is empty, the group goal uses the target property set in Settings > File display > Word and character count. Override it by setting a target value for this group.',
-            description: 'Customize the group header for this note. Leave the title empty to remove the header.'
+            color: 'Color',            description: 'Customize the group header for this note. Leave the title empty to remove the header.'
         },
         mergeNotes: {
             title: 'Merge notes',
@@ -576,9 +561,7 @@ export const STRINGS_EN = {
                 'nav-properties': 'Properties',
                 'nav-property': 'Property',
                 'nav-property-value': 'Value',
-                'file-unfinished-task': 'Tasks',
-                'file-word-count': 'Word count',
-                'file-character-count': 'Character count'
+                'file-unfinished-task': 'Tasks'
             }
         },
         colorPicker: {
@@ -1008,14 +991,7 @@ export const STRINGS_EN = {
         files: 'files',
         folder: 'folder',
         folders: 'folders',
-        wordCount: 'Word count',
         unfinishedTasks: 'Unfinished tasks'
-    },
-
-    fileCounts: {
-        words: '{count} words',
-        characters: '{count} chars',
-        separator: ' · '
     },
 
     // Settings
@@ -1118,7 +1094,7 @@ export const STRINGS_EN = {
             },
             fileDisplay: {
                 label: 'File display',
-                description: 'Titles, preview text, feature images, tags, properties, dates, word counts, and character counts.',
+                description: 'Titles, preview text, feature images, tags, properties, and dates.',
                 groups: {
                     icon: 'Icon',
                     title: 'Title',
@@ -1128,8 +1104,7 @@ export const STRINGS_EN = {
                     properties: 'Properties',
                     tasks: 'Tasks',
                     date: 'Date',
-                    parentFolder: 'Parent folder',
-                    wordAndCharacterCount: 'Word and character count'
+                    parentFolder: 'Parent folder'
                 }
             },
             calendar: {
@@ -1775,10 +1750,6 @@ export const STRINGS_EN = {
                 name: 'Show tags in tooltips',
                 desc: 'Display note tags in tooltips when the tags section is enabled.'
             },
-            showTooltipWordCount: {
-                name: 'Show word count in tooltips',
-                desc: 'Display word counts in tooltips when word counts are enabled.'
-            },
             resetPaneSeparator: {
                 name: 'Reset pane separator position',
                 desc: 'Reset the draggable separator between navigation pane and list pane to default position.',
@@ -2013,54 +1984,6 @@ export const STRINGS_EN = {
             linkPropertyPillsToUrls: {
                 name: 'Link property pills to URLs',
                 desc: 'Click a property pill to open the linked URL.'
-            },
-            textCountType: {
-                name: 'Count type',
-                desc: 'Choose which text counts appear in file items.',
-                options: {
-                    none: 'None',
-                    words: 'Word count',
-                    characters: 'Character count',
-                    both: 'Word and character count'
-                }
-            },
-            textCountPlacement: {
-                name: 'Placement',
-                desc: 'Choose where text counts appear.',
-                options: {
-                    title: 'In title',
-                    property: 'As property'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Character count',
-                desc: 'Choose whether spaces are included in character counts.',
-                options: {
-                    include: 'Including spaces',
-                    exclude: 'Excluding spaces'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Target property',
-                desc: 'Frontmatter property key containing the target word count. Leave empty to hide targets.'
-            },
-            showTargetPercentage: {
-                name: 'Show target percentage',
-                desc: 'Display only the progress percentage when a target word count is available.'
-            },
-            textCountActiveNotice: {
-                title: 'Counting is still on',
-                summary: 'Word or character counts are still calculated for all notes because they are used by the following:',
-                more: 'and {count} more',
-                reasons: {
-                    appearance: 'File appearance',
-                    'group-header': 'Group header'
-                },
-                scopes: {
-                    folder: 'Folder: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Property: {name}'
-                }
             },
             dateFormat: {
                 name: 'Date format',

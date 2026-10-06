@@ -514,7 +514,7 @@ export async function runClearFileContent(
 
 export async function runBatchClearAllFileContent(
     deps: ContentMutationOperationDeps,
-    params: { type: 'preview' | 'featureImage' | 'metadata' | 'tags' | 'wordCount' | 'characterCount' | 'properties' | 'all' }
+    params: { type: 'preview' | 'featureImage' | 'metadata' | 'tags' | 'properties' | 'all' }
 ): Promise<void> {
     const { type } = params;
     const transaction = deps.db.transaction([STORE_NAME, FEATURE_IMAGE_STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
@@ -626,27 +626,6 @@ export async function runBatchClearAllFileContent(
                         hasChanges = true;
                     }
                 }
-                if (type === 'wordCount' || type === 'all') {
-                    const nextWordCount = isMarkdown ? null : 0;
-                    if (updated.wordCount !== nextWordCount) {
-                        updated.wordCount = nextWordCount;
-                        changes.wordCount = nextWordCount;
-                        hasChanges = true;
-                    }
-                }
-                if (type === 'characterCount' || type === 'all') {
-                    const nextCharacterCount = isMarkdown ? null : 0;
-                    if (
-                        updated.characterCountWithSpaces !== nextCharacterCount ||
-                        updated.characterCountWithoutSpaces !== nextCharacterCount
-                    ) {
-                        updated.characterCountWithSpaces = nextCharacterCount;
-                        updated.characterCountWithoutSpaces = nextCharacterCount;
-                        changes.characterCountWithSpaces = nextCharacterCount;
-                        changes.characterCountWithoutSpaces = nextCharacterCount;
-                        hasChanges = true;
-                    }
-                }
                 if ((type === 'properties' || type === 'all') && updated.properties !== null) {
                     updated.properties = null;
                     changes.properties = null;
@@ -676,9 +655,6 @@ export async function runBatchClearAllFileContent(
                         changes.previewStatus !== undefined ||
                         changes.featureImageKey === null ||
                         changes.featureImageStatus !== undefined ||
-                        changes.wordCount !== undefined ||
-                        changes.characterCountWithSpaces !== undefined ||
-                        changes.characterCountWithoutSpaces !== undefined ||
                         changes.properties === null;
                     const hasMetadataCleared = changes.metadata === null || changes.tags !== undefined;
                     const clearType = hasContentCleared && hasMetadataCleared ? 'both' : hasContentCleared ? 'content' : 'metadata';

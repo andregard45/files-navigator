@@ -450,15 +450,6 @@ export const STRINGS_JA = {
         tasks: 'タスク',
         date: '日付',
         parentFolder: '親フォルダ',
-        textCount: {
-            label: 'テキストカウント',
-            options: {
-                none: 'なし',
-                words: '単語',
-                characters: '文字',
-                both: '単語と文字'
-            }
-        },
         resetAppearance: '外観をリセット',
         openPluginSettings: 'プラグイン設定を開く…'
     },
@@ -495,13 +486,7 @@ export const STRINGS_JA = {
             titleLabel: 'タイトル',
             placeholder: 'グループヘッダー',
             icon: 'アイコン',
-            color: '色',
-            wordCount: '単語数を表示',
-            wordCountTarget: '目標単語数',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'このフィールドが空の場合、グループ目標は 設定 > ファイル表示 > 単語数と文字数 で設定された目標プロパティを使用します。このグループに目標値を設定すると上書きできます。',
-            description: 'このノートのグループヘッダーをカスタマイズします。ヘッダーを削除するには、タイトルを空のままにします。'
+            color: '色',            description: 'このノートのグループヘッダーをカスタマイズします。ヘッダーを削除するには、タイトルを空のままにします。'
         },
         mergeNotes: {
             title: 'ノートを結合',
@@ -579,9 +564,7 @@ export const STRINGS_JA = {
                 'nav-properties': 'プロパティ',
                 'nav-property': 'プロパティ',
                 'nav-property-value': '値',
-                'file-unfinished-task': 'タスク',
-                'file-word-count': '単語数',
-                'file-character-count': '文字数'
+                'file-unfinished-task': 'タスク'
             }
         },
         colorPicker: {
@@ -1015,14 +998,7 @@ export const STRINGS_JA = {
         files: 'ファイル',
         folder: 'フォルダ',
         folders: 'フォルダ',
-        wordCount: '単語数',
         unfinishedTasks: '未完了タスク'
-    },
-
-    fileCounts: {
-        words: '{count} 語',
-        characters: '{count} 文字',
-        separator: ' · '
     },
 
     // Settings
@@ -1135,8 +1111,7 @@ export const STRINGS_JA = {
                     properties: 'プロパティ',
                     tasks: 'タスク',
                     date: '日付',
-                    parentFolder: '親フォルダ',
-                    wordAndCharacterCount: '単語数と文字数'
+                    parentFolder: '親フォルダ'
                 }
             },
             calendar: {
@@ -1782,10 +1757,6 @@ export const STRINGS_JA = {
                 name: 'ツールチップにタグを表示',
                 desc: 'タグセクションが有効な場合、ツールチップにノートのタグを表示します。'
             },
-            showTooltipWordCount: {
-                name: 'ツールチップに単語数を表示',
-                desc: '単語数が有効な場合、ツールチップに単語数を表示します。'
-            },
             resetPaneSeparator: {
                 name: 'ペインセパレーターの位置をリセット',
                 desc: 'ナビゲーションペインとリストペインの間のドラッグ可能なセパレーターをデフォルトの位置にリセットします。',
@@ -2000,54 +1971,6 @@ export const STRINGS_JA = {
             showFilePropertiesInCompactMode: {
                 name: 'コンパクトモードでプロパティを表示',
                 desc: 'コンパクトモードが有効な時にプロパティを表示します。'
-            },
-            textCountType: {
-                name: 'カウントの種類',
-                desc: 'ファイル項目に表示するテキストのカウントを選択します。',
-                options: {
-                    none: 'なし',
-                    words: '単語数',
-                    characters: '文字数',
-                    both: '単語数と文字数'
-                }
-            },
-            textCountPlacement: {
-                name: '配置',
-                desc: 'テキストのカウントを表示する場所を選択します。',
-                options: {
-                    title: 'タイトル内',
-                    property: 'プロパティとして'
-                }
-            },
-            characterCountSpaces: {
-                name: '文字数',
-                desc: '文字数にスペースを含めるかを選択します。',
-                options: {
-                    include: 'スペースを含む',
-                    exclude: 'スペースを除く'
-                }
-            },
-            wordCountTargetProperty: {
-                name: '目標プロパティ',
-                desc: '目標単語数を含むフロントマターのプロパティキー。目標を非表示にするには空にします。'
-            },
-            showTargetPercentage: {
-                name: '目標パーセントを表示',
-                desc: '目標単語数がある場合、進捗パーセントのみを表示します。'
-            },
-            textCountActiveNotice: {
-                title: 'カウントは引き続き有効です',
-                summary: '次の項目で使用されているため、すべてのノートで単語数または文字数が引き続き計算されます：',
-                more: 'ほか{count}件',
-                reasons: {
-                    appearance: 'ファイルの外観',
-                    'group-header': 'グループ見出し'
-                },
-                scopes: {
-                    folder: 'フォルダー: {name}',
-                    tag: 'タグ: #{name}',
-                    property: 'プロパティ: {name}'
-                }
             },
             propertyKeys: {
                 name: 'プロパティキー（保管庫プロファイル）',

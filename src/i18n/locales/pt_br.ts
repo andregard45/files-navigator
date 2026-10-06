@@ -451,15 +451,6 @@ export const STRINGS_PT_BR = {
         tasks: 'Tarefas',
         date: 'Data',
         parentFolder: 'Pasta pai',
-        textCount: {
-            label: 'Contagem de texto',
-            options: {
-                none: 'Nenhuma',
-                words: 'Palavras',
-                characters: 'Caracteres',
-                both: 'Palavras e caracteres'
-            }
-        },
         resetAppearance: 'Redefinir aparência',
         openPluginSettings: 'Abrir configurações do plugin…'
     },
@@ -496,13 +487,7 @@ export const STRINGS_PT_BR = {
             titleLabel: 'Título',
             placeholder: 'Cabeçalho de grupo',
             icon: 'Ícone',
-            color: 'Cor',
-            wordCount: 'Mostrar contagem de palavras',
-            wordCountTarget: 'Contagem de palavras alvo',
-            wordCountTargetPlaceholder: '10,000',
-            wordCountTargetDescription:
-                'Quando este campo está vazio, a meta do grupo usa a propriedade de meta definida em Configurações > Exibição de arquivos > Contagem de palavras e caracteres. Substitua definindo um valor de meta para este grupo.',
-            description: 'Personalize o cabeçalho de grupo para esta nota. Deixe o título em branco para remover o cabeçalho.'
+            color: 'Cor',            description: 'Personalize o cabeçalho de grupo para esta nota. Deixe o título em branco para remover o cabeçalho.'
         },
         mergeNotes: {
             title: 'Mesclar notas',
@@ -580,9 +565,7 @@ export const STRINGS_PT_BR = {
                 'nav-properties': 'Propriedades',
                 'nav-property': 'Propriedade',
                 'nav-property-value': 'Valor',
-                'file-unfinished-task': 'Tarefas',
-                'file-word-count': 'Contagem de palavras',
-                'file-character-count': 'Contagem de caracteres'
+                'file-unfinished-task': 'Tarefas'
             }
         },
         colorPicker: {
@@ -1017,14 +1000,7 @@ export const STRINGS_PT_BR = {
         files: 'arquivos',
         folder: 'pasta',
         folders: 'pastas',
-        wordCount: 'Contagem de palavras',
         unfinishedTasks: 'Tarefas inacabadas'
-    },
-
-    fileCounts: {
-        words: '{count} palavras',
-        characters: '{count} caracteres',
-        separator: ' · '
     },
 
     // Settings
@@ -1139,8 +1115,7 @@ export const STRINGS_PT_BR = {
                     properties: 'Propriedades',
                     tasks: 'Tarefas',
                     date: 'Data',
-                    parentFolder: 'Pasta pai',
-                    wordAndCharacterCount: 'Contagem de palavras e caracteres'
+                    parentFolder: 'Pasta pai'
                 }
             },
             calendar: {
@@ -1789,10 +1764,6 @@ export const STRINGS_PT_BR = {
                 name: 'Mostrar etiquetas nas dicas de ferramentas',
                 desc: 'Exibir as etiquetas das notas nas dicas de ferramentas quando a seção de etiquetas está ativada.'
             },
-            showTooltipWordCount: {
-                name: 'Mostrar contagem de palavras nas dicas de ferramentas',
-                desc: 'Exibir a contagem de palavras nas dicas de ferramentas quando a contagem de palavras está ativada.'
-            },
             resetPaneSeparator: {
                 name: 'Redefinir posição do separador de painéis',
                 desc: 'Redefinir o separador arrastável entre o painel de navegação e o painel de lista para a posição padrão.',
@@ -2008,55 +1979,6 @@ export const STRINGS_PT_BR = {
             showFilePropertiesInCompactMode: {
                 name: 'Mostrar propriedades no modo compacto',
                 desc: 'Exibir propriedades quando o modo compacto está ativo.'
-            },
-            textCountType: {
-                name: 'Tipo de contagem',
-                desc: 'Escolha quais contagens de texto aparecem nos itens de arquivo.',
-                options: {
-                    none: 'Nenhuma',
-                    words: 'Contagem de palavras',
-                    characters: 'Contagem de caracteres',
-                    both: 'Contagem de palavras e caracteres'
-                }
-            },
-            textCountPlacement: {
-                name: 'Posicionamento',
-                desc: 'Escolha onde as contagens de texto aparecem.',
-                options: {
-                    title: 'No título',
-                    property: 'Como propriedade'
-                }
-            },
-            characterCountSpaces: {
-                name: 'Contagem de caracteres',
-                desc: 'Escolha se os espaços são incluídos na contagem de caracteres.',
-                options: {
-                    include: 'Incluindo espaços',
-                    exclude: 'Excluindo espaços'
-                }
-            },
-            wordCountTargetProperty: {
-                name: 'Propriedade alvo',
-                desc: 'Chave da propriedade frontmatter que contém a contagem de palavras alvo. Deixe em branco para ocultar alvos.'
-            },
-            showTargetPercentage: {
-                name: 'Mostrar porcentagem da meta',
-                desc: 'Mostrar apenas a porcentagem de progresso quando houver uma contagem de palavras alvo disponível.'
-            },
-            textCountActiveNotice: {
-                title: 'A contagem continua ativa',
-                summary:
-                    'As contagens de palavras ou caracteres continuam sendo calculadas para todas as notas porque são utilizadas pelos seguintes itens:',
-                more: 'e mais {count}',
-                reasons: {
-                    appearance: 'Aparência dos arquivos',
-                    'group-header': 'Cabeçalho de grupo'
-                },
-                scopes: {
-                    folder: 'Pasta: {name}',
-                    tag: 'Tag: #{name}',
-                    property: 'Propriedade: {name}'
-                }
             },
             propertyKeys: {
                 name: 'Chaves de propriedades (perfil do cofre)',

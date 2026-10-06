@@ -40,13 +40,13 @@ import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecora
 import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 import { resolveUXIcon } from '../../utils/uxIcons';
 import { hasSolidFileRowBackground } from '../../utils/colorUtils';
-import { getManualSortGroupHeaderPropertyKey, shouldShowManualSortGroupHeaderProgress } from '../../utils/manualSort';
+import { getManualSortGroupHeaderPropertyKey } from '../../utils/manualSort';
 import type { ManualSortGroupHeaderData } from '../../utils/manualSort';
 import { resolveFolderDecorationColors } from '../../utils/folderDecoration';
 import { addManualSortGroupHeaderMenuItems } from '../../utils/contextMenu/manualSortGroupHeaderMenuItems';
 import { addMergeNotesMenuItem } from '../../utils/contextMenu/mergeNotesMenuItems';
 import { getMarkdownFilesInOrder } from '../../utils/noteMerge';
-import { ManualSortGroupHeaderContent, ManualSortGroupHeaderProgress } from './ManualSortGroupHeaderContent';
+import { ManualSortGroupHeaderContent } from './ManualSortGroupHeaderContent';
 
 export interface PointerClientPosition {
     clientX: number;
@@ -81,8 +81,6 @@ export interface HeaderRenderModel {
     totalItemCount: number | null;
     manualSortHeaderFilePath: string | null;
     manualSortHeader: ManualSortGroupHeaderData | null;
-    manualSortHeaderWordCount: number;
-    manualSortHeaderTargetWordCount: number | null;
     folderIconId: string | null;
     folderColor: string | null;
     applyFolderColorToLabel: boolean;
@@ -245,12 +243,6 @@ function shouldHideCollapsedHeaderSeparator(header: HeaderRenderModel | null): b
     return header?.isCollapsed === true;
 }
 
-function shouldHideManualSortGoalHeaderSeparator(header: HeaderRenderModel | null): boolean {
-    return header?.manualSortHeader
-        ? shouldShowManualSortGroupHeaderProgress(header.manualSortHeader, header.manualSortHeaderTargetWordCount)
-        : false;
-}
-
 export const ListPaneGroupHeader = React.memo(function ListPaneGroupHeader({
     header,
     collapseChevronIcons,
@@ -265,8 +257,6 @@ export const ListPaneGroupHeader = React.memo(function ListPaneGroupHeader({
     const manualSortHeader = header.manualSortHeader;
     const hasFolderPathSegments = header.folderGroupHeaderSegments.length > 0;
     const isClickableFolderGroupHeader = Boolean(folderGroupHeaderTarget) && !header.isPinnedHeader && !hasFolderPathSegments;
-    const hasManualSortGoal =
-        manualSortHeader !== null && shouldShowManualSortGroupHeaderProgress(manualSortHeader, header.manualSortHeaderTargetWordCount);
     const folderColor = header.folderColor ?? undefined;
     const folderIconStyle = folderColor ? { color: folderColor } : undefined;
     const folderLabelStyle = header.applyFolderColorToLabel && folderColor ? { color: folderColor } : undefined;
@@ -363,15 +353,9 @@ export const ListPaneGroupHeader = React.memo(function ListPaneGroupHeader({
         <div
             className={headerClasses.join(' ')}
             onClick={header.isCollapsible ? handleCollapseToggle : undefined}
-            onContextMenu={hasManualSortGoal ? undefined : handleContextMenu}
+            onContextMenu={handleContextMenu}
         >
-            {manualSortHeader ? (
-                <ManualSortGroupHeaderContent
-                    header={manualSortHeader}
-                    wordCount={header.manualSortHeaderWordCount}
-                    targetWordCount={header.manualSortHeaderTargetWordCount}
-                />
-            ) : (
+            {manualSortHeader ? <ManualSortGroupHeaderContent header={manualSortHeader} /> : (
                 <>
                     {header.isPinnedHeader && pinnedSectionIcon ? (
                         <ServiceIcon
@@ -415,19 +399,6 @@ export const ListPaneGroupHeader = React.memo(function ListPaneGroupHeader({
             ) : null}
         </div>
     );
-
-    if (hasManualSortGoal) {
-        return (
-            <div className="nn-manual-sort-group-header-shell" onContextMenu={handleContextMenu}>
-                {headerRow}
-                <ManualSortGroupHeaderProgress
-                    header={manualSortHeader}
-                    wordCount={header.manualSortHeaderWordCount}
-                    targetWordCount={header.manualSortHeaderTargetWordCount}
-                />
-            </div>
-        );
-    }
 
     return headerRow;
 });
@@ -807,8 +778,6 @@ export function ListPaneVirtualContent({
                 totalItemCount: settings.showGroupHeaderItemCounts ? (item.groupTotalItemCount ?? null) : null,
                 manualSortHeaderFilePath: item.headerKind === 'manual-sort-custom' ? (item.manualSortHeaderFilePath ?? null) : null,
                 manualSortHeader,
-                manualSortHeaderWordCount: item.manualSortHeaderWordCount ?? 0,
-                manualSortHeaderTargetWordCount: item.manualSortHeaderTargetWordCount ?? null,
                 folderIconId,
                 folderColor,
                 applyFolderColorToLabel: folderColor !== null && !settings.colorIconOnly
@@ -1168,7 +1137,7 @@ export function ListPaneVirtualContent({
                             const headerModel = headerModelByIndex.get(virtualItem.index) ?? null;
                             const firstFileAfterHeader = headerModel ? getFirstFileAfterHeader(listItems, virtualItem.index) : null;
                             const shouldHideHeaderSeparatorForGroup =
-                                shouldHideCollapsedHeaderSeparator(headerModel) || shouldHideManualSortGoalHeaderSeparator(headerModel);
+                                shouldHideCollapsedHeaderSeparator(headerModel);
                             const hideFileSeparator =
                                 item.type === ListPaneItemType.FILE &&
                                 ((isSelected && !hasSelectedBelow) || (!isSelected && isNextFileSelected));

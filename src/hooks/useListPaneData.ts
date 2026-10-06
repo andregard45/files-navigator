@@ -464,7 +464,6 @@ export function useListPaneData({
             propertySortKey: sortSpec.propertyKey,
             isManualSortActive,
             manualSortGroupHeaderPropertyKey,
-            wordCountTargetProperty: settings.wordCountTargetProperty,
             groupItemCountData
         });
     }, [
@@ -490,7 +489,6 @@ export function useListPaneData({
         sortSpec.propertyKey,
         isManualSortActive,
         manualSortGroupHeaderPropertyKey,
-        settings.wordCountTargetProperty,
         groupItemCountData
     ]);
 
@@ -508,9 +506,8 @@ export function useListPaneData({
     }>(() => {
         return buildOrderedFiles(listItems);
     }, [listItems]);
-    const customGroupHeaderState = useMemo(() => {
+    const customGroupHeaderFilePaths = useMemo(() => {
         const filePaths = new Set<string>();
-        let hasWordCountGroupHeaders = false;
 
         listItems.forEach(item => {
             if (item.type !== ListPaneItemType.HEADER || item.headerKind !== 'manual-sort-custom') {
@@ -520,13 +517,9 @@ export function useListPaneData({
             if (item.manualSortHeaderFilePath) {
                 filePaths.add(item.manualSortHeaderFilePath);
             }
-
-            if (item.manualSortHeaderShowsWordCount === true) {
-                hasWordCountGroupHeaders = true;
-            }
         });
 
-        return { filePaths, hasWordCountGroupHeaders };
+        return filePaths;
     }, [listItems]);
 
     useListPaneRefresh({
@@ -534,13 +527,12 @@ export function useListPaneData({
         basePathSet,
         cachedCustomGroupHeaderFilePaths,
         commandQueue,
-        customGroupHeaderFilePaths: customGroupHeaderState.filePaths,
+        customGroupHeaderFilePaths,
         dayKey,
         files,
         getDB,
         groupBy,
         hasDateSearchFilters,
-        hasManualSortWordCountGroupHeaders: customGroupHeaderState.hasWordCountGroupHeaders,
         hasPropertySearchFilters,
         hasTaskSearchFilters,
         hiddenFilePropertyMatcher,
