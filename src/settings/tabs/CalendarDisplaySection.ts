@@ -25,7 +25,6 @@ import {
     isCalendarLeftPlacement,
     isCalendarMonthHeadingFormat,
     isCalendarPlacement,
-    isCalendarWeekendDays,
     type CalendarWeeksToShow
 } from '../types';
 import type { SettingsTabContext } from './SettingsTabContext';
@@ -112,27 +111,6 @@ export function renderCalendarDisplaySections(
     const calendarLocaleWarningEl = calendarLocaleSetting.descEl.createDiv({
         cls: 'setting-item-description nn-setting-hidden nn-setting-warning'
     });
-
-    appearanceGroup
-        .addSetting(setting => {
-            setting.setName(strings.settings.items.calendarWeekendDays.name).setDesc(strings.settings.items.calendarWeekendDays.desc);
-        })
-        .addDropdown((dropdown: DropdownComponent) => {
-            dropdown
-                .addOption('none', strings.settings.items.calendarWeekendDays.options.none)
-                .addOption('sat-sun', strings.settings.items.calendarWeekendDays.options.satSun)
-                .addOption('fri-sat', strings.settings.items.calendarWeekendDays.options.friSat)
-                .addOption('thu-fri', strings.settings.items.calendarWeekendDays.options.thuFri)
-                .setValue(plugin.settings.calendarWeekendDays)
-                .onChange(async value => {
-                    if (!isCalendarWeekendDays(value)) {
-                        return;
-                    }
-
-                    plugin.settings.calendarWeekendDays = value;
-                    await plugin.saveSettingsAndUpdate();
-                });
-        });
 
     appearanceGroup
         .addSetting(setting => {

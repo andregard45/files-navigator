@@ -1621,16 +1621,6 @@ export const STRINGS_KO = {
                     systemDefault: '기본값'
                 }
             },
-            calendarWeekendDays: {
-                name: '주말',
-                desc: '주말을 다른 배경색으로 표시합니다.',
-                options: {
-                    none: '없음',
-                    satSun: '토요일과 일요일',
-                    friSat: '금요일과 토요일',
-                    thuFri: '목요일과 금요일'
-                }
-            },
             calendarMonthNameFormat: {
                 name: '월 이름 형식',
                 desc: '월 이름을 긴 형식(1월) 또는 짧은 형식(1월)으로 표시합니다.',

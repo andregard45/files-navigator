@@ -309,7 +309,6 @@ body {
     --nn-theme-calendar-day-outside-month-color: var(--nn-theme-foreground-faded);
 
     /* Day states */
-    --nn-theme-calendar-weekend-bg: color-mix(in srgb, var(--nn-theme-foreground) 10%, transparent);
     --nn-theme-calendar-hover-bg: var(--background-modifier-hover);
     --nn-theme-calendar-day-today-color: var(--nn-theme-calendar-day-in-month-color);
     --nn-theme-calendar-day-today-bg: var(--text-selection);

@@ -1612,16 +1612,6 @@ export const STRINGS_ZH_CN = {
                     systemDefault: '系统默认'
                 }
             },
-            calendarWeekendDays: {
-                name: '周末',
-                desc: '用不同的背景颜色显示周末。',
-                options: {
-                    none: '无',
-                    satSun: '周六和周日',
-                    friSat: '周五和周六',
-                    thuFri: '周四和周五'
-                }
-            },
             calendarMonthNameFormat: {
                 name: '月份名称格式',
                 desc: '显示完整（一月）或简称（1月）的月份名称。',

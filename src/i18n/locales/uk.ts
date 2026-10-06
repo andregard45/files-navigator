@@ -1625,16 +1625,6 @@ export const STRINGS_UK = {
                     systemDefault: 'За замовчуванням'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Вихідні дні',
-                desc: 'Показувати вихідні дні з іншим кольором фону.',
-                options: {
-                    none: 'Немає',
-                    satSun: 'Субота та неділя',
-                    friSat: "П'ятниця та субота",
-                    thuFri: "Четвер та п'ятниця"
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Формат назви місяця',
                 desc: 'Повна (січень) або скорочена (січ) назва місяця.',

@@ -1624,16 +1624,6 @@ export const STRINGS_TR = {
                     systemDefault: 'Varsayılan'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Hafta sonu günleri',
-                desc: 'Hafta sonu günlerini farklı bir arka plan rengiyle göster.',
-                options: {
-                    none: 'Hiçbiri',
-                    satSun: 'Cumartesi ve pazar',
-                    friSat: 'Cuma ve cumartesi',
-                    thuFri: 'Perşembe ve cuma'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Ay adı biçimi',
                 desc: 'Uzun (Ocak) veya kısa (Oca) ay adı.',

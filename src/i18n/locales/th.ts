@@ -1618,16 +1618,6 @@ export const STRINGS_TH = {
                     systemDefault: 'ค่าเริ่มต้น'
                 }
             },
-            calendarWeekendDays: {
-                name: 'วันหยุดสุดสัปดาห์',
-                desc: 'แสดงวันหยุดสุดสัปดาห์ด้วยสีพื้นหลังที่แตกต่างกัน',
-                options: {
-                    none: 'ไม่มี',
-                    satSun: 'วันเสาร์และวันอาทิตย์',
-                    friSat: 'วันศุกร์และวันเสาร์',
-                    thuFri: 'วันพฤหัสบดีและวันศุกร์'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'รูปแบบชื่อเดือน',
                 desc: 'ชื่อเดือนแบบเต็ม (มกราคม) หรือแบบย่อ (ม.ค.)',

@@ -1200,14 +1200,6 @@ settings:
         level: 2
         collapsed: false
     -
-        id: nn-theme-calendar-weekend-bg
-        title: Weekend day background
-        description: Background color for weekend day cells.
-        type: variable-themed-color
-        format: hex
-        default-light: '#'
-        default-dark: '#'
-    -
         id: nn-theme-calendar-hover-bg
         title: Hover background
         description: Background color when hovering calendar buttons and days.

@@ -1631,16 +1631,6 @@ export const STRINGS_NL = {
                     systemDefault: 'Standaard'
                 }
             },
-            calendarWeekendDays: {
-                name: 'Weekenddagen',
-                desc: 'Toon weekenddagen met een andere achtergrondkleur.',
-                options: {
-                    none: 'Geen',
-                    satSun: 'Zaterdag en zondag',
-                    friSat: 'Vrijdag en zaterdag',
-                    thuFri: 'Donderdag en vrijdag'
-                }
-            },
             calendarMonthNameFormat: {
                 name: 'Maandnaam-indeling',
                 desc: 'Lange (januari) of korte (jan.) maandnaam.',

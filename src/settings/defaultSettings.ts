@@ -403,7 +403,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     // Calendar tab - Calendar (always enabled)
     calendarPlacement: 'left-sidebar',
     calendarLocale: 'system-default',
-    calendarWeekendDays: 'sat-sun',
     calendarMonthHeadingFormat: 'full',
     calendarHighlightToday: true,
     calendarShowFeatureImage: true,
