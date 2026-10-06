@@ -1650,10 +1650,6 @@ export const STRINGS_PT = {
                 name: 'Realçar a data de hoje',
                 desc: 'Realçar a data de hoje com uma cor de fundo e texto em negrito.'
             },
-            calendarShowTasks: {
-                name: 'Mostrar tarefas',
-                desc: 'Mostrar um indicador em dias, semanas e meses com tarefas inacabadas.'
-            },
             calendarShowWeekNumber: {
                 name: 'Mostrar número da semana',
                 desc: 'Adicionar uma coluna com o número da semana.'

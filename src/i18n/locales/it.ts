@@ -1647,10 +1647,6 @@ export const STRINGS_IT = {
                 name: 'Evidenzia la data di oggi',
                 desc: 'Evidenzia la data di oggi con un colore di sfondo e testo in grassetto.'
             },
-            calendarShowTasks: {
-                name: 'Mostra attività',
-                desc: 'Mostra un indicatore su giorni, settimane e mesi con attività incomplete.'
-            },
             calendarShowWeekNumber: {
                 name: 'Mostra numero settimana',
                 desc: 'Aggiungi una colonna con il numero della settimana.'

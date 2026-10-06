@@ -60,8 +60,7 @@ import {
     formatIsoDate,
     isDateFilterModifierPressed,
     resolveCalendarWeekWindow,
-    shouldAutoRevealCalendarNoteKind,
-    setUnfinishedTaskCount
+    shouldAutoRevealCalendarNoteKind
 } from './calendarUtils';
 import { useCalendarHoverTooltip } from './useCalendarHoverTooltip';
 import { useCalendarNoteActions } from './useCalendarNoteActions';
@@ -91,7 +90,6 @@ const HIDDEN_DAY_NOTE_TARGET: CalendarNoteTarget = {
 
 interface CalendarYearMonthBaseEntry {
     date: MomentInstance;
-    dayFiles: TFile[];
     existingDayFiles: TFile[];
     fullLabel: string;
     hasDailyNote: boolean;
@@ -210,7 +208,6 @@ export function Calendar({
     );
 
     const [vaultVersion, setVaultVersion] = useState(0);
-    const [taskIndicatorVersion, setTaskIndicatorVersion] = useState(0);
     const [hoverTooltipPreviewVersion, setHoverTooltipPreviewVersion] = useState(0);
     const [metadataVersion, setMetadataVersion] = useState(0);
     const [profileVisibilityVersion, setProfileVisibilityVersion] = useState(0);
@@ -220,7 +217,6 @@ export function Calendar({
         },
         []
     );
-    const visibleIndicatorNotePathsRef = useRef<Set<string>>(new Set());
     const visibleFrontmatterNotePathsRef = useRef<Set<string>>(new Set());
     const frontmatterTitlesByPathRef = useRef<ReadonlyMap<string, string>>(new Map());
     const lastAppliedActiveEditorDateKeyRef = useRef<string | null>(null);
@@ -395,16 +391,13 @@ export function Calendar({
         }
 
         return db.onContentChange(changes => {
-            const visibleIndicatorPaths = visibleIndicatorNotePathsRef.current;
             const hoverTooltipState = hoverTooltipStateRef.current;
             const hoverPreviewPath =
                 hoverTooltipState && hoverTooltipState.tooltipData.previewEnabled ? hoverTooltipState.tooltipData.previewPath : null;
-            const shouldTrackTaskIndicator = settings.calendarShowTasks && visibleIndicatorPaths.size > 0;
             const shouldTrackHoverPreview = Boolean(hoverPreviewPath);
             // The calendar always shows hidden items, so profile-visibility tracking is unconditional.
             const shouldTrackProfileVisibility = hasFrontmatterVisibilityRules || hasTagVisibilityRules;
 
-            let hasTaskIndicatorChange = !shouldTrackTaskIndicator;
             let hasHoverPreviewChange = !shouldTrackHoverPreview;
             let hasProfileVisibilityChange = !shouldTrackProfileVisibility;
 
@@ -418,10 +411,6 @@ export function Calendar({
                     hasHoverPreviewChange = true;
                 }
 
-                if (!hasTaskIndicatorChange && visibleIndicatorPaths.has(change.path) && change.changes.taskUnfinished !== undefined) {
-                    hasTaskIndicatorChange = true;
-                }
-
                 if (
                     !hasProfileVisibilityChange &&
                     profileVisibilityNotePathsRef.current.has(change.path) &&
@@ -431,13 +420,9 @@ export function Calendar({
                     hasProfileVisibilityChange = true;
                 }
 
-                if (hasTaskIndicatorChange && hasHoverPreviewChange && hasProfileVisibilityChange) {
+                if (hasHoverPreviewChange && hasProfileVisibilityChange) {
                     break;
                 }
-            }
-
-            if (shouldTrackTaskIndicator && hasTaskIndicatorChange) {
-                setTaskIndicatorVersion(v => v + 1);
             }
 
             if (shouldTrackHoverPreview && hasHoverPreviewChange) {
@@ -448,14 +433,7 @@ export function Calendar({
                 scheduleProfileVisibilityUpdate();
             }
         });
-    }, [
-        db,
-        hasFrontmatterVisibilityRules,
-        hasTagVisibilityRules,
-        hoverTooltipStateRef,
-        settings.calendarShowTasks,
-        scheduleProfileVisibilityUpdate
-    ]);
+    }, [db, hasFrontmatterVisibilityRules, hasTagVisibilityRules, hoverTooltipStateRef, scheduleProfileVisibilityUpdate]);
 
     useEffect(() => {
         if (!hasFrontmatterVisibilityRules && !hasTagVisibilityRules) {
@@ -967,25 +945,6 @@ export function Calendar({
         return paths;
     }, [weeks]);
 
-    const unfinishedTaskCountByIso = useMemo(() => {
-        // Force refresh when calendar task metadata changes so day task indicators stay in sync with content updates.
-        void taskIndicatorVersion;
-
-        const unfinishedTaskCounts = new Map<string, number>();
-
-        if (!db || !settings.calendarShowTasks) {
-            return unfinishedTaskCounts;
-        }
-
-        for (const week of weeks) {
-            for (const day of week.days) {
-                setUnfinishedTaskCount(unfinishedTaskCounts, day.iso, day.note.visibleFile, db);
-            }
-        }
-
-        return unfinishedTaskCounts;
-    }, [db, settings.calendarShowTasks, taskIndicatorVersion, weeks]);
-
     const showYearCalendar = isRightSidebar && settings.calendarShowYearCalendar;
     const renderedWeekRowCount = useMemo(() => {
         const weeksToShow = clamp(weeksToShowSetting, 1, 6);
@@ -1195,29 +1154,22 @@ export function Calendar({
                 .startOf('day')
                 .locale(displayLocale);
             const daysInMonth = new Date(displayedYear, monthIndex + 1, 0).getDate();
-            const dayFiles: TFile[] = [];
             const existingDayFiles: TFile[] = [];
 
             for (let dayNumber = 1; dayNumber <= daysInMonth; dayNumber++) {
                 const dayDate = monthDate.clone().set({ date: dayNumber });
                 const dayNoteTarget = getExistingDayNoteTarget(dayDate);
-                const existingFile = dayNoteTarget.visibleFile;
 
                 if (dayNoteTarget.existingFile) {
                     existingDayFiles.push(dayNoteTarget.existingFile);
-                }
-
-                if (existingFile) {
-                    dayFiles.push(existingFile);
                 }
             }
 
             entries.push({
                 date: monthDate,
-                dayFiles,
                 existingDayFiles,
                 fullLabel: monthDate.format('MMMM'),
-                hasDailyNote: dayFiles.length > 0,
+                hasDailyNote: existingDayFiles.length > 0,
                 key: monthDate.format('YYYY-MM'),
                 monthIndex,
                 shortLabel: monthDate.format('MMM')
@@ -1227,21 +1179,18 @@ export function Calendar({
         return entries;
     }, [displayLocale, displayedYear, getExistingDayNoteTarget, momentApi, showYearCalendar, vaultVersion]);
 
-    const yearMonthEntries = useMemo<CalendarYearMonthEntry[]>(() => {
-        // Force refresh when calendar task metadata changes so year month indicators stay in sync.
-        void taskIndicatorVersion;
-
-        return yearMonthBaseEntries.map(entry => ({
-            date: entry.date,
-            fullLabel: entry.fullLabel,
-            hasDailyNote: entry.hasDailyNote,
-            hasUnfinishedTasks:
-                db && settings.calendarShowTasks ? entry.dayFiles.some(file => (db.getFile(file.path)?.taskUnfinished ?? 0) > 0) : false,
-            key: entry.key,
-            monthIndex: entry.monthIndex,
-            shortLabel: entry.shortLabel
-        }));
-    }, [db, settings.calendarShowTasks, taskIndicatorVersion, yearMonthBaseEntries]);
+    const yearMonthEntries = useMemo<CalendarYearMonthEntry[]>(
+        () =>
+            yearMonthBaseEntries.map(entry => ({
+                date: entry.date,
+                fullLabel: entry.fullLabel,
+                hasDailyNote: entry.hasDailyNote,
+                key: entry.key,
+                monthIndex: entry.monthIndex,
+                shortLabel: entry.shortLabel
+            })),
+        [yearMonthBaseEntries]
+    );
 
     const yearPanelDate = useMemo(() => {
         if (!momentApi || !cursorDate || displayedYear === null) {
@@ -1460,22 +1409,6 @@ export function Calendar({
         return entries;
     }, [cursorDate, displayLocale, getExistingCustomCalendarNoteTarget, momentApi, showWeekNumbers, vaultVersion, weekNotesEnabled, weeks]);
 
-    const weekUnfinishedTaskCountByKey = useMemo(() => {
-        // Force refresh when calendar task metadata changes so week number task indicators reflect the latest metadata.
-        void taskIndicatorVersion;
-
-        if (!db || !settings.calendarShowTasks) {
-            return new Map<string, number>();
-        }
-
-        const counts = new Map<string, number>();
-        weekNoteTargetsByKey.forEach((note, weekKey) => {
-            setUnfinishedTaskCount(counts, weekKey, note.visibleFile, db);
-        });
-
-        return counts;
-    }, [db, settings.calendarShowTasks, taskIndicatorVersion, weekNoteTargetsByKey]);
-
     const visibleCalendarNoteFiles = useMemo(() => {
         const files = new Map<string, TFile>();
 
@@ -1495,14 +1428,8 @@ export function Calendar({
             }
         });
 
-        for (const entry of yearMonthBaseEntries) {
-            for (const file of entry.dayFiles) {
-                files.set(file.path, file);
-            }
-        }
-
         return Array.from(files.values()).filter(file => file.extension === 'md');
-    }, [weekNoteTargetsByKey, weeks, yearMonthBaseEntries]);
+    }, [weekNoteTargetsByKey, weeks]);
 
     const profileVisibilityNotePaths = useMemo(() => {
         const paths = new Set<string>();
@@ -1543,14 +1470,6 @@ export function Calendar({
         onVisibleCalendarNoteFilesChange?.(visibleCalendarNoteFiles);
     }, [onVisibleCalendarNoteFilesChange, visibleCalendarNoteFiles]);
 
-    const visibleIndicatorNotePaths = useMemo(() => {
-        const paths = new Set<string>();
-        visibleCalendarNoteFiles.forEach(file => {
-            paths.add(file.path);
-        });
-        return paths;
-    }, [visibleCalendarNoteFiles]);
-    visibleIndicatorNotePathsRef.current = visibleIndicatorNotePaths;
     visibleFrontmatterNotePathsRef.current = visibleDayNotePaths;
 
     const handleWeekClick = useCallback(
@@ -1746,10 +1665,8 @@ export function Calendar({
                     hideOutsideMonthDays={hideOutsideMonthDays}
                     weekNotesEnabled={weekNotesEnabled}
                     weekNoteTargetsByKey={weekNoteTargetsByKey}
-                    weekUnfinishedTaskCountByKey={weekUnfinishedTaskCountByKey}
                     displayLocale={displayLocale}
                     todayIso={todayIso}
-                    unfinishedTaskCountByIso={unfinishedTaskCountByIso}
                     frontmatterTitlesByPath={frontmatterTitlesByPath}
                     dateFormat={settings.dateFormat}
                     isMobile={isMobile}

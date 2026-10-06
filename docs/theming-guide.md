@@ -374,7 +374,6 @@ These variables are shared by the navigation and list panes.
 | Variable | Default | Description |
 | --- | --- | --- |
 | `--nn-theme-calendar-note-indicator-color` | `var(--nn-theme-foreground-faded)` | Daily note indicator color |
-| `--nn-theme-calendar-unfinished-task-indicator-color` | `var(--nn-theme-calendar-note-indicator-color)` | Unfinished task indicator color |
 | `--nn-theme-calendar-feature-image-text-color` | `white` | Feature image day text color |
 | `--nn-theme-calendar-feature-image-overlay-color` | `rgb(0 0 0 / 0.05)` in light mode, `rgb(0 0 0 / 0.3)` in dark mode | Feature image overlay color |
 
@@ -580,7 +579,6 @@ supported by Notebook Navigator:
 
   /* Calendar indicators and feature images */
   --nn-theme-calendar-note-indicator-color: #4a78c8;
-  --nn-theme-calendar-unfinished-task-indicator-color: #4a78c8;
   --nn-theme-calendar-feature-image-text-color: #ffffff;
   --nn-theme-calendar-feature-image-overlay-color: rgb(0 0 0 / 0.05);
 

@@ -105,7 +105,6 @@ const BOOLEAN_SETTING_KEYS = [
     'showRecentNotes',
     'pinRecentNotesWithShortcuts',
     'calendarHighlightToday',
-    'calendarShowTasks',
     'calendarShowWeekNumber',
     'calendarShowQuarter',
     'calendarShowOutsideMonthDays',

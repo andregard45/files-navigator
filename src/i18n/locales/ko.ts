@@ -1644,10 +1644,6 @@ export const STRINGS_KO = {
                 name: '오늘 날짜 강조 표시',
                 desc: '오늘 날짜를 배경색과 굵은 텍스트로 강조 표시합니다.'
             },
-            calendarShowTasks: {
-                name: '작업 표시',
-                desc: '미완료 작업이 있는 일, 주, 월에 표시기를 표시합니다.'
-            },
             calendarShowWeekNumber: {
                 name: '주 번호 표시',
                 desc: '주 번호 열을 추가합니다.'

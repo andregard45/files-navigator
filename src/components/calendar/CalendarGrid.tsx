@@ -46,7 +46,6 @@ interface CalendarDayCellProps {
     day: CalendarDay;
     dayCellClassName: string;
     dayButtonClassName: string;
-    hasUnfinishedTasks: boolean;
     frontmatterTitle: string;
     displayLocale: string;
     dateFormat: string;
@@ -67,7 +66,6 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
     day,
     dayCellClassName,
     dayButtonClassName,
-    hasUnfinishedTasks,
     frontmatterTitle,
     displayLocale,
     dateFormat,
@@ -106,7 +104,6 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
                 tooltipData={tooltipData}
                 dayNumber={dayNumber}
                 isMobile={isMobile}
-                showUnfinishedTaskIndicator={hasUnfinishedTasks}
                 onShowTooltip={onShowTooltip}
                 onHideTooltip={onHideTooltip}
                 onMouseDown={event => onDayMouseDown(event, day)}
@@ -127,10 +124,8 @@ interface CalendarGridProps {
     hideOutsideMonthDays: boolean;
     weekNotesEnabled: boolean;
     weekNoteTargetsByKey: Map<string, CalendarNoteTarget>;
-    weekUnfinishedTaskCountByKey: Map<string, number>;
     displayLocale: string;
     todayIso: string | null;
-    unfinishedTaskCountByIso: Map<string, number>;
     frontmatterTitlesByPath: Map<string, string>;
     dateFormat: string;
     isMobile: boolean;
@@ -156,10 +151,8 @@ export const CalendarGrid = React.memo(function CalendarGrid({
     hideOutsideMonthDays,
     weekNotesEnabled,
     weekNoteTargetsByKey,
-    weekUnfinishedTaskCountByKey,
     displayLocale,
     todayIso,
-    unfinishedTaskCountByIso,
     frontmatterTitlesByPath,
     dateFormat,
     isMobile,
@@ -190,7 +183,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                 {weeks.map((week, weekIndex) => {
                     const weekNoteTarget = weekNoteTargetsByKey.get(week.key) ?? null;
                     const weekNoteFile = weekNoteTarget?.visibleFile ?? null;
-                    const weekHasUnfinishedTasks = (weekUnfinishedTaskCountByKey.get(week.key) ?? 0) > 0;
                     const isActiveEditorWeek = Boolean(weekNoteFile && activeEditorFilePath === weekNoteFile.path);
                     const isHiddenOutsideMonthWeek = hideOutsideMonthDays && week.days.every(day => !day.inMonth);
 
@@ -213,8 +205,7 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                                 'nn-navigation-calendar-weeknumber',
                                                 'nn-navigation-calendar-weeknumber-button',
                                                 weekNoteFile ? 'has-period-note' : '',
-                                                isActiveEditorWeek ? 'is-active-editor-file' : '',
-                                                weekHasUnfinishedTasks ? 'has-unfinished-tasks' : ''
+                                                isActiveEditorWeek ? 'is-active-editor-file' : ''
                                             ]
                                                 .filter(Boolean)
                                                 .join(' ')}
@@ -251,8 +242,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
 
                                 const visibleFile = day.note.visibleFile;
                                 const hasDailyNote = Boolean(visibleFile);
-                                const dayUnfinishedTaskCount = hasDailyNote ? (unfinishedTaskCountByIso.get(day.iso) ?? 0) : 0;
-                                const hasUnfinishedTasks = dayUnfinishedTaskCount > 0;
                                 const isToday = todayIso === day.iso;
                                 const isActiveEditorDay = Boolean(visibleFile && activeEditorFilePath === visibleFile.path);
                                 const dayCellClassName = 'nn-navigation-calendar-day-cell';
@@ -262,8 +251,7 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                     day.inMonth ? 'is-in-month' : 'is-outside-month',
                                     isToday ? 'is-today' : '',
                                     isActiveEditorDay ? 'is-active-editor-file' : '',
-                                    hasDailyNote ? 'has-daily-note' : '',
-                                    hasUnfinishedTasks ? 'has-unfinished-tasks' : ''
+                                    hasDailyNote ? 'has-daily-note' : ''
                                 ]
                                     .filter(Boolean)
                                     .join(' ');
@@ -276,7 +264,6 @@ export const CalendarGrid = React.memo(function CalendarGrid({
                                         day={day}
                                         dayCellClassName={dayCellClassName}
                                         dayButtonClassName={dayButtonClassName}
-                                        hasUnfinishedTasks={hasUnfinishedTasks}
                                         frontmatterTitle={frontmatterTitle}
                                         displayLocale={displayLocale}
                                         dateFormat={dateFormat}

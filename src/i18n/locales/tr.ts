@@ -1647,10 +1647,6 @@ export const STRINGS_TR = {
                 name: 'Bugünün tarihini vurgula',
                 desc: 'Bugünün tarihini arka plan rengi ve kalın metinle vurgula.'
             },
-            calendarShowTasks: {
-                name: 'Görevleri göster',
-                desc: 'Tamamlanmamış görevleri olan gün, hafta ve aylarda bir gösterge gösterir.'
-            },
             calendarShowWeekNumber: {
                 name: 'Hafta numarasını göster',
                 desc: 'Hafta numarasıyla bir sütun ekle.'

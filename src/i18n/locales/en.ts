@@ -1641,10 +1641,6 @@ export const STRINGS_EN = {
                 name: "Highlight today's date",
                 desc: "Highlight today's date with a background color and bold text."
             },
-            calendarShowTasks: {
-                name: 'Show tasks',
-                desc: 'Display an indicator on days, weeks, and months with unfinished tasks.'
-            },
             calendarShowWeekNumber: {
                 name: 'Show week number',
                 desc: 'Add a column with the week number.'

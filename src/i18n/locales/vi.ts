@@ -1647,10 +1647,6 @@ export const STRINGS_VI = {
                 name: 'Làm nổi bật ngày hôm nay',
                 desc: 'Làm nổi bật ngày hôm nay bằng màu nền và chữ in đậm.'
             },
-            calendarShowTasks: {
-                name: 'Hiển thị nhiệm vụ',
-                desc: 'Hiển thị chỉ báo trên ngày, tuần và tháng có nhiệm vụ chưa hoàn thành.'
-            },
             calendarShowWeekNumber: {
                 name: 'Hiển thị số tuần',
                 desc: 'Thêm cột với số tuần.'

@@ -1649,10 +1649,6 @@ export const STRINGS_ID = {
                 name: 'Sorot tanggal hari ini',
                 desc: 'Sorot tanggal hari ini dengan warna latar belakang dan teks tebal.'
             },
-            calendarShowTasks: {
-                name: 'Tampilkan tugas',
-                desc: 'Tampilkan indikator pada hari, minggu, dan bulan dengan tugas yang belum selesai.'
-            },
             calendarShowWeekNumber: {
                 name: 'Tampilkan nomor minggu',
                 desc: 'Tambahkan kolom dengan nomor minggu.'
