@@ -128,7 +128,6 @@ interface FileItemProps {
     /** Whether the file is normally hidden (frontmatter or excluded folder) */
     isHidden?: boolean;
     shortcutKey?: string;
-    manualSortDisabled?: boolean;
     inlineRename?: FileItemInlineRenameHandlers;
 }
 
@@ -234,7 +233,6 @@ export const FileItem = React.memo(function FileItem({
     matchedProperties,
     isHidden = false,
     shortcutKey,
-    manualSortDisabled = false,
     inlineRename
 }: FileItemProps) {
     const {
@@ -521,7 +519,6 @@ export const FileItem = React.memo(function FileItem({
     if (fileBackgroundColor) classes.push('nn-has-custom-background');
     // Apply muted style when file is normally hidden but shown via "show hidden items"
     if (isHidden) classes.push('nn-hidden-file');
-    if (manualSortDisabled) classes.push('nn-file-manual-sort-disabled');
     const className = classes.join(' ');
 
     const fileRowStyle = fileBackgroundColor

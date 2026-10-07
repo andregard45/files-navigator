@@ -18,7 +18,7 @@
 
 import { ItemType } from '../types';
 import { createPropertyGroupingOption, getPropertyGroupingKey, getPropertyGroupingOrder } from '../settings/types';
-import type { ListNoteGroupingOption, ListSortOverrideValue, NotebookNavigatorSettings, SortOption } from '../settings/types';
+import type { ListNoteGroupingOption, NotebookNavigatorSettings, SortOption } from '../settings/types';
 import { DEFAULT_SETTINGS } from '../settings/defaultSettings';
 import type { PropertyGroupingDirection } from '../settings/types';
 import { casefold } from './recordUtils';
@@ -26,22 +26,18 @@ import {
     getSortDirection,
     getSortField,
     isDateSortOption,
-    isManualSortPropertyKey,
     parsePropertySortKeys,
     replacePropertySortKey,
-    resolveListSort,
     type DefaultReconcileResult
 } from './sortUtils';
 
 /**
  * Returns the configured grouping property keys available as grouping choices.
- * The manual-sort property is excluded because manual sort has its own menu entry and is never
- * offered as a grouping choice.
  */
 export function getAvailablePropertyGroupKeys(
-    settings: Pick<NotebookNavigatorSettings, 'propertyGroupKey' | 'manualSortPropertyKey'>
+    settings: Pick<NotebookNavigatorSettings, 'propertyGroupKey'>
 ): string[] {
-    return parsePropertySortKeys(settings.propertyGroupKey).filter(propertyKey => !isManualSortPropertyKey(settings, propertyKey));
+    return parsePropertySortKeys(settings.propertyGroupKey);
 }
 
 /**
@@ -75,32 +71,23 @@ export interface ListGroupingResolution {
 export function resolveEffectiveListGroupingForSort({
     groupBy,
     sortOption,
-    selectionType,
-    isManualSortActive = false,
-    isManualSortEditActive = false
+    selectionType
 }: {
     groupBy: ListNoteGroupingOption;
     sortOption: SortOption;
     selectionType?: ItemType | null;
-    isManualSortActive?: boolean;
-    isManualSortEditActive?: boolean;
 }): ListNoteGroupingOption {
-    if (isManualSortActive || isManualSortEditActive) {
-        return 'custom';
-    }
-
     // Property grouping buckets by frontmatter value independent of the file order, so it survives every sort.
     if (getPropertyGroupingKey(groupBy) !== null) {
         return groupBy;
     }
 
-    // Sort-incompatible grouping modes fall back to None because falling back to Custom would
-    // activate frontmatter headers that the user did not select.
+    // Sort-incompatible grouping modes fall back to None.
     if (getSortField(sortOption) === 'property') {
         if (selectionType === ItemType.FOLDER && groupBy === 'folder') {
             return 'folder';
         }
-        return groupBy === 'custom' ? 'custom' : 'none';
+        return 'none';
     }
 
     if (groupBy === 'date' && !isDateSortOption(sortOption)) {
@@ -341,46 +328,6 @@ export function resolveListGroupingOverride({
     };
 }
 
-/** Returns whether one folder, tag, or property selection resolves to custom grouping after its sort override is applied. */
-export function hasEffectiveCustomListGroupingForSelection(
-    settings: NotebookNavigatorSettings,
-    selectionType: ItemType,
-    key: string | null
-): boolean {
-    let groupBy: ListNoteGroupingOption | undefined;
-    let sortOverride: ListSortOverrideValue | undefined;
-    if (key !== null) {
-        switch (selectionType) {
-            case ItemType.FOLDER:
-                groupBy = settings.folderAppearances[key]?.groupBy;
-                sortOverride = settings.folderSortOverrides[key];
-                break;
-            case ItemType.TAG:
-                groupBy = settings.tagAppearances[key]?.groupBy;
-                sortOverride = settings.tagSortOverrides[key];
-                break;
-            case ItemType.PROPERTY:
-                groupBy = settings.propertyAppearances[key]?.groupBy;
-                sortOverride = settings.propertySortOverrides[key];
-                break;
-        }
-    }
-
-    const grouping = resolveListGroupingOverride({
-        noteGrouping: settings.noteGrouping,
-        selectionType,
-        groupBy
-    }).effectiveGrouping;
-    const sort = resolveListSort(settings, sortOverride);
-    return (
-        resolveEffectiveListGroupingForSort({
-            groupBy: grouping,
-            sortOption: sort.option,
-            selectionType,
-            isManualSortActive: isManualSortPropertyKey(settings, sort.propertyKey)
-        }) === 'custom'
-    );
-}
 
 /**
  * Calculates effective list grouping for the current selection.

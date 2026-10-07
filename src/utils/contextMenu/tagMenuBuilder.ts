@@ -73,19 +73,12 @@ export function buildTagMenu(params: TagMenuBuilderParams): void {
     if (!isVirtualTag) {
         menu.addItem((item: MenuItem) => {
             setAsyncOnClick(item.setTitle(strings.contextMenu.folder.newNote).setIcon('lucide-pen-box'), async () => {
-                const selectionChanged = ensureTagSelected();
+                ensureTagSelected();
                 const sourcePath = selectionState.selectedFile?.path ?? app.workspace.getActiveFile()?.path ?? '';
-                const normalizedTagPath = normalizeTagPath(tagPath);
-                const manualSortContext = normalizedTagPath
-                    ? await fileSystemOps.getManualSortNewFileContextForTarget('tag', normalizedTagPath, {
-                          waitForSelectionUpdate: selectionChanged
-                      })
-                    : null;
                 const createdFile = await fileSystemOps.createNewFileForTag(
                     tagPath,
                     sourcePath,
-                    settings.createNewNotesInNewTab,
-                    manualSortContext
+                    settings.createNewNotesInNewTab
                 );
                 handleFileCreation(createdFile);
             });

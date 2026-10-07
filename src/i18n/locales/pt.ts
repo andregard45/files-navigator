@@ -56,13 +56,7 @@ export const STRINGS_PT = {
         hiddenItemAriaLabel: '{name} (oculto)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Recolher grupo',
         expandGroup: 'Expandir grupo',
-        manualSortTitle: 'Ordenação manual: {property}',
-        manualSortHint: 'Arraste para reordenar. A ordem é guardada como valores de índice numéricos na propriedade "{property}".',
-        manualSortNonMarkdownHint: 'Os ficheiros não Markdown são mostrados no fundo e não podem ser reordenados.',
-        unsortedSection: 'Sem ordenação',
-        propertyGroupNoValue: 'Nenhum',
-        manualSortDone: 'Concluído',
-        manualSortMultipleWriteFailure: '{count} ficheiros falharam; primeiro: {path}: {message}'
+        propertyGroupNoValue: 'Nenhum'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_PT = {
         changeChildSortOrder: 'Alterar ordem de ordenação',
         changeSortAndGroup: 'Alterar ordenação e agrupamento',
         resetViewToDefaults: 'Repor vista para predefinições',
-        manualSort: 'Ordenação manual',
-        editSortOrder: 'Editar ordenação...',
-        removeSortProperty: 'Remover propriedade de ordenação',
         descendants: 'descendentes',
         subfolders: 'subpastas',
         subtags: 'subetiquetas',
@@ -338,14 +329,6 @@ export const STRINGS_PT = {
             moveMultipleFilesToFolder: 'Mover {count} ficheiros para...',
             mergeNotes: 'Unir {count} notas...',
             mergeNotesInGroup: 'Unir notas no grupo...',
-            setManualSortGroupHeader: 'Definir cabeçalho de grupo',
-            changeManualSortGroupHeader: 'Alterar cabeçalho de grupo',
-            manualSortGroupHeader: {
-                title: 'Cabeçalho de grupo',
-                copyStyle: 'Copiar estilo de cabeçalho',
-                pasteStyle: 'Colar estilo de cabeçalho',
-                remove: 'Remover cabeçalho de grupo'
-            },
             addTag: 'Adicionar etiqueta',
             addPropertyKey: 'Definir propriedade',
             removeTag: 'Remover etiqueta',
@@ -452,27 +435,6 @@ export const STRINGS_PT = {
             resetAppearanceMessage: (count: number) =>
                 `A aparência será reposta para ${count} ${count === 1 ? 'item' : 'itens'}. A ordenação e o agrupamento são preservados. Esta é uma alteração única; alterações futuras e novos descendentes não ficam associados.`,
             affectedCountMessage: (count: number) => `Substituições existentes que serão alteradas: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Usar ordenação manual?',
-            propertySortMessage: (property: string, count: number) =>
-                `Isto muda a vista atual para ordenação manual usando "${property}". Editar a ordem escreve valores de índice numéricos nessa propriedade em ${count} ${count === 1 ? 'nota' : 'notas'} conforme necessário.`,
-            propertySortConfirmButton: 'Usar ordenação manual',
-            removePropertyTitle: 'Remover propriedade de ordenação?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Isto remove "${property}" de ${count} ${count === 1 ? 'nota' : 'notas'} na lista atual. A ordem de ordenação manual será apagada para essas notas.`,
-            removePropertyConfirmButton: 'Remover propriedade',
-            compactTitle: 'Compactar valores de índice?',
-            compactMessage: (count: number) =>
-                `Esta reordenação precisa de mais espaço numérico. ${count} ${count === 1 ? 'nota receberá' : 'notas receberão'} novos valores de índice.`,
-            compactConfirmButton: 'Compactar valores de índice'
-        },
-        manualSortGroupHeader: {
-            title: 'Definir cabeçalho de grupo',
-            titleLabel: 'Título',
-            placeholder: 'Cabeçalho de grupo',
-            icon: 'Ícone',
-            color: 'Cor',            description: 'Personalize o cabeçalho de grupo para esta nota. Deixe o título vazio para remover o cabeçalho.'
         },
         mergeNotes: {
             title: 'Unir notas',
@@ -848,8 +810,6 @@ export const STRINGS_PT = {
             propertiesRequireMarkdown: 'As propriedades só são suportadas em notas Markdown',
             propertySetOnNote: 'Propriedade atualizada em 1 nota',
             propertySetOnNotes: 'Propriedade atualizada em {count} notas',
-            manualSortPropertyRemovedFromNote: 'Propriedade de ordenação removida de 1 nota',
-            manualSortPropertyRemovedFromNotes: 'Propriedade de ordenação removida de {count} notas',
             hiddenFileReveal: 'O ficheiro está oculto. Ative "Mostrar itens ocultos" para o exibir'
         },
         confirmations: {
@@ -1066,7 +1026,6 @@ export const STRINGS_PT = {
                     appearance: 'Aparência',
                     sortAndGroup: 'Ordenação e agrupamento',
                     groupHeaders: 'Cabeçalhos de grupo',
-                    manualSort: 'Ordenação manual',
                     pinnedNotes: 'Notas fixadas',
                     behavior: 'Comportamento'
                 }
@@ -1198,41 +1157,11 @@ export const STRINGS_PT = {
                 desc: 'Propriedades do frontmatter separadas por vírgulas. Cada propriedade aparece como opção de agrupamento na definição Agrupamento predefinido e no menu de ordenação do painel de lista. Estas propriedades não são alteradas.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Propriedade de ordenação manual',
-                desc: 'Propriedade frontmatter usada para guardar valores de índice numéricos para ordenação manual.'
-            },
-            groupHeaderProperty: {
-                name: 'Propriedade de cabeçalho de grupo',
-                desc: 'Propriedade frontmatter usada para guardar cabeçalhos de grupo personalizados.'
-            },
             groupHeadersInstructions: {
                 intro: 'Os cabeçalhos de grupo personalizados são exibidos acima das notas no painel de lista.',
                 items: [
                     'No menu de ordenação do painel de lista, defina o agrupamento como **Personalizado**.',
                     'Clique com o botão direito numa nota e escolha **Definir cabeçalho de grupo** para adicionar um cabeçalho acima dela.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Colocação de novas notas',
-                desc: 'Escolha onde as novas notas são colocadas quando a lista atual usa ordenação manual.',
-                options: {
-                    top: 'Topo',
-                    bottom: 'Fundo',
-                    belowSelectedNote: 'Abaixo da nota selecionada',
-                    unsorted: 'Sem ordenação'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Confirmar antes da ordenação manual',
-                desc: 'Mostrar um aviso antes de escrever a propriedade de ordenação manual nas notas pela primeira vez. Quando desativado, as notas recebem a propriedade sem aviso.'
-            },
-            manualSortInstructions: {
-                intro: 'A ordenação manual escreve um valor de índice numérico numa propriedade frontmatter em cada nota. As notas sem índice aparecem em Sem ordenação.',
-                items: [
-                    'Ative a ordenação manual escolhendo **Ordenação manual** no menu de ordenação. Depois, há duas formas de reorganizar as notas.',
-                    'Selecione **Editar ordenação...** no menu de ordenação para abrir uma vista de reordenação. Arraste notas com o rato, ou com toque no telemóvel. No computador, **Cmd/Ctrl** ou **Shift** clique seleciona várias notas, e ao arrastar qualquer uma delas move o grupo inteiro.',
-                    'No painel de lista, selecione uma nota ou várias notas, e prima **Cmd/Ctrl + Arrow Up/Down** para mover a seleção para cima ou para baixo.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

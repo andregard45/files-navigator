@@ -56,13 +56,7 @@ export const STRINGS_FA = {
         hiddenItemAriaLabel: '{name} (پنهان)',
         collapseGroup: 'بستن گروه',
         expandGroup: 'باز کردن گروه',
-        manualSortTitle: 'مرتب‌سازی دستی: {property}',
-        manualSortHint: 'برای تغییر ترتیب بکشید. ترتیب به صورت مقادیر شاخص عددی در ویژگی «{property}» ذخیره می‌شود.',
-        manualSortNonMarkdownHint: 'فایل‌های غیر مارک‌داون در پایین نمایش داده می‌شوند و قابل مرتب‌سازی مجدد نیستند.',
-        unsortedSection: 'مرتب‌نشده',
-        propertyGroupNoValue: 'هیچ‌کدام',
-        manualSortDone: 'انجام شد',
-        manualSortMultipleWriteFailure: '{count} فایل ناموفق بود؛ اولین: {path}: {message}'
+        propertyGroupNoValue: 'هیچ‌کدام'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_FA = {
         changeChildSortOrder: 'تغییر ترتیب',
         changeSortAndGroup: 'تغییر ترتیب و گروه‌بندی',
         resetViewToDefaults: 'بازنشانی نما به پیش‌فرض‌ها',
-        manualSort: 'مرتب‌سازی دستی',
-        editSortOrder: 'ویرایش ترتیب مرتب‌سازی...',
-        removeSortProperty: 'حذف ویژگی مرتب‌سازی',
         descendants: 'زیرمجموعه‌ها',
         subfolders: 'زیرپوشه‌ها',
         subtags: 'زیربرچسب‌ها',
@@ -337,14 +328,6 @@ export const STRINGS_FA = {
             moveMultipleFilesToFolder: 'انتقال {count} فایل به...',
             mergeNotes: 'ادغام {count} یادداشت...',
             mergeNotesInGroup: 'ادغام یادداشت‌های گروه...',
-            setManualSortGroupHeader: 'تنظیم هدر گروه',
-            changeManualSortGroupHeader: 'تغییر هدر گروه',
-            manualSortGroupHeader: {
-                title: 'هدر گروه',
-                copyStyle: 'کپی سبک هدر',
-                pasteStyle: 'چسباندن سبک هدر',
-                remove: 'حذف هدر گروه'
-            },
             addTag: 'افزودن برچسب',
             addPropertyKey: 'تنظیم ویژگی',
             removeTag: 'حذف برچسب',
@@ -451,27 +434,6 @@ export const STRINGS_FA = {
             resetAppearanceMessage: (count: number) =>
                 `ظاهر ${count} مورد بازنشانی می‌شود. مرتب‌سازی و گروه‌بندی حفظ می‌شوند. این تغییر یک‌باره است؛ تغییرات آینده و موارد فرزند جدید پیوند داده نمی‌شوند.`,
             affectedCountMessage: (count: number) => `بازنویسی‌های موجود که تغییر خواهند کرد: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'استفاده از مرتب‌سازی دستی؟',
-            propertySortMessage: (property: string, count: number) =>
-                `این کار نمای فعلی را به مرتب‌سازی دستی با استفاده از «${property}» تغییر می‌دهد. ویرایش ترتیب، مقادیر شاخص عددی را در صورت نیاز در این ویژگی برای ${count} یادداشت می‌نویسد.`,
-            propertySortConfirmButton: 'استفاده از مرتب‌سازی دستی',
-            removePropertyTitle: 'حذف ویژگی مرتب‌سازی؟',
-            removePropertyMessage: (property: string, count: number) =>
-                `این کار «${property}» را از ${count} ${count === 1 ? 'یادداشت' : 'یادداشت'} در فهرست فعلی حذف می‌کند. ترتیب مرتب‌سازی دستی برای آن یادداشت‌ها پاک خواهد شد.`,
-            removePropertyConfirmButton: 'حذف ویژگی',
-            compactTitle: 'فشرده‌سازی مقادیر شاخص؟',
-            compactMessage: (count: number) =>
-                `این بازآرایی به فضای عددی بیشتری نیاز دارد. ${count} یادداشت مقادیر شاخص جدید دریافت می‌کند.`,
-            compactConfirmButton: 'فشرده‌سازی مقادیر شاخص'
-        },
-        manualSortGroupHeader: {
-            title: 'تنظیم هدر گروه',
-            titleLabel: 'عنوان',
-            placeholder: 'هدر گروه',
-            icon: 'آیکون',
-            color: 'رنگ',            description: 'هدر گروه را برای این یادداشت سفارشی کنید. عنوان را خالی بگذارید تا هدر حذف شود.'
         },
         mergeNotes: {
             title: 'ادغام یادداشت‌ها',
@@ -848,8 +810,6 @@ export const STRINGS_FA = {
             propertiesRequireMarkdown: 'ویژگی‌ها فقط در یادداشت‌های Markdown پشتیبانی می‌شوند',
             propertySetOnNote: 'ویژگی در ۱ یادداشت به‌روزرسانی شد',
             propertySetOnNotes: 'ویژگی در {count} یادداشت به‌روزرسانی شد',
-            manualSortPropertyRemovedFromNote: 'ویژگی مرتب‌سازی از ۱ یادداشت حذف شد',
-            manualSortPropertyRemovedFromNotes: 'ویژگی مرتب‌سازی از {count} یادداشت حذف شد',
             hiddenFileReveal: 'فایل مخفی است. «نمایش آیتم‌های مخفی» را فعال کنید'
         },
         confirmations: {
@@ -1066,7 +1026,6 @@ export const STRINGS_FA = {
                     appearance: 'ظاهر',
                     sortAndGroup: 'مرتب‌سازی و گروه‌بندی',
                     groupHeaders: 'هدرهای گروه',
-                    manualSort: 'مرتب‌سازی دستی',
                     pinnedNotes: 'یادداشت‌های سنجاق‌شده',
                     behavior: 'رفتار'
                 }
@@ -1196,41 +1155,11 @@ export const STRINGS_FA = {
                 desc: 'ویژگی‌های فرانت‌متر جدا شده با کاما. هر ویژگی به‌عنوان یک گزینه گروه‌بندی در تنظیم گروه‌بندی پیش‌فرض و در منوی مرتب‌سازی پنل لیست نمایش داده می‌شود. این ویژگی‌ها تغییر نمی‌کنند.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'ویژگی مرتب‌سازی دستی',
-                desc: 'ویژگی فرانت‌متر که برای ذخیره مقادیر شاخص عددی در مرتب‌سازی دستی استفاده می‌شود.'
-            },
-            groupHeaderProperty: {
-                name: 'ویژگی هدر گروه',
-                desc: 'ویژگی فرانت‌متر که برای ذخیره هدرهای سفارشی گروه استفاده می‌شود.'
-            },
             groupHeadersInstructions: {
                 intro: 'هدرهای سفارشی گروه بالای یادداشت‌ها در پنل لیست نمایش داده می‌شوند.',
                 items: [
                     'از منوی مرتب‌سازی در پنل لیست، گروه‌بندی را روی **سفارشی** تنظیم کنید.',
                     'روی یک یادداشت کلیک راست کنید و **تنظیم هدر گروه** را انتخاب کنید تا یک هدر بالای آن قرار گیرد.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'محل قرارگیری یادداشت جدید',
-                desc: 'محل قرارگیری یادداشت‌های جدید را زمانی که فهرست فعلی از مرتب‌سازی دستی استفاده می‌کند، انتخاب کنید.',
-                options: {
-                    top: 'بالا',
-                    bottom: 'پایین',
-                    belowSelectedNote: 'زیر یادداشت انتخاب‌شده',
-                    unsorted: 'مرتب‌نشده'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'تأیید پیش از مرتب‌سازی دستی',
-                desc: 'پیش از نوشتن ویژگی مرتب‌سازی دستی در یادداشت‌ها برای نخستین بار، یک هشدار نمایش داده شود. هنگامی که غیرفعال باشد، یادداشت‌ها بدون هشدار این ویژگی را دریافت می‌کنند.'
-            },
-            manualSortInstructions: {
-                intro: 'مرتب‌سازی دستی یک مقدار شاخص عددی را در یک ویژگی فرانت‌متر بر روی هر یادداشت می‌نویسد. یادداشت‌های بدون شاخص در زیر بخش مرتب‌نشده ظاهر می‌شوند.',
-                items: [
-                    'مرتب‌سازی دستی را با انتخاب **مرتب‌سازی دستی** از منوی مرتب‌سازی فعال کنید. پس از آن، دو روش برای بازآرایی یادداشت‌ها وجود دارد.',
-                    '**ویرایش ترتیب مرتب‌سازی...** را از منوی مرتب‌سازی انتخاب کنید تا نمای بازآرایی باز شود. یادداشت‌ها را با ماوس بکشید یا روی موبایل با لمس. در دسکتاپ، کلیک **Cmd/Ctrl** یا **Shift** چندین یادداشت را انتخاب می‌کند، سپس کشیدن هر یک از آن‌ها کل گروه را جابه‌جا می‌کند.',
-                    'در پنل لیست، یک یادداشت را انتخاب کنید یا چندین یادداشت را به صورت چندانتخابی انتخاب کنید، سپس **Cmd/Ctrl + Arrow Up/Down** را فشار دهید تا انتخاب به بالا یا پایین جابه‌جا شود.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

@@ -25,10 +25,8 @@ import {
     createPropertyGroupingOption,
     getPropertyGroupingKey,
     getPropertyGroupingOrder,
-    MANUAL_SORT_NEW_NOTE_PLACEMENT_OPTIONS,
     normalizeListNoteGroupingOption,
     PROPERTY_SORT_SECONDARY_OPTIONS,
-    type ManualSortNewNotePlacement,
     type PropertySortSecondaryOption
 } from '../types';
 import type { NotebookNavigatorSettings } from '../types';
@@ -57,7 +55,6 @@ import {
     pruneUnavailablePropertyGroupingOverrides,
     reconcileDefaultNoteGrouping
 } from '../../utils/listGrouping';
-import { getManualSortGroupHeaderPropertyKey, isValidManualSortPropertyKey, normalizeManualSortPropertyKey } from '../../utils/manualSort';
 import { formatPixelSliderValue, renderSliderSetting } from './SliderSetting';
 import { renderToolbarButtonsSetting } from './ToolbarButtonsSetting';
 
@@ -173,37 +170,9 @@ export function createListPaneSettingDefinitions(context: SettingsTabContext): S
                 desc: strings.settings.items.showGroupHeaderItemCounts.desc
             }),
             createRenderDefinition({
-                name: strings.settings.items.groupHeaderProperty.name,
-                desc: strings.settings.items.groupHeaderProperty.desc,
-                render: setting => renderManualSortGroupHeaderPropertySetting(setting, context)
-            }),
-            createRenderDefinition({
                 name: strings.settings.items.groupHeadersInstructions.intro,
                 searchable: false,
                 render: setting => renderInstructionSetting(setting, strings.settings.items.groupHeadersInstructions)
-            })
-        ]),
-        createGroupDefinition(strings.settings.pages.listPane.groups.manualSort, [
-            createRenderDefinition({
-                name: strings.settings.items.manualSortProperty.name,
-                desc: strings.settings.items.manualSortProperty.desc,
-                aliases: [DEFAULT_SETTINGS.manualSortPropertyKey],
-                render: setting => renderManualSortPropertyKeySetting(setting, context)
-            }),
-            createDropdownDefinition('manualSortNewNotePlacement', {
-                name: strings.settings.items.manualSortNewNotePlacement.name,
-                desc: strings.settings.items.manualSortNewNotePlacement.desc,
-                aliases: Object.values(strings.settings.items.manualSortNewNotePlacement.options),
-                options: createManualSortNewNotePlacementOptions()
-            }),
-            createToggleDefinition('confirmBeforeManualSort', {
-                name: strings.settings.items.confirmBeforeManualSort.name,
-                desc: strings.settings.items.confirmBeforeManualSort.desc
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.manualSortInstructions.intro,
-                searchable: false,
-                render: setting => renderInstructionSetting(setting, strings.settings.items.manualSortInstructions)
             })
         ]),
         createGroupDefinition(strings.settings.pages.listPane.groups.pinnedNotes, [
@@ -495,13 +464,13 @@ export function renderNoteGroupingSetting(setting: Setting, context: SettingsTab
 
             const rebuildOptions = (): void => {
                 dropdown.selectEl.empty();
-                // None disables headers, while Custom and Date annotate the sorted list without
+                // None disables headers, while Date annotates the sorted list without
                 // changing its order. Folder and property groups partition the list and order the
                 // groups on their own.
                 const headersGroupEl = dropdown.selectEl.createEl('optgroup', {
                     attr: { label: strings.settings.items.defaultGrouping.families.headers }
                 });
-                (['none', 'custom', 'date'] as const).forEach(option => {
+                (['none', 'date'] as const).forEach(option => {
                     headersGroupEl.createEl('option', { value: option, text: strings.settings.items.defaultGrouping.options[option] });
                 });
                 const groupsGroupEl = dropdown.selectEl.createEl('optgroup', {
@@ -650,14 +619,6 @@ function createPropertySortSecondaryOptions(): Record<string, string> {
     return options;
 }
 
-function createManualSortNewNotePlacementOptions(): Record<string, string> {
-    const options: Record<string, string> = {};
-    MANUAL_SORT_NEW_NOTE_PLACEMENT_OPTIONS.forEach(option => {
-        options[option] = getManualSortNewNotePlacementOptionLabel(option);
-    });
-    return options;
-}
-
 /** Maps persisted property-sort values to their semantic localization aliases. */
 export function getPropertySecondarySortOptionLabel(option: PropertySortSecondaryOption): string {
     switch (option) {
@@ -669,20 +630,6 @@ export function getPropertySecondarySortOptionLabel(option: PropertySortSecondar
             return strings.settings.items.propertySecondarySort.options.dateCreated;
         case 'modified':
             return strings.settings.items.propertySecondarySort.options.dateEdited;
-    }
-}
-
-/** Maps persisted manual-sort placement values to their semantic localization aliases. */
-export function getManualSortNewNotePlacementOptionLabel(option: ManualSortNewNotePlacement): string {
-    switch (option) {
-        case 'top':
-            return strings.settings.items.manualSortNewNotePlacement.options.top;
-        case 'bottom':
-            return strings.settings.items.manualSortNewNotePlacement.options.bottom;
-        case 'below-selected-note':
-            return strings.settings.items.manualSortNewNotePlacement.options.belowSelectedNote;
-        case 'unsorted':
-            return strings.settings.items.manualSortNewNotePlacement.options.unsorted;
     }
 }
 
@@ -738,51 +685,6 @@ function renderCompactItemHeightScaleTextSetting(setting: Setting, context: Sett
     addSettingSyncModeToggle({ setting, plugin, settingId: 'compactItemHeightScaleText' });
 }
 
-function renderManualSortGroupHeaderPropertySetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.groupHeaderProperty.name)
-        .setDesc(strings.settings.items.groupHeaderProperty.desc)
-        .addText(text => {
-            const commitGroupHeaderProperty = async (): Promise<void> => {
-                const value = text.getValue().trim();
-                if (
-                    value.length > 0 &&
-                    getManualSortGroupHeaderPropertyKey({
-                        manualSortGroupHeaderProperty: value,
-                        manualSortPropertyKey: plugin.settings.manualSortPropertyKey
-                    }) === null
-                ) {
-                    text.setValue(plugin.settings.manualSortGroupHeaderProperty);
-                    return;
-                }
-                text.setValue(value);
-                if (plugin.settings.manualSortGroupHeaderProperty === value) {
-                    return;
-                }
-                plugin.settings.manualSortGroupHeaderProperty = value;
-                await plugin.saveSettingsAndUpdate();
-            };
-
-            text.inputEl.addEventListener('blur', () => {
-                runAsyncAction(commitGroupHeaderProperty);
-            });
-            text.inputEl.addEventListener('keydown', event => {
-                if (event.key !== 'Enter') {
-                    return;
-                }
-                event.preventDefault();
-                runAsyncAction(commitGroupHeaderProperty);
-                text.inputEl.blur();
-            });
-
-            return text
-                .setPlaceholder(DEFAULT_SETTINGS.manualSortGroupHeaderProperty)
-                .setValue(plugin.settings.manualSortGroupHeaderProperty);
-        });
-}
-
 function renderPropertySortKeySetting(setting: Setting, context: SettingsTabContext): void {
     const { plugin } = context;
 
@@ -815,46 +717,6 @@ function renderPropertySortKeySetting(setting: Setting, context: SettingsTabCont
             });
 
             return text.setPlaceholder(strings.settings.items.sortingProperties.placeholder).setValue(plugin.settings.propertySortKey);
-        });
-}
-
-function renderManualSortPropertyKeySetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.manualSortProperty.name)
-        .setDesc(strings.settings.items.manualSortProperty.desc)
-        .addText(text => {
-            const commitManualSortPropertyKey = async (): Promise<void> => {
-                const value = normalizeManualSortPropertyKey(text.getValue());
-                if (!isValidManualSortPropertyKey(value)) {
-                    text.setValue(plugin.settings.manualSortPropertyKey);
-                    return;
-                }
-                text.setValue(value);
-                if (plugin.settings.manualSortPropertyKey === value) {
-                    return;
-                }
-                plugin.settings.manualSortPropertyKey = value;
-                pruneUnavailablePropertySortOverrides(plugin.settings);
-                pruneUnavailablePropertyGroupingOverrides(plugin.settings);
-                reconcileDefaultsAfterPropertyKeysEdit(plugin.settings);
-                await plugin.saveSettingsAndUpdate();
-            };
-
-            text.inputEl.addEventListener('blur', () => {
-                runAsyncAction(commitManualSortPropertyKey);
-            });
-            text.inputEl.addEventListener('keydown', event => {
-                if (event.key !== 'Enter') {
-                    return;
-                }
-                event.preventDefault();
-                runAsyncAction(commitManualSortPropertyKey);
-                text.inputEl.blur();
-            });
-
-            return text.setPlaceholder(DEFAULT_SETTINGS.manualSortPropertyKey).setValue(plugin.settings.manualSortPropertyKey);
         });
 }
 

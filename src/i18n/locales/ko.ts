@@ -56,13 +56,7 @@ export const STRINGS_KO = {
         hiddenItemAriaLabel: '{name} (숨김)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: '그룹 접기',
         expandGroup: '그룹 펼치기',
-        manualSortTitle: '수동 정렬: {property}',
-        manualSortHint: '드래그하여 순서를 변경하세요. 순서는 숫자 인덱스 값으로 속성 "{property}"에 저장됩니다.',
-        manualSortNonMarkdownHint: '마크다운이 아닌 파일은 하단에 표시되며 순서를 변경할 수 없습니다.',
-        unsortedSection: '정렬되지 않음',
-        propertyGroupNoValue: '없음',
-        manualSortDone: '완료',
-        manualSortMultipleWriteFailure: '{count}개 파일 실패; 첫 번째: {path}: {message}'
+        propertyGroupNoValue: '없음'
     },
 
     // Tag list
@@ -154,9 +148,6 @@ export const STRINGS_KO = {
         changeChildSortOrder: '정렬 순서 변경',
         changeSortAndGroup: '정렬 및 그룹 변경',
         resetViewToDefaults: '보기를 기본값으로 재설정',
-        manualSort: '수동 정렬',
-        editSortOrder: '정렬 순서 편집...',
-        removeSortProperty: '정렬 속성 제거',
         descendants: '하위 항목',
         subfolders: '하위 폴더',
         subtags: '하위 태그',
@@ -336,14 +327,6 @@ export const STRINGS_KO = {
             moveMultipleFilesToFolder: '{count}개의 파일 이동...',
             mergeNotes: '{count}개의 노트 병합...',
             mergeNotesInGroup: '그룹의 노트 병합...',
-            setManualSortGroupHeader: '그룹 머리글 설정',
-            changeManualSortGroupHeader: '그룹 머리글 변경',
-            manualSortGroupHeader: {
-                title: '그룹 머리글',
-                copyStyle: '머리글 스타일 복사',
-                pasteStyle: '머리글 스타일 붙여넣기',
-                remove: '그룹 머리글 제거'
-            },
             addTag: '태그 추가',
             addPropertyKey: '속성 설정',
             removeTag: '태그 제거',
@@ -450,27 +433,6 @@ export const STRINGS_KO = {
             resetAppearanceMessage: (count: number) =>
                 `${count}개 항목의 모양이 재설정됩니다. 정렬과 그룹화는 유지됩니다. 일회성 변경이며 이후 변경 사항과 새 하위 항목은 연결되지 않습니다.`,
             affectedCountMessage: (count: number) => `변경될 기존 재정의: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: '수동 정렬을 사용하시겠습니까?',
-            propertySortMessage: (property: string, count: number) =>
-                `현재 보기를 "${property}"을(를) 사용한 수동 정렬로 전환합니다. 순서를 편집하면 필요에 따라 ${count}개 노트의 해당 속성에 숫자 인덱스 값이 기록됩니다.`,
-            propertySortConfirmButton: '수동 정렬 사용',
-            removePropertyTitle: '정렬 속성을 제거하시겠습니까?',
-            removePropertyMessage: (property: string, count: number) =>
-                `현재 목록의 ${count}개 노트에서 "${property}"을(를) 제거합니다. 해당 노트의 수동 정렬 순서가 초기화됩니다.`,
-            removePropertyConfirmButton: '속성 제거',
-            compactTitle: '인덱스 값을 압축하시겠습니까?',
-            compactMessage: (count: number) =>
-                `이 재정렬에는 더 많은 숫자 공간이 필요합니다. ${count}개 노트에 새로운 인덱스 값이 할당됩니다.`,
-            compactConfirmButton: '인덱스 값 압축'
-        },
-        manualSortGroupHeader: {
-            title: '그룹 머리글 설정',
-            titleLabel: '제목',
-            placeholder: '그룹 머리글',
-            icon: '아이콘',
-            color: '색상',            description: '이 노트의 그룹 머리글을 사용자 지정합니다. 머리글을 제거하려면 제목을 비워 두세요.'
         },
         mergeNotes: {
             title: '노트 병합',
@@ -845,8 +807,6 @@ export const STRINGS_KO = {
             propertiesRequireMarkdown: '속성은 Markdown 노트에서만 지원됩니다',
             propertySetOnNote: '1개 노트의 속성을 업데이트했습니다',
             propertySetOnNotes: '{count}개 노트의 속성을 업데이트했습니다',
-            manualSortPropertyRemovedFromNote: '1개 노트에서 정렬 속성을 제거했습니다',
-            manualSortPropertyRemovedFromNotes: '{count}개 노트에서 정렬 속성을 제거했습니다',
             hiddenFileReveal: '파일이 숨겨져 있습니다. 표시하려면 "숨겨진 항목 표시"를 활성화하세요'
         },
         confirmations: {
@@ -1063,7 +1023,6 @@ export const STRINGS_KO = {
                     appearance: '모양',
                     sortAndGroup: '정렬 및 그룹화',
                     groupHeaders: '그룹 머리글',
-                    manualSort: '수동 정렬',
                     pinnedNotes: '고정된 노트',
                     behavior: '동작'
                 }
@@ -1193,41 +1152,11 @@ export const STRINGS_KO = {
                 desc: '쉼표로 구분된 frontmatter 속성입니다. 각 속성은 기본 그룹화 설정과 목록 창의 정렬 메뉴에 그룹화 옵션으로 표시됩니다. 이 속성들은 변경되지 않습니다.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: '수동 정렬 속성',
-                desc: '수동 정렬에서 숫자 인덱스 값을 저장하는 데 사용되는 frontmatter 속성입니다.'
-            },
-            groupHeaderProperty: {
-                name: '그룹 머리글 속성',
-                desc: '사용자 지정 그룹 머리글을 저장하는 데 사용되는 frontmatter 속성입니다.'
-            },
             groupHeadersInstructions: {
                 intro: '사용자 지정 그룹 머리글은 목록 창에서 노트 위에 표시됩니다.',
                 items: [
                     '목록 창의 정렬 메뉴에서 그룹화를 **사용자 지정**으로 설정합니다.',
                     '노트를 마우스 오른쪽 버튼으로 클릭하고 **그룹 머리글 설정**을 선택하여 노트 위에 머리글을 추가합니다.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: '새 노트 배치',
-                desc: '현재 목록이 수동 정렬을 사용할 때 새 노트가 배치될 위치를 선택하세요.',
-                options: {
-                    top: '상단',
-                    bottom: '하단',
-                    belowSelectedNote: '선택한 노트 아래',
-                    unsorted: '정렬되지 않음'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: '수동 정렬 전 확인',
-                desc: '수동 정렬 속성을 처음으로 노트에 기록하기 전에 경고를 표시합니다. 비활성화하면 노트는 경고 없이 속성을 받습니다.'
-            },
-            manualSortInstructions: {
-                intro: '수동 정렬은 각 노트의 frontmatter 속성에 숫자 인덱스 값을 기록합니다. 인덱스가 없는 노트는 정렬되지 않음 아래에 표시됩니다.',
-                items: [
-                    '정렬 메뉴에서 **수동 정렬**을 선택하여 수동 정렬을 활성화합니다. 그 후 노트를 재정렬하는 두 가지 방법이 있습니다.',
-                    '정렬 메뉴에서 **정렬 순서 편집...**을 선택하여 재정렬 보기를 엽니다. 마우스로, 또는 모바일에서는 터치로 노트를 드래그합니다. 데스크톱에서는 **Cmd/Ctrl** 또는 **Shift** 클릭으로 여러 노트를 선택한 다음, 그 중 하나를 드래그하여 전체 그룹을 이동합니다.',
-                    '목록 창에서 한 노트를 선택하거나 여러 노트를 다중 선택한 다음, **Cmd/Ctrl + Arrow Up/Down**을 눌러 선택 항목을 위아래로 이동합니다.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

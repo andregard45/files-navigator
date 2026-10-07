@@ -56,14 +56,7 @@ export const STRINGS_UK = {
         hiddenItemAriaLabel: '{name} (приховано)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Згорнути групу',
         expandGroup: 'Розгорнути групу',
-        manualSortTitle: 'Ручне сортування: {property}',
-        manualSortHint:
-            'Перетягуйте для зміни порядку. Порядок зберігається у вигляді числових значень індексу у властивості «{property}».',
-        manualSortNonMarkdownHint: 'Файли, відмінні від Markdown, показуються внизу, і їхній порядок не можна змінити.',
-        unsortedSection: 'Без сортування',
-        propertyGroupNoValue: 'Немає',
-        manualSortDone: 'Готово',
-        manualSortMultipleWriteFailure: 'Не вдалося обробити файлів ({count}); перший: {path}: {message}'
+        propertyGroupNoValue: 'Немає'
     },
 
     // Tag list
@@ -156,9 +149,6 @@ export const STRINGS_UK = {
         changeChildSortOrder: 'Змінити порядок сортування',
         changeSortAndGroup: 'Змінити сортування та групування',
         resetViewToDefaults: 'Скинути вигляд до стандартних налаштувань',
-        manualSort: 'Ручне сортування',
-        editSortOrder: 'Редагувати порядок сортування...',
-        removeSortProperty: 'Вилучити властивість сортування',
         descendants: 'нащадків',
         subfolders: 'підтек',
         subtags: 'підтегів',
@@ -339,14 +329,6 @@ export const STRINGS_UK = {
             moveMultipleFilesToFolder: 'Перемістити файли ({count}) до...',
             mergeNotes: 'Об’єднати нотатки ({count})...',
             mergeNotesInGroup: 'Об’єднати нотатки в групі...',
-            setManualSortGroupHeader: 'Встановити заголовок групи',
-            changeManualSortGroupHeader: 'Змінити заголовок групи',
-            manualSortGroupHeader: {
-                title: 'Заголовок групи',
-                copyStyle: 'Копіювати стиль заголовка',
-                pasteStyle: 'Вставити стиль заголовка',
-                remove: 'Вилучити заголовок групи'
-            },
             addTag: 'Додати мітку',
             addPropertyKey: 'Встановити властивість',
             removeTag: 'Вилучити мітку',
@@ -453,27 +435,6 @@ export const STRINGS_UK = {
             resetAppearanceMessage: (count: number) =>
                 `Оформлення буде скинуто для ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'елемента' : 'елементів'}. Сортування й групування зберігаються. Це одноразова зміна; майбутні зміни та нові дочірні елементи не пов’язуються.`,
             affectedCountMessage: (count: number) => `Наявних перевизначень, які зміняться: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Використати ручне сортування?',
-            propertySortMessage: (property: string, count: number) =>
-                `Перемикає поточний вигляд на ручне сортування з використанням «${property}». Редагування порядку записує числові значення індексу в цю властивість у ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'нотатці' : 'нотатках'} за потреби.`,
-            propertySortConfirmButton: 'Використати ручне сортування',
-            removePropertyTitle: 'Вилучити властивість сортування?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Це вилучить «${property}» з ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'нотатки' : 'нотаток'} у поточному списку. Порядок ручного сортування буде очищено для цих нотаток.`,
-            removePropertyConfirmButton: 'Вилучити властивість',
-            compactTitle: 'Стиснути значення індексу?',
-            compactMessage: (count: number) =>
-                `Це перевпорядкування потребує більше числового простору. ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'нотатка отримає' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'нотатки отримають' : 'нотаток отримають'} нові значення індексу.`,
-            compactConfirmButton: 'Стиснути значення індексу'
-        },
-        manualSortGroupHeader: {
-            title: 'Встановити заголовок групи',
-            titleLabel: 'Заголовок',
-            placeholder: 'Заголовок групи',
-            icon: 'Значок',
-            color: 'Колір',            description: 'Налаштуйте заголовок групи для цієї нотатки. Залиште заголовок порожнім, щоб видалити його.'
         },
         mergeNotes: {
             title: 'Об’єднати нотатки',
@@ -846,8 +807,6 @@ export const STRINGS_UK = {
             propertiesRequireMarkdown: 'Властивості підтримуються лише в нотатках Markdown',
             propertySetOnNote: 'Властивість оновлено в 1 нотатці',
             propertySetOnNotes: 'Властивість оновлено в {count} нотатках',
-            manualSortPropertyRemovedFromNote: 'Вилучено властивість сортування з 1 нотатки',
-            manualSortPropertyRemovedFromNotes: 'Вилучено властивість сортування з {count} нотаток',
             hiddenFileReveal: 'Файл прихований. Увімкніть «Показати приховані елементи» для відображення'
         },
         confirmations: {
@@ -1064,7 +1023,6 @@ export const STRINGS_UK = {
                     appearance: 'Вигляд',
                     sortAndGroup: 'Сортування та групування',
                     groupHeaders: 'Заголовки груп',
-                    manualSort: 'Ручне сортування',
                     pinnedNotes: 'Закріплені нотатки',
                     behavior: 'Поведінка'
                 }
@@ -1196,41 +1154,11 @@ export const STRINGS_UK = {
                 desc: 'Властивості frontmatter, розділені комами. Кожна властивість відображається як варіант групування в налаштуванні «Групування за замовчуванням» і в меню сортування на панелі списку. Ці властивості не змінюються.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Властивість ручного сортування',
-                desc: 'Властивість frontmatter, що використовується для зберігання числових значень індексу для ручного сортування.'
-            },
-            groupHeaderProperty: {
-                name: 'Властивість заголовка групи',
-                desc: 'Властивість frontmatter, що використовується для зберігання користувацьких заголовків груп.'
-            },
             groupHeadersInstructions: {
                 intro: 'Користувацькі заголовки груп відображаються над нотатками на панелі списку.',
                 items: [
                     'У меню сортування на панелі списку встановіть групування на **Користувацьке**.',
                     'Клацніть правою кнопкою миші на нотатці та виберіть **Встановити заголовок групи**, щоб додати заголовок над нею.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Розміщення нової нотатки',
-                desc: 'Виберіть, де розміщуються нові нотатки, коли поточний список використовує ручне сортування.',
-                options: {
-                    top: 'Зверху',
-                    bottom: 'Знизу',
-                    belowSelectedNote: 'Під вибраною нотаткою',
-                    unsorted: 'Без сортування'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Підтверджувати перед ручним сортуванням',
-                desc: 'Показувати попередження перед першим записом властивості ручного сортування до нотаток. Коли вимкнено, нотатки отримують властивість без попередження.'
-            },
-            manualSortInstructions: {
-                intro: 'Ручне сортування записує числове значення індексу у властивість frontmatter кожної нотатки. Нотатки без індексу відображаються в розділі «Без сортування».',
-                items: [
-                    'Увімкніть ручне сортування, вибравши **Ручне сортування** в меню сортування. Після цього є два способи переставити нотатки.',
-                    "Виберіть **Редагувати порядок сортування...** в меню сортування, щоб відкрити перегляд для зміни порядку. Перетягуйте нотатки мишею або дотиком на мобільному пристрої. На комп'ютері клік з **Cmd/Ctrl** або **Shift** вибирає кілька нотаток, після чого перетягування будь-якої з них переміщує всю групу.",
-                    'У панелі списку виберіть одну нотатку або кілька з мульти-вибором, потім натисніть **Cmd/Ctrl + Arrow Up/Down**, щоб перемістити вибране вгору або вниз.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

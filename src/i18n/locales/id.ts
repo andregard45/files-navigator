@@ -56,13 +56,7 @@ export const STRINGS_ID = {
         hiddenItemAriaLabel: '{name} (tersembunyi)',
         collapseGroup: 'Ciutkan grup',
         expandGroup: 'Bentangkan grup',
-        manualSortTitle: 'Urutan manual: {property}',
-        manualSortHint: 'Seret untuk mengatur ulang. Urutan disimpan sebagai nilai indeks numerik di properti "{property}".',
-        manualSortNonMarkdownHint: 'File non-Markdown ditampilkan di bawah dan tidak dapat diatur ulang.',
-        unsortedSection: 'Belum diurutkan',
-        propertyGroupNoValue: 'Tidak ada',
-        manualSortDone: 'Selesai',
-        manualSortMultipleWriteFailure: '{count} file gagal; pertama: {path}: {message}'
+        propertyGroupNoValue: 'Tidak ada'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_ID = {
         changeChildSortOrder: 'Ubah urutan',
         changeSortAndGroup: 'Ubah urutan dan grup',
         resetViewToDefaults: 'Atur ulang tampilan ke default',
-        manualSort: 'Urutan manual',
-        editSortOrder: 'Edit urutan...',
-        removeSortProperty: 'Hapus properti urutan',
         descendants: 'turunan',
         subfolders: 'subfolder',
         subtags: 'subtag',
@@ -338,14 +329,6 @@ export const STRINGS_ID = {
             moveMultipleFilesToFolder: 'Pindahkan {count} file ke...',
             mergeNotes: 'Gabungkan {count} catatan...',
             mergeNotesInGroup: 'Gabungkan catatan dalam grup...',
-            setManualSortGroupHeader: 'Atur header grup',
-            changeManualSortGroupHeader: 'Ubah header grup',
-            manualSortGroupHeader: {
-                title: 'Header grup',
-                copyStyle: 'Salin gaya header',
-                pasteStyle: 'Tempel gaya header',
-                remove: 'Hapus header grup'
-            },
             addTag: 'Tambah tag',
             addPropertyKey: 'Atur properti',
             removeTag: 'Hapus tag',
@@ -452,27 +435,6 @@ export const STRINGS_ID = {
             resetAppearanceMessage: (count: number) =>
                 `Tampilan akan diatur ulang untuk ${count} item. Pengurutan dan pengelompokan dipertahankan. Ini adalah perubahan satu kali; perubahan mendatang dan turunan baru tidak ditautkan.`,
             affectedCountMessage: (count: number) => `Penimpaan yang ada dan akan berubah: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Gunakan urutan manual?',
-            propertySortMessage: (property: string, count: number) =>
-                `Ini akan mengalihkan tampilan saat ini ke urutan manual menggunakan "${property}". Mengedit urutan akan menulis nilai indeks numerik ke properti tersebut di ${count} catatan sesuai kebutuhan.`,
-            propertySortConfirmButton: 'Gunakan urutan manual',
-            removePropertyTitle: 'Hapus properti urutan?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Ini akan menghapus "${property}" dari ${count} catatan di daftar saat ini. Urutan manual akan dihapus untuk catatan tersebut.`,
-            removePropertyConfirmButton: 'Hapus properti',
-            compactTitle: 'Padatkan nilai indeks?',
-            compactMessage: (count: number) =>
-                `Pengaturan ulang ini memerlukan lebih banyak ruang numerik. ${count} catatan akan menerima nilai indeks baru.`,
-            compactConfirmButton: 'Padatkan nilai indeks'
-        },
-        manualSortGroupHeader: {
-            title: 'Atur header grup',
-            titleLabel: 'Judul',
-            placeholder: 'Header grup',
-            icon: 'Ikon',
-            color: 'Warna',            description: 'Sesuaikan header grup untuk catatan ini. Biarkan judul kosong untuk menghapus header.'
         },
         mergeNotes: {
             title: 'Gabungkan catatan',
@@ -848,8 +810,6 @@ export const STRINGS_ID = {
             propertiesRequireMarkdown: 'Properti hanya didukung pada catatan Markdown',
             propertySetOnNote: 'Properti diperbarui pada 1 catatan',
             propertySetOnNotes: 'Properti diperbarui pada {count} catatan',
-            manualSortPropertyRemovedFromNote: 'Properti urutan dihapus dari 1 catatan',
-            manualSortPropertyRemovedFromNotes: 'Properti urutan dihapus dari {count} catatan',
             hiddenFileReveal: 'File tersembunyi. Aktifkan "Tampilkan item tersembunyi" untuk menampilkannya'
         },
         confirmations: {
@@ -1066,7 +1026,6 @@ export const STRINGS_ID = {
                     appearance: 'Tampilan',
                     sortAndGroup: 'Urutan & pengelompokan',
                     groupHeaders: 'Header grup',
-                    manualSort: 'Urutan manual',
                     pinnedNotes: 'Catatan yang disematkan',
                     behavior: 'Perilaku'
                 }
@@ -1197,41 +1156,11 @@ export const STRINGS_ID = {
                 desc: 'Properti frontmatter dipisahkan koma. Setiap properti muncul sebagai opsi pengelompokan di pengaturan Pengelompokan default dan di menu urutan pada panel daftar. Properti ini tidak diubah.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Properti urutan manual',
-                desc: 'Properti frontmatter yang digunakan untuk menyimpan nilai indeks numerik untuk urutan manual.'
-            },
-            groupHeaderProperty: {
-                name: 'Properti header grup',
-                desc: 'Properti frontmatter yang digunakan untuk menyimpan header grup kustom.'
-            },
             groupHeadersInstructions: {
                 intro: 'Header grup kustom ditampilkan di atas catatan di panel daftar.',
                 items: [
                     'Dari menu urutan di panel daftar, atur pengelompokan ke **Kustom**.',
                     'Klik kanan catatan dan pilih **Atur header grup** untuk menambahkan header di atasnya.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Penempatan catatan baru',
-                desc: 'Pilih tempat catatan baru ditempatkan saat daftar saat ini menggunakan urutan manual.',
-                options: {
-                    top: 'Atas',
-                    bottom: 'Bawah',
-                    belowSelectedNote: 'Di bawah catatan yang dipilih',
-                    unsorted: 'Belum diurutkan'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Konfirmasi sebelum urutan manual',
-                desc: 'Tampilkan peringatan sebelum menulis properti urutan manual ke catatan untuk pertama kalinya. Saat dinonaktifkan, catatan menerima properti tanpa peringatan.'
-            },
-            manualSortInstructions: {
-                intro: 'Urutan manual menulis nilai indeks numerik ke properti frontmatter pada setiap catatan. Catatan tanpa indeks muncul di bawah Belum diurutkan.',
-                items: [
-                    'Aktifkan urutan manual dengan memilih **Urutan manual** dari menu urutan. Setelah itu, ada dua cara untuk mengatur ulang catatan.',
-                    'Pilih **Edit urutan...** dari menu urutan untuk membuka tampilan pengaturan ulang. Seret catatan dengan mouse, atau dengan sentuhan di seluler. Di desktop, klik **Cmd/Ctrl** atau **Shift** memilih beberapa catatan, lalu menyeret salah satunya akan memindahkan seluruh grup.',
-                    'Di panel daftar, pilih satu catatan atau pilih beberapa, lalu tekan **Cmd/Ctrl + Arrow Up/Down** untuk memindahkan pilihan ke atas atau ke bawah.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

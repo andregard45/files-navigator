@@ -56,13 +56,7 @@ export const STRINGS_AR = {
         hiddenItemAriaLabel: '{name} (مخفي)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'طي المجموعة',
         expandGroup: 'توسيع المجموعة',
-        manualSortTitle: 'فرز يدوي: {property}',
-        manualSortHint: 'اسحب لإعادة الترتيب. يتم حفظ الترتيب كقيم رقمية للفهرس في الخاصية "{property}".',
-        manualSortNonMarkdownHint: 'الملفات غير Markdown تظهر في الأسفل ولا يمكن إعادة ترتيبها.',
-        unsortedSection: 'غير مرتبة',
-        propertyGroupNoValue: 'بدون',
-        manualSortDone: 'تم',
-        manualSortMultipleWriteFailure: 'فشل {count} من الملفات؛ الأول: {path}: {message}'
+        propertyGroupNoValue: 'بدون'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_AR = {
         changeChildSortOrder: 'تغيير ترتيب الفرز',
         changeSortAndGroup: 'تغيير الفرز والتجميع',
         resetViewToDefaults: 'إعادة تعيين العرض إلى الإعدادات الافتراضية',
-        manualSort: 'فرز يدوي',
-        editSortOrder: 'تحرير ترتيب الفرز...',
-        removeSortProperty: 'إزالة خاصية الفرز',
         descendants: 'العناصر الفرعية',
         subfolders: 'المجلدات الفرعية',
         subtags: 'الوسوم الفرعية',
@@ -337,14 +328,6 @@ export const STRINGS_AR = {
             moveMultipleFilesToFolder: 'نقل {count} من الملفات إلى...',
             mergeNotes: 'دمج {count} من الملاحظات...',
             mergeNotesInGroup: 'دمج الملاحظات في المجموعة...',
-            setManualSortGroupHeader: 'تعيين عنوان المجموعة',
-            changeManualSortGroupHeader: 'تغيير عنوان المجموعة',
-            manualSortGroupHeader: {
-                title: 'عنوان المجموعة',
-                copyStyle: 'نسخ نمط العنوان',
-                pasteStyle: 'لصق نمط العنوان',
-                remove: 'إزالة عنوان المجموعة'
-            },
             addTag: 'إضافة وسم',
             addPropertyKey: 'تعيين خاصية',
             removeTag: 'إزالة وسم',
@@ -451,27 +434,6 @@ export const STRINGS_AR = {
             resetAppearanceMessage: (count: number) =>
                 `سيُعاد تعيين المظهر لـ ${count} من العناصر. يُحتفظ بالفرز والتجميع. هذا تغيير لمرة واحدة؛ ولا ترتبط التغييرات المستقبلية والعناصر الفرعية الجديدة.`,
             affectedCountMessage: (count: number) => `التجاوزات الحالية التي ستتغير: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'استخدام الفرز اليدوي؟',
-            propertySortMessage: (property: string, count: number) =>
-                `يبدّل العرض الحالي إلى الفرز اليدوي باستخدام "${property}". تحرير الترتيب يكتب قيم فهرس رقمية إلى تلك الخاصية في ${count} من الملاحظات حسب الحاجة.`,
-            propertySortConfirmButton: 'استخدام الفرز اليدوي',
-            removePropertyTitle: 'إزالة خاصية الفرز؟',
-            removePropertyMessage: (property: string, count: number) =>
-                `يؤدي هذا إلى إزالة "${property}" من ${count} من الملاحظات في القائمة الحالية. سيتم مسح ترتيب الفرز اليدوي لتلك الملاحظات.`,
-            removePropertyConfirmButton: 'إزالة الخاصية',
-            compactTitle: 'ضغط قيم الفهرس؟',
-            compactMessage: (count: number) =>
-                `إعادة الترتيب هذه تحتاج إلى مساحة رقمية أكبر. ${count} من الملاحظات ستحصل على قيم فهرس جديدة.`,
-            compactConfirmButton: 'ضغط قيم الفهرس'
-        },
-        manualSortGroupHeader: {
-            title: 'تعيين عنوان المجموعة',
-            titleLabel: 'العنوان',
-            placeholder: 'عنوان المجموعة',
-            icon: 'الأيقونة',
-            color: 'اللون',            description: 'خصص عنوان المجموعة لهذه الملاحظة. اترك العنوان فارغًا لإزالة العنوان.'
         },
         mergeNotes: {
             title: 'دمج الملاحظات',
@@ -844,8 +806,6 @@ export const STRINGS_AR = {
             propertiesRequireMarkdown: 'الخصائص مدعومة فقط في ملاحظات Markdown',
             propertySetOnNote: 'تم تحديث الخاصية في ملاحظة واحدة',
             propertySetOnNotes: 'تم تحديث الخاصية في {count} من الملاحظات',
-            manualSortPropertyRemovedFromNote: 'تمت إزالة خاصية الفرز من ملاحظة واحدة',
-            manualSortPropertyRemovedFromNotes: 'تمت إزالة خاصية الفرز من {count} من الملاحظات',
             hiddenFileReveal: 'الملف مخفي. قم بتمكين "إظهار العناصر المخفية" لعرضه'
         },
         confirmations: {
@@ -1062,7 +1022,6 @@ export const STRINGS_AR = {
                     appearance: 'المظهر',
                     sortAndGroup: 'الفرز والتجميع',
                     groupHeaders: 'رؤوس المجموعات',
-                    manualSort: 'الفرز اليدوي',
                     pinnedNotes: 'الملاحظات المثبتة',
                     behavior: 'السلوك'
                 }
@@ -1192,41 +1151,11 @@ export const STRINGS_AR = {
                 desc: 'خصائص البيانات الأمامية مفصولة بفواصل. تظهر كل خاصية كخيار تجميع في إعداد التجميع الافتراضي وفي قائمة الفرز في لوحة القائمة. لا يتم تغيير هذه الخصائص.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'خاصية الفرز اليدوي',
-                desc: 'خاصية البيانات الأمامية المستخدمة لتخزين قيم الفهرس الرقمية للفرز اليدوي.'
-            },
-            groupHeaderProperty: {
-                name: 'خاصية عنوان المجموعة',
-                desc: 'خاصية البيانات الأمامية المستخدمة لتخزين رؤوس المجموعات المخصصة.'
-            },
             groupHeadersInstructions: {
                 intro: 'تظهر رؤوس المجموعات المخصصة أعلى الملاحظات في لوحة القائمة.',
                 items: [
                     'من قائمة الفرز في لوحة القائمة، اضبط التجميع على **مخصص**.',
                     'انقر بزر الفأرة الأيمن على ملاحظة واختر **تعيين عنوان المجموعة** لإضافة عنوان فوقها.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'موضع الملاحظة الجديدة',
-                desc: 'اختر مكان وضع الملاحظات الجديدة عندما تستخدم القائمة الحالية الفرز اليدوي.',
-                options: {
-                    top: 'الأعلى',
-                    bottom: 'الأسفل',
-                    belowSelectedNote: 'أسفل الملاحظة المحددة',
-                    unsorted: 'غير مرتبة'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'تأكيد قبل الفرز اليدوي',
-                desc: 'إظهار تحذير قبل كتابة خاصية الفرز اليدوي في الملاحظات للمرة الأولى. عند التعطيل، تتلقى الملاحظات الخاصية دون تحذير.'
-            },
-            manualSortInstructions: {
-                intro: 'يكتب الفرز اليدوي قيمة فهرس رقمية إلى خاصية في البيانات الأمامية على كل ملاحظة. تظهر الملاحظات بدون فهرس ضمن "غير مرتبة".',
-                items: [
-                    'فعّل الفرز اليدوي باختيار **فرز يدوي** من قائمة الفرز. بعد ذلك، توجد طريقتان لإعادة ترتيب الملاحظات.',
-                    'اختر **تحرير ترتيب الفرز...** من قائمة الفرز لفتح عرض إعادة الترتيب. اسحب الملاحظات بالفأرة، أو باللمس على الجوال. على سطح المكتب، النقر مع **Cmd/Ctrl** أو **Shift** يحدد عدة ملاحظات، ثم سحب أي منها ينقل المجموعة بأكملها.',
-                    'في لوحة القائمة، حدد ملاحظة واحدة أو حدد عدة ملاحظات، ثم اضغط **Cmd/Ctrl + Arrow Up/Down** لنقل التحديد لأعلى أو لأسفل.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

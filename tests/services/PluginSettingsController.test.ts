@@ -244,7 +244,6 @@ describe('PluginSettingsController.loadSettings', () => {
             keys: STORAGE_KEYS,
             loadData: vi.fn(async () => ({
                 propertySortKey: ['status'],
-                manualSortPropertyKey: ['sort_index'],
                 folderSortOverrides: {
                     Books: { option: 'property-asc', propertyKey: 'published' }
                 }
@@ -256,11 +255,9 @@ describe('PluginSettingsController.loadSettings', () => {
         await controller.loadSettings();
 
         expect(controller.settings.propertySortKey).toBe(DEFAULT_SETTINGS.propertySortKey);
-        expect(controller.settings.manualSortPropertyKey).toBe(DEFAULT_SETTINGS.manualSortPropertyKey);
         expect(controller.settings.folderSortOverrides.Books).toBeUndefined();
         expect(saveData).toHaveBeenCalledTimes(1);
         expect((saveData.mock.calls[0][0] as Record<string, unknown>).propertySortKey).toBe(DEFAULT_SETTINGS.propertySortKey);
-        expect((saveData.mock.calls[0][0] as Record<string, unknown>).manualSortPropertyKey).toBe(DEFAULT_SETTINGS.manualSortPropertyKey);
     });
 
     it('preserves none grouping values', async () => {

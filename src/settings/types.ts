@@ -183,14 +183,6 @@ export function isPropertySortSecondaryOption(value: unknown): value is Property
     return value === 'title' || value === 'filename' || value === 'created' || value === 'modified';
 }
 
-export type ManualSortNewNotePlacement = 'top' | 'bottom' | 'below-selected-note' | 'unsorted';
-
-export const MANUAL_SORT_NEW_NOTE_PLACEMENT_OPTIONS: ManualSortNewNotePlacement[] = ['top', 'bottom', 'below-selected-note', 'unsorted'];
-
-export function isManualSortNewNotePlacement(value: unknown): value is ManualSortNewNotePlacement {
-    return value === 'top' || value === 'bottom' || value === 'below-selected-note' || value === 'unsorted';
-}
-
 /** Alphabetical ordering options used by navigation trees. */
 export type AlphaSortOrder = 'alpha-asc' | 'alpha-desc';
 
@@ -485,7 +477,7 @@ export function isListDisplayMode(value: unknown): value is ListDisplayMode {
 }
 
 /** Built-in grouping modes for list pane notes */
-export type ListNoteGroupingBaseOption = 'none' | 'custom' | 'date' | 'folder';
+export type ListNoteGroupingBaseOption = 'none' | 'date' | 'folder';
 
 /** Resolved direction applied when arranging property groups */
 export type PropertyGroupingDirection = 'asc' | 'desc';
@@ -518,7 +510,7 @@ const PROPERTY_GROUPING_DESC_PREFIX = 'property-desc:';
 const PROPERTY_GROUPING_FOLLOW_PREFIX = 'property-follow:';
 
 function isListNoteGroupingBaseOption(value: unknown): value is ListNoteGroupingBaseOption {
-    return value === 'none' || value === 'custom' || value === 'date' || value === 'folder';
+    return value === 'none' || value === 'date' || value === 'folder';
 }
 
 function parsePropertyGroupingOption(value: unknown): { propertyKey: string; order: PropertyGroupingOrder } | null {
@@ -785,10 +777,6 @@ export interface NotebookNavigatorSettings {
      */
     propertyGroupKey: string;
     propertySortSecondary: PropertySortSecondaryOption;
-    manualSortPropertyKey: string;
-    manualSortGroupHeaderProperty: string;
-    manualSortNewNotePlacement: ManualSortNewNotePlacement;
-    confirmBeforeManualSort: boolean;
     revealFileOnListChanges: boolean;
     listPaneTitle: ListPaneTitleOption;
     // Applies the selected folder, tag, or property color to the list pane title text and icon.

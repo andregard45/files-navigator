@@ -56,14 +56,7 @@ export const STRINGS_NL = {
         hiddenItemAriaLabel: '{name} (verborgen)',
         collapseGroup: 'Groep inklappen',
         expandGroup: 'Groep uitklappen',
-        manualSortTitle: 'Handmatig sorteren: {property}',
-        manualSortHint:
-            'Sleep om opnieuw te ordenen. De volgorde wordt opgeslagen als numerieke indexwaarden in de eigenschap "{property}".',
-        manualSortNonMarkdownHint: 'Niet-Markdown-bestanden worden onderaan getoond en kunnen niet opnieuw worden geordend.',
-        unsortedSection: 'Niet gesorteerd',
-        propertyGroupNoValue: 'Geen',
-        manualSortDone: 'Klaar',
-        manualSortMultipleWriteFailure: '{count} bestanden mislukt; eerste: {path}: {message}'
+        propertyGroupNoValue: 'Geen'
     },
 
     // Tag list
@@ -158,9 +151,6 @@ export const STRINGS_NL = {
         changeChildSortOrder: 'Sorteervolgorde wijzigen',
         changeSortAndGroup: 'Sortering en groepering wijzigen',
         resetViewToDefaults: 'Weergave terugzetten naar standaardwaarden',
-        manualSort: 'Handmatig sorteren',
-        editSortOrder: 'Sorteervolgorde bewerken...',
-        removeSortProperty: 'Sorteereigenschap verwijderen',
         descendants: 'subelementen',
         subfolders: 'submappen',
         subtags: 'subtags',
@@ -342,14 +332,6 @@ export const STRINGS_NL = {
             moveMultipleFilesToFolder: '{count} bestanden verplaatsen naar...',
             mergeNotes: '{count} notities samenvoegen...',
             mergeNotesInGroup: 'Notities in groep samenvoegen...',
-            setManualSortGroupHeader: 'Groepskop instellen',
-            changeManualSortGroupHeader: 'Groepskop wijzigen',
-            manualSortGroupHeader: {
-                title: 'Groepskop',
-                copyStyle: 'Kopstijl kopiëren',
-                pasteStyle: 'Kopstijl plakken',
-                remove: 'Groepskop verwijderen'
-            },
             addTag: 'Tag toevoegen',
             addPropertyKey: 'Eigenschap instellen',
             removeTag: 'Tag verwijderen',
@@ -456,27 +438,6 @@ export const STRINGS_NL = {
             resetAppearanceMessage: (count: number) =>
                 `Het uiterlijk wordt hersteld voor ${count} ${count === 1 ? 'item' : 'items'}. Sortering en groepering blijven behouden. Dit is een eenmalige wijziging; toekomstige wijzigingen en nieuwe onderliggende items worden niet gekoppeld.`,
             affectedCountMessage: (count: number) => `Bestaande overschrijvingen die wijzigen: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Handmatig sorteren gebruiken?',
-            propertySortMessage: (property: string, count: number) =>
-                `Dit schakelt de huidige weergave over naar handmatig sorteren met "${property}". Bij het bewerken van de volgorde worden indien nodig numerieke indexwaarden naar die eigenschap geschreven in ${count} ${count === 1 ? 'notitie' : 'notities'}.`,
-            propertySortConfirmButton: 'Handmatig sorteren gebruiken',
-            removePropertyTitle: 'Sorteereigenschap verwijderen?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Dit verwijdert "${property}" uit ${count} ${count === 1 ? 'notitie' : 'notities'} in de huidige lijst. Voor die notities wordt de handmatige sorteervolgorde gewist.`,
-            removePropertyConfirmButton: 'Eigenschap verwijderen',
-            compactTitle: 'Indexwaarden comprimeren?',
-            compactMessage: (count: number) =>
-                `Deze herordening heeft meer numerieke ruimte nodig. ${count} ${count === 1 ? 'notitie krijgt' : 'notities krijgen'} nieuwe indexwaarden.`,
-            compactConfirmButton: 'Indexwaarden comprimeren'
-        },
-        manualSortGroupHeader: {
-            title: 'Groepskop instellen',
-            titleLabel: 'Titel',
-            placeholder: 'Groepskop',
-            icon: 'Pictogram',
-            color: 'Kleur',            description: 'Pas de groepskop voor deze notitie aan. Laat de titel leeg om de kop te verwijderen.'
         },
         mergeNotes: {
             title: 'Notities samenvoegen',
@@ -852,8 +813,6 @@ export const STRINGS_NL = {
             propertiesRequireMarkdown: 'Eigenschappen worden alleen ondersteund in Markdown-notities',
             propertySetOnNote: 'Eigenschap bijgewerkt op 1 notitie',
             propertySetOnNotes: 'Eigenschap bijgewerkt op {count} notities',
-            manualSortPropertyRemovedFromNote: 'Sorteereigenschap verwijderd uit 1 notitie',
-            manualSortPropertyRemovedFromNotes: 'Sorteereigenschap verwijderd uit {count} notities',
             hiddenFileReveal: 'Bestand is verborgen. Schakel "Verborgen items tonen" in om het weer te geven'
         },
         confirmations: {
@@ -1070,7 +1029,6 @@ export const STRINGS_NL = {
                     appearance: 'Uiterlijk',
                     sortAndGroup: 'Sorteren & groeperen',
                     groupHeaders: 'Groepskoppen',
-                    manualSort: 'Handmatig sorteren',
                     pinnedNotes: 'Vastgepinde notities',
                     behavior: 'Gedrag'
                 }
@@ -1202,41 +1160,11 @@ export const STRINGS_NL = {
                 desc: 'Kommagescheiden frontmatter-eigenschappen. Elke eigenschap verschijnt als groeperingsoptie in de instelling Standaard groepering en in het sorteermenu van het lijstpaneel. Deze eigenschappen worden niet gewijzigd.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Eigenschap voor handmatig sorteren',
-                desc: 'Frontmatter-eigenschap gebruikt om numerieke indexwaarden voor handmatig sorteren op te slaan.'
-            },
-            groupHeaderProperty: {
-                name: 'Eigenschap voor groepskop',
-                desc: 'Frontmatter-eigenschap gebruikt om aangepaste groepskoppen op te slaan.'
-            },
             groupHeadersInstructions: {
                 intro: 'Aangepaste groepskoppen verschijnen boven notities in het lijstpaneel.',
                 items: [
                     'Stel in het sorteermenu van het lijstpaneel groepering in op **Aangepast**.',
                     'Klik met de rechtermuisknop op een notitie en kies **Groepskop instellen** om een kop boven de notitie te plaatsen.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Plaatsing nieuwe notitie',
-                desc: 'Kies waar nieuwe notities worden geplaatst wanneer de huidige lijst handmatig sorteren gebruikt.',
-                options: {
-                    top: 'Bovenaan',
-                    bottom: 'Onderaan',
-                    belowSelectedNote: 'Onder geselecteerde notitie',
-                    unsorted: 'Niet gesorteerd'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Bevestigen voor handmatig sorteren',
-                desc: 'Toon een waarschuwing voordat de eigenschap voor handmatig sorteren voor het eerst naar notities wordt geschreven. Wanneer uitgeschakeld, ontvangen notities de eigenschap zonder waarschuwing.'
-            },
-            manualSortInstructions: {
-                intro: 'Handmatig sorteren schrijft een numerieke indexwaarde naar een frontmatter-eigenschap op elke notitie. Notities zonder index verschijnen onder Niet gesorteerd.',
-                items: [
-                    'Schakel handmatig sorteren in door **Handmatig sorteren** te kiezen uit het sorteermenu. Daarna zijn er twee manieren om notities te herschikken.',
-                    'Kies **Sorteervolgorde bewerken...** uit het sorteermenu om een herschikweergave te openen. Sleep notities met de muis, of met aanraking op mobiel. Op desktop selecteer je meerdere notities door met **Cmd/Ctrl** of **Shift** te klikken. Daarna verplaats je de hele groep door er één te slepen.',
-                    'Selecteer in het lijstpaneel één notitie of selecteer er meerdere, en druk vervolgens op **Cmd/Ctrl + Arrow Up/Down** om de selectie omhoog of omlaag te verplaatsen.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

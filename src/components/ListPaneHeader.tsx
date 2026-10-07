@@ -36,14 +36,11 @@ import { usesMobileChrome } from '../utils/paneLayout';
 import { normalizeTagPath } from '../utils/tagUtils';
 import { runAsyncAction } from '../utils/async';
 import { resolveUXIcon } from '../utils/uxIcons';
-import type { ManualSortNewFilePlacementContext } from '../utils/manualSort';
 
 interface ListPaneHeaderProps {
     onHeaderClick?: () => void;
     isSearchActive?: boolean;
     onSearchToggle?: () => void;
-    onManualSortStart?: (propertyKey: string) => void;
-    getManualSortNewFileContext?: () => ManualSortNewFilePlacementContext | null;
     canToggleGroupExpansion: boolean;
     shouldCollapseGroups: boolean;
     onToggleGroupExpansion: () => boolean;
@@ -59,8 +56,6 @@ export const ListPaneHeader = React.memo(function ListPaneHeader({
     onHeaderClick,
     isSearchActive,
     onSearchToggle,
-    onManualSortStart,
-    getManualSortNewFileContext,
     canToggleGroupExpansion,
     shouldCollapseGroups,
     onToggleGroupExpansion,
@@ -105,8 +100,6 @@ export const ListPaneHeader = React.memo(function ListPaneHeader({
         hasCustomSortOrGroup,
         hasCustomAppearance
     } = useListActions({
-        onManualSortStart,
-        getManualSortNewFileContext,
         trackRevealFileAvailability: !useMobileChrome && showRevealButton
     });
     const showBackButton = listToolbarVisibility.back && uiState.singlePane;

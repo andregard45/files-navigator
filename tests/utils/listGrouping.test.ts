@@ -30,7 +30,6 @@ import { buildPropertyKeyNodeId } from '../../src/utils/propertyTree';
 import {
     areListGroupingOptionsEqual,
     areListGroupingOptionsSameKind,
-    hasEffectiveCustomListGroupingForSelection,
     pruneUnavailablePropertyGroupingOverrides,
     reconcileDefaultNoteGrouping,
     resolveEffectiveListGroupingForSort,
@@ -56,7 +55,7 @@ function createGroupingSettings(noteGrouping: GroupingSettings['noteGrouping']):
 describe('resolveListGrouping property selections', () => {
     it('uses custom property grouping overrides when present', () => {
         const propertyNodeId = buildPropertyKeyNodeId('status');
-        const settings = createGroupingSettings('custom');
+        const settings = createGroupingSettings('folder');
         settings.propertyAppearances = {
             [propertyNodeId]: { groupBy: 'date' }
         };
@@ -67,7 +66,7 @@ describe('resolveListGrouping property selections', () => {
             propertyNodeId
         });
 
-        expect(result.defaultGrouping).toBe('custom');
+        expect(result.defaultGrouping).toBe('folder');
         expect(result.effectiveGrouping).toBe('date');
         expect(result.normalizedOverride).toBe('date');
         expect(result.hasCustomOverride).toBe(true);
@@ -146,15 +145,6 @@ describe('resolveEffectiveListGroupingForSort', () => {
         ).toBe('none');
     });
 
-    it('keeps custom grouping with property sort', () => {
-        expect(
-            resolveEffectiveListGroupingForSort({
-                groupBy: 'custom',
-                sortOption: 'property-asc',
-                selectionType: ItemType.TAG
-            })
-        ).toBe('custom');
-    });
 
     it('uses no grouping when date grouping is paired with a non-date sort', () => {
         expect(
@@ -174,17 +164,6 @@ describe('resolveEffectiveListGroupingForSort', () => {
                 selectionType: ItemType.FOLDER
             })
         ).toBe('date');
-    });
-
-    it('locks manual sort to custom groups', () => {
-        expect(
-            resolveEffectiveListGroupingForSort({
-                groupBy: 'folder',
-                sortOption: 'property-asc',
-                selectionType: ItemType.FOLDER,
-                isManualSortActive: true
-            })
-        ).toBe('custom');
     });
 
     it('keeps property grouping under every sort and selection type', () => {
@@ -207,16 +186,6 @@ describe('resolveEffectiveListGroupingForSort', () => {
         ).toBe(groupBy);
     });
 
-    it('locks manual sort to custom groups even with property grouping', () => {
-        expect(
-            resolveEffectiveListGroupingForSort({
-                groupBy: createPropertyGroupingOption('status', 'asc'),
-                sortOption: 'property-asc',
-                selectionType: ItemType.FOLDER,
-                isManualSortActive: true
-            })
-        ).toBe('custom');
-    });
 });
 
 describe('property grouping option encoding', () => {
@@ -272,7 +241,7 @@ describe('property grouping option encoding', () => {
         expect(areListGroupingOptionsSameKind('property:status', 'property-desc:Status')).toBe(true);
         expect(areListGroupingOptionsSameKind('property:status', 'property:genre')).toBe(false);
         expect(areListGroupingOptionsSameKind('date', 'date')).toBe(true);
-        expect(areListGroupingOptionsSameKind('property:status', 'custom')).toBe(false);
+        expect(areListGroupingOptionsSameKind('property:status', 'none')).toBe(false);
     });
 
     it('retains a grouping override when only one component matches the default', () => {
@@ -303,14 +272,6 @@ describe('pruneUnavailablePropertyGroupingOverrides', () => {
         expect(settings.tagAppearances.reading.groupBy).toBe('date');
     });
 
-    it('removes overrides referencing the manual sort key', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.propertyGroupKey = `status, ${settings.manualSortPropertyKey}`;
-        settings.folderAppearances.Projects = { groupBy: createPropertyGroupingOption(settings.manualSortPropertyKey, 'asc') };
-
-        expect(pruneUnavailablePropertyGroupingOverrides(settings)).toBe(true);
-        expect(settings.folderAppearances.Projects).toBeUndefined();
-    });
 
     it('reports no change when every override is available', () => {
         const settings = structuredClone(DEFAULT_SETTINGS);
@@ -353,84 +314,6 @@ describe('updatePropertyGroupingOverrideKeys', () => {
     });
 });
 
-describe('hasEffectiveCustomListGroupingForSelection', () => {
-    it('does not treat a non-date fallback as custom grouping', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'date';
-        settings.defaultFolderSort = 'title-asc';
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, null)).toBe(false);
-    });
-
-    it('does not treat a selection sort fallback as custom grouping', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'date';
-        settings.defaultFolderSort = 'modified-desc';
-        settings.folderSortOverrides.Projects = 'title-asc';
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, 'Projects')).toBe(false);
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, 'Writing')).toBe(false);
-    });
-
-    it('keeps a tag sort fallback separate from custom grouping', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'folder';
-        settings.defaultFolderSort = 'modified-desc';
-        settings.tagAppearances.reading = { groupBy: 'date' };
-        settings.tagSortOverrides.reading = 'title-asc';
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.TAG, 'reading')).toBe(false);
-    });
-
-    it('keeps a property sort fallback separate from custom grouping', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'folder';
-        settings.defaultFolderSort = 'modified-desc';
-        settings.propertySortOverrides['property:status:active'] = 'property-asc';
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.PROPERTY, 'property:status:active')).toBe(false);
-    });
-
-    it('detects an explicit custom grouping override', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'none';
-        settings.defaultFolderSort = 'title-asc';
-        settings.folderAppearances.Projects = { groupBy: 'custom' };
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, 'Projects')).toBe(true);
-    });
-
-    it('detects custom grouping forced by manual sorting', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'folder';
-        settings.defaultFolderSort = 'property-asc';
-        settings.propertySortKey = settings.manualSortPropertyKey;
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, null)).toBe(true);
-    });
-
-    it('detects manual sorting in an object override', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'folder';
-        settings.defaultFolderSort = 'modified-desc';
-        settings.folderSortOverrides.Projects = {
-            option: 'property-desc',
-            propertyKey: settings.manualSortPropertyKey
-        };
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, 'Projects')).toBe(true);
-    });
-
-    it('does not treat alphabetical folder grouping as custom', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.noteGrouping = 'folder';
-        settings.defaultFolderSort = 'modified-desc';
-        settings.folderSortOverrides.Projects = 'title-asc';
-
-        expect(hasEffectiveCustomListGroupingForSelection(settings, ItemType.FOLDER, 'Projects')).toBe(false);
-    });
-});
-
 describe('reconcileDefaultNoteGrouping', () => {
     it('keeps property groupings whose key is configured, matching case-insensitively', () => {
         const settings = structuredClone(DEFAULT_SETTINGS);
@@ -441,23 +324,7 @@ describe('reconcileDefaultNoteGrouping', () => {
         expect(settings.noteGrouping).toBe('property:status');
     });
 
-    it('resets property groupings whose key is not configured', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.propertyGroupKey = 'genre';
-        settings.noteGrouping = 'property-desc:status';
 
-        expect(reconcileDefaultNoteGrouping(settings)).toEqual({ changed: true, reset: true });
-        expect(settings.noteGrouping).toBe(DEFAULT_SETTINGS.noteGrouping);
-    });
-
-    it('resets property groupings referencing the manual sort key', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.propertyGroupKey = settings.manualSortPropertyKey;
-        settings.noteGrouping = createPropertyGroupingOption(settings.manualSortPropertyKey, 'asc');
-
-        expect(reconcileDefaultNoteGrouping(settings)).toEqual({ changed: true, reset: true });
-        expect(settings.noteGrouping).toBe(DEFAULT_SETTINGS.noteGrouping);
-    });
 
     it('leaves base grouping modes untouched', () => {
         const settings = structuredClone(DEFAULT_SETTINGS);

@@ -56,13 +56,7 @@ export const STRINGS_ZH_CN = {
         hiddenItemAriaLabel: '{name}（已隐藏）', // Accessibility label applied to list items that are normally hidden
         collapseGroup: '折叠分组',
         expandGroup: '展开分组',
-        manualSortTitle: '手动排序：{property}',
-        manualSortHint: '拖动以重新排序。顺序以数字索引值的形式保存在属性“{property}”中。',
-        manualSortNonMarkdownHint: '非 Markdown 文件显示在底部，无法重新排序。',
-        unsortedSection: '未排序',
-        propertyGroupNoValue: '无',
-        manualSortDone: '完成',
-        manualSortMultipleWriteFailure: '{count} 个文件失败；第一个：{path}: {message}'
+        propertyGroupNoValue: '无'
     },
 
     // Tag list
@@ -154,9 +148,6 @@ export const STRINGS_ZH_CN = {
         changeChildSortOrder: '更改排序方式',
         changeSortAndGroup: '更改排序和分组',
         resetViewToDefaults: '将视图重置为默认值',
-        manualSort: '手动排序',
-        editSortOrder: '编辑排序方式...',
-        removeSortProperty: '移除排序属性',
         descendants: '子项',
         subfolders: '子文件夹',
         subtags: '子标签',
@@ -323,14 +314,6 @@ export const STRINGS_ZH_CN = {
             moveMultipleFilesToFolder: '将 {count} 个文件移动到...',
             mergeNotes: '合并 {count} 个笔记...',
             mergeNotesInGroup: '合并组中的笔记...',
-            setManualSortGroupHeader: '设置分组标题',
-            changeManualSortGroupHeader: '更改分组标题',
-            manualSortGroupHeader: {
-                title: '分组标题',
-                copyStyle: '复制标题样式',
-                pasteStyle: '粘贴标题样式',
-                remove: '移除分组标题'
-            },
             addTag: '添加标签',
             addPropertyKey: '设置属性',
             removeTag: '移除标签',
@@ -450,26 +433,6 @@ export const STRINGS_ZH_CN = {
             resetAppearanceMessage: (count: number) =>
                 `将重置 ${count} 项的外观。排序和分组保持不变。这是一次性更改；以后所做的更改和新建的后代项目不会联动。`,
             affectedCountMessage: (count: number) => `将更改的现有覆盖：${count}。`
-        },
-        manualSortConfirm: {
-            propertySortTitle: '使用手动排序？',
-            propertySortMessage: (property: string, count: number) =>
-                `这会将当前视图切换为使用“${property}”的手动排序。编辑顺序时会按需将数字索引值写入 ${count} 条笔记的该属性。`,
-            propertySortConfirmButton: '使用手动排序',
-            removePropertyTitle: '移除排序属性？',
-            removePropertyMessage: (property: string, count: number) =>
-                `这将从当前列表中的 ${count} 篇笔记中移除“${property}”。这些笔记的手动排序顺序将被清除。`,
-            removePropertyConfirmButton: '移除属性',
-            compactTitle: '压缩索引值？',
-            compactMessage: (count: number) => `此次重新排序需要更多数字空间。${count} 条笔记将获得新的索引值。`,
-            compactConfirmButton: '压缩索引值'
-        },
-        manualSortGroupHeader: {
-            title: '设置分组标题',
-            titleLabel: '标题',
-            placeholder: '分组标题',
-            icon: '图标',
-            color: '颜色',            description: '为此笔记自定义分组标题。将标题留空以移除该标题。'
         },
         mergeNotes: {
             title: '合并笔记',
@@ -839,8 +802,6 @@ export const STRINGS_ZH_CN = {
             propertiesRequireMarkdown: '属性仅在 Markdown 笔记中受支持',
             propertySetOnNote: '已在 1 篇笔记中更新属性',
             propertySetOnNotes: '已在 {count} 篇笔记中更新属性',
-            manualSortPropertyRemovedFromNote: '已从 1 篇笔记中移除排序属性',
-            manualSortPropertyRemovedFromNotes: '已从 {count} 篇笔记中移除排序属性',
             hiddenFileReveal: '文件已隐藏。启用“显示隐藏项目”以显示它'
         },
         confirmations: {
@@ -1057,7 +1018,6 @@ export const STRINGS_ZH_CN = {
                     appearance: '外观',
                     sortAndGroup: '排序与分组',
                     groupHeaders: '分组标题',
-                    manualSort: '手动排序',
                     pinnedNotes: '固定笔记',
                     behavior: '行为'
                 }
@@ -1187,39 +1147,9 @@ export const STRINGS_ZH_CN = {
                 desc: '以逗号分隔的 frontmatter 属性。每个属性会作为分组选项显示在默认分组设置和列表窗格的排序菜单中。这些属性不会被更改。',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: '手动排序属性',
-                desc: '用于存储手动排序数字索引值的 frontmatter 属性。'
-            },
-            groupHeaderProperty: {
-                name: '分组标题属性',
-                desc: '用于存储自定义分组标题的 frontmatter 属性。'
-            },
             groupHeadersInstructions: {
                 intro: '自定义分组标题显示在列表窗格中笔记的上方。',
                 items: ['在列表窗格的排序菜单中，将分组设置为 **自定义**。', '右键点击笔记并选择 **设置分组标题**，在其上方添加标题。']
-            },
-            manualSortNewNotePlacement: {
-                name: '新笔记位置',
-                desc: '选择当前列表使用手动排序时新笔记的放置位置。',
-                options: {
-                    top: '顶部',
-                    bottom: '底部',
-                    belowSelectedNote: '所选笔记下方',
-                    unsorted: '未排序'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: '手动排序前确认',
-                desc: '在首次将手动排序属性写入笔记之前显示警告。禁用时，笔记将不显示警告即接收该属性。'
-            },
-            manualSortInstructions: {
-                intro: '手动排序会将数字索引值写入每条笔记的 frontmatter 属性。没有索引的笔记会显示在“未排序”下。',
-                items: [
-                    '从排序菜单中选择 **手动排序** 启用手动排序。之后有两种方式重新排列笔记。',
-                    '从排序菜单中选择 **编辑排序方式...** 打开重新排序视图。用鼠标拖动笔记，或在移动端使用触摸。在桌面端，按 **Cmd/Ctrl** 或 **Shift** 点击可选择多条笔记，然后拖动其中任意一条即可移动整组。',
-                    '在列表窗格中，选择一条笔记或多选若干条，然后按 **Cmd/Ctrl + Arrow Up/Down** 向上或向下移动所选内容。'
-                ]
             },
             scrollToSelectedFileOnListChanges: {
                 name: '列表变更时滚动到选定文件',

@@ -56,13 +56,7 @@ export const STRINGS_RU = {
         hiddenItemAriaLabel: '{name} (скрыто)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Свернуть группу',
         expandGroup: 'Развернуть группу',
-        manualSortTitle: 'Ручная сортировка: {property}',
-        manualSortHint: 'Перетащите для изменения порядка. Порядок сохраняется как числовые значения индекса в свойстве «{property}».',
-        manualSortNonMarkdownHint: 'Файлы, отличные от Markdown, показаны внизу и их порядок изменить нельзя.',
-        unsortedSection: 'Без сортировки',
-        propertyGroupNoValue: 'Нет',
-        manualSortDone: 'Готово',
-        manualSortMultipleWriteFailure: 'Не удалось обработать файлов: {count}; первый: {path}: {message}'
+        propertyGroupNoValue: 'Нет'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_RU = {
         changeChildSortOrder: 'Изменить сортировку',
         changeSortAndGroup: 'Изменить сортировку и группировку',
         resetViewToDefaults: 'Сбросить вид к настройкам по умолчанию',
-        manualSort: 'Ручная сортировка',
-        editSortOrder: 'Изменить порядок сортировки...',
-        removeSortProperty: 'Удалить свойство сортировки',
         descendants: 'потомков',
         subfolders: 'подпапок',
         subtags: 'подтегов',
@@ -338,14 +329,6 @@ export const STRINGS_RU = {
             moveMultipleFilesToFolder: 'Переместить файлы ({count}) в...',
             mergeNotes: 'Объединить заметки ({count})...',
             mergeNotesInGroup: 'Объединить заметки в группе...',
-            setManualSortGroupHeader: 'Задать заголовок группы',
-            changeManualSortGroupHeader: 'Изменить заголовок группы',
-            manualSortGroupHeader: {
-                title: 'Заголовок группы',
-                copyStyle: 'Копировать стиль заголовка',
-                pasteStyle: 'Вставить стиль заголовка',
-                remove: 'Удалить заголовок группы'
-            },
             addTag: 'Добавить тег',
             addPropertyKey: 'Задать свойство',
             removeTag: 'Удалить тег',
@@ -452,27 +435,6 @@ export const STRINGS_RU = {
             resetAppearanceMessage: (count: number) =>
                 `Оформление будет сброшено для ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'элемента' : 'элементов'}. Сортировка и группировка сохраняются. Это разовое изменение; будущие изменения и новые дочерние элементы не связываются.`,
             affectedCountMessage: (count: number) => `Существующих переопределений, которые изменятся: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Использовать ручную сортировку?',
-            propertySortMessage: (property: string, count: number) =>
-                `Переключает текущий вид на ручную сортировку с использованием «${property}». При изменении порядка числовые значения индекса записываются в это свойство в ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'заметке' : 'заметках'} по мере необходимости.`,
-            propertySortConfirmButton: 'Использовать ручную сортировку',
-            removePropertyTitle: 'Удалить свойство сортировки?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Это удалит «${property}» из ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'заметки' : 'заметок'} в текущем списке. Порядок ручной сортировки будет сброшен для этих заметок.`,
-            removePropertyConfirmButton: 'Удалить свойство',
-            compactTitle: 'Сжать значения индекса?',
-            compactMessage: (count: number) =>
-                `Эта перестановка требует больше числового пространства. ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'заметка получит' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'заметки получат' : 'заметок получат'} новые значения индекса.`,
-            compactConfirmButton: 'Сжать значения индекса'
-        },
-        manualSortGroupHeader: {
-            title: 'Задать заголовок группы',
-            titleLabel: 'Заголовок',
-            placeholder: 'Заголовок группы',
-            icon: 'Иконка',
-            color: 'Цвет',            description: 'Настройте заголовок группы для этой заметки. Оставьте заголовок пустым, чтобы удалить его.'
         },
         mergeNotes: {
             title: 'Объединить заметки',
@@ -846,8 +808,6 @@ export const STRINGS_RU = {
             propertiesRequireMarkdown: 'Свойства поддерживаются только в заметках Markdown',
             propertySetOnNote: 'Свойство обновлено в 1 заметке',
             propertySetOnNotes: 'Свойство обновлено. Изменено заметок: {count}',
-            manualSortPropertyRemovedFromNote: 'Свойство сортировки удалено из 1 заметки',
-            manualSortPropertyRemovedFromNotes: 'Свойство сортировки удалено. Изменено заметок: {count}',
             hiddenFileReveal: 'Файл скрыт. Включите «Показать скрытые элементы» для отображения'
         },
         confirmations: {
@@ -1064,7 +1024,6 @@ export const STRINGS_RU = {
                     appearance: 'Оформление',
                     sortAndGroup: 'Сортировка и группировка',
                     groupHeaders: 'Заголовки групп',
-                    manualSort: 'Ручная сортировка',
                     pinnedNotes: 'Закреплённые заметки',
                     behavior: 'Поведение'
                 }
@@ -1195,41 +1154,11 @@ export const STRINGS_RU = {
                 desc: 'Свойства frontmatter, разделённые запятыми. Каждое свойство отображается как вариант группировки в настройке «Группировка по умолчанию» и в меню сортировки на панели списка. Эти свойства не изменяются.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Свойство ручной сортировки',
-                desc: 'Свойство frontmatter, используемое для хранения числовых значений индекса для ручной сортировки.'
-            },
-            groupHeaderProperty: {
-                name: 'Свойство заголовка группы',
-                desc: 'Свойство frontmatter, используемое для хранения произвольных заголовков групп.'
-            },
             groupHeadersInstructions: {
                 intro: 'Произвольные заголовки групп отображаются над заметками на панели списка.',
                 items: [
                     'В меню сортировки на панели списка установите группировку **Произвольная**.',
                     'Щёлкните правой кнопкой мыши по заметке и выберите **Задать заголовок группы**, чтобы добавить заголовок над ней.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Размещение новых заметок',
-                desc: 'Выберите, где размещаются новые заметки, когда текущий список использует ручную сортировку.',
-                options: {
-                    top: 'Сверху',
-                    bottom: 'Снизу',
-                    belowSelectedNote: 'Под выбранной заметкой',
-                    unsorted: 'Без сортировки'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Подтверждать перед ручной сортировкой',
-                desc: 'Показывать предупреждение перед первой записью свойства ручной сортировки в заметки. Когда отключено, заметки получают свойство без предупреждения.'
-            },
-            manualSortInstructions: {
-                intro: 'Ручная сортировка записывает числовое значение индекса в свойство frontmatter каждой заметки. Заметки без индекса отображаются в разделе «Без сортировки».',
-                items: [
-                    'Включите ручную сортировку, выбрав **Ручная сортировка** в меню сортировки. После этого есть два способа изменить порядок заметок.',
-                    'Выберите **Изменить порядок сортировки...** в меню сортировки, чтобы открыть представление для изменения порядка. Перетаскивайте заметки мышью или касанием на мобильных устройствах. На компьютере **Cmd/Ctrl** или **Shift** клик выбирает несколько заметок, после чего перетаскивание любой из них перемещает всю группу.',
-                    'В панели списка выберите одну заметку или несколько, затем нажмите **Cmd/Ctrl + Arrow Up/Down**, чтобы переместить выделение вверх или вниз.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

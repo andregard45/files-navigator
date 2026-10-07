@@ -58,15 +58,13 @@ export class MarkdownPipelineContentProvider extends BaseContentProvider {
     }
 
     getRelevantSettings(): (keyof NotebookNavigatorSettings)[] {
-        // defaultFolderSortPropertyKey is intentionally absent: which non-manual property performs the
+        // defaultFolderSortPropertyKey is intentionally absent: which property performs the
         // default sort does not change extracted content, and every transition that can flip effective
-        // custom grouping also changes defaultFolderSort, propertySortKey, or manualSortPropertyKey,
-        // which are listed. Listing it would rescan the vault when switching between sort properties.
+        // custom grouping also changes defaultFolderSort or propertySortKey, which are listed.
+        // Listing it would rescan the vault when switching between sort properties.
         // Appearance maps are observed through their effective word/character consumer state in
         // useStorageSettingsSync, so visual-only appearance edits do not restart this provider.
         return [
-            'manualSortGroupHeaderProperty',
-            'manualSortPropertyKey',
             'noteGrouping',
             'defaultFolderSort',
             'propertySortKey',

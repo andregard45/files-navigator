@@ -56,13 +56,7 @@ export const STRINGS_TH = {
         hiddenItemAriaLabel: '{name} (ซ่อนอยู่)',
         collapseGroup: 'ยุบกลุ่ม',
         expandGroup: 'ขยายกลุ่ม',
-        manualSortTitle: 'จัดเรียงด้วยตนเอง: {property}',
-        manualSortHint: 'ลากเพื่อจัดเรียงใหม่ ลำดับจะถูกบันทึกเป็นค่าดัชนีตัวเลขในคุณสมบัติ "{property}"',
-        manualSortNonMarkdownHint: 'ไฟล์ที่ไม่ใช่ Markdown จะแสดงด้านล่างและไม่สามารถจัดเรียงใหม่ได้',
-        unsortedSection: 'ยังไม่จัดเรียง',
-        propertyGroupNoValue: 'ไม่มี',
-        manualSortDone: 'เสร็จ',
-        manualSortMultipleWriteFailure: '{count} ไฟล์ล้มเหลว ไฟล์แรก: {path}: {message}'
+        propertyGroupNoValue: 'ไม่มี'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_TH = {
         changeChildSortOrder: 'เปลี่ยนลำดับการเรียง',
         changeSortAndGroup: 'เปลี่ยนการเรียงและการจัดกลุ่ม',
         resetViewToDefaults: 'รีเซ็ตมุมมองเป็นค่าเริ่มต้น',
-        manualSort: 'จัดเรียงด้วยตนเอง',
-        editSortOrder: 'แก้ไขลำดับการจัดเรียง...',
-        removeSortProperty: 'ลบคุณสมบัติการจัดเรียง',
         descendants: 'รายการย่อย',
         subfolders: 'โฟลเดอร์ย่อย',
         subtags: 'แท็กย่อย',
@@ -337,14 +328,6 @@ export const STRINGS_TH = {
             moveMultipleFilesToFolder: 'ย้าย {count} ไฟล์ไปยัง...',
             mergeNotes: 'รวม {count} โน้ต...',
             mergeNotesInGroup: 'รวมโน้ตในกลุ่ม...',
-            setManualSortGroupHeader: 'ตั้งค่าส่วนหัวกลุ่ม',
-            changeManualSortGroupHeader: 'เปลี่ยนส่วนหัวกลุ่ม',
-            manualSortGroupHeader: {
-                title: 'ส่วนหัวกลุ่ม',
-                copyStyle: 'คัดลอกสไตล์ส่วนหัว',
-                pasteStyle: 'วางสไตล์ส่วนหัว',
-                remove: 'นำส่วนหัวกลุ่มออก'
-            },
             addTag: 'เพิ่มแท็ก',
             addPropertyKey: 'ตั้งค่าคุณสมบัติ',
             removeTag: 'นำแท็กออก',
@@ -451,26 +434,6 @@ export const STRINGS_TH = {
             resetAppearanceMessage: (count: number) =>
                 `ลักษณะจะถูกรีเซ็ตสำหรับ ${count} รายการ โดยคงการเรียงลำดับและการจัดกลุ่มไว้ นี่เป็นการเปลี่ยนแปลงครั้งเดียว การเปลี่ยนแปลงในอนาคตและรายการย่อยใหม่จะไม่เชื่อมโยงกัน`,
             affectedCountMessage: (count: number) => `การแทนที่ที่มีอยู่ซึ่งจะเปลี่ยนแปลง: ${count}`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'ใช้การจัดเรียงด้วยตนเองหรือไม่?',
-            propertySortMessage: (property: string, count: number) =>
-                `จะสลับมุมมองปัจจุบันเป็นการจัดเรียงด้วยตนเองโดยใช้ "${property}" การแก้ไขลำดับจะเขียนค่าดัชนีตัวเลขลงในคุณสมบัตินั้นใน ${count} โน้ต ตามความจำเป็น`,
-            propertySortConfirmButton: 'ใช้การจัดเรียงด้วยตนเอง',
-            removePropertyTitle: 'ลบคุณสมบัติการจัดเรียงหรือไม่?',
-            removePropertyMessage: (property: string, count: number) =>
-                `จะลบ "${property}" ออกจาก ${count} โน้ตในรายการปัจจุบัน ลำดับการจัดเรียงด้วยตนเองของโน้ตเหล่านั้นจะถูกล้าง`,
-            removePropertyConfirmButton: 'ลบคุณสมบัติ',
-            compactTitle: 'บีบอัดค่าดัชนีหรือไม่?',
-            compactMessage: (count: number) => `การจัดเรียงใหม่นี้ต้องการพื้นที่ตัวเลขเพิ่มเติม ${count} โน้ต จะได้รับค่าดัชนีใหม่`,
-            compactConfirmButton: 'บีบอัดค่าดัชนี'
-        },
-        manualSortGroupHeader: {
-            title: 'ตั้งค่าส่วนหัวกลุ่ม',
-            titleLabel: 'ชื่อเรื่อง',
-            placeholder: 'ส่วนหัวกลุ่ม',
-            icon: 'ไอคอน',
-            color: 'สี',            description: 'ปรับแต่งส่วนหัวกลุ่มสำหรับโน้ตนี้ เว้นชื่อเรื่องว่างเพื่อนำส่วนหัวออก'
         },
         mergeNotes: {
             title: 'รวมโน้ต',
@@ -841,8 +804,6 @@ export const STRINGS_TH = {
             propertiesRequireMarkdown: 'คุณสมบัติรองรับเฉพาะโน้ต Markdown เท่านั้น',
             propertySetOnNote: 'อัปเดตคุณสมบัติใน 1 โน้ต',
             propertySetOnNotes: 'อัปเดตคุณสมบัติใน {count} โน้ต',
-            manualSortPropertyRemovedFromNote: 'ลบคุณสมบัติการจัดเรียงจาก 1 โน้ตแล้ว',
-            manualSortPropertyRemovedFromNotes: 'ลบคุณสมบัติการจัดเรียงจาก {count} โน้ตแล้ว',
             hiddenFileReveal: 'ไฟล์ซ่อนอยู่ เปิดใช้งาน "แสดงรายการที่ซ่อน" เพื่อแสดง'
         },
         confirmations: {
@@ -1059,7 +1020,6 @@ export const STRINGS_TH = {
                     appearance: 'ลักษณะ',
                     sortAndGroup: 'เรียงลำดับและจัดกลุ่ม',
                     groupHeaders: 'ส่วนหัวกลุ่ม',
-                    manualSort: 'การจัดเรียงด้วยตนเอง',
                     pinnedNotes: 'โน้ตที่ปักหมุด',
                     behavior: 'พฤติกรรม'
                 }
@@ -1189,41 +1149,11 @@ export const STRINGS_TH = {
                 desc: 'คุณสมบัติ frontmatter คั่นด้วยจุลภาค แต่ละคุณสมบัติจะปรากฏเป็นตัวเลือกการจัดกลุ่มในการตั้งค่าการจัดกลุ่มเริ่มต้นและในเมนูจัดเรียงของแผงรายการ คุณสมบัติเหล่านี้จะไม่ถูกเปลี่ยนแปลง',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'คุณสมบัติสำหรับการจัดเรียงด้วยตนเอง',
-                desc: 'คุณสมบัติ frontmatter ที่ใช้เก็บค่าดัชนีตัวเลขสำหรับการจัดเรียงด้วยตนเอง'
-            },
-            groupHeaderProperty: {
-                name: 'คุณสมบัติส่วนหัวกลุ่ม',
-                desc: 'คุณสมบัติ frontmatter ที่ใช้เก็บส่วนหัวกลุ่มกำหนดเอง'
-            },
             groupHeadersInstructions: {
                 intro: 'ส่วนหัวกลุ่มกำหนดเองจะแสดงเหนือโน้ตในแผงรายการ',
                 items: [
                     'จากเมนูจัดเรียงในแผงรายการ ตั้งค่าการจัดกลุ่มเป็น **กำหนดเอง**',
                     'คลิกขวาที่โน้ตและเลือก **ตั้งค่าส่วนหัวกลุ่ม** เพื่อเพิ่มส่วนหัวเหนือโน้ตนั้น'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'ตำแหน่งโน้ตใหม่',
-                desc: 'เลือกตำแหน่งที่จะวางโน้ตใหม่เมื่อรายการปัจจุบันใช้การจัดเรียงด้วยตนเอง',
-                options: {
-                    top: 'ด้านบน',
-                    bottom: 'ด้านล่าง',
-                    belowSelectedNote: 'ใต้โน้ตที่เลือก',
-                    unsorted: 'ยังไม่จัดเรียง'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'ยืนยันก่อนการจัดเรียงด้วยตนเอง',
-                desc: 'แสดงคำเตือนก่อนเขียนคุณสมบัติการจัดเรียงด้วยตนเองลงในโน้ตเป็นครั้งแรก เมื่อปิดใช้งาน โน้ตจะได้รับคุณสมบัตินั้นโดยไม่มีคำเตือน'
-            },
-            manualSortInstructions: {
-                intro: 'การจัดเรียงด้วยตนเองจะเขียนค่าดัชนีตัวเลขลงในคุณสมบัติ frontmatter ของแต่ละโน้ต โน้ตที่ไม่มีดัชนีจะปรากฏอยู่ใต้ยังไม่จัดเรียง',
-                items: [
-                    'เปิดใช้การจัดเรียงด้วยตนเองโดยเลือก **จัดเรียงด้วยตนเอง** จากเมนูจัดเรียง หลังจากนั้น มีสองวิธีในการจัดเรียงโน้ตใหม่',
-                    'เลือก **แก้ไขลำดับการจัดเรียง...** จากเมนูจัดเรียงเพื่อเปิดมุมมองจัดเรียงใหม่ ลากโน้ตด้วยเมาส์หรือสัมผัสบนมือถือ บนเดสก์ท็อป **Cmd/Ctrl** หรือ **Shift** คลิกเพื่อเลือกหลายโน้ต จากนั้นลากโน้ตใดโน้ตหนึ่งเพื่อย้ายทั้งกลุ่ม',
-                    'ในแผงรายการ เลือกโน้ตหนึ่งโน้ตหรือเลือกหลายโน้ต จากนั้นกด **Cmd/Ctrl + Arrow Up/Down** เพื่อเลื่อนการเลือกขึ้นหรือลง'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

@@ -56,13 +56,7 @@ export const STRINGS_IT = {
         hiddenItemAriaLabel: '{name} (nascosto)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Comprimi gruppo',
         expandGroup: 'Espandi gruppo',
-        manualSortTitle: 'Ordinamento manuale: {property}',
-        manualSortHint: 'Trascina per riordinare. L\'ordine è salvato come valori indice numerici nella proprietà "{property}".',
-        manualSortNonMarkdownHint: 'I file non Markdown sono mostrati in fondo e non possono essere riordinati.',
-        unsortedSection: 'Non ordinato',
-        propertyGroupNoValue: 'Nessuno',
-        manualSortDone: 'Fatto',
-        manualSortMultipleWriteFailure: '{count} file non riusciti; primo: {path}: {message}'
+        propertyGroupNoValue: 'Nessuno'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_IT = {
         changeChildSortOrder: 'Cambia ordine',
         changeSortAndGroup: 'Cambia ordine e raggruppamento',
         resetViewToDefaults: 'Ripristina vista alle impostazioni predefinite',
-        manualSort: 'Ordinamento manuale',
-        editSortOrder: 'Modifica ordinamento...',
-        removeSortProperty: 'Rimuovi proprietà di ordinamento',
         descendants: 'discendenti',
         subfolders: 'sottocartelle',
         subtags: 'sottoetichette',
@@ -337,14 +328,6 @@ export const STRINGS_IT = {
             moveMultipleFilesToFolder: 'Sposta {count} file in...',
             mergeNotes: 'Unisci {count} note...',
             mergeNotesInGroup: 'Unisci note nel gruppo...',
-            setManualSortGroupHeader: 'Imposta intestazione gruppo',
-            changeManualSortGroupHeader: 'Cambia intestazione gruppo',
-            manualSortGroupHeader: {
-                title: 'Intestazione gruppo',
-                copyStyle: 'Copia stile intestazione',
-                pasteStyle: 'Incolla stile intestazione',
-                remove: 'Rimuovi intestazione gruppo'
-            },
             addTag: 'Aggiungi etichetta',
             addPropertyKey: 'Imposta proprietà',
             removeTag: 'Rimuovi etichetta',
@@ -451,28 +434,6 @@ export const STRINGS_IT = {
             resetAppearanceMessage: (count: number) =>
                 `L'aspetto verrà reimpostato per ${count} ${count === 1 ? 'elemento' : 'elementi'}. Ordinamento e raggruppamento restano invariati. È una modifica una tantum; le modifiche future e i nuovi discendenti non sono collegati.`,
             affectedCountMessage: (count: number) => `Sostituzioni esistenti che cambieranno: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: "Usare l'ordinamento manuale?",
-            propertySortMessage: (property: string, count: number) =>
-                `Questo cambia la vista corrente all'ordinamento manuale usando "${property}". La modifica dell'ordine scrive valori indice numerici in quella proprietà in ${count} ${count === 1 ? 'nota' : 'note'} secondo necessità.`,
-            propertySortConfirmButton: 'Usa ordinamento manuale',
-            removePropertyTitle: 'Rimuovere la proprietà di ordinamento?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Questo rimuove "${property}" da ${count} ${count === 1 ? 'nota' : 'note'} nella lista corrente. L'ordinamento manuale verrà cancellato per quelle note.`,
-            removePropertyConfirmButton: 'Rimuovi proprietà',
-            compactTitle: 'Compattare i valori indice?',
-            compactMessage: (count: number) =>
-                `Questo riordino richiede più spazio numerico. ${count} ${count === 1 ? 'nota riceverà' : 'note riceveranno'} nuovi valori indice.`,
-            compactConfirmButton: 'Compatta valori indice'
-        },
-        manualSortGroupHeader: {
-            title: 'Imposta intestazione gruppo',
-            titleLabel: 'Titolo',
-            placeholder: 'Intestazione gruppo',
-            icon: 'Icona',
-            color: 'Colore',
-            description: "Personalizza l'intestazione di gruppo per questa nota. Lascia il titolo vuoto per rimuovere l'intestazione."
         },
         mergeNotes: {
             title: 'Unisci note',
@@ -846,8 +807,6 @@ export const STRINGS_IT = {
             propertiesRequireMarkdown: 'Le proprietà sono supportate solo nelle note Markdown',
             propertySetOnNote: 'Proprietà aggiornata su 1 nota',
             propertySetOnNotes: 'Proprietà aggiornata su {count} note',
-            manualSortPropertyRemovedFromNote: 'Proprietà di ordinamento rimossa da 1 nota',
-            manualSortPropertyRemovedFromNotes: 'Proprietà di ordinamento rimossa da {count} note',
             hiddenFileReveal: 'Il file è nascosto. Abilita "Mostra elementi nascosti" per visualizzarlo'
         },
         confirmations: {
@@ -1064,7 +1023,6 @@ export const STRINGS_IT = {
                     appearance: 'Aspetto',
                     sortAndGroup: 'Ordinamento e raggruppamento',
                     groupHeaders: 'Intestazioni di gruppo',
-                    manualSort: 'Ordinamento manuale',
                     pinnedNotes: 'Note fissate',
                     behavior: 'Comportamento'
                 }
@@ -1196,41 +1154,11 @@ export const STRINGS_IT = {
                 desc: "Proprietà frontmatter separate da virgole. Ogni proprietà appare come opzione di raggruppamento nell'impostazione Raggruppamento predefinito e nel menu di ordinamento nel pannello lista. Queste proprietà non vengono modificate.",
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Proprietà ordinamento manuale',
-                desc: "Proprietà frontmatter usata per memorizzare i valori indice numerici per l'ordinamento manuale."
-            },
-            groupHeaderProperty: {
-                name: 'Proprietà intestazione gruppo',
-                desc: 'Proprietà frontmatter usata per memorizzare le intestazioni di gruppo personalizzate.'
-            },
             groupHeadersInstructions: {
                 intro: 'Le intestazioni di gruppo personalizzate vengono visualizzate sopra le note nel pannello lista.',
                 items: [
                     'Dal menu di ordinamento nel pannello lista, imposta il raggruppamento su **Personalizzato**.',
                     "Fai clic destro su una nota e scegli **Imposta intestazione gruppo** per aggiungere un'intestazione sopra di essa."
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Posizionamento nuove note',
-                desc: "Scegli dove sono posizionate le nuove note quando la lista corrente usa l'ordinamento manuale.",
-                options: {
-                    top: 'In alto',
-                    bottom: 'In basso',
-                    belowSelectedNote: 'Sotto la nota selezionata',
-                    unsorted: 'Non ordinato'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: "Conferma prima dell'ordinamento manuale",
-                desc: 'Mostra un avviso prima di scrivere la proprietà di ordinamento manuale nelle note per la prima volta. Quando disattivato, le note ricevono la proprietà senza avviso.'
-            },
-            manualSortInstructions: {
-                intro: "L'ordinamento manuale scrive un valore indice numerico in una proprietà frontmatter su ogni nota. Le note senza indice appaiono sotto Non ordinato.",
-                items: [
-                    "Abilita l'ordinamento manuale scegliendo **Ordinamento manuale** dal menu di ordinamento. Successivamente, ci sono due modi per riordinare le note.",
-                    "Scegli **Modifica ordinamento...** dal menu di ordinamento per aprire una vista di riordinamento. Trascina le note con il mouse, o con il tocco su mobile. Su desktop, **Cmd/Ctrl** o **Shift** clic seleziona più note, quindi trascinandone una qualsiasi sposta l'intero gruppo.",
-                    'Nel pannello lista, seleziona una nota o selezionane più, quindi premi **Cmd/Ctrl + Arrow Up/Down** per spostare la selezione su o giù.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

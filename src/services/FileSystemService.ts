@@ -77,14 +77,6 @@ import type { PropertyTreeNode } from '../types/storage';
 import { FolderPathSettingsSync } from './fileSystem/FolderPathSettingsSync';
 import { FileMoveService } from './fileSystem/FileMoveService';
 import { FileDeletionService, type FileTrashResult } from './fileSystem/FileDeletionService';
-import {
-    buildManualSortInsertionRankPlan,
-    getLocalizedManualSortWriteFailureMessage,
-    normalizeManualSortPropertyKey,
-    writeManualSortAssignments,
-    type ManualSortRankPlan,
-    type ManualSortNewFilePlacementContext
-} from '../utils/manualSort';
 import type {
     MoveFilesOptions,
     MoveFilesResult,
@@ -95,7 +87,6 @@ import type {
 } from './fileSystem/types';
 export { FolderMoveError } from './fileSystem/FileMoveService';
 export type { FileTrashResult };
-export type { ManualSortNewFilePlacementContext };
 
 /**
  * Summary of property assignment results across a file batch.
@@ -156,7 +147,6 @@ export class FileSystemOperations {
     private readonly folderPathSettingsSync: FolderPathSettingsSync;
     private readonly moveService: FileMoveService;
     private readonly deletionService: FileDeletionService;
-    private manualSortNewFileContextProvider: (() => ManualSortNewFilePlacementContext | null) | null = null;
 
     /**
      * Creates a new FileSystemOperations instance
@@ -219,129 +209,6 @@ export class FileSystemOperations {
     private notifyError(template: string, error: unknown, fallback?: string): void {
         const message = template.replace('{error}', getErrorMessage(error, fallback ?? strings.common.unknownError));
         showNotice(message, { variant: 'warning' });
-    }
-
-    public setManualSortNewFileContextProvider(provider: (() => ManualSortNewFilePlacementContext | null) | null): () => void {
-        this.manualSortNewFileContextProvider = provider;
-        return () => {
-            if (this.manualSortNewFileContextProvider === provider) {
-                this.manualSortNewFileContextProvider = null;
-            }
-        };
-    }
-
-    private resolveManualSortNewFileContext(
-        context: ManualSortNewFilePlacementContext | null | undefined,
-        targetType: ManualSortNewFilePlacementContext['targetType'],
-        targetKey: string
-    ): ManualSortNewFilePlacementContext | null {
-        const resolvedContext = context !== undefined ? context : (this.manualSortNewFileContextProvider?.() ?? null);
-        if (!resolvedContext || resolvedContext.targetType !== targetType || resolvedContext.targetKey !== targetKey) {
-            return null;
-        }
-
-        return resolvedContext;
-    }
-
-    private async waitForManualSortNewFileContextProviderRefresh(): Promise<void> {
-        await new Promise<void>(resolve => {
-            window.requestAnimationFrame(() => {
-                window.setTimeout(resolve, 0);
-            });
-        });
-    }
-
-    public async getManualSortNewFileContextForTarget(
-        targetType: ManualSortNewFilePlacementContext['targetType'],
-        targetKey: string,
-        options: { waitForSelectionUpdate?: boolean } = {}
-    ): Promise<ManualSortNewFilePlacementContext | null> {
-        const currentContext = this.resolveManualSortNewFileContext(undefined, targetType, targetKey);
-        if (currentContext || !options.waitForSelectionUpdate) {
-            return currentContext;
-        }
-
-        for (let attempt = 0; attempt < 3; attempt += 1) {
-            await this.waitForManualSortNewFileContextProviderRefresh();
-            const nextContext = this.resolveManualSortNewFileContext(undefined, targetType, targetKey);
-            if (nextContext) {
-                return nextContext;
-            }
-        }
-
-        return null;
-    }
-
-    private async writeManualSortNewFilePlacement(propertyKey: string, plan: ManualSortRankPlan<TFile>): Promise<void> {
-        try {
-            const result = await writeManualSortAssignments(this.app, plan.files, propertyKey, plan.assignments);
-            if (result.failed > 0) {
-                showNotice(
-                    strings.dragDrop.errors.failedToSetProperty.replace('{error}', getLocalizedManualSortWriteFailureMessage(result)),
-                    { variant: 'warning' }
-                );
-            }
-        } catch (error) {
-            showNotice(
-                strings.dragDrop.errors.failedToSetProperty.replace('{error}', getErrorMessage(error, strings.common.unknownError)),
-                { variant: 'warning' }
-            );
-        }
-    }
-
-    private openManualSortNewFileCompactionConfirm(propertyKey: string, plan: ManualSortRankPlan<TFile>): void {
-        new ConfirmModal(
-            this.app,
-            strings.modals.manualSortConfirm.compactTitle,
-            strings.modals.manualSortConfirm.compactMessage(plan.assignments.length),
-            () => this.writeManualSortNewFilePlacement(propertyKey, plan),
-            strings.modals.manualSortConfirm.compactConfirmButton,
-            { confirmButtonClass: 'mod-cta' }
-        ).open();
-    }
-
-    private async applyManualSortNewFilePlacement(
-        file: TFile,
-        context?: ManualSortNewFilePlacementContext | null,
-        options: { deferCompactionPrompt?: boolean } = {}
-    ): Promise<(() => void) | null> {
-        if (!context || file.extension !== 'md') {
-            return null;
-        }
-
-        const propertyKey = normalizeManualSortPropertyKey(context.propertyKey);
-        if (!propertyKey) {
-            return null;
-        }
-
-        const plan = buildManualSortInsertionRankPlan({
-            files: context.files,
-            planningFiles: context.planningFiles,
-            planningInsertionIndex: context.planningInsertionIndex,
-            insertedFile: file,
-            placement: context.placement,
-            selectedPath: context.selectedFilePath,
-            rankByPath: context.rankByPath
-        });
-        if (!plan || plan.assignments.length === 0) {
-            return null;
-        }
-
-        if (plan.requiresCompaction) {
-            if (options.deferCompactionPrompt) {
-                return () => {
-                    window.setTimeout(() => {
-                        this.openManualSortNewFileCompactionConfirm(propertyKey, plan);
-                    }, TIMEOUTS.FILE_OPERATION_DELAY * 2);
-                };
-            }
-
-            this.openManualSortNewFileCompactionConfirm(propertyKey, plan);
-            return null;
-        }
-
-        await this.writeManualSortNewFilePlacement(propertyKey, plan);
-        return null;
     }
 
     private resolveConfiguredPropertyDisplayKey(normalizedKey: string): string | null {
@@ -813,24 +680,15 @@ export class FileSystemOperations {
      */
     async createNewFile(
         parent: TFolder,
-        openInNewTab = false,
-        manualSortContext?: ManualSortNewFilePlacementContext | null
+        openInNewTab = false
     ): Promise<TFile | null> {
-        const resolvedManualSortContext = this.resolveManualSortNewFileContext(manualSortContext, 'folder', parent.path);
-        const deferredManualSortPrompt: { run: (() => void) | null } = { run: null };
         const file = await createFileWithOptions(parent, this.app, {
             extension: 'md',
             content: '',
             openInNewTab,
             templateSettings: this.settingsProvider.settings,
-            afterCreate: async createdFile => {
-                deferredManualSortPrompt.run = await this.applyManualSortNewFilePlacement(createdFile, resolvedManualSortContext, {
-                    deferCompactionPrompt: true
-                });
-            },
             errorKey: 'createFile'
         });
-        deferredManualSortPrompt.run?.();
         return file;
     }
 
@@ -845,8 +703,7 @@ export class FileSystemOperations {
     async createNewFileForTag(
         tagPath: string,
         sourcePath?: string,
-        openInNewTab = false,
-        manualSortContext?: ManualSortNewFilePlacementContext | null
+        openInNewTab = false
     ): Promise<TFile | null> {
         const normalizedTag = normalizeTagPath(tagPath);
         if (!normalizedTag || normalizedTag === TAGGED_TAG_ID || normalizedTag === UNTAGGED_TAG_ID) {
@@ -856,8 +713,6 @@ export class FileSystemOperations {
         const tagTreeService = this.getTagTreeService();
         const tagNode = tagTreeService?.findTagNode(normalizedTag);
         const resolvedTagPath = tagNode?.displayPath ?? normalizedTag;
-        const resolvedManualSortContext = this.resolveManualSortNewFileContext(manualSortContext, 'tag', normalizedTag);
-
         try {
             const activeFilePath = this.app.workspace.getActiveFile()?.path ?? '';
             const sourceFilePath = sourcePath?.trim().length ? sourcePath : activeFilePath;
@@ -896,18 +751,12 @@ export class FileSystemOperations {
                 showNotice(strings.dragDrop.errors.failedToAddTag.replace('{tag}', `#${resolvedTagPath}`), { variant: 'warning' });
             }
 
-            const scheduleDeferredManualSortPrompt = await this.applyManualSortNewFilePlacement(file, resolvedManualSortContext, {
-                deferCompactionPrompt: true
-            });
-
             const leaf = this.app.workspace.getLeaf(openInNewTab);
             await leaf.openFile(file, { state: { mode: 'source' }, active: true });
 
             window.setTimeout(() => {
                 executeCommand(this.app, OBSIDIAN_COMMANDS.EDIT_FILE_TITLE);
             }, TIMEOUTS.FILE_OPERATION_DELAY);
-            scheduleDeferredManualSortPrompt?.();
-
             return file;
         } catch (error) {
             this.notifyError(strings.fileSystem.errors.createFile, error);
@@ -926,8 +775,7 @@ export class FileSystemOperations {
     async createNewFileForProperty(
         propertyNodeId: string,
         sourcePath?: string,
-        openInNewTab = false,
-        manualSortContext?: ManualSortNewFilePlacementContext | null
+        openInNewTab = false
     ): Promise<TFile | null> {
         if (propertyNodeId === PROPERTIES_ROOT_VIRTUAL_FOLDER_ID) {
             return null;
@@ -938,12 +786,6 @@ export class FileSystemOperations {
             return null;
         }
         const normalizedPropertyNodeId = normalizePropertyNodeId(propertyNodeId);
-        const resolvedManualSortContext = this.resolveManualSortNewFileContext(
-            manualSortContext,
-            'property',
-            normalizedPropertyNodeId ?? ''
-        );
-
         try {
             const activeFilePath = this.app.workspace.getActiveFile()?.path ?? '';
             const sourceFilePath = sourcePath?.trim().length ? sourcePath : activeFilePath;
@@ -971,18 +813,12 @@ export class FileSystemOperations {
                 );
             }
 
-            const scheduleDeferredManualSortPrompt = await this.applyManualSortNewFilePlacement(file, resolvedManualSortContext, {
-                deferCompactionPrompt: true
-            });
-
             const leaf = this.app.workspace.getLeaf(openInNewTab);
             await leaf.openFile(file, { state: { mode: 'source' }, active: true });
 
             window.setTimeout(() => {
                 executeCommand(this.app, OBSIDIAN_COMMANDS.EDIT_FILE_TITLE);
             }, TIMEOUTS.FILE_OPERATION_DELAY);
-            scheduleDeferredManualSortPrompt?.();
-
             return file;
         } catch (error) {
             this.notifyError(strings.fileSystem.errors.createFile, error);
