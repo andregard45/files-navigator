@@ -29,7 +29,6 @@ function createFileData(overrides: Partial<FileData>): FileData {
         tags: [],
         wordCount: null,
         properties: null,
-        previewStatus: 'none',
         metadata: {},
         ...overrides
     };
@@ -47,7 +46,6 @@ describe('IndexedDBStorage.getFilesNeedingContent', () => {
             createFileData({
                 tags: null,
                 metadata: null,
-                previewStatus: 'none'
             })
         );
         cache.updateFile(
@@ -55,7 +53,6 @@ describe('IndexedDBStorage.getFilesNeedingContent', () => {
             createFileData({
                 tags: null,
                 metadata: null,
-                previewStatus: 'unprocessed'
             })
         );
 

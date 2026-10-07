@@ -90,8 +90,6 @@ const CalendarDayCell = React.memo(function CalendarDayCell({
         imageUrl: null,
         title: tooltipTitle || ariaLabel,
         dateTimestamp,
-        previewPath: visibleFile?.path ?? null,
-        previewEnabled: Boolean(visibleFile && visibleFile.extension === 'md'),
         showDate
     };
 

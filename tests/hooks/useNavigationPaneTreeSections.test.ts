@@ -65,7 +65,6 @@ vi.mock('../../src/storage/fileOperations', () => ({
                 tags: entry.tags,
                 wordCount: null,
                 properties: entry.properties,
-                previewStatus: 'unprocessed',
                 metadata: null
             };
         },

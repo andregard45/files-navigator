@@ -2322,7 +2322,6 @@ export const STRINGS_ID = {
                 localCache: 'Cache lokal',
                 items: 'item',
                 withTags: 'dengan tag',
-                withPreviewText: 'dengan teks pratinjau',
                 withMetadata: 'dengan metadata'
             },
             metadataInfo: {

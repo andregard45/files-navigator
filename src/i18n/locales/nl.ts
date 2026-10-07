@@ -2329,7 +2329,6 @@ export const STRINGS_NL = {
                 localCache: 'Lokale cache',
                 items: 'items',
                 withTags: 'met tags',
-                withPreviewText: 'met voorbeeldtekst',
                 withMetadata: 'met metadata'
             },
             metadataInfo: {

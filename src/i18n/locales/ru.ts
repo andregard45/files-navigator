@@ -2320,7 +2320,6 @@ export const STRINGS_RU = {
                 localCache: 'Локальный кэш',
                 items: 'элементов',
                 withTags: 'с тегами',
-                withPreviewText: 'с текстом превью',
                 withMetadata: 'с метаданными'
             },
             metadataInfo: {

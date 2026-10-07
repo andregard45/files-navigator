@@ -2316,7 +2316,6 @@ export const STRINGS_AR = {
                 localCache: 'الذاكرة المؤقتة المحلية',
                 items: 'عناصر',
                 withTags: 'مع وسوم',
-                withPreviewText: 'مع نص معاينة',
                 withMetadata: 'مع بيانات وصفية'
             },
             metadataInfo: {

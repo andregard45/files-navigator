@@ -29,9 +29,9 @@ export type ContentProviderType = 'metadata' | 'tags' | 'markdownPipeline';
 /**
  * Types of file content that can be generated and stored.
  *
- * These values identify content fields in storage (preview text, tags, etc).
+ * These values identify content fields in storage (tags, metadata, properties).
  */
-export type FileContentType = 'preview' | 'metadata' | 'tags' | 'properties';
+export type FileContentType = 'metadata' | 'tags' | 'properties';
 
 export type ContentProviderClearContext = {
     oldSettings: NotebookNavigatorSettings;

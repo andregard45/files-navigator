@@ -2330,7 +2330,6 @@ export const STRINGS_DE = {
                 localCache: 'Lokaler Cache',
                 items: 'Einträge',
                 withTags: 'mit Tags',
-                withPreviewText: 'mit Vorschautext',
                 withMetadata: 'mit Metadaten'
             },
             metadataInfo: {

@@ -16,24 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { type FileData, getDefaultPreviewStatusForPath, isPropertyData } from './fileData';
+import { type FileData, isPropertyData } from './fileData';
 
-type MutableFileData = Partial<FileData> & { preview?: string | null; customProperty?: unknown };
+type MutableFileData = Partial<FileData> & { customProperty?: unknown };
 
-export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?: string): FileData {
-
-    const rawPreviewStatus = data.previewStatus;
-    const previewStatus =
-        rawPreviewStatus === 'unprocessed' || rawPreviewStatus === 'none' || rawPreviewStatus === 'has'
-            ? rawPreviewStatus
-            : typeof data.preview === 'string'
-              ? data.preview.length > 0
-                  ? 'has'
-                  : 'none'
-              : typeof pathForDefaults === 'string'
-                ? getDefaultPreviewStatusForPath(pathForDefaults)
-                : 'unprocessed';
-
+export function normalizeFileDataInPlace(data: MutableFileData): FileData {
     data.mtime = typeof data.mtime === 'number' ? data.mtime : 0;
     // Default provider processed mtimes to the stored mtime for existing databases.
     // New files explicitly initialize these to 0 so providers run at least once.
@@ -46,19 +33,13 @@ export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?
     if ('customProperty' in data) {
         delete data.customProperty;
     }
-    data.previewStatus = previewStatus;
-    // Feature image blobs are stored separately from the main record.
     // The MemoryFileCache is used for synchronous rendering and should not hold blob payloads.
     data.metadata = data.metadata && typeof data.metadata === 'object' ? data.metadata : null;
-
-    if ('preview' in data) {
-        delete data.preview;
-    }
 
     return data as FileData;
 }
 
-export function normalizeFileData(data: Partial<FileData> & { preview?: string | null }): FileData {
+export function normalizeFileData(data: Partial<FileData>): FileData {
     const copy: MutableFileData = { ...data };
     return normalizeFileDataInPlace(copy);
 }

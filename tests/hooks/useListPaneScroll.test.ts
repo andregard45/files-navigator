@@ -152,7 +152,6 @@ describe('isListRowHeightAffectingContentChange', () => {
             frontmatterPropertyRowsPossible: false
         });
 
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'has' } }), config)).toBe(false);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(false);
     });
 
@@ -168,8 +167,6 @@ describe('isListRowHeightAffectingContentChange', () => {
     it('ignores content fields that do not change estimated row height', () => {
         const config = createHeightChangeConfig();
 
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { preview: 'Preview' } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { preview: null } }), config)).toBe(false);
         expect(
             isListRowHeightAffectingContentChange(
                 createContentChange({

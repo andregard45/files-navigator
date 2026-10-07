@@ -53,7 +53,6 @@ function createFileData(properties: PropertyItem[] | null): FileData {
         tags: null,
         wordCount: null,
         properties,
-        previewStatus: 'unprocessed',
         metadata: null
     };
 }

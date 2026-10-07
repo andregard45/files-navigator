@@ -54,7 +54,6 @@ function createFileData(overrides: Partial<FileData>): FileData {
         tags: null,
         wordCount: null,
         properties: null,
-        previewStatus: 'unprocessed',
         metadata: null,
         ...overrides
     };
@@ -69,7 +68,6 @@ describe('recordFileChanges patch-only updates', () => {
         const current = createFileData({
             mtime: 100,
             tags: ['provider-tag'],
-            previewStatus: 'has'
         });
         db.setFile(file.path, current);
 
@@ -77,7 +75,6 @@ describe('recordFileChanges patch-only updates', () => {
         const staleSnapshot = createFileData({
             mtime: 100,
             tags: null,
-            previewStatus: 'unprocessed'
         });
         const existingData = new Map<string, FileData>([[file.path, staleSnapshot]]);
 
@@ -91,6 +88,5 @@ describe('recordFileChanges patch-only updates', () => {
 
         expect(updated.mtime).toBe(200);
         expect(updated.tags).toEqual(['provider-tag']);
-        expect(updated.previewStatus).toBe('has');
     });
 });

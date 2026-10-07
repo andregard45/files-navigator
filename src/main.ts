@@ -373,14 +373,10 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         await languageInitialization;
         if (this.isUnloading) return;
 
-        // Use a fixed per-platform LRU size for preview text strings.
-        const previewTextCacheMaxEntries = Platform.isMobile ? 10000 : 50000;
-        // Limit the number of preview text paths processed per load flush.
-        const previewLoadMaxBatch = Platform.isMobile ? 20 : 50;
         runAsyncAction(
             async () => {
                 try {
-                    await initializeDatabase(appId, { previewTextCacheMaxEntries, previewLoadMaxBatch });
+                    await initializeDatabase(appId);
                 } catch (error: unknown) {
                     console.error('Failed to initialize database:', error);
                 }
@@ -1195,7 +1191,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             for (const leaf of navigatorLeaves) {
                 const view = leaf.view;
                 if (isNotebookNavigatorView(view)) {
-                    // Halt preview/tag generation loops inside each React view
                     view.stopContentProcessing();
                 }
             }

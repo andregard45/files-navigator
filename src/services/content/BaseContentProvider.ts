@@ -34,7 +34,6 @@ interface ContentJob {
 export type ContentProviderUpdate = {
     path: string;
     tags?: string[] | null;
-    preview?: string;
     metadata?: FileData['metadata'];
     properties?: FileData['properties'];
 };

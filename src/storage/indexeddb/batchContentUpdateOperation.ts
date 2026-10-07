@@ -19,7 +19,7 @@
 import type { ContentProviderType } from '../../interfaces/IContentProvider';
 import { MemoryFileCache } from '../MemoryFileCache';
 import { getProviderProcessedMtimeField } from '../providerMtime';
-import { PREVIEW_STORE_NAME, STORE_NAME } from './constants';
+import { STORE_NAME } from './constants';
 import {
     createDefaultFileData,
     getChangedPropertyKeys,
@@ -27,15 +27,13 @@ import {
     hasMetadataHiddenChanged,
     hasMetadataNameChanged,
     type FileContentChange,
-    type FileData,
-    type PreviewStatus
+    type FileData
 } from './fileData';
 import { rejectWithTransactionError } from './idbErrors';
 
 export interface BatchContentUpdate {
     path: string;
     tags?: string[] | null;
-    preview?: string;
     metadata?: FileData['metadata'];
     properties?: FileData['properties'];
 }
@@ -55,7 +53,7 @@ export interface BatchUpdateFileContentAndProviderProcessedMtimesParams {
 interface BatchContentUpdateOperationDeps {
     db: IDBDatabase;
     cache: MemoryFileCache;
-    normalizeFileData: (data: Partial<FileData> & { preview?: string | null }) => FileData;
+    normalizeFileData: (data: Partial<FileData>) => FileData;
     emitChanges: (changes: FileContentChange[]) => void;
 }
 
@@ -93,18 +91,10 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
         return;
     }
 
-    const needsPreviewStore = contentUpdates.some(update => update.preview !== undefined);
-    const storeNames: string[] = [STORE_NAME];
-    if (needsPreviewStore) {
-        storeNames.push(PREVIEW_STORE_NAME);
-    }
-
-    const transaction = deps.db.transaction(storeNames, 'readwrite');
+    const transaction = deps.db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
-    const previewStore = needsPreviewStore ? transaction.objectStore(PREVIEW_STORE_NAME) : null;
     const filesToUpdate: { path: string; data: FileData }[] = [];
     const changeNotifications: FileContentChange[] = [];
-    const previewTextUpdates: { path: string; previewText: string; previewStatus: PreviewStatus }[] = [];
     let createdRecordWithoutKnownMtime = 0;
     const createdRecordWithoutKnownMtimeExamples: string[] = [];
 
@@ -155,41 +145,6 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
                         changes.properties = guardedUpdate.properties;
                         hasContentChanges = true;
                     }
-                    if (guardedUpdate.preview !== undefined) {
-                        const previewStatus: PreviewStatus = guardedUpdate.preview.length > 0 ? 'has' : 'none';
-                        newData.previewStatus = previewStatus;
-                        changes.preview = guardedUpdate.preview;
-                        if (existing.previewStatus !== previewStatus) {
-                            changes.previewStatus = previewStatus;
-                        }
-                        hasContentChanges = true;
-                        if (previewStore && previewStatus === 'has') {
-                            const previewReq = previewStore.put(guardedUpdate.preview, path);
-                            previewReq.onerror = () => {
-                                lastRequestError = previewReq.error || null;
-                                console.error('[IndexedDB] put failed', {
-                                    store: PREVIEW_STORE_NAME,
-                                    op,
-                                    path,
-                                    name: previewReq.error?.name,
-                                    message: previewReq.error?.message
-                                });
-                            };
-                            previewTextUpdates.push({ path, previewText: guardedUpdate.preview, previewStatus });
-                        } else if (previewStore) {
-                            const deleteReq = previewStore.delete(path);
-                            deleteReq.onerror = () => {
-                                lastRequestError = deleteReq.error || null;
-                                console.error('[IndexedDB] delete failed', {
-                                    store: PREVIEW_STORE_NAME,
-                                    op,
-                                    path,
-                                    name: deleteReq.error?.name,
-                                    message: deleteReq.error?.message
-                                });
-                            };
-                        }
-                    }
 
                     if (guardedUpdate.metadata !== undefined) {
                         metadataHiddenChanged = hasMetadataHiddenChanged(existing.metadata, guardedUpdate.metadata);
@@ -228,10 +183,7 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
                     filesToUpdate.push({ path, data: newData });
 
                     if (hasContentChanges) {
-                        const hasContentUpdates =
-                            changes.preview !== undefined ||
-                            changes.previewStatus !== undefined ||
-                            changes.properties !== undefined;
+                        const hasContentUpdates = changes.properties !== undefined;
                         const hasMetadataUpdates = changes.metadata !== undefined || changes.tags !== undefined;
                         const updateType = hasContentUpdates && hasMetadataUpdates ? 'both' : hasContentUpdates ? 'content' : 'metadata';
                         const contentChange: FileContentChange = { path, changes, changeType: updateType };
@@ -287,11 +239,6 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
 
     if (filesToUpdate.length > 0) {
         deps.cache.batchUpdate(filesToUpdate);
-        if (previewTextUpdates.length > 0) {
-            previewTextUpdates.forEach(update => {
-                deps.cache.updateFileContent(update.path, { previewText: update.previewText, previewStatus: update.previewStatus });
-            });
-        }
         if (changeNotifications.length > 0) {
             deps.emitChanges(changeNotifications);
         }

@@ -67,7 +67,7 @@ export async function hydrateCacheFromMainStore(params: { db: IDBDatabase; cache
             if (typeof key !== 'string') {
                 continue;
             }
-            cache.updateFile(key, normalizeFileDataInPlace(values[index], key));
+            cache.updateFile(key, normalizeFileDataInPlace(values[index]));
         }
 
         // Continue from the last key returned in this batch.

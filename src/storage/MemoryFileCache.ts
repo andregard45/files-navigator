@@ -17,7 +17,6 @@
  */
 
 import type { FileData } from './IndexedDBStorage';
-import { PreviewTextCache } from './PreviewTextCache';
 import { clonePropertyItems } from '../utils/propertyUtils';
 
 // Creates a deep clone of FileData to prevent mutations from affecting the original
@@ -30,34 +29,18 @@ function cloneFileData(data: FileData): FileData {
         tags: data.tags ? [...data.tags] : null,
         // Clone property items to prevent consumers from mutating cached records.
         properties: clonePropertyItems(data.properties),
-        previewStatus: data.previewStatus,
         metadata: data.metadata ? { ...data.metadata } : null
     };
-}
-
-interface MemoryFileCacheOptions {
-    previewTextCacheMaxEntries?: number;
 }
 
 /**
  * In-memory file cache for synchronous rendering.
  *
- * Stores:
- * - Main file records for the entire vault (no blob payloads)
- * - A bounded in-memory LRU for preview text strings
+ * Stores main file records for the entire vault (no blob payloads).
  */
 export class MemoryFileCache {
     private fileDataByPath = new Map<string, FileData>();
-    private readonly previewTexts: PreviewTextCache;
     private isInitialized = false;
-
-    /**
-     * Creates an in-memory cache with a bounded preview text LRU.
-     */
-    constructor(options?: MemoryFileCacheOptions) {
-        const maxEntries = options?.previewTextCacheMaxEntries ?? 10000;
-        this.previewTexts = new PreviewTextCache(maxEntries);
-    }
 
     /**
      * Mark the cache as initialized after loading data.
@@ -72,7 +55,6 @@ export class MemoryFileCache {
      */
     resetToEmpty(): void {
         this.fileDataByPath.clear();
-        this.previewTexts.clear();
         this.isInitialized = true;
     }
 
@@ -95,36 +77,6 @@ export class MemoryFileCache {
             }
         }
         return result;
-    }
-
-    /**
-     * Check if a file has preview text.
-     */
-    hasPreview(path: string): boolean {
-        const file = this.fileDataByPath.get(path);
-        return file?.previewStatus === 'has';
-    }
-
-    /**
-     * Get preview text synchronously.
-     * Returns empty string when preview text is not loaded.
-     */
-    getPreviewText(path: string): string {
-        return this.previewTexts.get(path) ?? '';
-    }
-
-    /**
-     * Check if preview text is currently loaded in the LRU.
-     */
-    isPreviewTextLoaded(path: string): boolean {
-        return this.previewTexts.has(path);
-    }
-
-    /**
-     * Get loaded preview text entry count.
-     */
-    getPreviewTextEntryCount(): number {
-        return this.previewTexts.getEntryCount();
     }
 
     /**
@@ -173,17 +125,11 @@ export class MemoryFileCache {
      */
     updateFile(path: string, data: FileData): void {
         this.fileDataByPath.set(path, data);
-        if (data.previewStatus !== 'has') {
-            this.previewTexts.delete(path);
-        }
     }
 
     // Sets a cloned copy of file data to prevent external modifications
     setClonedFile(path: string, data: FileData): void {
         this.fileDataByPath.set(path, cloneFileData(data));
-        if (data.previewStatus !== 'has') {
-            this.previewTexts.delete(path);
-        }
     }
 
     /**
@@ -192,8 +138,6 @@ export class MemoryFileCache {
     updateFileContent(
         path: string,
         updates: {
-            previewText?: string;
-            previewStatus?: FileData['previewStatus'];
             metadata?: FileData['metadata'];
             properties?: FileData['properties'];
         }
@@ -201,19 +145,6 @@ export class MemoryFileCache {
         const existing = this.fileDataByPath.get(path);
         if (existing) {
             // Update specific fields
-            if (updates.previewStatus !== undefined) {
-                existing.previewStatus = updates.previewStatus;
-            }
-            if (updates.previewText !== undefined) {
-                if (updates.previewText.length > 0) {
-                    this.previewTexts.set(path, updates.previewText);
-                } else {
-                    this.previewTexts.delete(path);
-                }
-            }
-            if (existing.previewStatus !== 'has') {
-                this.previewTexts.delete(path);
-            }
             if (updates.metadata !== undefined) existing.metadata = updates.metadata;
             if (updates.properties !== undefined) existing.properties = updates.properties;
         }
@@ -224,7 +155,6 @@ export class MemoryFileCache {
      */
     deleteFile(path: string): void {
         this.fileDataByPath.delete(path);
-        this.previewTexts.delete(path);
     }
 
     /**
@@ -233,7 +163,6 @@ export class MemoryFileCache {
     batchDelete(paths: string[]): void {
         for (const path of paths) {
             this.fileDataByPath.delete(path);
-            this.previewTexts.delete(path);
         }
     }
 
@@ -243,9 +172,6 @@ export class MemoryFileCache {
     batchUpdate(updates: { path: string; data: FileData }[]): void {
         for (const { path, data } of updates) {
             this.fileDataByPath.set(path, data);
-            if (data.previewStatus !== 'has') {
-                this.previewTexts.delete(path);
-            }
         }
     }
 
@@ -255,8 +181,6 @@ export class MemoryFileCache {
     batchUpdateFileContent(
         updates: {
             path: string;
-            previewText?: string;
-            previewStatus?: FileData['previewStatus'];
             metadata?: FileData['metadata'];
         }[]
     ): void {
@@ -277,7 +201,6 @@ export class MemoryFileCache {
      */
     clear(): void {
         this.fileDataByPath.clear();
-        this.previewTexts.clear();
         this.isInitialized = false;
     }
 }

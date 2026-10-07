@@ -281,18 +281,7 @@ export const FileItem = React.memo(function FileItem({
     const isCompactMode = appearanceSettings.mode === 'compact';
     const isMarkdownFile = file.extension === 'md';
     const canShowPropertyPills = isMarkdownFile && (!isCompactMode || settings.showFilePropertiesInCompactMode);
-    const shouldLoadProperties =
-        isMarkdownFile &&
-        ((canShowPropertyPills && appearanceSettings.showProperties && visiblePropertyKeys.size > 0) ||
-            (matchedProperties?.length ?? 0) > 0);
-    const { properties, metadataVersion } = useFileItemContentState({
-        app,
-        file,
-        getDB,
-        loadOptions: {
-            loadProperties: shouldLoadProperties
-        }
-    });
+    const { properties, metadataVersion } = useFileItemContentState({ file, getDB });
 
     // === Refs ===
     const fileRef = useRef<HTMLDivElement | null>(null);

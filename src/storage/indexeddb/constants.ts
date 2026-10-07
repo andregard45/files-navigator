@@ -16,14 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { LIMITS } from '../../constants/limits';
-
 export const STORE_NAME = 'keyvaluepairs';
-export const PREVIEW_STORE_NAME = 'filePreviews';
 
-export const DB_SCHEMA_VERSION = 4; // IndexedDB structure version (v4 removes the feature image blob store)
+export const DB_SCHEMA_VERSION = 5; // IndexedDB structure version (v5 removes the preview text store)
 export const DB_CONTENT_VERSION = 7; // Data format version
-
-// Default limits for preview text caching and load batching.
-export const DEFAULT_PREVIEW_TEXT_CACHE_MAX_ENTRIES = LIMITS.storage.previewTextCacheMaxEntriesDefault;
-export const DEFAULT_PREVIEW_LOAD_MAX_BATCH = LIMITS.storage.previewLoadMaxBatchDefault;

@@ -17,18 +17,14 @@
  */
 
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import type { IndexedDBStorage } from '../../storage/IndexedDBStorage';
-import { runAsyncAction } from '../../utils/async';
 import { DateUtils } from '../../utils/dateUtils';
 import { getTooltipPlacement } from '../../utils/domUtils';
 import { clamp } from './calendarUtils';
 import type { CalendarHoverTooltipData, CalendarHoverTooltipState } from './types';
 
 interface UseCalendarHoverTooltipOptions {
-    db: IndexedDBStorage | null;
     dateFormat: string;
     isMobile: boolean;
-    previewVersion: number;
 }
 
 interface UseCalendarHoverTooltipResult {
@@ -36,8 +32,6 @@ interface UseCalendarHoverTooltipResult {
     hoverTooltipStyle: React.CSSProperties | null;
     hoverTooltipRef: React.RefObject<HTMLDivElement | null>;
     hoverTooltipStateRef: React.RefObject<CalendarHoverTooltipState | null>;
-    hoverTooltipPreviewText: string;
-    shouldShowHoverTooltipPreview: boolean;
     hoverTooltipDateText: string;
     handleShowTooltip: (element: HTMLElement, tooltipData: CalendarHoverTooltipData) => void;
     handleHideTooltip: (element: HTMLElement) => void;
@@ -49,34 +43,19 @@ function isSameTooltipData(left: CalendarHoverTooltipData, right: CalendarHoverT
         left.imageUrl === right.imageUrl &&
         left.title === right.title &&
         left.dateTimestamp === right.dateTimestamp &&
-        left.previewPath === right.previewPath &&
-        left.previewEnabled === right.previewEnabled &&
         left.showDate === right.showDate
     );
 }
 
 export function useCalendarHoverTooltip({
-    db,
     dateFormat,
-    isMobile,
-    previewVersion
+    isMobile
 }: UseCalendarHoverTooltipOptions): UseCalendarHoverTooltipResult {
     const [hoverTooltip, setHoverTooltip] = useState<CalendarHoverTooltipState | null>(null);
     const [hoverTooltipStyle, setHoverTooltipStyle] = useState<React.CSSProperties | null>(null);
     const hoverTooltipRef = useRef<HTMLDivElement | null>(null);
     const hoverTooltipAnchorRef = useRef<HTMLElement | null>(null);
-    const lastHoverTooltipPreviewVisibleRef = useRef<boolean | null>(null);
     const hoverTooltipStateRef = useRef<CalendarHoverTooltipState | null>(null);
-
-    const hoverTooltipPreviewText = useMemo(() => {
-        void previewVersion;
-        if (!hoverTooltip || !db || !hoverTooltip.tooltipData.previewEnabled || !hoverTooltip.tooltipData.previewPath) {
-            return '';
-        }
-        return db.getCachedPreviewText(hoverTooltip.tooltipData.previewPath);
-    }, [db, hoverTooltip, previewVersion]);
-
-    const shouldShowHoverTooltipPreview = hoverTooltipPreviewText.trim().length > 0;
 
     const hoverTooltipDateText =
         hoverTooltip && hoverTooltip.tooltipData.showDate ? DateUtils.formatDate(hoverTooltip.tooltipData.dateTimestamp, dateFormat) : '';
@@ -171,22 +150,6 @@ export function useCalendarHoverTooltip({
         updateHoverTooltipPosition();
     }, [updateHoverTooltipPosition]);
 
-    useLayoutEffect(() => {
-        if (!hoverTooltip || isMobile) {
-            lastHoverTooltipPreviewVisibleRef.current = null;
-            return;
-        }
-
-        const previous = lastHoverTooltipPreviewVisibleRef.current;
-        lastHoverTooltipPreviewVisibleRef.current = shouldShowHoverTooltipPreview;
-
-        if (previous === null || previous === shouldShowHoverTooltipPreview) {
-            return;
-        }
-
-        updateHoverTooltipPosition();
-    }, [hoverTooltip, isMobile, shouldShowHoverTooltipPreview, updateHoverTooltipPosition]);
-
     useEffect(() => {
         if (!hoverTooltip) {
             return;
@@ -228,15 +191,6 @@ export function useCalendarHoverTooltip({
                 setHoverTooltipStyle(null);
             }
 
-            const existing = hoverTooltipStateRef.current;
-            const current = existing && existing.anchorEl === element ? existing.tooltipData : null;
-            const isUnchanged = current !== null && isSameTooltipData(current, tooltipData);
-
-            const previewPath = tooltipData.previewPath;
-            if (!isUnchanged && tooltipData.previewEnabled && previewPath && db) {
-                runAsyncAction(() => db.ensurePreviewTextLoaded(previewPath));
-            }
-
             setHoverTooltip(existingTooltip => {
                 if (existingTooltip && existingTooltip.anchorEl === element) {
                     const currentTooltip = existingTooltip.tooltipData;
@@ -248,7 +202,7 @@ export function useCalendarHoverTooltip({
                 return { anchorEl: element, tooltipData };
             });
         },
-        [db]
+        []
     );
 
     const handleHideTooltip = useCallback((element: HTMLElement) => {
@@ -270,8 +224,6 @@ export function useCalendarHoverTooltip({
         hoverTooltipStyle,
         hoverTooltipRef,
         hoverTooltipStateRef,
-        hoverTooltipPreviewText,
-        shouldShowHoverTooltipPreview,
         hoverTooltipDateText,
         handleShowTooltip,
         handleHideTooltip,

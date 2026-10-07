@@ -25,7 +25,7 @@ import {
     type PendingRenameMove,
     type RenameFlushStore
 } from '../../src/context/storage/renameFlush';
-import { createDefaultFileData, type FileData, type PreviewTextBatchOp } from '../../src/storage/IndexedDBStorage';
+import { createDefaultFileData, type FileData } from '../../src/storage/IndexedDBStorage';
 
 function makeMove(
     oldPath: string,
@@ -48,20 +48,16 @@ function makeMove(
 interface StoreCalls {
     seeded: { path: string; mtime: number }[];
     setFiles: { records: { path: string; data: FileData }[] }[];
-    previewOps: PreviewTextBatchOp[][];
 }
 
 function createFakeStore(overrides?: Partial<RenameFlushStore>): { store: RenameFlushStore; calls: StoreCalls } {
-    const calls: StoreCalls = { seeded: [], setFiles: [], previewOps: [] };
+    const calls: StoreCalls = { seeded: [], setFiles: [] };
     const store: RenameFlushStore = {
         seedMemoryFile: (path, data) => {
             calls.seeded.push({ path, mtime: data.mtime });
         },
         setFiles: async records => {
             calls.setFiles.push({ records });
-        },
-        movePreviewTexts: async ops => {
-            calls.previewOps.push(ops);
         },
         ...overrides
     };
@@ -128,12 +124,6 @@ describe('createRenameFlushController', () => {
         expect(calls.setFiles).toHaveLength(1);
         expect(calls.setFiles[0].records.map(record => record.path)).toEqual(['new/a.md', 'new/b.md']);
         expect(calls.setFiles[0].records.map(record => record.data.mtime)).toEqual([111, 222]);
-        expect(calls.previewOps).toEqual([
-            [
-                { type: 'move', oldPath: 'old/a.md', newPath: 'new/a.md' },
-                { type: 'move', oldPath: 'old/b.md', newPath: 'new/b.md' }
-            ]
-        ]);
         expect(queueContentRefresh).toHaveBeenCalledExactlyOnceWith([moveA.file, moveB.file]);
         expect(scheduleDiff).toHaveBeenCalledOnce();
         expect(pendingRenameData.size).toBe(0);
@@ -156,18 +146,6 @@ describe('createRenameFlushController', () => {
         expect(calls.setFiles[0].records.map(record => record.data.mtime)).toEqual([1, 222]);
     });
 
-    it('maps a markdown to non-markdown rename to a preview delete op', async () => {
-        const { store, calls } = createFakeStore();
-        const toText = makeMove('notes/a.md', 'notes/a.txt', { isMarkdown: false });
-        const image = makeMove('img/a.png', 'img/b.png', { wasMarkdown: false, isMarkdown: false });
-        const { controller, buffer } = createController({ store });
-        buffer.moves.push(toText, image);
-
-        controller.scheduleFlush();
-        await settle();
-
-        expect(calls.previewOps).toEqual([[{ type: 'delete', path: 'notes/a.md' }]]);
-    });
 
     it('cancels an armed diff timer when scheduling a flush', () => {
         const { controller, cancelScheduledDiff } = createController();
@@ -193,7 +171,6 @@ describe('createRenameFlushController', () => {
 
         // Both movers must have their batches (and therefore their transactions) created while the
         // record persist is still pending, so a diff cannot slot its transactions between them.
-        expect(calls.previewOps).toHaveLength(1);
         expect(queueContentRefresh).not.toHaveBeenCalled();
 
         resolvePersist();
@@ -232,7 +209,6 @@ describe('createRenameFlushController', () => {
         expect(buffer.moves).toEqual([]);
         expect(pendingRenameData.size).toBe(0);
         expect(calls.setFiles).toEqual([]);
-        expect(calls.previewOps).toEqual([]);
         expect(queueContentRefresh).not.toHaveBeenCalled();
         expect(scheduleDiff).not.toHaveBeenCalled();
     });

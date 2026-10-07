@@ -2305,7 +2305,6 @@ export const STRINGS_ZH_TW = {
                 localCache: '本機快取',
                 items: '項',
                 withTags: '包含標籤',
-                withPreviewText: '包含預覽文字',
                 withMetadata: '包含中繼資料'
             },
             metadataInfo: {
