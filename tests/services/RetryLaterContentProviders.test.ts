@@ -24,7 +24,6 @@ import { TagContentProvider } from '../../src/services/content/TagContentProvide
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
 import type { NotebookNavigatorSettings } from '../../src/settings/types';
 import type { FileData } from '../../src/storage/IndexedDBStorage';
-import { getDrawingDirectFeatureImageKey } from '../../src/utils/drawingFeatureImages';
 import { setActivePropertyFields } from '../../src/utils/vaultProfiles';
 
 class TestTagContentProvider extends TagContentProvider {
@@ -71,14 +70,10 @@ describe('Content provider retry-later semantics', () => {
             markdownPipelineMtime: file.stat.mtime,
             tagsMtime: 0,
             metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
             tags: ['old-tag'],
             wordCount: null,
             properties: null,
             previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: null,
             metadata: {}
         };
 
@@ -115,14 +110,10 @@ describe('Content provider retry-later semantics', () => {
             markdownPipelineMtime: file.stat.mtime,
             tagsMtime: 100,
             metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
             tags: ['old-tag'],
             wordCount: null,
             properties: null,
             previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: null,
             metadata: {}
         };
 
@@ -147,14 +138,10 @@ describe('Content provider retry-later semantics', () => {
             markdownPipelineMtime: file.stat.mtime,
             tagsMtime: 0,
             metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
             tags: null,
             wordCount: null,
             properties: null,
             previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: null,
             metadata: {}
         };
 
@@ -186,14 +173,10 @@ describe('Content provider retry-later semantics', () => {
             markdownPipelineMtime: file.stat.mtime,
             tagsMtime: 0,
             metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
             tags: null,
             wordCount: null,
             properties: null,
             previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: null,
             metadata: {}
         };
 
@@ -262,14 +245,10 @@ describe('Content provider retry-later semantics', () => {
             markdownPipelineMtime: file.stat.mtime - 1,
             tagsMtime: file.stat.mtime,
             metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
             tags: [],
             wordCount: 10,
             properties: null,
             previewStatus: 'has',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: '',
             metadata: {}
         };
 
@@ -279,171 +258,3 @@ describe('Content provider retry-later semantics', () => {
         expect(result.update).toBeNull();
     });
 
-    it('MarkdownPipelineContentProvider defers property refresh for modified notes until property frontmatter is ready', async () => {
-        const app = new App();
-        app.metadataCache.getFileCache = () => ({});
-
-        const provider = new TestMarkdownPipelineContentProvider(app);
-        const file = new TFile();
-        file.path = 'notes/properties.md';
-        file.extension = 'md';
-        file.name = 'properties.md';
-        file.stat.mtime = Date.now();
-        app.vault.cachedRead = async () => 'hello world';
-
-        const settings: NotebookNavigatorSettings = {
-            ...DEFAULT_SETTINGS,
-            showFilePreview: false,
-            showFeatureImage: false
-        };
-        setActivePropertyFields(settings, 'status');
-
-        const fileData: FileData = {
-            mtime: file.stat.mtime,
-            markdownPipelineMtime: file.stat.mtime - 1,
-            tagsMtime: file.stat.mtime,
-            metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
-            tags: [],
-            wordCount: 2,
-            properties: [{ fieldKey: 'status', value: 'Active', valueKind: 'string' }],
-            previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: '',
-            metadata: {}
-        };
-
-        const result = await provider.runProcessFile(file, fileData, settings);
-
-        expect(result.processed).toBe(false);
-        expect(result.update).toBeNull();
-    });
-
-    it('MarkdownPipelineContentProvider defers feature-image refresh for modified notes until feature-image frontmatter is ready', async () => {
-        const app = new App();
-        app.metadataCache.getFileCache = () => ({});
-
-        const provider = new TestMarkdownPipelineContentProvider(app);
-        const file = new TFile();
-        file.path = 'notes/feature-image.md';
-        file.extension = 'md';
-        file.name = 'feature-image.md';
-        file.stat.mtime = Date.now();
-        app.vault.cachedRead = async () => 'hello world';
-
-        const settings: NotebookNavigatorSettings = {
-            ...DEFAULT_SETTINGS,
-            showFilePreview: false,
-            showFeatureImage: true,
-            featureImageProperties: ['thumbnail']
-        };
-
-        const fileData: FileData = {
-            mtime: file.stat.mtime,
-            markdownPipelineMtime: file.stat.mtime - 1,
-            tagsMtime: file.stat.mtime,
-            metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
-            tags: [],
-            wordCount: 2,
-            properties: [],
-            previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'has',
-            featureImageKey: 'f:images/cover.png@1',
-            metadata: {}
-        };
-
-        const result = await provider.runProcessFile(file, fileData, settings);
-
-        expect(result.processed).toBe(false);
-        expect(result.update).toBeNull();
-    });
-
-    it('MarkdownPipelineContentProvider processes frontmatter-based Excalidraw notes when metadata frontmatter is missing', async () => {
-        const app = new App();
-        app.metadataCache.getFileCache = () => ({});
-
-        const provider = new TestMarkdownPipelineContentProvider(app);
-        const file = new TFile();
-        file.path = 'notes/sketch.md';
-        file.extension = 'md';
-        file.name = 'sketch.md';
-        file.stat.mtime = Date.now() - 20_000;
-        app.vault.cachedRead = async () => '---\nexcalidraw-plugin: parsed\n---\n# Heading\n- [ ] task\n';
-
-        const settings: NotebookNavigatorSettings = {
-            ...DEFAULT_SETTINGS,
-            showFilePreview: true,
-            showFeatureImage: true,
-            textCountDisplay: 'words'
-        };
-
-        const fileData: FileData = {
-            mtime: file.stat.mtime,
-            markdownPipelineMtime: file.stat.mtime - 1,
-            tagsMtime: file.stat.mtime,
-            metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
-            tags: [],
-            wordCount: 12,
-            properties: [],
-            previewStatus: 'unprocessed',
-            featureImage: null,
-            featureImageStatus: 'none',
-            featureImageKey: '',
-            metadata: {}
-        };
-
-        const result = await provider.runProcessFile(file, fileData, settings);
-
-        expect(result.processed).toBe(true);
-        expect(result.update?.path).toBe(file.path);
-        expect(result.update?.preview).toBe('');
-        expect(result.update?.wordCount).toBe(0);
-        expect(result.update?.featureImageKey).toBe(getDrawingDirectFeatureImageKey(file, 'excalidraw'));
-        expect(result.update?.featureImage).toBeInstanceOf(Blob);
-    });
-
-    it('MarkdownPipelineContentProvider defers large frontmatter-based Excalidraw feature-image refresh until metadata frontmatter is ready', async () => {
-        const app = new App();
-        app.metadataCache.getFileCache = () => ({});
-
-        const provider = new TestMarkdownPipelineContentProvider(app);
-        const file = new TFile();
-        file.path = 'notes/large-sketch.md';
-        file.extension = 'md';
-        file.name = 'large-sketch.md';
-        file.stat.mtime = Date.now();
-        file.stat.size = LIMITS.markdown.maxReadBytes.desktop + 1;
-        app.vault.cachedRead = async () => '---\nexcalidraw-plugin: parsed\n---\n';
-
-        const settings: NotebookNavigatorSettings = {
-            ...DEFAULT_SETTINGS,
-            showFilePreview: false,
-            showFeatureImage: true
-        };
-
-        const fileData: FileData = {
-            mtime: file.stat.mtime,
-            markdownPipelineMtime: file.stat.mtime - 1,
-            tagsMtime: file.stat.mtime,
-            metadataMtime: file.stat.mtime,
-            fileThumbnailsMtime: file.stat.mtime,
-            tags: [],
-            wordCount: 0,
-            properties: [],
-            previewStatus: 'none',
-            featureImage: null,
-            featureImageStatus: 'has',
-            featureImageKey: `x:${file.path}@1`,
-            metadata: {}
-        };
-
-        const result = await provider.runProcessFile(file, fileData, settings);
-
-        expect(result.processed).toBe(false);
-        expect(result.update).toBeNull();
-    });
-});

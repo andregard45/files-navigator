@@ -43,8 +43,6 @@ class FakeDB {
             tags?: string[] | null;
             wordCount?: number | null;
             preview?: string;
-            featureImage?: Blob | null;
-            featureImageKey?: string | null;
             metadata?: FileData['metadata'];
             properties?: FileData['properties'];
         }[];
@@ -94,12 +92,7 @@ class FakeDB {
                     continue;
                 }
                 existing.metadataMtime = update.mtime;
-            } else if (provider === 'fileThumbnails') {
-                if (existing.fileThumbnailsMtime !== update.expectedPreviousMtime) {
-                    continue;
-                }
-                existing.fileThumbnailsMtime = update.mtime;
-            }
+
 
             // Records mtime write history for race-order assertions.
             const historyKey = this.getProviderMtimeUpdateKey(provider, update.path);
@@ -124,9 +117,7 @@ class FakeDB {
             existing.tagsMtime = mtime;
         } else if (provider === 'metadata') {
             existing.metadataMtime = mtime;
-        } else if (provider === 'fileThumbnails') {
-            existing.fileThumbnailsMtime = mtime;
-        }
+
     }
 }
 
@@ -143,14 +134,10 @@ function createFileData(overrides: Partial<FileData>): FileData {
         markdownPipelineMtime: 0,
         tagsMtime: 0,
         metadataMtime: 0,
-        fileThumbnailsMtime: 0,
         tags: null,
         wordCount: null,
         properties: null,
         previewStatus: 'unprocessed',
-        featureImage: null,
-        featureImageStatus: 'unprocessed',
-        featureImageKey: null,
         metadata: null,
         ...overrides
     };

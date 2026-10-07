@@ -57,48 +57,15 @@ function createFileData(overrides: Partial<FileData>): FileData {
         markdownPipelineMtime: 0,
         tagsMtime: 0,
         metadataMtime: 0,
-        fileThumbnailsMtime: 0,
         tags: null,
         wordCount: null,
         characterCountWithSpaces: null,
         characterCountWithoutSpaces: null,
         properties: null,
         previewStatus: 'unprocessed',
-        featureImage: null,
-        featureImageStatus: 'unprocessed',
-        featureImageKey: null,
         metadata: null,
         ...overrides
     };
 }
 
 describe('markFilesForRegeneration', () => {
-    it('resets only requested provider mtimes when providers are specified', async () => {
-        const db = new FakeDb();
-        const file = createTestTFile('notes/note.md');
-        file.stat.mtime = 500;
-        db.setFile(
-            file.path,
-            createFileData({
-                mtime: 400,
-                markdownPipelineMtime: 300,
-                tagsMtime: 301,
-                metadataMtime: 302,
-                fileThumbnailsMtime: 303
-            })
-        );
-
-        await markFilesForRegeneration([file], ['markdownPipeline'], db);
-
-        const updated = db.getFile(file.path);
-        expect(updated).not.toBeNull();
-        if (!updated) {
-            throw new Error('Expected updated file data');
-        }
-        expect(updated.mtime).toBe(500);
-        expect(updated.markdownPipelineMtime).toBe(0);
-        expect(updated.tagsMtime).toBe(301);
-        expect(updated.metadataMtime).toBe(302);
-        expect(updated.fileThumbnailsMtime).toBe(303);
-    });
-});

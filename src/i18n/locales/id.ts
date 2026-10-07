@@ -40,7 +40,6 @@ export const STRINGS_ID = {
         darkMode: 'Mode gelap', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Tidak ada pilihan',
         untagged: 'Tanpa tag',
-        featureImageAlt: 'Gambar unggulan',
         unknownError: 'Kesalahan tidak diketahui',
         clipboardWriteError: 'Tidak dapat menulis ke papan klip',
         previous: 'Sebelumnya', // Generic aria label for previous navigation (English: Previous)
@@ -1093,7 +1092,6 @@ export const STRINGS_ID = {
                 groups: {
                     icon: 'Ikon',
                     title: 'Judul',
-                    featureImage: 'Gambar unggulan',
                     properties: 'Properti'
                 }
             },
@@ -1920,47 +1918,6 @@ export const STRINGS_ID = {
                 name: 'Gunakan warna folder',
                 desc: 'Warnai judul catatan dan ikon file dengan warna folder induk saat tidak ada warna file kustom yang ditetapkan. Prioritas: warna file kustom > warna folder > warna default.'
             },
-            showFeatureImage: {
-                name: 'Tampilkan gambar unggulan',
-                desc: 'Menampilkan thumbnail gambar pertama yang ditemukan di catatan.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Paksa gambar unggulan persegi',
-                desc: 'Render gambar unggulan sebagai thumbnail persegi.'
-            },
-            featureImageProperties: {
-                name: 'Properti gambar',
-                desc: 'Daftar properti frontmatter yang dipisahkan koma untuk diperiksa terlebih dahulu. Jika tidak ditemukan, menggunakan gambar pertama dalam konten markdown.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Kecualikan catatan dengan properti',
-                desc: 'Daftar properti frontmatter yang dipisahkan koma. Catatan yang mengandung properti ini tidak menyimpan gambar unggulan.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Ukuran tampilan gambar unggulan',
-                desc: 'Ukuran render maksimum untuk gambar unggulan dalam daftar catatan.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Ukuran piksel gambar unggulan',
-                desc: 'Resolusi yang digunakan saat membuat thumbnail gambar unggulan yang disimpan. Tingkatkan ini jika pratinjau yang lebih besar terlihat buram.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Unduh gambar eksternal',
-                desc: 'Unduh gambar jarak jauh dan thumbnail YouTube untuk gambar unggulan.'
-            },
             hideExportedPreviewImages: {
                 name: 'Sembunyikan gambar pratinjau yang diekspor',
                 desc: 'Sembunyikan file PNG pratinjau gambar yang diekspor. Aktifkan "Tampilkan item tersembunyi" untuk menampilkannya.'
@@ -2366,7 +2323,6 @@ export const STRINGS_ID = {
                 items: 'item',
                 withTags: 'dengan tag',
                 withPreviewText: 'dengan teks pratinjau',
-                withFeatureImage: 'dengan gambar unggulan',
                 withMetadata: 'dengan metadata'
             },
             metadataInfo: {

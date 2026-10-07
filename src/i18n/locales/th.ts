@@ -40,7 +40,6 @@ export const STRINGS_TH = {
         darkMode: 'โหมดมืด', // Label for dark theme mode (English: Dark mode)
         noSelection: 'ไม่มีการเลือก',
         untagged: 'ไม่มีแท็ก',
-        featureImageAlt: 'รูปภาพเด่น',
         unknownError: 'ข้อผิดพลาดที่ไม่ทราบสาเหตุ',
         clipboardWriteError: 'ไม่สามารถเขียนลงคลิปบอร์ดได้',
         previous: 'ก่อนหน้า', // Generic aria label for previous navigation (English: Previous)
@@ -1085,7 +1084,6 @@ export const STRINGS_TH = {
                 groups: {
                     icon: 'ไอคอน',
                     title: 'ชื่อเรื่อง',
-                    featureImage: 'รูปภาพเด่น',
                     properties: 'คุณสมบัติ'
                 }
             },
@@ -1911,47 +1909,6 @@ export const STRINGS_TH = {
                 name: 'ใช้สีโฟลเดอร์',
                 desc: 'ใส่สีให้กับชื่อโน้ตและไอคอนไฟล์ตามสีของโฟลเดอร์หลักเมื่อไม่มีการตั้งค่าสีไฟล์กำหนดเอง ลำดับความสำคัญ: สีไฟล์กำหนดเอง > สีโฟลเดอร์ > สีค่าเริ่มต้น'
             },
-            showFeatureImage: {
-                name: 'แสดงรูปภาพเด่น',
-                desc: 'แสดงภาพย่อของรูปภาพแรกที่พบในโน้ต'
-            },
-            forceSquareFeatureImage: {
-                name: 'บังคับรูปภาพเด่นสี่เหลี่ยม',
-                desc: 'แสดงรูปภาพเด่นเป็นภาพย่อสี่เหลี่ยม'
-            },
-            featureImageProperties: {
-                name: 'คุณสมบัติรูปภาพ',
-                desc: 'รายการคุณสมบัติ frontmatter คั่นด้วยเครื่องหมายจุลภาคเพื่อตรวจสอบก่อน ถ้าไม่พบจะใช้รูปภาพแรกในเนื้อหา markdown',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'ยกเว้นโน้ตที่มีคุณสมบัติ',
-                desc: 'รายการคุณสมบัติ frontmatter คั่นด้วยเครื่องหมายจุลภาค โน้ตที่มีคุณสมบัติใดๆ เหล่านี้จะไม่เก็บรูปภาพเด่น',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'ขนาดการแสดงรูปภาพเด่น',
-                desc: 'ขนาดสูงสุดในการแสดงผลรูปภาพเด่นในรายการโน้ต',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'ขนาดพิกเซลของรูปภาพเด่น',
-                desc: 'ความละเอียดที่ใช้ในการสร้างภาพขนาดย่อที่จัดเก็บของรูปภาพเด่น เพิ่มค่านี้หากภาพตัวอย่างขนาดใหญ่ดูเบลอ',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'ดาวน์โหลดรูปภาพภายนอก',
-                desc: 'ดาวน์โหลดรูปภาพระยะไกลและภาพขนาดย่อ YouTube สำหรับรูปภาพเด่น'
-            },
             hideExportedPreviewImages: {
                 name: 'ซ่อนรูปภาพตัวอย่างที่ส่งออก',
                 desc: 'ซ่อนไฟล์ PNG ตัวอย่างภาพวาดที่ส่งออก เปิด "แสดงรายการที่ซ่อน" เพื่อแสดงไฟล์เหล่านั้น'
@@ -2357,7 +2314,6 @@ export const STRINGS_TH = {
                 items: 'รายการ',
                 withTags: 'มีแท็ก',
                 withPreviewText: 'มีข้อความตัวอย่าง',
-                withFeatureImage: 'มีรูปภาพเด่น',
                 withMetadata: 'มีเมตาดาต้า'
             },
             metadataInfo: {

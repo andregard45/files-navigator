@@ -40,7 +40,6 @@ export const STRINGS_PL = {
         darkMode: 'Tryb ciemny', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Nie wybrano', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Bez tagów', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Wyróżniony obraz', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Nieznany błąd', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Nie można zapisać do schowka',
         previous: 'Poprzedni', // Generic aria label for previous navigation (English: Previous)
@@ -1096,7 +1095,6 @@ export const STRINGS_PL = {
                 groups: {
                     icon: 'Ikonka',
                     title: 'Tytuł',
-                    featureImage: 'Wyróżniony obraz',
                     properties: 'Atrybuty'
                 }
             },
@@ -1925,47 +1923,6 @@ export const STRINGS_PL = {
                 name: 'Użyj koloru folderu',
                 desc: 'Koloruje tytuły notatek i ikonki plików kolorem folderu nadrzędnego, gdy nie ustawiono niestandardowego koloru pliku. Priorytet: niestandardowy kolor pliku > kolor folderu > kolor domyślny.'
             },
-            showFeatureImage: {
-                name: 'Pokaż wyróżniony obraz',
-                desc: 'Wyświetla miniaturę pierwszego obrazu znalezionego w notatce.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Wymuś kwadratowy wyróżniony obraz',
-                desc: 'Wyświetla wyróżnione obrazy jako kwadratowe miniatury.'
-            },
-            featureImageProperties: {
-                name: 'Atrybuty obrazu',
-                desc: 'Lista atrybutów rozdzielonych przecinkami do sprawdzenia w pierwszej kolejności. Używa pierwszego obrazu z treści markdown, jeśli nie określono.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Wyklucz notatki z atrybutami',
-                desc: 'Lista atrybutów rozdzielonych przecinkami. Notatki zawierające którykolwiek z tych atrybutów nie wyświetlają wyróżnionych obrazów.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Rozmiar wyświetlania wyróżnionego obrazu',
-                desc: 'Maksymalny rozmiar renderowania wyróżnionych obrazów na listach notatek.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Rozmiar pikseli wyróżnionego obrazu',
-                desc: 'Rozdzielczość używana podczas generowania przechowywanych miniatur wyróżnionych obrazów. Zwiększ tę wartość, jeśli większe podglądy wyglądają na rozmyte.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Pobierz obrazy zewnętrzne',
-                desc: 'Pobiera zdalne obrazy i miniatury YouTube wyróżnionych obrazów.'
-            },
             hideExportedPreviewImages: {
                 name: 'Ukryj wyeksportowane obrazy podglądu',
                 desc: 'Ukrywa wyeksportowane pliki PNG podglądu rysunków. Włącz „Pokaż ukryte elementy”, aby je wyświetlić.'
@@ -2371,7 +2328,6 @@ export const STRINGS_PL = {
                 items: 'elementy',
                 withTags: 'z tagami',
                 withPreviewText: 'z tekstem podglądu',
-                withFeatureImage: 'z wyróżnionym obrazem',
                 withMetadata: 'z metadanymi'
             },
             metadataInfo: {

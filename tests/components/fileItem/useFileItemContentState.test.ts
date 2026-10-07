@@ -16,19 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { App } from 'obsidian';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { createDefaultFileData, type FileData } from '../../../src/storage/IndexedDBStorage';
 import {
-    applyFileItemContentChangeToBox,
     loadFileItemCacheSnapshot,
     shouldRefreshFileItemMetadataVersionForContentChange,
-    subscribeToFileItemContentState,
-    type FileItemCacheSnapshot,
-    type FileItemContentBox,
     type FileItemContentDb
 } from '../../../src/components/fileItem/useFileItemContentState';
-import { createTestTFile } from '../../utils/createTestTFile';
 
 function createFileRecord(patch?: Partial<FileData>): FileData {
     const base = createDefaultFileData({ mtime: 0, path: 'Notes/Daily.md' });
@@ -40,26 +34,18 @@ function createFileRecord(patch?: Partial<FileData>): FileData {
 
 function createContentDb(fileData: FileData | null): FileItemContentDb {
     return {
-        getCachedPreviewText: () => 'Cached preview text',
         getFile: () => fileData,
-        onFileContentChange: () => () => {},
-        ensurePreviewTextLoaded: async () => {},
-        getFeatureImageBlob: async () => null
+        onFileContentChange: () => () => {}
     };
 }
 
 describe('useFileItemContentState helpers', () => {
-
-
-
-    it('refreshes metadata version only for metadata or skipped feature-image changes', () => {
+    it('refreshes metadata version only for metadata changes', () => {
         expect(
             shouldRefreshFileItemMetadataVersionForContentChange({
                 changes: {
                     properties: [{ fieldKey: 'status', value: 'open', valueKind: 'string' }]
-                },
-                shouldLoadFeatureImage: false,
-                refreshMetadataVersionOnFeatureImageChange: true
+                }
             })
         ).toBe(false);
 
@@ -67,91 +53,23 @@ describe('useFileItemContentState helpers', () => {
             shouldRefreshFileItemMetadataVersionForContentChange({
                 changes: {
                     metadata: { name: 'Daily note' }
-                },
-                shouldLoadFeatureImage: true,
-                refreshMetadataVersionOnFeatureImageChange: false
+                }
             })
         ).toBe(true);
-
-        expect(
-            shouldRefreshFileItemMetadataVersionForContentChange({
-                changes: {
-                    featureImageKey: 'd:excalidraw:Notes/Drawing.md'
-                },
-                shouldLoadFeatureImage: false,
-                refreshMetadataVersionOnFeatureImageChange: true
-            })
-        ).toBe(true);
-
-        expect(
-            shouldRefreshFileItemMetadataVersionForContentChange({
-                changes: {
-                    featureImageStatus: 'has'
-                },
-                shouldLoadFeatureImage: false,
-                refreshMetadataVersionOnFeatureImageChange: true
-            })
-        ).toBe(true);
-
-        expect(
-            shouldRefreshFileItemMetadataVersionForContentChange({
-                changes: {
-                    featureImageKey: 'feature-1'
-                },
-                shouldLoadFeatureImage: true,
-                refreshMetadataVersionOnFeatureImageChange: true
-            })
-        ).toBe(false);
-
-        expect(
-            shouldRefreshFileItemMetadataVersionForContentChange({
-                changes: {
-                    featureImageKey: 'feature-1'
-                },
-                shouldLoadFeatureImage: false,
-                refreshMetadataVersionOnFeatureImageChange: false
-            })
-        ).toBe(false);
     });
 
-
-
-
-
-    it('versions direct image resource URLs by file mtime', () => {
-        const app = new App();
-        const file = createTestTFile('Assets/Image.png');
-        file.stat.mtime = 1234;
-        app.vault.getResourcePath = () => 'app://local/Assets/Image.png';
-
-        const snapshot = loadFileItemCacheSnapshot({
-            app,
-            file,
-            showSearchExcerpt: false,
-            showImage: true,
-            db: createContentDb(null)
+    it('loads cached properties from the file record', () => {
+        const record = createFileRecord({
+            properties: [{ fieldKey: 'status', value: 'open', valueKind: 'string' }]
         });
 
-        expect(snapshot.featureImageKey).toBe('direct-image:Assets/Image.png@1234');
-        expect(snapshot.featureImageUrl).toBe('app://local/Assets/Image.png?nn-mtime=1234');
-    });
-
-    it('does not create direct preview URLs for SVG files', () => {
-        const app = new App();
-        const file = createTestTFile('Assets/Icon.svg');
-        file.stat.mtime = 1234;
-        app.vault.getResourcePath = () => 'app://local/Assets/Icon.svg';
-
         const snapshot = loadFileItemCacheSnapshot({
-            app,
-            file,
-            showSearchExcerpt: false,
-            showImage: true,
-            db: createContentDb(null)
+            app: undefined as never,
+            file: undefined as never,
+            db: createContentDb(record),
+            loadOptions: { loadTags: false }
         });
 
-        expect(snapshot.featureImageKey).toBeNull();
-        expect(snapshot.featureImageUrl).toBeNull();
+        expect(snapshot.properties).toEqual([{ fieldKey: 'status', value: 'open', valueKind: 'string' }]);
     });
-
 });

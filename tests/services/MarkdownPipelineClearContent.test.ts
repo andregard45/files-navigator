@@ -24,21 +24,19 @@ import type { NotebookNavigatorSettings } from '../../src/settings/types';
 import { setActivePropertyFields } from '../../src/utils/vaultProfiles';
 
 const batchClearAllFileContentMock = vi.fn();
-const batchClearFeatureImageContentMock = vi.fn();
 
 // Replaces storage access with spies so tests can assert clearContent DB calls directly.
 vi.mock('../../src/storage/fileOperations', () => ({
     getDBInstance: () => ({
         batchClearAllFileContent: batchClearAllFileContentMock,
-        batchClearFeatureImageContent: batchClearFeatureImageContentMock
+
     })
 }));
 
-// Builds a stable baseline with markdown preview/feature-image extraction disabled unless overridden by each test.
+// Builds a stable baseline with markdown preview disabled unless overridden by each test.
 function createSettings(overrides: Partial<NotebookNavigatorSettings> & { propertyFields?: string }): NotebookNavigatorSettings {
     const { propertyFields: rawPropertyFields, ...restOverrides } = overrides;
     const settings = structuredClone(DEFAULT_SETTINGS);
-    settings.showFeatureImage = false;
     Object.assign(settings, restOverrides);
 
     if (typeof rawPropertyFields === 'string') {
@@ -51,7 +49,6 @@ function createSettings(overrides: Partial<NotebookNavigatorSettings> & { proper
 describe('MarkdownPipelineContentProvider clearContent', () => {
     beforeEach(() => {
         batchClearAllFileContentMock.mockReset();
-        batchClearFeatureImageContentMock.mockReset();
     });
 
     it('declares every list sort setting used by word count consumers', () => {
@@ -120,7 +117,6 @@ describe('MarkdownPipelineContentProvider clearContent', () => {
         expect(provider.shouldRegenerate(oldSettings, newSettings)).toBe(true);
         expect(batchClearAllFileContentMock).toHaveBeenCalledTimes(1);
         expect(batchClearAllFileContentMock).toHaveBeenCalledWith('characterCount');
-        expect(batchClearFeatureImageContentMock).not.toHaveBeenCalled();
     });
 
     it('does not regenerate word counts when only tooltip word count changes', async () => {
@@ -132,7 +128,6 @@ describe('MarkdownPipelineContentProvider clearContent', () => {
 
         expect(provider.shouldRegenerate(oldSettings, newSettings)).toBe(false);
         expect(batchClearAllFileContentMock).not.toHaveBeenCalled();
-        expect(batchClearFeatureImageContentMock).not.toHaveBeenCalled();
     });
 
     it('clears word counts when grouping activates a consuming custom group header', async () => {
@@ -164,6 +159,5 @@ describe('MarkdownPipelineContentProvider clearContent', () => {
 
         expect(provider.shouldRegenerate(oldSettings, newSettings)).toBe(true);
         expect(batchClearAllFileContentMock).toHaveBeenCalledWith('wordCount');
-        expect(batchClearFeatureImageContentMock).not.toHaveBeenCalled();
     });
 });

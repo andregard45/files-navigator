@@ -40,7 +40,6 @@ export const STRINGS_DE = {
         darkMode: 'Dunkler Modus', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Keine Auswahl', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Ohne Tag', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Feature-Bild', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Unbekannter Fehler', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Konnte nicht in Zwischenablage schreiben',
         previous: 'Zurück', // Generic aria label for previous navigation (English: Previous)
@@ -1097,7 +1096,6 @@ export const STRINGS_DE = {
                 groups: {
                     icon: 'Symbol',
                     title: 'Titel',
-                    featureImage: 'Feature-Bild',
                     properties: 'Eigenschaften'
                 }
             },
@@ -1928,46 +1926,6 @@ export const STRINGS_DE = {
                 name: 'Ordnerfarbe verwenden',
                 desc: 'Notizentitel und Dateisymbole mit der Farbe des übergeordneten Ordners einfärben, wenn keine benutzerdefinierte Dateifarbe festgelegt ist. Priorität: Benutzerdefinierte Dateifarbe > Ordnerfarbe > Standardfarbe.'
             },
-            showFeatureImage: {
-                name: 'Feature-Bild anzeigen',
-                desc: 'Zeigt eine Miniatur des ersten Bildes in der Notiz an.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Quadratische Feature-Bilder erzwingen',
-                desc: 'Feature-Bilder als quadratische Miniaturansichten darstellen.'
-            },
-            featureImageProperties: {
-                name: 'Bildeigenschaften',
-                desc: 'Kommagetrennte Liste von Frontmatter-Eigenschaften, die zuerst geprüft werden. Fällt auf das erste Bild im Markdown-Inhalt zurück.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Notizen mit Eigenschaften ausschließen',
-                desc: 'Kommagetrennte Liste von Frontmatter-Eigenschaften. Notizen mit einer dieser Eigenschaften speichern keine Feature-Bilder.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Anzeigegröße des Feature-Bildes',
-                desc: 'Maximale Darstellungsgröße für Feature-Bilder in Notizlisten.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Pixelgröße des Feature-Bildes',
-                desc: 'Auflösung für gespeicherte Feature-Bild-Vorschaubilder. Erhöhe diesen Wert, wenn größere Vorschauen unscharf aussehen.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-            downloadExternalFeatureImages: {
-                name: 'Externe Bilder herunterladen',
-                desc: 'Remote-Bilder und YouTube-Vorschaubilder für Feature-Bilder herunterladen.'
-            },
             hideExportedPreviewImages: {
                 name: 'Exportierte Vorschaubilder ausblenden',
                 desc: 'Exportierte PNG-Dateien der Zeichnungsvorschau ausblenden. Aktiviere „Ausgeblendete Elemente anzeigen“, um sie anzuzeigen.'
@@ -2373,7 +2331,6 @@ export const STRINGS_DE = {
                 items: 'Einträge',
                 withTags: 'mit Tags',
                 withPreviewText: 'mit Vorschautext',
-                withFeatureImage: 'mit Feature-Bild',
                 withMetadata: 'mit Metadaten'
             },
             metadataInfo: {

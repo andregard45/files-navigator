@@ -71,8 +71,6 @@ describe('List pane measurements stay in sync with CSS', () => {
         const tagRowGap = extractPxVariableValue(coreVars, 'nn-file-tag-row-gap-base');
         expect(desktop.tagRowHeight).toBe(tagRowHeight + tagRowGap);
 
-        expect(desktop.featureImageMinHeight).toBe(extractPxVariableValue(coreVars, 'nn-file-thumbnail-min-size'));
-
         expect(desktop.groupHeaderHeight).toBe(extractPxVariableValue(coreVars, 'nn-list-group-header-height'));
         expect(desktop.groupHeaderSpacerBefore).toBe(extractPxVariableValue(coreVars, 'nn-list-group-header-spacer-before'));
 
@@ -97,8 +95,6 @@ describe('List pane measurements stay in sync with CSS', () => {
         const tagRowHeight = extractPxVariableValue(coreVars, 'nn-file-tag-row-height-base');
         const tagRowGap = extractPxVariableValue(coreVars, 'nn-file-tag-row-gap-base');
         expect(mobile.tagRowHeight).toBe(tagRowHeight + tagRowGap);
-
-        expect(mobile.featureImageMinHeight).toBe(extractPxVariableValue(coreVars, 'nn-file-thumbnail-min-size'));
 
         const headerIncrement = extractCalcAddPx(mobileVars, 'nn-list-group-header-height-mobile', 'nn-list-group-header-height');
         expect(mobile.groupHeaderHeight).toBe(extractPxVariableValue(coreVars, 'nn-list-group-header-height') + headerIncrement);
@@ -127,21 +123,6 @@ describe('List pane measurements stay in sync with CSS', () => {
         );
         expect(previewRule).not.toMatch(/(^|\n)\s*min-height:\s*/m);
         expect(previewRule).not.toMatch(/(^|\n)\s*height:\s*/m);
-    });
-
-    test('thumbnail sizing uses the same content box height as file text', () => {
-        const listThumbnailsCss = readTextFile('src/styles/sections/list-file-thumbnails.css');
-        const thumbnailRule = extractRuleBlock(listThumbnailsCss, '.nn-virtual-file-item .nn-file-thumbnail');
-        const extensionBadgeRule = extractRuleBlock(listThumbnailsCss, '.nn-virtual-file-item .nn-file-thumbnail--extension-badge');
-
-        expect(thumbnailRule).toMatch(
-            /calc\(var\(--item-height\)\s*-\s*var\(--nn-file-padding-total-mobile,\s*var\(--nn-file-padding-total\)\)\)/
-        );
-        expect(thumbnailRule).not.toMatch(/--nn-file-padding-vertical-mobile/);
-
-        expect(extensionBadgeRule).toMatch(/width:\s*var\(--nn-file-thumbnail-min-size\)/);
-        expect(extensionBadgeRule).toMatch(/height:\s*var\(--nn-file-thumbnail-min-size\)/);
-        expect(extensionBadgeRule).not.toMatch(/--image-size/);
     });
 
     test('pill height uses the fixed row height as border-box height', () => {

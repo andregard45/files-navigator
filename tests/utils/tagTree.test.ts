@@ -55,14 +55,10 @@ function createFileData(tags: string[] | null): FileData {
         markdownPipelineMtime: 0,
         tagsMtime: 0,
         metadataMtime: 0,
-        fileThumbnailsMtime: 0,
         tags,
         wordCount: null,
         properties: null,
         previewStatus: 'unprocessed',
-        featureImage: null,
-        featureImageStatus: 'unprocessed',
-        featureImageKey: null,
         metadata: null
     };
 }

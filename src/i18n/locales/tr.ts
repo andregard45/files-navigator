@@ -40,7 +40,6 @@ export const STRINGS_TR = {
         darkMode: 'Koyu mod', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Seçim yok', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Etiketsiz', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Öne çıkan görsel', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Bilinmeyen hata', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Panoya yazılamadı',
         previous: 'Önceki', // Generic aria label for previous navigation (English: Previous)
@@ -1091,7 +1090,6 @@ export const STRINGS_TR = {
                 groups: {
                     icon: 'Simge',
                     title: 'Başlık',
-                    featureImage: 'Öne çıkan görsel',
                     properties: 'Özellikler'
                 }
             },
@@ -1918,47 +1916,6 @@ export const STRINGS_TR = {
                 name: 'Klasör rengini kullan',
                 desc: 'Özel dosya rengi ayarlanmadığında not başlıklarını ve dosya simgelerini üst klasörün rengiyle renklendir. Öncelik: özel dosya rengi > klasör rengi > varsayılan renk.'
             },
-            showFeatureImage: {
-                name: 'Öne çıkan görseli göster',
-                desc: 'Notta bulunan ilk görselin küçük resmini görüntüler.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Kare öne çıkan görsel zorla',
-                desc: 'Öne çıkan görselleri kare küçük resim olarak oluştur.'
-            },
-            featureImageProperties: {
-                name: 'Görsel özellikleri',
-                desc: 'Önce kontrol edilecek virgülle ayrılmış frontmatter özellikleri listesi. Bulunamazsa markdown içeriğindeki ilk görsel kullanılır.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Özellikli notları hariç tut',
-                desc: 'Virgülle ayrılmış frontmatter özellikleri listesi. Bu özelliklerden herhangi birini içeren notlar öne çıkan görsel saklamaz.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Öne çıkan görsel görüntüleme boyutu',
-                desc: 'Not listelerinde öne çıkan görsellerin maksimum işleme boyutu.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Öne çıkan görsel piksel boyutu',
-                desc: 'Depolanan öne çıkan görsel küçük resimleri oluşturulurken kullanılan çözünürlük. Büyük önizlemeler bulanık görünüyorsa bu değeri artırın.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Harici görselleri indir',
-                desc: 'Öne çıkan görseller için uzak görselleri ve YouTube küçük resimlerini indir.'
-            },
             hideExportedPreviewImages: {
                 name: 'Dışa aktarılmış önizleme görsellerini gizle',
                 desc: 'Dışa aktarılan çizim önizleme PNG dosyalarını gizler. Görüntülemek için "Gizli öğeleri göster" seçeneğini açın.'
@@ -2364,7 +2321,6 @@ export const STRINGS_TR = {
                 items: 'öğe',
                 withTags: 'etiketli',
                 withPreviewText: 'önizleme metinli',
-                withFeatureImage: 'öne çıkan görselli',
                 withMetadata: 'meta verili'
             },
             metadataInfo: {

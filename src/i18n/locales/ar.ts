@@ -40,7 +40,6 @@ export const STRINGS_AR = {
         darkMode: 'الوضع الداكن', // Label for dark theme mode (English: Dark mode)
         noSelection: 'لا يوجد تحديد', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'بدون وسم', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'صورة مميزة', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'خطأ غير معروف', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'تعذرت الكتابة إلى الحافظة',
         previous: 'السابق', // Generic aria label for previous navigation (English: Previous)
@@ -1088,7 +1087,6 @@ export const STRINGS_AR = {
                 groups: {
                     icon: 'الأيقونة',
                     title: 'العنوان',
-                    featureImage: 'الصورة المميزة',
                     properties: 'الخصائص'
                 }
             },
@@ -1914,47 +1912,6 @@ export const STRINGS_AR = {
                 name: 'استخدام لون المجلد',
                 desc: 'تلوين عناوين الملاحظات وأيقونات الملفات بلون المجلد الأصلي عند عدم تعيين لون ملف مخصص. الأولوية: لون الملف المخصص > لون المجلد > اللون الافتراضي.'
             },
-            showFeatureImage: {
-                name: 'إظهار الصورة المميزة',
-                desc: 'عرض صورة مصغرة لأول صورة موجودة في الملاحظة.'
-            },
-            forceSquareFeatureImage: {
-                name: 'فرض صورة مميزة مربعة',
-                desc: 'عرض الصور المميزة كصور مصغرة مربعة.'
-            },
-            featureImageProperties: {
-                name: 'خصائص الصورة',
-                desc: 'قائمة مفصولة بفاصلة من خصائص البيانات الأمامية للتحقق منها أولاً. يستخدم أول صورة في محتوى markdown كبديل.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'استبعاد الملاحظات ذات الخصائص',
-                desc: 'قائمة مفصولة بفاصلة من خصائص البيانات الأمامية. الملاحظات التي تحتوي على أي من هذه الخصائص لا تخزن الصور المميزة.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'حجم عرض الصورة المميزة',
-                desc: 'الحجم الأقصى المعروض للصور المميزة في قوائم الملاحظات.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'دقة بكسل الصورة المميزة',
-                desc: 'الدقة المستخدمة عند إنشاء صور مصغرة محفوظة للصور المميزة. قم بزيادتها إذا بدت المعاينات الأكبر ضبابية.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'تنزيل الصور الخارجية',
-                desc: 'تنزيل الصور عن بُعد والصور المصغرة من YouTube للصور المميزة.'
-            },
             hideExportedPreviewImages: {
                 name: 'إخفاء صور المعاينة المُصدَّرة',
                 desc: 'إخفاء ملفات PNG لمعاينة الرسومات المُصدَّرة. فعِّل "إظهار العناصر المخفية" لعرضها.'
@@ -2360,7 +2317,6 @@ export const STRINGS_AR = {
                 items: 'عناصر',
                 withTags: 'مع وسوم',
                 withPreviewText: 'مع نص معاينة',
-                withFeatureImage: 'مع صورة مميزة',
                 withMetadata: 'مع بيانات وصفية'
             },
             metadataInfo: {

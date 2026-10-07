@@ -74,7 +74,6 @@ describe('resolveListPaneAppearance', () => {
         const result = resolveListPaneAppearance({
             settings: createSettings({
                 defaultListMode: 'standard',
-                showFeatureImage: true,
             }),
             appearance: { mode: 'compact' },
             selectionType: ItemType.PROPERTY
@@ -84,7 +83,6 @@ describe('resolveListPaneAppearance', () => {
             mode: 'compact',
             // The file-display preview feature was removed; excerpt sizing is a fixed internal constant.
             previewRows: 1,
-            showImage: false,
         });
     });
 

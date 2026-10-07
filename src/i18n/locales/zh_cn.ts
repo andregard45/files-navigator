@@ -40,7 +40,6 @@ export const STRINGS_ZH_CN = {
         darkMode: '深色模式', // Label for dark theme mode (English: Dark mode)
         noSelection: '未选择', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: '无标签', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: '特色图片', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '未知错误', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: '无法写入剪贴板',
         previous: '上一个', // Generic aria label for previous navigation (English: Previous)
@@ -1083,7 +1082,6 @@ export const STRINGS_ZH_CN = {
                 groups: {
                     icon: '图标',
                     title: '标题',
-                    featureImage: '特色图片',
                     properties: '属性'
                 }
             },
@@ -1903,47 +1901,6 @@ export const STRINGS_ZH_CN = {
                 name: '使用文件夹颜色',
                 desc: '当未设置自定义文件颜色时，使用父文件夹的颜色为笔记标题和文件图标着色。优先级：自定义文件颜色 > 文件夹颜色 > 默认颜色。'
             },
-            showFeatureImage: {
-                name: '显示特色图片',
-                desc: '显示笔记中找到的第一张图片的缩略图。'
-            },
-            forceSquareFeatureImage: {
-                name: '强制正方形特色图片',
-                desc: '将特色图片渲染为正方形缩略图。'
-            },
-            featureImageProperties: {
-                name: '图片属性',
-                desc: '首先检查的前置元数据属性的逗号分隔列表。如果未找到，则使用 markdown 内容中的第一张图片。',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: '排除含有属性的笔记',
-                desc: '逗号分隔的前置元数据属性列表。包含这些属性的笔记不会存储特色图片。',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: '特色图片显示大小',
-                desc: '笔记列表中特色图片的最大渲染大小。',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: '特色图片像素大小',
-                desc: '生成存储的特色图片缩略图时使用的分辨率。如果较大的预览看起来模糊，请增大此值。',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: '下载外部图片',
-                desc: '下载远程图片和 YouTube 缩略图作为特色图片。'
-            },
             hideExportedPreviewImages: {
                 name: '隐藏导出的预览图片',
                 desc: '隐藏导出的绘图预览 PNG 文件。开启“显示隐藏项目”以显示它们。'
@@ -2349,7 +2306,6 @@ export const STRINGS_ZH_CN = {
                 items: '项',
                 withTags: '包含标签',
                 withPreviewText: '包含预览文本',
-                withFeatureImage: '包含特色图片',
                 withMetadata: '包含元数据'
             },
             metadataInfo: {

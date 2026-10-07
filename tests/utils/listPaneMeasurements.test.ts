@@ -23,9 +23,7 @@ import {
     getFileItemLayoutState,
     getListPaneMeasurements,
     getSelectedPropertyValuePillToHide,
-    getPropertyRowCount,
-    shouldShowExtensionBadgeThumbnail,
-    shouldShowFeatureImageArea
+    getPropertyRowCount
 } from '../../src/utils/listPaneMeasurements';
 import { ItemType } from '../../src/types';
 import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
@@ -39,10 +37,8 @@ describe('listPaneMeasurements layout helpers', () => {
             getFileItemLayoutState({
                 isCompactMode: false,
                 showSearchExcerpt: false,
-                showImage: false,
                 isPinned: false,
                 hasPreviewContent: false,
-                showFeatureImageArea: false,
                 hasVisiblePillRows: false
             })
         ).toMatchObject({ isCompactMode: false });
@@ -51,39 +47,19 @@ describe('listPaneMeasurements layout helpers', () => {
             getFileItemLayoutState({
                 isCompactMode: true,
                 showSearchExcerpt: false,
-                showImage: false,
                 isPinned: false,
                 hasPreviewContent: false,
-                showFeatureImageArea: false,
                 hasVisiblePillRows: false
             })
         ).toMatchObject({ isCompactMode: true });
-    });
-
-    it('keeps the multiline preview slot when the feature image area is visible', () => {
-        expect(
-            getFileItemLayoutState({
-                showSearchExcerpt: true,
-                showImage: true,
-                isPinned: false,
-                hasPreviewContent: false,
-                showFeatureImageArea: true,
-                hasVisiblePillRows: false
-            })
-        ).toMatchObject({
-            isCompactMode: false,
-            shouldShowMultilinePreview: true,
-            shouldReplaceEmptyPreviewWithPills: false        });
     });
 
     it('collapses empty preview space when pills are visible and no image is shown', () => {
         expect(
             getFileItemLayoutState({
                 showSearchExcerpt: true,
-                showImage: false,
                 isPinned: false,
                 hasPreviewContent: false,
-                showFeatureImageArea: false,
                 hasVisiblePillRows: true
             })
         ).toMatchObject({
@@ -94,10 +70,8 @@ describe('listPaneMeasurements layout helpers', () => {
     it('uses a title-only row height when normal rows render no content or image', () => {
         const layoutState = getFileItemLayoutState({
             showSearchExcerpt: true,
-            showImage: false,
             isPinned: false,
             hasPreviewContent: false,
-            showFeatureImageArea: false,
             hasVisiblePillRows: false
         });
 
@@ -107,133 +81,9 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: 3,
                 layoutState,
-                showFeatureImageArea: false,
-                showExtensionBadgeThumbnail: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
-    });
-
-    it('uses the thumbnail minimum row height for base and canvas extension badges without note content', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: false,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: true,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
-    });
-
-    it('does not reserve an empty preview slot for base and canvas extension badges', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(layoutState.shouldShowMultilinePreview).toBe(false);
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 1,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: true,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
-    });
-
-    it('does not add a metadata line for multi-row base and canvas extension badge titles', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: false,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 3,
-                previewRows: 3,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: true,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight * 3);
-    });
-
-    it('sizes base and canvas extension badge rows from actual pill rows', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: true,
-            hasVisiblePillRows: true
-        });
-
-        expect(layoutState.shouldShowMultilinePreview).toBe(false);
-        expect(layoutState.shouldReplaceEmptyPreviewWithPills).toBe(true);
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: true,
-                visiblePillRowCount: 1
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.tagRowHeight);
-    });
-
-    it('does not reserve a hidden metadata row for base and canvas extension badges', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: true,
-            hasVisiblePillRows: true
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: true,
-                visiblePillRowCount: 2
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.tagRowHeight * 2);
     });
 
     it('estimates compact file rows from compact padding, title rows, and visible pill rows', () => {
@@ -242,8 +92,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 {
                     isPinned: false,
                     hasPreviewContent: false,
-                    showFeatureImageArea: false,
-                    showExtensionBadgeThumbnail: false,
                     visiblePillRowCount: 2
                 },
                 {
@@ -252,7 +100,6 @@ describe('listPaneMeasurements layout helpers', () => {
                     previewRows: 3,
                     isCompactMode: true,
                     showSearchExcerpt: false,
-                    showImage: false,
                     compactPaddingTotal: 18
                 }
             )
@@ -265,8 +112,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 {
                     isPinned: false,
                     hasPreviewContent: false,
-                    showFeatureImageArea: false,
-                    showExtensionBadgeThumbnail: false,
                     visiblePillRowCount: 0
                 },
                 {
@@ -275,28 +120,22 @@ describe('listPaneMeasurements layout helpers', () => {
                     previewRows: 3,
                     isCompactMode: false,
                     showSearchExcerpt: false,
-                    showImage: false,
                     compactPaddingTotal: 18
                 }
             )
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
     });
 
-    it('estimates pinned image rows with the pinned preview row count', () => {
+    it('estimates pinned rows with the pinned preview row count', () => {
         const inputs = {
             isPinned: true,
             hasPreviewContent: true,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: false,
             visiblePillRowCount: 1
         };
         const layoutState = getFileItemLayoutState({
             showSearchExcerpt: true,
-            showImage: true,
             isPinned: inputs.isPinned,
             hasPreviewContent: inputs.hasPreviewContent,
-            showFeatureImageArea: inputs.showFeatureImageArea,
-            showExtensionBadgeThumbnail: inputs.showExtensionBadgeThumbnail,
             hasVisiblePillRows: true
         });
 
@@ -307,7 +146,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 previewRows: 4,
                 isCompactMode: false,
                 showSearchExcerpt: true,
-                showImage: true,
                 compactPaddingTotal: 18
             })
         ).toBe(
@@ -316,112 +154,16 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: 1,
                 layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
                 visiblePillRowCount: 1
             })
         );
     });
 
-    it('estimates extension badge rows from metadata and pill inputs', () => {
-        const inputs = {
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: true,
-            visiblePillRowCount: 2
-        };
+    it('uses configured preview rows when no pills replace the preview', () => {
         const layoutState = getFileItemLayoutState({
             showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: true,
-            hasVisiblePillRows: true
-        });
-
-        expect(
-            estimateFileRowHeight(inputs, {
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                isCompactMode: false,
-                showSearchExcerpt: true,
-                showImage: true,
-                compactPaddingTotal: 18
-            })
-        ).toBe(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: true,
-                visiblePillRowCount: 2
-            })
-        );
-    });
-
-    it('uses the thumbnail minimum row height for short feature image rows', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: false,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 1,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
-    });
-
-    it('uses a fixed rich row height for feature image rows', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 0
-            })
-        ).toBe(
-            desktopHeights.basePadding +
-                desktopHeights.titleLineHeight +
-                desktopHeights.multilineTextLineHeight * 3 +
-                desktopHeights.singleTextLineHeight
-        );
-    });
-
-    it('uses configured preview rows without a feature image', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
             isPinned: false,
             hasPreviewContent: true,
-            showFeatureImageArea: false,
             hasVisiblePillRows: false
         });
 
@@ -432,8 +174,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: 2,
                 layoutState,
-                showFeatureImageArea: false,
-                showExtensionBadgeThumbnail: false,
                 visiblePillRowCount: 0
             })
         ).toBe(
@@ -446,10 +186,8 @@ describe('listPaneMeasurements layout helpers', () => {
     it('uses one preview row for pinned items', () => {
         const layoutState = getFileItemLayoutState({
             showSearchExcerpt: true,
-            showImage: false,
             isPinned: true,
             hasPreviewContent: true,
-            showFeatureImageArea: false,
             hasVisiblePillRows: false
         });
         const pinnedPreviewRows = 1;
@@ -461,8 +199,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: pinnedPreviewRows,
                 layoutState,
-                showFeatureImageArea: false,
-                showExtensionBadgeThumbnail: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.multilineTextLineHeight);
@@ -471,10 +207,8 @@ describe('listPaneMeasurements layout helpers', () => {
     it('keeps pinned task progress and preview in one secondary row', () => {
         const layoutState = getFileItemLayoutState({
             showSearchExcerpt: true,
-            showImage: false,
             isPinned: true,
             hasPreviewContent: true,
-            showFeatureImageArea: false,
             hasVisiblePillRows: false
         });
 
@@ -484,8 +218,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 titleRows: 1,
                 previewRows: 1,
                 layoutState,
-                showFeatureImageArea: false,
-                showExtensionBadgeThumbnail: false,
                 visiblePillRowCount: 0
             })
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.multilineTextLineHeight);
@@ -494,240 +226,22 @@ describe('listPaneMeasurements layout helpers', () => {
     it('does not show the pinned preview slot when preview text is disabled', () => {
         const layoutState = getFileItemLayoutState({
             showSearchExcerpt: false,
-            showImage: false,
             isPinned: true,
             hasPreviewContent: true,
-            showFeatureImageArea: false,
             hasVisiblePillRows: false
         });
 
         expect(layoutState.shouldShowMultilinePreview).toBe(false);
     });
 
-    it('uses the thumbnail minimum row height for pinned feature image rows', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: true,
-            hasPreviewContent: true,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: false
-        });
-        const pinnedPreviewRows = 1;
-
-        expect(layoutState.isPinnedImageRow).toBe(true);
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: pinnedPreviewRows,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.featureImageMinHeight);
-    });
-
-
-
-    it('keeps rich image rows at a stable height', () => {
-        const commonParams = {
-            heights: desktopHeights,
-            titleRows: 1,
-            previewRows: 2,
-            showFeatureImageArea: true,
-            showExtensionBadgeThumbnail: false,
-            visiblePillRowCount: 0
-        };
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: true,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: false
-        });
-
-        const rowHeight = calculateNormalListFileRowHeightEstimate({
-            ...commonParams,
-            layoutState
-        });
-
-        expect(rowHeight).toBe(
-            desktopHeights.basePadding +
-                desktopHeights.titleLineHeight +
-                desktopHeights.multilineTextLineHeight * 2 +
-                desktopHeights.singleTextLineHeight
-        );
-    });
-
-    it('lets pill rows use the reserved image metadata line', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: true,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: true
-        });
-        const richBaseHeight =
-            desktopHeights.basePadding +
-            desktopHeights.titleLineHeight +
-            desktopHeights.multilineTextLineHeight * 2 +
-            desktopHeights.singleTextLineHeight;
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 2,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 1
-            })
-        ).toBe(richBaseHeight + desktopHeights.tagRowHeight - desktopHeights.singleTextLineHeight);
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 2,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 3
-            })
-        ).toBe(richBaseHeight + desktopHeights.tagRowHeight * 3 - desktopHeights.singleTextLineHeight);
-    });
-
-    it('lets replacement pill rows use the rich preview slot before growing the row', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            showImage: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            showFeatureImageArea: true,
-            hasVisiblePillRows: true
-        });
-        const richBaseHeight =
-            desktopHeights.basePadding +
-            desktopHeights.titleLineHeight +
-            desktopHeights.multilineTextLineHeight * 2 +
-            desktopHeights.singleTextLineHeight;
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 2,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 1
-            })
-        ).toBe(richBaseHeight);
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 2,
-                layoutState,
-                showFeatureImageArea: true,
-                showExtensionBadgeThumbnail: false,
-                visiblePillRowCount: 3
-            })
-        ).toBe(richBaseHeight + desktopHeights.tagRowHeight * 3 - desktopHeights.multilineTextLineHeight * 2 - desktopHeights.singleTextLineHeight);
-    });
-
-    it('keeps feature image visibility aligned for image files and cached thumbnails', () => {
-        const markdownFile = createTestTFile('Notes/Daily.md');
-        const imageFile = createTestTFile('Images/Cover.png');
-        const excalidrawFile = createTestTFile('Drawings/Sketch.excalidraw.md');
-        const legacyExcalidrawFile = createTestTFile('Drawings/Sketch.excalidraw');
-
-        expect(
-            shouldShowFeatureImageArea({
-                showImage: true,
-                file: markdownFile,
-                featureImageStatus: 'has'
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowFeatureImageArea({
-                showImage: true,
-                file: imageFile,
-                featureImageStatus: 'unprocessed'
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowFeatureImageArea({
-                showImage: true,
-                file: excalidrawFile,
-                featureImageStatus: 'none',
-                showDrawingFeatureImage: true
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowFeatureImageArea({
-                showImage: true,
-                file: legacyExcalidrawFile,
-                featureImageStatus: 'none',
-                showDrawingFeatureImage: true
-            })
-        ).toBe(true);
-    });
-
-    it('only shows extension badge thumbnails when the feature image area renders', () => {
-        const baseFile = createTestTFile('Data/Inventory.base');
-        const excalidrawFile = createTestTFile('Drawings/Sketch.excalidraw.md');
-
-        expect(
-            shouldShowExtensionBadgeThumbnail({
-                showFeatureImageArea: false,
-                file: baseFile
-            })
-        ).toBe(false);
-
-        expect(
-            shouldShowExtensionBadgeThumbnail({
-                showFeatureImageArea: true,
-                file: baseFile
-            })
-        ).toBe(true);
-
-        expect(
-            shouldShowExtensionBadgeThumbnail({
-                showFeatureImageArea: true,
-                file: baseFile,
-                hasFeatureImageUrl: true
-            })
-        ).toBe(false);
-
-        expect(
-            shouldShowExtensionBadgeThumbnail({
-                showFeatureImageArea: true,
-                file: excalidrawFile,
-                showDrawingMissingFeatureImage: true
-            })
-        ).toBe(true);
-    });
-
     it('counts numeric frontmatter properties as visible property rows', () => {
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Numbers.md'),
-                wordCount: null,
                 properties: [{ fieldKey: 'rating', value: '4.5', valueKind: 'number' }],
                 visiblePropertyKeys: new Set<string>(['rating'])
             })
@@ -737,13 +251,11 @@ describe('listPaneMeasurements layout helpers', () => {
     it('counts boolean frontmatter properties as visible property rows', () => {
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Flags.md'),
-                wordCount: null,
                 properties: [{ fieldKey: 'flag', value: 'true', valueKind: 'boolean' }],
                 visiblePropertyKeys: new Set<string>(['flag'])
             })
@@ -760,13 +272,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file,
-                wordCount: null,
                 properties,
                 visiblePropertyKeys: new Set<string>(['topic', 'priority'])
             })
@@ -774,13 +284,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: true,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file,
-                wordCount: null,
                 properties,
                 visiblePropertyKeys: new Set<string>(['topic', 'priority'])
             })
@@ -796,13 +304,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Status.md'),
-                wordCount: null,
                 properties: [{ fieldKey: 'status', value: 'done', valueKind: 'string' }],
                 visiblePropertyKeys: new Set<string>(['status']),
                 hiddenPropertyValueNodeId: selectedPropertyValueNodeIdToHide
@@ -811,13 +317,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Status.md'),
-                wordCount: null,
                 properties: [
                     { fieldKey: 'status', value: 'done', valueKind: 'string' },
                     { fieldKey: 'priority', value: 'high', valueKind: 'string' }
@@ -836,13 +340,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Status.md'),
-                wordCount: null,
                 properties,
                 visiblePropertyKeys: new Set<string>(['status'])
             })
@@ -850,13 +352,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Status.md'),
-                wordCount: null,
                 properties,
                 visiblePropertyKeys: new Set<string>(['missing'])
             })
@@ -864,13 +364,11 @@ describe('listPaneMeasurements layout helpers', () => {
 
         expect(
             getPropertyRowCount({
-                showTextCountProperty: false,
                 showFileProperties: true,
                 showPropertiesOnSeparateRows: false,
                 showFilePropertiesInCompactMode: true,
                 isCompactMode: false,
                 file: createTestTFile('Notes/Status.md'),
-                wordCount: null,
                 properties,
                 visiblePropertyKeys: new Set<string>(['status'])
             })

@@ -40,7 +40,6 @@ export const STRINGS_FA = {
         darkMode: 'حالت تاریک', // Label for dark theme mode (English: Dark mode)
         noSelection: 'بدون انتخاب',
         untagged: 'بدون برچسب',
-        featureImageAlt: 'تصویر ویژه',
         unknownError: 'خطای ناشناخته',
         clipboardWriteError: 'نمی‌توان در کلیپ‌بورد نوشت',
         previous: 'قبلی', // Generic aria label for previous navigation (English: Previous)
@@ -1092,7 +1091,6 @@ export const STRINGS_FA = {
                 groups: {
                     icon: 'آیکون',
                     title: 'عنوان',
-                    featureImage: 'تصویر ویژه',
                     properties: 'ویژگی‌ها'
                 }
             },
@@ -1919,47 +1917,6 @@ export const STRINGS_FA = {
                 name: 'استفاده از رنگ پوشه',
                 desc: 'رنگ‌آمیزی عناوین یادداشت و آیکون‌های فایل با رنگ پوشه والد هنگامی که رنگ فایل سفارشی تنظیم نشده است. اولویت: رنگ فایل سفارشی > رنگ پوشه > رنگ پیش‌فرض.'
             },
-            showFeatureImage: {
-                name: 'نمایش تصویر ویژه',
-                desc: 'نمایش تصویر بندانگشتی از اولین تصویر موجود در یادداشت.'
-            },
-            forceSquareFeatureImage: {
-                name: 'اجبار تصویر ویژه مربع',
-                desc: 'تصاویر ویژه را به صورت بندانگشتی مربع نمایش دهید.'
-            },
-            featureImageProperties: {
-                name: 'ویژگی‌های تصویر',
-                desc: 'لیست ویژگی‌های فرانت‌متر جدا شده با کاما برای بررسی در ابتدا. در صورت عدم یافتن، از اولین تصویر در محتوای markdown استفاده می‌شود.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'استثنای یادداشت‌ها با ویژگی‌ها',
-                desc: 'لیست ویژگی‌های فرانت‌متر جدا شده با کاما. یادداشت‌هایی که هر یک از این ویژگی‌ها را دارند، تصاویر ویژه را ذخیره نمی‌کنند.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'اندازه نمایش تصویر شاخص',
-                desc: 'حداکثر اندازه رندر شده برای تصاویر شاخص در لیست یادداشت‌ها.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'اندازه پیکسل تصویر شاخص',
-                desc: 'وضوح تصویر هنگام تولید تصاویر بندانگشتی ذخیره‌شده تصویر شاخص. اگر پیش‌نمایش‌های بزرگ‌تر تار به نظر می‌رسند، این مقدار را افزایش دهید.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'دانلود تصاویر خارجی',
-                desc: 'دانلود تصاویر از راه دور و تصاویر کوچک YouTube برای تصاویر ویژه.'
-            },
             hideExportedPreviewImages: {
                 name: 'پنهان کردن تصاویر پیش‌نمایش صادر شده',
                 desc: 'پنهان کردن فایل‌های PNG پیش‌نمایش طراحی صادر شده. برای نمایش آن‌ها، «نمایش آیتم‌های مخفی» را روشن کنید.'
@@ -2365,7 +2322,6 @@ export const STRINGS_FA = {
                 items: 'آیتم',
                 withTags: 'با برچسب',
                 withPreviewText: 'با متن پیش‌نمایش',
-                withFeatureImage: 'با تصویر ویژه',
                 withMetadata: 'با متادیتا'
             },
             metadataInfo: {
