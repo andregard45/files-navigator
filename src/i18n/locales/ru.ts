@@ -410,8 +410,6 @@ export const STRINGS_RU = {
     folderAppearance: {
         appearance: 'Оформление',
         sortBy: 'Сортировать по',
-        standardPreset: 'Стандартный',
-        compactPreset: 'Компактный',
         defaultSuffix: '(по умолчанию)',
         defaultLabel: 'По умолчанию',
         titleRows: {
@@ -893,7 +891,6 @@ export const STRINGS_RU = {
         toggleTagSort: 'Переключить сортировку тегов', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Переключить теги по выбору',
         togglePropertiesBySelection: 'Переключить свойства по выбору',
-        toggleCompactMode: 'Переключить компактный режим', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Переключить закреплённый раздел',
         collapseExpand: 'Свернуть / развернуть все элементы навигации', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Свернуть / развернуть все группы списка',
@@ -1210,14 +1207,6 @@ export const STRINGS_RU = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Группировка по папкам: файлы текущей папки внизу',
                 desc: 'Если для группировки по умолчанию выбран вариант «Папка», файлы непосредственно в выбранной папке будут показаны ниже групп вложенных папок.'
-            },
-            defaultListMode: {
-                name: 'Режим списка по умолчанию',
-                desc: 'Выберите разметку списка по умолчанию. Стандартный показывает название, дату, описание и превью. Компактный показывает только название. Можно переопределить внешний вид для каждой папки.',
-                options: {
-                    standard: 'Стандартный',
-                    compact: 'Компактный'
-                }
             },
             showFileIcons: {
                 name: 'Показывать иконки файлов',

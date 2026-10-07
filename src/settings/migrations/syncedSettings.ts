@@ -274,53 +274,23 @@ export function migrateLegacySyncedSettings(params: {
         settings.propertySortOrder = defaultSettings.propertySortOrder;
     }
 
-    type LegacyAppearance = ListPaneAppearance & {
-        showPreview?: boolean;
-        showImage?: boolean;
-        showDate?: boolean;
-    };
-
-    const migrateLegacyAppearanceMode = (appearance: ListPaneAppearance | undefined): ListPaneAppearance | undefined => {
-        if (!appearance) {
-            return appearance;
-        }
-
-        const legacy = appearance as LegacyAppearance;
-
-        // Only the full slim-preset trio identifies the legacy compact mode.
-        // Current records never store showPreview or showImage, so the trio cannot match them.
-        const isLegacyCompact =
-            legacy.mode === undefined &&
-            legacy.showDate === false &&
-            legacy.showPreview === false &&
-            legacy.showImage === false;
-
-        if (isLegacyCompact) {
-            const migrated: LegacyAppearance = { ...legacy, mode: 'compact' };
-            delete migrated.showDate;
-            delete migrated.showPreview;
-            delete migrated.showImage;
-            return migrated;
-        }
-
-        return appearance;
-    };
-
     const migrateLegacyAppearances = (collection: Record<string, ListPaneAppearance> | undefined) => {
         if (!collection) {
             return;
         }
 
         Object.entries(collection).forEach(([key, appearance]) => {
-            const migratedAppearance = migrateLegacyAppearanceMode(appearance);
-            if (migratedAppearance) {
-                const appearanceRecord = migratedAppearance as unknown as Record<string, unknown>;
-                delete appearanceRecord['notePropertyType'];
-                delete appearanceRecord['customPropertyType'];
-                // File-display property pills feature was removed; drop the per-folder toggle.
-                delete appearanceRecord['showProperties'];
-                collection[key] = migratedAppearance;
-            }
+            const appearanceRecord = appearance as unknown as Record<string, unknown>;
+            delete appearanceRecord['notePropertyType'];
+            delete appearanceRecord['customPropertyType'];
+            // File-display property pills feature was removed; drop the per-folder toggle.
+            delete appearanceRecord['showProperties'];
+            // Compact is the only list mode; drop stored legacy content toggles and the mode field.
+            delete appearanceRecord['showPreview'];
+            delete appearanceRecord['showImage'];
+            delete appearanceRecord['showDate'];
+            delete appearanceRecord['mode'];
+            collection[key] = appearance;
         });
     };
 

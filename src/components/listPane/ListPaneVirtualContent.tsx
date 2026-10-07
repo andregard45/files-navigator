@@ -102,7 +102,6 @@ interface ListPaneVirtualContentProps {
     rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
     scrollContainerRefCallback: (element: HTMLDivElement | null) => void;
     activeFolderDropPath: string | null;
-    isCompactMode: boolean;
     isEmptySelection: boolean;
     hasNoFiles: boolean;
     topSpacerHeight: number;
@@ -572,7 +571,6 @@ export function ListPaneVirtualContent({
     rowVirtualizer,
     scrollContainerRefCallback,
     activeFolderDropPath,
-    isCompactMode,
     isEmptySelection,
     hasNoFiles,
     topSpacerHeight,
@@ -950,7 +948,7 @@ export function ListPaneVirtualContent({
     return (
         <div
             ref={scrollContainerRefCallback}
-            className={`nn-list-pane-scroller ${!isEmptySelection && !hasNoFiles && isCompactMode ? 'nn-compact-mode' : ''}`}
+            className={`nn-list-pane-scroller ${!isEmptySelection && !hasNoFiles ? 'nn-compact-mode' : ''}`}
             data-drop-zone={activeFolderDropPath ? 'folder' : undefined}
             data-drop-path={activeFolderDropPath ?? undefined}
             data-allow-internal-drop={activeFolderDropPath ? 'false' : undefined}

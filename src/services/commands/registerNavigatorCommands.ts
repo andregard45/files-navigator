@@ -41,7 +41,6 @@ function getCommandSpecs(): NavigatorCommandSpec[] {
         { id: 'toggle-tag-sort', name: strings.commands.toggleTagSort },
         { id: 'toggle-tags-by-selection', name: strings.commands.toggleTagsBySelection },
         { id: 'toggle-properties-by-selection', name: strings.commands.togglePropertiesBySelection },
-        { id: 'toggle-compact-mode', name: strings.commands.toggleCompactMode },
         { id: 'toggle-pinned-section', name: strings.commands.togglePinnedSection },
         { id: 'collapse-expand-list-groups', name: strings.commands.collapseExpandListGroups },
         { id: 'toggle-dual-pane', name: strings.commands.toggleDualPane },

@@ -412,8 +412,6 @@ export const STRINGS_FR = {
     folderAppearance: {
         appearance: 'Apparence',
         sortBy: 'Trier par',
-        standardPreset: 'Standard',
-        compactPreset: 'Compact',
         defaultSuffix: '(par défaut)',
         defaultLabel: 'Par défaut',
         titleRows: {
@@ -899,7 +897,6 @@ export const STRINGS_FR = {
         toggleTagSort: 'Basculer le tri des mots-clés', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Basculer les mots-clés par sélection',
         togglePropertiesBySelection: 'Basculer les propriétés par sélection',
-        toggleCompactMode: 'Basculer le mode compact', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Basculer la section épinglée',
         collapseExpand: 'Replier / déplier tous les éléments de navigation', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Replier / déplier tous les groupes de la liste',
@@ -1217,14 +1214,6 @@ export const STRINGS_FR = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Regroupement par dossier : fichiers du dossier actuel en bas',
                 desc: 'Lorsque le regroupement par défaut est Dossier, déplacer les fichiers directement dans le dossier sélectionné sous les groupes de sous-dossiers.'
-            },
-            defaultListMode: {
-                name: 'Mode de liste par défaut',
-                desc: "Sélectionner la mise en page de liste par défaut. Standard affiche le titre, la date, la description et le texte d'aperçu. Compact affiche uniquement le titre. L'apparence peut être remplacée par dossier.",
-                options: {
-                    standard: 'Standard',
-                    compact: 'Compact'
-                }
             },
             showFileIcons: {
                 name: 'Afficher les icônes de fichier',

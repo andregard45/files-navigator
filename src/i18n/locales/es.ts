@@ -412,8 +412,6 @@ export const STRINGS_ES = {
     folderAppearance: {
         appearance: 'Apariencia',
         sortBy: 'Ordenar por',
-        standardPreset: 'Estándar',
-        compactPreset: 'Compacto',
         defaultSuffix: '(predeterminado)',
         defaultLabel: 'Predeterminado',
         titleRows: {
@@ -898,7 +896,6 @@ export const STRINGS_ES = {
         toggleTagSort: 'Alternar orden de etiquetas', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Alternar etiquetas por selección',
         togglePropertiesBySelection: 'Alternar propiedades por selección',
-        toggleCompactMode: 'Alternar modo compacto', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Alternar sección fijada',
         collapseExpand: 'Contraer / expandir todos los elementos de navegación', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Contraer / expandir todos los grupos de la lista',
@@ -1217,14 +1214,6 @@ export const STRINGS_ES = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Agrupación por carpeta: archivos de la carpeta actual al final',
                 desc: 'Cuando la agrupación predeterminada sea Carpeta, mueve los archivos directamente en la carpeta seleccionada debajo de los grupos de subcarpetas.'
-            },
-            defaultListMode: {
-                name: 'Modo de lista predeterminado',
-                desc: 'Selecciona el diseño de lista predeterminado. Estándar muestra título, fecha, descripción y texto de vista previa. Compacto muestra solo el título. La apariencia se puede sobrescribir por carpeta.',
-                options: {
-                    standard: 'Estándar',
-                    compact: 'Compacto'
-                }
             },
             showFileIcons: {
                 name: 'Mostrar iconos de archivo',

@@ -18,7 +18,6 @@
 
 import { Menu, TFolder, type MenuItem } from 'obsidian';
 import {
-    getDefaultListMode,
     getStoredListPaneAppearanceFields,
     hasStoredListPaneAppearanceOverride,
     mergeListPaneAppearanceAndGrouping,
@@ -26,7 +25,7 @@ import {
     type ListPaneAppearance
 } from '../settings/listPaneAppearance';
 import { strings } from '../i18n';
-import type { ListDisplayMode, NotebookNavigatorSettings } from '../settings/types';
+import type { NotebookNavigatorSettings } from '../settings/types';
 import { ItemType } from '../types';
 import { runAsyncAction } from '../utils/async';
 import { setSubmenuOnClick, tryCreateSubmenu } from '../utils/contextMenu/menuAsyncHelpers';
@@ -77,7 +76,6 @@ export function showListPaneAppearanceMenu({
     descendantAction,
     defaultSettingsAction
 }: AppearanceMenuProps) {
-    const defaultMode: ListDisplayMode = getDefaultListMode(settings);
     const resolveAppearanceAccessor = (): AppearanceRecordAccessor | null => {
         if (selectionType === ItemType.TAG && selectedTag) {
             return {
@@ -138,8 +136,6 @@ export function showListPaneAppearanceMenu({
     const appearance = appearanceAccessor ? appearanceAccessor.getRecord(settings)?.[appearanceAccessor.key] : undefined;
     const storedFields = getStoredListPaneAppearanceFields(appearance);
     const resolved = resolveListPaneAppearance({ settings, appearance, selectionType });
-    const effectiveMode = resolved.mode;
-    const isCompact = effectiveMode === 'compact';
     const hasAppearanceOverride = hasStoredListPaneAppearanceOverride(appearance);
     const withSuffix = (label: string, suffix: string | null): string => (suffix ? `${label} ${suffix}` : label);
     // Entries with a per-selection custom value are marked in bold instead of a text suffix.
@@ -202,33 +198,6 @@ export function showListPaneAppearanceMenu({
         item.setTitle(strings.folderAppearance.appearance)
             .setIcon(resolveUXIconForMenu(settings.interfaceIcons, 'list-appearance'))
             .setDisabled(true);
-    });
-
-    menu.addItem(item => {
-        const label = withSuffix(
-            strings.folderAppearance.standardPreset,
-            defaultMode === 'standard' ? strings.folderAppearance.defaultSuffix : null
-        );
-        setItemTitle(item, label, appearance?.mode === 'standard');
-        item.setIcon('lucide-list')
-            .setChecked(effectiveMode === 'standard')
-            .onClick(() => {
-                updateAppearance({ mode: defaultMode === 'standard' ? undefined : 'standard' });
-            });
-    });
-
-    menu.addItem(item => {
-        const label = withSuffix(
-            strings.folderAppearance.compactPreset,
-            defaultMode === 'compact' ? strings.folderAppearance.defaultSuffix : null
-        );
-        setItemTitle(item, label, appearance?.mode === 'compact');
-        item.setIcon('lucide-align-left')
-            .setChecked(effectiveMode === 'compact')
-            .onClick(() => {
-                // Content preferences remain stored because they become active again in Standard mode.
-                updateAppearance({ mode: defaultMode === 'compact' ? undefined : 'compact' });
-            });
     });
 
     menu.addSeparator();

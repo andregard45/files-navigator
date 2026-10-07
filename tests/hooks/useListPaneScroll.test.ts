@@ -46,7 +46,6 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         titleRows: 1,
         showSearchExcerpt,
         compactPaddingTotal: 18,
-        isCompactMode: false,
         selectionType: 'folder' as never,
         includeDescendantNotes: false,
         selectedPropertyValueNodeIdToHide: null,

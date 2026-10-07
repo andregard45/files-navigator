@@ -409,8 +409,6 @@ export const STRINGS_FA = {
     folderAppearance: {
         appearance: 'ظاهر',
         sortBy: 'مرتب‌سازی بر اساس',
-        standardPreset: 'استاندارد',
-        compactPreset: 'فشرده',
         defaultSuffix: '(پیش‌فرض)',
         defaultLabel: 'پیش‌فرض',
         titleRows: {
@@ -895,7 +893,6 @@ export const STRINGS_FA = {
         toggleTagSort: 'تغییر ترتیب مرتب‌سازی برچسب',
         toggleTagsBySelection: 'تغییر برچسب‌ها بر اساس انتخاب',
         togglePropertiesBySelection: 'تغییر ویژگی‌ها بر اساس انتخاب',
-        toggleCompactMode: 'تغییر حالت فشرده', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'تغییر بخش سنجاق‌شده',
         collapseExpand: 'جمع / باز کردن همه آیتم‌های ناوبری',
         collapseExpandListGroups: 'جمع / باز کردن همه گروه‌های فهرست',
@@ -1211,14 +1208,6 @@ export const STRINGS_FA = {
             showCurrentFolderFilesAtBottom: {
                 name: 'گروه‌بندی پوشه: فایل‌های پوشه فعلی در پایین',
                 desc: 'وقتی گروه‌بندی پیش‌فرض روی پوشه است، فایل‌هایی که مستقیماً در پوشه انتخاب‌شده هستند به زیر گروه‌های زیرپوشه منتقل می‌شوند.'
-            },
-            defaultListMode: {
-                name: 'حالت لیست پیش‌فرض',
-                desc: 'نمای لیست پیش‌فرض را انتخاب کنید. استاندارد عنوان، تاریخ، توضیحات و متن پیش‌نمایش را نمایش می‌دهد. فشرده فقط عنوان را نمایش می‌دهد. ظاهر را برای هر پوشه جداگانه تنظیم کنید.',
-                options: {
-                    standard: 'استاندارد',
-                    compact: 'فشرده'
-                }
             },
             showFileIcons: {
                 name: 'نمایش آیکون‌های فایل',

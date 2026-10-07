@@ -409,8 +409,6 @@ export const STRINGS_PL = {
     folderAppearance: {
         appearance: 'Wygląd',
         sortBy: 'Sortuj według',
-        standardPreset: 'Standardowy',
-        compactPreset: 'Kompaktowy',
         defaultSuffix: '(domyślne)',
         defaultLabel: 'Domyślne',
         titleRows: {
@@ -897,7 +895,6 @@ export const STRINGS_PL = {
         toggleTagSort: 'Przełącz sortowanie tagów', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Przełącz tagi według wyboru',
         togglePropertiesBySelection: 'Przełącz atrybuty według wyboru',
-        toggleCompactMode: 'Przełącz tryb kompaktowy', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Przełącz przypiętą sekcję',
         collapseExpand: 'Zwiń / rozwiń wszystkie elementy nawigacji', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Zwiń / rozwiń wszystkie grupy listy',
@@ -1214,14 +1211,6 @@ export const STRINGS_PL = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Grupowanie folderów: pliki bieżącego folderu na dole',
                 desc: 'Gdy domyślne grupowanie to Folder, przenieś pliki znajdujące się bezpośrednio w wybranym folderze pod grupy podfolderów.'
-            },
-            defaultListMode: {
-                name: 'Domyślny tryb listy',
-                desc: 'Wybierz domyślny układ listy. Opcja "Standardowy" wyświetla tytuł, datę, opis i tekst podglądu. Opcja "Kompaktowy" wyświetla tylko tytuł. Można to zmienić dla konkretnych folderów.',
-                options: {
-                    standard: 'Standardowy',
-                    compact: 'Kompaktowy'
-                }
             },
             showFileIcons: {
                 name: 'Pokaż ikonki plików',

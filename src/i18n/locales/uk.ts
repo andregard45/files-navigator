@@ -410,8 +410,6 @@ export const STRINGS_UK = {
     folderAppearance: {
         appearance: 'Вигляд',
         sortBy: 'Сортувати за',
-        standardPreset: 'Стандартний',
-        compactPreset: 'Компактний',
         defaultSuffix: '(за замовчуванням)',
         defaultLabel: 'За замовчуванням',
         titleRows: {
@@ -892,7 +890,6 @@ export const STRINGS_UK = {
         toggleTagSort: 'Перемкнути порядок сортування міток', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Перемкнути мітки за вибором',
         togglePropertiesBySelection: 'Перемкнути властивості за вибором',
-        toggleCompactMode: 'Перемкнути компактний режим', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Перемкнути закріплений розділ',
         collapseExpand: 'Згорнути / розгорнути всі елементи навігації', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Згорнути / розгорнути всі групи списку',
@@ -1210,14 +1207,6 @@ export const STRINGS_UK = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Групування за теками: файли поточної теки внизу',
                 desc: 'Коли для групування за замовчуванням вибрано «Тека», файли безпосередньо у вибраній теці буде показано нижче груп підтек.'
-            },
-            defaultListMode: {
-                name: 'Режим списку за замовчуванням',
-                desc: 'Виберіть макет списку за замовчуванням. Стандартний показує заголовок, дату, опис та текст попереднього перегляду. Компактний показує лише заголовок. Перевизначте вигляд для кожної теки.',
-                options: {
-                    standard: 'Стандартний',
-                    compact: 'Компактний'
-                }
             },
             showFileIcons: {
                 name: 'Показувати іконки файлів',

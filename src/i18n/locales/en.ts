@@ -409,8 +409,6 @@ export const STRINGS_EN = {
     folderAppearance: {
         appearance: 'Appearance',
         sortBy: 'Sort by',
-        standardPreset: 'Standard',
-        compactPreset: 'Compact',
         defaultSuffix: '(default)',
         defaultLabel: 'Default',
         titleRows: {
@@ -889,7 +887,6 @@ export const STRINGS_EN = {
         toggleTagSort: 'Toggle tag sort order', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Toggle tags by selection',
         togglePropertiesBySelection: 'Toggle properties by selection',
-        toggleCompactMode: 'Toggle compact mode', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Toggle pinned section',
         collapseExpand: 'Collapse / expand all navigation items', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Collapse / expand all list groups',
@@ -1205,14 +1202,6 @@ export const STRINGS_EN = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Folder grouping: current folder files at bottom',
                 desc: 'When Default grouping is Folder, move files directly in the selected folder below subfolder groups.'
-            },
-            defaultListMode: {
-                name: 'Default list mode',
-                desc: 'Select the default list layout. Standard shows title, date, description, and preview text. Compact shows title only. Override appearance per folder.',
-                options: {
-                    standard: 'Standard',
-                    compact: 'Compact'
-                }
             },
             showFileIcons: {
                 name: 'Show file icons',

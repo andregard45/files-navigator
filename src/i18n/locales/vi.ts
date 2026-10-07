@@ -409,8 +409,6 @@ export const STRINGS_VI = {
     folderAppearance: {
         appearance: 'Giao diện',
         sortBy: 'Sắp xếp theo',
-        standardPreset: 'Chuẩn',
-        compactPreset: 'Gọn',
         defaultSuffix: '(mặc định)',
         defaultLabel: 'Mặc định',
         titleRows: {
@@ -894,7 +892,6 @@ export const STRINGS_VI = {
         toggleTagSort: 'Bật/tắt sắp xếp thẻ', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Bật/tắt thẻ theo lựa chọn',
         togglePropertiesBySelection: 'Bật/tắt thuộc tính theo lựa chọn',
-        toggleCompactMode: 'Bật/tắt chế độ gọn', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Bật/tắt phần đã ghim',
         collapseExpand: 'Thu gọn / mở rộng tất cả mục điều hướng', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Thu gọn / mở rộng tất cả nhóm trong danh sách',
@@ -1210,14 +1207,6 @@ export const STRINGS_VI = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Nhóm theo thư mục: tệp trong thư mục hiện tại ở dưới cùng',
                 desc: 'Khi kiểu nhóm mặc định là Thư mục, chuyển các tệp nằm trực tiếp trong thư mục đã chọn xuống dưới các nhóm thư mục con.'
-            },
-            defaultListMode: {
-                name: 'Chế độ danh sách mặc định',
-                desc: 'Chọn bố cục danh sách mặc định. Chuẩn hiện tiêu đề, ngày, mô tả và văn bản xem trước. Gọn chỉ hiện tiêu đề. Ghi đè giao diện theo thư mục.',
-                options: {
-                    standard: 'Chuẩn',
-                    compact: 'Gọn'
-                }
             },
             showFileIcons: {
                 name: 'Hiện biểu tượng tệp',

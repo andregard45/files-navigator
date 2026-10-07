@@ -150,7 +150,6 @@ type ListLayoutSignatureSettings = Pick<
 >;
 
 export interface ListFileRowSizingConfig extends FileRowHeightConfig {
-    isCompactMode: boolean;
     selectionType: SelectionState['selectionType'];
     includeDescendantNotes: boolean;
     selectedPropertyValueNodeIdToHide: string | null;
@@ -231,7 +230,6 @@ function getListLayoutSignature({
     // Lightweight tagged concat instead of JSON.stringify; runs on every layout input change.
     return [
         'topSpacer', topSpacerHeight,
-        'mode', folderSettings.mode,
         'titleRows', folderSettings.titleRows,
         'groupBy', folderSettings.groupBy,
         'searchExcerpt', folderSettings.showSearchExcerpt ? 1 : 0,
@@ -430,7 +428,6 @@ export function useListPaneScroll({
         onScrollContainerVisibilityChangeRef.current?.(nextVisible, scrollElement);
     }, []);
 
-    const isCompactMode = folderSettings.mode === 'compact';
     const revealFileOnListChanges = settings.revealFileOnListChanges;
     const hasSelectedFile = Boolean(selectedFile);
     const selectedPropertyValueNodeIdToHide = useMemo(
@@ -447,7 +444,6 @@ export function useListPaneScroll({
         titleRows: folderSettings.titleRows || 1,
         showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
         compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
-        isCompactMode,
         selectionType: selectionState.selectionType,
         includeDescendantNotes,
         selectedPropertyValueNodeIdToHide
@@ -457,7 +453,6 @@ export function useListPaneScroll({
         folderSettings.showSearchExcerpt,
         folderSettings.titleRows,
         includeDescendantNotes,
-        isCompactMode,
         isMobile,
         listMeasurements,
         selectedPropertyValueNodeIdToHide,

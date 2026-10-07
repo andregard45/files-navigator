@@ -409,8 +409,6 @@ export const STRINGS_TH = {
     folderAppearance: {
         appearance: 'ลักษณะ',
         sortBy: 'เรียงตาม',
-        standardPreset: 'มาตรฐาน',
-        compactPreset: 'กะทัดรัด',
         defaultSuffix: '(ค่าเริ่มต้น)',
         defaultLabel: 'ค่าเริ่มต้น',
         titleRows: {
@@ -889,7 +887,6 @@ export const STRINGS_TH = {
         toggleTagSort: 'สลับลำดับการเรียงแท็ก',
         toggleTagsBySelection: 'สลับแท็กตามการเลือก',
         togglePropertiesBySelection: 'สลับคุณสมบัติตามการเลือก',
-        toggleCompactMode: 'สลับโหมดกะทัดรัด', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'สลับส่วนที่ปักหมุด',
         collapseExpand: 'ยุบ / ขยายรายการนำทางทั้งหมด',
         collapseExpandListGroups: 'ยุบ / ขยายกลุ่มรายการทั้งหมด',
@@ -1205,14 +1202,6 @@ export const STRINGS_TH = {
             showCurrentFolderFilesAtBottom: {
                 name: 'การจัดกลุ่มตามโฟลเดอร์: ไฟล์ในโฟลเดอร์ปัจจุบันอยู่ด้านล่าง',
                 desc: 'เมื่อการจัดกลุ่มเริ่มต้นเป็นโฟลเดอร์ ให้ย้ายไฟล์ที่อยู่ในโฟลเดอร์ที่เลือกโดยตรงไปไว้ใต้กลุ่มโฟลเดอร์ย่อย'
-            },
-            defaultListMode: {
-                name: 'โหมดรายการเริ่มต้น',
-                desc: 'เลือกรูปแบบรายการเริ่มต้น มาตรฐานแสดงชื่อเรื่อง วันที่ คำอธิบาย และข้อความตัวอย่าง กะทัดรัดแสดงชื่อเรื่องเท่านั้น แทนที่ลักษณะต่อโฟลเดอร์',
-                options: {
-                    standard: 'มาตรฐาน',
-                    compact: 'กะทัดรัด'
-                }
             },
             showFileIcons: {
                 name: 'แสดงไอคอนไฟล์',

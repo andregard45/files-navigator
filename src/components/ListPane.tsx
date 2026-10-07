@@ -695,7 +695,6 @@ export const ListPane = React.memo(
             }
         });
 
-        const isCompactMode = appearanceSettings.mode === 'compact';
         const {
             selectFileFromList,
             selectAdjacentFile,
@@ -958,7 +957,6 @@ export const ListPane = React.memo(
                         rowVirtualizer={rowVirtualizer}
                         scrollContainerRefCallback={scrollContainerRefCallback}
                         activeFolderDropPath={activeFolderDropPath}
-                        isCompactMode={isCompactMode}
                         isEmptySelection={isEmptySelection}
                         hasNoFiles={hasNoFiles}
                         topSpacerHeight={effectiveTopSpacerHeight}

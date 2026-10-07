@@ -409,8 +409,6 @@ export const STRINGS_IT = {
     folderAppearance: {
         appearance: 'Aspetto',
         sortBy: 'Ordina per',
-        standardPreset: 'Standard',
-        compactPreset: 'Compatto',
         defaultSuffix: '(predefinito)',
         defaultLabel: 'Predefinito',
         titleRows: {
@@ -892,7 +890,6 @@ export const STRINGS_IT = {
         toggleTagSort: 'Attiva/disattiva ordinamento etichette', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Attiva/disattiva etichette per selezione',
         togglePropertiesBySelection: 'Attiva/disattiva proprietà per selezione',
-        toggleCompactMode: 'Attiva/disattiva modalità compatta', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Attiva/disattiva sezione fissata',
         collapseExpand: 'Comprimi / espandi tutti gli elementi di navigazione', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: "Comprimi / espandi tutti i gruppi dell'elenco",
@@ -1210,14 +1207,6 @@ export const STRINGS_IT = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Raggruppamento per cartella: file della cartella corrente in basso',
                 desc: 'Quando il raggruppamento predefinito è Cartella, sposta i file direttamente nella cartella selezionata sotto i gruppi di sottocartelle.'
-            },
-            defaultListMode: {
-                name: 'Modalità lista predefinita',
-                desc: "Seleziona il layout lista predefinito. Standard mostra titolo, data, descrizione e testo anteprima. Compatto mostra solo il titolo. Sovrascrivi l'aspetto per cartella.",
-                options: {
-                    standard: 'Standard',
-                    compact: 'Compatto'
-                }
             },
             showFileIcons: {
                 name: 'Mostra icone file',

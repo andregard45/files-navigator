@@ -411,8 +411,6 @@ export const STRINGS_JA = {
     folderAppearance: {
         appearance: '外観',
         sortBy: '並べ替え',
-        standardPreset: '標準',
-        compactPreset: 'コンパクト',
         defaultSuffix: '(デフォルト)',
         defaultLabel: 'デフォルト',
         titleRows: {
@@ -896,7 +894,6 @@ export const STRINGS_JA = {
         toggleTagSort: 'タグの並び順を切り替え', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: '選択範囲でタグを切り替え',
         togglePropertiesBySelection: '選択範囲でプロパティを切り替え',
-        toggleCompactMode: 'コンパクトモードの切り替え', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'ピン留めセクションの切り替え',
         collapseExpand: 'すべてのナビゲーション項目を折りたたむ/展開', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'リストのすべてのグループを折りたたむ/展開',
@@ -1212,14 +1209,6 @@ export const STRINGS_JA = {
             showCurrentFolderFilesAtBottom: {
                 name: 'フォルダグループ化: 現在のフォルダのファイルを下部に表示',
                 desc: 'デフォルトのグループ化がフォルダの場合、選択したフォルダ直下のファイルをサブフォルダグループの下に移動します。'
-            },
-            defaultListMode: {
-                name: 'リストのデフォルトモード',
-                desc: 'デフォルトのリストレイアウトを選択します。標準はタイトル、日付、説明、プレビューテキストを表示します。コンパクトはタイトルのみを表示します。外観はフォルダごとに上書きできます。',
-                options: {
-                    standard: '標準',
-                    compact: 'コンパクト'
-                }
             },
             showFileIcons: {
                 name: 'ファイルアイコンを表示',

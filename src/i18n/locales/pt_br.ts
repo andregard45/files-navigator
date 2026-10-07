@@ -412,8 +412,6 @@ export const STRINGS_PT_BR = {
     folderAppearance: {
         appearance: 'Aparência',
         sortBy: 'Classificar por',
-        standardPreset: 'Padrão',
-        compactPreset: 'Compacto',
         defaultSuffix: '(padrão)',
         defaultLabel: 'Padrão',
         titleRows: {
@@ -898,7 +896,6 @@ export const STRINGS_PT_BR = {
         toggleTagSort: 'Alternar ordem de classificação de etiquetas',
         toggleTagsBySelection: 'Alternar etiquetas por seleção',
         togglePropertiesBySelection: 'Alternar propriedades por seleção',
-        toggleCompactMode: 'Alternar modo compacto', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Alternar seção fixada',
         collapseExpand: 'Recolher / expandir todos os itens de navegação',
         collapseExpandListGroups: 'Recolher / expandir todos os grupos da lista',
@@ -1216,14 +1213,6 @@ export const STRINGS_PT_BR = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Agrupamento por pasta: arquivos da pasta atual embaixo',
                 desc: 'Quando o agrupamento padrão for Pasta, mova os arquivos diretamente na pasta selecionada para baixo dos grupos de subpastas.'
-            },
-            defaultListMode: {
-                name: 'Modo padrão da lista',
-                desc: 'Selecione o layout padrão da lista. Padrão mostra título, data, descrição e texto de visualização. Compacto mostra apenas o título. A aparência pode ser substituída por pasta.',
-                options: {
-                    standard: 'Padrão',
-                    compact: 'Compacto'
-                }
             },
             showFileIcons: {
                 name: 'Mostrar ícones de arquivo',

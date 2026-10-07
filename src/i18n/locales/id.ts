@@ -410,8 +410,6 @@ export const STRINGS_ID = {
     folderAppearance: {
         appearance: 'Tampilan',
         sortBy: 'Urutkan berdasarkan',
-        standardPreset: 'Standar',
-        compactPreset: 'Kompak',
         defaultSuffix: '(default)',
         defaultLabel: 'Bawaan',
         titleRows: {
@@ -895,7 +893,6 @@ export const STRINGS_ID = {
         toggleTagSort: 'Alihkan urutan tag',
         toggleTagsBySelection: 'Alihkan tag berdasarkan pilihan',
         togglePropertiesBySelection: 'Alihkan properti berdasarkan pilihan',
-        toggleCompactMode: 'Alihkan mode kompak', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Alihkan bagian yang disematkan',
         collapseExpand: 'Ciutkan / luaskan semua item navigasi',
         collapseExpandListGroups: 'Ciutkan / luaskan semua grup daftar',
@@ -1212,14 +1209,6 @@ export const STRINGS_ID = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Pengelompokan folder: file folder saat ini di bawah',
                 desc: 'Saat pengelompokan default adalah Folder, pindahkan file yang langsung berada di folder yang dipilih ke bawah grup subfolder.'
-            },
-            defaultListMode: {
-                name: 'Mode daftar default',
-                desc: 'Pilih tata letak daftar default. Standar menampilkan judul, tanggal, deskripsi, dan teks pratinjau. Kompak menampilkan judul saja. Ganti tampilan per folder.',
-                options: {
-                    standard: 'Standar',
-                    compact: 'Kompak'
-                }
             },
             showFileIcons: {
                 name: 'Tampilkan ikon file',

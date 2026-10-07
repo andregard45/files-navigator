@@ -297,7 +297,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     scopePropertiesToCurrentContext: false,
 
     // List pane tab
-    defaultListMode: 'standard',
     includeDescendantNotes: false,
     defaultFolderSort: 'modified-desc',
     defaultFolderSortPropertyKey: '',

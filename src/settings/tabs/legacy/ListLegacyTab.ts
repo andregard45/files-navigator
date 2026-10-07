@@ -19,7 +19,7 @@
 import { Platform, Setting, setIcon } from 'obsidian';
 import { strings } from '../../../i18n';
 import { DEFAULT_SETTINGS } from '../../defaultSettings';
-import { isListDisplayMode, isListPaneTitleOption, isPropertySortSecondaryOption } from '../../types';
+import { isListPaneTitleOption, isPropertySortSecondaryOption } from '../../types';
 import { PROPERTY_SORT_SECONDARY_OPTIONS } from '../../types';
 import type { SettingsTabContext } from '../SettingsTabContext';
 import {
@@ -89,25 +89,6 @@ export function renderListPaneTab(context: SettingsTabContext): void {
                 plugin.settings.colorListPaneTitle = value;
             }
         );
-
-        appearanceGroup.addSetting(setting => {
-            setting
-                .setName(strings.settings.items.defaultListMode.name)
-                .setDesc(strings.settings.items.defaultListMode.desc)
-                .addDropdown(dropdown =>
-                    dropdown
-                        .addOption('standard', strings.settings.items.defaultListMode.options.standard)
-                        .addOption('compact', strings.settings.items.defaultListMode.options.compact)
-                        .setValue(plugin.settings.defaultListMode)
-                        .onChange(async value => {
-                            if (!isListDisplayMode(value)) {
-                                return;
-                            }
-                            plugin.settings.defaultListMode = value === 'compact' ? 'compact' : 'standard';
-                            await plugin.saveSettingsAndUpdate();
-                        })
-                );
-        });
 
         const compactItemHeightSetting = appearanceGroup.addSetting(setting => {
             renderSliderSetting(setting, {

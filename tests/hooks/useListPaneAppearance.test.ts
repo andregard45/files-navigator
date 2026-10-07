@@ -35,42 +35,36 @@ function createSettings(overrides: Partial<NotebookNavigatorSettings> = {}): Not
 }
 
 describe('resolveListPaneAppearance', () => {
-    it('lets a selection override the stored mode', () => {
+    it('lets a selection override the stored title rows', () => {
         const result = resolveListPaneAppearance({
-            settings: createSettings({ defaultListMode: 'standard' }),
-            appearance: { mode: 'compact' },
+            settings: createSettings({ fileNameRows: 1 }),
+            appearance: { titleRows: 2 },
             selectionType: ItemType.FOLDER
         });
 
-        expect(result).toMatchObject({ mode: 'compact' });
+        expect(result).toMatchObject({ titleRows: 2 });
     });
 
-    it('applies compact mode gates without deleting stored Standard-mode preferences', () => {
+    it('falls back to the global file name rows when no override is stored', () => {
         const result = resolveListPaneAppearance({
-            settings: createSettings({
-                defaultListMode: 'standard',
-            }),
-            appearance: { mode: 'compact' },
+            settings: createSettings({ fileNameRows: 3 }),
+            appearance: undefined,
             selectionType: ItemType.PROPERTY
         });
 
-        expect(result).toMatchObject({
-            mode: 'compact',
-        });
+        expect(result).toMatchObject({ titleRows: 3 });
     });
 });
 
 describe('stored list appearance intent', () => {
-    it('retains both enabling and hiding toggles and drops invalid or unknown fields', () => {
+    it('retains valid fields and drops invalid or unknown fields', () => {
         const stored = getStoredListPaneAppearanceFields({
-            mode: 'standard',
             titleRows: 2,
             previewRows: 9,
             showProperties: true
         } as unknown as ListPaneAppearance);
 
         expect(stored).toEqual({
-            mode: 'standard',
             titleRows: 2,
         });
         expect(hasStoredListPaneAppearanceOverride(stored ?? undefined)).toBe(true);
@@ -91,7 +85,7 @@ describe('stored list appearance intent', () => {
 describe('appearance map snapshots', () => {
     it('preserves map identity when an unrelated settings update leaves appearances unchanged', () => {
         const current = {
-            Writing: { mode: 'standard', titleRows: 2 }
+            Writing: { titleRows: 2 }
         } satisfies Record<string, ListPaneAppearance>;
         const initialSnapshot = snapshotListPaneAppearanceMap(current);
         const nextSnapshot = snapshotListPaneAppearanceMap(current, initialSnapshot);
@@ -103,7 +97,7 @@ describe('appearance map snapshots', () => {
 
     it('publishes a new immutable snapshot after an in-place appearance mutation', () => {
         const current = {
-            Writing: { mode: 'standard', titleRows: 2 }
+            Writing: { titleRows: 2 }
         } satisfies Record<string, ListPaneAppearance>;
         const initialSnapshot = snapshotListPaneAppearanceMap(current);
 
