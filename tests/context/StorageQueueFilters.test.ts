@@ -148,4 +148,5 @@ describe('Storage queue filters', () => {
         });
         expect(conservativeMissingResult).toEqual([file]);
     });
+});
 

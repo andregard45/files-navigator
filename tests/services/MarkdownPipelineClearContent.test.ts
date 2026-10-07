@@ -16,33 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { App, TFile } from 'obsidian';
+import { App } from 'obsidian';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { MarkdownPipelineContentProvider } from '../../src/services/content/MarkdownPipelineContentProvider';
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
 import type { NotebookNavigatorSettings } from '../../src/settings/types';
-import { setActivePropertyFields } from '../../src/utils/vaultProfiles';
 
 const batchClearAllFileContentMock = vi.fn();
 
 // Replaces storage access with spies so tests can assert clearContent DB calls directly.
 vi.mock('../../src/storage/fileOperations', () => ({
     getDBInstance: () => ({
-        batchClearAllFileContent: batchClearAllFileContentMock,
-
+        batchClearAllFileContent: batchClearAllFileContentMock
     })
 }));
 
-// Builds a stable baseline with markdown preview disabled unless overridden by each test.
-function createSettings(overrides: Partial<NotebookNavigatorSettings> & { propertyFields?: string }): NotebookNavigatorSettings {
-    const { propertyFields: rawPropertyFields, ...restOverrides } = overrides;
+function createSettings(overrides: Partial<NotebookNavigatorSettings>): NotebookNavigatorSettings {
     const settings = structuredClone(DEFAULT_SETTINGS);
-    Object.assign(settings, restOverrides);
-
-    if (typeof rawPropertyFields === 'string') {
-        setActivePropertyFields(settings, rawPropertyFields);
-    }
-
+    Object.assign(settings, overrides);
     return settings;
 }
 
@@ -65,99 +56,31 @@ describe('MarkdownPipelineContentProvider clearContent', () => {
         );
     });
 
-    it('keeps persisted properties when every display property is disabled', async () => {
+    it('clears the property cache when called without a settings context', async () => {
         const provider = new MarkdownPipelineContentProvider(new App());
-        const oldSettings = createSettings({ propertyFields: 'status' });
-        const newSettings = createSettings({ propertyFields: '' });
 
-        await provider.clearContent({ oldSettings, newSettings });
+        await provider.clearContent();
 
-        expect(batchClearAllFileContentMock).not.toHaveBeenCalled();
+        expect(batchClearAllFileContentMock).toHaveBeenCalledTimes(1);
+        expect(batchClearAllFileContentMock).toHaveBeenCalledWith('properties');
     });
 
-    it('clears previews when preview is enabled', async () => {
+    it('always clears persisted properties regardless of display setting changes', async () => {
         const provider = new MarkdownPipelineContentProvider(new App());
-        const oldSettings = createSettings({ showFilePreview: false });
-        const newSettings = createSettings({ showFilePreview: true });
+        const oldSettings = createSettings({});
+        const newSettings = createSettings({});
 
         await provider.clearContent({ oldSettings, newSettings });
 
         expect(batchClearAllFileContentMock).toHaveBeenCalledTimes(1);
-        expect(batchClearAllFileContentMock).toHaveBeenCalledWith('preview');
+        expect(batchClearAllFileContentMock).toHaveBeenCalledWith('properties');
     });
 
-    it('clears previews when preview is disabled', async () => {
+    it('never triggers vault-wide regeneration from appearance-only setting changes', () => {
         const provider = new MarkdownPipelineContentProvider(new App());
-        const oldSettings = createSettings({ showFilePreview: true });
-        const newSettings = createSettings({ showFilePreview: false });
-
-        await provider.clearContent({ oldSettings, newSettings });
-
-        expect(batchClearAllFileContentMock).toHaveBeenCalledTimes(1);
-        expect(batchClearAllFileContentMock).toHaveBeenCalledWith('preview');
-    });
-
-    it('keeps persisted properties when display property fields change', async () => {
-        const provider = new MarkdownPipelineContentProvider(new App());
-        const oldSettings = createSettings({ propertyFields: 'status' });
-        const newSettings = createSettings({ propertyFields: 'status, type' });
-
-        await provider.clearContent({ oldSettings, newSettings });
-
-        expect(batchClearAllFileContentMock).not.toHaveBeenCalled();
-    });
-
-    it('clears character counts when character count display is enabled', async () => {
-        const provider = new MarkdownPipelineContentProvider(new App());
-        const oldSettings = createSettings({ textCountDisplay: 'none' });
-        const newSettings = createSettings({ textCountDisplay: 'characters' });
-
-        await provider.clearContent({ oldSettings, newSettings });
-
-        expect(provider.shouldRegenerate(oldSettings, newSettings)).toBe(true);
-        expect(batchClearAllFileContentMock).toHaveBeenCalledTimes(1);
-        expect(batchClearAllFileContentMock).toHaveBeenCalledWith('characterCount');
-    });
-
-    it('does not regenerate word counts when only tooltip word count changes', async () => {
-        const provider = new MarkdownPipelineContentProvider(new App());
-        const oldSettings = createSettings({ showTooltips: false, showTooltipWordCount: false });
-        const newSettings = createSettings({ showTooltips: true, showTooltipWordCount: true });
-
-        await provider.clearContent({ oldSettings, newSettings });
+        const oldSettings = createSettings({});
+        const newSettings = createSettings({ showTooltips: true });
 
         expect(provider.shouldRegenerate(oldSettings, newSettings)).toBe(false);
-        expect(batchClearAllFileContentMock).not.toHaveBeenCalled();
-    });
-
-    it('clears word counts when grouping activates a consuming custom group header', async () => {
-        const app = new App();
-        const headerFile = new TFile('Projects/Header.md');
-        app.vault.getMarkdownFiles = () => [headerFile];
-        app.vault.getFileByPath = path => (path === headerFile.path ? headerFile : null);
-        app.metadataCache.getFileCache = file =>
-            file.path === headerFile.path
-                ? {
-                      frontmatter: {
-                          group_header: { title: 'Projects', show_word_count: true }
-                      }
-                  }
-                : null;
-        const provider = new MarkdownPipelineContentProvider(app);
-        const oldSettings = createSettings({
-            textCountDisplay: 'none',
-            noteGrouping: 'none',
-            defaultFolderSort: 'title-asc'
-        });
-        const newSettings = createSettings({
-            textCountDisplay: 'none',
-            noteGrouping: 'custom',
-            defaultFolderSort: 'title-asc'
-        });
-
-        await provider.clearContent({ oldSettings, newSettings });
-
-        expect(provider.shouldRegenerate(oldSettings, newSettings)).toBe(true);
-        expect(batchClearAllFileContentMock).toHaveBeenCalledWith('wordCount');
     });
 });

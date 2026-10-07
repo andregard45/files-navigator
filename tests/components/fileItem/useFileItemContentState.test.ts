@@ -65,7 +65,7 @@ describe('useFileItemContentState helpers', () => {
 
         const snapshot = loadFileItemCacheSnapshot({
             app: undefined as never,
-            file: undefined as never,
+            file: { path: 'notes/note.md' } as never,
             db: createContentDb(record),
             loadOptions: { loadTags: false }
         });
