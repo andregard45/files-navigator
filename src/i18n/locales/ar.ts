@@ -409,8 +409,6 @@ export const STRINGS_AR = {
     folderAppearance: {
         appearance: 'المظهر',
         sortBy: 'فرز حسب',
-        standardPreset: 'قياسي',
-        compactPreset: 'مضغوط',
         defaultSuffix: '(افتراضي)',
         defaultLabel: 'افتراضي',
         titleRows: {
@@ -891,7 +889,6 @@ export const STRINGS_AR = {
         toggleTagSort: 'تبديل ترتيب فرز الوسوم', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'تبديل الوسوم حسب التحديد',
         togglePropertiesBySelection: 'تبديل الخصائص حسب التحديد',
-        toggleCompactMode: 'تبديل الوضع المضغوط', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'تبديل قسم المثبتة',
         collapseExpand: 'طي / توسيع جميع عناصر التنقل', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'طي / توسيع جميع مجموعات القائمة',
@@ -1207,14 +1204,6 @@ export const STRINGS_AR = {
             showCurrentFolderFilesAtBottom: {
                 name: 'تجميع المجلدات: ملفات المجلد الحالي في الأسفل',
                 desc: 'عندما يكون التجميع الافتراضي هو المجلد، انقل الملفات الموجودة مباشرة في المجلد المحدد أسفل مجموعات المجلدات الفرعية.'
-            },
-            defaultListMode: {
-                name: 'وضع القائمة الافتراضي',
-                desc: 'اختر تخطيط القائمة الافتراضي. القياسي يعرض العنوان والتاريخ والوصف ونص المعاينة. المضغوط يعرض العنوان فقط. تجاوز المظهر لكل مجلد.',
-                options: {
-                    standard: 'قياسي',
-                    compact: 'مضغوط'
-                }
             },
             showFileIcons: {
                 name: 'إظهار أيقونات الملفات',

@@ -408,8 +408,6 @@ export const STRINGS_ZH_CN = {
     folderAppearance: {
         appearance: '外观',
         sortBy: '排序方式',
-        standardPreset: '标准',
-        compactPreset: '紧凑',
         defaultSuffix: '（默认）',
         defaultLabel: '默认',
         titleRows: {
@@ -887,7 +885,6 @@ export const STRINGS_ZH_CN = {
         toggleTagSort: '切换标签排序', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: '按选择切换标签',
         togglePropertiesBySelection: '按选择切换属性',
-        toggleCompactMode: '切换紧凑模式', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: '切换固定区域',
         collapseExpand: '折叠/展开所有导航项', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: '折叠/展开所有列表分组',
@@ -1200,14 +1197,6 @@ export const STRINGS_ZH_CN = {
             showCurrentFolderFilesAtBottom: {
                 name: '文件夹分组：当前文件夹文件置底',
                 desc: '当默认分组为文件夹时，将所选文件夹中的直属文件移到子文件夹分组下方。'
-            },
-            defaultListMode: {
-                name: '默认列表模式',
-                desc: '选择默认列表布局。标准显示标题、日期、描述和预览文本。紧凑只显示标题。外观可按文件夹覆盖。',
-                options: {
-                    standard: '标准',
-                    compact: '紧凑'
-                }
             },
             showFileIcons: {
                 name: '显示文件图标',

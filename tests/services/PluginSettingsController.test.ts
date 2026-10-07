@@ -295,7 +295,6 @@ describe('PluginSettingsController.loadSettings', () => {
             loadData: vi.fn(async () => ({
                 folderAppearances: {
                     Valid: {
-                        mode: 'standard',
                         titleRows: 2,
                         previewRows: 4,
                         showTags: true,
@@ -306,7 +305,6 @@ describe('PluginSettingsController.loadSettings', () => {
                         unknown: 'discard me'
                     },
                     Invalid: {
-                        mode: 'dense',
                         titleRows: 9,
                         previewRows: -1,
                         showTags: 'yes',
@@ -322,7 +320,6 @@ describe('PluginSettingsController.loadSettings', () => {
 
         expect(controller.settings.folderAppearances).toEqual({
             Valid: {
-                mode: 'standard',
                 titleRows: 2,
                 previewRows: 4,
                 showTags: true,

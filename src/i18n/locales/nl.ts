@@ -413,8 +413,6 @@ export const STRINGS_NL = {
     folderAppearance: {
         appearance: 'Uiterlijk',
         sortBy: 'Sorteren op',
-        standardPreset: 'Standaard',
-        compactPreset: 'Compact',
         defaultSuffix: '(standaard)',
         defaultLabel: 'Standaard',
         titleRows: {
@@ -898,7 +896,6 @@ export const STRINGS_NL = {
         toggleTagSort: 'Sorteervolgorde van tags in-/uitschakelen',
         toggleTagsBySelection: 'Tags op selectie in-/uitschakelen',
         togglePropertiesBySelection: 'Eigenschappen op selectie in-/uitschakelen',
-        toggleCompactMode: 'Compacte modus in-/uitschakelen', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Vastgepinde sectie in-/uitschakelen',
         collapseExpand: 'Alle navigatie-items in-/uitklappen',
         collapseExpandListGroups: 'Alle lijstgroepen in-/uitklappen',
@@ -1216,14 +1213,6 @@ export const STRINGS_NL = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Mapgroepering: bestanden van huidige map onderaan',
                 desc: 'Wanneer de standaard groepering Map is, worden bestanden direct in de geselecteerde map onder submapgroepen geplaatst.'
-            },
-            defaultListMode: {
-                name: 'Standaard lijstmodus',
-                desc: 'Selecteer de standaard lijstindeling. Standaard toont titel, datum, beschrijving en voorbeeldtekst. Compact toont alleen de titel. Uiterlijk kan per map worden overschreven.',
-                options: {
-                    standard: 'Standaard',
-                    compact: 'Compact'
-                }
             },
             showFileIcons: {
                 name: 'Bestandspictogrammen tonen',

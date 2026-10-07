@@ -19,7 +19,6 @@
 import { ItemType } from '../types';
 import { resolveListGroupingOverride } from '../utils/listGrouping';
 import {
-    type ListDisplayMode,
     type ListNoteGroupingOption,
     type ListPaneAppearance,
     type NotebookNavigatorSettings
@@ -31,7 +30,6 @@ export type { ListPaneAppearance } from './types';
 export const SEARCH_EXCERPT_ROWS = 2;
 
 export interface ListPaneAppearanceSettings {
-    mode: ListDisplayMode;
     titleRows: number;
     groupBy: ListNoteGroupingOption;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
@@ -49,7 +47,6 @@ export type ListPaneToggleKey = (typeof LIST_PANE_TOGGLE_KEYS)[number];
 export type ListPaneAppearanceFields = Omit<ListPaneAppearance, 'groupBy'>;
 
 const LIST_PANE_APPEARANCE_FIELD_KEYS = [
-    'mode',
     'titleRows',
     ...LIST_PANE_TOGGLE_KEYS
 ] as const satisfies readonly (keyof ListPaneAppearanceFields)[];
@@ -68,9 +65,6 @@ export function getStoredListPaneAppearanceFields(appearance: ListPaneAppearance
     }
 
     const normalized: ListPaneAppearanceFields = {};
-    if (appearance.mode === 'standard' || appearance.mode === 'compact') {
-        normalized.mode = appearance.mode;
-    }
     if (isValidTitleRows(appearance.titleRows)) {
         normalized.titleRows = appearance.titleRows;
     }
@@ -159,25 +153,10 @@ export function snapshotListPaneAppearanceMap<T extends ListPaneAppearance>(
     return cloneAppearanceMap(map);
 }
 
-export function getDefaultListMode(settings: NotebookNavigatorSettings): ListDisplayMode {
-    return settings.defaultListMode === 'compact' ? 'compact' : 'standard';
-}
-
-/** Resolve the effective list mode for a stored selection appearance. */
-function resolveListMode({ appearance, defaultMode }: { appearance?: ListPaneAppearance; defaultMode: ListDisplayMode }): ListDisplayMode {
-    if (appearance?.mode === 'compact' || appearance?.mode === 'standard') {
-        return appearance.mode;
-    }
-
-    return defaultMode;
-}
-
 /**
  * Resolves the effective list pane appearance for a selection.
  *
- * Per-selection toggles replace the global per-file display setting, but structural gates stay
- * global: compact mode keeps its own global property visibility, and the compact row layout never
- * renders previews, images, dates, or parent folders.
+ * Compact is the only list mode, so per-selection overrides cover title rows and grouping only.
  */
 export function resolveListPaneAppearance({
     settings,
@@ -188,7 +167,6 @@ export function resolveListPaneAppearance({
     appearance?: ListPaneAppearance;
     selectionType: ItemType;
 }): ListPaneAppearanceSettings {
-    const mode = resolveListMode({ appearance, defaultMode: getDefaultListMode(settings) });
     const grouping = resolveListGroupingOverride({
         noteGrouping: settings.noteGrouping,
         selectionType,
@@ -196,7 +174,6 @@ export function resolveListPaneAppearance({
     });
 
     return {
-        mode,
         titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
         groupBy: grouping.effectiveGrouping
     };

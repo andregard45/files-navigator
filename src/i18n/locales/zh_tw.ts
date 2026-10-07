@@ -409,8 +409,6 @@ export const STRINGS_ZH_TW = {
     folderAppearance: {
         appearance: '外觀',
         sortBy: '排序方式',
-        standardPreset: '標準',
-        compactPreset: '精簡',
         defaultSuffix: '(預設)',
         defaultLabel: '預設',
         titleRows: {
@@ -888,7 +886,6 @@ export const STRINGS_ZH_TW = {
         toggleTagSort: '切換標籤排序',
         toggleTagsBySelection: '依選擇切換標籤',
         togglePropertiesBySelection: '依選擇切換屬性',
-        toggleCompactMode: '切換精簡模式', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: '切換釘選區段',
         collapseExpand: '摺疊/展開所有導覽項目',
         collapseExpandListGroups: '摺疊/展開所有列表群組',
@@ -1201,14 +1198,6 @@ export const STRINGS_ZH_TW = {
             showCurrentFolderFilesAtBottom: {
                 name: '資料夾分組：目前資料夾檔案置底',
                 desc: '當預設分組為資料夾時，將所選資料夾中的直屬檔案移到子資料夾分組下方。'
-            },
-            defaultListMode: {
-                name: '預設列表模式',
-                desc: '選擇預設列表版面配置。標準顯示標題、日期、描述和預覽文字。精簡只顯示標題。外觀可按資料夾覆寫。',
-                options: {
-                    standard: '標準',
-                    compact: '精簡'
-                }
             },
             showFileIcons: {
                 name: '顯示檔案圖示',

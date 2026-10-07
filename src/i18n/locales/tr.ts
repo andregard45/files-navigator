@@ -410,8 +410,6 @@ export const STRINGS_TR = {
     folderAppearance: {
         appearance: 'Görünüm',
         sortBy: 'Sıralama ölçütü',
-        standardPreset: 'Standart',
-        compactPreset: 'Kompakt',
         defaultSuffix: '(varsayılan)',
         defaultLabel: 'Varsayılan',
         titleRows: {
@@ -893,7 +891,6 @@ export const STRINGS_TR = {
         toggleTagSort: 'Etiket sıralama düzenini aç/kapat', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Etiketleri seçime göre aç/kapat',
         togglePropertiesBySelection: 'Özellikleri seçime göre aç/kapat',
-        toggleCompactMode: 'Kompakt modu aç/kapat', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Sabitlenmiş bölümü aç/kapat',
         collapseExpand: 'Tüm gezinme öğelerini daralt / genişlet', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Tüm liste gruplarını daralt / genişlet',
@@ -1210,14 +1207,6 @@ export const STRINGS_TR = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Klasör gruplama: geçerli klasör dosyaları altta',
                 desc: 'Varsayılan gruplama Klasör olduğunda, seçili klasörde doğrudan bulunan dosyaları alt klasör gruplarının altına taşı.'
-            },
-            defaultListMode: {
-                name: 'Varsayılan liste modu',
-                desc: 'Varsayılan liste düzenini seçin. Standart başlık, tarih, açıklama ve önizleme metni gösterir. Kompakt yalnızca başlık gösterir. Klasör başına görünümü geçersiz kıl.',
-                options: {
-                    standard: 'Standart',
-                    compact: 'Kompakt'
-                }
             },
             showFileIcons: {
                 name: 'Dosya simgelerini göster',

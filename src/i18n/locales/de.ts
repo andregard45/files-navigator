@@ -411,8 +411,6 @@ export const STRINGS_DE = {
     folderAppearance: {
         appearance: 'Darstellung',
         sortBy: 'Sortieren nach',
-        standardPreset: 'Standard',
-        compactPreset: 'Kompakt',
         defaultSuffix: '(Standard)',
         defaultLabel: 'Standard',
         titleRows: {
@@ -898,7 +896,6 @@ export const STRINGS_DE = {
         toggleTagSort: 'Tag-Sortierung umschalten', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: 'Tags nach Auswahl umschalten',
         togglePropertiesBySelection: 'Eigenschaften nach Auswahl umschalten',
-        toggleCompactMode: 'Kompaktmodus umschalten', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: 'Angehefteten Bereich umschalten',
         collapseExpand: 'Alle Navigationselemente ein-/ausklappen', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: 'Alle Listengruppen ein-/ausklappen',
@@ -1216,14 +1213,6 @@ export const STRINGS_DE = {
             showCurrentFolderFilesAtBottom: {
                 name: 'Ordnergruppierung: Dateien des aktuellen Ordners unten',
                 desc: 'Wenn die Standardgruppierung „Ordner“ ist, Dateien direkt im ausgewählten Ordner unter den Unterordnergruppen anzeigen.'
-            },
-            defaultListMode: {
-                name: 'Standardmodus für Listen',
-                desc: 'Standardlistenlayout auswählen. Standard zeigt Titel, Datum, Beschreibung und Vorschautext. Kompakt zeigt nur den Titel. Ansicht kann pro Ordner überschrieben werden.',
-                options: {
-                    standard: 'Standard',
-                    compact: 'Kompakt'
-                }
             },
             showFileIcons: {
                 name: 'Dateisymbole anzeigen',

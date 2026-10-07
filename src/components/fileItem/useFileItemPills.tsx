@@ -25,7 +25,6 @@ import { buildPropertySearchEvidence, resolvePropertyDisplayText, type PropertyS
 
 export interface UseFileItemPillsParams {
     file: TFile;
-    isCompactMode: boolean;
     properties: PropertyItem[] | null;
     matchedProperties?: readonly PropertySearchMatch[];
 }

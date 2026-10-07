@@ -469,13 +469,6 @@ export function isCalendarPeriodicNotesLocaleSource(value: unknown): value is Ca
     return value === 'calendar' || value === 'obsidian';
 }
 
-/** Default display modes for list items */
-export type ListDisplayMode = 'standard' | 'compact';
-
-export function isListDisplayMode(value: unknown): value is ListDisplayMode {
-    return value === 'standard' || value === 'compact';
-}
-
 /** Built-in grouping modes for list pane notes */
 export type ListNoteGroupingBaseOption = 'none' | 'date' | 'folder';
 
@@ -500,7 +493,6 @@ export type ListNoteGroupingOption =
     ListNoteGroupingBaseOption | `property:${string}` | `property-desc:${string}` | `property-follow:${string}`;
 
 export interface ListPaneAppearance {
-    mode?: ListDisplayMode;
     titleRows?: number;
     groupBy?: ListNoteGroupingOption;
 }
@@ -759,7 +751,6 @@ export interface NotebookNavigatorSettings {
     scopePropertiesToCurrentContext: boolean;
 
     // List pane tab
-    defaultListMode: ListDisplayMode;
     includeDescendantNotes: boolean;
     defaultFolderSort: SortOption;
     /**

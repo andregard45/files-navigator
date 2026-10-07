@@ -254,7 +254,6 @@ export const FileItem = React.memo(function FileItem({
     const settings = useSettingsState();
     const metadataService = useMetadataService();
     const { getFileDisplayName, getDB, getFileTimestamps } = fileItemStorage;
-    const isCompactMode = appearanceSettings.mode === 'compact';
     const { properties, metadataVersion } = useFileItemContentState({ file, getDB });
 
     // === Refs ===
@@ -404,7 +403,6 @@ export const FileItem = React.memo(function FileItem({
     const propertySearchEvidenceIconId = resolveUXIcon(settings.interfaceIcons, 'nav-property');
     const { propertySearchEvidenceGroups, propertySearchEvidenceHiddenGroupCount } = useFileItemPills({
         file,
-        isCompactMode,
         properties,
         matchedProperties
     });
@@ -513,7 +511,7 @@ export const FileItem = React.memo(function FileItem({
 
     const classes = ['nn-file'];
     if (isSelected) classes.push('nn-selected');
-    if (isCompactMode) classes.push('nn-compact');
+    classes.push('nn-compact');
     if (isSelected && hasSelectedAbove) classes.push('nn-has-selected-above');
     if (isSelected && hasSelectedBelow) classes.push('nn-has-selected-below');
     if (fileBackgroundColor) classes.push('nn-has-custom-background');
@@ -801,7 +799,7 @@ export const FileItem = React.memo(function FileItem({
         }
         const iconService = getIconService();
         iconService.renderIcon(iconContainer, iconId, fileIconSize);
-    }, [effectiveFileIconId, iconServiceVersion, shouldShowFileIcon, isCompactMode, fileIconSize]);
+    }, [effectiveFileIconId, iconServiceVersion, shouldShowFileIcon, fileIconSize]);
 
     // Set up quick action icons after their elements mount.
     useEffect(() => {
@@ -874,7 +872,7 @@ export const FileItem = React.memo(function FileItem({
                 {/* Quick actions mount only for the row currently tracked by the list pane hover state. */}
                 {!isMobile && hasQuickActions && showQuickActionsPanel && (
                     <div
-                        className={`nn-quick-actions-panel ${isCompactMode ? 'nn-compact-mode' : ''}`}
+                        className="nn-quick-actions-panel nn-compact-mode"
                         data-title-rows={appearanceSettings.titleRows}
                     >
                         {quickActionItems.map((action, index) => (
@@ -898,32 +896,19 @@ export const FileItem = React.memo(function FileItem({
                             ) : null}
                         </div>
                     ) : null}
-                    {isCompactMode ? (
-                        // ========== COMPACT MODE ==========
-                        // Minimal layout: file name only
-                        // Used when the current list appearance mode is compact
-                        <div className="nn-compact-file-text-content">
-                            <div className="nn-compact-file-header">{fileTitleElement}</div>
-                        </div>
-                    ) : (
-                        // ========== NORMAL MODE ==========
-                        // Full layout with all enabled elements
-                        <>
-                            <div className="nn-file-text-content">
-                                {fileTitleElement}
-
-                                {/* Search excerpt line (pinned rows clamp it to a single row). */}
-                                {shouldShowMultilinePreview && (
-                                    <div
-                                        className="nn-file-preview"
-                                        style={{ '--preview-rows': excerptRows } as React.CSSProperties}
-                                    >
-                                        {highlightedPreview}
-                                    </div>
-                                )}
+                    {/* Compact layout (the only list layout): file name plus the optional Omnisearch excerpt line. */}
+                    <div className="nn-compact-file-text-content">
+                        <div className="nn-compact-file-header">{fileTitleElement}</div>
+                        {/* Search excerpt line (pinned rows clamp it to a single row). */}
+                        {shouldShowMultilinePreview && (
+                            <div
+                                className="nn-file-preview"
+                                style={{ '--preview-rows': excerptRows } as React.CSSProperties}
+                            >
+                                {highlightedPreview}
                             </div>
-                        </>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
             {/* Screen reader announcement for hidden files */}

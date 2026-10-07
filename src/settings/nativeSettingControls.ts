@@ -148,7 +148,6 @@ const STRING_SETTING_KEYS = [
     'templateEngine',
     'navCountLeaderStyle',
     'listPaneTitle',
-    'defaultListMode',
     'propertySortSecondary',
     'collapseBehavior'
 ] as const satisfies readonly SettingsKeyOfType<string>[];
@@ -173,7 +172,6 @@ const STRING_SETTING_OPTIONS: Partial<Record<NativeStringControlKey, readonly st
     calendarMonthHeadingFormat: ['full', 'short'],
     navCountLeaderStyle: ['none', 'dots', 'dashes', 'line'],
     listPaneTitle: ['header', 'list', 'hidden'],
-    defaultListMode: ['standard', 'compact'],
     propertySortSecondary: ['title', 'filename', 'created', 'modified'],
     collapseBehavior: ['all', 'folders-only', 'tags-only', 'properties-only']
 };

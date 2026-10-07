@@ -408,8 +408,6 @@ export const STRINGS_KO = {
     folderAppearance: {
         appearance: '모양',
         sortBy: '정렬 기준',
-        standardPreset: '표준',
-        compactPreset: '컴팩트',
         defaultSuffix: '(기본값)',
         defaultLabel: '기본',
         titleRows: {
@@ -892,7 +890,6 @@ export const STRINGS_KO = {
         toggleTagSort: '태그 정렬 전환', // Command palette: Toggles between alphabetical and frequency tag sorting (English: Toggle tag sort order)
         toggleTagsBySelection: '선택에 따라 태그 전환',
         togglePropertiesBySelection: '선택에 따라 속성 전환',
-        toggleCompactMode: '컴팩트 모드 전환', // Command palette: Toggles list mode between standard and compact (English: Toggle compact mode)
         togglePinnedSection: '고정 섹션 전환',
         collapseExpand: '모든 탐색 항목 접기 / 펼치기', // Command palette: Collapse or expand all folders and tags (English: Collapse / expand all navigation items)
         collapseExpandListGroups: '모든 목록 그룹 접기 / 펼치기',
@@ -1208,14 +1205,6 @@ export const STRINGS_KO = {
             showCurrentFolderFilesAtBottom: {
                 name: '폴더 그룹화: 현재 폴더 파일을 하단에 표시',
                 desc: '기본 그룹화가 폴더인 경우 선택한 폴더 바로 아래의 파일을 하위 폴더 그룹 아래로 이동합니다.'
-            },
-            defaultListMode: {
-                name: '기본 목록 모드',
-                desc: '기본 목록 레이아웃을 선택합니다. 표준은 제목, 날짜, 설명, 미리보기 텍스트를 표시합니다. 컴팩트는 제목만 표시합니다. 모양은 폴더별로 덮어쓸 수 있습니다.',
-                options: {
-                    standard: '표준',
-                    compact: '컴팩트'
-                }
             },
             showFileIcons: {
                 name: '파일 아이콘 표시',

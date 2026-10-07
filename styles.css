@@ -3584,20 +3584,7 @@ button.nn-navigation-calendar-day {
     display: none;
 }
 
-/* File text content - left side container for name and preview */
-.nn-file-text-content {
-    flex: 1;
-    min-width: 0; /* Enable text truncation */
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    order: 1; /* Ensure it appears on the left */
-    height: 100%;
-    min-height: 0;
-    justify-content: flex-start;
-}
-
-/* Compact mode file text content - same as above but without min-height */
+/* File text content - left side container for name and search excerpt (compact is the only list mode) */
 .nn-compact-file-text-content {
     flex: 1;
     min-width: 0; /* Enable text truncation */
@@ -3772,14 +3759,7 @@ button.nn-navigation-calendar-day {
     top: var(--nn-file-padding-vertical-compact);
 }
 
-/* Second line container - holds date and preview text */
-.nn-file-second-line {
-    display: flex;
-    align-items: center; /* Center align for better icon/text alignment */
-    gap: 4px;
-}
-
-/* File preview text - secondary line showing file content */
+/* File preview text - search excerpt shown under the title while searching */
 .nn-file-preview {
     font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
     font-weight: var(--nn-theme-file-preview-font-weight);
@@ -3792,18 +3772,6 @@ button.nn-navigation-calendar-day {
     -webkit-box-orient: vertical;
     word-break: break-word;
     max-height: calc(var(--nn-file-multiline-text-line-height) * var(--preview-rows, 1));
-}
-
-/* Pinned previews share the secondary row layout. */
-.nn-file-second-line--pinned {
-    overflow: hidden;
-}
-
-.nn-file-second-line--pinned .nn-file-preview {
-    display: block;
-    flex: 1 1 auto;
-    min-width: 0;
-    white-space: nowrap;
 }
 /* Source: src/styles/sections/list-tags.css */
 

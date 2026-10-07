@@ -183,14 +183,13 @@ function forEachVisibleFrontmatterProperty({
 const SEARCH_EXCERPT_SLOT_HEIGHT = DESKTOP_MEASUREMENTS.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
 
 export interface FileRowHeightInputs {
-    /** Unused placeholder kept so callers can pass per-item inputs; row height no longer depends on file properties. */
+    /** True when this particular row carries an Omnisearch excerpt; reserves the excerpt slot in compact layout. */
     hasSearchExcerptContent?: boolean;
 }
 
 export interface FileRowHeightConfig {
     heights: ListPaneMeasurements;
     titleRows: number;
-    isCompactMode: boolean;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
     showSearchExcerpt: boolean;
     compactPaddingTotal: number;
@@ -213,20 +212,14 @@ export function estimateSearchRowHeight(
     return config.heights.basePadding + titleContentHeight + SEARCH_EXCERPT_SLOT_HEIGHT;
 }
 
+/**
+ * Compact is the only list layout, so every row uses the compact padding formula.
+ * Rows that actually carry an Omnisearch excerpt reserve one extra excerpt slot.
+ */
 export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
     const { heights, titleRows, compactPaddingTotal } = config;
-
-    if (config.isCompactMode) {
-        const textContentHeight = heights.titleLineHeight * titleRows;
-        return compactPaddingTotal + textContentHeight;
-    }
-
-    // Excerpt rows are only ever reserved while the Omnisearch excerpt feature is on;
-    // it no longer matters whether this particular row actually has excerpt text.
-    if (config.showSearchExcerpt) {
-        return estimateSearchRowHeight(config);
-    }
-
-    return estimatePlainRowHeight(config);
+    const textContentHeight = heights.titleLineHeight * titleRows;
+    const excerptSlotHeight = inputs.hasSearchExcerptContent ? SEARCH_EXCERPT_SLOT_HEIGHT : 0;
+    return compactPaddingTotal + textContentHeight + excerptSlotHeight;
 }
 

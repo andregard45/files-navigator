@@ -38,7 +38,6 @@ describe('listPaneMeasurements layout helpers', () => {
                 {
                     heights: desktopHeights,
                     titleRows: 2,
-                    isCompactMode: true,
                     showSearchExcerpt: false,
                     compactPaddingTotal: 18
                 }
@@ -46,64 +45,42 @@ describe('listPaneMeasurements layout helpers', () => {
         ).toBe(18 + desktopHeights.titleLineHeight * 2);
     });
 
-    it('uses a title-only row height in standard mode', () => {
-        expect(
-            estimateFileRowHeight(
-                {},
-                {
-                    heights: desktopHeights,
-                    titleRows: 1,
-                    isCompactMode: false,
-                    showSearchExcerpt: false,
-                    compactPaddingTotal: 18
-                }
-            )
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
+    it('reserves the excerpt slot only for rows that carry search excerpt content', () => {
+        const excerptSlot = desktopHeights.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
+        const config = {
+            heights: desktopHeights,
+            titleRows: 1,
+            showSearchExcerpt: true,
+            compactPaddingTotal: 18
+        };
+
+        expect(estimateFileRowHeight({ hasSearchExcerptContent: true }, config)).toBe(
+            18 + desktopHeights.titleLineHeight + excerptSlot
+        );
+        expect(estimateFileRowHeight({ hasSearchExcerptContent: false }, config)).toBe(
+            18 + desktopHeights.titleLineHeight
+        );
+        expect(estimateFileRowHeight({}, config)).toBe(18 + desktopHeights.titleLineHeight);
     });
 
-    it('delegates plain (non-search) rows to estimatePlainRowHeight', () => {
+    it('computes plain (non-search) row height from base padding and title rows', () => {
         expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 1 })).toBe(
             desktopHeights.basePadding + desktopHeights.titleLineHeight
         );
         expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 2 })).toBe(
             desktopHeights.basePadding + desktopHeights.titleLineHeight * 2
         );
-
-        // estimateFileRowHeight routes non-search rows through the same estimator.
-        expect(
-            estimateFileRowHeight(
-                {},
-                {
-                    heights: desktopHeights,
-                    titleRows: 1,
-                    isCompactMode: false,
-                    showSearchExcerpt: false,
-                    compactPaddingTotal: 18
-                }
-            )
-        ).toBe(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 1 }));
     });
 
-    it('reserves the shared search excerpt slot for search rows', () => {
+    it('reserves the shared search excerpt slot in the standalone search estimator', () => {
         const excerptSlot = desktopHeights.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
 
         expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 })).toBe(
             desktopHeights.basePadding + desktopHeights.titleLineHeight + excerptSlot
         );
-
-        // estimateFileRowHeight routes search rows (showSearchExcerpt on) through it.
-        expect(
-            estimateFileRowHeight(
-                {},
-                {
-                    heights: desktopHeights,
-                    titleRows: 1,
-                    isCompactMode: false,
-                    showSearchExcerpt: true,
-                    compactPaddingTotal: 18
-                }
-            )
-        ).toBe(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 }));
+        expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 2 })).toBe(
+            desktopHeights.basePadding + desktopHeights.titleLineHeight * 2 + excerptSlot
+        );
     });
 
     it('returns the selected property value node id to hide only when appropriate', () => {

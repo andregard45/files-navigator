@@ -233,15 +233,6 @@ function createListAppearanceDefinitionGroup(context: SettingsTabContext): Setti
             name: strings.settings.items.colorListPaneTitle.name,
             desc: strings.settings.items.colorListPaneTitle.desc
         }),
-        createDropdownDefinition('defaultListMode', {
-            name: strings.settings.items.defaultListMode.name,
-            desc: strings.settings.items.defaultListMode.desc,
-            aliases: Object.values(strings.settings.items.defaultListMode.options),
-            options: {
-                standard: strings.settings.items.defaultListMode.options.standard,
-                compact: strings.settings.items.defaultListMode.options.compact
-            }
-        }),
         createRenderDefinition({
             name: strings.settings.items.compactItemHeight.name,
             desc: strings.settings.items.compactItemHeight.desc,

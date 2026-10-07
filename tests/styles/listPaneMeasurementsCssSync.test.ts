@@ -143,7 +143,7 @@ describe('List pane measurements stay in sync with CSS', () => {
         const fileRule = extractRuleBlock(listFilesCss, '.nn-file');
         const fileContentRule = extractRuleBlock(listFilesCss, '.nn-file-content');
         const fileInnerContentRule = extractRuleBlock(listFilesCss, '.nn-file-inner-content');
-        const fileTextContentRule = extractRuleBlock(listFilesCss, '.nn-file-text-content');
+        const fileTextContentRule = extractRuleBlock(listFilesCss, '.nn-compact-file-text-content');
         const fileNameRule = extractRuleBlock(listFilesCss, '.nn-file-name');
         const previewRule = extractRuleBlock(listFilesCss, '.nn-file-preview');
 
@@ -152,7 +152,6 @@ describe('List pane measurements stay in sync with CSS', () => {
         expect(fileContentRule).toMatch(/(^|\n)\s*height:\s*100%\s*;/m);
         expect(fileContentRule).toMatch(/(^|\n)\s*box-sizing:\s*border-box\s*;/m);
         expect(fileInnerContentRule).toMatch(/(^|\n)\s*height:\s*100%\s*;/m);
-        expect(fileTextContentRule).toMatch(/(^|\n)\s*height:\s*100%\s*;/m);
         expect(fileTextContentRule).toMatch(/(^|\n)\s*justify-content:\s*flex-start\s*;/m);
         expect(fileNameRule).toMatch(
             /(^|\n)\s*max-height:\s*calc\(var\(--nn-file-title-line-height\)\s*\*\s*var\(--filename-rows, 1\)\)\s*;/m
