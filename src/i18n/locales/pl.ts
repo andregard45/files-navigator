@@ -437,7 +437,6 @@ export const STRINGS_PL = {
                 `${rows} ${rows === 1 ? 'wiersz' : rows === 2 || rows === 3 || rows === 4 ? 'wiersze' : 'wierszy'} tytułu`
         },
         groupBy: 'Grupuj według',
-        properties: 'Atrybuty',
         resetAppearance: 'Zresetuj wygląd',
         openPluginSettings: 'Otwórz ustawienia wtyczki…'
     },
@@ -1094,8 +1093,7 @@ export const STRINGS_PL = {
                 description: 'Tytuły, tekst podglądu, wyróżnione obrazy, tagi, atrybuty, daty, liczba słów i liczba znaków.',
                 groups: {
                     icon: 'Ikonka',
-                    title: 'Tytuł',
-                    properties: 'Atrybuty'
+                    title: 'Tytuł'
                 }
             },
             calendar: {
@@ -1858,22 +1856,6 @@ export const STRINGS_PL = {
                 desc: 'Lista folderów oddzielonych przecinkami, które mają być pomijane podczas zbierania notatek z podfolderów. Foldery pozostają widoczne, a wybranie folderu nadal pokazuje jego notatki. Używa tych samych wzorców co Ukryj foldery.',
                 placeholder: 'dzienne, zasoby, /archiwum'
             },
-            showFileProperties: {
-                name: 'Pokaż atrybuty plików',
-                desc: 'Wyświetl atrybuty w elementach plików. Użyj okna „Widoczność kluczy atrybutów”, aby wybrać, które atrybuty są pokazywane.'
-            },
-            colorFileProperties: {
-                name: 'Koloruj atrybuty plików',
-                desc: 'Zastosuj kolory do etykiet atrybutów w elementach plików.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Wyświetl kolorowe atrybuty jako pierwsze',
-                desc: 'Sortuj kolorowe atrybuty przed pozostałymi w elementach plików.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Pokaż atrybuty w trybie kompaktowym',
-                desc: 'Wyświetlaj atrybuty, gdy tryb kompaktowy jest aktywny.'
-            },
             propertyKeys: {
                 name: 'Klucze atrybutów (profil sejfu)',
                 desc: 'Klucze atrybutów frontmatter z kontrolą widoczności per klucz dla nawigacji i listy plików.',
@@ -1881,18 +1863,6 @@ export const STRINGS_PL = {
                 noneConfigured: 'Brak skonfigurowanych atrybutów',
                 singleConfigured: '1 atrybut skonfigurowany: {properties}',
                 multipleConfigured: 'Skonfigurowane atrybuty ({count}): {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Pokaż atrybuty w osobnych wierszach',
-                desc: 'Wyświetl każdy atrybut w osobnym wierszu.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Połącz etykiety atrybutów z notatkami',
-                desc: 'Kliknij etykietę atrybutu, aby otworzyć powiązaną notatkę.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Połącz etykiety atrybutów z adresami URL',
-                desc: 'Kliknij etykietę atrybutu, aby otworzyć powiązany adres URL.'
             },
             dateFormat: {
                 name: 'Format daty',

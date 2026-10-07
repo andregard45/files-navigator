@@ -435,7 +435,6 @@ export const STRINGS_ZH_TW = {
             option: (rows: number) => `標題${rows}行`
         },
         groupBy: '分組依據',
-        properties: '屬性',
         resetAppearance: '重設外觀',
         openPluginSettings: '開啟外掛程式設定…'
     },
@@ -1082,8 +1081,7 @@ export const STRINGS_ZH_TW = {
                 description: '標題、預覽文字、特色圖片、標籤、屬性、日期、字數與字元數。',
                 groups: {
                     icon: '圖示',
-                    title: '標題',
-                    properties: '屬性'
+                    title: '標題'
                 }
             },
             calendar: {
@@ -1837,22 +1835,6 @@ export const STRINGS_ZH_TW = {
                     desc: '啟動或執行命令時，如果週期筆記不存在則建立。'
                 }
             },
-            showFileProperties: {
-                name: '顯示檔案屬性',
-                desc: '在檔案項目中顯示屬性。使用「屬性鍵可見性」對話方塊選擇要顯示的屬性。'
-            },
-            colorFileProperties: {
-                name: '為檔案屬性著色',
-                desc: '將屬性顏色套用到檔案項目的屬性徽章上。'
-            },
-            showColoredPropertiesFirst: {
-                name: '優先顯示彩色屬性',
-                desc: '在檔案項目中將彩色屬性排列在其他屬性之前。'
-            },
-            showFilePropertiesInCompactMode: {
-                name: '在精簡模式中顯示屬性',
-                desc: '精簡模式啟用時顯示屬性。'
-            },
             propertyKeys: {
                 name: '屬性鍵（儲存庫設定檔）',
                 desc: 'Frontmatter 屬性鍵，可按鍵設定導覽和檔案清單的可見性。',
@@ -1860,18 +1842,6 @@ export const STRINGS_ZH_TW = {
                 noneConfigured: '未設定屬性',
                 singleConfigured: '已設定 1 個屬性：{properties}',
                 multipleConfigured: '已設定 {count} 個屬性：{properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: '在個別行中顯示屬性',
-                desc: '將每個屬性顯示在個別行中。'
-            },
-            linkPropertyPillsToNotes: {
-                name: '將屬性標記連結到筆記',
-                desc: '點擊屬性標記以開啟連結的筆記。'
-            },
-            linkPropertyPillsToUrls: {
-                name: '將屬性標記連結到 URL',
-                desc: '點擊屬性標記以開啟連結的 URL。'
             },
             dateFormat: {
                 name: '日期格式',

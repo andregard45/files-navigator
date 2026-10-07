@@ -348,13 +348,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     fileTypeIconPreset: DEFAULT_FILE_TYPE_ICON_PRESET,
     fileNameRows: 1,
     useFolderColorForTitles: false,
-    showFileProperties: true,
-    colorFileProperties: true,
-    prioritizeColoredFileProperties: true,
-    showFilePropertiesInCompactMode: false,
-    showPropertiesOnSeparateRows: false,
-    enablePropertyInternalLinks: true,
-    enablePropertyExternalLinks: true,
 
     // Calendar tab - Calendar (always enabled)
     calendarPlacement: 'left-sidebar',

@@ -35,38 +35,14 @@ function createSettings(overrides: Partial<NotebookNavigatorSettings> = {}): Not
 }
 
 describe('resolveListPaneAppearance', () => {
-    it('lets a selection hide globally shown content', () => {
-        const settings = createSettings({
-            showFileProperties: true,
-        });
+    it('lets a selection override the stored mode', () => {
         const result = resolveListPaneAppearance({
-            settings,
-            appearance: {
-                showProperties: false,
-            },
+            settings: createSettings({ defaultListMode: 'standard' }),
+            appearance: { mode: 'compact' },
             selectionType: ItemType.FOLDER
         });
 
-        expect(result).toMatchObject({
-            showProperties: false,
-        });
-    });
-
-    it('lets a selection enable content that global settings turn off', () => {
-        const settings = createSettings({
-            showFileProperties: false,
-        });
-        const result = resolveListPaneAppearance({
-            settings,
-            appearance: {
-                showProperties: true,
-            },
-            selectionType: ItemType.FOLDER
-        });
-
-        expect(result).toMatchObject({
-            showProperties: true,
-        });
+        expect(result).toMatchObject({ mode: 'compact' });
     });
 
     it('applies compact mode gates without deleting stored Standard-mode preferences', () => {
@@ -82,21 +58,6 @@ describe('resolveListPaneAppearance', () => {
             mode: 'compact',
         });
     });
-
-    it('keeps compact property visibility as a global style choice', () => {
-        const result = resolveListPaneAppearance({
-            settings: createSettings({
-                defaultListMode: 'compact',
-                showFileProperties: false,
-                showFilePropertiesInCompactMode: true
-            }),
-            appearance: { showProperties: true },
-            selectionType: ItemType.FOLDER
-        });
-
-        expect(result.showProperties).toBe(true);
-    });
-
 });
 
 describe('stored list appearance intent', () => {
@@ -111,15 +72,14 @@ describe('stored list appearance intent', () => {
         expect(stored).toEqual({
             mode: 'standard',
             titleRows: 2,
-            showProperties: true,
         });
         expect(hasStoredListPaneAppearanceOverride(stored ?? undefined)).toBe(true);
     });
 
     it('treats toggles stored with different values as different overrides', () => {
-        expect(areStoredListPaneAppearanceFieldsEqual({ showProperties: true }, { showProperties: false })).toBe(false);
-        expect(areStoredListPaneAppearanceFieldsEqual({ showProperties: true }, { showProperties: true })).toBe(true);
-        expect(areStoredListPaneAppearanceFieldsEqual(undefined, { showProperties: undefined })).toBe(true);
+        expect(areStoredListPaneAppearanceFieldsEqual({ titleRows: 2 }, { titleRows: 3 })).toBe(false);
+        expect(areStoredListPaneAppearanceFieldsEqual({ titleRows: 2 }, { titleRows: 2 })).toBe(true);
+        expect(areStoredListPaneAppearanceFieldsEqual(undefined, { titleRows: undefined })).toBe(true);
     });
 
     it('preserves grouping while resetting appearance fields', () => {
@@ -131,7 +91,7 @@ describe('stored list appearance intent', () => {
 describe('appearance map snapshots', () => {
     it('preserves map identity when an unrelated settings update leaves appearances unchanged', () => {
         const current = {
-            Writing: { mode: 'standard', showProperties: true }
+            Writing: { mode: 'standard', titleRows: 2 }
         } satisfies Record<string, ListPaneAppearance>;
         const initialSnapshot = snapshotListPaneAppearanceMap(current);
         const nextSnapshot = snapshotListPaneAppearanceMap(current, initialSnapshot);
@@ -143,15 +103,15 @@ describe('appearance map snapshots', () => {
 
     it('publishes a new immutable snapshot after an in-place appearance mutation', () => {
         const current = {
-            Writing: { mode: 'standard', showProperties: true }
+            Writing: { mode: 'standard', titleRows: 2 }
         } satisfies Record<string, ListPaneAppearance>;
         const initialSnapshot = snapshotListPaneAppearanceMap(current);
 
-        current.Writing.showProperties = false;
+        current.Writing.titleRows = 3;
         const nextSnapshot = snapshotListPaneAppearanceMap(current, initialSnapshot);
 
         expect(nextSnapshot).not.toBe(initialSnapshot);
-        expect(nextSnapshot.Writing.showProperties).toBe(false);
-        expect(initialSnapshot.Writing.showProperties).toBe(true);
+        expect(nextSnapshot.Writing.titleRows).toBe(3);
+        expect(initialSnapshot.Writing.titleRows).toBe(2);
     });
 });

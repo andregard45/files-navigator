@@ -84,11 +84,9 @@ import { useSurfaceColorVariables } from '../hooks/useSurfaceColorVariables';
 import { LIST_PANE_SURFACE_COLOR_MAPPINGS } from '../constants/surfaceColorMappings';
 import { getListPaneMeasurements } from '../utils/listPaneMeasurements';
 import { usesMobileChrome } from '../utils/paneLayout';
-import { getPropertyKeySet } from '../utils/vaultProfiles';
 import { DateUtils } from '../utils/dateUtils';
 import type { NavigateToFolderOptions, RevealPropertyOptions, RevealTagOptions } from '../hooks/useNavigatorReveal';
 import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
-import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
 import { runAsyncAction } from '../utils/async';
 import { getFilesForNavigationSelection, getPinnedSectionCollapseKey } from '../utils/selectionUtils';
 import { buildListGroupCollapseKeyPrefix } from '../utils/listGroupCollapse';
@@ -170,7 +168,6 @@ interface ListPaneProps {
     onSearchTokensChange?: (state: SearchNavFilterState) => void;
     folderDecorationModel: FolderDecorationModel;
     fileItemPillDecorationModel: FileItemPillDecorationModel;
-    fileItemPillOrderModel: FileItemPillOrderModel;
     onNavigateToFolder: (folderPath: string, options?: NavigateToFolderOptions) => void;
     onRevealTag: (tagPath: string, options?: RevealTagOptions) => void;
     onRevealProperty: (propertyNodeId: string, options?: RevealPropertyOptions) => boolean;
@@ -311,8 +308,7 @@ export const ListPane = React.memo(
             onRevealTag,
             onRevealProperty,
             folderDecorationModel,
-            fileItemPillDecorationModel,
-            fileItemPillOrderModel
+            fileItemPillDecorationModel
         } = props;
         const selectionState = useSelectionState();
         const selectionDispatch = useSelectionDispatch();
@@ -799,12 +795,6 @@ export const ListPane = React.memo(
             }
             return selectedFolder.path;
         }, [selectionType, selectedFolder]);
-        const { visibleListPropertyKeys, visibleNavigationPropertyKeys } = useMemo(() => {
-            return {
-                visibleListPropertyKeys: getPropertyKeySet(activeProfile.propertyKeys, 'list'),
-                visibleNavigationPropertyKeys: getPropertyKeySet(activeProfile.propertyKeys, 'navigation')
-            };
-        }, [activeProfile.propertyKeys]);
         const fileItemStorage = useMemo<FileItemStorageHelpers>(
             () => ({
                 getFileDisplayName,
@@ -866,16 +856,6 @@ export const ListPane = React.memo(
             },
             [syncHoveredFilePathToPointer, syncHoveredFilePathToPointerAfterPaint]
         );
-        const visibleListPropertyKeySignature = useMemo(() => {
-            if (visibleListPropertyKeys.size === 0) {
-                return '';
-            }
-
-            const sortedKeys = Array.from(visibleListPropertyKeys);
-            sortedKeys.sort();
-            return sortedKeys.join('\u0001');
-        }, [visibleListPropertyKeys]);
-
         useEffect(() => {
             if (
                 isManualSortEditActive ||
@@ -933,8 +913,6 @@ export const ListPane = React.memo(
                 topSpacerHeight: effectiveTopSpacerHeight,
                 includeDescendantNotes: effectiveIncludeDescendantNotes,
                 groupCollapseStateSignature,
-                visiblePropertyKeys: visibleListPropertyKeys,
-                visiblePropertyKeySignature: visibleListPropertyKeySignature,
                 scrollMargin: 0,
                 scrollPaddingEnd,
                 onVirtualizerScrollingChange: handleVirtualizerScrollingChange,
@@ -1790,15 +1768,10 @@ export const ListPane = React.memo(
                             sortOption={effectiveSortOption}
                             fileIconSize={listMeasurements.fileIconSize}
                             appearanceSettings={layoutAppearanceSettings}
-                            includeDescendantNotes={effectiveIncludeDescendantNotes}
                             fileNameIconNeedles={fileNameIconNeedles}
-                            visibleListPropertyKeys={visibleListPropertyKeys}
-                            visibleNavigationPropertyKeys={visibleNavigationPropertyKeys}
                             fileItemStorage={fileItemStorage}
                             noteShortcutKeysByPath={noteShortcutKeysByPath}
                             folderDecorationModel={folderDecorationModel}
-                            fileItemPillDecorationModel={fileItemPillDecorationModel}
-                            fileItemPillOrderModel={fileItemPillOrderModel}
                             getSolidBackground={getSolidBackground}
                             selectedFiles={selectionState.selectedFiles}
                             selectedFilePath={selectedFile?.path ?? null}
@@ -1835,13 +1808,9 @@ export const ListPane = React.memo(
                             suppressRowHover={isListScrolling}
                             onHoveredFilePathChange={handleHoveredFilePathChange}
                             onFileClick={handleFileItemClick}
-                            onModifySearchWithProperty={modifySearchWithPropertyWithDefaultScope}
                             fileIconSize={listMeasurements.fileIconSize}
                             appearanceSettings={layoutAppearanceSettings}
-                            includeDescendantNotes={effectiveIncludeDescendantNotes}
                             fileNameIconNeedles={fileNameIconNeedles}
-                            visibleListPropertyKeys={visibleListPropertyKeys}
-                            visibleNavigationPropertyKeys={visibleNavigationPropertyKeys}
                             fileItemStorage={fileItemStorage}
                             noteShortcutKeysByPath={noteShortcutKeysByPath}
                             onToggleNoteShortcut={toggleNoteShortcut}
@@ -1851,8 +1820,6 @@ export const ListPane = React.memo(
                             onFileRenameRestoreFocus={restoreListPaneFocus}
                             onNavigateToFolder={onNavigateToFolder}
                             folderDecorationModel={folderDecorationModel}
-                            fileItemPillDecorationModel={fileItemPillDecorationModel}
-                            fileItemPillOrderModel={fileItemPillOrderModel}
                             getSolidBackground={getSolidBackground}
                         />
                     )}

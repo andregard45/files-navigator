@@ -28,15 +28,12 @@ import { getFolderNote, openFolderNoteFile, revealFolderNoteInNavigator } from '
 import { resolveFolderNoteClickOpenContext } from '../../utils/keyboardOpenContext';
 import type { ListPaneItem } from '../../types/virtualization';
 import type { NotebookNavigatorSettings, SortOption } from '../../settings/types';
-import type { InclusionOperator } from '../../utils/filterSearch';
 import type { FolderDecorationModel } from '../../utils/folderDecoration';
 import type { NavigateToFolderOptions } from '../../hooks/useNavigatorReveal';
 import { FileItem, type FileItemInlineRenameHandlers, type FileItemPaneProps, type FileItemStorageHelpers } from '../FileItem';
 import { ServiceIcon } from '../ServiceIcon';
 import type { ListPaneAppearanceSettings } from '../../settings/listPaneAppearance';
 import type { FileNameIconNeedle } from '../../utils/fileIconUtils';
-import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
-import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 import { resolveUXIcon } from '../../utils/uxIcons';
 import { hasSolidFileRowBackground } from '../../utils/colorUtils';
 import { getManualSortGroupHeaderPropertyKey } from '../../utils/manualSort';
@@ -130,13 +127,9 @@ interface ListPaneVirtualContentProps {
     suppressRowHover: boolean;
     onHoveredFilePathChange: (path: string | null, pointerClientPosition: PointerClientPosition | null) => void;
     onFileClick: (file: TFile, fileIndex: number | undefined, event: React.MouseEvent) => void;
-    onModifySearchWithProperty: (key: string, value: string | null, operator: InclusionOperator) => void;
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
-    includeDescendantNotes: boolean;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
-    visibleListPropertyKeys: ReadonlySet<string>;
-    visibleNavigationPropertyKeys: ReadonlySet<string>;
     fileItemStorage: FileItemStorageHelpers;
     noteShortcutKeysByPath: ReadonlyMap<string, string>;
     onToggleNoteShortcut: (file: TFile, shortcutKey: string | undefined) => Promise<void>;
@@ -146,8 +139,6 @@ interface ListPaneVirtualContentProps {
     onFileRenameRestoreFocus: () => void;
     onNavigateToFolder: (folderPath: string, options?: NavigateToFolderOptions) => void;
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
-    fileItemPillOrderModel: FileItemPillOrderModel;
     getSolidBackground: (color?: string | null) => string | undefined;
 }
 
@@ -614,13 +605,9 @@ export function ListPaneVirtualContent({
     suppressRowHover,
     onHoveredFilePathChange,
     onFileClick,
-    onModifySearchWithProperty,
     fileIconSize,
     appearanceSettings,
-    includeDescendantNotes,
     fileNameIconNeedles,
-    visibleListPropertyKeys,
-    visibleNavigationPropertyKeys,
     fileItemStorage,
     noteShortcutKeysByPath,
     onToggleNoteShortcut,
@@ -630,8 +617,6 @@ export function ListPaneVirtualContent({
     onFileRenameRestoreFocus,
     onNavigateToFolder,
     folderDecorationModel,
-    fileItemPillDecorationModel,
-    fileItemPillOrderModel,
     getSolidBackground
 }: ListPaneVirtualContentProps) {
     const { app, commandQueue, plugin } = useServices();
@@ -965,18 +950,12 @@ export function ListPaneVirtualContent({
             selectionType,
             sortOption,
             searchHighlightTerms,
-            onModifySearchWithProperty,
             fileIconSize,
             appearanceSettings,
-            includeDescendantNotes,
             fileNameIconNeedles,
-            visiblePropertyKeys: visibleListPropertyKeys,
-            visibleNavigationPropertyKeys,
             fileItemStorage,
             onToggleNoteShortcut,
             folderDecorationModel,
-            fileItemPillDecorationModel,
-            fileItemPillOrderModel,
             getSolidBackground
         }),
         [
@@ -984,18 +963,12 @@ export function ListPaneVirtualContent({
             selectionType,
             sortOption,
             searchHighlightTerms,
-            onModifySearchWithProperty,
             fileIconSize,
             appearanceSettings,
-            includeDescendantNotes,
             fileNameIconNeedles,
-            visibleListPropertyKeys,
-            visibleNavigationPropertyKeys,
             fileItemStorage,
             onToggleNoteShortcut,
             folderDecorationModel,
-            fileItemPillDecorationModel,
-            fileItemPillOrderModel,
             getSolidBackground
         ]
     );

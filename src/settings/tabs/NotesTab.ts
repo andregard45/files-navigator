@@ -139,42 +139,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                 name: strings.settings.items.useFolderColor.name,
                 desc: strings.settings.items.useFolderColor.desc
             })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.properties, [
-            createToggleDefinition('showFileProperties', {
-                name: strings.settings.items.showFileProperties.name,
-                desc: strings.settings.items.showFileProperties.desc
-            }),
-            createToggleDefinition('colorFileProperties', {
-                name: strings.settings.items.colorFileProperties.name,
-                desc: strings.settings.items.colorFileProperties.desc,
-                visible: () => plugin.settings.showFileProperties
-            }),
-            createToggleDefinition('prioritizeColoredFileProperties', {
-                name: strings.settings.items.showColoredPropertiesFirst.name,
-                desc: strings.settings.items.showColoredPropertiesFirst.desc,
-                visible: () => plugin.settings.showFileProperties && plugin.settings.colorFileProperties
-            }),
-            createToggleDefinition('showFilePropertiesInCompactMode', {
-                name: strings.settings.items.showFilePropertiesInCompactMode.name,
-                desc: strings.settings.items.showFilePropertiesInCompactMode.desc,
-                visible: () => plugin.settings.showFileProperties
-            }),
-            createToggleDefinition('showPropertiesOnSeparateRows', {
-                name: strings.settings.items.showPropertiesOnSeparateRows.name,
-                desc: strings.settings.items.showPropertiesOnSeparateRows.desc,
-                visible: () => plugin.settings.showFileProperties
-            }),
-            createToggleDefinition('enablePropertyInternalLinks', {
-                name: strings.settings.items.linkPropertyPillsToNotes.name,
-                desc: strings.settings.items.linkPropertyPillsToNotes.desc,
-                visible: () => plugin.settings.showFileProperties
-            }),
-            createToggleDefinition('enablePropertyExternalLinks', {
-                name: strings.settings.items.linkPropertyPillsToUrls.name,
-                desc: strings.settings.items.linkPropertyPillsToUrls.desc,
-                visible: () => plugin.settings.showFileProperties
-            })
         ])
     ];
 }

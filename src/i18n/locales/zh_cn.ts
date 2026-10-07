@@ -434,7 +434,6 @@ export const STRINGS_ZH_CN = {
             option: (rows: number) => `标题${rows}行`
         },
         groupBy: '分组依据',
-        properties: '属性',
         resetAppearance: '重置外观',
         openPluginSettings: '打开插件设置…'
     },
@@ -1081,8 +1080,7 @@ export const STRINGS_ZH_CN = {
                 description: '标题、预览文本、特色图片、标签、属性、日期、字数和字符数。',
                 groups: {
                     icon: '图标',
-                    title: '标题',
-                    properties: '属性'
+                    title: '标题'
                 }
             },
             calendar: {
@@ -1836,22 +1834,6 @@ export const STRINGS_ZH_CN = {
                     desc: '启动或执行命令时，如果定期笔记不存在则创建。'
                 }
             },
-            showFileProperties: {
-                name: '显示文件属性',
-                desc: '在文件项中显示属性。使用“属性键可见性”对话框选择要显示的属性。'
-            },
-            colorFileProperties: {
-                name: '为文件属性着色',
-                desc: '将属性颜色应用到文件项的属性徽章上。'
-            },
-            showColoredPropertiesFirst: {
-                name: '优先显示彩色属性',
-                desc: '在文件项中将彩色属性排列在其他属性之前。'
-            },
-            showFilePropertiesInCompactMode: {
-                name: '在精简模式中显示属性',
-                desc: '精简模式启用时显示属性。'
-            },
             propertyKeys: {
                 name: '属性键（仓库配置文件）',
                 desc: 'Frontmatter 属性键，可按键设置导航和文件列表的可见性。',
@@ -1859,18 +1841,6 @@ export const STRINGS_ZH_CN = {
                 noneConfigured: '未配置属性',
                 singleConfigured: '已配置 1 个属性：{properties}',
                 multipleConfigured: '已配置 {count} 个属性：{properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: '在单独的行中显示属性',
-                desc: '将每个属性显示在单独的行中。'
-            },
-            linkPropertyPillsToNotes: {
-                name: '将属性标记链接到笔记',
-                desc: '点击属性标记以打开链接的笔记。'
-            },
-            linkPropertyPillsToUrls: {
-                name: '将属性标记链接到 URL',
-                desc: '点击属性标记以打开链接的 URL。'
             },
             dateFormat: {
                 name: '日期格式',

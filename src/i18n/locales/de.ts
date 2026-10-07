@@ -437,7 +437,6 @@ export const STRINGS_DE = {
             option: (rows: number) => `${rows} Titelzeile${rows === 1 ? '' : 'n'}`
         },
         groupBy: 'Gruppieren nach',
-        properties: 'Eigenschaften',
         resetAppearance: 'Darstellung zurücksetzen',
         openPluginSettings: 'Plugin-Einstellungen öffnen…'
     },
@@ -1095,8 +1094,7 @@ export const STRINGS_DE = {
                 description: 'Titel, Vorschautext, Feature-Bilder, Tags, Eigenschaften, Daten, Wortanzahlen und Zeichenanzahlen.',
                 groups: {
                     icon: 'Symbol',
-                    title: 'Titel',
-                    properties: 'Eigenschaften'
+                    title: 'Titel'
                 }
             },
             calendar: {
@@ -1861,22 +1859,6 @@ export const STRINGS_DE = {
                     desc: 'Erstellt die periodische Notiz beim Start oder per Befehl, falls sie nicht existiert.'
                 }
             },
-            showFileProperties: {
-                name: 'Datei-Eigenschaften anzeigen',
-                desc: 'Eigenschaften in Datei-Elementen anzeigen. Wähle im Dialog „Sichtbarkeit der Eigenschaftsschlüssel“ aus, welche Eigenschaften angezeigt werden.'
-            },
-            colorFileProperties: {
-                name: 'Datei-Eigenschaften einfärben',
-                desc: 'Eigenschaftsfarben auf Eigenschafts-Abzeichen in Datei-Elementen anwenden.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Farbige Eigenschaften zuerst anzeigen',
-                desc: 'Farbige Eigenschaften vor anderen Eigenschaften in Datei-Elementen sortieren.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Eigenschaften im Kompaktmodus anzeigen',
-                desc: 'Eigenschaften anzeigen, wenn der Kompaktmodus aktiv ist.'
-            },
             propertyKeys: {
                 name: 'Eigenschaftsschlüssel (Vault-Profil)',
                 desc: 'Frontmatter-Eigenschaftsschlüssel mit schlüsselweiser Sichtbarkeit für Navigation und Dateiliste.',
@@ -1884,18 +1866,6 @@ export const STRINGS_DE = {
                 noneConfigured: 'Keine Eigenschaften konfiguriert',
                 singleConfigured: '1 Eigenschaft konfiguriert: {properties}',
                 multipleConfigured: '{count} Eigenschaften konfiguriert: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Eigenschaften in separaten Zeilen anzeigen',
-                desc: 'Jede Eigenschaft in einer eigenen Zeile anzeigen.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Eigenschafts-Pills mit Notizen verknüpfen',
-                desc: 'Auf ein Eigenschafts-Pill klicken, um die verknüpfte Notiz zu öffnen.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Eigenschafts-Pills mit URLs verknüpfen',
-                desc: 'Auf ein Eigenschafts-Pill klicken, um die verknüpfte URL zu öffnen.'
             },
             dateFormat: {
                 name: 'Datumsformat',

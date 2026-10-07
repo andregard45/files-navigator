@@ -70,7 +70,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const createGroup = createSettingGroupFactory(containerEl);
     const iconGroup = createGroup(strings.settings.pages.fileDisplay.groups.icon);
     const titleGroup = createGroup(strings.settings.pages.fileDisplay.groups.title);
-    const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
 
     const createColorSetting = (params: {
         containerEl: HTMLElement;
@@ -305,80 +304,4 @@ export function renderNotesTab(context: SettingsTabContext): void {
                 })
             );
     });
-
-    const showFilePropertiesSetting = notePropertyGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showFileProperties.name).setDesc(strings.settings.items.showFileProperties.desc);
-    });
-
-    const filePropertiesDependentSettingsEl = wireToggleSettingWithDependentSection(
-        showFilePropertiesSetting,
-        () => plugin.settings.showFileProperties,
-        async value => {
-            plugin.settings.showFileProperties = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    const colorFilePropertiesSetting = new Setting(filePropertiesDependentSettingsEl)
-        .setName(strings.settings.items.colorFileProperties.name)
-        .setDesc(strings.settings.items.colorFileProperties.desc);
-
-    const colorFilePropertiesDependentSettingsEl = wireToggleSettingWithDependentSection(
-        colorFilePropertiesSetting,
-        () => plugin.settings.colorFileProperties,
-        async value => {
-            plugin.settings.colorFileProperties = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    new Setting(colorFilePropertiesDependentSettingsEl)
-        .setName(strings.settings.items.showColoredPropertiesFirst.name)
-        .setDesc(strings.settings.items.showColoredPropertiesFirst.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.prioritizeColoredFileProperties).onChange(async value => {
-                plugin.settings.prioritizeColoredFileProperties = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(filePropertiesDependentSettingsEl)
-        .setName(strings.settings.items.showFilePropertiesInCompactMode.name)
-        .setDesc(strings.settings.items.showFilePropertiesInCompactMode.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showFilePropertiesInCompactMode).onChange(async value => {
-                plugin.settings.showFilePropertiesInCompactMode = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(filePropertiesDependentSettingsEl)
-        .setName(strings.settings.items.showPropertiesOnSeparateRows.name)
-        .setDesc(strings.settings.items.showPropertiesOnSeparateRows.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.showPropertiesOnSeparateRows).onChange(async value => {
-                plugin.settings.showPropertiesOnSeparateRows = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(filePropertiesDependentSettingsEl)
-        .setName(strings.settings.items.linkPropertyPillsToNotes.name)
-        .setDesc(strings.settings.items.linkPropertyPillsToNotes.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.enablePropertyInternalLinks).onChange(async value => {
-                plugin.settings.enablePropertyInternalLinks = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(filePropertiesDependentSettingsEl)
-        .setName(strings.settings.items.linkPropertyPillsToUrls.name)
-        .setDesc(strings.settings.items.linkPropertyPillsToUrls.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.enablePropertyExternalLinks).onChange(async value => {
-                plugin.settings.enablePropertyExternalLinks = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
 }

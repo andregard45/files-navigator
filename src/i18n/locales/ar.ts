@@ -435,7 +435,6 @@ export const STRINGS_AR = {
             option: (rows: number) => (rows === 1 ? 'صف عنوان واحد' : rows === 2 ? 'صفا عنوان' : `${rows} صفوف عنوان`)
         },
         groupBy: 'تجميع حسب',
-        properties: 'الخصائص',
         resetAppearance: 'إعادة تعيين المظهر',
         openPluginSettings: 'فتح إعدادات الإضافة…'
     },
@@ -1086,8 +1085,7 @@ export const STRINGS_AR = {
                 description: 'العناوين ونص المعاينة والصور المميزة والوسوم والخصائص والتواريخ وعدد الكلمات وعدد الأحرف.',
                 groups: {
                     icon: 'الأيقونة',
-                    title: 'العنوان',
-                    properties: 'الخصائص'
+                    title: 'العنوان'
                 }
             },
             calendar: {
@@ -1847,22 +1845,6 @@ export const STRINGS_AR = {
                 desc: 'قائمة مفصولة بفواصل للمجلدات التي يتم تجاهلها عند جمع الملاحظات من المجلدات الفرعية. تبقى المجلدات مرئية، ويظل تحديدها يعرض ملاحظاتها. تستخدم نفس أنماط إخفاء المجلدات.',
                 placeholder: 'يوميات, موارد, /archive'
             },
-            showFileProperties: {
-                name: 'إظهار خصائص الملفات',
-                desc: 'عرض الخصائص في عناصر الملفات. استخدم نافذة رؤية مفاتيح الخصائص لاختيار الخصائص المعروضة.'
-            },
-            colorFileProperties: {
-                name: 'تلوين خصائص الملفات',
-                desc: 'تطبيق ألوان الخصائص على شارات الخصائص في عناصر الملفات.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'إظهار الخصائص الملونة أولاً',
-                desc: 'ترتيب الخصائص الملونة قبل الخصائص الأخرى في عناصر الملفات.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'إظهار الخصائص في الوضع المضغوط',
-                desc: 'عرض الخصائص عند تفعيل الوضع المضغوط.'
-            },
             propertyKeys: {
                 name: 'مفاتيح الخصائص (ملف تعريف الخزنة)',
                 desc: 'مفاتيح خصائص البيانات الأمامية، مع إمكانية التحكم في رؤية كل مفتاح للتنقل وقائمة الملفات.',
@@ -1870,18 +1852,6 @@ export const STRINGS_AR = {
                 noneConfigured: 'لم يتم تكوين أي خصائص',
                 singleConfigured: 'خاصية واحدة مكوّنة: {properties}',
                 multipleConfigured: '{count} من الخصائص مكوّنة: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'إظهار الخصائص في صفوف منفصلة',
-                desc: 'عرض كل خاصية في صف منفصل.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'ربط شارات الخصائص بالملاحظات',
-                desc: 'انقر على شارة خاصية لفتح الملاحظة المرتبطة.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'ربط شارات الخصائص بالروابط',
-                desc: 'انقر على شارة خاصية لفتح الرابط المرتبط.'
             },
             dateFormat: {
                 name: 'تنسيق التاريخ',

@@ -438,7 +438,6 @@ export const STRINGS_ES = {
             option: (rows: number) => `${rows} fila${rows === 1 ? '' : 's'} de título`
         },
         groupBy: 'Agrupar por',
-        properties: 'Propiedades',
         resetAppearance: 'Restablecer apariencia',
         openPluginSettings: 'Abrir ajustes del plugin…'
     },
@@ -1095,8 +1094,7 @@ export const STRINGS_ES = {
                     'Títulos, texto de vista previa, imágenes destacadas, etiquetas, propiedades, fechas, recuento de palabras y recuento de caracteres.',
                 groups: {
                     icon: 'Icono',
-                    title: 'Título',
-                    properties: 'Propiedades'
+                    title: 'Título'
                 }
             },
             calendar: {
@@ -1861,22 +1859,6 @@ export const STRINGS_ES = {
                     desc: 'Crea la nota periódica al iniciar o mediante el comando si no existe.'
                 }
             },
-            showFileProperties: {
-                name: 'Mostrar propiedades de archivo',
-                desc: 'Mostrar propiedades en los elementos de archivo. Usa el diálogo "Visibilidad de claves de propiedad" para elegir qué propiedades se muestran.'
-            },
-            colorFileProperties: {
-                name: 'Colorear propiedades de archivo',
-                desc: 'Aplicar colores de propiedad a las insignias de propiedad en los elementos de archivo.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Mostrar primero las propiedades coloreadas',
-                desc: 'Ordenar las propiedades coloreadas antes que otras propiedades en los elementos de archivo.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Mostrar propiedades en modo compacto',
-                desc: 'Mostrar propiedades cuando el modo compacto está activo.'
-            },
             propertyKeys: {
                 name: 'Claves de propiedades (perfil de bóveda)',
                 desc: 'Claves de propiedades de metadatos, con visibilidad por clave para la navegación y la lista de archivos.',
@@ -1884,18 +1866,6 @@ export const STRINGS_ES = {
                 noneConfigured: 'No hay propiedades configuradas',
                 singleConfigured: '1 propiedad configurada: {properties}',
                 multipleConfigured: '{count} propiedades configuradas: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Mostrar propiedades en filas separadas',
-                desc: 'Mostrar cada propiedad en su propia fila.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Vincular etiquetas de propiedad a notas',
-                desc: 'Haz clic en una etiqueta de propiedad para abrir la nota vinculada.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Vincular etiquetas de propiedad a URLs',
-                desc: 'Haz clic en una etiqueta de propiedad para abrir la URL vinculada.'
             },
             dateFormat: {
                 name: 'Formato de fecha',

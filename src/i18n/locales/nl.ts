@@ -440,7 +440,6 @@ export const STRINGS_NL = {
             option: (rows: number) => `${rows} titelrij${rows === 1 ? '' : 'en'}`
         },
         groupBy: 'Groeperen op',
-        properties: 'Eigenschappen',
         resetAppearance: 'Uiterlijk herstellen',
         openPluginSettings: 'Plugin-instellingen openen…'
     },
@@ -1096,8 +1095,7 @@ export const STRINGS_NL = {
                     'Titels, voorbeeldtekst, uitgelichte afbeeldingen, tags, eigenschappen, datums, aantal woorden en aantal tekens.',
                 groups: {
                     icon: 'Pictogram',
-                    title: 'Titel',
-                    properties: 'Eigenschappen'
+                    title: 'Titel'
                 }
             },
             calendar: {
@@ -1860,22 +1858,6 @@ export const STRINGS_NL = {
                 desc: 'Kommagescheiden lijst met mappen die worden overgeslagen bij het verzamelen van notities uit submappen. Mappen blijven zichtbaar, en het selecteren van een map toont nog steeds de notities. Gebruikt dezelfde patronen als Mappen verbergen.',
                 placeholder: 'dagelijks, bronnen, /archief'
             },
-            showFileProperties: {
-                name: 'Bestandseigenschappen tonen',
-                desc: 'Eigenschappen weergeven in bestandsitems. Gebruik het dialoogvenster "Zichtbaarheid van eigenschapssleutels" om te kiezen welke eigenschappen worden getoond.'
-            },
-            colorFileProperties: {
-                name: 'Bestandseigenschappen kleuren',
-                desc: 'Eigenschapskleuren toepassen op eigenschapsbadges in bestandsitems.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Gekleurde eigenschappen eerst tonen',
-                desc: 'Gekleurde eigenschappen sorteren vóór andere eigenschappen in bestandsitems.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Eigenschappen tonen in compacte modus',
-                desc: 'Eigenschappen weergeven wanneer de compacte modus actief is.'
-            },
             propertyKeys: {
                 name: 'Eigenschapssleutels (kluisprofiel)',
                 desc: 'Frontmatter-eigenschapssleutels, met zichtbaarheid per sleutel voor navigatie en bestandslijst.',
@@ -1883,18 +1865,6 @@ export const STRINGS_NL = {
                 noneConfigured: 'Geen eigenschappen geconfigureerd',
                 singleConfigured: '1 eigenschap geconfigureerd: {properties}',
                 multipleConfigured: '{count} eigenschappen geconfigureerd: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Eigenschappen op afzonderlijke regels tonen',
-                desc: 'Toon elke eigenschap op een eigen regel.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Eigenschapspillen koppelen aan notities',
-                desc: 'Klik op een eigenschapspil om de gekoppelde notitie te openen.'
-            },
-            linkPropertyPillsToUrls: {
-                name: "Eigenschapspillen koppelen aan URL's",
-                desc: 'Klik op een eigenschapspil om de gekoppelde URL te openen.'
             },
             dateFormat: {
                 name: 'Datumformaat',

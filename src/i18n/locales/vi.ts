@@ -435,7 +435,6 @@ export const STRINGS_VI = {
             option: (rows: number) => `${rows} dòng tiêu đề`
         },
         groupBy: 'Nhóm theo',
-        properties: 'Thuộc tính',
         resetAppearance: 'Đặt lại giao diện',
         openPluginSettings: 'Mở cài đặt plugin…'
     },
@@ -1089,8 +1088,7 @@ export const STRINGS_VI = {
                 description: 'Tiêu đề, văn bản xem trước, hình ảnh nổi bật, thẻ, thuộc tính, ngày, số từ và số ký tự.',
                 groups: {
                     icon: 'Biểu tượng',
-                    title: 'Tiêu đề',
-                    properties: 'Thuộc tính'
+                    title: 'Tiêu đề'
                 }
             },
             calendar: {
@@ -1851,22 +1849,6 @@ export const STRINGS_VI = {
                 desc: 'Danh sách thư mục phân cách bằng dấu phẩy sẽ được bỏ qua khi thu thập ghi chú từ thư mục con. Các thư mục vẫn hiển thị, và khi chọn một thư mục thì ghi chú của thư mục đó vẫn được hiển thị. Dùng cùng mẫu với Ẩn thư mục.',
                 placeholder: 'hàng ngày, tài nguyên, /lưu trữ'
             },
-            showFileProperties: {
-                name: 'Hiện thuộc tính tệp',
-                desc: 'Hiển thị các thuộc tính trong mục tệp. Dùng hộp thoại "Hiển thị khóa thuộc tính" để chọn thuộc tính nào được hiển thị.'
-            },
-            colorFileProperties: {
-                name: 'Tô màu thuộc tính tệp',
-                desc: 'Áp dụng màu thuộc tính cho huy hiệu thuộc tính trên mục tệp.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Hiện thuộc tính có màu trước',
-                desc: 'Sắp xếp thuộc tính có màu trước các thuộc tính khác trên mục tệp.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Hiện thuộc tính ở chế độ gọn',
-                desc: 'Hiển thị thuộc tính khi chế độ gọn đang hoạt động.'
-            },
             propertyKeys: {
                 name: 'Khóa thuộc tính (hồ sơ vault)',
                 desc: 'Các khóa thuộc tính frontmatter, với khả năng thiết lập hiển thị từng khóa cho điều hướng và danh sách tệp.',
@@ -1874,18 +1856,6 @@ export const STRINGS_VI = {
                 noneConfigured: 'Chưa cấu hình thuộc tính nào',
                 singleConfigured: '1 thuộc tính đã cấu hình: {properties}',
                 multipleConfigured: '{count} thuộc tính đã cấu hình: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Hiển thị thuộc tính trên các dòng riêng',
-                desc: 'Hiển thị mỗi thuộc tính trên một dòng riêng.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Liên kết nhãn thuộc tính với ghi chú',
-                desc: 'Nhấp vào nhãn thuộc tính để mở ghi chú được liên kết.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Liên kết nhãn thuộc tính với URL',
-                desc: 'Nhấp vào nhãn thuộc tính để mở URL được liên kết.'
             },
             dateFormat: {
                 name: 'Định dạng ngày',

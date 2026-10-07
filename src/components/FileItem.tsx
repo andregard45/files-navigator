@@ -27,7 +27,7 @@
  *
  * 3. Extracted subsystems:
  *    - useFileItemContentState: Storage hydration + frontmatter property subscriptions
- *    - useFileItemPills: Property pill models and rendering
+ *    - useFileItemPills: Property search evidence computation (search feature)
  *    - listPaneMeasurements helpers: Shared layout rules with the virtualizer
  */
 
@@ -55,11 +55,8 @@ import { mergeRanges, NumericRange } from '../utils/arrayUtils';
 import { casefold } from '../utils/recordUtils';
 import { openAddTagToFilesModal } from '../utils/tagModalHelpers';
 import { resolveUXIcon } from '../utils/uxIcons';
-import type { InclusionOperator } from '../utils/filterSearch';
 import { getNavigatorPinContext } from '../utils/selectionUtils';
 import type { FileNameIconNeedle } from '../utils/fileIconUtils';
-import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
-import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
 import { useFileItemContentState, type FileItemContentDb } from './fileItem/useFileItemContentState';
 import { useFileItemPills } from './fileItem/useFileItemPills';
 import { renderTextWithHighlightRanges } from './fileItem/searchHighlightRendering';
@@ -95,21 +92,13 @@ export interface FileItemPaneProps {
     sortOption?: SortOption;
     /** Folded name tokens from the active internal filter search for highlighting the file name */
     searchHighlightTerms?: readonly string[];
-    /** Modifies the active search query with a property token when modifier clicking */
-    onModifySearchWithProperty?: (key: string, value: string | null, operator: InclusionOperator) => void;
     /** Icon size for rendering file icons */
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
-    /** Visible frontmatter property keys for file list pills (normalized keys) */
-    visiblePropertyKeys: ReadonlySet<string>;
-    /** Visible frontmatter property keys in navigation pane (normalized keys) */
-    visibleNavigationPropertyKeys: ReadonlySet<string>;
     fileItemStorage: FileItemStorageHelpers;
     onToggleNoteShortcut: (file: TFile, shortcutKey: string | undefined) => Promise<void>;
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
-    fileItemPillOrderModel: FileItemPillOrderModel;
     getSolidBackground: (color?: string | null) => string | undefined;
     disableNativeDrag?: boolean;
 }
@@ -253,17 +242,12 @@ export const FileItem = React.memo(function FileItem({
         selectionType,
         sortOption,
         searchHighlightTerms,
-        onModifySearchWithProperty,
         fileIconSize,
         appearanceSettings,
         fileNameIconNeedles,
-        visiblePropertyKeys,
-        visibleNavigationPropertyKeys,
         fileItemStorage,
         onToggleNoteShortcut,
         folderDecorationModel,
-        fileItemPillDecorationModel,
-        fileItemPillOrderModel,
         getSolidBackground,
         disableNativeDrag = false
     } = paneProps;
@@ -273,8 +257,6 @@ export const FileItem = React.memo(function FileItem({
     const metadataService = useMetadataService();
     const { getFileDisplayName, getDB, getFileTimestamps } = fileItemStorage;
     const isCompactMode = appearanceSettings.mode === 'compact';
-    const isMarkdownFile = file.extension === 'md';
-    const canShowPropertyPills = isMarkdownFile && (!isCompactMode || settings.showFilePropertiesInCompactMode);
     const { properties, metadataVersion } = useFileItemContentState({ file, getDB });
 
     // === Refs ===
@@ -422,23 +404,11 @@ export const FileItem = React.memo(function FileItem({
         [file, fileSystemOps, inlineRename]
     );
     const propertySearchEvidenceIconId = resolveUXIcon(settings.interfaceIcons, 'nav-property');
-    const {
-        hasVisiblePillRows,
-        propertySearchEvidenceGroups,
-        propertySearchEvidenceHiddenGroupCount,
-        pillRows
-    } = useFileItemPills({
+    const { propertySearchEvidenceGroups, propertySearchEvidenceHiddenGroupCount } = useFileItemPills({
         file,
         isCompactMode,
         properties,
-        settings,
-        showProperties: appearanceSettings.showProperties,
-        visiblePropertyKeys,
-        visibleNavigationPropertyKeys,
-        matchedProperties,
-        onModifySearchWithProperty,
-        fileItemPillDecorationModel,
-        fileItemPillOrderModel
+        matchedProperties
     });
     const fileTitleElement = (() => {
         if (inlineRename && renameInputOptions) {
@@ -537,8 +507,6 @@ export const FileItem = React.memo(function FileItem({
     );
     // Pinned rows clamp the excerpt to a single line; search rows use the shared constant.
     const excerptRows = isPinned ? 1 : SEARCH_EXCERPT_ROWS;
-
-    const renderedPillRows = pillRows;
 
     // The excerpt text renders only when this row actually carries an Omnisearch excerpt.
     const shouldShowMultilinePreview = hasSearchExcerptContent;
@@ -935,11 +903,10 @@ export const FileItem = React.memo(function FileItem({
                     ) : null}
                     {isCompactMode ? (
                         // ========== COMPACT MODE ==========
-                        // Minimal layout: file name + pills
+                        // Minimal layout: file name only
                         // Used when the current list appearance mode is compact
                         <div className="nn-compact-file-text-content">
                             <div className="nn-compact-file-header">{fileTitleElement}</div>
-                            {renderedPillRows}
                         </div>
                     ) : (
                         // ========== NORMAL MODE ==========
@@ -957,9 +924,6 @@ export const FileItem = React.memo(function FileItem({
                                         {highlightedPreview}
                                     </div>
                                 )}
-
-                                {/* Pills */}
-                                {renderedPillRows}
                             </div>
                         </>
                     )}
