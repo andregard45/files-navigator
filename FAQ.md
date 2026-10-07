@@ -31,7 +31,8 @@ Check these settings in order:
    Notes hidden by tag or property
 4. **Hide folder notes in list** (Folders & folder notes, Folder note files) - Recognized folder-note files hidden from
    the file list
-5. **Hide exported preview images** (List pane, Drawing previews) - Exported PNG previews hidden for drawing files
+5. **Drawing companion images** - Exported PNG previews for drawing files (for example `Drawing.excalidraw.png`,
+   `Drawing.excalidraw.dark.png`, and `Drawing.excalidraw.light.png`) are always hidden from the file list
 
 If a note appears in its own folder but not while browsing an ancestor, also check **Exclude folders from descendants
 (vault profile)** and **Show notes from subfolders / descendants**. The eye button or **Toggle hidden folders, tags, and

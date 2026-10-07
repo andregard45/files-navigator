@@ -1061,8 +1061,7 @@ export const STRINGS_TH = {
                     groupHeaders: 'ส่วนหัวกลุ่ม',
                     manualSort: 'การจัดเรียงด้วยตนเอง',
                     pinnedNotes: 'โน้ตที่ปักหมุด',
-                    behavior: 'พฤติกรรม',
-                    drawingPreviews: 'ตัวอย่างภาพวาด'
+                    behavior: 'พฤติกรรม'
                 }
             },
             fileOperations: {
@@ -1878,19 +1877,6 @@ export const STRINGS_TH = {
             useFolderColor: {
                 name: 'ใช้สีโฟลเดอร์',
                 desc: 'ใส่สีให้กับชื่อโน้ตและไอคอนไฟล์ตามสีของโฟลเดอร์หลักเมื่อไม่มีการตั้งค่าสีไฟล์กำหนดเอง ลำดับความสำคัญ: สีไฟล์กำหนดเอง > สีโฟลเดอร์ > สีค่าเริ่มต้น'
-            },
-            hideExportedPreviewImages: {
-                name: 'ซ่อนรูปภาพตัวอย่างที่ส่งออก',
-                desc: 'ซ่อนไฟล์ PNG ตัวอย่างภาพวาดที่ส่งออก เปิด "แสดงรายการที่ซ่อน" เพื่อแสดงไฟล์เหล่านั้น'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator แสดงไฟล์ PNG ที่ส่งออกโดย Excalidraw เป็นภาพตัวอย่างของภาพวาด',
-                items: [
-                    'ใน **การตั้งค่า Excalidraw** เปิด **Embedding Excalidraw into your Notes and Exporting** จากนั้น **Export Settings** จากนั้น **Auto-export Settings**',
-                    'เปิดใช้งาน **Auto-export PNG** หากต้องการ ให้เปิดใช้งาน **Export both dark- and light-themed image** ด้วย',
-                    'Notebook Navigator จะมองหา **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** หรือ **Drawing.excalidraw.light.png**',
-                    'ขณะที่ **ซ่อนรูปภาพตัวอย่างที่ส่งออก** เปิดอยู่ ไฟล์ PNG จะปรากฏเฉพาะเมื่อ **แสดงรายการที่ซ่อน** เปิดอยู่ด้วยเท่านั้น'
-                ]
             },
             showRootFolder: {
                 name: 'แสดงโฟลเดอร์ราก',

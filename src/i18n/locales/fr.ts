@@ -1073,8 +1073,7 @@ export const STRINGS_FR = {
                     groupHeaders: 'En-têtes de groupe',
                     manualSort: 'Tri manuel',
                     pinnedNotes: 'Notes épinglées',
-                    behavior: 'Comportement',
-                    drawingPreviews: 'Aperçus des dessins'
+                    behavior: 'Comportement'
                 }
             },
             fileOperations: {
@@ -1897,19 +1896,6 @@ export const STRINGS_FR = {
             useFolderColor: {
                 name: 'Utiliser la couleur du dossier',
                 desc: "Colorer les titres de notes et les icônes de fichier avec la couleur du dossier parent lorsqu'aucune couleur de fichier personnalisée n'est définie. Priorité : couleur de fichier personnalisée > couleur du dossier > couleur par défaut."
-            },
-            hideExportedPreviewImages: {
-                name: 'Masquer les images de prévisualisation exportées',
-                desc: 'Masquer les fichiers PNG de prévisualisation de dessin exportés. Activez « Afficher les éléments masqués » pour les afficher.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator affiche les fichiers PNG exportés par Excalidraw comme prévisualisations de dessin.',
-                items: [
-                    "Dans les **paramètres d'Excalidraw**, ouvrez **Embedding Excalidraw into your Notes and Exporting**, puis **Export Settings**, puis **Auto-export Settings**.",
-                    'Activez **Auto-export PNG**. Activez éventuellement **Export both dark- and light-themed image**.',
-                    'Notebook Navigator recherche **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** ou **Drawing.excalidraw.light.png**.',
-                    "Tant que **Masquer les images de prévisualisation exportées** est activé, les fichiers PNG n'apparaissent que si **Afficher les éléments masqués** est également activé."
-                ]
             },
             showRootFolder: {
                 name: 'Afficher le dossier racine',

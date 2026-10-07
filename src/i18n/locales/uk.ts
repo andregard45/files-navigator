@@ -1066,8 +1066,7 @@ export const STRINGS_UK = {
                     groupHeaders: 'Заголовки груп',
                     manualSort: 'Ручне сортування',
                     pinnedNotes: 'Закріплені нотатки',
-                    behavior: 'Поведінка',
-                    drawingPreviews: 'Перегляд малюнків'
+                    behavior: 'Поведінка'
                 }
             },
             fileOperations: {
@@ -1886,19 +1885,6 @@ export const STRINGS_UK = {
             useFolderColor: {
                 name: 'Використовувати колір теки',
                 desc: 'Забарвлювати заголовки нотаток та значки файлів кольором батьківської теки, коли не задано користувацький колір файлу. Пріоритет: користувацький колір файлу > колір теки > колір за замовчуванням.'
-            },
-            hideExportedPreviewImages: {
-                name: 'Сховати експортовані зображення попереднього перегляду',
-                desc: 'Приховує експортовані PNG-файли попереднього перегляду малюнків. Увімкніть «Показати приховані елементи», щоб відобразити їх.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator показує PNG-файли, експортовані Excalidraw, як попередній перегляд малюнків.',
-                items: [
-                    'У **налаштуваннях Excalidraw** відкрийте **Embedding Excalidraw into your Notes and Exporting**, потім **Export Settings**, потім **Auto-export Settings**.',
-                    'Увімкніть **Auto-export PNG**. За бажанням увімкніть **Export both dark- and light-themed image**.',
-                    'Notebook Navigator шукає **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** або **Drawing.excalidraw.light.png**.',
-                    'Поки увімкнено **Сховати експортовані зображення попереднього перегляду**, PNG-файли видно лише тоді, коли також увімкнено **Показати приховані елементи**.'
-                ]
             },
             showRootFolder: {
                 name: 'Показувати кореневу теку',

@@ -23,7 +23,6 @@ import {
     isExcalidrawFile,
     isTruthyFrontmatterFlagValue
 } from './fileNameUtils';
-import type { NotebookNavigatorSettings } from '../settings/types';
 
 const EXCALIDRAW_COMPANION_IMAGE_EXTENSIONS = ['png', 'dark.png', 'light.png'] as const;
 const TLDRAW_FRONTMATTER_KEY = 'tldraw-file';
@@ -36,8 +35,6 @@ export interface DrawingFeatureImageSource {
     supportsCompanionImages: boolean;
 }
 
-type DrawingFeatureImageListener = () => void;
-
 interface DrawingFeatureImageProvider {
     id: DrawingFeatureImageProviderId;
     iconId: string;
@@ -46,8 +43,6 @@ interface DrawingFeatureImageProvider {
     getSourcePathCandidatesForCompanionBasePath: (basePath: string) => string[];
     isSourceFileWithFrontmatter: (file: TFile, frontmatter: unknown) => boolean;
 }
-
-const featureImageListenersBySourcePath = new Map<string, Set<DrawingFeatureImageListener>>();
 
 function getPathWithoutFinalExtension(path: string): string | null {
     const dotIndex = path.lastIndexOf('.');
@@ -195,37 +190,10 @@ export function isDrawingCompanionImageFile(app: App, file: TFile): boolean {
     return file.extension.toLowerCase() === 'png' && findDrawingFileForCompanionImage(app, file.path) !== null;
 }
 
-export function shouldHideDrawingCompanionImageFile(
-    app: App,
-    file: TFile,
-    settings: Pick<NotebookNavigatorSettings, 'hideDrawingPreviewImages'>
-): boolean {
-    return settings.hideDrawingPreviewImages && isDrawingCompanionImageFile(app, file);
-}
-
-export function subscribeDrawingFeatureImageChange(sourcePath: string, listener: DrawingFeatureImageListener): () => void {
-    const existingListeners = featureImageListenersBySourcePath.get(sourcePath);
-    const listeners = existingListeners ?? new Set<DrawingFeatureImageListener>();
-    listeners.add(listener);
-    if (!existingListeners) {
-        featureImageListenersBySourcePath.set(sourcePath, listeners);
-    }
-
-    return () => {
-        listeners.delete(listener);
-        if (listeners.size === 0) {
-            featureImageListenersBySourcePath.delete(sourcePath);
-        }
-    };
-}
-
-function emitDrawingFeatureImageChange(sourcePath: string): void {
-    featureImageListenersBySourcePath.get(sourcePath)?.forEach(listener => listener());
+export function shouldHideDrawingCompanionImageFile(app: App, file: TFile): boolean {
+    return isDrawingCompanionImageFile(app, file);
 }
 
 export function emitDrawingCompanionImageChange(app: App, imagePath: string): void {
-    const sourceFile = findDrawingFileForCompanionImage(app, imagePath);
-    if (sourceFile) {
-        emitDrawingFeatureImageChange(sourceFile.path);
-    }
+    // No-op since the drawing preview feature was removed; kept for vault sync call sites.
 }

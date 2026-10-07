@@ -1069,8 +1069,7 @@ export const STRINGS_JA = {
                     groupHeaders: 'グループヘッダー',
                     manualSort: '手動並べ替え',
                     pinnedNotes: 'ピン留めされたノート',
-                    behavior: '動作',
-                    drawingPreviews: '描画プレビュー'
+                    behavior: '動作'
                 }
             },
             fileOperations: {
@@ -1886,19 +1885,6 @@ export const STRINGS_JA = {
             useFolderColor: {
                 name: 'フォルダの色を使用',
                 desc: 'カスタムファイル色が設定されていない場合に、ノートタイトルとファイルアイコンを親フォルダの色で表示します。優先順位: カスタムファイル色 > フォルダの色 > デフォルト色。'
-            },
-            hideExportedPreviewImages: {
-                name: 'エクスポートされたプレビュー画像を非表示',
-                desc: 'エクスポートされた描画プレビューの PNG ファイルを非表示にします。表示するには「非表示の項目を表示」をオンにしてください。'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator は Excalidraw からエクスポートされた PNG ファイルを図のプレビューとして表示します。',
-                items: [
-                    '**Excalidraw 設定** で **Embedding Excalidraw into your Notes and Exporting** を開き、続いて **Export Settings**、次に **Auto-export Settings** を開きます。',
-                    '**Auto-export PNG** を有効にします。必要に応じて **Export both dark- and light-themed image** も有効にできます。',
-                    'Notebook Navigator は **Drawing.excalidraw.png**、**Drawing.excalidraw.dark.png**、**Drawing.excalidraw.light.png** のいずれかを探します。',
-                    '**エクスポートされたプレビュー画像を非表示** が有効な間、PNG ファイルは **非表示の項目を表示** も有効な場合にのみ表示されます。'
-                ]
             },
             showRootFolder: {
                 name: 'ルートフォルダを表示',

@@ -249,7 +249,6 @@ export function useListPaneData({
         activeProfile.fileVisibility,
         settings.enableFolderNotes,
         settings.hideFolderNoteInList,
-        settings.hideDrawingPreviewImages,
         settings.folderNoteNamePattern,
         settings.useFrontmatterMetadata,
         settings.frontmatterNameField,
@@ -340,7 +339,6 @@ export function useListPaneData({
             hiddenFilePropertyMatcher,
             hiddenFileTags,
             hiddenFolders,
-            hideDrawingPreviewImages: settings.hideDrawingPreviewImages,
             showHiddenItems
         });
     }, [
@@ -350,7 +348,6 @@ export function useListPaneData({
         hiddenFilePropertyMatcher,
         hiddenFileNames,
         hiddenFileTags,
-        settings.hideDrawingPreviewImages,
         showHiddenItems,
         app
     ]);

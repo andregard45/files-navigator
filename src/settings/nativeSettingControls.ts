@@ -124,7 +124,6 @@ const BOOLEAN_SETTING_KEYS = [
     'confirmBeforeManualSort',
     'filterPinnedByFolder',
     'revealFileOnListChanges',
-    'hideDrawingPreviewImages',
     'showNoteCount',
     'separateNoteCounts',
     'showIndentGuides',

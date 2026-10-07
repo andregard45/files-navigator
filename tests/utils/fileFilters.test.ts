@@ -162,16 +162,14 @@ describe('getFilteredFiles', () => {
         ]);
     });
 
-    it('shows Excalidraw companion PNGs when rendered preview image hiding is disabled', () => {
+    it('always hides Excalidraw companion PNGs regardless of settings', () => {
         const drawing = createTestTFile('Drawings/Sketch.excalidraw.md');
         const companionImage = createTestTFile('Drawings/Sketch.excalidraw.png');
         const normalImage = createTestTFile('Drawings/Cover.png');
         const app = createAppWithFiles([drawing, companionImage, normalImage]);
-        const settings = { ...createSettings(), hideDrawingPreviewImages: false };
 
-        expect(toPaths(getFilteredFiles(app, settings))).toEqual([
+        expect(toPaths(getFilteredFiles(app, createSettings()))).toEqual([
             'Drawings/Sketch.excalidraw.md',
-            'Drawings/Sketch.excalidraw.png',
             'Drawings/Cover.png'
         ]);
     });

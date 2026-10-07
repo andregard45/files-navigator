@@ -1060,8 +1060,7 @@ export const STRINGS_ZH_TW = {
                     groupHeaders: '群組標題',
                     manualSort: '手動排序',
                     pinnedNotes: '釘選筆記',
-                    behavior: '行為',
-                    drawingPreviews: '繪圖預覽'
+                    behavior: '行為'
                 }
             },
             fileOperations: {
@@ -1871,19 +1870,6 @@ export const STRINGS_ZH_TW = {
             useFolderColor: {
                 name: '使用資料夾顏色',
                 desc: '當未設定自訂檔案顏色時，使用父資料夾的顏色為筆記標題和檔案圖示著色。優先順序：自訂檔案顏色 > 資料夾顏色 > 預設顏色。'
-            },
-            hideExportedPreviewImages: {
-                name: '隱藏匯出的預覽圖片',
-                desc: '隱藏匯出的繪圖預覽 PNG 檔案。開啟「顯示隱藏項目」以顯示它們。'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator 將 Excalidraw 匯出的 PNG 檔案用作繪圖預覽。',
-                items: [
-                    '在 **Excalidraw 設定** 中，依次開啟 **Embedding Excalidraw into your Notes and Exporting**、**Export Settings**、**Auto-export Settings**。',
-                    '啟用 **Auto-export PNG**。可選啟用 **Export both dark- and light-themed image**。',
-                    'Notebook Navigator 會尋找 **Drawing.excalidraw.png**、**Drawing.excalidraw.dark.png** 或 **Drawing.excalidraw.light.png**。',
-                    '當 **隱藏匯出的預覽圖片** 開啟時，僅當 **顯示隱藏項目** 也開啟時，PNG 檔案才會顯示。'
-                ]
             },
             showRootFolder: {
                 name: '顯示根資料夾',

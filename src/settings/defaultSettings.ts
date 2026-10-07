@@ -326,7 +326,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     quickActionAddToShortcuts: true,
     quickActionPinNote: true,
     quickActionOpenInNewTab: false,
-    hideDrawingPreviewImages: true,
 
     // Frontmatter tab
     useFrontmatterMetadata: false,

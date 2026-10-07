@@ -54,16 +54,15 @@ describe('Drawing companion files', () => {
         expect(isDrawingCompanionImageFile(app, image)).toBe(false);
     });
 
-    it('hides companion images only when the drawing file exists and hiding is enabled', () => {
+    it('always hides companion images when the drawing file exists', () => {
         const drawing = createTestTFile('Drawings/Sketch.excalidraw.md');
         const image = createTestTFile('Drawings/Sketch.excalidraw.png');
 
         const appWithDrawing = createAppWithFiles([drawing, image]);
-        expect(shouldHideDrawingCompanionImageFile(appWithDrawing, image, { hideDrawingPreviewImages: true })).toBe(true);
-        expect(shouldHideDrawingCompanionImageFile(appWithDrawing, image, { hideDrawingPreviewImages: false })).toBe(false);
+        expect(shouldHideDrawingCompanionImageFile(appWithDrawing, image)).toBe(true);
 
         const appWithoutDrawing = createAppWithFiles([image]);
-        expect(shouldHideDrawingCompanionImageFile(appWithoutDrawing, image, { hideDrawingPreviewImages: true })).toBe(false);
+        expect(shouldHideDrawingCompanionImageFile(appWithoutDrawing, image)).toBe(false);
     });
 
     it('finds the drawing file for a companion image', () => {

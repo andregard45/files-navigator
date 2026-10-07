@@ -110,7 +110,6 @@ interface BuildHiddenFileStateArgs {
     hiddenFilePropertyMatcher: ReturnType<typeof createFrontmatterPropertyExclusionMatcher>;
     hiddenFileTags: string[];
     hiddenFolders: string[];
-    hideDrawingPreviewImages: boolean;
     showHiddenItems: boolean;
 }
 
@@ -500,7 +499,6 @@ export function buildHiddenFileState({
     hiddenFilePropertyMatcher,
     hiddenFileTags,
     hiddenFolders,
-    hideDrawingPreviewImages,
     showHiddenItems
 }: BuildHiddenFileStateArgs): ReadonlyMap<string, boolean> {
     if (!showHiddenItems || files.length === 0) {
@@ -543,7 +541,7 @@ export function buildHiddenFileState({
 
         const hiddenByFileName = fileNameMatcher ? fileNameMatcher.matches(file) : false;
         const hiddenByFolder = shouldCheckFolders ? resolveFolderHidden(file.parent ?? null) : false;
-        const hiddenByDrawingCompanion = shouldHideDrawingCompanionImageFile(app, file, { hideDrawingPreviewImages });
+        const hiddenByDrawingCompanion = shouldHideDrawingCompanionImageFile(app, file);
         const hiddenByTags =
             hiddenFileTagVisibility !== null &&
             hiddenFileTagVisibility.hasHiddenRules &&
