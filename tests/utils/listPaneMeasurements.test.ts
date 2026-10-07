@@ -18,13 +18,14 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-    calculateNormalListFileRowHeightEstimate,
     estimateFileRowHeight,
-    getFileItemLayoutState,
+    estimatePlainRowHeight,
+    estimateSearchRowHeight,
     getListPaneMeasurements,
     getSelectedPropertyValuePillToHide,
     getPropertyRowCount
 } from '../../src/utils/listPaneMeasurements';
+import { SEARCH_EXCERPT_ROWS } from '../../src/settings/listPaneAppearance';
 import { ItemType } from '../../src/types';
 import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
 import { createTestTFile } from './createTestTFile';
@@ -32,72 +33,16 @@ import { createTestTFile } from './createTestTFile';
 describe('listPaneMeasurements layout helpers', () => {
     const desktopHeights = getListPaneMeasurements(false);
 
-    it('uses explicit compact mode instead of inferring it from hidden date, preview, and image sections', () => {
-        expect(
-            getFileItemLayoutState({
-                isCompactMode: false,
-                showSearchExcerpt: false,
-                isPinned: false,
-                hasPreviewContent: false,
-                hasVisiblePillRows: false
-            })
-        ).toMatchObject({ isCompactMode: false });
-
-        expect(
-            getFileItemLayoutState({
-                isCompactMode: true,
-                showSearchExcerpt: false,
-                isPinned: false,
-                hasPreviewContent: false,
-                hasVisiblePillRows: false
-            })
-        ).toMatchObject({ isCompactMode: true });
-    });
-
-    it('collapses empty preview space when pills are visible and no image is shown', () => {
-        expect(
-            getFileItemLayoutState({
-                showSearchExcerpt: true,
-                isPinned: false,
-                hasPreviewContent: false,
-                hasVisiblePillRows: true
-            })
-        ).toMatchObject({
-            shouldShowMultilinePreview: false,
-            shouldReplaceEmptyPreviewWithPills: true        });
-    });
-
-    it('uses a title-only row height when normal rows render no content or image', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            isPinned: false,
-            hasPreviewContent: false,
-            hasVisiblePillRows: false
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 3,
-                layoutState,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
-    });
-
     it('estimates compact file rows from compact padding, title rows, and visible pill rows', () => {
         expect(
             estimateFileRowHeight(
                 {
-                    isPinned: false,
-                    hasPreviewContent: false,
+                    hasSearchExcerptContent: false,
                     visiblePillRowCount: 2
                 },
                 {
                     heights: desktopHeights,
                     titleRows: 2,
-                    previewRows: 3,
                     isCompactMode: true,
                     showSearchExcerpt: false,
                     compactPaddingTotal: 18
@@ -106,18 +51,16 @@ describe('listPaneMeasurements layout helpers', () => {
         ).toBe(18 + desktopHeights.titleLineHeight * 2 + desktopHeights.tagRowHeight * 2);
     });
 
-    it('uses a title-only row height in standard mode when date, preview, and image are hidden', () => {
+    it('uses a title-only row height in standard mode when there are no pill rows', () => {
         expect(
             estimateFileRowHeight(
                 {
-                    isPinned: false,
-                    hasPreviewContent: false,
+                    hasSearchExcerptContent: false,
                     visiblePillRowCount: 0
                 },
                 {
                     heights: desktopHeights,
                     titleRows: 1,
-                    previewRows: 3,
                     isCompactMode: false,
                     showSearchExcerpt: false,
                     compactPaddingTotal: 18
@@ -126,112 +69,65 @@ describe('listPaneMeasurements layout helpers', () => {
         ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight);
     });
 
-    it('estimates pinned rows with the pinned preview row count', () => {
-        const inputs = {
-            isPinned: true,
-            hasPreviewContent: true,
-            visiblePillRowCount: 1
-        };
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            isPinned: inputs.isPinned,
-            hasPreviewContent: inputs.hasPreviewContent,
-            hasVisiblePillRows: true
-        });
-
-        expect(
-            estimateFileRowHeight(inputs, {
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 4,
-                isCompactMode: false,
-                showSearchExcerpt: true,
-                compactPaddingTotal: 18
-            })
-        ).toBe(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 1,
-                layoutState,
-                visiblePillRowCount: 1
-            })
+    it('delegates plain (non-search) rows to estimatePlainRowHeight', () => {
+        expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 1 }, 0)).toBe(
+            desktopHeights.basePadding + desktopHeights.titleLineHeight
         );
+        expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 2 }, 1)).toBe(
+            desktopHeights.basePadding + desktopHeights.titleLineHeight * 2 + desktopHeights.tagRowHeight
+        );
+        expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 1 }, 3)).toBe(
+            desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.tagRowHeight * 3
+        );
+
+        // estimateFileRowHeight routes non-search rows through the same estimator.
+        expect(
+            estimateFileRowHeight(
+                { hasSearchExcerptContent: false, visiblePillRowCount: 3 },
+                {
+                    heights: desktopHeights,
+                    titleRows: 1,
+                    isCompactMode: false,
+                    showSearchExcerpt: false,
+                    compactPaddingTotal: 18
+                }
+            )
+        ).toBe(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 1 }, 3));
     });
 
-    it('uses configured preview rows when no pills replace the preview', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            isPinned: false,
-            hasPreviewContent: true,
-            hasVisiblePillRows: false
-        });
+    it('reserves the shared search excerpt slot for search rows', () => {
+        const excerptSlot = desktopHeights.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
 
-        expect(layoutState.shouldShowMultilinePreview).toBe(true);
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 2,
-                layoutState,
-                visiblePillRowCount: 0
-            })
-        ).toBe(
+        expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 }, { visiblePillRowCount: 0 })).toBe(
+            desktopHeights.basePadding + desktopHeights.titleLineHeight + excerptSlot
+        );
+
+        // Pill rows up to the reserved excerpt slot do not grow the row...
+        expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 }, { visiblePillRowCount: 1 })).toBe(
+            desktopHeights.basePadding + desktopHeights.titleLineHeight + excerptSlot
+        );
+
+        // ...but taller pill stacks add their excess height on top.
+        expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 }, { visiblePillRowCount: 3 })).toBe(
             desktopHeights.basePadding +
                 desktopHeights.titleLineHeight +
-                desktopHeights.multilineTextLineHeight * 2
+                excerptSlot +
+                (desktopHeights.tagRowHeight * 3 - excerptSlot)
         );
-    });
 
-    it('uses one preview row for pinned items', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            isPinned: true,
-            hasPreviewContent: true,
-            hasVisiblePillRows: false
-        });
-        const pinnedPreviewRows = 1;
-
-        expect(layoutState.shouldShowMultilinePreview).toBe(true);
+        // estimateFileRowHeight routes search rows (showSearchExcerpt on) through it.
         expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: pinnedPreviewRows,
-                layoutState,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.multilineTextLineHeight);
-    });
-
-    it('keeps pinned task progress and preview in one secondary row', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: true,
-            isPinned: true,
-            hasPreviewContent: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(
-            calculateNormalListFileRowHeightEstimate({
-                heights: desktopHeights,
-                titleRows: 1,
-                previewRows: 1,
-                layoutState,
-                visiblePillRowCount: 0
-            })
-        ).toBe(desktopHeights.basePadding + desktopHeights.titleLineHeight + desktopHeights.multilineTextLineHeight);
-    });
-
-    it('does not show the pinned preview slot when preview text is disabled', () => {
-        const layoutState = getFileItemLayoutState({
-            showSearchExcerpt: false,
-            isPinned: true,
-            hasPreviewContent: true,
-            hasVisiblePillRows: false
-        });
-
-        expect(layoutState.shouldShowMultilinePreview).toBe(false);
+            estimateFileRowHeight(
+                { hasSearchExcerptContent: true, visiblePillRowCount: 1 },
+                {
+                    heights: desktopHeights,
+                    titleRows: 1,
+                    isCompactMode: false,
+                    showSearchExcerpt: true,
+                    compactPaddingTotal: 18
+                }
+            )
+        ).toBe(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 }, { visiblePillRowCount: 1 }));
     });
 
     it('counts numeric frontmatter properties as visible property rows', () => {

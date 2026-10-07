@@ -17,6 +17,7 @@
  */
 
 import type { TFile } from 'obsidian';
+import { SEARCH_EXCERPT_ROWS } from '../settings/listPaneAppearance';
 import { ItemType, ListPaneItemType, type NavigationItemType } from '../types';
 import type { FileData } from '../storage/IndexedDBStorage';
 import type { ListPaneItem } from '../types/virtualization';
@@ -176,114 +177,69 @@ export function forEachVisibleFrontmatterProperty({
     }
 }
 
-export interface FileItemLayoutState {
-    isCompactMode: boolean;
-    isPinned: boolean;
-    shouldShowMultilinePreview: boolean;
-    shouldReplaceEmptyPreviewWithPills: boolean;
-}
+/**
+ * Shared clamp height for the Omnisearch excerpt area of a search-result row.
+ * The excerpt always reserves `SEARCH_EXCERPT_ROWS` clamped lines regardless of
+ * whether the excerpt text itself is rendered or replaced by property pills.
+ */
+const SEARCH_EXCERPT_SLOT_HEIGHT = DESKTOP_MEASUREMENTS.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
 
 export interface FileRowHeightInputs {
-    isPinned: boolean;
-    hasPreviewContent: boolean;
+    /** True when the row carries an Omnisearch excerpt string (only possible during search). */
+    hasSearchExcerptContent: boolean;
     visiblePillRowCount: number;
 }
 
 export interface FileRowHeightConfig {
     heights: ListPaneMeasurements;
     titleRows: number;
-    /** Row count reserved for the Omnisearch excerpt area in search result rows. */
-    previewRows: number;
     isCompactMode: boolean;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
     showSearchExcerpt: boolean;
     compactPaddingTotal: number;
 }
 
-export function getFileItemLayoutState({
-    isCompactMode = false,
-    showSearchExcerpt,
-    isPinned,
-    hasPreviewContent,
-    hasVisiblePillRows
-}: {
-    isCompactMode?: boolean;
-    showSearchExcerpt: boolean;
-    isPinned: boolean;
-    hasPreviewContent: boolean;
-    hasVisiblePillRows: boolean;
-}): FileItemLayoutState {
-    const shouldReplaceEmptyPreviewWithPills = !hasPreviewContent && hasVisiblePillRows;
-    const shouldShowMultilinePreview = showSearchExcerpt && !shouldReplaceEmptyPreviewWithPills && hasPreviewContent;
-
-    return {
-        isCompactMode,
-        isPinned,
-        shouldShowMultilinePreview,
-        shouldReplaceEmptyPreviewWithPills
-    };
+/** Flat estimator for regular (non-search) file rows: title + property pill rows only. */
+export function estimatePlainRowHeight(config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>, visiblePillRowCount: number): number {
+    const titleContentHeight = config.heights.titleLineHeight * config.titleRows;
+    if (visiblePillRowCount <= 0) {
+        return config.heights.basePadding + titleContentHeight;
+    }
+    if (visiblePillRowCount === 1) {
+        return config.heights.basePadding + titleContentHeight + config.heights.tagRowHeight;
+    }
+    return config.heights.basePadding + titleContentHeight + config.heights.tagRowHeight * visiblePillRowCount;
 }
 
-export function calculateNormalListFileRowHeightEstimate({
-    heights,
-    titleRows,
-    previewRows,
-    layoutState,
-    visiblePillRowCount
-}: {
-    heights: ListPaneMeasurements;
-    titleRows: number;
-    previewRows: number;
-    layoutState: FileItemLayoutState;
-    visiblePillRowCount: number;
-}): number {
-    const titleContentHeight = heights.titleLineHeight * titleRows;
-    const pillRowCount = Math.max(0, visiblePillRowCount);
-    const hasPillRows = pillRowCount > 0;
-    const hasPreviewSlot = layoutState.shouldShowMultilinePreview;
-    const previewSlotHeight = hasPreviewSlot ? heights.multilineTextLineHeight * previewRows : 0;
-    const contentLineCount = pillRowCount;
-    const canUseBaseHeight = !hasPreviewSlot;
-
-    if (canUseBaseHeight && contentLineCount === 0) {
-        return heights.basePadding + titleContentHeight;
-    }
-
-    if (canUseBaseHeight && contentLineCount <= 1) {
-        return heights.basePadding + titleContentHeight + (hasPillRows ? heights.tagRowHeight : 0);
-    }
-
-    const richContentHeight = titleContentHeight + previewSlotHeight;
-    const pillRowsHeight = heights.tagRowHeight * pillRowCount;
-    const pillRowsReservedHeight = previewSlotHeight;
-    const pillRowsExtraHeight = Math.max(0, pillRowsHeight - pillRowsReservedHeight);
-
-    return heights.basePadding + richContentHeight + pillRowsExtraHeight;
+/**
+ * Flat estimator for Omnisearch search-result rows. The excerpt slot always reserves
+ * `SEARCH_EXCERPT_ROWS` clamped lines; extra property pill rows add to that baseline.
+ */
+export function estimateSearchRowHeight(
+    config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>,
+    { visiblePillRowCount }: { visiblePillRowCount: number }
+): number {
+    const titleContentHeight = config.heights.titleLineHeight * config.titleRows;
+    const pillRowsExtraHeight = Math.max(0, config.heights.tagRowHeight * visiblePillRowCount - SEARCH_EXCERPT_SLOT_HEIGHT);
+    return config.heights.basePadding + titleContentHeight + SEARCH_EXCERPT_SLOT_HEIGHT + pillRowsExtraHeight;
 }
 
 export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
-    const { heights, titleRows, previewRows, compactPaddingTotal } = config;
+    const { heights, titleRows, compactPaddingTotal } = config;
     const visiblePillRowCount = Math.max(0, inputs.visiblePillRowCount);
-    const layoutState = getFileItemLayoutState({
-        isCompactMode: config.isCompactMode,
-        showSearchExcerpt: config.showSearchExcerpt,
-        isPinned: inputs.isPinned,
-        hasPreviewContent: inputs.hasPreviewContent,
-        hasVisiblePillRows: visiblePillRowCount > 0
-    });
 
-    if (layoutState.isCompactMode) {
+    if (config.isCompactMode) {
         const textContentHeight = heights.titleLineHeight * titleRows + heights.tagRowHeight * visiblePillRowCount;
         return compactPaddingTotal + textContentHeight;
     }
 
-    return calculateNormalListFileRowHeightEstimate({
-        heights,
-        titleRows,
-        previewRows: inputs.isPinned ? 1 : previewRows,
-        layoutState,
-        visiblePillRowCount
-    });
+    // Excerpt rows are only ever reserved while the Omnisearch excerpt feature is on;
+    // it no longer matters whether this particular row actually has excerpt text.
+    if (config.showSearchExcerpt) {
+        return estimateSearchRowHeight(config, { visiblePillRowCount });
+    }
+
+    return estimatePlainRowHeight(config, visiblePillRowCount);
 }
 
 type VisibleFrontmatterPropertySummary = {

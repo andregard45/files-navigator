@@ -23,7 +23,6 @@ import {
     hasStoredListPaneAppearanceOverride,
     mergeListPaneAppearanceAndGrouping,
     resolveListPaneAppearance,
-    SEARCH_EXCERPT_ROWS,
     snapshotListPaneAppearanceMap,
     type ListPaneAppearance
 } from '../../src/settings/listPaneAppearance';
@@ -81,19 +80,7 @@ describe('resolveListPaneAppearance', () => {
 
         expect(result).toMatchObject({
             mode: 'compact',
-            // The file-display preview feature was removed; excerpt sizing is a fixed internal constant.
-            previewRows: 1,
         });
-    });
-
-    it('uses the standard excerpt row constant outside compact mode', () => {
-        const result = resolveListPaneAppearance({
-            settings: createSettings({ defaultListMode: 'standard' }),
-            appearance: undefined,
-            selectionType: ItemType.FOLDER
-        });
-
-        expect(result.previewRows).toBe(SEARCH_EXCERPT_ROWS);
     });
 
     it('keeps compact property visibility as a global style choice', () => {

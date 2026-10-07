@@ -23,17 +23,12 @@
  *
  * 2. Render-path work:
  *    - displayName: Read from the storage-backed display-name cache
- *    - feature image state: Hydrated from content storage and object URL lifecycle effects
  *    - className/style values: Built directly from row state
  *
  * 3. Extracted subsystems:
- *    - useFileItemContentState: Cache hydration, content subscriptions, feature-image URL lifecycle
- *    - useFileItemPills: Tag/property/text-count pill models and rendering
+ *    - useFileItemContentState: Storage hydration + frontmatter property subscriptions
+ *    - useFileItemPills: Property pill models and rendering
  *    - listPaneMeasurements helpers: Shared layout rules with the virtualizer
- *
- * 4. Image optimization:
- *    - Feature images use default browser loading behavior
- *    - Resource paths are cached to avoid repeated vault.getResourcePath calls
  */
 
 import React, { useRef, useMemo, useEffect, useState, useCallback, useId } from 'react';
@@ -42,7 +37,7 @@ import { useServices } from '../context/ServicesContext';
 import { useMetadataService } from '../context/ServicesContext';
 import { useSettingsState } from '../context/SettingsContext';
 import type { FolderDecorationModel } from '../utils/folderDecoration';
-import type { ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
+import { SEARCH_EXCERPT_ROWS, type ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
 import { strings } from '../i18n';
 import type { SortOption } from '../settings/types';
 import { type NavigationItemType } from '../types';
@@ -54,7 +49,6 @@ import { resolveFileDragIconId, resolveFileIconId } from '../utils/fileIconUtils
 import { isInsideNativeTooltipTarget, useTooltip } from '../context/TooltipContext';
 import { FileTooltipContent } from './FileTooltipContent';
 import { getFoldedSearchHighlightRanges } from '../utils/searchHighlight';
-import { getFileItemLayoutState } from '../utils/listPaneMeasurements';
 import { getIconService, useIconServiceVersion } from '../services/icons';
 import type { AliasSearchMatch, PropertySearchMatch, SearchResultMeta } from '../types/search';
 import { mergeRanges, NumericRange } from '../utils/arrayUtils';
@@ -226,15 +220,15 @@ function renderPropertySearchEvidenceKey(group: PropertySearchEvidenceGroup): Re
 
 /**
  * Memoized FileItem component.
- * Renders an individual file item in the file list with preview text and metadata.
- * Displays the file name, date, preview text, and optional feature image.
+ * Renders an individual file row in the list pane: file name (with optional
+ * Omnisearch excerpt line during search) and frontmatter property pills.
  * Handles selection state, quick actions, and drag-and-drop functionality.
  *
  * @param props - The component props
  * @param props.file - The Obsidian TFile to display
  * @param props.isSelected - Whether this file is currently selected
  * @param props.onClick - Handler called when the file is clicked
- * @returns A file item element with name, date, preview and optional image
+ * @returns A file row element with title, optional search excerpt, and pills
  */
 export const FileItem = React.memo(function FileItem({
     file,
@@ -541,20 +535,13 @@ export const FileItem = React.memo(function FileItem({
         () => (searchMeta ? renderHighlightedText(searchExcerpt, undefined, searchMeta) : searchExcerpt),
         [searchExcerpt, searchMeta]
     );
-    const excerptRows = isPinned ? 1 : appearanceSettings.previewRows;
+    // Pinned rows clamp the excerpt to a single line; search rows use the shared constant.
+    const excerptRows = isPinned ? 1 : SEARCH_EXCERPT_ROWS;
 
-    const effectiveHasVisiblePillRows = hasVisiblePillRows;
     const renderedPillRows = pillRows;
 
-    const { shouldShowMultilinePreview } = getFileItemLayoutState({
-        isCompactMode,
-        showSearchExcerpt: appearanceSettings.showSearchExcerpt === true,
-        isPinned,
-        hasPreviewContent: hasSearchExcerptContent,
-        hasVisiblePillRows: effectiveHasVisiblePillRows
-    });
-
-    const shouldShowPinnedSecondaryLine = isPinned && shouldShowMultilinePreview;
+    // The excerpt text renders only when this row actually carries an Omnisearch excerpt.
+    const shouldShowMultilinePreview = hasSearchExcerptContent;
 
     const showTooltips = settings.showTooltips;
 
@@ -961,23 +948,12 @@ export const FileItem = React.memo(function FileItem({
                             <div className="nn-file-text-content">
                                 {fileTitleElement}
 
-                                {/* Pinned previews render on the shared secondary line. */}
-                                {shouldShowPinnedSecondaryLine && (
-                                    <div className="nn-file-second-line nn-file-second-line--pinned">
-                                        {shouldShowMultilinePreview && (
-                                            <div
-                                                className="nn-file-preview"
-                                                style={{ '--preview-rows': excerptRows } as React.CSSProperties}
-                                            >
-                                                {highlightedPreview}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* Non-pinned previews clamp to the configured row count. */}
-                                {!isPinned && shouldShowMultilinePreview && (
-                                    <div className="nn-file-preview" style={{ '--preview-rows': excerptRows } as React.CSSProperties}>
+                                {/* Search excerpt line (pinned rows clamp it to a single row). */}
+                                {shouldShowMultilinePreview && (
+                                    <div
+                                        className="nn-file-preview"
+                                        style={{ '--preview-rows': excerptRows } as React.CSSProperties}
+                                    >
                                         {highlightedPreview}
                                     </div>
                                 )}

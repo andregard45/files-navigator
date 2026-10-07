@@ -170,10 +170,7 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     visiblePropertyKeys: ReadonlySet<string>;
 }
 
-export type ListRowHeightAffectingContentChangeConfig = Pick<
-    ListFileRowSizingConfig,
-    'showSearchExcerpt' | 'frontmatterPropertyRowsPossible'
->;
+export type ListRowHeightAffectingContentChangeConfig = Pick<ListFileRowSizingConfig, 'frontmatterPropertyRowsPossible'>;
 
 interface ResolveListFileRowHeightInputsParams {
     db: IndexedDBStorage;
@@ -251,33 +248,28 @@ function getListLayoutSignature({
     visiblePropertyKeySignature,
     listMeasurements
 }: ListLayoutSignatureParams): string {
-    return JSON.stringify({
-        spacers: {
-            topSpacerHeight
-        },
-        appearance: {
-            mode: folderSettings.mode,
-            titleRows: folderSettings.titleRows,
-            previewRows: folderSettings.previewRows,
-            groupBy: folderSettings.groupBy,
-            showSearchExcerpt: folderSettings.showSearchExcerpt,
-            showProperties: folderSettings.showProperties
-        },
-        rowContent: {
-            showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
-            showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
-            showSelectedNavigationPills: settings.showSelectedNavigationPills,
-            visiblePropertyKeySignature,
-            selectionType: selectionType ?? null,
-            selectedPropertyValueNodeIdToHide,
-            includeDescendantNotes
-        },
-        rowSizing: {
-            compactItemHeight: settings.compactItemHeight,
-            compactItemHeightScaleText: settings.compactItemHeightScaleText
-        },
-        measurements: listMeasurements
-    });
+    // Lightweight tagged concat instead of JSON.stringify; runs on every layout input change.
+    return [
+        'topSpacer', topSpacerHeight,
+        'mode', folderSettings.mode,
+        'titleRows', folderSettings.titleRows,
+        'groupBy', folderSettings.groupBy,
+        'searchExcerpt', folderSettings.showSearchExcerpt ? 1 : 0,
+        'showProperties', folderSettings.showProperties ? 1 : 0,
+        'propsCompact', settings.showFilePropertiesInCompactMode ? 1 : 0,
+        'propsSeparate', settings.showPropertiesOnSeparateRows ? 1 : 0,
+        'selectedPills', settings.showSelectedNavigationPills ? 1 : 0,
+        'visibleKeys', visiblePropertyKeySignature,
+        'selectionType', selectionType ?? '',
+        'hiddenPill', selectedPropertyValueNodeIdToHide ?? '',
+        'descendants', includeDescendantNotes ? 1 : 0,
+        'compactHeight', settings.compactItemHeight,
+        'compactScaleText', settings.compactItemHeightScaleText ? 1 : 0,
+        'measurements', listMeasurements.basePadding, listMeasurements.titleLineHeight, listMeasurements.singleTextLineHeight,
+        listMeasurements.multilineTextLineHeight, listMeasurements.tagRowHeight, listMeasurements.groupHeaderHeight,
+        listMeasurements.groupHeaderSpacerBefore, listMeasurements.fileIconSize, listMeasurements.topSpacer,
+        listMeasurements.bottomSpacer
+    ].join('|');
 }
 
 function getScrollPreservationSignature({
@@ -290,29 +282,24 @@ function getScrollPreservationSignature({
     propertySortKey,
     propertySortSecondary
 }: ScrollPreservationSignatureParams): string {
-    return JSON.stringify({
-        includeDescendantNotes,
-        listLayoutSignature,
-        groupBy,
-        noteGrouping,
-        stickyGroupHeaders,
-        effectiveSort,
-        propertySortKey: propertySortKey ?? null,
-        propertySortSecondary
-    });
+    // Tagged concat keeps the signature cheap; it only needs stable equality semantics.
+    return [
+        'descendants', includeDescendantNotes ? 1 : 0,
+        'layout', listLayoutSignature,
+        'groupBy', groupBy ?? '',
+        'noteGrouping', noteGrouping ?? '',
+        'sticky', stickyGroupHeaders ?? '',
+        'sort', effectiveSort,
+        'propSortKey', propertySortKey ?? '',
+        'propSortSecondary', propertySortSecondary ?? ''
+    ].join('|');
 }
 
 export function isListRowHeightAffectingContentChange(
     change: FileContentChange,
     config: ListRowHeightAffectingContentChangeConfig
 ): boolean {
-    const { changes } = change;
-
-    if (changes.properties !== undefined && config.frontmatterPropertyRowsPossible) {
-        return true;
-    }
-
-    return false;
+    return change.changes.properties !== undefined && config.frontmatterPropertyRowsPossible;
 }
 
 export function createRemeasureScheduler(measure: () => void): { schedule: () => void; cancel: () => void } {
@@ -360,14 +347,6 @@ function getStickyHeaderHeightBeforeIndex(
     return 0;
 }
 
-function shouldReadFileRecordForRowEstimate(item: ListPaneItem, config: ListFileRowSizingConfig): boolean {
-    if (config.propertyRowsPossible) {
-        return true;
-    }
-
-    return false;
-}
-
 export function resolveListFileRowHeightInputs({
     db,
     item,
@@ -375,16 +354,12 @@ export function resolveListFileRowHeightInputs({
     config
 }: ResolveListFileRowHeightInputsParams): FileRowHeightInputs {
     let fileRecord: FileData | null = null;
-    if (shouldReadFileRecordForRowEstimate(item, config)) {
+    if (config.propertyRowsPossible) {
         fileRecord = db.getFile(file.path);
     }
 
-    let hasOmnisearchExcerpt = false;
-    if (config.showSearchExcerpt) {
-        const excerpt = item.searchMeta?.excerpt;
-        hasOmnisearchExcerpt = typeof excerpt === 'string' && excerpt.length > 0;
-    }
-    const hasPreviewContent = hasOmnisearchExcerpt;
+    const hasSearchExcerptContent =
+        config.showSearchExcerpt && typeof item.searchMeta?.excerpt === 'string' && item.searchMeta.excerpt.length > 0;
 
     const propertyRowCount = config.propertyRowsPossible
         ? getPropertyRowCount({
@@ -400,8 +375,7 @@ export function resolveListFileRowHeightInputs({
         : 0;
 
     return {
-        isPinned: Boolean(item.isPinned),
-        hasPreviewContent,
+        hasSearchExcerptContent,
         visiblePillRowCount: propertyRowCount
     };
 }
@@ -530,7 +504,6 @@ export function useListPaneScroll({
         return {
             heights: listMeasurements,
             titleRows: folderSettings.titleRows || 1,
-            previewRows: folderSettings.previewRows,
             showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
             compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
             isCompactMode,
@@ -547,7 +520,6 @@ export function useListPaneScroll({
     }, [
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
-        folderSettings.previewRows,
         folderSettings.showSearchExcerpt,
         folderSettings.showProperties,
         folderSettings.titleRows,
