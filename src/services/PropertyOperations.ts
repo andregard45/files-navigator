@@ -114,34 +114,6 @@ function updatePropertySortKeySetting(
     return true;
 }
 
-function updateManualSortPropertyKeySetting(
-    settings: NotebookNavigatorSettings,
-    oldKeyNormalized: string,
-    newKeyDisplay: string | null
-): boolean {
-    const currentKey = settings.manualSortPropertyKey.trim();
-    if (!currentKey || casefold(currentKey) !== oldKeyNormalized) {
-        return false;
-    }
-
-    settings.manualSortPropertyKey = newKeyDisplay ?? '';
-    return true;
-}
-
-function updateManualSortGroupHeaderPropertySetting(
-    settings: NotebookNavigatorSettings,
-    oldKeyNormalized: string,
-    newKeyDisplay: string | null
-): boolean {
-    const currentKey = settings.manualSortGroupHeaderProperty.trim();
-    if (!currentKey || casefold(currentKey) !== oldKeyNormalized) {
-        return false;
-    }
-
-    settings.manualSortGroupHeaderProperty = newKeyDisplay ?? '';
-    return true;
-}
-
 function updateSortOverridePropertyKeys(
     record: Record<string, ListSortOverrideValue> | undefined,
     oldKeyNormalized: string,
@@ -714,13 +686,11 @@ export class PropertyOperations {
 
         changed = updatePropertySortKeySetting(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updatePropertyGroupKeySetting(settings, oldKeyNormalized, newKeyDisplay) || changed;
-        changed = updateManualSortPropertyKeySetting(settings, oldKeyNormalized, newKeyDisplay) || changed;
-        changed = updateManualSortGroupHeaderPropertySetting(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updateSortOverridePropertyKeySettings(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updatePropertyGroupingOverrideKeys(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updateDefaultFolderSortPropertyKey(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updateDefaultNoteGroupingKey(settings, oldKeyNormalized, newKeyDisplay) || changed;
-        // The rename can move a default onto the manual-sort key (or vice versa), which the
+        // The rename can move a default onto an excluded key (or vice versa), which the
         // rewrites above cannot detect; reconcile silently so the defaults never persist a key
         // the settings dropdowns exclude.
         changed = reconcileDefaultFolderSort(settings).changed || changed;
@@ -745,13 +715,11 @@ export class PropertyOperations {
 
         changed = updatePropertySortKeySetting(settings, normalizedKey, null) || changed;
         changed = updatePropertyGroupKeySetting(settings, normalizedKey, null) || changed;
-        changed = updateManualSortPropertyKeySetting(settings, normalizedKey, null) || changed;
-        changed = updateManualSortGroupHeaderPropertySetting(settings, normalizedKey, null) || changed;
         changed = updateSortOverridePropertyKeySettings(settings, normalizedKey, null) || changed;
         changed = updatePropertyGroupingOverrideKeys(settings, normalizedKey, null) || changed;
         changed = updateDefaultFolderSortPropertyKey(settings, normalizedKey, null) || changed;
         changed = updateDefaultNoteGroupingKey(settings, normalizedKey, null) || changed;
-        // Deleting the manual-sort key can make previously excluded configured keys available and
+        // Deleting a key can make previously excluded configured keys available and
         // the delete rewrites above only match the deleted key; reconcile to keep the defaults
         // consistent with the updated key lists.
         changed = reconcileDefaultFolderSort(settings).changed || changed;

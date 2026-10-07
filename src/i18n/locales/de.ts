@@ -56,13 +56,7 @@ export const STRINGS_DE = {
         hiddenItemAriaLabel: '{name} (ausgeblendet)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Gruppe einklappen',
         expandGroup: 'Gruppe ausklappen',
-        manualSortTitle: 'Manuelle Sortierung: {property}',
-        manualSortHint: 'Zum Neuordnen ziehen. Die Reihenfolge wird als numerische Indexwerte in der Eigenschaft „{property}“ gespeichert.',
-        manualSortNonMarkdownHint: 'Nicht-Markdown-Dateien werden unten angezeigt und können nicht neu geordnet werden.',
-        unsortedSection: 'Unsortiert',
-        propertyGroupNoValue: 'Keine',
-        manualSortDone: 'Fertig',
-        manualSortMultipleWriteFailure: '{count} Dateien fehlgeschlagen; erste: {path}: {message}'
+        propertyGroupNoValue: 'Keine'
     },
 
     // Tag list
@@ -155,9 +149,6 @@ export const STRINGS_DE = {
         changeChildSortOrder: 'Sortierreihenfolge ändern',
         changeSortAndGroup: 'Sortierung und Gruppierung ändern',
         resetViewToDefaults: 'Ansicht auf Standardwerte zurücksetzen',
-        manualSort: 'Manuelle Sortierung',
-        editSortOrder: 'Sortierreihenfolge bearbeiten...',
-        removeSortProperty: 'Sortier-Eigenschaft entfernen',
         descendants: 'Unterelemente',
         subfolders: 'Unterordner',
         subtags: 'Unter-Tags',
@@ -326,14 +317,6 @@ export const STRINGS_DE = {
             moveMultipleFilesToFolder: '{count} Dateien verschieben nach...',
             mergeNotes: '{count} Notizen zusammenführen...',
             mergeNotesInGroup: 'Notizen in Gruppe zusammenführen...',
-            setManualSortGroupHeader: 'Gruppenüberschrift festlegen',
-            changeManualSortGroupHeader: 'Gruppenüberschrift ändern',
-            manualSortGroupHeader: {
-                title: 'Gruppenüberschrift',
-                copyStyle: 'Stil der Gruppenüberschrift kopieren',
-                pasteStyle: 'Stil der Gruppenüberschrift einfügen',
-                remove: 'Gruppenüberschrift entfernen'
-            },
             addTag: 'Tag hinzufügen',
             addPropertyKey: 'Eigenschaft setzen',
             removeTag: 'Tag entfernen',
@@ -453,27 +436,6 @@ export const STRINGS_DE = {
             resetAppearanceMessage: (count: number) =>
                 `Die Darstellung wird für ${count} ${count === 1 ? 'Element' : 'Elemente'} zurückgesetzt. Sortierung und Gruppierung bleiben erhalten. Dies ist eine einmalige Änderung; künftige Änderungen und neue Unterelemente sind nicht verknüpft.`,
             affectedCountMessage: (count: number) => `Vorhandene Überschreibungen, die sich ändern: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Manuelle Sortierung verwenden?',
-            propertySortMessage: (property: string, count: number) =>
-                `Wechselt die aktuelle Ansicht zur manuellen Sortierung mit „${property}“. Beim Bearbeiten der Reihenfolge werden numerische Indexwerte bei Bedarf in diese Eigenschaft in ${count} ${count === 1 ? 'Notiz' : 'Notizen'} geschrieben.`,
-            propertySortConfirmButton: 'Manuelle Sortierung verwenden',
-            removePropertyTitle: 'Sortier-Eigenschaft entfernen?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Entfernt „${property}“ aus ${count} ${count === 1 ? 'Notiz' : 'Notizen'} in der aktuellen Liste. Die manuelle Sortierreihenfolge dieser Notizen wird gelöscht.`,
-            removePropertyConfirmButton: 'Eigenschaft entfernen',
-            compactTitle: 'Indexwerte verdichten?',
-            compactMessage: (count: number) =>
-                `Diese Neuanordnung benötigt mehr numerischen Raum. ${count} ${count === 1 ? 'Notiz erhält' : 'Notizen erhalten'} neue Indexwerte.`,
-            compactConfirmButton: 'Indexwerte verdichten'
-        },
-        manualSortGroupHeader: {
-            title: 'Gruppenüberschrift festlegen',
-            titleLabel: 'Titel',
-            placeholder: 'Gruppenüberschrift',
-            icon: 'Symbol',
-            color: 'Farbe',            description: 'Passe die Gruppenüberschrift für diese Notiz an. Lass den Titel leer, um die Überschrift zu entfernen.'
         },
         mergeNotes: {
             title: 'Notizen zusammenführen',
@@ -851,8 +813,6 @@ export const STRINGS_DE = {
             propertiesRequireMarkdown: 'Eigenschaften werden nur bei Markdown-Notizen unterstützt',
             propertySetOnNote: 'Eigenschaft bei 1 Notiz aktualisiert',
             propertySetOnNotes: 'Eigenschaft bei {count} Notizen aktualisiert',
-            manualSortPropertyRemovedFromNote: 'Sortier-Eigenschaft aus 1 Notiz entfernt',
-            manualSortPropertyRemovedFromNotes: 'Sortier-Eigenschaft aus {count} Notizen entfernt',
             hiddenFileReveal: 'Datei ist ausgeblendet. Aktiviere „Ausgeblendete Elemente anzeigen“, um sie anzuzeigen'
         },
         confirmations: {
@@ -1070,7 +1030,6 @@ export const STRINGS_DE = {
                     appearance: 'Darstellung',
                     sortAndGroup: 'Sortierung & Gruppierung',
                     groupHeaders: 'Gruppenüberschriften',
-                    manualSort: 'Manuelle Sortierung',
                     pinnedNotes: 'Angeheftete Notizen',
                     behavior: 'Verhalten'
                 }
@@ -1201,41 +1160,11 @@ export const STRINGS_DE = {
                 desc: 'Kommagetrennte Frontmatter-Eigenschaften. Jede Eigenschaft erscheint als Gruppierungsoption in der Einstellung Standardgruppierung und im Sortiermenü des Listenbereichs. Diese Eigenschaften werden nicht geändert.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Eigenschaft für manuelle Sortierung',
-                desc: 'Frontmatter-Eigenschaft zum Speichern der numerischen Indexwerte für die manuelle Sortierung.'
-            },
-            groupHeaderProperty: {
-                name: 'Eigenschaft für Gruppenüberschriften',
-                desc: 'Frontmatter-Eigenschaft zum Speichern der benutzerdefinierten Gruppenüberschriften.'
-            },
             groupHeadersInstructions: {
                 intro: 'Benutzerdefinierte Gruppenüberschriften werden über Notizen im Listenbereich angezeigt.',
                 items: [
                     'Stelle im Sortiermenü des Listenbereichs die Gruppierung auf **Benutzerdefiniert**.',
                     'Klicke mit der rechten Maustaste auf eine Notiz und wähle **Gruppenüberschrift festlegen**, um eine Überschrift darüber hinzuzufügen.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Platzierung neuer Notizen',
-                desc: 'Wähle, wo neue Notizen platziert werden, wenn die aktuelle Liste die manuelle Sortierung verwendet.',
-                options: {
-                    top: 'Oben',
-                    bottom: 'Unten',
-                    belowSelectedNote: 'Unter ausgewählter Notiz',
-                    unsorted: 'Unsortiert'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Vor manueller Sortierung bestätigen',
-                desc: 'Eine Warnung anzeigen, bevor die Eigenschaft für die manuelle Sortierung erstmals in Notizen geschrieben wird. Wenn deaktiviert, erhalten Notizen die Eigenschaft ohne Warnung.'
-            },
-            manualSortInstructions: {
-                intro: 'Die manuelle Sortierung schreibt einen numerischen Indexwert in eine Frontmatter-Eigenschaft jeder Notiz. Notizen ohne Index erscheinen unter Unsortiert.',
-                items: [
-                    'Aktiviere die manuelle Sortierung, indem du **Manuelle Sortierung** aus dem Sortiermenü wählst. Danach gibt es zwei Möglichkeiten, Notizen neu anzuordnen.',
-                    'Wähle **Sortierreihenfolge bearbeiten...** aus dem Sortiermenü, um eine Neuordnungsansicht zu öffnen. Ziehe Notizen mit der Maus oder per Touch auf Mobilgeräten. Auf dem Desktop wählt **Cmd/Ctrl**- oder **Shift**-Klick mehrere Notizen aus; das Ziehen einer beliebigen verschiebt dann die gesamte Gruppe.',
-                    'Wähle im Listenbereich eine Notiz aus oder markiere mehrere und drücke **Cmd/Ctrl + Arrow Up/Down**, um die Auswahl nach oben oder unten zu verschieben.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

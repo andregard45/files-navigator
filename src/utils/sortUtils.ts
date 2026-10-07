@@ -128,22 +128,11 @@ export function appendPropertySortKey(value: unknown, propertyKey: string): stri
 
 /**
  * Returns the configured sorting property keys available as sort choices.
- * The manual-sort property is excluded because manual sort has its own menu entry and is never
- * offered as a regular property sort choice.
  */
 export function getAvailablePropertySortKeys(
-    settings: Pick<NotebookNavigatorSettings, 'propertySortKey' | 'manualSortPropertyKey'>
+    settings: Pick<NotebookNavigatorSettings, 'propertySortKey'>
 ): string[] {
-    return parsePropertySortKeys(settings.propertySortKey).filter(propertyKey => !isManualSortPropertyKey(settings, propertyKey));
-}
-
-export function getManualSortPropertyKey(settings: Pick<NotebookNavigatorSettings, 'manualSortPropertyKey'>): string {
-    return typeof settings.manualSortPropertyKey === 'string' ? settings.manualSortPropertyKey.trim() : '';
-}
-
-export function isManualSortPropertyKey(settings: Pick<NotebookNavigatorSettings, 'manualSortPropertyKey'>, propertyKey: string): boolean {
-    const normalizedManualSortPropertyKey = casefold(getManualSortPropertyKey(settings));
-    return normalizedManualSortPropertyKey.length > 0 && casefold(propertyKey.trim()) === normalizedManualSortPropertyKey;
+    return parsePropertySortKeys(settings.propertySortKey);
 }
 
 function extractPropertySortParts(value: unknown): string[] {
@@ -272,12 +261,7 @@ export function cloneListSortOverride(sortOverride: ListSortOverrideValue): List
 export function pruneUnavailablePropertySortOverrides(settings: NotebookNavigatorSettings): boolean {
     const configuredPropertyKeys = parsePropertySortKeys(settings.propertySortKey);
     const configuredPropertyKeySet = new Set(configuredPropertyKeys.map(key => casefold(key)));
-    const manualSortPropertyKey = getManualSortPropertyKey(settings);
     const availablePropertyKeys = new Set(configuredPropertyKeySet);
-    const normalizedManualSortPropertyKey = casefold(manualSortPropertyKey);
-    if (normalizedManualSortPropertyKey) {
-        availablePropertyKeys.add(normalizedManualSortPropertyKey);
-    }
     let changed = false;
 
     SORT_OVERRIDE_RECORD_KEYS.forEach(recordKey => {
@@ -380,18 +364,6 @@ function getMatchingConfiguredPropertySortKey(configuredPropertyKeys: readonly s
     }
 
     return configuredPropertyKeys.find(configuredKey => casefold(configuredKey) === normalizedPropertyKey) ?? '';
-}
-
-function getMatchingAvailablePropertySortKey(
-    configuredPropertyKeys: readonly string[],
-    manualSortPropertyKey: string,
-    propertyKey: string
-): string {
-    if (manualSortPropertyKey && casefold(propertyKey) === casefold(manualSortPropertyKey)) {
-        return manualSortPropertyKey;
-    }
-
-    return getMatchingConfiguredPropertySortKey(configuredPropertyKeys, propertyKey);
 }
 
 function getListSortOverrideSignature(sortOverride: ListSortOverrideValue | undefined): string {
@@ -586,10 +558,9 @@ export function resolveListSort(settings: NotebookNavigatorSettings, sortOverrid
         typeof normalizedOverride === 'string' ? normalizedOverride : (normalizedOverride?.option ?? settings.defaultFolderSort);
     const configuredPropertyKeys = parsePropertySortKeys(settings.propertySortKey);
     const configuredPropertyKey = configuredPropertyKeys[0] ?? '';
-    const manualSortPropertyKey = getManualSortPropertyKey(settings);
     const overridePropertyKey =
         typeof normalizedOverride === 'object'
-            ? getMatchingAvailablePropertySortKey(configuredPropertyKeys, manualSortPropertyKey, normalizedOverride.propertyKey ?? '')
+            ? getMatchingConfiguredPropertySortKey(configuredPropertyKeys, normalizedOverride.propertyKey ?? '')
             : '';
     // A property default resolves through its companion key. Legacy bare-string property overrides
     // keep the historical first-configured-property behavior, and the first configured property
@@ -600,10 +571,9 @@ export function resolveListSort(settings: NotebookNavigatorSettings, sortOverrid
             ? getMatchingConfiguredPropertySortKey(configuredPropertyKeys, settings.defaultFolderSortPropertyKey)
             : '';
     const propertyKey = isPropertySortOption(rawOption) ? overridePropertyKey || defaultPropertyKey || configuredPropertyKey : '';
-    const option = rawOption === 'property-desc' && isManualSortPropertyKey(settings, propertyKey) ? 'property-asc' : rawOption;
 
     return {
-        option,
+        option: rawOption,
         propertyKey,
         propertySortSecondary: settings.propertySortSecondary
     };

@@ -56,13 +56,7 @@ export const STRINGS_JA = {
         hiddenItemAriaLabel: '{name} (非表示)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'グループを折りたたむ',
         expandGroup: 'グループを展開',
-        manualSortTitle: '手動並べ替え: {property}',
-        manualSortHint: 'ドラッグして並べ替えます。並び順は数値インデックス値としてプロパティ「{property}」に保存されます。',
-        manualSortNonMarkdownHint: 'Markdown 以外のファイルは下部に表示され、並べ替えできません。',
-        unsortedSection: '未ソート',
-        propertyGroupNoValue: 'なし',
-        manualSortDone: '完了',
-        manualSortMultipleWriteFailure: '{count} 件のファイルが失敗しました。最初: {path}: {message}'
+        propertyGroupNoValue: 'なし'
     },
 
     // Tag list
@@ -156,9 +150,6 @@ export const STRINGS_JA = {
         changeChildSortOrder: '並び順を変更',
         changeSortAndGroup: '並び順とグループを変更',
         resetViewToDefaults: 'ビューをデフォルトに戻す',
-        manualSort: '手動並べ替え',
-        editSortOrder: '並べ替え順を編集...',
-        removeSortProperty: '並べ替えプロパティを削除',
         descendants: '子孫',
         subfolders: 'サブフォルダ',
         subtags: 'サブタグ',
@@ -326,14 +317,6 @@ export const STRINGS_JA = {
             moveMultipleFilesToFolder: '{count}個のファイルを移動...',
             mergeNotes: '{count}個のノートを結合...',
             mergeNotesInGroup: 'グループ内のノートを結合...',
-            setManualSortGroupHeader: 'グループヘッダーを設定',
-            changeManualSortGroupHeader: 'グループヘッダーを変更',
-            manualSortGroupHeader: {
-                title: 'グループヘッダー',
-                copyStyle: 'ヘッダースタイルをコピー',
-                pasteStyle: 'ヘッダースタイルを貼り付け',
-                remove: 'グループヘッダーを削除'
-            },
             addTag: 'タグを追加',
             addPropertyKey: 'プロパティを設定',
             removeTag: 'タグを削除',
@@ -453,27 +436,6 @@ export const STRINGS_JA = {
             resetAppearanceMessage: (count: number) =>
                 `${count}件の外観がリセットされます。並べ替えとグループ化は保持されます。これは一度限りの変更で、今後の変更や新しい子項目は連動しません。`,
             affectedCountMessage: (count: number) => `変更される既存のオーバーライド: ${count}。`
-        },
-        manualSortConfirm: {
-            propertySortTitle: '手動並べ替えを使用しますか？',
-            propertySortMessage: (property: string, count: number) =>
-                `現在のビューを「${property}」を使った手動並べ替えに切り替えます。並び順を編集すると、必要に応じて ${count} 件のノートのそのプロパティに数値インデックス値が書き込まれます。`,
-            propertySortConfirmButton: '手動並べ替えを使用',
-            removePropertyTitle: '並べ替えプロパティを削除しますか？',
-            removePropertyMessage: (property: string, count: number) =>
-                `現在のリストの ${count} 件のノートから「${property}」を削除します。それらのノートの手動並べ替え順はクリアされます。`,
-            removePropertyConfirmButton: 'プロパティを削除',
-            compactTitle: 'インデックス値を圧縮しますか？',
-            compactMessage: (count: number) =>
-                `この並べ替えにはより多くの数値領域が必要です。${count} 件のノートに新しいインデックス値が割り当てられます。`,
-            compactConfirmButton: 'インデックス値を圧縮'
-        },
-        manualSortGroupHeader: {
-            title: 'グループヘッダーを設定',
-            titleLabel: 'タイトル',
-            placeholder: 'グループヘッダー',
-            icon: 'アイコン',
-            color: '色',            description: 'このノートのグループヘッダーをカスタマイズします。ヘッダーを削除するには、タイトルを空のままにします。'
         },
         mergeNotes: {
             title: 'ノートを結合',
@@ -849,8 +811,6 @@ export const STRINGS_JA = {
             propertiesRequireMarkdown: 'プロパティはMarkdownノートでのみサポートされています',
             propertySetOnNote: '1件のノートでプロパティを更新しました',
             propertySetOnNotes: '{count}件のノートでプロパティを更新しました',
-            manualSortPropertyRemovedFromNote: '1件のノートから並べ替えプロパティを削除しました',
-            manualSortPropertyRemovedFromNotes: '{count}件のノートから並べ替えプロパティを削除しました',
             hiddenFileReveal: 'ファイルは非表示です。表示するには「非表示項目を表示」を有効にしてください'
         },
         confirmations: {
@@ -1067,7 +1027,6 @@ export const STRINGS_JA = {
                     appearance: '外観',
                     sortAndGroup: '並べ替えとグループ化',
                     groupHeaders: 'グループヘッダー',
-                    manualSort: '手動並べ替え',
                     pinnedNotes: 'ピン留めされたノート',
                     behavior: '動作'
                 }
@@ -1197,41 +1156,11 @@ export const STRINGS_JA = {
                 desc: 'カンマ区切りのフロントマタープロパティ。各プロパティは、デフォルトのグループ化の設定とリストペインの並べ替えメニューにグループ化オプションとして表示されます。これらのプロパティは変更されません。',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: '手動並べ替え用プロパティ',
-                desc: '手動並べ替えの数値インデックス値を保存するために使用されるフロントマタープロパティ。'
-            },
-            groupHeaderProperty: {
-                name: 'グループヘッダープロパティ',
-                desc: 'カスタムグループヘッダーを保存するために使用されるフロントマタープロパティ。'
-            },
             groupHeadersInstructions: {
                 intro: 'カスタムグループヘッダーは、リストペインでノートの上に表示されます。',
                 items: [
                     'リストペインの並べ替えメニューから、グループ化を **カスタム** に設定します。',
                     'ノートを右クリックして **グループヘッダーを設定** を選ぶと、その上にヘッダーを追加できます。'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: '新規ノートの配置',
-                desc: '現在のリストが手動並べ替えを使用しているときに、新規ノートを配置する場所を選択します。',
-                options: {
-                    top: '先頭',
-                    bottom: '末尾',
-                    belowSelectedNote: '選択ノートの下',
-                    unsorted: '未ソート'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: '手動並べ替えの前に確認',
-                desc: '手動並べ替えプロパティを初めてノートに書き込む前に警告を表示します。無効にすると、ノートは警告なしでプロパティを受け取ります。'
-            },
-            manualSortInstructions: {
-                intro: '手動並べ替えは、各ノートのフロントマタープロパティに数値インデックス値を書き込みます。インデックスのないノートは「未ソート」の下に表示されます。',
-                items: [
-                    '並べ替えメニューから **手動並べ替え** を選択して手動並べ替えを有効にします。その後、ノートを並べ替える方法は 2 つあります。',
-                    '並べ替えメニューから **並べ替え順を編集...** を選んで並べ替えビューを開きます。マウスでドラッグするか、モバイルではタッチでドラッグします。デスクトップでは、**Cmd/Ctrl** または **Shift** クリックで複数のノートを選択し、いずれかをドラッグするとグループ全体が移動します。',
-                    'リストペインで 1 つのノートを選択するか複数選択し、**Cmd/Ctrl + Arrow Up/Down** を押すと選択範囲を上下に移動できます。'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

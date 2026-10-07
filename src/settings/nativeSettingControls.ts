@@ -121,7 +121,6 @@ const BOOLEAN_SETTING_KEYS = [
     'showFolderGroupPaths',
     'showGroupHeaderItemCounts',
     'showCurrentFolderFilesAtBottom',
-    'confirmBeforeManualSort',
     'filterPinnedByFolder',
     'revealFileOnListChanges',
     'showNoteCount',
@@ -151,7 +150,6 @@ const STRING_SETTING_KEYS = [
     'listPaneTitle',
     'defaultListMode',
     'propertySortSecondary',
-    'manualSortNewNotePlacement',
     'collapseBehavior'
 ] as const satisfies readonly SettingsKeyOfType<string>[];
 
@@ -177,7 +175,6 @@ const STRING_SETTING_OPTIONS: Partial<Record<NativeStringControlKey, readonly st
     listPaneTitle: ['header', 'list', 'hidden'],
     defaultListMode: ['standard', 'compact'],
     propertySortSecondary: ['title', 'filename', 'created', 'modified'],
-    manualSortNewNotePlacement: ['top', 'bottom', 'below-selected-note', 'unsorted'],
     collapseBehavior: ['all', 'folders-only', 'tags-only', 'properties-only']
 };
 

@@ -56,13 +56,7 @@ export const STRINGS_PT_BR = {
         hiddenItemAriaLabel: '{name} (oculto)',
         collapseGroup: 'Recolher grupo',
         expandGroup: 'Expandir grupo',
-        manualSortTitle: 'Classificação manual: {property}',
-        manualSortHint: 'Arraste para reordenar. A ordem é salva como valores numéricos de índice na propriedade "{property}".',
-        manualSortNonMarkdownHint: 'Arquivos não Markdown são exibidos no final e não podem ser reordenados.',
-        unsortedSection: 'Não classificados',
-        propertyGroupNoValue: 'Nenhum',
-        manualSortDone: 'Concluído',
-        manualSortMultipleWriteFailure: '{count} arquivos falharam; primeiro: {path}: {message}'
+        propertyGroupNoValue: 'Nenhum'
     },
 
     // Tag list
@@ -156,9 +150,6 @@ export const STRINGS_PT_BR = {
         changeChildSortOrder: 'Alterar ordem de classificação',
         changeSortAndGroup: 'Alterar classificação e agrupamento',
         resetViewToDefaults: 'Redefinir visualização para o padrão',
-        manualSort: 'Classificação manual',
-        editSortOrder: 'Editar ordem de classificação...',
-        removeSortProperty: 'Remover propriedade de classificação',
         descendants: 'descendentes',
         subfolders: 'subpastas',
         subtags: 'subetiquetas',
@@ -340,14 +331,6 @@ export const STRINGS_PT_BR = {
             moveMultipleFilesToFolder: 'Mover {count} arquivos para...',
             mergeNotes: 'Mesclar {count} notas...',
             mergeNotesInGroup: 'Mesclar notas no grupo...',
-            setManualSortGroupHeader: 'Definir cabeçalho de grupo',
-            changeManualSortGroupHeader: 'Alterar cabeçalho de grupo',
-            manualSortGroupHeader: {
-                title: 'Cabeçalho de grupo',
-                copyStyle: 'Copiar estilo do cabeçalho',
-                pasteStyle: 'Colar estilo do cabeçalho',
-                remove: 'Remover cabeçalho de grupo'
-            },
             addTag: 'Adicionar etiqueta',
             addPropertyKey: 'Definir propriedade',
             removeTag: 'Remover etiqueta',
@@ -454,27 +437,6 @@ export const STRINGS_PT_BR = {
             resetAppearanceMessage: (count: number) =>
                 `A aparência será redefinida para ${count} ${count === 1 ? 'item' : 'itens'}. A ordenação e o agrupamento são preservados. Esta é uma alteração única; alterações futuras e novos descendentes não ficam vinculados.`,
             affectedCountMessage: (count: number) => `Substituições existentes que serão alteradas: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Usar classificação manual?',
-            propertySortMessage: (property: string, count: number) =>
-                `Isso muda a visualização atual para classificação manual usando "${property}". Editar a ordem grava valores numéricos de índice nessa propriedade em ${count} ${count === 1 ? 'nota' : 'notas'} conforme necessário.`,
-            propertySortConfirmButton: 'Usar classificação manual',
-            removePropertyTitle: 'Remover propriedade de classificação?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Isso remove "${property}" de ${count} ${count === 1 ? 'nota' : 'notas'} na lista atual. A ordem de classificação manual será limpa para essas notas.`,
-            removePropertyConfirmButton: 'Remover propriedade',
-            compactTitle: 'Compactar valores de índice?',
-            compactMessage: (count: number) =>
-                `Esta reordenação precisa de mais espaço numérico. ${count} ${count === 1 ? 'nota receberá' : 'notas receberão'} novos valores de índice.`,
-            compactConfirmButton: 'Compactar valores de índice'
-        },
-        manualSortGroupHeader: {
-            title: 'Definir cabeçalho de grupo',
-            titleLabel: 'Título',
-            placeholder: 'Cabeçalho de grupo',
-            icon: 'Ícone',
-            color: 'Cor',            description: 'Personalize o cabeçalho de grupo para esta nota. Deixe o título em branco para remover o cabeçalho.'
         },
         mergeNotes: {
             title: 'Mesclar notas',
@@ -851,8 +813,6 @@ export const STRINGS_PT_BR = {
             propertiesRequireMarkdown: 'As propriedades só são suportadas em notas Markdown',
             propertySetOnNote: 'Propriedade atualizada em 1 nota',
             propertySetOnNotes: 'Propriedade atualizada em {count} notas',
-            manualSortPropertyRemovedFromNote: 'Propriedade de classificação removida de 1 nota',
-            manualSortPropertyRemovedFromNotes: 'Propriedade de classificação removida de {count} notas',
             hiddenFileReveal: 'Arquivo está oculto. Ative "Mostrar itens ocultos" para exibi-lo'
         },
         confirmations: {
@@ -1069,7 +1029,6 @@ export const STRINGS_PT_BR = {
                     appearance: 'Aparência',
                     sortAndGroup: 'Classificação e agrupamento',
                     groupHeaders: 'Cabeçalhos de grupo',
-                    manualSort: 'Classificação manual',
                     pinnedNotes: 'Notas fixadas',
                     behavior: 'Comportamento'
                 }
@@ -1201,41 +1160,11 @@ export const STRINGS_PT_BR = {
                 desc: 'Propriedades do frontmatter separadas por vírgulas. Cada propriedade aparece como opção de agrupamento na configuração Agrupamento padrão e no menu de ordenação no painel de lista. Essas propriedades não são alteradas.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Propriedade da classificação manual',
-                desc: 'Propriedade frontmatter usada para armazenar valores numéricos de índice para a classificação manual.'
-            },
-            groupHeaderProperty: {
-                name: 'Propriedade do cabeçalho de grupo',
-                desc: 'Propriedade frontmatter usada para armazenar cabeçalhos personalizados de grupo.'
-            },
             groupHeadersInstructions: {
                 intro: 'Cabeçalhos personalizados de grupo são exibidos acima das notas no painel de lista.',
                 items: [
                     'No menu de ordenação no painel de lista, defina o agrupamento como **Personalizado**.',
                     'Clique com o botão direito em uma nota e escolha **Definir cabeçalho de grupo** para adicionar um cabeçalho acima dela.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Posicionamento de novas notas',
-                desc: 'Escolha onde as novas notas são colocadas quando a lista atual usa classificação manual.',
-                options: {
-                    top: 'Topo',
-                    bottom: 'Final',
-                    belowSelectedNote: 'Abaixo da nota selecionada',
-                    unsorted: 'Não classificados'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Confirmar antes da classificação manual',
-                desc: 'Mostrar um aviso antes de gravar a propriedade de classificação manual nas notas pela primeira vez. Quando desativado, as notas recebem a propriedade sem aviso.'
-            },
-            manualSortInstructions: {
-                intro: 'A classificação manual grava um valor numérico de índice em uma propriedade frontmatter de cada nota. Notas sem índice aparecem em Não classificados.',
-                items: [
-                    'Ative a classificação manual escolhendo **Classificação manual** no menu de ordenação. Depois disso, há duas formas de reorganizar as notas.',
-                    'Escolha **Editar ordem de classificação...** no menu de ordenação para abrir uma visualização de reordenação. Arraste notas com o mouse ou com toque no celular. No desktop, **Cmd/Ctrl** ou **Shift** clique seleciona várias notas, e arrastar qualquer uma delas move o grupo inteiro.',
-                    'No painel de lista, selecione uma nota ou várias com seleção múltipla e pressione **Cmd/Ctrl + Arrow Up/Down** para mover a seleção para cima ou para baixo.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

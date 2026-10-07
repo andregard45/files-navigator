@@ -79,16 +79,12 @@ describe('PropertyOperations settings updates', () => {
     it('renames propertyFields and propertySortKey on rename', async () => {
         setActivePropertyFields(settings, 'Status, priority');
         settings.propertySortKey = 'STATUS';
-        settings.manualSortPropertyKey = 'STATUS';
-        settings.manualSortGroupHeaderProperty = 'STATUS';
 
         await operations.renameSettings('status', 'State');
 
         expect(saveSettingsAndUpdate).toHaveBeenCalledTimes(1);
         expect(getActivePropertyFields(settings)).toBe('State, priority');
         expect(settings.propertySortKey).toBe('State');
-        expect(settings.manualSortPropertyKey).toBe('State');
-        expect(settings.manualSortGroupHeaderProperty).toBe('State');
     });
 
     it('renames comma-separated propertySortKey entries and sort override property keys', async () => {
@@ -114,16 +110,12 @@ describe('PropertyOperations settings updates', () => {
     it('clears propertySortKey and removes propertyFields entries on delete', async () => {
         setActivePropertyFields(settings, 'State, priority');
         settings.propertySortKey = 'State';
-        settings.manualSortPropertyKey = 'State';
-        settings.manualSortGroupHeaderProperty = 'State';
 
         await operations.deleteSettings('state');
 
         expect(saveSettingsAndUpdate).toHaveBeenCalledTimes(1);
         expect(getActivePropertyFields(settings)).toBe('priority');
         expect(settings.propertySortKey).toBe('');
-        expect(settings.manualSortPropertyKey).toBe('');
-        expect(settings.manualSortGroupHeaderProperty).toBe('');
     });
 
     it('removes deleted propertySortKey entries and matching sort overrides', async () => {
@@ -226,7 +218,7 @@ describe('PropertyOperations settings updates', () => {
         };
         settings.propertyAppearances = {
             [deletedKeyNodeId]: { groupBy: 'date' },
-            [keptKeyNodeId]: { groupBy: 'custom' }
+            [keptKeyNodeId]: { groupBy: 'folder' }
         };
         settings.propertyTreeSortOverrides = {
             [deletedKeyNodeId]: 'alpha-desc',
@@ -249,7 +241,7 @@ describe('PropertyOperations settings updates', () => {
             [keptKeyNodeId]: 'title-desc'
         });
         expect(settings.propertyAppearances).toEqual({
-            [keptKeyNodeId]: { groupBy: 'custom' }
+            [keptKeyNodeId]: { groupBy: 'folder' }
         });
         expect(settings.propertyTreeSortOverrides).toEqual({
             [keptKeyNodeId]: 'alpha-asc'

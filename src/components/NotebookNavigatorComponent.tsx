@@ -1025,10 +1025,8 @@ export const NotebookNavigatorComponent = React.memo(
                     });
                 },
                 createNoteInSelectedFolder: async (openInNewTab = false) => {
-                    const manualSortContext = listPaneRef.current?.getManualSortNewFileContext() ?? null;
-
                     if (selectionState.selectedFolder) {
-                        await fileSystemOps.createNewFile(selectionState.selectedFolder, openInNewTab, manualSortContext);
+                        await fileSystemOps.createNewFile(selectionState.selectedFolder, openInNewTab);
                         return;
                     }
 
@@ -1039,7 +1037,7 @@ export const NotebookNavigatorComponent = React.memo(
                         selectionState.selectedTag !== UNTAGGED_TAG_ID
                     ) {
                         const sourcePath = selectionState.selectedFile?.path ?? app.workspace.getActiveFile()?.path ?? '';
-                        await fileSystemOps.createNewFileForTag(selectionState.selectedTag, sourcePath, openInNewTab, manualSortContext);
+                        await fileSystemOps.createNewFileForTag(selectionState.selectedTag, sourcePath, openInNewTab);
                         return;
                     }
 
@@ -1052,8 +1050,7 @@ export const NotebookNavigatorComponent = React.memo(
                         await fileSystemOps.createNewFileForProperty(
                             selectionState.selectedProperty,
                             sourcePath,
-                            openInNewTab,
-                            manualSortContext
+                            openInNewTab
                         );
                         return;
                     }

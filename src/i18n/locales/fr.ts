@@ -56,14 +56,7 @@ export const STRINGS_FR = {
         hiddenItemAriaLabel: '{name} (masqué)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Réduire le groupe',
         expandGroup: 'Développer le groupe',
-        manualSortTitle: 'Tri manuel : {property}',
-        manualSortHint:
-            "Glissez pour réorganiser. L'ordre est enregistré sous forme de valeurs numériques dans la propriété « {property} ».",
-        manualSortNonMarkdownHint: 'Les fichiers non Markdown sont affichés en bas et ne peuvent pas être réorganisés.',
-        unsortedSection: 'Non trié',
-        propertyGroupNoValue: 'Aucun',
-        manualSortDone: 'Terminé',
-        manualSortMultipleWriteFailure: '{count} fichiers ont échoué ; premier : {path} : {message}'
+        propertyGroupNoValue: 'Aucun'
     },
 
     // Tag list
@@ -157,9 +150,6 @@ export const STRINGS_FR = {
         changeChildSortOrder: "Changer l'ordre de tri",
         changeSortAndGroup: 'Changer le tri et le regroupement',
         resetViewToDefaults: 'Réinitialiser la vue aux valeurs par défaut',
-        manualSort: 'Tri manuel',
-        editSortOrder: "Modifier l'ordre de tri...",
-        removeSortProperty: 'Supprimer la propriété de tri',
         descendants: 'descendants',
         subfolders: 'sous-dossiers',
         subtags: 'sous-mots-clés',
@@ -328,14 +318,6 @@ export const STRINGS_FR = {
             moveMultipleFilesToFolder: 'Déplacer {count} fichiers vers...',
             mergeNotes: 'Fusionner {count} notes...',
             mergeNotesInGroup: 'Fusionner les notes du groupe...',
-            setManualSortGroupHeader: "Définir l'en-tête de groupe",
-            changeManualSortGroupHeader: "Modifier l'en-tête de groupe",
-            manualSortGroupHeader: {
-                title: 'En-tête de groupe',
-                copyStyle: "Copier le style d'en-tête",
-                pasteStyle: "Coller le style d'en-tête",
-                remove: "Supprimer l'en-tête de groupe"
-            },
             addTag: 'Ajouter un mot-clé',
             addPropertyKey: 'Définir la propriété',
             removeTag: 'Supprimer le mot-clé',
@@ -455,27 +437,6 @@ export const STRINGS_FR = {
             resetAppearanceMessage: (count: number) =>
                 `L’apparence sera réinitialisée pour ${count} ${count === 1 ? 'élément' : 'éléments'}. Le tri et le regroupement sont conservés. Cette modification est ponctuelle ; les changements futurs et les nouveaux descendants ne sont pas liés.`,
             affectedCountMessage: (count: number) => `Remplacements existants qui seront modifiés : ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Utiliser le tri manuel ?',
-            propertySortMessage: (property: string, count: number) =>
-                `Ceci bascule la vue actuelle sur le tri manuel en utilisant « ${property} ». La modification de l'ordre écrit des valeurs numériques dans cette propriété sur ${count} ${count === 1 ? 'note' : 'notes'} au besoin.`,
-            propertySortConfirmButton: 'Utiliser le tri manuel',
-            removePropertyTitle: 'Supprimer la propriété de tri ?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Ceci supprime « ${property} » de ${count} ${count === 1 ? 'note' : 'notes'} dans la liste actuelle. L'ordre de tri manuel sera effacé pour ces notes.`,
-            removePropertyConfirmButton: 'Supprimer la propriété',
-            compactTitle: 'Compacter les valeurs numériques ?',
-            compactMessage: (count: number) =>
-                `Cette réorganisation nécessite plus d'espace numérique. ${count} ${count === 1 ? 'note recevra' : 'notes recevront'} de nouvelles valeurs numériques.`,
-            compactConfirmButton: 'Compacter les valeurs numériques'
-        },
-        manualSortGroupHeader: {
-            title: "Définir l'en-tête de groupe",
-            titleLabel: 'Titre',
-            placeholder: 'En-tête de groupe',
-            icon: 'Icône',
-            color: 'Couleur',            description: "Personnalisez l'en-tête de groupe pour cette note. Laissez le titre vide pour supprimer l'en-tête."
         },
         mergeNotes: {
             title: 'Fusionner les notes',
@@ -853,8 +814,6 @@ export const STRINGS_FR = {
             propertiesRequireMarkdown: 'Les propriétés ne sont prises en charge que sur les notes Markdown',
             propertySetOnNote: 'Propriété mise à jour sur 1 note',
             propertySetOnNotes: 'Propriété mise à jour sur {count} notes',
-            manualSortPropertyRemovedFromNote: 'Propriété de tri supprimée de 1 note',
-            manualSortPropertyRemovedFromNotes: 'Propriété de tri supprimée de {count} notes',
             hiddenFileReveal: "Le fichier est masqué. Activer « Afficher les éléments masqués » pour l'afficher"
         },
         confirmations: {
@@ -1071,7 +1030,6 @@ export const STRINGS_FR = {
                     appearance: 'Apparence',
                     sortAndGroup: 'Tri et regroupement',
                     groupHeaders: 'En-têtes de groupe',
-                    manualSort: 'Tri manuel',
                     pinnedNotes: 'Notes épinglées',
                     behavior: 'Comportement'
                 }
@@ -1203,41 +1161,11 @@ export const STRINGS_FR = {
                 desc: 'Propriétés frontmatter séparées par des virgules. Chaque propriété apparaît comme option de regroupement dans le réglage Regroupement par défaut et dans le menu de tri du panneau de liste. Ces propriétés ne sont pas modifiées.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Propriété de tri manuel',
-                desc: 'Propriété frontmatter utilisée pour enregistrer les valeurs numériques du tri manuel.'
-            },
-            groupHeaderProperty: {
-                name: "Propriété d'en-tête de groupe",
-                desc: 'Propriété frontmatter utilisée pour enregistrer les en-têtes de groupe personnalisés.'
-            },
             groupHeadersInstructions: {
                 intro: 'Les en-têtes de groupe personnalisés sont affichés au-dessus des notes dans le panneau de liste.',
                 items: [
                     'Depuis le menu de tri du panneau de liste, définissez le regroupement sur **Personnalisé**.',
                     "Cliquez avec le bouton droit sur une note et choisissez **Définir l'en-tête de groupe** pour ajouter un en-tête au-dessus."
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Emplacement des nouvelles notes',
-                desc: 'Choisissez où sont placées les nouvelles notes lorsque la liste actuelle utilise le tri manuel.',
-                options: {
-                    top: 'En haut',
-                    bottom: 'En bas',
-                    belowSelectedNote: 'Sous la note sélectionnée',
-                    unsorted: 'Non trié'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Confirmer avant le tri manuel',
-                desc: 'Afficher un avertissement avant d’écrire la propriété de tri manuel dans les notes pour la première fois. Lorsque désactivé, les notes reçoivent la propriété sans avertissement.'
-            },
-            manualSortInstructions: {
-                intro: 'Le tri manuel écrit une valeur numérique dans une propriété frontmatter sur chaque note. Les notes sans valeur apparaissent sous Non trié.',
-                items: [
-                    'Activez le tri manuel en choisissant **Tri manuel** dans le menu de tri. Ensuite, il existe deux façons de réorganiser les notes.',
-                    "Choisissez **Modifier l'ordre de tri...** dans le menu de tri pour ouvrir une vue de réorganisation. Glissez les notes avec la souris, ou par toucher sur mobile. Sur ordinateur, **Cmd/Ctrl** ou **Shift** clic sélectionne plusieurs notes, puis glisser l'une d'elles déplace tout le groupe.",
-                    'Dans le panneau de liste, sélectionnez une note ou plusieurs notes, puis appuyez sur **Cmd/Ctrl + Arrow Up/Down** pour déplacer la sélection vers le haut ou le bas.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

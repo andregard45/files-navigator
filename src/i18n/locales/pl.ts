@@ -56,14 +56,7 @@ export const STRINGS_PL = {
         hiddenItemAriaLabel: '{name} (ukryte)', // Accessibility label applied to list items that are normally hidden
         collapseGroup: 'Zwiń grupę',
         expandGroup: 'Rozwiń grupę',
-        manualSortTitle: 'Sortowanie ręczne: {property}',
-        manualSortHint:
-            'Przeciągnij, aby zmienić kolejność. Kolejność jest zapisywana jako wartości indeksu liczbowego w atrybucie „{property}”.',
-        manualSortNonMarkdownHint: 'Pliki inne niż Markdown są wyświetlane na dole i nie można zmieniać ich kolejności.',
-        unsortedSection: 'Nieposortowane',
-        propertyGroupNoValue: 'Brak',
-        manualSortDone: 'Gotowe',
-        manualSortMultipleWriteFailure: 'Nie udało się przetworzyć plików: {count}; pierwszy: {path}: {message}'
+        propertyGroupNoValue: 'Brak'
     },
 
     // Tag list
@@ -155,9 +148,6 @@ export const STRINGS_PL = {
         changeChildSortOrder: 'Zmień kolejność sortowania',
         changeSortAndGroup: 'Zmień sortowanie i grupowanie',
         resetViewToDefaults: 'Przywróć widok do ustawień domyślnych',
-        manualSort: 'Sortowanie ręczne',
-        editSortOrder: 'Edytuj kolejność sortowania...',
-        removeSortProperty: 'Usuń atrybut sortowania',
         descendants: 'potomków',
         subfolders: 'podfolderów',
         subtags: 'podtagów',
@@ -338,14 +328,6 @@ export const STRINGS_PL = {
             moveMultipleFilesToFolder: 'Przenieś pliki ({count}) do...',
             mergeNotes: 'Scal notatki ({count})...',
             mergeNotesInGroup: 'Scal notatki w grupie...',
-            setManualSortGroupHeader: 'Ustaw nagłówek grupy',
-            changeManualSortGroupHeader: 'Zmień nagłówek grupy',
-            manualSortGroupHeader: {
-                title: 'Nagłówek grupy',
-                copyStyle: 'Kopiuj styl nagłówka',
-                pasteStyle: 'Wklej styl nagłówka',
-                remove: 'Usuń nagłówek grupy'
-            },
             addTag: 'Dodaj tag',
             addPropertyKey: 'Ustaw atrybut',
             removeTag: 'Usuń tag',
@@ -453,27 +435,6 @@ export const STRINGS_PL = {
             resetAppearanceMessage: (count: number) =>
                 `Wygląd zostanie zresetowany dla ${count} ${count === 1 ? 'elementu' : 'elementów'}. Sortowanie i grupowanie pozostaną bez zmian. Jest to jednorazowa zmiana; przyszłe zmiany i nowe elementy podrzędne nie będą połączone.`,
             affectedCountMessage: (count: number) => `Istniejące nadpisania do zmiany: ${count}.`
-        },
-        manualSortConfirm: {
-            propertySortTitle: 'Użyć sortowania ręcznego?',
-            propertySortMessage: (property: string, count: number) =>
-                `Przełącza bieżący widok na sortowanie ręczne z użyciem „${property}”. Edycja kolejności w razie potrzeby zapisuje wartości indeksu liczbowego do tego atrybutu w ${count} ${count === 1 ? 'notatce' : 'notatkach'}.`,
-            propertySortConfirmButton: 'Użyj sortowania ręcznego',
-            removePropertyTitle: 'Usunąć atrybut sortowania?',
-            removePropertyMessage: (property: string, count: number) =>
-                `Usuwa „${property}” z ${count} ${count === 1 ? 'notatki' : 'notatek'} na bieżącej liście. Kolejność sortowania ręcznego zostanie wyczyszczona dla tych notatek.`,
-            removePropertyConfirmButton: 'Usuń atrybut',
-            compactTitle: 'Zagęścić wartości indeksu?',
-            compactMessage: (count: number) =>
-                `Ta zmiana kolejności wymaga więcej miejsca na wartości liczbowe. ${count} ${count === 1 ? 'notatka otrzyma' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'notatki otrzymają' : 'notatek otrzyma'} nowe wartości indeksu.`,
-            compactConfirmButton: 'Zagęść wartości indeksu'
-        },
-        manualSortGroupHeader: {
-            title: 'Ustaw nagłówek grupy',
-            titleLabel: 'Tytuł',
-            placeholder: 'Nagłówek grupy',
-            icon: 'Ikona',
-            color: 'Kolor',            description: 'Dostosuj nagłówek grupy dla tej notatki. Pozostaw tytuł pusty, aby usunąć nagłówek.'
         },
         mergeNotes: {
             title: 'Scal notatki',
@@ -851,8 +812,6 @@ export const STRINGS_PL = {
             propertiesRequireMarkdown: 'Atrybuty są obsługiwane tylko w notatkach Markdown',
             propertySetOnNote: 'Zaktualizowano atrybut w 1 notatce',
             propertySetOnNotes: 'Zaktualizowano atrybut w wielu ({count}) notatkach',
-            manualSortPropertyRemovedFromNote: 'Usunięto atrybut sortowania z 1 notatki',
-            manualSortPropertyRemovedFromNotes: 'Usunięto atrybut sortowania z {count} notatek',
             hiddenFileReveal: 'Plik jest ukryty. Aby go wyświetlić, włącz opcję "Pokaż ukryte elementy".'
         },
         confirmations: {
@@ -1069,7 +1028,6 @@ export const STRINGS_PL = {
                     appearance: 'Wygląd',
                     sortAndGroup: 'Sortowanie i grupowanie',
                     groupHeaders: 'Nagłówki grup',
-                    manualSort: 'Sortowanie ręczne',
                     pinnedNotes: 'Przypięte notatki',
                     behavior: 'Zachowanie'
                 }
@@ -1200,41 +1158,11 @@ export const STRINGS_PL = {
                 desc: 'Atrybuty frontmatter rozdzielone przecinkami. Każdy atrybut pojawia się jako opcja grupowania w ustawieniu Domyślne grupowanie i w menu sortowania w panelu listy. Te atrybuty nie są zmieniane.',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: 'Atrybut sortowania ręcznego',
-                desc: 'Atrybut frontmatter używany do przechowywania wartości indeksu liczbowego dla sortowania ręcznego.'
-            },
-            groupHeaderProperty: {
-                name: 'Atrybut nagłówka grupy',
-                desc: 'Atrybut frontmatter używany do przechowywania niestandardowych nagłówków grup.'
-            },
             groupHeadersInstructions: {
                 intro: 'Niestandardowe nagłówki grup wyświetlają się nad notatkami w panelu listy.',
                 items: [
                     'W menu sortowania w panelu listy ustaw grupowanie na **Niestandardowe**.',
                     'Kliknij notatkę prawym przyciskiem myszy i wybierz **Ustaw nagłówek grupy**, aby dodać nagłówek nad nią.'
-                ]
-            },
-            manualSortNewNotePlacement: {
-                name: 'Umiejscowienie nowych notatek',
-                desc: 'Wybierz, gdzie umieszczane są nowe notatki, gdy bieżąca lista używa sortowania ręcznego.',
-                options: {
-                    top: 'Na górze',
-                    bottom: 'Na dole',
-                    belowSelectedNote: 'Pod wybraną notatką',
-                    unsorted: 'Nieposortowane'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: 'Potwierdzaj przed sortowaniem ręcznym',
-                desc: 'Pokaż ostrzeżenie przed pierwszym zapisaniem atrybutu sortowania ręcznego w notatkach. Po wyłączeniu notatki otrzymują atrybut bez ostrzeżenia.'
-            },
-            manualSortInstructions: {
-                intro: 'Sortowanie ręczne zapisuje wartość indeksu liczbowego do atrybutu frontmatter w każdej notatce. Notatki bez indeksu pojawiają się w sekcji Nieposortowane.',
-                items: [
-                    'Włącz sortowanie ręczne, wybierając **Sortowanie ręczne** z menu sortowania. Następnie istnieją dwa sposoby zmiany kolejności notatek.',
-                    'Wybierz **Edytuj kolejność sortowania...** z menu sortowania, aby otworzyć widok zmiany kolejności. Przeciągaj notatki myszą lub dotykiem na urządzeniach mobilnych. Na komputerze kliknięcie z **Cmd/Ctrl** lub **Shift** zaznacza wiele notatek, a następnie przeciągnięcie którejkolwiek z nich przenosi całą grupę.',
-                    'W panelu listy zaznacz jedną notatkę lub zaznacz wiele, a następnie naciśnij **Cmd/Ctrl + Arrow Up/Down**, aby przesunąć zaznaczenie w górę lub w dół.'
                 ]
             },
             scrollToSelectedFileOnListChanges: {

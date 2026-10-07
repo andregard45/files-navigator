@@ -56,7 +56,6 @@ import {
     isFolderNoteOpenLocation,
     isHomepageSource,
     isMouseBackForwardAction,
-    isManualSortNewNotePlacement,
     isPropertySortSecondaryOption,
     isNarrowSidebarTriggerMode,
     normalizeNarrowSidebarLayout,
@@ -474,11 +473,6 @@ export class PluginSettingsController {
             Object.prototype.hasOwnProperty.call(storedData, 'propertySortKey') &&
             typeof storedData['propertySortKey'] !== 'string'
         );
-        const hadInvalidManualSortPropertyKeyInStoredData = Boolean(
-            storedData &&
-            Object.prototype.hasOwnProperty.call(storedData, 'manualSortPropertyKey') &&
-            typeof storedData['manualSortPropertyKey'] !== 'string'
-        );
         const hadInvalidDefaultFolderSortInStoredData = Boolean(
             storedData &&
             Object.prototype.hasOwnProperty.call(storedData, 'defaultFolderSort') &&
@@ -560,20 +554,12 @@ export class PluginSettingsController {
             this.currentSettings.propertyGroupKey = this.currentSettings.propertySortKey;
         }
 
-        if (typeof this.currentSettings.manualSortPropertyKey !== 'string') {
-            this.currentSettings.manualSortPropertyKey = DEFAULT_SETTINGS.manualSortPropertyKey;
-        }
-
         if (!isSortOption(this.currentSettings.defaultFolderSort)) {
             this.currentSettings.defaultFolderSort = DEFAULT_SETTINGS.defaultFolderSort;
         }
 
         if (typeof this.currentSettings.defaultFolderSortPropertyKey !== 'string') {
             this.currentSettings.defaultFolderSortPropertyKey = DEFAULT_SETTINGS.defaultFolderSortPropertyKey;
-        }
-
-        if (typeof this.currentSettings.manualSortGroupHeaderProperty !== 'string') {
-            this.currentSettings.manualSortGroupHeaderProperty = DEFAULT_SETTINGS.manualSortGroupHeaderProperty;
         }
 
         this.currentSettings.keyboardShortcuts = sanitizeKeyboardShortcuts(this.currentSettings.keyboardShortcuts);
@@ -626,10 +612,6 @@ export class PluginSettingsController {
 
         if (!isPropertySortSecondaryOption(this.currentSettings.propertySortSecondary)) {
             this.currentSettings.propertySortSecondary = DEFAULT_SETTINGS.propertySortSecondary;
-        }
-
-        if (!isManualSortNewNotePlacement(this.currentSettings.manualSortNewNotePlacement)) {
-            this.currentSettings.manualSortNewNotePlacement = DEFAULT_SETTINGS.manualSortNewNotePlacement;
         }
 
         if (!isCalendarMonthHeadingFormat(this.currentSettings.calendarMonthHeadingFormat)) {
@@ -747,7 +729,6 @@ export class PluginSettingsController {
             hadShowPinnedGroupHeaderInStoredData ||
             hadPinnedSectionIconInStoredData ||
             hadInvalidPropertySortKeyInStoredData ||
-            hadInvalidManualSortPropertyKeyInStoredData ||
             hadInvalidDefaultFolderSortInStoredData ||
             hadInvalidDefaultFolderSortPropertyKeyInStoredData ||
             hadInvalidPropertyGroupKeyInStoredData ||

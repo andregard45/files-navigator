@@ -82,8 +82,6 @@ interface UseListPaneKeyboardProps {
     onScheduleKeyboardOpenForFile?: (file: TFile) => void;
     /** Commit selection by opening the currently selected file */
     onCommitKeyboardOpen?: () => void;
-    /** Reorder the selected property-sorted file block */
-    onReorderPropertySort?: (direction: 'up' | 'down') => boolean;
     /** Starts inline rename for the current file when available */
     onStartRename?: () => boolean;
 }
@@ -105,7 +103,6 @@ export function useListPaneKeyboard({
     onScheduleKeyboardOpen,
     onScheduleKeyboardOpenForFile,
     onCommitKeyboardOpen,
-    onReorderPropertySort,
     onStartRename
 }: UseListPaneKeyboardProps) {
     const { app, commandQueue, tagTreeService, propertyTreeService } = useServices();
@@ -326,20 +323,6 @@ export function useListPaneKeyboard({
                 }
                 openFileInWorkspace(file);
             };
-
-            if (matchesShortcut(e, shortcuts, KeyboardShortcutAction.LIST_MANUAL_SORT_DOWN)) {
-                if (onReorderPropertySort?.('down') === true) {
-                    e.preventDefault();
-                    return;
-                }
-            }
-
-            if (matchesShortcut(e, shortcuts, KeyboardShortcutAction.LIST_MANUAL_SORT_UP)) {
-                if (onReorderPropertySort?.('up') === true) {
-                    e.preventDefault();
-                    return;
-                }
-            }
 
             if (matchesShortcut(e, shortcuts, KeyboardShortcutAction.LIST_EXTEND_SELECTION_DOWN)) {
                 e.preventDefault();
@@ -589,7 +572,6 @@ export function useListPaneKeyboard({
             openFileInWorkspace,
             onScheduleKeyboardOpen,
             onScheduleKeyboardOpenForFile,
-            onReorderPropertySort,
             onStartRename,
             scrollToIndexSafely
         ]

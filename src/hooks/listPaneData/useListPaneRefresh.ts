@@ -32,15 +32,12 @@ import type { ITagTreeProvider } from '../../interfaces/ITagTreeProvider';
 import { ItemType, TAGGED_TAG_ID, UNTAGGED_TAG_ID } from '../../types';
 import type { PropertySelectionNodeId } from '../../utils/propertyTree';
 import { createFrontmatterPropertyExclusionMatcher } from '../../utils/fileFilters';
-import { getCachedManualSortGroupHeader } from '../../utils/manualSort';
 import { DateUtils } from '../../utils/dateUtils';
 
 interface UseListPaneRefreshArgs {
     app: App;
     basePathSet: ReadonlySet<string>;
-    cachedCustomGroupHeaderFilePaths: ReadonlySet<string>;
     commandQueue: CommandQueueService | null;
-    customGroupHeaderFilePaths: ReadonlySet<string>;
     dayKey: string;
     files: readonly TFile[];
     getDB: () => IndexedDBStorage;
@@ -50,7 +47,6 @@ interface UseListPaneRefreshArgs {
     hiddenFilePropertyMatcher: ReturnType<typeof createFrontmatterPropertyExclusionMatcher>;
     hiddenFileTags: string[];
     includeDescendantNotes: boolean;
-    manualSortGroupHeaderPropertyKey: string | null;
     onRefresh: () => void;
     propertyTreeService: IPropertyTreeProvider | null;
     tagTreeService: ITagTreeProvider | null;
@@ -59,21 +55,10 @@ interface UseListPaneRefreshArgs {
     selectedTag: string | null;
     selectionType: ItemType | null;
     settings: NotebookNavigatorSettings;
-    shouldRefreshOnCustomGroupHeaderMetadataChange: boolean;
     showHiddenItems: boolean;
     sortOption: SortOption;
     propertySortKey: string;
     propertySortSecondary: PropertySortSecondaryOption;
-}
-
-interface CustomGroupHeaderMetadataRefreshArgs {
-    app: App;
-    basePathSet: ReadonlySet<string>;
-    cachedCustomGroupHeaderFilePaths: ReadonlySet<string>;
-    customGroupHeaderFilePaths: ReadonlySet<string>;
-    file: TFile;
-    manualSortGroupHeaderPropertyKey: string | null;
-    shouldRefreshOnCustomGroupHeaderMetadataChange: boolean;
 }
 
 export function getModifiedSortBoundaryRefreshKey(params: {
@@ -129,35 +114,6 @@ export function hasPropertySearchContentChange(changes: readonly FileContentChan
     return changes.some(change => change.changes.properties !== undefined && basePathSet.has(change.path));
 }
 
-/**
- * Current metadata detects added headers, while the rendered and count-snapshot paths detect removals
- * after the header property no longer identifies the file as an owner.
- */
-export function shouldRefreshForCustomGroupHeaderMetadataChange({
-    app,
-    basePathSet,
-    cachedCustomGroupHeaderFilePaths,
-    customGroupHeaderFilePaths,
-    file,
-    manualSortGroupHeaderPropertyKey,
-    shouldRefreshOnCustomGroupHeaderMetadataChange
-}: CustomGroupHeaderMetadataRefreshArgs): boolean {
-    if (
-        !shouldRefreshOnCustomGroupHeaderMetadataChange ||
-        manualSortGroupHeaderPropertyKey === null ||
-        file.extension !== 'md' ||
-        !basePathSet.has(file.path)
-    ) {
-        return false;
-    }
-
-    if (customGroupHeaderFilePaths.has(file.path) || cachedCustomGroupHeaderFilePaths.has(file.path)) {
-        return true;
-    }
-
-    return getCachedManualSortGroupHeader(app, file, manualSortGroupHeaderPropertyKey) !== null;
-}
-
 function fileIsWithinSelectedFolder(file: TFile, includeDescendantNotes: boolean, selectedFolder: TFolder | null): boolean {
     if (!selectedFolder) {
         return false;
@@ -180,9 +136,7 @@ function fileIsWithinSelectedFolder(file: TFile, includeDescendantNotes: boolean
 export function useListPaneRefresh({
     app,
     basePathSet,
-    cachedCustomGroupHeaderFilePaths,
     commandQueue,
-    customGroupHeaderFilePaths,
     dayKey,
     files,
     getDB,
@@ -192,7 +146,6 @@ export function useListPaneRefresh({
     hiddenFilePropertyMatcher,
     hiddenFileTags,
     includeDescendantNotes,
-    manualSortGroupHeaderPropertyKey,
     onRefresh,
     propertyTreeService,
     tagTreeService,
@@ -201,7 +154,6 @@ export function useListPaneRefresh({
     selectedTag,
     selectionType,
     settings,
-    shouldRefreshOnCustomGroupHeaderMetadataChange,
     showHiddenItems,
     sortOption,
     propertySortKey,
@@ -407,37 +359,7 @@ export function useListPaneRefresh({
 
             // This check must precede the selection-specific returns because cached search grouping
             // applies to every selection; otherwise tag and property events leave stale boundaries.
-            if (
-                shouldRefreshForCustomGroupHeaderMetadataChange({
-                    app,
-                    basePathSet,
-                    cachedCustomGroupHeaderFilePaths,
-                    customGroupHeaderFilePaths,
-                    file,
-                    manualSortGroupHeaderPropertyKey,
-                    shouldRefreshOnCustomGroupHeaderMetadataChange
-                })
-            ) {
-                queueRefresh();
-                return;
-            }
-
-            if (selectionType === ItemType.TAG && selectedTag) {
-                if (file.extension !== 'md') {
-                    return;
-                }
-
-                if (!showHiddenItems && hasHiddenPropertyStateChanged()) {
-                    queueRefresh();
-                    return;
-                }
-
-                if (shouldRefreshOnMetadataChange && basePathSet.has(file.path)) {
-                    queueRefresh();
-                }
-                return;
-            }
-
+            
             if (selectionType === ItemType.PROPERTY && selectedProperty) {
                 if (file.extension !== 'md') {
                     return;
@@ -537,9 +459,7 @@ export function useListPaneRefresh({
     }, [
         app,
         basePathSet,
-        cachedCustomGroupHeaderFilePaths,
         commandQueue,
-        customGroupHeaderFilePaths,
         dayKey,
         files,
         getDB,
@@ -549,14 +469,12 @@ export function useListPaneRefresh({
         hiddenFilePropertyMatcher,
         hiddenFileTags,
         includeDescendantNotes,
-        manualSortGroupHeaderPropertyKey,
         propertyTreeService,
         tagTreeService,
         selectedFolder,
         selectedProperty,
         selectedTag,
         selectionType,
-        shouldRefreshOnCustomGroupHeaderMetadataChange,
         settings.frontmatterCreatedField,
         settings.frontmatterModifiedField,
         settings.frontmatterNameField,

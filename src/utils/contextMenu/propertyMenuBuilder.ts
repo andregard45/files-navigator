@@ -174,16 +174,12 @@ export function buildPropertyMenu(params: PropertyMenuBuilderParams): void {
 
     menu.addItem((item: MenuItem) => {
         setAsyncOnClick(item.setTitle(strings.contextMenu.folder.newNote).setIcon('lucide-pen-box'), async () => {
-            const selectionChanged = ensurePropertySelected();
+            ensurePropertySelected();
             const sourcePath = selectionState.selectedFile?.path ?? app.workspace.getActiveFile()?.path ?? '';
-            const manualSortContext = await fileSystemOps.getManualSortNewFileContextForTarget('property', normalizedNodeId, {
-                waitForSelectionUpdate: selectionChanged
-            });
             const createdFile = await fileSystemOps.createNewFileForProperty(
                 normalizedNodeId,
                 sourcePath,
-                settings.createNewNotesInNewTab,
-                manualSortContext
+                settings.createNewNotesInNewTab
             );
             handleFileCreation(createdFile);
         });

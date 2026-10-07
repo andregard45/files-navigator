@@ -24,13 +24,10 @@ import { ServiceIcon } from './ServiceIcon';
 import { useListActions } from '../hooks/useListActions';
 import { runAsyncAction } from '../utils/async';
 import { resolveUXIcon } from '../utils/uxIcons';
-import type { ManualSortNewFilePlacementContext } from '../utils/manualSort';
 
 interface ListToolbarProps {
     isSearchActive?: boolean;
     onSearchToggle?: () => void;
-    onManualSortStart?: (propertyKey: string) => void;
-    getManualSortNewFileContext?: () => ManualSortNewFilePlacementContext | null;
     canToggleGroupExpansion: boolean;
     shouldCollapseGroups: boolean;
     onToggleGroupExpansion: () => boolean;
@@ -40,8 +37,6 @@ interface ListToolbarProps {
 export function ListToolbar({
     isSearchActive,
     onSearchToggle,
-    onManualSortStart,
-    getManualSortNewFileContext,
     canToggleGroupExpansion,
     shouldCollapseGroups,
     onToggleGroupExpansion,
@@ -68,7 +63,7 @@ export function ListToolbar({
         hasAppearanceOrSortSelection,
         hasCustomSortOrGroup,
         hasCustomAppearance
-    } = useListActions({ onManualSortStart, getManualSortNewFileContext, trackRevealFileAvailability: showRevealButton });
+    } = useListActions({ trackRevealFileAvailability: showRevealButton });
 
     const showSearchButton = listVisibility.search;
     const showDescendantsButton = listVisibility.descendants;

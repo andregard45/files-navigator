@@ -56,13 +56,7 @@ export const STRINGS_ZH_TW = {
         hiddenItemAriaLabel: '{name} (已隱藏)',
         collapseGroup: '摺疊群組',
         expandGroup: '展開群組',
-        manualSortTitle: '手動排序：{property}',
-        manualSortHint: '拖曳以重新排序。順序會以數字索引值儲存在屬性「{property}」中。',
-        manualSortNonMarkdownHint: '非 Markdown 檔案顯示於底部，無法重新排序。',
-        unsortedSection: '未排序',
-        propertyGroupNoValue: '無',
-        manualSortDone: '完成',
-        manualSortMultipleWriteFailure: '{count} 個檔案失敗；第一個：{path}: {message}'
+        propertyGroupNoValue: '無'
     },
 
     // Tag list
@@ -154,9 +148,6 @@ export const STRINGS_ZH_TW = {
         changeChildSortOrder: '變更排序方式',
         changeSortAndGroup: '變更排序與分組',
         resetViewToDefaults: '將檢視重設為預設值',
-        manualSort: '手動排序',
-        editSortOrder: '編輯排序方式...',
-        removeSortProperty: '移除排序屬性',
         descendants: '子項',
         subfolders: '子資料夾',
         subtags: '子標籤',
@@ -324,14 +315,6 @@ export const STRINGS_ZH_TW = {
             moveMultipleFilesToFolder: '將 {count} 個檔案移動至...',
             mergeNotes: '合併 {count} 則筆記...',
             mergeNotesInGroup: '合併群組中的筆記...',
-            setManualSortGroupHeader: '設定群組標題',
-            changeManualSortGroupHeader: '變更群組標題',
-            manualSortGroupHeader: {
-                title: '群組標題',
-                copyStyle: '複製標題樣式',
-                pasteStyle: '貼上標題樣式',
-                remove: '移除群組標題'
-            },
             addTag: '新增標籤',
             addPropertyKey: '設定屬性',
             removeTag: '移除標籤',
@@ -451,26 +434,6 @@ export const STRINGS_ZH_TW = {
             resetAppearanceMessage: (count: number) =>
                 `將重設 ${count} 項的外觀。排序和分組保持不變。這是一次性變更；日後的變更和新增的後代項目不會連動。`,
             affectedCountMessage: (count: number) => `將更改的現有覆寫：${count}。`
-        },
-        manualSortConfirm: {
-            propertySortTitle: '使用手動排序？',
-            propertySortMessage: (property: string, count: number) =>
-                `這會將目前檢視切換為使用「${property}」的手動排序。編輯順序時會依需要將數字索引值寫入該屬性，影響 ${count} 則筆記。`,
-            propertySortConfirmButton: '使用手動排序',
-            removePropertyTitle: '移除排序屬性？',
-            removePropertyMessage: (property: string, count: number) =>
-                `這會從目前列表中的 ${count} 則筆記移除「${property}」。這些筆記的手動排序順序將被清除。`,
-            removePropertyConfirmButton: '移除屬性',
-            compactTitle: '壓縮索引值？',
-            compactMessage: (count: number) => `此次重新排序需要更多數字空間。${count} 則筆記將獲得新的索引值。`,
-            compactConfirmButton: '壓縮索引值'
-        },
-        manualSortGroupHeader: {
-            title: '設定群組標題',
-            titleLabel: '標題',
-            placeholder: '群組標題',
-            icon: '圖示',
-            color: '顏色',            description: '為此筆記自訂群組標題。將標題留空以移除標題。'
         },
         mergeNotes: {
             title: '合併筆記',
@@ -840,8 +803,6 @@ export const STRINGS_ZH_TW = {
             propertiesRequireMarkdown: '屬性僅在 Markdown 筆記中受支援',
             propertySetOnNote: '已在 1 篇筆記中更新屬性',
             propertySetOnNotes: '已在 {count} 篇筆記中更新屬性',
-            manualSortPropertyRemovedFromNote: '已從 1 則筆記移除排序屬性',
-            manualSortPropertyRemovedFromNotes: '已從 {count} 則筆記移除排序屬性',
             hiddenFileReveal: '檔案已隱藏。啟用「顯示隱藏項目」以顯示它'
         },
         confirmations: {
@@ -1058,7 +1019,6 @@ export const STRINGS_ZH_TW = {
                     appearance: '外觀',
                     sortAndGroup: '排序與分組',
                     groupHeaders: '群組標題',
-                    manualSort: '手動排序',
                     pinnedNotes: '釘選筆記',
                     behavior: '行為'
                 }
@@ -1188,39 +1148,9 @@ export const STRINGS_ZH_TW = {
                 desc: '以逗號分隔的 frontmatter 屬性。每個屬性會作為分組選項顯示在預設分組設定和列表窗格的排序選單中。這些屬性不會被更改。',
                 placeholder: 'status, genre'
             },
-            manualSortProperty: {
-                name: '手動排序屬性',
-                desc: '用於儲存手動排序數字索引值的 frontmatter 屬性。'
-            },
-            groupHeaderProperty: {
-                name: '群組標題屬性',
-                desc: '用於儲存自訂群組標題的 frontmatter 屬性。'
-            },
             groupHeadersInstructions: {
                 intro: '自訂群組標題會顯示在列表窗格的筆記上方。',
                 items: ['從列表窗格的排序選單中，將分組設定為 **自訂**。', '右鍵點擊筆記並選擇 **設定群組標題** 以在其上方新增標題。']
-            },
-            manualSortNewNotePlacement: {
-                name: '新筆記位置',
-                desc: '選擇當目前列表使用手動排序時新筆記的放置位置。',
-                options: {
-                    top: '頂部',
-                    bottom: '底部',
-                    belowSelectedNote: '在選定筆記下方',
-                    unsorted: '未排序'
-                }
-            },
-            confirmBeforeManualSort: {
-                name: '手動排序前確認',
-                desc: '在首次將手動排序屬性寫入筆記之前顯示警告。停用時，筆記將不顯示警告即接收該屬性。'
-            },
-            manualSortInstructions: {
-                intro: '手動排序會將數字索引值寫入每則筆記的 frontmatter 屬性。沒有索引的筆記會顯示在「未排序」之下。',
-                items: [
-                    '從排序選單中選擇 **手動排序** 以啟用手動排序。之後有兩種方式可以重新排列筆記。',
-                    '從排序選單中選擇 **編輯排序方式...** 以開啟重新排序檢視。使用滑鼠拖曳筆記，或在行動裝置上使用觸控。在桌面上，**Cmd/Ctrl** 或 **Shift** 點擊可選取多則筆記，拖曳其中任何一則即可移動整個群組。',
-                    '在列表窗格中，選取一則筆記或多選數則，然後按 **Cmd/Ctrl + Arrow Up/Down** 將所選項目上移或下移。'
-                ]
             },
             scrollToSelectedFileOnListChanges: {
                 name: '列表變更時捲動到選定檔案',
