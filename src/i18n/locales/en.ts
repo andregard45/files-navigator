@@ -40,7 +40,6 @@ export const STRINGS_EN = {
         darkMode: 'Dark mode',
         noSelection: 'No selection', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Untagged', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Feature image', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Unknown error', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Could not write to clipboard',
         previous: 'Previous', // Generic aria label for previous navigation (English: Previous)
@@ -1086,7 +1085,6 @@ export const STRINGS_EN = {
                 groups: {
                     icon: 'Icon',
                     title: 'Title',
-                    featureImage: 'Feature image',
                     properties: 'Properties'
                 }
             },
@@ -1912,46 +1910,6 @@ export const STRINGS_EN = {
                 name: 'Use folder color',
                 desc: 'Color note titles and file icons with their parent folder color when no custom file color is set. Priority: custom file color > folder color > default color.'
             },
-            showFeatureImage: {
-                name: 'Show feature image',
-                desc: 'Display a thumbnail of the first image found in the note.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Force square feature image',
-                desc: 'Render feature images as square thumbnails.'
-            },
-            featureImageProperties: {
-                name: 'Image properties',
-                desc: 'Comma-separated list of frontmatter properties to check first. Falls back to the first image in markdown content.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Exclude notes with properties',
-                desc: 'Comma-separated list of frontmatter properties. Notes containing any of these properties do not store feature images.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Feature image display size',
-                desc: 'Maximum rendered size for feature images in note lists.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Feature image pixel size',
-                desc: 'Resolution used when generating stored feature-image thumbnails. Increase this if larger previews look blurry.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-            downloadExternalFeatureImages: {
-                name: 'Download external images',
-                desc: 'Download remote images and YouTube thumbnails for feature images.'
-            },
             hideExportedPreviewImages: {
                 name: 'Hide exported preview images',
                 desc: 'Hide exported drawing preview PNG files. Turn on Show hidden items to display them.'
@@ -2357,7 +2315,6 @@ export const STRINGS_EN = {
                 items: 'items',
                 withTags: 'with tags',
                 withPreviewText: 'with preview text',
-                withFeatureImage: 'with feature image',
                 withMetadata: 'with metadata'
             },
             metadataInfo: {

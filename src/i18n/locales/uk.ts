@@ -40,7 +40,6 @@ export const STRINGS_UK = {
         darkMode: 'Темний режим', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Нічого не вибрано', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Без міток', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Головне зображення', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Невідома помилка', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Не вдалося записати в буфер обміну',
         previous: 'Назад', // Generic aria label for previous navigation (English: Previous)
@@ -1092,7 +1091,6 @@ export const STRINGS_UK = {
                 groups: {
                     icon: 'Іконка',
                     title: 'Заголовок',
-                    featureImage: 'Головне зображення',
                     properties: 'Властивості'
                 }
             },
@@ -1919,47 +1917,6 @@ export const STRINGS_UK = {
                 name: 'Використовувати колір теки',
                 desc: 'Забарвлювати заголовки нотаток та значки файлів кольором батьківської теки, коли не задано користувацький колір файлу. Пріоритет: користувацький колір файлу > колір теки > колір за замовчуванням.'
             },
-            showFeatureImage: {
-                name: 'Показувати головне зображення',
-                desc: 'Відображає мініатюру першого зображення у нотатці.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Примусово квадратне головне зображення',
-                desc: 'Відображати головні зображення як квадратні мініатюри.'
-            },
-            featureImageProperties: {
-                name: 'Властивості зображення',
-                desc: 'Список властивостей frontmatter, розділених комами, для перевірки в першу чергу. Якщо їх немає, використовується перше зображення з вмісту markdown.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Виключити нотатки з властивостями',
-                desc: 'Список властивостей frontmatter, розділених комами. Нотатки, що містять будь-яку з цих властивостей, не зберігають головні зображення.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Розмір відображення головного зображення',
-                desc: 'Максимальний розмір відображення головних зображень у списках нотаток.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Піксельний розмір головного зображення',
-                desc: 'Роздільна здатність, що використовується при створенні збережених мініатюр головних зображень. Збільшіть це значення, якщо великі попередні перегляди виглядають розмитими.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Завантажувати зовнішні зображення',
-                desc: 'Завантажувати віддалені зображення та мініатюри YouTube для головних зображень.'
-            },
             hideExportedPreviewImages: {
                 name: 'Сховати експортовані зображення попереднього перегляду',
                 desc: 'Приховує експортовані PNG-файли попереднього перегляду малюнків. Увімкніть «Показати приховані елементи», щоб відобразити їх.'
@@ -2365,7 +2322,6 @@ export const STRINGS_UK = {
                 items: 'елементів',
                 withTags: 'з мітками',
                 withPreviewText: 'з текстом попереднього перегляду',
-                withFeatureImage: 'з головним зображенням',
                 withMetadata: 'з метаданими'
             },
             metadataInfo: {

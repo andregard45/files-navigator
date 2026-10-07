@@ -16,10 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { FEATURE_IMAGE_STORE_NAME } from '../FeatureImageBlobStore';
 import { isPlainObjectRecordValue } from '../../utils/recordUtils';
 import { PREVIEW_STORE_NAME, STORE_NAME } from './constants';
 import type { PreviewStatus } from './fileData';
+
+const LEGACY_FEATURE_IMAGE_STORE_NAME = 'featureImageBlobs';
 
 export function handleUpgradeNeeded(event: IDBVersionChangeEvent): void {
     const target = event.target;
@@ -36,12 +37,13 @@ export function handleUpgradeNeeded(event: IDBVersionChangeEvent): void {
         store.createIndex('tags', 'tags', { unique: false, multiEntry: true });
     }
 
-    if (!db.objectStoreNames.contains(FEATURE_IMAGE_STORE_NAME)) {
-        db.createObjectStore(FEATURE_IMAGE_STORE_NAME);
-    }
-
     if (!db.objectStoreNames.contains(PREVIEW_STORE_NAME)) {
         db.createObjectStore(PREVIEW_STORE_NAME);
+    }
+
+    // Schema v4 removes the feature image blob store entirely.
+    if (db.objectStoreNames.contains(LEGACY_FEATURE_IMAGE_STORE_NAME)) {
+        db.deleteObjectStore(LEGACY_FEATURE_IMAGE_STORE_NAME);
     }
 
     const transaction = target.transaction;
@@ -50,7 +52,7 @@ export function handleUpgradeNeeded(event: IDBVersionChangeEvent): void {
     }
 
     if (event.oldVersion < 2) {
-        // Schema v2 introduces a dedicated feature image blob store.
+        // Schema v2 introduced a dedicated feature image blob store (removed in v4).
         // Schema v3 introduces a dedicated preview text store.
         //
         // v1 cache payloads are not migrated; clear stores so the cache is rebuilt.
@@ -61,14 +63,6 @@ export function handleUpgradeNeeded(event: IDBVersionChangeEvent): void {
             }
         } catch (error: unknown) {
             console.error('[IndexedDB] clear failed during upgrade', { store: STORE_NAME, error });
-        }
-
-        try {
-            if (transaction.objectStoreNames.contains(FEATURE_IMAGE_STORE_NAME)) {
-                transaction.objectStore(FEATURE_IMAGE_STORE_NAME).clear();
-            }
-        } catch (error: unknown) {
-            console.error('[IndexedDB] clear failed during upgrade', { store: FEATURE_IMAGE_STORE_NAME, error });
         }
 
         try {
@@ -103,14 +97,13 @@ export function handleUpgradeNeeded(event: IDBVersionChangeEvent): void {
                 return;
             }
 
-            const record = recordValue as { preview?: unknown; previewStatus?: unknown; featureImage?: unknown };
+            const record = recordValue as { preview?: unknown; previewStatus?: unknown };
             const legacyPreview = record.preview;
             const previewText = typeof legacyPreview === 'string' ? legacyPreview : null;
 
             const persistAndContinue = (nextPreviewStatus: PreviewStatus) => {
                 delete record.preview;
                 record.previewStatus = nextPreviewStatus;
-                record.featureImage = null;
 
                 const updateReq = cursor.update(record);
                 updateReq.onsuccess = () => cursor.continue();

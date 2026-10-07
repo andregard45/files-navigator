@@ -48,13 +48,13 @@ import type { SortOption } from '../settings/types';
 import { type NavigationItemType } from '../types';
 import { runAsyncAction } from '../utils/async';
 import { openFileInContext } from '../utils/openFileInContext';
-import { FILE_VISIBILITY, getExtensionSuffix, isRasterImageFile, shouldDisplayFile } from '../utils/fileTypeUtils';
+import { FILE_VISIBILITY, getExtensionSuffix, shouldDisplayFile } from '../utils/fileTypeUtils';
 import { resolveFolderDecorationColors } from '../utils/folderDecoration';
 import { resolveFileDragIconId, resolveFileIconId } from '../utils/fileIconUtils';
 import { isInsideNativeTooltipTarget, useTooltip } from '../context/TooltipContext';
 import { FileTooltipContent } from './FileTooltipContent';
 import { getFoldedSearchHighlightRanges } from '../utils/searchHighlight';
-import { getFileItemLayoutState, shouldShowExtensionBadgeThumbnail, shouldShowFeatureImageArea } from '../utils/listPaneMeasurements';
+import { getFileItemLayoutState } from '../utils/listPaneMeasurements';
 import { getIconService, useIconServiceVersion } from '../services/icons';
 import type { AliasSearchMatch, PropertySearchMatch, SearchResultMeta } from '../types/search';
 import { mergeRanges, NumericRange } from '../utils/arrayUtils';
@@ -70,14 +70,10 @@ import { useFileItemContentState, type FileItemContentDb } from './fileItem/useF
 import { useFileItemPills } from './fileItem/useFileItemPills';
 import { renderTextWithHighlightRanges } from './fileItem/searchHighlightRendering';
 import { ServiceIcon } from './ServiceIcon';
-import { getDrawingFeatureImageSource } from '../utils/drawingFeatureImages';
-import { useDrawingFeatureImage } from '../hooks/useDrawingFeatureImage';
 import { resolveFileRowBackgroundColor } from '../utils/colorUtils';
 import type { PropertySearchEvidenceGroup, PropertySearchEvidenceValue } from '../utils/propertyUtils';
 import { InlineRenameInput } from './InlineRenameInput';
 import { ObsidianIcon } from './ObsidianIcon';
-
-const FEATURE_IMAGE_MAX_ASPECT_RATIO = 16 / 9;
 
 interface FileItemMiddleMouseDownEvent {
     readonly button: number;
@@ -96,32 +92,6 @@ export function prepareFileItemMiddleMouseDown(event: FileItemMiddleMouseDownEve
 
     event.preventDefault();
     return true;
-}
-
-function useImageFileResourceVersion(app: ReturnType<typeof useServices>['app'], file: TFile, enabled: boolean): number {
-    const [version, setVersion] = useState(file.stat.mtime);
-
-    useEffect(() => {
-        setVersion(file.stat.mtime);
-    }, [file, file.stat.mtime]);
-
-    useEffect(() => {
-        if (!enabled) {
-            return;
-        }
-
-        const eventRef = app.vault.on('modify', changedFile => {
-            if (changedFile instanceof TFile && changedFile.path === file.path) {
-                setVersion(changedFile.stat.mtime);
-            }
-        });
-
-        return () => {
-            app.vault.offref(eventRef);
-        };
-    }, [app, enabled, file.path]);
-
-    return enabled ? version : file.stat.mtime;
 }
 
 /** Pane-level inputs shared by every file row in a list surface. */
@@ -183,7 +153,6 @@ export interface FileItemStorageHelpers {
     getFileDisplayName: (file: TFile) => string;
     getDB: () => FileItemContentDb;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
-    regenerateFeatureImageForFile: (file: TFile) => Promise<void>;
 }
 
 /**
@@ -308,7 +277,7 @@ export const FileItem = React.memo(function FileItem({
     const { app, isMobile, plugin, commandQueue, fileSystemOps, tagOperations } = useServices();
     const settings = useSettingsState();
     const metadataService = useMetadataService();
-    const { getFileDisplayName, getDB, getFileTimestamps, regenerateFeatureImageForFile } = fileItemStorage;
+    const { getFileDisplayName, getDB, getFileTimestamps } = fileItemStorage;
     const isCompactMode = appearanceSettings.mode === 'compact';
     const isMarkdownFile = file.extension === 'md';
     const canShowPropertyPills = isMarkdownFile && (!isCompactMode || settings.showFilePropertiesInCompactMode);
@@ -316,44 +285,14 @@ export const FileItem = React.memo(function FileItem({
         isMarkdownFile &&
         ((canShowPropertyPills && appearanceSettings.showProperties && visiblePropertyKeys.size > 0) ||
             (matchedProperties?.length ?? 0) > 0);
-    const shouldRefreshMetadataVersionOnFeatureImageChange = isMarkdownFile && appearanceSettings.showImage;
-    const fileStatMtime = useImageFileResourceVersion(app, file, appearanceSettings.showImage && isRasterImageFile(file));
-    const drawingFeatureImageSource = getDrawingFeatureImageSource(app, file);
-    const isDrawingFeatureImageRow = drawingFeatureImageSource !== null;
-    const {
-        featureImageKey,
-        featureImageStatus,
-        featureImageUrl,
-        properties,
-        metadataVersion
-    } = useFileItemContentState({
+    const { properties, metadataVersion } = useFileItemContentState({
         app,
         file,
-        showImage: appearanceSettings.showImage,
-        skipFeatureImage: isDrawingFeatureImageRow,
-        fileStatMtime,
         getDB,
-        regenerateFeatureImageForFile,
         loadOptions: {
-            loadFeatureImage: appearanceSettings.showImage && !isDrawingFeatureImageRow,
             loadProperties: shouldLoadProperties
-        },
-        refreshMetadataVersionOnFeatureImageChange: shouldRefreshMetadataVersionOnFeatureImageChange
+        }
     });
-
-    const drawingFeatureImage = useDrawingFeatureImage({
-        app,
-        file,
-        enabled: appearanceSettings.showImage,
-        source: drawingFeatureImageSource,
-        metadataVersion
-    });
-    const effectiveFeatureImageUrl = drawingFeatureImage.url ?? (drawingFeatureImage.isDrawing ? null : featureImageUrl);
-    const effectiveFeatureImageKey = drawingFeatureImage.key ?? featureImageKey;
-
-    // === State ===
-    const [featureImageAspectRatio, setFeatureImageAspectRatio] = useState<number | null>(null);
-    const [isFeatureImageHidden, setIsFeatureImageHidden] = useState(false);
 
     // === Refs ===
     const fileRef = useRef<HTMLDivElement | null>(null);
@@ -363,7 +302,6 @@ export const FileItem = React.memo(function FileItem({
     const pinNoteIconRef = useRef<HTMLDivElement | null>(null);
     const openInNewTabIconRef = useRef<HTMLDivElement | null>(null);
     const fileIconRef = useRef<HTMLSpanElement | null>(null);
-    const featureImageImgRef = useRef<HTMLImageElement | null>(null);
     // Unique ID for linking screen reader description to the file item
     const hiddenDescriptionId = useId();
 
@@ -429,8 +367,6 @@ export const FileItem = React.memo(function FileItem({
         getSolidBackground
     });
     const fileExtension = file.extension.toLowerCase();
-    const isBaseFile = fileExtension === 'base';
-    const isCanvasFile = fileExtension === 'canvas';
     // Check if file is not natively supported by Obsidian (e.g., Office files, archives)
     const isExternalFile = !shouldDisplayFile(file, FILE_VISIBILITY.SUPPORTED, app);
     const fileIconColor = fileColor ?? folderListColor;
@@ -497,7 +433,6 @@ export const FileItem = React.memo(function FileItem({
     const fileIconStyle = fileIconColor ? ({ color: fileIconColor } as React.CSSProperties) : undefined;
     const fileIconClassName = 'nn-file-icon';
     const dragIconColor = fileIconColor ?? undefined;
-    const shouldShowCompactExtensionBadge = isCompactMode && (isBaseFile || isCanvasFile);
 
     const renameInputOptions = useMemo(
         () => (inlineRename ? fileSystemOps.getFileDisplayNameRenameInput(file) : null),
@@ -619,102 +554,19 @@ export const FileItem = React.memo(function FileItem({
     );
     const excerptRows = isPinned ? 1 : appearanceSettings.previewRows;
 
-    // Determine if we should show the feature image area (either with an image or extension badge)
-    const showFeatureImageArea = shouldShowFeatureImageArea({
-        showImage: appearanceSettings.showImage,
-        file,
-        featureImageStatus,
-        hasFeatureImageUrl: Boolean(effectiveFeatureImageUrl),
-        showDrawingFeatureImage: drawingFeatureImage.showsFeatureImageBox
-    });
-    const showDrawingMissingFeatureImage = drawingFeatureImage.isMissing;
-    const showExtensionBadgeThumbnail = shouldShowExtensionBadgeThumbnail({
-        showFeatureImageArea,
-        file,
-        hasFeatureImageUrl: Boolean(effectiveFeatureImageUrl),
-        showDrawingMissingFeatureImage
-    });
-    const shouldShowPillRows = !showDrawingMissingFeatureImage;
-    const effectiveHasVisiblePillRows = shouldShowPillRows && hasVisiblePillRows;
-    const renderedPillRows = shouldShowPillRows ? pillRows : null;
+    const effectiveHasVisiblePillRows = hasVisiblePillRows;
+    const renderedPillRows = pillRows;
 
     const { shouldShowMultilinePreview } = getFileItemLayoutState({
         isCompactMode,
         showSearchExcerpt: appearanceSettings.showSearchExcerpt === true,
         isPinned,
         hasPreviewContent: hasSearchExcerptContent,
-        showFeatureImageArea,
-        showExtensionBadgeThumbnail,
         hasVisiblePillRows: effectiveHasVisiblePillRows
     });
 
     const shouldShowPinnedSecondaryLine = isPinned && shouldShowMultilinePreview;
 
-    // Reset image hidden state when the feature image URL changes
-    useEffect(() => {
-        setIsFeatureImageHidden(false);
-    }, [effectiveFeatureImageKey, effectiveFeatureImageUrl]);
-
-    const isDrawingFeatureImage = drawingFeatureImage.isDrawing;
-    const useSquareFeatureImage = !effectiveFeatureImageUrl || settings.forceSquareFeatureImage;
-
-    const featureImageContainerClasses = ['nn-file-thumbnail'];
-    if (useSquareFeatureImage) {
-        featureImageContainerClasses.push('nn-file-thumbnail--square');
-    } else {
-        featureImageContainerClasses.push('nn-file-thumbnail--natural');
-    }
-    if (effectiveFeatureImageUrl) {
-        featureImageContainerClasses.push('nn-file-thumbnail--inset-highlight');
-    }
-    if (isDrawingFeatureImage) {
-        featureImageContainerClasses.push('nn-file-thumbnail--drawing');
-    }
-    if (showExtensionBadgeThumbnail || showDrawingMissingFeatureImage) {
-        featureImageContainerClasses.push('nn-file-thumbnail--extension-badge');
-    }
-    // Hide container if image failed to load
-    if (isFeatureImageHidden) {
-        featureImageContainerClasses.push('nn-file-thumbnail--hidden');
-    }
-    const featureImageContainerClassName = featureImageContainerClasses.join(' ');
-
-    // The inset highlight overlay uses the thumbnail as a mask so it only covers opaque pixels.
-    const featureImageMaskImage = effectiveFeatureImageUrl ? `url("${effectiveFeatureImageUrl.replace(/[\\"]/g, '\\$&')}")` : null;
-
-    let featureImageStyle: React.CSSProperties | undefined;
-    if (!useSquareFeatureImage) {
-        featureImageStyle = { '--nn-file-thumbnail-aspect-ratio': featureImageAspectRatio ?? 1 } as React.CSSProperties;
-    }
-    if (featureImageMaskImage) {
-        featureImageStyle = {
-            ...featureImageStyle,
-            '--nn-file-thumbnail-mask-image': featureImageMaskImage
-        } as React.CSSProperties;
-    }
-
-    const handleFeatureImageLoad = useCallback(() => {
-        if (useSquareFeatureImage) {
-            return;
-        }
-
-        const image = featureImageImgRef.current;
-        if (!image) {
-            return;
-        }
-
-        const width = image.naturalWidth || image.width || 0;
-        const height = image.naturalHeight || image.height || 0;
-
-        if (width <= 0 || height <= 0) {
-            setFeatureImageAspectRatio(null);
-            return;
-        }
-
-        const ratio = width / height;
-        const clampedRatio = Math.min(ratio, FEATURE_IMAGE_MAX_ASPECT_RATIO);
-        setFeatureImageAspectRatio(clampedRatio);
-    }, [useSquareFeatureImage]);
     const showTooltips = settings.showTooltips;
 
     const classes = ['nn-file'];
@@ -736,27 +588,6 @@ export const FileItem = React.memo(function FileItem({
 
     // Screen reader description for files shown via "show hidden items" toggle
     const hiddenDescription = isHidden ? strings.listPane.hiddenItemAriaLabel.replace('{name}', displayName) : undefined;
-
-    useEffect(() => {
-        if (useSquareFeatureImage) {
-            setFeatureImageAspectRatio(null);
-            return;
-        }
-
-        setFeatureImageAspectRatio(null);
-        // If the already-rendered image is cached and completes synchronously,
-        // compute the aspect ratio immediately without forcing a second decode.
-        const image = featureImageImgRef.current;
-        if (image && image.complete) {
-            const width = image.naturalWidth || image.width || 0;
-            const height = image.naturalHeight || image.height || 0;
-            if (width > 0 && height > 0) {
-                const ratio = width / height;
-                const clampedRatio = Math.min(ratio, FEATURE_IMAGE_MAX_ASPECT_RATIO);
-                setFeatureImageAspectRatio(clampedRatio);
-            }
-        }
-    }, [effectiveFeatureImageUrl, useSquareFeatureImage]);
 
     // Locals for the mutable TFile fields so the tooltip memo re-runs on rename and on
     // timestamp changes; the TFile identity itself is stable across those mutations.
@@ -1131,16 +962,7 @@ export const FileItem = React.memo(function FileItem({
                         // Minimal layout: file name + pills
                         // Used when the current list appearance mode is compact
                         <div className="nn-compact-file-text-content">
-                            <div className="nn-compact-file-header">
-                                {fileTitleElement}
-                                {shouldShowCompactExtensionBadge ? (
-                                    <div className="nn-compact-extension-badge" aria-hidden="true">
-                                        <div className="nn-file-icon-rectangle">
-                                            <span className="nn-file-icon-rectangle-text">{fileExtension}</span>
-                                        </div>
-                                    </div>
-                                ) : null}
-                            </div>
+                            <div className="nn-compact-file-header">{fileTitleElement}</div>
                             {renderedPillRows}
                         </div>
                     ) : (
@@ -1174,40 +996,6 @@ export const FileItem = React.memo(function FileItem({
                                 {/* Pills */}
                                 {renderedPillRows}
                             </div>
-                            {/* ========== FEATURE IMAGE AREA ========== */}
-                            {/* Shows either actual image or extension badge for non-markdown files */}
-                            {showFeatureImageArea && (
-                                <div className={featureImageContainerClassName} style={featureImageStyle}>
-                                    {effectiveFeatureImageUrl ? (
-                                        <img
-                                            key={effectiveFeatureImageKey ?? effectiveFeatureImageUrl}
-                                            src={effectiveFeatureImageUrl}
-                                            alt={strings.common.featureImageAlt}
-                                            className="nn-file-thumbnail-img"
-                                            ref={featureImageImgRef}
-                                            draggable={false}
-                                            onDragStart={e => e.preventDefault()}
-                                            onLoad={handleFeatureImageLoad}
-                                            // Hide the image container when image fails to load
-                                            onError={() => {
-                                                setIsFeatureImageHidden(true);
-                                            }}
-                                        />
-                                    ) : showDrawingMissingFeatureImage ? (
-                                        <div className="nn-file-extension-badge nn-file-extension-badge--drawing" aria-hidden="true">
-                                            <ServiceIcon
-                                                iconId={drawingFeatureImage.iconId ?? 'brush'}
-                                                className="nn-file-extension-icon"
-                                                aria-hidden={true}
-                                            />
-                                        </div>
-                                    ) : showExtensionBadgeThumbnail ? (
-                                        <div className="nn-file-extension-badge">
-                                            <span className="nn-file-extension-text">{file.extension}</span>
-                                        </div>
-                                    ) : null}
-                                </div>
-                            )}
                         </>
                     )}
                 </div>

@@ -69,7 +69,6 @@ import { useUXPreferences } from './UXPreferencesContext';
 import type { NotebookNavigatorAPI } from '../api/NotebookNavigatorAPI';
 import { getCacheRebuildProgressTypes } from './storage/storageContentTypes';
 import { clearCacheRebuildNoticeState, getCacheRebuildNoticeState, setCacheRebuildNoticeState } from './storage/cacheRebuildNoticeStorage';
-import { shouldQueueFileThumbnailProvider } from './storageQueueFilters';
 import { runAsyncAction } from '../utils/async';
 
 /**
@@ -99,7 +98,6 @@ interface StorageContextValue {
     isStorageReady: boolean;
     stopAllProcessing: () => void;
     rebuildCache: () => Promise<void>;
-    regenerateFeatureImageForFile: (file: TFile) => Promise<void>;
 }
 
 const StorageContext = createContext<StorageContextValue | null>(null);
@@ -403,46 +401,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
 
     const hasPreview = useCallback((path: string): boolean => getDBInstance().hasPreview(path), []);
 
-    const regenerateFeatureImageForFile = useCallback(
-        async (file: TFile) => {
-            if (stoppedRef.current) {
-                return;
-            }
-
-            const liveSettings = latestSettingsRef.current;
-            if (!liveSettings.showFeatureImage) {
-                return;
-            }
-
-            if (file.extension !== 'md' && !shouldQueueFileThumbnailProvider(file)) {
-                return;
-            }
-
-            try {
-                const db = getDBInstance();
-                await db.clearFileContent(file.path, 'featureImage');
-            } catch (error: unknown) {
-                console.error('Failed to clear feature image content:', error);
-                return;
-            }
-
-            if (stoppedRef.current || !contentRegistry.current) {
-                return;
-            }
-
-            try {
-                if (file.extension === 'md') {
-                    queueMetadataContentWhenReady([file], ['markdownPipeline'], liveSettings);
-                } else {
-                    contentRegistry.current.queueFilesForAllProviders([file], liveSettings, { include: ['fileThumbnails'] });
-                }
-            } catch (error: unknown) {
-                console.error('Failed to queue feature image regeneration for file:', file.path, error);
-            }
-        },
-        [queueMetadataContentWhenReady]
-    );
-
     /**
      * Memoized context value to prevent unnecessary re-renders
      *
@@ -499,8 +457,7 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
             findTagInTree,
             getAllTagPaths,
             getTagDisplayPath,
-            rebuildCache,
-            regenerateFeatureImageForFile
+            rebuildCache
         };
     }, [
         fileData,
@@ -511,8 +468,7 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         getFileMetadata,
         hasPreview,
         isStorageReady,
-        rebuildCache,
-        regenerateFeatureImageForFile
+        rebuildCache
     ]);
 
     // Initializes providers before settings-sync hooks schedule any provider work.

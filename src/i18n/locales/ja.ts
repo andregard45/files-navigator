@@ -40,7 +40,6 @@ export const STRINGS_JA = {
         darkMode: 'ダークモード', // Label for dark theme mode (English: Dark mode)
         noSelection: '選択なし', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'タグなし', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'アイキャッチ画像', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '不明なエラー', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'クリップボードに書き込めませんでした',
         previous: '前へ', // Generic aria label for previous navigation (English: Previous)
@@ -1093,7 +1092,6 @@ export const STRINGS_JA = {
                 groups: {
                     icon: 'アイコン',
                     title: 'タイトル',
-                    featureImage: 'アイキャッチ画像',
                     properties: 'プロパティ'
                 }
             },
@@ -1919,47 +1917,6 @@ export const STRINGS_JA = {
                 name: 'フォルダの色を使用',
                 desc: 'カスタムファイル色が設定されていない場合に、ノートタイトルとファイルアイコンを親フォルダの色で表示します。優先順位: カスタムファイル色 > フォルダの色 > デフォルト色。'
             },
-            showFeatureImage: {
-                name: 'アイキャッチ画像を表示',
-                desc: 'ノートで最初に見つかった画像のサムネイルを表示します。'
-            },
-            forceSquareFeatureImage: {
-                name: 'アイキャッチ画像を正方形に固定',
-                desc: 'アイキャッチ画像を正方形のサムネイルとして表示します。'
-            },
-            featureImageProperties: {
-                name: '画像プロパティ',
-                desc: '最初にチェックするフロントマタープロパティのカンマ区切りリスト。見つからない場合はmarkdownコンテンツの最初の画像を使用します。',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'プロパティを持つノートを除外',
-                desc: 'フロントマタープロパティのカンマ区切りリスト。これらのプロパティを含むノートはアイキャッチ画像を保存しません。',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'アイキャッチ画像の表示サイズ',
-                desc: 'ノートリストでのアイキャッチ画像の最大レンダリングサイズ。',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'アイキャッチ画像のピクセルサイズ',
-                desc: '保存されるアイキャッチ画像サムネイルの生成時に使用される解像度。大きなプレビューがぼやける場合はこの値を上げてください。',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: '外部画像をダウンロード',
-                desc: 'リモート画像とYouTubeサムネイルをアイキャッチ画像としてダウンロードします。'
-            },
             hideExportedPreviewImages: {
                 name: 'エクスポートされたプレビュー画像を非表示',
                 desc: 'エクスポートされた描画プレビューの PNG ファイルを非表示にします。表示するには「非表示の項目を表示」をオンにしてください。'
@@ -2365,7 +2322,6 @@ export const STRINGS_JA = {
                 items: '項目',
                 withTags: 'タグ付き',
                 withPreviewText: 'プレビューテキスト付き',
-                withFeatureImage: 'アイキャッチ画像付き',
                 withMetadata: 'メタデータ付き'
             },
             metadataInfo: {

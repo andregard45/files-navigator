@@ -40,7 +40,6 @@ export const STRINGS_PT_BR = {
         darkMode: 'Modo escuro', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Nenhuma seleção',
         untagged: 'Sem etiquetas',
-        featureImageAlt: 'Imagem de destaque',
         unknownError: 'Erro desconhecido',
         clipboardWriteError: 'Não foi possível gravar na área de transferência',
         previous: 'Anterior', // Generic aria label for previous navigation (English: Previous)
@@ -1097,7 +1096,6 @@ export const STRINGS_PT_BR = {
                 groups: {
                     icon: 'Ícone',
                     title: 'Título',
-                    featureImage: 'Imagem de destaque',
                     properties: 'Propriedades'
                 }
             },
@@ -1927,47 +1925,6 @@ export const STRINGS_PT_BR = {
                 name: 'Usar cor da pasta',
                 desc: 'Colorir títulos de notas e ícones de arquivos com a cor da pasta pai quando não há uma cor de arquivo personalizada definida. Prioridade: cor de arquivo personalizada > cor da pasta > cor padrão.'
             },
-            showFeatureImage: {
-                name: 'Mostrar imagem de destaque',
-                desc: 'Exibir uma miniatura da primeira imagem encontrada na nota.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Forçar imagem de destaque quadrada',
-                desc: 'Renderizar imagens de destaque como miniaturas quadradas.'
-            },
-            featureImageProperties: {
-                name: 'Propriedades de imagem',
-                desc: 'Lista separada por vírgulas de propriedades do frontmatter a verificar primeiro. Usa a primeira imagem no conteúdo markdown como alternativa.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Excluir notas com propriedades',
-                desc: 'Lista separada por vírgulas de propriedades do frontmatter. Notas contendo qualquer uma dessas propriedades não armazenam imagens de destaque.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Tamanho de exibição da imagem de destaque',
-                desc: 'Tamanho máximo de renderização para imagens de destaque em listas de notas.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Tamanho em pixels da imagem de destaque',
-                desc: 'Resolução usada ao gerar miniaturas armazenadas de imagens de destaque. Aumente esse valor se as visualizações maiores ficarem borradas.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Baixar imagens externas',
-                desc: 'Baixar imagens remotas e miniaturas do YouTube para imagens de destaque.'
-            },
             hideExportedPreviewImages: {
                 name: 'Ocultar imagens de pré-visualização exportadas',
                 desc: 'Ocultar arquivos PNG de pré-visualização de desenhos exportados. Ative "Mostrar itens ocultos" para exibi-los.'
@@ -2373,7 +2330,6 @@ export const STRINGS_PT_BR = {
                 items: 'itens',
                 withTags: 'com etiquetas',
                 withPreviewText: 'com texto de visualização',
-                withFeatureImage: 'com imagem de destaque',
                 withMetadata: 'com metadados'
             },
             metadataInfo: {

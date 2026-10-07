@@ -40,7 +40,6 @@ export const STRINGS_ES = {
         darkMode: 'Modo oscuro', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Sin selección', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Sin etiquetas', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Imagen destacada', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Error desconocido', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'No se pudo escribir en el portapapeles',
         previous: 'Anterior', // Generic aria label for previous navigation (English: Previous)
@@ -1097,7 +1096,6 @@ export const STRINGS_ES = {
                 groups: {
                     icon: 'Icono',
                     title: 'Título',
-                    featureImage: 'Imagen destacada',
                     properties: 'Propiedades'
                 }
             },
@@ -1928,47 +1926,6 @@ export const STRINGS_ES = {
                 name: 'Usar color de carpeta',
                 desc: 'Colorear los títulos de notas y los iconos de archivo con el color de la carpeta principal cuando no hay un color de archivo personalizado. Prioridad: color de archivo personalizado > color de carpeta > color predeterminado.'
             },
-            showFeatureImage: {
-                name: 'Mostrar imagen destacada',
-                desc: 'Muestra una miniatura de la primera imagen encontrada en la nota.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Forzar imagen destacada cuadrada',
-                desc: 'Renderizar imágenes destacadas como miniaturas cuadradas.'
-            },
-            featureImageProperties: {
-                name: 'Propiedades de imagen',
-                desc: 'Lista separada por comas de propiedades del frontmatter a comprobar primero. Si no se encuentra, usa la primera imagen del contenido markdown.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Excluir notas con propiedades',
-                desc: 'Lista separada por comas de propiedades del frontmatter. Las notas que contengan cualquiera de estas propiedades no almacenan imágenes destacadas.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Tamaño de visualización de imagen destacada',
-                desc: 'Tamaño máximo de renderizado para imágenes destacadas en listas de notas.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Tamaño en píxeles de imagen destacada',
-                desc: 'Resolución utilizada al generar miniaturas almacenadas de imágenes destacadas. Aumenta este valor si las previsualizaciones grandes se ven borrosas.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Descargar imágenes externas',
-                desc: 'Descargar imágenes remotas y miniaturas de YouTube para imágenes destacadas.'
-            },
             hideExportedPreviewImages: {
                 name: 'Ocultar imágenes de previsualización exportadas',
                 desc: 'Oculta los archivos PNG de previsualización de dibujo exportados. Activa "Mostrar elementos ocultos" para verlos.'
@@ -2375,7 +2332,6 @@ export const STRINGS_ES = {
                 items: 'elementos',
                 withTags: 'con etiquetas',
                 withPreviewText: 'con texto de vista previa',
-                withFeatureImage: 'con imagen destacada',
                 withMetadata: 'con metadatos'
             },
             metadataInfo: {

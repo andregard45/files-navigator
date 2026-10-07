@@ -51,14 +51,10 @@ function createFileData(overrides: Partial<FileData>): FileData {
         markdownPipelineMtime: 0,
         tagsMtime: 0,
         metadataMtime: 0,
-        fileThumbnailsMtime: 0,
         tags: null,
         wordCount: null,
         properties: null,
         previewStatus: 'unprocessed',
-        featureImage: null,
-        featureImageStatus: 'unprocessed',
-        featureImageKey: null,
         metadata: null,
         ...overrides
     };

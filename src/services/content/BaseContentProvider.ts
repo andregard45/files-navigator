@@ -35,8 +35,6 @@ export type ContentProviderUpdate = {
     path: string;
     tags?: string[] | null;
     preview?: string;
-    featureImage?: Blob | null;
-    featureImageKey?: string | null;
     metadata?: FileData['metadata'];
     properties?: FileData['properties'];
 };

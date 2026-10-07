@@ -16,19 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { type FeatureImageStatus, type FileData, getDefaultPreviewStatusForPath, isPropertyData } from './fileData';
+import { type FileData, getDefaultPreviewStatusForPath, isPropertyData } from './fileData';
 
 type MutableFileData = Partial<FileData> & { preview?: string | null; customProperty?: unknown };
 
 export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?: string): FileData {
-    const featureImageKey = typeof data.featureImageKey === 'string' ? data.featureImageKey : null;
-    const rawStatus = data.featureImageStatus;
-    const featureImageStatus: FeatureImageStatus =
-        rawStatus === 'unprocessed' || rawStatus === 'none' || rawStatus === 'has'
-            ? rawStatus
-            : featureImageKey === null
-              ? 'unprocessed'
-              : 'none';
 
     const rawPreviewStatus = data.previewStatus;
     const previewStatus =
@@ -48,7 +40,6 @@ export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?
     data.markdownPipelineMtime = typeof data.markdownPipelineMtime === 'number' ? data.markdownPipelineMtime : data.mtime;
     data.tagsMtime = typeof data.tagsMtime === 'number' ? data.tagsMtime : data.mtime;
     data.metadataMtime = typeof data.metadataMtime === 'number' ? data.metadataMtime : data.mtime;
-    data.fileThumbnailsMtime = typeof data.fileThumbnailsMtime === 'number' ? data.fileThumbnailsMtime : data.mtime;
     data.tags = Array.isArray(data.tags) ? data.tags : null;
     const rawProperties = data.properties ?? data.customProperty;
     data.properties = isPropertyData(rawProperties) ? rawProperties : null;
@@ -58,9 +49,6 @@ export function normalizeFileDataInPlace(data: MutableFileData, pathForDefaults?
     data.previewStatus = previewStatus;
     // Feature image blobs are stored separately from the main record.
     // The MemoryFileCache is used for synchronous rendering and should not hold blob payloads.
-    data.featureImage = null;
-    data.featureImageStatus = featureImageStatus;
-    data.featureImageKey = featureImageKey;
     data.metadata = data.metadata && typeof data.metadata === 'object' ? data.metadata : null;
 
     if ('preview' in data) {

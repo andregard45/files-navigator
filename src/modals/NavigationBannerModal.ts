@@ -19,7 +19,7 @@
 import { App, TFile } from 'obsidian';
 import { BaseSuggestModal } from './BaseSuggestModal';
 import { strings } from '../i18n';
-import { decodeSvgSourceText, svgSourceDefinesDimensions } from '../services/content/thumbnail/svgFeatureImage';
+import { decodeSvgSourceText, svgSourceDefinesDimensions } from '../utils/svgSource';
 import { naturalCompare } from '../utils/sortUtils';
 import { isRasterImageFile, isSvgFile } from '../utils/fileTypeUtils';
 import { showNotice } from '../utils/noticeUtils';

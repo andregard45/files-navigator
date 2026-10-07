@@ -69,13 +69,7 @@ export function getContentWorkTotal(files: TFile[], types: FileContentType[]): n
         return 0;
     }
 
-    const needsFeatureImage = types.includes('featureImage');
-    if (needsFeatureImage) {
-        return files.length;
-    }
-
-    const needsMarkdownContent = types.some(type => type !== 'featureImage');
-    if (!needsMarkdownContent) {
+    if (types.length === 0) {
         return 0;
     }
 

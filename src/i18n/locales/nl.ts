@@ -40,7 +40,6 @@ export const STRINGS_NL = {
         darkMode: 'Donkere modus', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Geen selectie',
         untagged: 'Zonder tags',
-        featureImageAlt: 'Uitgelichte afbeelding',
         unknownError: 'Onbekende fout',
         clipboardWriteError: 'Kon niet naar klembord schrijven',
         previous: 'Vorige', // Generic aria label for previous navigation (English: Previous)
@@ -1098,7 +1097,6 @@ export const STRINGS_NL = {
                 groups: {
                     icon: 'Pictogram',
                     title: 'Titel',
-                    featureImage: 'Uitgelichte afbeelding',
                     properties: 'Eigenschappen'
                 }
             },
@@ -1927,47 +1925,6 @@ export const STRINGS_NL = {
                 name: 'Mapkleur gebruiken',
                 desc: 'Notitietitels en bestandspictogrammen kleuren met de kleur van de bovenliggende map wanneer er geen aangepaste bestandskleur is ingesteld. Prioriteit: aangepaste bestandskleur > mapkleur > standaardkleur.'
             },
-            showFeatureImage: {
-                name: 'Uitgelichte afbeelding tonen',
-                desc: 'Toont een miniatuur van de eerste afbeelding in de notitie.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Vierkante uitgelichte afbeelding afdwingen',
-                desc: 'Uitgelichte afbeeldingen weergeven als vierkante miniaturen.'
-            },
-            featureImageProperties: {
-                name: 'Afbeeldingseigenschappen',
-                desc: 'Kommagescheiden lijst van frontmatter-eigenschappen om eerst te controleren. Valt terug op de eerste afbeelding in de markdown-inhoud.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Notities met eigenschappen uitsluiten',
-                desc: 'Kommagescheiden lijst van frontmatter-eigenschappen. Notities met een van deze eigenschappen slaan geen uitgelichte afbeeldingen op.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Weergavegrootte uitgelichte afbeelding',
-                desc: 'Maximale weergavegrootte voor uitgelichte afbeeldingen in notitie-overzichten.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Pixelgrootte uitgelichte afbeelding',
-                desc: 'Resolutie voor opgeslagen miniaturen van uitgelichte afbeeldingen. Verhoog deze waarde als grotere voorbeelden wazig lijken.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Externe afbeeldingen downloaden',
-                desc: 'Download externe afbeeldingen en YouTube-miniaturen voor uitgelichte afbeeldingen.'
-            },
             hideExportedPreviewImages: {
                 name: 'Geëxporteerde voorbeeldafbeeldingen verbergen',
                 desc: 'Verberg geëxporteerde PNG-bestanden met tekeningvoorbeelden. Schakel "Verborgen items tonen" in om ze weer te geven.'
@@ -2373,7 +2330,6 @@ export const STRINGS_NL = {
                 items: 'items',
                 withTags: 'met tags',
                 withPreviewText: 'met voorbeeldtekst',
-                withFeatureImage: 'met uitgelichte afbeelding',
                 withMetadata: 'met metadata'
             },
             metadataInfo: {

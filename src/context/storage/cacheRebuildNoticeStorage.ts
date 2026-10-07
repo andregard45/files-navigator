@@ -35,7 +35,6 @@ function isFileContentType(value: unknown): value is FileContentType {
     return (
         value === 'preview' ||
         value === 'tags' ||
-        value === 'featureImage' ||
         value === 'metadata' ||
         value === 'properties'
     );

@@ -40,7 +40,6 @@ export const STRINGS_ZH_TW = {
         darkMode: '深色模式', // Label for dark theme mode (English: Dark mode)
         noSelection: '未選擇',
         untagged: '無標籤',
-        featureImageAlt: '特色圖片',
         unknownError: '未知錯誤',
         clipboardWriteError: '無法寫入剪貼簿',
         previous: '上一個', // Generic aria label for previous navigation (English: Previous)
@@ -1084,7 +1083,6 @@ export const STRINGS_ZH_TW = {
                 groups: {
                     icon: '圖示',
                     title: '標題',
-                    featureImage: '特色圖片',
                     properties: '屬性'
                 }
             },
@@ -1904,47 +1902,6 @@ export const STRINGS_ZH_TW = {
                 name: '使用資料夾顏色',
                 desc: '當未設定自訂檔案顏色時，使用父資料夾的顏色為筆記標題和檔案圖示著色。優先順序：自訂檔案顏色 > 資料夾顏色 > 預設顏色。'
             },
-            showFeatureImage: {
-                name: '顯示特色圖片',
-                desc: '顯示筆記中找到的第一張圖片的縮圖。'
-            },
-            forceSquareFeatureImage: {
-                name: '強制正方形特色圖片',
-                desc: '將特色圖片呈現為正方形縮圖。'
-            },
-            featureImageProperties: {
-                name: '圖片屬性',
-                desc: '首先檢查的前置中繼資料屬性的逗號分隔列表。如果未找到，則使用 markdown 內容中的第一張圖片。',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: '排除含有屬性的筆記',
-                desc: '逗號分隔的前置中繼資料屬性列表。包含這些屬性的筆記不會儲存特色圖片。',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: '特色圖片顯示大小',
-                desc: '筆記列表中特色圖片的最大渲染大小。',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: '特色圖片像素大小',
-                desc: '產生儲存的特色圖片縮圖時使用的解析度。如果較大的預覽看起來模糊，請增大此值。',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: '下載外部圖片',
-                desc: '下載遠端圖片和 YouTube 縮圖作為特色圖片。'
-            },
             hideExportedPreviewImages: {
                 name: '隱藏匯出的預覽圖片',
                 desc: '隱藏匯出的繪圖預覽 PNG 檔案。開啟「顯示隱藏項目」以顯示它們。'
@@ -2349,7 +2306,6 @@ export const STRINGS_ZH_TW = {
                 items: '項',
                 withTags: '包含標籤',
                 withPreviewText: '包含預覽文字',
-                withFeatureImage: '包含特色圖片',
                 withMetadata: '包含中繼資料'
             },
             metadataInfo: {

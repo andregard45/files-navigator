@@ -17,7 +17,7 @@
  */
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { App, TFile } from 'obsidian';
+import { TFile } from 'obsidian';
 import { ItemType, ListPaneItemType } from '../../src/types';
 import type { ListPaneItem } from '../../src/types/virtualization';
 import { getListPaneMeasurements } from '../../src/utils/listPaneMeasurements';
@@ -51,7 +51,6 @@ function createFileItem(file: TFile, overrides: Partial<ListPaneItem> = {}): Lis
 
 function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {}): ListFileRowSizingConfig {
     const showSearchExcerpt = overrides.showSearchExcerpt ?? true;
-    const showImage = overrides.showImage ?? false;
 
     return {
         heights: getListPaneMeasurements(false),
@@ -59,7 +58,6 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         previewRows: 3,
         showDate: true,
         showSearchExcerpt,
-        showImage,
         compactPaddingTotal: 18,
         isCompactMode: false,
         frontmatterPropertyRowsPossible: false,
@@ -71,7 +69,6 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
         includeDescendantNotes: false,
         selectedPropertyValueNodeIdToHide: null,
         visiblePropertyKeys: new Set(),
-        themeMode: 'light',
         ...overrides
     };
 }
@@ -138,7 +135,6 @@ describe('isListRowHeightAffectingContentChange', () => {
     ): ListRowHeightAffectingContentChangeConfig {
         return {
             showSearchExcerpt: true,
-            showImage: true,
             frontmatterPropertyRowsPossible: true,
             ...overrides
         };
@@ -147,21 +143,16 @@ describe('isListRowHeightAffectingContentChange', () => {
     it('detects content fields that can change estimated list row height', () => {
         const config = createHeightChangeConfig();
 
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageKey: 'key' } }), config)).toBe(true);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageStatus: 'has' } }), config)).toBe(true);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(true);
     });
 
     it('ignores content fields disabled by the active row sizing config', () => {
         const config = createHeightChangeConfig({
             showSearchExcerpt: false,
-            showImage: false,
             frontmatterPropertyRowsPossible: false
         });
 
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { previewStatus: 'has' } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageKey: 'key' } }), config)).toBe(false);
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { featureImageStatus: 'has' } }), config)).toBe(false);
         expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(false);
     });
 
@@ -194,60 +185,30 @@ describe('isListRowHeightAffectingContentChange', () => {
 });
 
 describe('resolveListFileRowHeightInputs', () => {
-    it('skips db and drawing metadata reads when row features are disabled', () => {
-        const app = new App();
-        const getFileCache = vi.fn(() => null);
-        app.metadataCache.getFileCache = getFileCache;
+    it('skips db reads when row features are disabled', () => {
         const file = createTestTFile('Notes/Daily.md');
         const db = createDb();
         const inputs = resolveListFileRowHeightInputs({
-            app,
             db: db as unknown as IndexedDBStorage,
             item: createFileItem(file),
             file,
             config: createRowSizingConfig({
                 showSearchExcerpt: false,
-                showImage: false,
-                        propertyRowsPossible: false
+                propertyRowsPossible: false
             })
         });
 
         expect(inputs.visiblePillRowCount).toBe(0);
-        expect(inputs.showFeatureImageArea).toBe(false);
         expect(db.getFile).not.toHaveBeenCalled();
-        expect(getFileCache).not.toHaveBeenCalled();
-    });
-
-    it('reads drawing metadata only when image rows are enabled', () => {
-        const app = new App();
-        const getFileCache = vi.fn(() => null);
-        app.metadataCache.getFileCache = getFileCache;
-        const file = createTestTFile('Notes/Daily.md');
-        const db = createDb({ featureImageStatus: 'none' });
-
-        resolveListFileRowHeightInputs({
-            app,
-            db: db as unknown as IndexedDBStorage,
-            item: createFileItem(file),
-            file,
-            config: createRowSizingConfig({
-                showImage: true
-            })
-        });
-
-        expect(db.getFile).toHaveBeenCalledWith(file.path);
-        expect(getFileCache).toHaveBeenCalledWith(file);
     });
 
     it('skips db reads when frontmatter properties are enabled without visible list property keys', () => {
-        const app = new App();
         const file = createTestTFile('Notes/Daily.md');
         const db = createDb({
             properties: [{ fieldKey: 'status', value: 'active', valueKind: 'text' }]
         });
 
         const inputs = resolveListFileRowHeightInputs({
-            app,
             db: db as unknown as IndexedDBStorage,
             item: createFileItem(file),
             file,
@@ -264,14 +225,12 @@ describe('resolveListFileRowHeightInputs', () => {
     });
 
     it('reads the file record when visible property rows can affect height', () => {
-        const app = new App();
         const file = createTestTFile('Notes/Daily.md');
         const db = createDb({
             properties: [{ fieldKey: 'status', value: 'active', valueKind: 'text' }]
         });
 
         const inputs = resolveListFileRowHeightInputs({
-            app,
             db: db as unknown as IndexedDBStorage,
             item: createFileItem(file),
             file,

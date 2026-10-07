@@ -7,7 +7,7 @@ import { runAsyncAction } from '../utils/async';
 import { getDBInstance } from '../storage/fileOperations';
 import { ContentProviderRegistry } from '../services/content/ContentProviderRegistry';
 import { ContentReadCache } from '../services/content/ContentReadCache';
-import { getMarkdownPipelineClearFlags, MarkdownPipelineContentProvider } from '../services/content/MarkdownPipelineContentProvider';
+import { MarkdownPipelineContentProvider } from '../services/content/MarkdownPipelineContentProvider';
 import { NotebookNavigatorView } from '../view/NotebookNavigatorView';
 import { Calendar } from './calendar';
 
@@ -17,7 +17,6 @@ export function CalendarRightSidebar() {
     const isMountedRef = useRef(true);
     const latestSettingsRef = useRef(settings);
     latestSettingsRef.current = settings;
-    const previousSettingsRef = useRef(settings);
     const calendarContentRegistryRef = useRef<ContentProviderRegistry | null>(null);
     const visibleCalendarNoteFilesRef = useRef<TFile[]>([]);
     const visibleCalendarNotePathsRef = useRef<Set<string>>(new Set());
@@ -90,59 +89,6 @@ export function CalendarRightSidebar() {
             app.vault.offref(modifyRef);
         };
     }, [app.vault, queueCalendarContentRefresh, storageRuntimeActive]);
-
-    useEffect(() => {
-        const oldSettings = previousSettingsRef.current;
-        previousSettingsRef.current = settings;
-
-        if (oldSettings === settings || storageRuntimeActive || isStorageRuntimeActive()) {
-            return;
-        }
-
-        const { shouldClearFeatureImage } = getMarkdownPipelineClearFlags(
-            {
-                oldSettings,
-                newSettings: settings
-            },
-            app
-        );
-        const enabledFeatureImages = oldSettings.showFeatureImage !== settings.showFeatureImage && settings.showFeatureImage;
-        if (!shouldClearFeatureImage && !enabledFeatureImages) {
-            return;
-        }
-
-        const filesByPath = new Map<string, TFile>();
-        visibleCalendarNoteFilesRef.current.forEach(file => {
-            if (file.extension === 'md') {
-                filesByPath.set(file.path, file);
-            }
-        });
-        const files = Array.from(filesByPath.values());
-        if (files.length === 0) {
-            return;
-        }
-
-        const registry = calendarContentRegistryRef.current;
-        registry?.stopAllProcessing();
-        runAsyncAction(async () => {
-            await registry?.getProvider('markdownPipeline')?.waitForIdle();
-            if (!isMountedRef.current || isStorageRuntimeActive()) {
-                return;
-            }
-
-            const db = getDBInstance();
-            const paths = files.map(file => file.path);
-            if (shouldClearFeatureImage) {
-                await db.batchClearFileContent(paths, 'featureImage');
-            }
-
-            if (!isMountedRef.current || isStorageRuntimeActive()) {
-                return;
-            }
-
-            queueCalendarContentRefresh(files);
-        });
-    }, [app, queueCalendarContentRefresh, settings, storageRuntimeActive]);
 
     const handleAddDateFilter = useCallback(
         (dateToken: string) => {

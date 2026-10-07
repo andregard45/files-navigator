@@ -48,8 +48,6 @@ let isInitializing = false;
 let isShuttingDown = false;
 let isShutdownState = false;
 let initializationPromise: Promise<void> | null = null;
-// Configured feature image blob cache size for the current platform.
-let featureImageCacheMaxEntries: number | null = null;
 // Configured preview text LRU size for the current platform.
 let previewTextCacheMaxEntries: number | null = null;
 // Configured preview text load batch size for the current platform.
@@ -76,13 +74,9 @@ export function getDBInstance(): IndexedDBStorage {
         }
         // Build the constructor options from the configured module-level settings.
         const options: {
-            featureImageCacheMaxEntries?: number;
             previewTextCacheMaxEntries?: number;
             previewLoadMaxBatch?: number;
         } = {};
-        if (featureImageCacheMaxEntries !== null) {
-            options.featureImageCacheMaxEntries = featureImageCacheMaxEntries;
-        }
         if (previewTextCacheMaxEntries !== null) {
             options.previewTextCacheMaxEntries = previewTextCacheMaxEntries;
         }
@@ -117,7 +111,6 @@ export function getDBInstanceOrNull(): IndexedDBStorage | null {
 export async function initializeDatabase(
     appIdParam: string,
     options?: {
-        featureImageCacheMaxEntries?: number;
         previewTextCacheMaxEntries?: number;
         previewLoadMaxBatch?: number;
     }
@@ -148,10 +141,6 @@ export async function initializeDatabase(
                 return;
             }
             appId = appIdParam;
-            if (options?.featureImageCacheMaxEntries !== undefined) {
-                // Persist feature image cache size for the singleton instance.
-                featureImageCacheMaxEntries = options.featureImageCacheMaxEntries;
-            }
             if (options?.previewTextCacheMaxEntries !== undefined) {
                 previewTextCacheMaxEntries = options.previewTextCacheMaxEntries;
             }
@@ -254,7 +243,6 @@ export function shutdownDatabase(): void {
         appId = null;
         isInitializing = false;
         initializationPromise = null;
-        featureImageCacheMaxEntries = null;
         previewTextCacheMaxEntries = null;
         previewLoadMaxBatch = null;
         isShuttingDown = false;
@@ -310,12 +298,9 @@ export async function recordFileChanges(
                 markdownPipelineMtime: renamed.markdownPipelineMtime,
                 tagsMtime: renamed.tagsMtime,
                 metadataMtime: renamed.metadataMtime,
-                fileThumbnailsMtime: renamed.fileThumbnailsMtime,
                 tags: renamed.tags,
                 properties: renamed.properties,
                 previewStatus: renamed.previewStatus,
-                featureImageStatus: renamed.featureImageStatus,
-                featureImageKey: renamed.featureImageKey,
                 metadata: renamed.metadata
             };
             const createdData: FileData = { ...renamed, mtime: file.stat.mtime };
@@ -372,7 +357,6 @@ export async function markFilesForRegeneration(
                 patch.markdownPipelineMtime = 0;
                 patch.tagsMtime = 0;
                 patch.metadataMtime = 0;
-                patch.fileThumbnailsMtime = 0;
             }
             const createdData: FileData = { ...existing, ...patch };
             updates.push({ path: file.path, create: createdData, patch });

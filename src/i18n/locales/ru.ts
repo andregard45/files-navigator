@@ -40,7 +40,6 @@ export const STRINGS_RU = {
         darkMode: 'Тёмный режим', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Ничего не выбрано', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Без тегов', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Изображение-обложка', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Неизвестная ошибка', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Не удалось записать в буфер обмена',
         previous: 'Назад', // Generic aria label for previous navigation (English: Previous)
@@ -1091,7 +1090,6 @@ export const STRINGS_RU = {
                 groups: {
                     icon: 'Иконка',
                     title: 'Заголовок',
-                    featureImage: 'Изображение-обложка',
                     properties: 'Свойства'
                 }
             },
@@ -1918,47 +1916,6 @@ export const STRINGS_RU = {
                 name: 'Использовать цвет папки',
                 desc: 'Окрашивать заголовки заметок и иконки файлов цветом родительской папки, когда не задан пользовательский цвет файла. Приоритет: пользовательский цвет файла > цвет папки > цвет по умолчанию.'
             },
-            showFeatureImage: {
-                name: 'Показывать изображение-обложку',
-                desc: 'Отображает миниатюру первого изображения в заметке.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Квадратное изображение-обложка',
-                desc: 'Отображать изображения-обложки как квадратные миниатюры.'
-            },
-            featureImageProperties: {
-                name: 'Свойства изображения',
-                desc: 'Список свойств frontmatter через запятую для проверки в первую очередь. При отсутствии используется первое изображение из содержимого markdown.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Исключить заметки со свойствами',
-                desc: 'Список свойств frontmatter через запятую. Заметки, содержащие любое из этих свойств, не сохраняют изображения-обложки.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Размер отображения изображения-обложки',
-                desc: 'Максимальный размер отображения изображений-обложек в списках заметок.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Пиксельный размер изображения-обложки',
-                desc: 'Разрешение, используемое при создании сохранённых миниатюр изображений-обложек. Увеличьте это значение, если крупные превью выглядят размытыми.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Загружать внешние изображения',
-                desc: 'Загружать удалённые изображения и миниатюры YouTube для изображений-обложек.'
-            },
             hideExportedPreviewImages: {
                 name: 'Скрыть экспортированные изображения предпросмотра',
                 desc: 'Скрывает экспортированные PNG-файлы предпросмотра рисунков. Включите «Показать скрытые элементы», чтобы отобразить их.'
@@ -2364,7 +2321,6 @@ export const STRINGS_RU = {
                 items: 'элементов',
                 withTags: 'с тегами',
                 withPreviewText: 'с текстом превью',
-                withFeatureImage: 'с изображением-обложкой',
                 withMetadata: 'с метаданными'
             },
             metadataInfo: {

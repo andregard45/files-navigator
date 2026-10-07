@@ -45,7 +45,7 @@
  */
 
 import { useRef, useCallback, useEffect, useLayoutEffect, useState, useMemo } from 'react';
-import { TFile, TFolder, type App } from 'obsidian';
+import { TFile, TFolder } from 'obsidian';
 import { useVirtualizer, Virtualizer } from '@tanstack/react-virtual';
 import { useServices } from '../context/ServicesContext';
 import { useFileCache } from '../context/StorageContext';
@@ -63,14 +63,9 @@ import {
     getSelectedPropertyValuePillToHide,
     getListPaneHeaderHeight,
     getListPaneMeasurements,
-    getPropertyRowCount,
-    shouldShowExtensionBadgeThumbnail,
-    shouldShowFeatureImageArea
+    getPropertyRowCount
 } from '../utils/listPaneMeasurements';
 import type { PropertySelectionNodeId } from '../utils/propertyTree';
-import { getDrawingFeatureImageSource, resolveDrawingFeatureImageFileForProvider } from '../utils/drawingFeatureImages';
-import { useThemeMode } from './useThemeMode';
-import type { ThemeMode } from '../utils/themeMode';
 import { getListSortOverrideForSelection, resolveListSort } from '../utils/sortUtils';
 import type { ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
 
@@ -173,18 +168,14 @@ export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     includeDescendantNotes: boolean;
     selectedPropertyValueNodeIdToHide: string | null;
     visiblePropertyKeys: ReadonlySet<string>;
-    themeMode: ThemeMode;
 }
 
 export type ListRowHeightAffectingContentChangeConfig = Pick<
     ListFileRowSizingConfig,
-    | 'showSearchExcerpt'
-    | 'showImage'
-    | 'frontmatterPropertyRowsPossible'
+    'showSearchExcerpt' | 'frontmatterPropertyRowsPossible'
 >;
 
 interface ResolveListFileRowHeightInputsParams {
-    app: App;
     db: IndexedDBStorage;
     item: ListPaneItem;
     file: TFile;
@@ -227,7 +218,6 @@ interface ListLayoutSignatureParams {
     topSpacerHeight: number;
     folderSettings: ListPaneAppearanceLayoutSettings;
     settings: ListLayoutSignatureSettings;
-    themeMode: ThemeMode;
     selectionType: SelectionState['selectionType'];
     selectedPropertyValueNodeIdToHide: string | null;
     includeDescendantNotes: boolean;
@@ -255,7 +245,6 @@ function getListLayoutSignature({
     topSpacerHeight,
     folderSettings,
     settings,
-    themeMode,
     selectionType,
     selectedPropertyValueNodeIdToHide,
     includeDescendantNotes,
@@ -266,16 +255,12 @@ function getListLayoutSignature({
         spacers: {
             topSpacerHeight
         },
-        environment: {
-            themeMode
-        },
         appearance: {
             mode: folderSettings.mode,
             titleRows: folderSettings.titleRows,
             previewRows: folderSettings.previewRows,
             groupBy: folderSettings.groupBy,
             showSearchExcerpt: folderSettings.showSearchExcerpt,
-            showImage: folderSettings.showImage,
             showProperties: folderSettings.showProperties
         },
         rowContent: {
@@ -322,10 +307,6 @@ export function isListRowHeightAffectingContentChange(
     config: ListRowHeightAffectingContentChangeConfig
 ): boolean {
     const { changes } = change;
-
-    if ((changes.featureImageKey !== undefined || changes.featureImageStatus !== undefined) && config.showImage) {
-        return true;
-    }
 
     if (changes.properties !== undefined && config.frontmatterPropertyRowsPossible) {
         return true;
@@ -380,10 +361,6 @@ function getStickyHeaderHeightBeforeIndex(
 }
 
 function shouldReadFileRecordForRowEstimate(item: ListPaneItem, config: ListFileRowSizingConfig): boolean {
-    if (config.showImage) {
-        return true;
-    }
-
     if (config.propertyRowsPossible) {
         return true;
     }
@@ -392,7 +369,6 @@ function shouldReadFileRecordForRowEstimate(item: ListPaneItem, config: ListFile
 }
 
 export function resolveListFileRowHeightInputs({
-    app,
     db,
     item,
     file,
@@ -410,34 +386,8 @@ export function resolveListFileRowHeightInputs({
     }
     const hasPreviewContent = hasOmnisearchExcerpt;
 
-    let showDrawingFeatureImage = false;
-    let showDrawingMissingFeatureImage = false;
-    if (config.showImage) {
-        const drawingFeatureImageSource = getDrawingFeatureImageSource(app, file);
-        showDrawingFeatureImage = drawingFeatureImageSource?.showsFeatureImageBox ?? false;
-        showDrawingMissingFeatureImage =
-            showDrawingFeatureImage && !drawingFeatureImageSource?.supportsCompanionImages
-                ? true
-                : showDrawingFeatureImage && drawingFeatureImageSource
-                  ? resolveDrawingFeatureImageFileForProvider(app, file, drawingFeatureImageSource.providerId, config.themeMode) === null
-                  : false;
-    }
-
-    const showFeatureImageArea = shouldShowFeatureImageArea({
-        showImage: config.showImage,
-        file,
-        featureImageStatus: fileRecord?.featureImageStatus ?? null,
-        showDrawingFeatureImage
-    });
-    const showExtensionBadgeThumbnail = shouldShowExtensionBadgeThumbnail({
-        showFeatureImageArea,
-        file,
-        showDrawingMissingFeatureImage
-    });
-
-    const propertyRowCount =
-        !showDrawingMissingFeatureImage && config.propertyRowsPossible
-            ? getPropertyRowCount({
+    const propertyRowCount = config.propertyRowsPossible
+        ? getPropertyRowCount({
                   showFileProperties: config.showFileProperties,
                   showPropertiesOnSeparateRows: config.showPropertiesOnSeparateRows,
                   showFilePropertiesInCompactMode: config.showFilePropertiesInCompactMode,
@@ -447,13 +397,11 @@ export function resolveListFileRowHeightInputs({
                   visiblePropertyKeys: config.visiblePropertyKeys,
                   hiddenPropertyValueNodeId: config.selectedPropertyValueNodeIdToHide
               })
-            : 0;
+        : 0;
 
     return {
         isPinned: Boolean(item.isPinned),
         hasPreviewContent,
-        showFeatureImageArea,
-        showExtensionBadgeThumbnail,
         visiblePillRowCount: propertyRowCount
     };
 }
@@ -490,10 +438,9 @@ export function useListPaneScroll({
     onVirtualizerScrollingChange,
     onScrollContainerVisibilityChange
 }: UseListPaneScrollParams): UseListPaneScrollResult {
-    const { app, isMobile } = useServices();
+    const { isMobile } = useServices();
     const listMeasurements = getListPaneMeasurements(isMobile);
     const { getDB, isStorageReady } = useFileCache();
-    const themeMode = useThemeMode(app);
     // The list pane only renders after StorageContext marks storage ready.
     const db = getDB();
 
@@ -585,7 +532,6 @@ export function useListPaneScroll({
             titleRows: folderSettings.titleRows || 1,
             previewRows: folderSettings.previewRows,
             showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
-            showImage: folderSettings.showImage,
             compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
             isCompactMode,
             frontmatterPropertyRowsPossible,
@@ -596,14 +542,12 @@ export function useListPaneScroll({
             selectionType: selectionState.selectionType,
             includeDescendantNotes,
             selectedPropertyValueNodeIdToHide,
-            visiblePropertyKeys,
-            themeMode
+            visiblePropertyKeys
         };
     }, [
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
         folderSettings.previewRows,
-        folderSettings.showImage,
         folderSettings.showSearchExcerpt,
         folderSettings.showProperties,
         folderSettings.titleRows,
@@ -615,7 +559,6 @@ export function useListPaneScroll({
         selectionState.selectionType,
         settings.showFilePropertiesInCompactMode,
         settings.showPropertiesOnSeparateRows,
-        themeMode,
         visiblePropertyKeys
     ]);
     const getListItemKey = useCallback((index: number) => listItems[index]?.key ?? index, [listItems]);
@@ -665,7 +608,6 @@ export function useListPaneScroll({
             if (item.type === ListPaneItemType.FILE && item.data instanceof TFile) {
                 return estimateFileRowHeight(
                     resolveListFileRowHeightInputs({
-                        app,
                         db,
                         item,
                         file: item.data,
@@ -791,7 +733,6 @@ export function useListPaneScroll({
                 topSpacerHeight,
                 folderSettings,
                 settings: listLayoutSettings,
-                themeMode,
                 selectionType: selectionState.selectionType,
                 selectedPropertyValueNodeIdToHide,
                 includeDescendantNotes,
@@ -802,7 +743,6 @@ export function useListPaneScroll({
             topSpacerHeight,
             folderSettings,
             listLayoutSettings,
-            themeMode,
             selectionState.selectionType,
             selectedPropertyValueNodeIdToHide,
             includeDescendantNotes,

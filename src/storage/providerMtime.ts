@@ -18,8 +18,6 @@ export function getProviderProcessedMtimeField(provider: ContentProviderType): P
             return 'tagsMtime';
         case 'metadata':
             return 'metadataMtime';
-        case 'fileThumbnails':
-            return 'fileThumbnailsMtime';
         default:
             return assertNever(provider);
     }

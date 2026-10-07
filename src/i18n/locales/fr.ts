@@ -40,7 +40,6 @@ export const STRINGS_FR = {
         darkMode: 'Mode sombre', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Aucune sélection', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Sans mot-clé', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Image vedette', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Erreur inconnue', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: "Impossible d'écrire dans le presse-papiers",
         previous: 'Précédent', // Generic aria label for previous navigation (English: Previous)
@@ -1099,7 +1098,6 @@ export const STRINGS_FR = {
                 groups: {
                     icon: 'Icône',
                     title: 'Titre',
-                    featureImage: 'Image vedette',
                     properties: 'Propriétés'
                 }
             },
@@ -1930,47 +1928,6 @@ export const STRINGS_FR = {
                 name: 'Utiliser la couleur du dossier',
                 desc: "Colorer les titres de notes et les icônes de fichier avec la couleur du dossier parent lorsqu'aucune couleur de fichier personnalisée n'est définie. Priorité : couleur de fichier personnalisée > couleur du dossier > couleur par défaut."
             },
-            showFeatureImage: {
-                name: "Afficher l'image vedette",
-                desc: 'Affiche une miniature de la première image trouvée dans la note.'
-            },
-            forceSquareFeatureImage: {
-                name: "Forcer l'image vedette carrée",
-                desc: 'Afficher les images vedettes sous forme de miniatures carrées.'
-            },
-            featureImageProperties: {
-                name: "Propriétés d'image",
-                desc: 'Liste de propriétés frontmatter séparées par des virgules à vérifier en premier. Se rabat sur la première image dans le contenu markdown.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Exclure les notes avec propriétés',
-                desc: "Liste de propriétés frontmatter séparées par des virgules. Les notes contenant l'une de ces propriétés ne stockent pas d'images vedettes.",
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: "Taille d'affichage de l'image vedette",
-                desc: 'Taille maximale de rendu pour les images vedettes dans les listes de notes.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: "Taille en pixels de l'image vedette",
-                desc: 'Résolution utilisée lors de la génération des vignettes stockées des images vedettes. Augmentez cette valeur si les aperçus plus grands semblent flous.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Télécharger les images externes',
-                desc: 'Télécharger les images distantes et les miniatures YouTube pour les images vedettes.'
-            },
             hideExportedPreviewImages: {
                 name: 'Masquer les images de prévisualisation exportées',
                 desc: 'Masquer les fichiers PNG de prévisualisation de dessin exportés. Activez « Afficher les éléments masqués » pour les afficher.'
@@ -2376,7 +2333,6 @@ export const STRINGS_FR = {
                 items: 'éléments',
                 withTags: 'avec mots-clés',
                 withPreviewText: 'avec texte de prévisualisation',
-                withFeatureImage: 'avec image vedette',
                 withMetadata: 'avec métadonnées'
             },
             metadataInfo: {

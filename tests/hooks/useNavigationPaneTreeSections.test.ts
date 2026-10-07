@@ -62,14 +62,10 @@ vi.mock('../../src/storage/fileOperations', () => ({
                 markdownPipelineMtime: 0,
                 tagsMtime: 0,
                 metadataMtime: 0,
-                fileThumbnailsMtime: 0,
                 tags: entry.tags,
                 wordCount: null,
                 properties: entry.properties,
                 previewStatus: 'unprocessed',
-                featureImage: null,
-                featureImageStatus: 'unprocessed',
-                featureImageKey: null,
                 metadata: null
             };
         },

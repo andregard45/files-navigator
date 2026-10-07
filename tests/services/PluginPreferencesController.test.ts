@@ -125,28 +125,4 @@ describe('PluginPreferencesController', () => {
             'tag:work': true
         });
     });
-
-    it('mirrors feature image pixel size updates to local storage', () => {
-        isLocal = true;
-
-        controller.setFeatureImagePixelSize('512');
-
-        expect(settings.featureImagePixelSize).toBe('512');
-        expect(localStorageSet).toHaveBeenCalledWith(STORAGE_KEYS.featureImagePixelSizeKey, '512');
-        expect(persistSyncModeSettingUpdate).toHaveBeenCalledWith('featureImagePixelSize');
-        expect(saveSettings).not.toHaveBeenCalled();
-        expect(notifySettingsUpdate).not.toHaveBeenCalled();
-    });
-
-    it('mirrors feature image display size updates to local storage', () => {
-        isLocal = true;
-
-        controller.setFeatureImageSize('128');
-
-        expect(settings.featureImageSize).toBe('128');
-        expect(localStorageSet).toHaveBeenCalledWith(STORAGE_KEYS.featureImageSizeKey, '128');
-        expect(persistSyncModeSettingUpdate).toHaveBeenCalledWith('featureImageSize');
-        expect(saveSettings).not.toHaveBeenCalled();
-        expect(notifySettingsUpdate).not.toHaveBeenCalled();
-    });
 });

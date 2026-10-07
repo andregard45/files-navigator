@@ -142,8 +142,7 @@ export function useStorageSettingsSync(params: {
                 }
             }
 
-            const enabledFeatureImages = oldSettings.showFeatureImage !== newSettings.showFeatureImage && newSettings.showFeatureImage;
-            const shouldShowIndexNotice = (affectedProviders.length > 0 || enabledFeatureImages) && !stoppedRef.current;
+            const shouldShowIndexNotice = affectedProviders.length > 0 && !stoppedRef.current;
 
             if (shouldShowIndexNotice) {
                 const enabledTypes = getCacheRebuildProgressTypes(newSettings);
@@ -172,12 +171,7 @@ export function useStorageSettingsSync(params: {
             const affectedProviderTypeSet = new Set<ContentProviderType>(affectedProviders);
             // Queue only metadata providers that were affected by this settings change.
             const metadataTypesToQueue = metadataDependentTypes.filter(type => affectedProviderTypeSet.has(type));
-            // Enabling feature images requires markdown pipeline reprocessing for markdown files.
-            if (enabledFeatureImages && !metadataTypesToQueue.includes('markdownPipeline')) {
-                metadataTypesToQueue.push('markdownPipeline');
-            }
-            const shouldQueueContent = metadataTypesToQueue.length > 0 || enabledFeatureImages;
-            if (!shouldQueueContent) {
+            if (metadataTypesToQueue.length === 0) {
                 return;
             }
 

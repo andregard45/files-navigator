@@ -40,7 +40,6 @@ export const STRINGS_VI = {
         darkMode: 'Chế độ tối', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Chưa chọn gì', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: 'Không có thẻ', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: 'Ảnh nổi bật', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: 'Lỗi không xác định', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: 'Không thể ghi vào clipboard',
         previous: 'Trước', // Generic aria label for previous navigation (English: Previous)
@@ -1091,7 +1090,6 @@ export const STRINGS_VI = {
                 groups: {
                     icon: 'Biểu tượng',
                     title: 'Tiêu đề',
-                    featureImage: 'Hình ảnh nổi bật',
                     properties: 'Thuộc tính'
                 }
             },
@@ -1918,47 +1916,6 @@ export const STRINGS_VI = {
                 name: 'Dùng màu thư mục',
                 desc: 'Tô màu tiêu đề ghi chú và biểu tượng tệp bằng màu của thư mục cha khi không có màu tệp tùy chỉnh được đặt. Ưu tiên: màu tệp tùy chỉnh > màu thư mục > màu mặc định.'
             },
-            showFeatureImage: {
-                name: 'Hiện ảnh nổi bật',
-                desc: 'Hiển thị hình thu nhỏ của hình ảnh đầu tiên trong ghi chú.'
-            },
-            forceSquareFeatureImage: {
-                name: 'Buộc ảnh nổi bật vuông',
-                desc: 'Hiển thị ảnh nổi bật dạng thu nhỏ vuông.'
-            },
-            featureImageProperties: {
-                name: 'Thuộc tính ảnh',
-                desc: 'Danh sách thuộc tính frontmatter phân cách bằng dấu phẩy để kiểm tra trước. Nếu không tìm thấy, sử dụng ảnh đầu tiên trong nội dung markdown.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: 'Loại trừ ghi chú có thuộc tính',
-                desc: 'Danh sách thuộc tính frontmatter phân cách bằng dấu phẩy. Ghi chú chứa bất kỳ thuộc tính nào trong số này không lưu trữ ảnh nổi bật.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: 'Kích thước hiển thị ảnh nổi bật',
-                desc: 'Kích thước hiển thị tối đa cho ảnh nổi bật trong danh sách ghi chú.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: 'Kích thước pixel ảnh nổi bật',
-                desc: 'Độ phân giải được sử dụng khi tạo hình thu nhỏ ảnh nổi bật đã lưu. Tăng giá trị này nếu bản xem trước lớn hơn bị mờ.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: 'Tải hình ảnh bên ngoài',
-                desc: 'Tải hình ảnh từ xa và hình thu nhỏ YouTube cho hình ảnh nổi bật.'
-            },
             hideExportedPreviewImages: {
                 name: 'Ẩn ảnh xem trước đã xuất',
                 desc: 'Ẩn các tệp PNG xem trước bản vẽ đã xuất. Bật "Hiện mục ẩn" để hiển thị chúng.'
@@ -2364,7 +2321,6 @@ export const STRINGS_VI = {
                 items: 'mục',
                 withTags: 'có thẻ',
                 withPreviewText: 'có văn bản xem trước',
-                withFeatureImage: 'có ảnh nổi bật',
                 withMetadata: 'có metadata'
             },
             metadataInfo: {

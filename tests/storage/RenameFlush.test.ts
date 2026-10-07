@@ -30,7 +30,7 @@ import { createDefaultFileData, type FileData, type PreviewTextBatchOp } from '.
 function makeMove(
     oldPath: string,
     newPath: string,
-    options?: { wasMarkdown?: boolean; isMarkdown?: boolean; hasStoredBlob?: boolean; mtime?: number }
+    options?: { wasMarkdown?: boolean; isMarkdown?: boolean; mtime?: number }
 ): PendingRenameMove {
     const file = new TFile(newPath);
     file.stat.mtime = options?.mtime ?? 100;
@@ -42,29 +42,23 @@ function makeMove(
         seeded,
         wasMarkdown: options?.wasMarkdown ?? true,
         isMarkdown: options?.isMarkdown ?? true,
-        hasStoredBlob: options?.hasStoredBlob ?? false
     };
 }
 
 interface StoreCalls {
     seeded: { path: string; mtime: number }[];
     setFiles: { records: { path: string; data: FileData }[] }[];
-    blobMoves: { oldPath: string; newPath: string }[][];
     previewOps: PreviewTextBatchOp[][];
 }
 
 function createFakeStore(overrides?: Partial<RenameFlushStore>): { store: RenameFlushStore; calls: StoreCalls } {
-    const calls: StoreCalls = { seeded: [], setFiles: [], blobMoves: [], previewOps: [] };
+    const calls: StoreCalls = { seeded: [], setFiles: [], previewOps: [] };
     const store: RenameFlushStore = {
         seedMemoryFile: (path, data) => {
             calls.seeded.push({ path, mtime: data.mtime });
         },
         setFiles: async records => {
             calls.setFiles.push({ records });
-        },
-        moveFeatureImageBlobs: async moves => {
-            calls.blobMoves.push(moves);
-            return true;
         },
         movePreviewTexts: async ops => {
             calls.previewOps.push(ops);
@@ -116,7 +110,7 @@ describe('createRenameFlushController', () => {
 
     it('flushes a rename burst as one batch per store in event order', async () => {
         const { store, calls } = createFakeStore();
-        const moveA = makeMove('old/a.md', 'new/a.md', { hasStoredBlob: true, mtime: 111 });
+        const moveA = makeMove('old/a.md', 'new/a.md', { mtime: 111 });
         const moveB = makeMove('old/b.md', 'new/b.md', { mtime: 222 });
         const { controller, buffer, pendingRenameData, queueContentRefresh, scheduleDiff } = createController({ store });
         buffer.moves.push(moveA, moveB);
@@ -134,7 +128,6 @@ describe('createRenameFlushController', () => {
         expect(calls.setFiles).toHaveLength(1);
         expect(calls.setFiles[0].records.map(record => record.path)).toEqual(['new/a.md', 'new/b.md']);
         expect(calls.setFiles[0].records.map(record => record.data.mtime)).toEqual([111, 222]);
-        expect(calls.blobMoves).toEqual([[{ oldPath: 'old/a.md', newPath: 'new/a.md' }]]);
         expect(calls.previewOps).toEqual([
             [
                 { type: 'move', oldPath: 'old/a.md', newPath: 'new/a.md' },
@@ -166,7 +159,7 @@ describe('createRenameFlushController', () => {
     it('maps a markdown to non-markdown rename to a preview delete op', async () => {
         const { store, calls } = createFakeStore();
         const toText = makeMove('notes/a.md', 'notes/a.txt', { isMarkdown: false });
-        const image = makeMove('img/a.png', 'img/b.png', { wasMarkdown: false, isMarkdown: false, hasStoredBlob: true });
+        const image = makeMove('img/a.png', 'img/b.png', { wasMarkdown: false, isMarkdown: false });
         const { controller, buffer } = createController({ store });
         buffer.moves.push(toText, image);
 
@@ -174,7 +167,6 @@ describe('createRenameFlushController', () => {
         await settle();
 
         expect(calls.previewOps).toEqual([[{ type: 'delete', path: 'notes/a.md' }]]);
-        expect(calls.blobMoves).toEqual([[{ oldPath: 'img/a.png', newPath: 'img/b.png' }]]);
     });
 
     it('cancels an armed diff timer when scheduling a flush', () => {
@@ -193,7 +185,7 @@ describe('createRenameFlushController', () => {
             }
         });
         const { controller, buffer, queueContentRefresh } = createController({ store });
-        buffer.moves.push(makeMove('old/a.md', 'new/a.md', { hasStoredBlob: true }));
+        buffer.moves.push(makeMove('old/a.md', 'new/a.md'));
 
         controller.scheduleFlush();
         // Let the zero-delay flush timer fire; the persist deferred is still unresolved.
@@ -201,53 +193,12 @@ describe('createRenameFlushController', () => {
 
         // Both movers must have their batches (and therefore their transactions) created while the
         // record persist is still pending, so a diff cannot slot its transactions between them.
-        expect(calls.blobMoves).toHaveLength(1);
         expect(calls.previewOps).toHaveLength(1);
         expect(queueContentRefresh).not.toHaveBeenCalled();
 
         resolvePersist();
         await settle();
         expect(queueContentRefresh).toHaveBeenCalledOnce();
-    });
-
-    it('marks renamed feature images unprocessed when the blob move batch fails', async () => {
-        const { store, calls } = createFakeStore();
-        store.moveFeatureImageBlobs = async moves => {
-            calls.blobMoves.push(moves);
-            return false;
-        };
-        const move = makeMove('old/a.pdf', 'new/a.pdf', { wasMarkdown: false, isMarkdown: false, hasStoredBlob: true, mtime: 1 });
-        move.seeded.featureImageStatus = 'has';
-        move.seeded.featureImageKey = 'f:new/a.pdf@1';
-        move.seeded.fileThumbnailsMtime = 1;
-        const { controller, buffer, queueContentRefresh } = createController({ store });
-        buffer.moves.push(move);
-
-        controller.scheduleFlush();
-        await settle();
-
-        expect(calls.blobMoves).toEqual([[{ oldPath: 'old/a.pdf', newPath: 'new/a.pdf' }]]);
-        expect(calls.setFiles).toHaveLength(2);
-        expect(calls.setFiles[0].records[0]).toMatchObject({
-            path: 'new/a.pdf',
-            data: {
-                featureImageKey: 'f:new/a.pdf@1',
-                featureImageStatus: 'has'
-            }
-        });
-        expect(calls.setFiles[1].records).toEqual([
-            {
-                path: 'new/a.pdf',
-                data: {
-                    ...move.seeded,
-                    featureImage: null,
-                    featureImageKey: null,
-                    featureImageStatus: 'unprocessed'
-                }
-            }
-        ]);
-        expect(calls.seeded).toEqual([{ path: 'new/a.pdf', mtime: 1 }]);
-        expect(queueContentRefresh).toHaveBeenCalledExactlyOnceWith([move.file]);
     });
 
     it('keeps a pending rename entry that a later rename replaced', async () => {
@@ -281,7 +232,6 @@ describe('createRenameFlushController', () => {
         expect(buffer.moves).toEqual([]);
         expect(pendingRenameData.size).toBe(0);
         expect(calls.setFiles).toEqual([]);
-        expect(calls.blobMoves).toEqual([]);
         expect(calls.previewOps).toEqual([]);
         expect(queueContentRefresh).not.toHaveBeenCalled();
         expect(scheduleDiff).not.toHaveBeenCalled();

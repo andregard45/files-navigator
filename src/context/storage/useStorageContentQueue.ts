@@ -22,11 +22,7 @@ import type { ContentProviderType, FileContentType } from '../../interfaces/ICon
 import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { getDBInstance } from '../../storage/fileOperations';
-import {
-    filterFilesRequiringFileThumbnails,
-    filterFilesRequiringMetadataSources,
-    shouldQueueFileThumbnailProvider
-} from '../storageQueueFilters';
+import { filterFilesRequiringMetadataSources } from '../storageQueueFilters';
 import { getMetadataDependentTypes } from './storageContentTypes';
 import { getMarkdownPipelineContentTypes } from '../../utils/markdownPipelineContentTypes';
 
@@ -36,7 +32,6 @@ import { getMarkdownPipelineContentTypes } from '../../utils/markdownPipelineCon
  * This hook is responsible for deciding which files should be handed to the `ContentProviderRegistry`.
  * It separates:
  * - Markdown files, which are often gated by Obsidian metadata cache readiness.
- * - Non-markdown feature-image files, which only need the thumbnail provider when feature images are enabled.
  */
 export function useStorageContentQueue(params: {
     app: App;
@@ -60,23 +55,14 @@ export function useStorageContentQueue(params: {
             }
 
             const markdownFiles: TFile[] = [];
-            const fileThumbnailFiles: TFile[] = [];
 
             for (const file of files) {
                 if (file.extension === 'md') {
                     markdownFiles.push(file);
-                    continue;
-                }
-                if (shouldQueueFileThumbnailProvider(file)) {
-                    fileThumbnailFiles.push(file);
                 }
             }
 
             // Markdown processing is metadata-gated via queueMetadataContentWhenReady().
-
-            if (settings.showFeatureImage && fileThumbnailFiles.length > 0) {
-                registry.queueFilesForAllProviders(fileThumbnailFiles, settings, { include: ['fileThumbnails'] });
-            }
 
             return { markdownFiles };
         },
@@ -105,10 +91,8 @@ export function useStorageContentQueue(params: {
                           })
                         : [];
 
-                const filesNeedingThumbnails = filterFilesRequiringFileThumbnails(filesToCheck, settings);
-
                 const uniqueByPath = new Map<string, TFile>();
-                for (const file of [...markdownFilesNeedingContent, ...filesNeedingThumbnails]) {
+                for (const file of markdownFilesNeedingContent) {
                     uniqueByPath.set(file.path, file);
                 }
                 filesToProcess = Array.from(uniqueByPath.values());

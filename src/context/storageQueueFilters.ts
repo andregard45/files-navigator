@@ -22,16 +22,8 @@ import type { ContentProviderType } from '../interfaces/IContentProvider';
 import type { NotebookNavigatorSettings } from '../settings/types';
 import { getDBInstance } from '../storage/fileOperations';
 import { createFrontmatterPropertyExclusionMatcher } from '../utils/fileFilters';
-import { isGeneratedThumbnailFile } from '../utils/fileTypeUtils';
 import { getActiveHiddenFileProperties } from '../utils/vaultProfiles';
-import { getLocalFeatureImageKey } from '../services/content/FeatureImageContentProvider';
-import { createCaseInsensitiveKeyMatcher } from '../utils/recordUtils';
-import {
-    getDrawingDirectFeatureImageKey,
-    getDrawingSourceProviderIdWithFrontmatter,
-    getNonMarkdownDrawingFeatureImageProviderId
-} from '../utils/drawingFeatureImages';
-import { hasMarkdownFeatureImageConsumer, hasMarkdownPipelineContent } from '../utils/markdownPipelineContentTypes';
+import { hasMarkdownPipelineContent } from '../utils/markdownPipelineContentTypes';
 
 type MetadataSourceFilterOptions = {
     /**
@@ -65,10 +57,8 @@ export function filterFilesRequiringMetadataSources(
     const needsTags = types.includes('tags');
     const needsMetadata = types.includes('metadata');
     const app = options?.app;
-    const featureImageExcludeMatcher = createCaseInsensitiveKeyMatcher(settings.featureImageExcludeProperties);
     const hiddenFilePropertyMatcher = requiresHiddenState ? createFrontmatterPropertyExclusionMatcher(hiddenFileProperties) : null;
     const markdownPipelineEnabled = hasMarkdownPipelineContent(settings);
-    const featureImageEnabled = hasMarkdownFeatureImageConsumer(settings);
 
     return files.filter(file => {
         const record = records.get(file.path);
@@ -83,34 +73,14 @@ export function filterFilesRequiringMetadataSources(
         }
 
         if (needsMarkdownPipeline && markdownPipelineEnabled && file.extension === 'md') {
-            let cachedMetadata: CachedMetadata | null | undefined;
-            const getCachedMetadata = (): CachedMetadata | null => {
-                if (cachedMetadata === undefined) {
-                    cachedMetadata = app?.metadataCache.getFileCache(file) ?? null;
-                }
-                return cachedMetadata;
-            };
             const needsRefresh = record.markdownPipelineMtime !== file.stat.mtime;
             if (needsRefresh) {
                 // Every markdown change can alter the complete frontmatter property cache.
                 return true;
             }
 
-            let needsFeatureImage = featureImageEnabled && (record.featureImageKey === null || record.featureImageStatus === 'unprocessed');
-            if (featureImageEnabled && !needsFeatureImage && app) {
-                const frontmatter = getCachedMetadata()?.frontmatter;
-                const featureImageExcluded = featureImageExcludeMatcher.matches(frontmatter);
-                if (!featureImageExcluded) {
-                    const drawingProviderId = getDrawingSourceProviderIdWithFrontmatter(file, frontmatter);
-                    const expectedDrawingFeatureImageKey = drawingProviderId
-                        ? getDrawingDirectFeatureImageKey(file, drawingProviderId)
-                        : null;
-                    needsFeatureImage =
-                        expectedDrawingFeatureImageKey !== null && record.featureImageKey !== expectedDrawingFeatureImageKey;
-                }
-            }
             const needsProperties = record.properties === null;
-            if (needsFeatureImage || needsProperties) {
+            if (needsProperties) {
                 return true;
             }
         }
@@ -144,62 +114,4 @@ export function filterFilesRequiringMetadataSources(
 
         return false;
     });
-}
-
-function getFileThumbnailFeatureImageKey(file: TFile): string | null {
-    if (isGeneratedThumbnailFile(file)) {
-        return getLocalFeatureImageKey(file);
-    }
-
-    const drawingProviderId = getNonMarkdownDrawingFeatureImageProviderId(file);
-    if (!drawingProviderId) {
-        return null;
-    }
-
-    return getDrawingDirectFeatureImageKey(file, drawingProviderId);
-}
-
-export function shouldQueueFileThumbnailProvider(file: TFile): boolean {
-    return getFileThumbnailFeatureImageKey(file) !== null;
-}
-
-/**
- * Returns non-markdown files that need the file thumbnails provider to run.
- *
- * This resumes forced regeneration across restarts when `fileThumbnailsMtime` was reset without changing FileData.mtime.
- */
-export function filterFilesRequiringFileThumbnails(files: TFile[], settings: NotebookNavigatorSettings): TFile[] {
-    if (!settings.showFeatureImage || files.length === 0) {
-        return [];
-    }
-
-    const candidates = files
-        .map(file => ({ file, expectedKey: getFileThumbnailFeatureImageKey(file) }))
-        .filter((candidate): candidate is { file: TFile; expectedKey: string } => candidate.expectedKey !== null);
-    if (candidates.length === 0) {
-        return [];
-    }
-
-    const db = getDBInstance();
-    const records = db.getFiles(candidates.map(({ file }) => file.path));
-
-    return candidates
-        .filter(({ file, expectedKey }) => {
-            const record = records.get(file.path);
-            if (!record) {
-                return true;
-            }
-
-            const fileMtime = file.stat.mtime;
-            if (record.fileThumbnailsMtime !== fileMtime) {
-                return true;
-            }
-
-            if (record.featureImageStatus === 'unprocessed') {
-                return true;
-            }
-
-            return record.featureImageKey === null || record.featureImageKey !== expectedKey;
-        })
-        .map(({ file }) => file);
 }

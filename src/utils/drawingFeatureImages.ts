@@ -23,11 +23,9 @@ import {
     isExcalidrawFile,
     isTruthyFrontmatterFlagValue
 } from './fileNameUtils';
-import { getCurrentThemeMode, type ThemeMode } from './themeMode';
 import type { NotebookNavigatorSettings } from '../settings/types';
 
 const EXCALIDRAW_COMPANION_IMAGE_EXTENSIONS = ['png', 'dark.png', 'light.png'] as const;
-const DRAWING_DIRECT_FEATURE_IMAGE_KEY_PREFIX = 'd:';
 const TLDRAW_FRONTMATTER_KEY = 'tldraw-file';
 
 export type DrawingFeatureImageProviderId = 'excalidraw' | 'tldraw';
@@ -35,7 +33,6 @@ export type DrawingFeatureImageProviderId = 'excalidraw' | 'tldraw';
 export interface DrawingFeatureImageSource {
     providerId: DrawingFeatureImageProviderId;
     iconId: string;
-    showsFeatureImageBox: boolean;
     supportsCompanionImages: boolean;
 }
 
@@ -44,7 +41,6 @@ type DrawingFeatureImageListener = () => void;
 interface DrawingFeatureImageProvider {
     id: DrawingFeatureImageProviderId;
     iconId: string;
-    showsFeatureImageBox: boolean;
     companionImageExtensions: readonly string[];
     getCompanionImagePath: (file: Pick<TFile, 'path'>, extension: string) => string | null;
     getSourcePathCandidatesForCompanionBasePath: (basePath: string) => string[];
@@ -113,7 +109,6 @@ const DRAWING_FEATURE_IMAGE_PROVIDERS: readonly DrawingFeatureImageProvider[] = 
     {
         id: 'excalidraw',
         iconId: 'excalidraw-icon',
-        showsFeatureImageBox: true,
         companionImageExtensions: EXCALIDRAW_COMPANION_IMAGE_EXTENSIONS,
         getCompanionImagePath: getCompanionImagePathFromFinalExtension,
         getSourcePathCandidatesForCompanionBasePath: basePath =>
@@ -125,7 +120,6 @@ const DRAWING_FEATURE_IMAGE_PROVIDERS: readonly DrawingFeatureImageProvider[] = 
     {
         id: 'tldraw',
         iconId: 'brush',
-        showsFeatureImageBox: true,
         companionImageExtensions: [],
         getCompanionImagePath: getCompanionImagePathFromFinalExtension,
         getSourcePathCandidatesForCompanionBasePath: basePath => [`${basePath}.md`, `${basePath}.tldr`],
@@ -133,40 +127,12 @@ const DRAWING_FEATURE_IMAGE_PROVIDERS: readonly DrawingFeatureImageProvider[] = 
     }
 ]);
 
-function getThemePreferredExtensions(provider: DrawingFeatureImageProvider, themeMode: ThemeMode): readonly string[] {
-    const extensions = provider.companionImageExtensions;
-    if (extensions.length === 0) {
-        return extensions;
-    }
-
-    const preferred = themeMode === 'dark' ? 'dark.png' : 'light.png';
-    const fallback = themeMode === 'dark' ? 'light.png' : 'dark.png';
-    if (!extensions.includes(preferred) || !extensions.includes(fallback) || !extensions.includes('png')) {
-        return extensions;
-    }
-
-    return [preferred, 'png', fallback];
-}
-
 function getDrawingFeatureImageProviderById(providerId: DrawingFeatureImageProviderId): DrawingFeatureImageProvider {
     return DRAWING_FEATURE_IMAGE_PROVIDERS.find(provider => provider.id === providerId) ?? DRAWING_FEATURE_IMAGE_PROVIDERS[0];
 }
 
 function getDrawingFeatureImageProviderWithFrontmatter(file: TFile, frontmatter: unknown): DrawingFeatureImageProvider | null {
     return DRAWING_FEATURE_IMAGE_PROVIDERS.find(provider => provider.isSourceFileWithFrontmatter(file, frontmatter)) ?? null;
-}
-
-function getDrawingFeatureImageProvider(app: App, file: TFile): DrawingFeatureImageProvider | null {
-    const nonMarkdownProvider = getNonMarkdownDrawingFeatureImageProvider(file);
-    if (nonMarkdownProvider) {
-        return nonMarkdownProvider;
-    }
-
-    if (file.extension.toLowerCase() !== 'md') {
-        return null;
-    }
-
-    return getDrawingFeatureImageProviderWithFrontmatter(file, app.metadataCache.getFileCache(file)?.frontmatter);
 }
 
 function getNonMarkdownDrawingFeatureImageProvider(file: TFile): DrawingFeatureImageProvider | null {
@@ -181,20 +147,6 @@ export function getDrawingSourceProviderIdWithFrontmatter(file: TFile, frontmatt
     return getDrawingFeatureImageProviderWithFrontmatter(file, frontmatter)?.id ?? null;
 }
 
-function toDrawingFeatureImageSource(provider: DrawingFeatureImageProvider): DrawingFeatureImageSource {
-    return {
-        providerId: provider.id,
-        iconId: provider.iconId,
-        showsFeatureImageBox: provider.showsFeatureImageBox,
-        supportsCompanionImages: provider.companionImageExtensions.length > 0
-    };
-}
-
-export function getDrawingFeatureImageSource(app: App, file: TFile): DrawingFeatureImageSource | null {
-    const provider = getDrawingFeatureImageProvider(app, file);
-    return provider ? toDrawingFeatureImageSource(provider) : null;
-}
-
 export function isNonMarkdownDrawingFeatureImageFile(file: TFile): boolean {
     return getNonMarkdownDrawingFeatureImageProvider(file) !== null;
 }
@@ -203,54 +155,11 @@ export function getNonMarkdownDrawingFeatureImageProviderId(file: TFile): Drawin
     return getNonMarkdownDrawingFeatureImageProvider(file)?.id ?? null;
 }
 
-export function getDrawingDirectFeatureImageKey(file: Pick<TFile, 'path'>, providerId: DrawingFeatureImageProviderId): string {
-    return `${DRAWING_DIRECT_FEATURE_IMAGE_KEY_PREFIX}${providerId}:${file.path}`;
-}
-
 export function getDrawingCompanionImagePaths(file: Pick<TFile, 'path'>, providerId: DrawingFeatureImageProviderId): string[] {
     const provider = getDrawingFeatureImageProviderById(providerId);
     return provider.companionImageExtensions
         .map(extension => provider.getCompanionImagePath(file, extension))
         .filter((path): path is string => path !== null);
-}
-
-function resolveDrawingFeatureImageFileWithProvider(
-    app: App,
-    drawingFile: TFile,
-    provider: DrawingFeatureImageProvider,
-    themeMode: ThemeMode
-): TFile | null {
-    for (const extension of getThemePreferredExtensions(provider, themeMode)) {
-        const path = provider.getCompanionImagePath(drawingFile, extension);
-        if (!path) {
-            continue;
-        }
-
-        const file = getFileByPath(app, path);
-        if (file) {
-            return file;
-        }
-    }
-
-    return null;
-}
-
-export function resolveDrawingFeatureImageFileForProvider(
-    app: App,
-    drawingFile: TFile,
-    providerId: DrawingFeatureImageProviderId,
-    themeMode: ThemeMode = getCurrentThemeMode()
-): TFile | null {
-    return resolveDrawingFeatureImageFileWithProvider(app, drawingFile, getDrawingFeatureImageProviderById(providerId), themeMode);
-}
-
-export function resolveDrawingFeatureImageFile(app: App, drawingFile: TFile, themeMode: ThemeMode = getCurrentThemeMode()): TFile | null {
-    const provider = getDrawingFeatureImageProvider(app, drawingFile);
-    if (!provider) {
-        return null;
-    }
-
-    return resolveDrawingFeatureImageFileWithProvider(app, drawingFile, provider, themeMode);
 }
 
 export function findDrawingFileForCompanionImage(app: App, imagePath: string): TFile | null {

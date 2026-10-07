@@ -74,9 +74,6 @@ body {
     --nn-file-title-line-height-mobile: 21px; /* Mobile title text height */
     --nn-file-single-text-line-height-mobile: 20px; /* Mobile single-line text height */
     --nn-file-multiline-text-line-height-mobile: 19px; /* Mobile preview text height */
-    --nn-file-thumbnail-min-size: 42px; /* Minimum size for file thumbnails */
-    --nn-file-thumbnail-max-size: 64px; /* Maximum size for file thumbnails */
-
     /* Font sizes - fixed pixel values to prevent scaling with Obsidian font size */
     --nn-file-name-size: 14px; /* Fixed 14px */
     --nn-file-small-size: 13px; /* Fixed 13px */

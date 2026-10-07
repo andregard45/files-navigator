@@ -40,7 +40,6 @@ export const STRINGS_KO = {
         darkMode: '다크 모드', // Label for dark theme mode (English: Dark mode)
         noSelection: '선택 없음', // Placeholder text when no folder or tag is selected (English: No selection)
         untagged: '태그 없음', // Label for notes without any tags (English: Untagged)
-        featureImageAlt: '대표 이미지', // Alt text for thumbnail/preview images (English: Feature image)
         unknownError: '알 수 없는 오류', // Generic fallback when an error has no message (English: Unknown error)
         clipboardWriteError: '클립보드에 쓸 수 없습니다',
         previous: '이전', // Generic aria label for previous navigation (English: Previous)
@@ -1089,7 +1088,6 @@ export const STRINGS_KO = {
                 groups: {
                     icon: '아이콘',
                     title: '제목',
-                    featureImage: '대표 이미지',
                     properties: '속성'
                 }
             },
@@ -1914,47 +1912,6 @@ export const STRINGS_KO = {
                 name: '폴더 색상 사용',
                 desc: '사용자 지정 파일 색상이 설정되지 않은 경우 노트 제목과 파일 아이콘에 상위 폴더 색상을 적용합니다. 우선순위: 사용자 지정 파일 색상 > 폴더 색상 > 기본 색상.'
             },
-            showFeatureImage: {
-                name: '대표 이미지 표시',
-                desc: '노트에서 발견된 첫 번째 이미지의 썸네일을 표시합니다.'
-            },
-            forceSquareFeatureImage: {
-                name: '대표 이미지를 정사각형으로 고정',
-                desc: '대표 이미지를 정사각형 썸네일로 렌더링합니다.'
-            },
-            featureImageProperties: {
-                name: '이미지 속성',
-                desc: '먼저 확인할 frontmatter 속성의 쉼표로 구분된 목록입니다. 없으면 마크다운 콘텐츠의 첫 번째 이미지를 사용합니다.',
-                placeholder: 'thumbnail, featureResized, feature'
-            },
-            featureImageExcludeProperties: {
-                name: '속성이 있는 노트 제외',
-                desc: '쉼표로 구분된 frontmatter 속성 목록입니다. 이러한 속성 중 하나라도 포함된 노트는 대표 이미지를 저장하지 않습니다.',
-                placeholder: 'private, confidential'
-            },
-            featureImageDisplaySize: {
-                name: '대표 이미지 표시 크기',
-                desc: '노트 목록에서 대표 이미지의 최대 렌더링 크기.',
-                options: {
-                    '64': '64 px',
-                    '96': '96 px',
-                    '128': '128 px'
-                }
-            },
-            featureImagePixelSize: {
-                name: '대표 이미지 픽셀 크기',
-                desc: '저장된 대표 이미지 썸네일을 생성할 때 사용되는 해상도. 큰 미리보기가 흐릿하게 보이면 이 값을 높이세요.',
-                options: {
-                    '256x144': '256 x 144 px',
-                    '384x216': '384 x 216 px',
-                    '512x288': '512 x 288 px'
-                }
-            },
-
-            downloadExternalFeatureImages: {
-                name: '외부 이미지 다운로드',
-                desc: '대표 이미지로 원격 이미지 및 YouTube 썸네일을 다운로드합니다.'
-            },
             hideExportedPreviewImages: {
                 name: '내보낸 미리보기 이미지 숨기기',
                 desc: '내보낸 그림 미리보기 PNG 파일을 숨깁니다. 표시하려면 "숨겨진 항목 표시"를 켜세요.'
@@ -2359,7 +2316,6 @@ export const STRINGS_KO = {
                 items: '항목',
                 withTags: '태그 포함',
                 withPreviewText: '미리보기 텍스트 포함',
-                withFeatureImage: '대표 이미지 포함',
                 withMetadata: '메타데이터 포함'
             },
             metadataInfo: {

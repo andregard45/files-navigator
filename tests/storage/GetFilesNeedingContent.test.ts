@@ -26,14 +26,10 @@ function createFileData(overrides: Partial<FileData>): FileData {
         markdownPipelineMtime: 0,
         tagsMtime: 0,
         metadataMtime: 0,
-        fileThumbnailsMtime: 0,
         tags: [],
         wordCount: null,
         properties: null,
         previewStatus: 'none',
-        featureImage: null,
-        featureImageStatus: 'none',
-        featureImageKey: '',
         metadata: {},
         ...overrides
     };

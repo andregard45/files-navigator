@@ -70,8 +70,6 @@ import {
     type CalendarLeftPlacement,
     type CalendarWeeksToShow,
     type AlphaSortOrder,
-    type FeatureImagePixelSizeSetting,
-    type FeatureImageSizeSetting,
     isSettingSyncMode,
     type SettingSyncMode,
     type SyncModeSettingId,
@@ -375,8 +373,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         await languageInitialization;
         if (this.isUnloading) return;
 
-        // Use a fixed per-platform LRU size for feature image blobs.
-        const featureImageCacheMaxEntries = Platform.isMobile ? 200 : 1000;
         // Use a fixed per-platform LRU size for preview text strings.
         const previewTextCacheMaxEntries = Platform.isMobile ? 10000 : 50000;
         // Limit the number of preview text paths processed per load flush.
@@ -384,7 +380,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         runAsyncAction(
             async () => {
                 try {
-                    await initializeDatabase(appId, { featureImageCacheMaxEntries, previewTextCacheMaxEntries, previewLoadMaxBatch });
+                    await initializeDatabase(appId, { previewTextCacheMaxEntries, previewLoadMaxBatch });
                 } catch (error: unknown) {
                     console.error('Failed to initialize database:', error);
                 }
@@ -1021,20 +1017,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     public setCompactItemHeightScaleText(enabled: boolean): void {
         this.preferencesController.setCompactItemHeightScaleText(enabled);
-    }
-
-    /**
-     * Updates the feature image display size and persists to local storage.
-     */
-    public setFeatureImageSize(size: FeatureImageSizeSetting): void {
-        this.preferencesController.setFeatureImageSize(size);
-    }
-
-    /**
-     * Updates the feature image thumbnail pixel size and persists to local storage.
-     */
-    public setFeatureImagePixelSize(size: FeatureImagePixelSizeSetting): void {
-        this.preferencesController.setFeatureImagePixelSize(size);
     }
 
     /**

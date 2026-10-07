@@ -53,8 +53,6 @@ import {
     isCalendarPeriodicNotesLocaleSource,
     isCalendarPlacement,
     isEnterKeyAction,
-    isFeatureImagePixelSizeSetting,
-    isFeatureImageSizeSetting,
     isFolderNoteOpenLocation,
     isHomepageSource,
     isMouseBackForwardAction,
@@ -642,14 +640,6 @@ export class PluginSettingsController {
             this.currentSettings.calendarPeriodicNotesLocaleSource = DEFAULT_SETTINGS.calendarPeriodicNotesLocaleSource;
         }
 
-        if (!isFeatureImageSizeSetting(this.currentSettings.featureImageSize)) {
-            this.currentSettings.featureImageSize = DEFAULT_SETTINGS.featureImageSize;
-        }
-
-        if (!isFeatureImagePixelSizeSetting(this.currentSettings.featureImagePixelSize)) {
-            this.currentSettings.featureImagePixelSize = DEFAULT_SETTINGS.featureImagePixelSize;
-        }
-
         if (!isMouseBackForwardAction(this.currentSettings.mouseBackForwardAction)) {
             this.currentSettings.mouseBackForwardAction = DEFAULT_SETTINGS.mouseBackForwardAction;
         }
@@ -1117,14 +1107,6 @@ export class PluginSettingsController {
         return this.sanitizeBoundedIntegerSetting(value, { min: 20, max: 28, fallback: DEFAULT_SETTINGS.compactItemHeight });
     }
 
-    private sanitizeFeatureImageSizeSetting(value: unknown): NotebookNavigatorSettings['featureImageSize'] {
-        return isFeatureImageSizeSetting(value) ? value : DEFAULT_SETTINGS.featureImageSize;
-    }
-
-    private sanitizeFeatureImagePixelSizeSetting(value: unknown): NotebookNavigatorSettings['featureImagePixelSize'] {
-        return isFeatureImagePixelSizeSetting(value) ? value : DEFAULT_SETTINGS.featureImagePixelSize;
-    }
-
     private sanitizeTagSortOrderSetting(value: unknown): TagSortOrder {
         return typeof value === 'string' && isTagSortOrder(value) ? value : DEFAULT_SETTINGS.tagSortOrder;
     }
@@ -1257,8 +1239,6 @@ export class PluginSettingsController {
             sanitizeCalendarPlacementSetting: value => this.sanitizeCalendarPlacementSetting(value),
             sanitizeCalendarLeftPlacementSetting: value => this.sanitizeCalendarLeftPlacementSetting(value),
             sanitizeCompactItemHeightSetting: value => this.sanitizeCompactItemHeightSetting(value),
-            sanitizeFeatureImageSizeSetting: value => this.sanitizeFeatureImageSizeSetting(value),
-            sanitizeFeatureImagePixelSizeSetting: value => this.sanitizeFeatureImagePixelSizeSetting(value),
             defaultUXPreferences: getDefaultUXPreferences(),
             isUXPreferencesRecord,
             mirrorUXPreferences: update => {

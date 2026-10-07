@@ -18,10 +18,8 @@
 
 import type { TFile } from 'obsidian';
 import { ItemType, ListPaneItemType, type NavigationItemType } from '../types';
-import type { FeatureImageStatus, FileData } from '../storage/IndexedDBStorage';
-import { type FeatureImageSizeSetting } from '../settings/types';
+import type { FileData } from '../storage/IndexedDBStorage';
 import type { ListPaneItem } from '../types/virtualization';
-import { isRasterImageFile } from './fileTypeUtils';
 import {
     buildPropertyKeyNodeId,
     buildPropertyValueNodeId,
@@ -42,7 +40,6 @@ export interface ListPaneMeasurements {
     singleTextLineHeight: number;
     multilineTextLineHeight: number;
     tagRowHeight: number;
-    featureImageMinHeight: number;
     groupHeaderHeight: number;
     groupHeaderSpacerBefore: number;
     fileIconSize: number;
@@ -50,23 +47,12 @@ export interface ListPaneMeasurements {
     bottomSpacer: number;
 }
 
-export interface FeatureImageDisplayMeasurements {
-    listMaxSize: number;
-}
-
-const FEATURE_IMAGE_DISPLAY_MEASUREMENTS: Readonly<Record<FeatureImageSizeSetting, FeatureImageDisplayMeasurements>> = Object.freeze({
-    '64': { listMaxSize: 64 },
-    '96': { listMaxSize: 96 },
-    '128': { listMaxSize: 128 }
-});
-
 const DESKTOP_MEASUREMENTS: ListPaneMeasurements = Object.freeze({
     basePadding: 16, // 8px padding on each side
     titleLineHeight: 20,
     singleTextLineHeight: 19,
     multilineTextLineHeight: 18,
     tagRowHeight: 26, // 22px row + 4px gap
-    featureImageMinHeight: 42,
     groupHeaderHeight: 27,
     groupHeaderSpacerBefore: 20,
     fileIconSize: 16,
@@ -80,7 +66,6 @@ const MOBILE_MEASUREMENTS: ListPaneMeasurements = Object.freeze({
     singleTextLineHeight: 20,
     multilineTextLineHeight: 19,
     tagRowHeight: 26, // 22px row + 4px gap
-    featureImageMinHeight: 42,
     groupHeaderHeight: 35, // 27px + 8px mobile increment
     groupHeaderSpacerBefore: 20,
     fileIconSize: 20, // 16px + 4px mobile increment
@@ -91,10 +76,6 @@ const MOBILE_MEASUREMENTS: ListPaneMeasurements = Object.freeze({
 /**
  * Returns the static measurement set for the current platform.
  */
-export function getFeatureImageDisplayMeasurements(featureImageSize: FeatureImageSizeSetting): FeatureImageDisplayMeasurements {
-    return FEATURE_IMAGE_DISPLAY_MEASUREMENTS[featureImageSize];
-}
-
 export function getListPaneMeasurements(isMobile: boolean): ListPaneMeasurements {
     return isMobile ? MOBILE_MEASUREMENTS : DESKTOP_MEASUREMENTS;
 }
@@ -200,14 +181,11 @@ export interface FileItemLayoutState {
     isPinned: boolean;
     shouldShowMultilinePreview: boolean;
     shouldReplaceEmptyPreviewWithPills: boolean;
-    isPinnedImageRow: boolean;
 }
 
 export interface FileRowHeightInputs {
     isPinned: boolean;
     hasPreviewContent: boolean;
-    showFeatureImageArea: boolean;
-    showExtensionBadgeThumbnail: boolean;
     visiblePillRowCount: number;
 }
 
@@ -219,7 +197,6 @@ export interface FileRowHeightConfig {
     isCompactMode: boolean;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
     showSearchExcerpt: boolean;
-    showImage: boolean;
     compactPaddingTotal: number;
 }
 
@@ -228,30 +205,22 @@ export function getFileItemLayoutState({
     showSearchExcerpt,
     isPinned,
     hasPreviewContent,
-    showFeatureImageArea,
-    showExtensionBadgeThumbnail = false,
     hasVisiblePillRows
 }: {
     isCompactMode?: boolean;
     showSearchExcerpt: boolean;
-    showImage?: boolean;
     isPinned: boolean;
     hasPreviewContent: boolean;
-    showFeatureImageArea: boolean;
-    showExtensionBadgeThumbnail?: boolean;
     hasVisiblePillRows: boolean;
 }): FileItemLayoutState {
-    const hasImageTextArea = showFeatureImageArea && !showExtensionBadgeThumbnail;
-    const isPinnedImageRow = isPinned && hasImageTextArea;
     const shouldReplaceEmptyPreviewWithPills = !hasPreviewContent && hasVisiblePillRows;
-    const shouldShowMultilinePreview = showSearchExcerpt && !shouldReplaceEmptyPreviewWithPills && (hasPreviewContent || hasImageTextArea);
+    const shouldShowMultilinePreview = showSearchExcerpt && !shouldReplaceEmptyPreviewWithPills && hasPreviewContent;
 
     return {
         isCompactMode,
         isPinned,
         shouldShowMultilinePreview,
-        shouldReplaceEmptyPreviewWithPills,
-        isPinnedImageRow
+        shouldReplaceEmptyPreviewWithPills
     };
 }
 
@@ -260,16 +229,12 @@ export function calculateNormalListFileRowHeightEstimate({
     titleRows,
     previewRows,
     layoutState,
-    showFeatureImageArea,
-    showExtensionBadgeThumbnail,
     visiblePillRowCount
 }: {
     heights: ListPaneMeasurements;
     titleRows: number;
     previewRows: number;
     layoutState: FileItemLayoutState;
-    showFeatureImageArea: boolean;
-    showExtensionBadgeThumbnail: boolean;
     visiblePillRowCount: number;
 }): number {
     const titleContentHeight = heights.titleLineHeight * titleRows;
@@ -278,30 +243,22 @@ export function calculateNormalListFileRowHeightEstimate({
     const hasPreviewSlot = layoutState.shouldShowMultilinePreview;
     const previewSlotHeight = hasPreviewSlot ? heights.multilineTextLineHeight * previewRows : 0;
     const contentLineCount = pillRowCount;
-    const hasImageTextArea = showFeatureImageArea && !showExtensionBadgeThumbnail;
-    const fillsPreviewSlotWithPills = layoutState.shouldReplaceEmptyPreviewWithPills && hasImageTextArea;
-    const replacementPreviewSlotHeight = fillsPreviewSlotWithPills ? heights.multilineTextLineHeight * previewRows : 0;
-    const canUseBaseHeight = !hasPreviewSlot && !hasImageTextArea;
-    const applyFeatureImageFloor = (contentHeight: number): number =>
-        showFeatureImageArea ? Math.max(contentHeight, heights.featureImageMinHeight) : contentHeight;
+    const canUseBaseHeight = !hasPreviewSlot;
 
     if (canUseBaseHeight && contentLineCount === 0) {
-        return heights.basePadding + applyFeatureImageFloor(titleContentHeight);
+        return heights.basePadding + titleContentHeight;
     }
 
     if (canUseBaseHeight && contentLineCount <= 1) {
-        return heights.basePadding + applyFeatureImageFloor(titleContentHeight + (hasPillRows ? heights.tagRowHeight : 0));
+        return heights.basePadding + titleContentHeight + (hasPillRows ? heights.tagRowHeight : 0);
     }
 
-    const reservedPreviewSlotHeight = Math.max(previewSlotHeight, replacementPreviewSlotHeight);
-    const reserveImageMetadataLine = hasImageTextArea && !layoutState.isPinnedImageRow;
-    const reservedMetadataLineHeight = reserveImageMetadataLine ? heights.singleTextLineHeight : 0;
-    const richContentHeight = titleContentHeight + reservedPreviewSlotHeight + reservedMetadataLineHeight;
+    const richContentHeight = titleContentHeight + previewSlotHeight;
     const pillRowsHeight = heights.tagRowHeight * pillRowCount;
-    const pillRowsReservedHeight = replacementPreviewSlotHeight + (reserveImageMetadataLine ? reservedMetadataLineHeight : 0);
+    const pillRowsReservedHeight = previewSlotHeight;
     const pillRowsExtraHeight = Math.max(0, pillRowsHeight - pillRowsReservedHeight);
 
-    return heights.basePadding + applyFeatureImageFloor(richContentHeight + pillRowsExtraHeight);
+    return heights.basePadding + richContentHeight + pillRowsExtraHeight;
 }
 
 export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
@@ -312,8 +269,6 @@ export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileR
         showSearchExcerpt: config.showSearchExcerpt,
         isPinned: inputs.isPinned,
         hasPreviewContent: inputs.hasPreviewContent,
-        showFeatureImageArea: inputs.showFeatureImageArea,
-        showExtensionBadgeThumbnail: inputs.showExtensionBadgeThumbnail,
         hasVisiblePillRows: visiblePillRowCount > 0
     });
 
@@ -327,71 +282,8 @@ export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileR
         titleRows,
         previewRows: inputs.isPinned ? 1 : previewRows,
         layoutState,
-        showFeatureImageArea: inputs.showFeatureImageArea,
-        showExtensionBadgeThumbnail: inputs.showExtensionBadgeThumbnail,
         visiblePillRowCount
     });
-}
-
-/**
- * Shared feature image visibility logic for list pane rendering and sizing.
- */
-export function shouldShowFeatureImageArea({
-    showImage,
-    file,
-    featureImageStatus,
-    hasFeatureImageUrl,
-    showDrawingFeatureImage
-}: {
-    showImage: boolean;
-    file: TFile | null;
-    featureImageStatus?: FeatureImageStatus | null;
-    hasFeatureImageUrl?: boolean;
-    showDrawingFeatureImage?: boolean;
-}): boolean {
-    if (!showImage || !file) {
-        return false;
-    }
-
-    if (hasFeatureImageUrl) {
-        return true;
-    }
-
-    if (file.extension === 'canvas' || file.extension === 'base') {
-        return true;
-    }
-
-    if (isRasterImageFile(file)) {
-        return true;
-    }
-
-    if (showDrawingFeatureImage) {
-        return true;
-    }
-
-    return featureImageStatus === 'has';
-}
-
-export function shouldShowExtensionBadgeThumbnail({
-    showFeatureImageArea,
-    file,
-    hasFeatureImageUrl,
-    showDrawingMissingFeatureImage
-}: {
-    showFeatureImageArea: boolean;
-    file: TFile | null;
-    hasFeatureImageUrl?: boolean;
-    showDrawingMissingFeatureImage?: boolean;
-}): boolean {
-    if (!showFeatureImageArea || !file || hasFeatureImageUrl) {
-        return false;
-    }
-
-    if (showDrawingMissingFeatureImage) {
-        return true;
-    }
-
-    return file.extension === 'canvas' || file.extension === 'base';
 }
 
 type VisibleFrontmatterPropertySummary = {
