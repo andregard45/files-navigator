@@ -32,8 +32,6 @@ export interface PendingRenameMove {
     seeded: DBFileData;
     wasMarkdown: boolean;
     isMarkdown: boolean;
-    /** True when the old record had a stored thumbnail (`featureImageStatus === 'has'`) */
-    hasStoredBlob: boolean;
 }
 
 /**
@@ -50,7 +48,6 @@ export interface PendingRenameFlushBuffer {
 export interface RenameFlushStore {
     seedMemoryFile(path: string, data: DBFileData): void;
     setFiles(files: { path: string; data: DBFileData }[]): Promise<void>;
-    moveFeatureImageBlobs(moves: { oldPath: string; newPath: string }[]): Promise<boolean>;
     movePreviewTexts(ops: PreviewTextBatchOp[]): Promise<void>;
 }
 
@@ -119,51 +116,6 @@ export function createRenameFlushController(params: {
         }
     };
 
-    const clearFeatureImagesForFailedBlobMove = async (
-        db: RenameFlushStore,
-        records: { path: string; data: DBFileData }[],
-        blobMoves: { oldPath: string; newPath: string }[]
-    ) => {
-        if (blobMoves.length === 0) {
-            return;
-        }
-
-        const recordsByPath = new Map(records.map(record => [record.path, record.data]));
-        const repairRecords: { path: string; data: DBFileData }[] = [];
-        const repairedPaths = new Set<string>();
-
-        for (const move of blobMoves) {
-            if (repairedPaths.has(move.newPath) || pendingRenameData.has(move.newPath)) {
-                continue;
-            }
-
-            const data = recordsByPath.get(move.newPath);
-            if (!data) {
-                continue;
-            }
-
-            const repairedData: DBFileData = {
-                ...data,
-                featureImage: null,
-                featureImageKey: null,
-                featureImageStatus: 'unprocessed'
-            };
-            repairedPaths.add(move.newPath);
-            repairRecords.push({ path: move.newPath, data: repairedData });
-            db.seedMemoryFile(move.newPath, repairedData);
-        }
-
-        if (repairRecords.length === 0) {
-            return;
-        }
-
-        try {
-            await db.setFiles(repairRecords);
-        } catch (error: unknown) {
-            console.error('Failed to mark renamed feature images for regeneration:', error);
-        }
-    };
-
     const flush = () => {
         buffer.timerId = null;
         const moves = buffer.moves;
@@ -187,8 +139,8 @@ export function createRenameFlushController(params: {
             //
             // Content providers can still run during the rename window (before the next diff reconciles the
             // vault). Provider writes fetch the main IndexedDB record for the path first. If the record is
-            // missing, the provider layer creates a default record, which resets preview/feature-image fields
-            // (status/key) and also drops any cached preview text for the path.
+            // missing, the provider layer creates a default record, which resets preview content fields
+            // and also drops any cached preview text for the path.
             //
             // Keeping real records in IndexedDB avoids the default-record path and preserves the seeded fields
             // until the diff finishes and deletes the old paths.
@@ -209,7 +161,6 @@ export function createRenameFlushController(params: {
                 records.push({ path: move.newPath, data });
                 db.seedMemoryFile(move.newPath, data);
             }
-            const blobMoves = moves.filter(move => move.hasStoredBlob).map(move => ({ oldPath: move.oldPath, newPath: move.newPath }));
             const previewOps: PreviewTextBatchOp[] = [];
             for (const move of moves) {
                 if (move.wasMarkdown && move.isMarkdown) {
@@ -234,13 +185,11 @@ export function createRenameFlushController(params: {
                     return false;
                 }
             );
-            // The batched move methods handle their own failures and never reject; a failed feature-image
-            // blob move resets the affected main records before the provider refresh runs.
-            const featureImageMovePromise = db.moveFeatureImageBlobs(blobMoves);
+            // The batched move method handles its own failures and never rejects.
             const previewMovePromise = db.movePreviewTexts(previewOps);
 
             const persisted = await persistPromise;
-            const [featureImageBlobsMoved] = await Promise.all([featureImageMovePromise, previewMovePromise.then(() => undefined)]);
+            await previewMovePromise;
 
             if (persisted) {
                 consumePendingRenameData(moves);
@@ -255,10 +204,6 @@ export function createRenameFlushController(params: {
                         console.error('Failed to persist renamed file record:', { path: records[index].path, error });
                     }
                 }
-            }
-
-            if (!featureImageBlobsMoved) {
-                await clearFeatureImagesForFailedBlobMove(db, records, blobMoves);
             }
 
             queueContentRefresh(moves.map(move => move.file));

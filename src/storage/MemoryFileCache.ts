@@ -27,15 +27,10 @@ function cloneFileData(data: FileData): FileData {
         markdownPipelineMtime: data.markdownPipelineMtime,
         tagsMtime: data.tagsMtime,
         metadataMtime: data.metadataMtime,
-        fileThumbnailsMtime: data.fileThumbnailsMtime,
         tags: data.tags ? [...data.tags] : null,
         // Clone property items to prevent consumers from mutating cached records.
         properties: clonePropertyItems(data.properties),
         previewStatus: data.previewStatus,
-        // Feature image blobs are stored in IndexedDB, not in the memory cache.
-        featureImage: null,
-        featureImageStatus: data.featureImageStatus,
-        featureImageKey: data.featureImageKey,
         metadata: data.metadata ? { ...data.metadata } : null
     };
 }
@@ -199,9 +194,6 @@ export class MemoryFileCache {
         updates: {
             previewText?: string;
             previewStatus?: FileData['previewStatus'];
-            featureImage?: Blob | null;
-            featureImageKey?: string | null;
-            featureImageStatus?: FileData['featureImageStatus'];
             metadata?: FileData['metadata'];
             properties?: FileData['properties'];
         }
@@ -222,10 +214,6 @@ export class MemoryFileCache {
             if (existing.previewStatus !== 'has') {
                 this.previewTexts.delete(path);
             }
-            // Drop blob updates; the memory cache only tracks the key.
-            if (updates.featureImage !== undefined) existing.featureImage = null;
-            if (updates.featureImageKey !== undefined) existing.featureImageKey = updates.featureImageKey;
-            if (updates.featureImageStatus !== undefined) existing.featureImageStatus = updates.featureImageStatus;
             if (updates.metadata !== undefined) existing.metadata = updates.metadata;
             if (updates.properties !== undefined) existing.properties = updates.properties;
         }
@@ -269,9 +257,6 @@ export class MemoryFileCache {
             path: string;
             previewText?: string;
             previewStatus?: FileData['previewStatus'];
-            featureImage?: Blob | null;
-            featureImageKey?: string | null;
-            featureImageStatus?: FileData['featureImageStatus'];
             metadata?: FileData['metadata'];
         }[]
     ): void {

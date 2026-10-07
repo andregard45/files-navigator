@@ -17,7 +17,6 @@
  */
 
 import type { ContentProviderType } from '../../interfaces/IContentProvider';
-import { FeatureImageBlobStore, FEATURE_IMAGE_STORE_NAME, computeFeatureImageMutation } from '../FeatureImageBlobStore';
 import { MemoryFileCache } from '../MemoryFileCache';
 import { getProviderProcessedMtimeField } from '../providerMtime';
 import { PREVIEW_STORE_NAME, STORE_NAME } from './constants';
@@ -37,8 +36,6 @@ export interface BatchContentUpdate {
     path: string;
     tags?: string[] | null;
     preview?: string;
-    featureImage?: Blob | null;
-    featureImageKey?: string | null;
     metadata?: FileData['metadata'];
     properties?: FileData['properties'];
 }
@@ -59,7 +56,6 @@ interface BatchContentUpdateOperationDeps {
     db: IDBDatabase;
     cache: MemoryFileCache;
     normalizeFileData: (data: Partial<FileData> & { preview?: string | null }) => FileData;
-    featureImageBlobs: Pick<FeatureImageBlobStore, 'deleteFromCache'>;
     emitChanges: (changes: FileContentChange[]) => void;
 }
 
@@ -98,22 +94,16 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
     }
 
     const needsPreviewStore = contentUpdates.some(update => update.preview !== undefined);
-    const needsFeatureImageStore = contentUpdates.some(update => update.featureImageKey !== undefined || update.featureImage !== undefined);
     const storeNames: string[] = [STORE_NAME];
-    if (needsFeatureImageStore) {
-        storeNames.push(FEATURE_IMAGE_STORE_NAME);
-    }
     if (needsPreviewStore) {
         storeNames.push(PREVIEW_STORE_NAME);
     }
 
     const transaction = deps.db.transaction(storeNames, 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
-    const blobStore = needsFeatureImageStore ? transaction.objectStore(FEATURE_IMAGE_STORE_NAME) : null;
     const previewStore = needsPreviewStore ? transaction.objectStore(PREVIEW_STORE_NAME) : null;
     const filesToUpdate: { path: string; data: FileData }[] = [];
     const changeNotifications: FileContentChange[] = [];
-    const featureImageCacheUpdates = new Set<string>();
     const previewTextUpdates: { path: string; previewText: string; previewStatus: PreviewStatus }[] = [];
     let createdRecordWithoutKnownMtime = 0;
     const createdRecordWithoutKnownMtimeExamples: string[] = [];
@@ -152,16 +142,6 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
                     !providerField ||
                     newData[providerField] === processedMtimeUpdate.expectedPreviousMtime;
                 const guardedUpdate = shouldApplyProviderContent ? update : null;
-                const hasFeatureImageUpdate = guardedUpdate?.featureImageKey !== undefined || guardedUpdate?.featureImage !== undefined;
-                const featureImageMutation =
-                    guardedUpdate && hasFeatureImageUpdate
-                        ? computeFeatureImageMutation({
-                              existingKey: existing.featureImageKey,
-                              existingStatus: existing.featureImageStatus,
-                              featureImageKey: guardedUpdate.featureImageKey,
-                              featureImage: guardedUpdate.featureImage
-                          })
-                        : null;
 
                 if (guardedUpdate) {
                     if (guardedUpdate.tags !== undefined) {
@@ -211,25 +191,6 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
                         }
                     }
 
-                    if (featureImageMutation) {
-                        if (featureImageMutation.changes.featureImageKey !== undefined) {
-                            changes.featureImageKey = featureImageMutation.changes.featureImageKey;
-                            hasContentChanges = true;
-                        }
-                        if (featureImageMutation.changes.featureImageStatus !== undefined) {
-                            changes.featureImageStatus = featureImageMutation.changes.featureImageStatus;
-                            hasContentChanges = true;
-                        }
-                        // Main store records never hold blob data.
-                        newData.featureImageKey = featureImageMutation.nextKey;
-                        newData.featureImage = null;
-                        newData.featureImageStatus = featureImageMutation.nextStatus;
-
-                        if (featureImageMutation.shouldClearCache) {
-                            featureImageCacheUpdates.add(path);
-                        }
-                    }
-
                     if (guardedUpdate.metadata !== undefined) {
                         metadataHiddenChanged = hasMetadataHiddenChanged(existing.metadata, guardedUpdate.metadata);
                         metadataNameChanged = hasMetadataNameChanged(existing.metadata, guardedUpdate.metadata);
@@ -264,44 +225,12 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
                         });
                     };
 
-                    if (blobStore && featureImageMutation) {
-                        if (featureImageMutation.blobUpdate) {
-                            // Write the blob record with the current key.
-                            const imageReq = blobStore.put(featureImageMutation.blobUpdate, path);
-                            imageReq.onerror = () => {
-                                lastRequestError = imageReq.error || null;
-                                console.error('[IndexedDB] put failed', {
-                                    store: FEATURE_IMAGE_STORE_NAME,
-                                    op,
-                                    path,
-                                    name: imageReq.error?.name,
-                                    message: imageReq.error?.message
-                                });
-                            };
-                        } else if (featureImageMutation.shouldDeleteBlob) {
-                            // Remove any stored blob when the key changes or blob is empty.
-                            const deleteReq = blobStore.delete(path);
-                            deleteReq.onerror = () => {
-                                lastRequestError = deleteReq.error || null;
-                                console.error('[IndexedDB] delete failed', {
-                                    store: FEATURE_IMAGE_STORE_NAME,
-                                    op,
-                                    path,
-                                    name: deleteReq.error?.name,
-                                    message: deleteReq.error?.message
-                                });
-                            };
-                        }
-                    }
-
                     filesToUpdate.push({ path, data: newData });
 
                     if (hasContentChanges) {
                         const hasContentUpdates =
                             changes.preview !== undefined ||
                             changes.previewStatus !== undefined ||
-                            changes.featureImageKey !== undefined ||
-                            changes.featureImageStatus !== undefined ||
                             changes.properties !== undefined;
                         const hasMetadataUpdates = changes.metadata !== undefined || changes.tags !== undefined;
                         const updateType = hasContentUpdates && hasMetadataUpdates ? 'both' : hasContentUpdates ? 'content' : 'metadata';
@@ -366,10 +295,6 @@ export async function runBatchUpdateFileContentAndProviderProcessedMtimes(
         if (changeNotifications.length > 0) {
             deps.emitChanges(changeNotifications);
         }
-    }
-    if (featureImageCacheUpdates.size > 0) {
-        // Drop any cached blobs for updated paths.
-        featureImageCacheUpdates.forEach(path => deps.featureImageBlobs.deleteFromCache(path));
     }
     if (createdRecordWithoutKnownMtime > 0) {
         console.error('[IndexedDB] Created file record without known mtime during content update', {

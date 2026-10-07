@@ -19,7 +19,6 @@
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
 import { casefold, isPlainObjectRecordValue } from '../../utils/recordUtils';
 
-export type FeatureImageStatus = 'unprocessed' | 'none' | 'has';
 export type PreviewStatus = 'unprocessed' | 'none' | 'has';
 export type PropertyValueKind = 'string' | 'number' | 'boolean';
 
@@ -120,13 +119,9 @@ export function createDefaultFileData(params: { mtime: number; path: string }): 
         markdownPipelineMtime: 0,
         tagsMtime: 0,
         metadataMtime: 0,
-        fileThumbnailsMtime: 0,
         tags: isMarkdown ? null : [],
         properties: null,
         previewStatus: getDefaultPreviewStatusForPath(params.path),
-        featureImage: null,
-        featureImageStatus: 'unprocessed',
-        featureImageKey: null,
         metadata: isMarkdown ? null : {}
     };
 }
@@ -164,10 +159,6 @@ export interface FileData {
      * Last file mtime processed by the metadata provider.
      */
     metadataMtime: number;
-    /**
-     * Last file mtime processed by the file thumbnails provider (non-markdown thumbnails like PDF covers).
-     */
-    fileThumbnailsMtime: number;
     tags: string[] | null; // null = not extracted yet (e.g. when tags disabled)
     properties: PropertyItem[] | null; // null = not generated yet
     /**
@@ -179,33 +170,6 @@ export interface FileData {
      * - `has`: processed and a non-empty preview string exists in the preview store
      */
     previewStatus: PreviewStatus;
-    /**
-     * Feature image placeholder for the main record.
-     * Always null in the main store; blobs live in a dedicated blob store.
-     * Empty blobs are not persisted; the featureImageKey is the durable marker for "processed but no thumbnail".
-     */
-    featureImage: Blob | null;
-    /**
-     * Feature image processing state.
-     *
-     * Semantics:
-     * - `unprocessed`: content provider has not run yet for this file
-     * - `none`: processed, but no thumbnail blob is stored (no reference or thumbnail generation failed)
-     * - `has`: processed and a thumbnail blob is stored in the blob store
-     */
-    featureImageStatus: FeatureImageStatus;
-    /**
-     * Stable key describing the selected feature image source.
-     *
-     * Semantics:
-     * - `null`: not generated yet (pending content generation)
-     * - `''`: generated and resolved, but no image reference is selected
-     * - `f:<path>@<mtime>`: local vault file reference (image embeds, PDF cover thumbnails)
-     * - `e:<url>`: external https URL reference (normalized, without hash)
-     * - `y:<videoId>`: YouTube thumbnail reference
-     * - `d:<provider>:<path>`: drawing file with provider-owned preview rendering
-     */
-    featureImageKey: string | null;
     metadata: {
         name?: string;
         created?: number; // Valid timestamp, 0 = field not configured, -1 = parse failed
@@ -222,9 +186,6 @@ export interface FileContentChange {
     changes: {
         preview?: string | null;
         previewStatus?: PreviewStatus;
-        featureImage?: Blob | null;
-        featureImageKey?: string | null;
-        featureImageStatus?: FeatureImageStatus;
         metadata?: FileData['metadata'] | null;
         tags?: string[] | null;
         properties?: FileData['properties'];

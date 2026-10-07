@@ -326,7 +326,7 @@ export const ListPane = React.memo(
         const showHiddenItems = uxPreferences.showHiddenItems;
         const showCalendar = uxPreferences.showCalendar;
         const appearanceSettings = useListPaneAppearance();
-        const { getFileDisplayName, getDB, getFileTimestamps, regenerateFeatureImageForFile } = useFileCache();
+        const { getFileDisplayName, getDB, getFileTimestamps } = useFileCache();
         const { noteShortcutKeysByPath, addNoteShortcut, removeShortcut } = useShortcuts();
         const uiState = useUIState();
         const isVerticalDualPane = !uiState.singlePane && uiState.effectiveDualPaneOrientation === 'vertical';
@@ -809,10 +809,9 @@ export const ListPane = React.memo(
             () => ({
                 getFileDisplayName,
                 getDB,
-                getFileTimestamps,
-                regenerateFeatureImageForFile
+                getFileTimestamps
             }),
-            [getFileDisplayName, getDB, getFileTimestamps, regenerateFeatureImageForFile]
+            [getFileDisplayName, getDB, getFileTimestamps]
         );
         const syncHoveredFilePathToPointer = React.useCallback((scrollElement: HTMLDivElement | null) => {
             const nextHoveredFilePath = getHoveredFilePathAtPointer(scrollElement, hoverPointerClientPositionRef.current);

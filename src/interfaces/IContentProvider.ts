@@ -24,14 +24,14 @@ import type { NotebookNavigatorSettings } from '../settings/types';
  *
  * These values identify providers in the ContentProviderRegistry include/exclude lists.
  */
-export type ContentProviderType = 'fileThumbnails' | 'metadata' | 'tags' | 'markdownPipeline';
+export type ContentProviderType = 'metadata' | 'tags' | 'markdownPipeline';
 
 /**
  * Types of file content that can be generated and stored.
  *
- * These values identify content fields in storage (preview text, feature images, tags, etc).
+ * These values identify content fields in storage (preview text, tags, etc).
  */
-export type FileContentType = 'preview' | 'featureImage' | 'metadata' | 'tags' | 'properties';
+export type FileContentType = 'preview' | 'metadata' | 'tags' | 'properties';
 
 export type ContentProviderClearContext = {
     oldSettings: NotebookNavigatorSettings;

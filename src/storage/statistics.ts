@@ -45,7 +45,6 @@ export interface CacheStatistics {
     totalItems: number;
     itemsWithTags: number;
     itemsWithPreview: number;
-    itemsWithFeature: number;
     itemsWithMetadata: number;
     totalSizeMB: number;
     // Detailed metadata breakdown
@@ -60,8 +59,7 @@ export interface CacheStatistics {
 }
 
 function estimateFileDataSizeBytes(fileData: FileData): number {
-    // Exclude blobs from size estimates; the main store keeps featureImage null.
-    const jsonSizeBytes = JSON.stringify({ ...fileData, featureImage: null }).length;
+    const jsonSizeBytes = JSON.stringify(fileData).length;
     return jsonSizeBytes;
 }
 
@@ -222,7 +220,6 @@ export async function calculateCacheStatistics(
             totalItems: 0,
             itemsWithTags: 0,
             itemsWithPreview: 0,
-            itemsWithFeature: 0,
             itemsWithMetadata: 0,
             totalSizeMB: 0,
             itemsWithMetadataName: 0,
@@ -305,25 +302,6 @@ export async function calculateCacheStatistics(
             }
         });
 
-        // Stream the blob store for accurate feature image counts and sizes.
-        await db.forEachFeatureImageBlobRecord((path, record) => {
-            if (excludedFolderPatterns.length > 0 && isPathInExcludedFolder(path, excludedFolderPatterns)) {
-                return;
-            }
-
-            const fileData = db.getFile(path);
-            if (!fileData || fileData.featureImageStatus !== 'has' || !fileData.featureImageKey) {
-                return;
-            }
-
-            // Only count blobs that match the current key in the main store.
-            if (fileData.featureImageKey !== record.featureImageKey) {
-                return;
-            }
-
-            stats.itemsWithFeature++;
-            totalSize += record.blob.size;
-        });
 
         // Stream the preview store for accurate preview counts and sizes.
         await db.forEachPreviewTextRecord((path, previewText) => {

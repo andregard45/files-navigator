@@ -25,7 +25,7 @@ import { ConfirmModal } from '../../modals/ConfirmModal';
 import { getSupportedLeaves, type VisibilityPreferences } from '../../types';
 import { TIMEOUTS } from '../../types/obsidian-extended';
 import { getErrorMessage } from '../../utils/errorUtils';
-import { getDrawingCompanionImagePaths, getDrawingFeatureImageSource } from '../../utils/drawingFeatureImages';
+import { getDrawingCompanionImagePaths, getDrawingSourceProviderIdWithFrontmatter } from '../../utils/drawingFeatureImages';
 import { getFolderNoteDetectionSettings, isFolderNote } from '../../utils/folderNoteLookup';
 import { isPrimaryDocumentFile } from '../../utils/fileTypeUtils';
 import { showNotice } from '../../utils/noticeUtils';
@@ -505,13 +505,16 @@ export class FileDeletionService {
     }
 
     private getDrawingCompanionAttachmentCandidates(sourceFile: TFile): TFile[] {
-        const source = getDrawingFeatureImageSource(this.app, sourceFile);
-        if (!source?.supportsCompanionImages) {
+        const providerId = getDrawingSourceProviderIdWithFrontmatter(
+            sourceFile,
+            this.app.metadataCache.getFileCache(sourceFile)?.frontmatter
+        );
+        if (!providerId) {
             return [];
         }
 
         const resolved = new Map<string, TFile>();
-        for (const path of getDrawingCompanionImagePaths(sourceFile, source.providerId)) {
+        for (const path of getDrawingCompanionImagePaths(sourceFile, providerId)) {
             const file = this.app.vault.getFileByPath(path);
             if (!file || !this.isAttachmentFile(file)) {
                 continue;

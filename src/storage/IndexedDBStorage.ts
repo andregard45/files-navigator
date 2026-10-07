@@ -20,9 +20,7 @@ import { STORAGE_KEYS } from '../types';
 import { localStorage } from '../utils/localStorage';
 import type { ContentProviderType, FileContentType } from '../interfaces/IContentProvider';
 import { isMarkdownPath } from '../utils/fileTypeUtils';
-import { DEFAULT_FEATURE_IMAGE_CACHE_MAX, FEATURE_IMAGE_STORE_NAME, FeatureImageBlobStore } from './FeatureImageBlobStore';
 import { MemoryFileCache } from './MemoryFileCache';
-import { FeatureImageCoordinator } from './indexeddb/featureImageOps';
 import { PreviewTextCoordinator, type PreviewTextBatchOp } from './indexeddb/previewTextOps';
 import { hydrateCacheFromMainStore } from './indexeddb/cacheHydration';
 import {
@@ -41,25 +39,21 @@ import {
 import { normalizeFileData as normalizeFileDataValue } from './indexeddb/normalizeFileData';
 import { handleUpgradeNeeded } from './indexeddb/schemaUpgrade';
 import { createDefaultFileData, METADATA_SENTINEL } from './indexeddb/fileData';
-import type { PropertyItem, PropertyValueKind, FeatureImageStatus, FileContentChange, FileData, PreviewStatus } from './indexeddb/fileData';
+import type { PropertyItem, PropertyValueKind, FileContentChange, FileData, PreviewStatus } from './indexeddb/fileData';
 import {
     runBatchUpdateFileContentAndProviderProcessedMtimes,
     type BatchUpdateFileContentAndProviderProcessedMtimesParams
 } from './indexeddb/batchContentUpdateOperation';
 import {
     runBatchClearAllFileContent,
-    runBatchClearFeatureImageContent,
     runBatchClearFileContent,
-    runClearFileContent,
-    runUpdateFileContent,
     runUpdateFileMetadata
 } from './indexeddb/contentMutationOperations';
 
 export { createDefaultFileData, METADATA_SENTINEL };
-export type { PropertyItem, PropertyValueKind, FeatureImageStatus, FileContentChange, FileData, PreviewStatus, PreviewTextBatchOp };
+export type { PropertyItem, PropertyValueKind, FileContentChange, FileData, PreviewStatus, PreviewTextBatchOp };
 
 interface IndexedDBStorageOptions {
-    featureImageCacheMaxEntries?: number;
     previewTextCacheMaxEntries?: number;
     previewLoadMaxBatch?: number;
     cache?: MemoryFileCache;
@@ -89,9 +83,6 @@ export class IndexedDBStorage {
     private changeListeners = new Set<(changes: FileContentChange[]) => void>();
     private db: IDBDatabase | null = null;
     private dbName: string;
-    // Dedicated feature image blob store with an in-memory LRU.
-    private featureImageBlobs: FeatureImageBlobStore;
-    private readonly featureImages: FeatureImageCoordinator;
     private readonly previewTexts: PreviewTextCoordinator;
     private fileChangeListeners = new Map<string, Set<(changes: FileContentChange['changes']) => void>>();
     private isClosing = false;
@@ -104,15 +95,6 @@ export class IndexedDBStorage {
         this.cache = options?.cache ?? new MemoryFileCache({ previewTextCacheMaxEntries });
         const normalizedPreviewTextCacheMaxEntries = Math.max(0, previewTextCacheMaxEntries);
         const previewLoadMaxBatch = Math.max(1, options?.previewLoadMaxBatch ?? DEFAULT_PREVIEW_LOAD_MAX_BATCH);
-        // Initialize the LRU size from caller options or fallback default.
-        const featureImageMaxEntries = options?.featureImageCacheMaxEntries ?? DEFAULT_FEATURE_IMAGE_CACHE_MAX;
-        this.featureImageBlobs = new FeatureImageBlobStore(featureImageMaxEntries);
-        this.featureImages = new FeatureImageCoordinator({
-            getDb: () => this.db,
-            init: () => this.init(),
-            isClosing: () => this.isClosing,
-            blobs: this.featureImageBlobs
-        });
         this.previewTexts = new PreviewTextCoordinator({
             deps: {
                 cache: this.cache,
@@ -417,8 +399,6 @@ export class IndexedDBStorage {
                 }
 
                 this.db = openedDb;
-                // Reset blob caches whenever a new database connection is opened.
-                this.featureImageBlobs.clearMemoryCaches();
 
                 // Close this connection if a version change is requested elsewhere
                 if (this.db) {
@@ -476,9 +456,8 @@ export class IndexedDBStorage {
      */
     private async clearStores(db: IDBDatabase): Promise<void> {
         // Clear stores in one transaction to keep the cache consistent.
-        const transaction = db.transaction([STORE_NAME, FEATURE_IMAGE_STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+        const transaction = db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        const blobStore = transaction.objectStore(FEATURE_IMAGE_STORE_NAME);
         const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
 
         return new Promise((resolve, reject) => {
@@ -493,16 +472,6 @@ export class IndexedDBStorage {
                     message: request.error?.message
                 });
             };
-            // Clear blob records alongside the main store.
-            const blobRequest = blobStore.clear();
-            blobRequest.onerror = () => {
-                lastRequestError = blobRequest.error || null;
-                console.error('[IndexedDB] clear failed', {
-                    store: FEATURE_IMAGE_STORE_NAME,
-                    name: blobRequest.error?.name,
-                    message: blobRequest.error?.message
-                });
-            };
             const previewRequest = previewStore.clear();
             previewRequest.onerror = () => {
                 lastRequestError = previewRequest.error || null;
@@ -514,8 +483,6 @@ export class IndexedDBStorage {
             };
             transaction.oncomplete = () => {
                 this.cache.resetToEmpty();
-                // Drop any in-memory blobs after clearing the database.
-                this.featureImageBlobs.clearMemoryCaches();
                 resolve();
             };
             transaction.onabort = () => {
@@ -564,10 +531,6 @@ export class IndexedDBStorage {
         this.cache.setClonedFile(path, data);
     }
 
-    beginFeatureImageBlobMove(oldPath: string, newPath: string): void {
-        this.featureImages.beginMove(oldPath, newPath);
-    }
-
     beginPreviewTextMove(oldPath: string, newPath: string): void {
         this.previewTexts.beginMove(oldPath, newPath);
     }
@@ -581,9 +544,8 @@ export class IndexedDBStorage {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
 
-        const transaction = this.db.transaction([STORE_NAME, FEATURE_IMAGE_STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+        const transaction = this.db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        const blobStore = transaction.objectStore(FEATURE_IMAGE_STORE_NAME);
         const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
 
         return new Promise((resolve, reject) => {
@@ -599,17 +561,6 @@ export class IndexedDBStorage {
                     message: request.error?.message
                 });
             };
-            // Remove any feature image blob for the file path.
-            const blobRequest = blobStore.delete(path);
-            blobRequest.onerror = () => {
-                lastRequestError = blobRequest.error || null;
-                console.error('[IndexedDB] delete failed', {
-                    store: FEATURE_IMAGE_STORE_NAME,
-                    path,
-                    name: blobRequest.error?.name,
-                    message: blobRequest.error?.message
-                });
-            };
             const previewRequest = previewStore.delete(path);
             previewRequest.onerror = () => {
                 lastRequestError = previewRequest.error || null;
@@ -622,7 +573,6 @@ export class IndexedDBStorage {
             };
             transaction.oncomplete = () => {
                 this.cache.deleteFile(path);
-                this.featureImageBlobs.deleteFromCache(path);
                 resolve();
             };
             transaction.onabort = () => {
@@ -686,10 +636,10 @@ export class IndexedDBStorage {
                 resolve();
                 return;
             }
-            // Persist batch records without feature image blob data.
+            // Persist batch records.
             const sanitizedFiles = files.map(({ path, data }) => ({
                 path,
-                data: this.normalizeFileData({ ...data, featureImage: null })
+                data: this.normalizeFileData(data)
             }));
 
             sanitizedFiles.forEach(({ path, data }) => {
@@ -773,8 +723,6 @@ export class IndexedDBStorage {
                     // Apply the patch on top of the base record (typically mtime + provider processed-mtime resets).
                     const nextData: FileData = update.patch ? { ...base, ...update.patch } : base;
 
-                    // Main store never persists feature image blobs; keep it null.
-                    nextData.featureImage = null;
                     const sanitized = this.normalizeFileData(nextData);
                     cacheUpdates.push({ path: update.path, data: sanitized });
 
@@ -839,9 +787,8 @@ export class IndexedDBStorage {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
 
-        const transaction = this.db.transaction([STORE_NAME, FEATURE_IMAGE_STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+        const transaction = this.db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        const blobStore = transaction.objectStore(FEATURE_IMAGE_STORE_NAME);
         const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
 
         return new Promise((resolve, reject) => {
@@ -863,17 +810,6 @@ export class IndexedDBStorage {
                         message: request.error?.message
                     });
                 };
-                // Remove any feature image blob for the file path.
-                const blobRequest = blobStore.delete(path);
-                blobRequest.onerror = () => {
-                    lastRequestError = blobRequest.error || null;
-                    console.error('[IndexedDB] delete failed', {
-                        store: FEATURE_IMAGE_STORE_NAME,
-                        path,
-                        name: blobRequest.error?.name,
-                        message: blobRequest.error?.message
-                    });
-                };
                 const previewRequest = previewStore.delete(path);
                 previewRequest.onerror = () => {
                     lastRequestError = previewRequest.error || null;
@@ -888,7 +824,6 @@ export class IndexedDBStorage {
 
             transaction.oncomplete = () => {
                 this.cache.batchDelete(paths);
-                paths.forEach(path => this.featureImageBlobs.deleteFromCache(path));
                 resolve();
             };
             transaction.onabort = () => {
@@ -919,14 +854,12 @@ export class IndexedDBStorage {
      * @param type - Type of content to check for
      * @returns Array of files with content
      */
-    getFilesWithContent(type: 'preview' | 'featureImage' | 'metadata'): FileData[] {
+    getFilesWithContent(type: 'preview' | 'metadata'): FileData[] {
         if (!this.cache.isReady()) {
             return [];
         }
         return this.cache.getAllFiles().filter(file => {
             if (type === 'preview') return file.previewStatus !== 'unprocessed';
-            // Feature images are considered present when a stored thumbnail blob exists.
-            if (type === 'featureImage') return file.featureImageStatus === 'has';
             if (type === 'metadata') return file.metadata !== null;
             return false;
         });
@@ -986,8 +919,6 @@ export class IndexedDBStorage {
             if (
                 (type === 'tags' && isMarkdownPath(path) && data.tags === null) ||
                 (type === 'preview' && isMarkdownPath(path) && data.previewStatus === 'unprocessed') ||
-                // Feature images need processing when they are unprocessed or missing a key marker.
-                (type === 'featureImage' && (data.featureImageKey === null || data.featureImageStatus === 'unprocessed')) ||
                 (type === 'metadata' && isMarkdownPath(path) && data.metadata === null) ||
                 (type === 'properties' && isMarkdownPath(path) && data.properties === null)
             ) {
@@ -1004,7 +935,6 @@ export class IndexedDBStorage {
 
         const needsTags = types.includes('tags');
         const needsPreview = types.includes('preview');
-        const needsFeatureImage = types.includes('featureImage');
         const needsMetadata = types.includes('metadata');
         const needsProperties = types.includes('properties');
 
@@ -1014,7 +944,6 @@ export class IndexedDBStorage {
             if (
                 (needsTags && isMarkdown && data.tags === null) ||
                 (needsPreview && isMarkdown && data.previewStatus === 'unprocessed') ||
-                (needsFeatureImage && (data.featureImageKey === null || data.featureImageStatus === 'unprocessed')) ||
                 (needsMetadata && isMarkdown && data.metadata === null) ||
                 (needsProperties && isMarkdown && data.properties === null)
             ) {
@@ -1027,8 +956,6 @@ export class IndexedDBStorage {
     /**
      * Get current database statistics.
      * Returns the number of items in the main store and an estimated total size in MB.
-     *
-     * Includes feature image blobs stored in the dedicated blob store.
      *
      * @returns Object with item count and size in MB
      */
@@ -1045,45 +972,8 @@ export class IndexedDBStorage {
         await this.forEachPreviewTextRecord((path, previewText) => {
             totalSize += path.length + previewText.length;
         });
-        await this.forEachFeatureImageBlobRecord((_path, record) => {
-            totalSize += record.blob.size;
-        });
         const sizeMB = totalSize / 1024 / 1024;
         return { itemCount, sizeMB };
-    }
-
-    /**
-     * Update file content (preview, image, and/or metadata) by path.
-     * Only updates provided fields, preserves others.
-     * Emits change notifications.
-     *
-     * @param path - File path to update
-     * @param preview - New preview text (optional)
-     * @param image - New feature image blob (optional)
-     * @param metadata - New metadata (optional)
-     */
-    async updateFileContent(
-        path: string,
-        preview?: string,
-        image?: Blob | null,
-        metadata?: FileData['metadata'],
-        featureImageKey?: string | null
-    ): Promise<void> {
-        await this.init();
-        if (!this.db) throw new Error('Database not initialized');
-        await runUpdateFileContent(
-            {
-                db: this.db,
-                cache: this.cache,
-                featureImageBlobs: this.featureImageBlobs,
-                normalizeFileData: data => this.normalizeFileData(data),
-                emitChanges: changes => this.emitChanges(changes),
-                normalizeIdbError: (error, fallbackMessage) => this.normalizeIdbError(error, fallbackMessage),
-                rejectWithTransactionError: (reject, transaction, lastRequestError, fallbackMessage) =>
-                    this.rejectWithTransactionError(reject, transaction, lastRequestError, fallbackMessage)
-            },
-            { path, preview, image, metadata, featureImageKey }
-        );
     }
 
     /**
@@ -1111,7 +1001,6 @@ export class IndexedDBStorage {
             {
                 db: this.db,
                 cache: this.cache,
-                featureImageBlobs: this.featureImageBlobs,
                 normalizeFileData: data => this.normalizeFileData(data),
                 emitChanges: changes => this.emitChanges(changes),
                 normalizeIdbError: (error, fallbackMessage) => this.normalizeIdbError(error, fallbackMessage),
@@ -1143,32 +1032,6 @@ export class IndexedDBStorage {
     }
 
     /**
-     * Clear content for a file by path (set to null).
-     * Used when content needs to be regenerated.
-     * Emits change notifications.
-     *
-     * @param path - File path to clear content for
-     * @param type - Type of content to clear or 'all'
-     */
-    async clearFileContent(path: string, type: 'preview' | 'featureImage' | 'metadata' | 'all'): Promise<void> {
-        await this.init();
-        if (!this.db) throw new Error('Database not initialized');
-        await runClearFileContent(
-            {
-                db: this.db,
-                cache: this.cache,
-                featureImageBlobs: this.featureImageBlobs,
-                normalizeFileData: data => this.normalizeFileData(data),
-                emitChanges: changes => this.emitChanges(changes),
-                normalizeIdbError: (error, fallbackMessage) => this.normalizeIdbError(error, fallbackMessage),
-                rejectWithTransactionError: (reject, transaction, lastRequestError, fallbackMessage) =>
-                    this.rejectWithTransactionError(reject, transaction, lastRequestError, fallbackMessage)
-            },
-            { path, type }
-        );
-    }
-
-    /**
      * Clear content for ALL files in batch using cursor.
      * Very efficient for clearing content when settings change.
      * Only clears content that is not already null.
@@ -1177,7 +1040,7 @@ export class IndexedDBStorage {
      * @param type - Type of content to clear or 'all'
      */
     async batchClearAllFileContent(
-        type: 'preview' | 'featureImage' | 'metadata' | 'tags' | 'properties' | 'all'
+        type: 'preview' | 'metadata' | 'tags' | 'properties' | 'all'
     ): Promise<void> {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
@@ -1185,7 +1048,6 @@ export class IndexedDBStorage {
             {
                 db: this.db,
                 cache: this.cache,
-                featureImageBlobs: this.featureImageBlobs,
                 normalizeFileData: data => this.normalizeFileData(data),
                 emitChanges: changes => this.emitChanges(changes),
                 normalizeIdbError: (error, fallbackMessage) => this.normalizeIdbError(error, fallbackMessage),
@@ -1197,35 +1059,8 @@ export class IndexedDBStorage {
     }
 
     /**
-     * Clear feature image content for either markdown or non-markdown files.
-     *
-     * Used when providers split feature image generation by domain:
-     * - markdownPipeline clears markdown feature images
-     * - fileThumbnails clears non-markdown feature images (PDF covers, etc)
-     *
-     * Emits change notifications for affected files.
-     */
-    async batchClearFeatureImageContent(scope: 'markdown' | 'nonMarkdown'): Promise<void> {
-        await this.init();
-        if (!this.db) throw new Error('Database not initialized');
-        await runBatchClearFeatureImageContent(
-            {
-                db: this.db,
-                cache: this.cache,
-                featureImageBlobs: this.featureImageBlobs,
-                normalizeFileData: data => this.normalizeFileData(data),
-                emitChanges: changes => this.emitChanges(changes),
-                normalizeIdbError: (error, fallbackMessage) => this.normalizeIdbError(error, fallbackMessage),
-                rejectWithTransactionError: (reject, transaction, lastRequestError, fallbackMessage) =>
-                    this.rejectWithTransactionError(reject, transaction, lastRequestError, fallbackMessage)
-            },
-            { scope }
-        );
-    }
-
-    /**
      * Clear content for specific files in batch.
-     * More efficient than multiple clearFileContent calls.
+     * More efficient than multiple clear calls.
      * Only clears content that is not already null.
      * Emits change notifications for all affected files.
      *
@@ -1234,7 +1069,7 @@ export class IndexedDBStorage {
      */
     async batchClearFileContent(
         paths: string[],
-        type: 'preview' | 'featureImage' | 'metadata' | 'tags' | 'properties' | 'all'
+        type: 'preview' | 'metadata' | 'tags' | 'properties' | 'all'
     ): Promise<void> {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
@@ -1242,7 +1077,6 @@ export class IndexedDBStorage {
             {
                 db: this.db,
                 cache: this.cache,
-                featureImageBlobs: this.featureImageBlobs,
                 normalizeFileData: data => this.normalizeFileData(data),
                 emitChanges: changes => this.emitChanges(changes),
                 normalizeIdbError: (error, fallbackMessage) => this.normalizeIdbError(error, fallbackMessage),
@@ -1283,7 +1117,6 @@ export class IndexedDBStorage {
                 db: this.db,
                 cache: this.cache,
                 normalizeFileData: data => this.normalizeFileData(data),
-                featureImageBlobs: this.featureImageBlobs,
                 emitChanges: changes => this.emitChanges(changes)
             },
             params
@@ -1358,22 +1191,6 @@ export class IndexedDBStorage {
     }
 
     /**
-     * Fetch a feature image blob by path and expected key.
-     * Reads from the in-memory LRU first, then IndexedDB.
-     */
-    async getFeatureImageBlob(path: string, expectedKey: string): Promise<Blob | null> {
-        return this.featureImages.getBlob(path, expectedKey);
-    }
-
-    /**
-     * Stream all feature image blob records without allocating an array.
-     * Only yields non-empty blobs with a string key.
-     */
-    async forEachFeatureImageBlobRecord(callback: (path: string, record: { featureImageKey: string; blob: Blob }) => void): Promise<void> {
-        await this.featureImages.forEachBlobRecord(callback);
-    }
-
-    /**
      * Stream all preview text records without hydrating them into the main in-memory cache.
      * Only yields non-empty strings with a string key.
      */
@@ -1382,24 +1199,10 @@ export class IndexedDBStorage {
     }
 
     /**
-     * Move a rename burst's feature image blobs in one transaction, replayed in vault event order.
-     */
-    async moveFeatureImageBlobs(moves: { oldPath: string; newPath: string }[]): Promise<boolean> {
-        return this.featureImages.moveBlobs(moves);
-    }
-
-    /**
      * Apply a rename burst's preview store moves and deletes in one transaction, replayed in vault event order.
      */
     async movePreviewTexts(ops: PreviewTextBatchOp[]): Promise<void> {
         await this.previewTexts.movePreviewTexts(ops);
-    }
-
-    /**
-     * Delete a feature image blob by path.
-     */
-    async deleteFeatureImageBlob(path: string): Promise<void> {
-        await this.featureImages.deleteBlob(path);
     }
 
     /**
@@ -1415,7 +1218,5 @@ export class IndexedDBStorage {
         this.initPromise = null;
         this.cache.clear();
         this.previewTexts.close();
-        this.featureImages.close();
-        this.featureImageBlobs.clearMemoryCaches();
     }
 }

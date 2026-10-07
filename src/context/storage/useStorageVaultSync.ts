@@ -26,14 +26,12 @@ import type { ContentProviderRegistry } from '../../services/content/ContentProv
 import type { PropertyTreeNode, TagTreeNode } from '../../types/storage';
 import { calculateFileDiff } from '../../storage/diffCalculator';
 import { type FileData as DBFileData } from '../../storage/IndexedDBStorage';
-import { remapSelfReferentialFeatureImageKey } from '../../storage/FeatureImageBlobStore';
 import { getDBInstance, markFilesForRegeneration, recordFileChanges, removeFilesFromCache } from '../../storage/fileOperations';
 import { createRenameFlushController, excludeReoccupiedRenameTargets, type PendingRenameFlushBuffer } from './renameFlush';
 import { runAsyncAction } from '../../utils/async';
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
 import { isPropertyFeatureEnabled } from '../../utils/propertyTree';
 import { emitDrawingCompanionImageChange, findDrawingFileForCompanionImage } from '../../utils/drawingFeatureImages';
-import { filterFilesRequiringFileThumbnails, shouldQueueFileThumbnailProvider } from '../storageQueueFilters';
 import { getCacheRebuildProgressTypes, getContentWorkTotal, getMetadataDependentTypes } from './storageContentTypes';
 import {
     clearFrontmatterMetadataCacheSignature,
@@ -84,7 +82,7 @@ async function ensureFrontmatterMetadataCacheMatchesSettings(settings: NotebookN
  * - Vault events can arrive in bursts or in multi-step sequences (especially renames/moves). A shared debouncer
  *   (TIMEOUTS.FILE_OPERATION_DELAY) collapses those bursts into a single `calculateFileDiff()` pass.
  * - A markdown save fires both `vault.on('modify')` and `metadataCache.on('changed')`. The modify flush records
- *   stat changes and queues non-markdown thumbnails only; markdown content generation is queued by the
+ *   stat changes; markdown content generation is queued by the
  *   metadata-change flush so providers read the metadata cache after Obsidian has indexed the save.
  * - Rename handling preserves existing cached content by seeding the new path with the old record at event time
  *   and buffering the move. A zero-delay flush then persists the whole burst's seeded records in one `setFiles`
@@ -210,31 +208,16 @@ export function useStorageVaultSync(params: {
 
                     if (contentRegistryRef.current && contentEnabled) {
                         const markdownFiles: TFile[] = [];
-                        const fileThumbnailFiles: TFile[] = [];
 
                         for (const file of allFiles) {
                             if (file.extension === 'md') {
                                 markdownFiles.push(file);
-                                continue;
-                            }
-                            if (shouldQueueFileThumbnailProvider(file)) {
-                                fileThumbnailFiles.push(file);
                             }
                         }
 
                         if (metadataDependentTypes.length > 0 && markdownFiles.length > 0) {
                             queueMetadataContentWhenReady(markdownFiles, metadataDependentTypes, settings);
                         }
-
-                        if (settings.showFeatureImage && fileThumbnailFiles.length > 0) {
-                            const filesNeedingThumbnails = filterFilesRequiringFileThumbnails(fileThumbnailFiles, settings);
-                            if (filesNeedingThumbnails.length > 0) {
-                                contentRegistryRef.current.queueFilesForAllProviders(filesNeedingThumbnails, settings, {
-                                    include: ['fileThumbnails']
-                                });
-                            }
-                        }
-
                     }
                 } catch (error: unknown) {
                     console.error('Failed during initial load sequence:', error);
@@ -588,22 +571,15 @@ export function useStorageVaultSync(params: {
                                 ? existing.previewStatus
                                 : 'unprocessed'
                             : 'none';
-                        const remappedFeatureImageKey = remapSelfReferentialFeatureImageKey(existing.featureImageKey, oldPath, file.path);
                         const seeded: DBFileData = {
                             ...existing,
                             previewStatus: nextPreviewStatus,
-                            featureImageKey: remappedFeatureImageKey ?? existing.featureImageKey,
                             markdownPipelineMtime: wasMarkdown && isMarkdown ? 0 : existing.markdownPipelineMtime,
                             metadataMtime: wasMarkdown && isMarkdown ? 0 : existing.metadataMtime
                         };
 
                         pendingRenameDataRef.current.set(file.path, seeded);
                         db.seedMemoryFile(file.path, seeded);
-                        const hasStoredBlob = existing.featureImageStatus === 'has';
-                        if (hasStoredBlob) {
-                            // Prevent `getFeatureImageBlob(newPath)` from returning null before the blob store key moves.
-                            db.beginFeatureImageBlobMove(oldPath, file.path);
-                        }
                         if (wasMarkdown && isMarkdown) {
                             // Prevent preview status repairs while the preview store key is moving from oldPath -> newPath.
                             db.beginPreviewTextMove(oldPath, file.path);
@@ -614,8 +590,7 @@ export function useStorageVaultSync(params: {
                             newPath: file.path,
                             seeded,
                             wasMarkdown,
-                            isMarkdown,
-                            hasStoredBlob
+                            isMarkdown
                         });
                         renameFlushController.scheduleFlush();
                         rebuildFileCache?.();
@@ -641,7 +616,7 @@ export function useStorageVaultSync(params: {
                 return;
             }
 
-            if (file.extension !== 'md' && !shouldQueueFileThumbnailProvider(file)) {
+            if (file.extension !== 'md') {
                 return;
             }
 

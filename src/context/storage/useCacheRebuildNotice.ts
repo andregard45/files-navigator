@@ -23,7 +23,6 @@ import { strings } from '../../i18n';
 import { getDBInstance } from '../../storage/fileOperations';
 import { showNotice } from '../../utils/noticeUtils';
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
-import { shouldQueueFileThumbnailProvider } from '../storageQueueFilters';
 
 const CACHE_REBUILD_NOTICE_DELAY_MS = 500;
 const CACHE_REBUILD_PROGRESS_POLL_INTERVAL_MS = 2_000;
@@ -94,7 +93,6 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
             const description = strings.settings.items.rebuildCache.progress;
             const trackPreview = enabledTypes.includes('preview');
             const trackTags = enabledTypes.includes('tags');
-            const trackFeatureImage = enabledTypes.includes('featureImage');
             const trackMetadata = enabledTypes.includes('metadata');
             const trackProperties = enabledTypes.includes('properties');
 
@@ -184,41 +182,18 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
                         }
                         return trackedFile;
                     };
-                    const supportsFileThumbnail =
-                        !isMarkdown &&
-                        trackFeatureImage &&
-                        (() => {
-                            const file = getTrackedFile();
-                            return file !== null && shouldQueueFileThumbnailProvider(file);
-                        })();
                     const needsPreview = trackPreview && isMarkdown && data.previewStatus === 'unprocessed';
                     const needsTags = trackTags && isMarkdown && data.tags === null;
-                    const needsFeatureImage =
-                        trackFeatureImage &&
-                        (data.featureImageKey === null || data.featureImageStatus === 'unprocessed') &&
-                        (isMarkdown || supportsFileThumbnail);
                     const needsMetadata = trackMetadata && isMarkdown && data.metadata === null;
                     const needsProperties = trackProperties && isMarkdown && data.properties === null;
 
-                    if (
-                        !needsPreview &&
-                        !needsTags &&
-                        !needsFeatureImage &&
-                        !needsMetadata &&
-                        !needsProperties
-                    ) {
+                    if (!needsPreview && !needsTags && !needsMetadata && !needsProperties) {
                         return;
                     }
 
                     // `rawRemainingCount` counts everything still missing, even if it can't be processed yet because
                     // Obsidian metadata hasn't been indexed for the file.
                     rawRemainingCount += 1;
-
-                    const readyWithoutMetadata = needsFeatureImage && !isMarkdown && supportsFileThumbnail;
-                    if (readyWithoutMetadata) {
-                        readyRemainingCount += 1;
-                        return;
-                    }
 
                     const file = getTrackedFile();
                     if (!file) {
@@ -227,12 +202,7 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
 
                     const hasMetadataCache = Boolean(app.metadataCache.getFileCache(file));
                     const isMetadataReady =
-                        hasMetadataCache &&
-                        (needsPreview ||
-                            needsProperties ||
-                            (needsFeatureImage && isMarkdown) ||
-                            needsTags ||
-                            needsMetadata);
+                        hasMetadataCache && (needsPreview || needsProperties || needsTags || needsMetadata);
 
                     if (isMetadataReady) {
                         // Track only work that can be queued immediately. Before metadata is ready, providers that

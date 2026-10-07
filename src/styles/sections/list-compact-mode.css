@@ -47,11 +47,6 @@
     min-width: 0;
 }
 
-.nn-compact-extension-badge {
-    margin-left: auto;
-    display: flex;
-}
-
 /* Selected compact file - maintain selection styles */
 .nn-file.nn-compact.nn-selected .nn-file-name {
     color: var(--nn-selected-file-name-color);

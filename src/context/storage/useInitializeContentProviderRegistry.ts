@@ -21,7 +21,6 @@ import type { App } from 'obsidian';
 import { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
 import { ContentReadCache } from '../../services/content/ContentReadCache';
 import { MarkdownPipelineContentProvider } from '../../services/content/MarkdownPipelineContentProvider';
-import { createFeatureImageThumbnailRuntime, FeatureImageContentProvider } from '../../services/content/FeatureImageContentProvider';
 import { MetadataContentProvider } from '../../services/content/MetadataContentProvider';
 import { TagContentProvider } from '../../services/content/TagContentProvider';
 
@@ -48,11 +47,9 @@ export function useInitializeContentProviderRegistry(params: {
         // but providers should not be duplicated across mounts.
         if (!contentRegistryRef.current) {
             const readCache = new ContentReadCache(app);
-            const thumbnailRuntime = createFeatureImageThumbnailRuntime();
 
             contentRegistryRef.current = new ContentProviderRegistry();
-            contentRegistryRef.current.registerProvider(new MarkdownPipelineContentProvider(app, readCache, thumbnailRuntime));
-            contentRegistryRef.current.registerProvider(new FeatureImageContentProvider(app, readCache, thumbnailRuntime));
+            contentRegistryRef.current.registerProvider(new MarkdownPipelineContentProvider(app, readCache));
             contentRegistryRef.current.registerProvider(new MetadataContentProvider(app));
             contentRegistryRef.current.registerProvider(new TagContentProvider(app));
         }

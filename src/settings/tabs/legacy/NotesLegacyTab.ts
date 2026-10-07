@@ -22,14 +22,9 @@ import { showNotice } from '../../../utils/noticeUtils';
 import type { SettingsTabContext } from '../SettingsTabContext';
 import { runAsyncAction } from '../../../utils/async';
 import { createSettingGroupFactory } from '../../settingGroups';
-import { addSettingSyncModeToggle } from '../../syncModeToggle';
 import { attachColorSwatchSetting } from '../../colorSwatchSetting';
 import { createDependentSettingsSection, setElementVisible, wireToggleSettingWithDependentSection } from '../../dependentSettings';
 import { DEFAULT_SETTINGS } from '../../defaultSettings';
-import {
-    isFeatureImagePixelSizeSetting,
-    isFeatureImageSizeSetting
-} from '../../types';
 import {
     normalizeFileNameIconMapKey,
     normalizeFileTypeIconMapKey,
@@ -37,7 +32,7 @@ import {
     serializeIconMapRecord,
     type IconMapParseResult
 } from '../../../utils/iconizeFormat';
-import { formatCommaSeparatedList, parseCommaSeparatedList } from '../../../utils/commaSeparatedListUtils';
+
 import { isFileTypeIconPreset } from '../../../utils/fileTypeIconPresets';
 
 function parseFileTypeIconMapText(value: string): IconMapParseResult {
@@ -75,7 +70,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
     const createGroup = createSettingGroupFactory(containerEl);
     const iconGroup = createGroup(strings.settings.pages.fileDisplay.groups.icon);
     const titleGroup = createGroup(strings.settings.pages.fileDisplay.groups.title);
-    const featureImageGroup = createGroup(strings.settings.pages.fileDisplay.groups.featureImage);
     const notePropertyGroup = createGroup(strings.settings.pages.fileDisplay.groups.properties);
 
     const createColorSetting = (params: {
@@ -311,99 +305,6 @@ export function renderNotesTab(context: SettingsTabContext): void {
                 })
             );
     });
-
-    const showFeatureImageSetting = featureImageGroup.addSetting(setting => {
-        setting.setName(strings.settings.items.showFeatureImage.name).setDesc(strings.settings.items.showFeatureImage.desc);
-    });
-
-    const featureImageSettingsEl = wireToggleSettingWithDependentSection(
-        showFeatureImageSetting,
-        () => plugin.settings.showFeatureImage,
-        async value => {
-            plugin.settings.showFeatureImage = value;
-            await plugin.saveSettingsAndUpdate();
-        }
-    );
-
-    const featurePropertiesSetting = context.createDebouncedTextSetting(
-        featureImageSettingsEl,
-        strings.settings.items.featureImageProperties.name,
-        strings.settings.items.featureImageProperties.desc,
-        strings.settings.items.featureImageProperties.placeholder,
-        () => formatCommaSeparatedList(plugin.settings.featureImageProperties),
-        value => {
-            plugin.settings.featureImageProperties = parseCommaSeparatedList(value);
-        }
-    );
-    featurePropertiesSetting.controlEl.addClass('nn-setting-wide-input');
-
-    const featureExcludePropertiesSetting = context.createDebouncedTextSetting(
-        featureImageSettingsEl,
-        strings.settings.items.featureImageExcludeProperties.name,
-        strings.settings.items.featureImageExcludeProperties.desc,
-        strings.settings.items.featureImageExcludeProperties.placeholder,
-        () => formatCommaSeparatedList(plugin.settings.featureImageExcludeProperties),
-        value => {
-            plugin.settings.featureImageExcludeProperties = parseCommaSeparatedList(value);
-        }
-    );
-    featureExcludePropertiesSetting.controlEl.addClass('nn-setting-wide-input');
-
-    const featureImageSizeSetting = new Setting(featureImageSettingsEl)
-        .setName(strings.settings.items.featureImageDisplaySize.name)
-        .setDesc(strings.settings.items.featureImageDisplaySize.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('64', strings.settings.items.featureImageDisplaySize.options['64'])
-                .addOption('96', strings.settings.items.featureImageDisplaySize.options['96'])
-                .addOption('128', strings.settings.items.featureImageDisplaySize.options['128'])
-                .setValue(plugin.settings.featureImageSize)
-                .onChange(value => {
-                    if (!isFeatureImageSizeSetting(value)) {
-                        return;
-                    }
-                    plugin.setFeatureImageSize(value);
-                })
-        );
-    addSettingSyncModeToggle({ setting: featureImageSizeSetting, plugin, settingId: 'featureImageSize' });
-
-    const featureImagePixelSizeSetting = new Setting(featureImageSettingsEl)
-        .setName(strings.settings.items.featureImagePixelSize.name)
-        .setDesc(strings.settings.items.featureImagePixelSize.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('256', strings.settings.items.featureImagePixelSize.options['256x144'])
-                .addOption('384', strings.settings.items.featureImagePixelSize.options['384x216'])
-                .addOption('512', strings.settings.items.featureImagePixelSize.options['512x288'])
-                .setValue(plugin.settings.featureImagePixelSize)
-                .onChange(value => {
-                    if (!isFeatureImagePixelSizeSetting(value)) {
-                        return;
-                    }
-                    plugin.setFeatureImagePixelSize(value);
-                })
-        );
-    addSettingSyncModeToggle({ setting: featureImagePixelSizeSetting, plugin, settingId: 'featureImagePixelSize' });
-
-    new Setting(featureImageSettingsEl)
-        .setName(strings.settings.items.forceSquareFeatureImage.name)
-        .setDesc(strings.settings.items.forceSquareFeatureImage.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.forceSquareFeatureImage).onChange(async value => {
-                plugin.settings.forceSquareFeatureImage = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
-
-    new Setting(featureImageSettingsEl)
-        .setName(strings.settings.items.downloadExternalFeatureImages.name)
-        .setDesc(strings.settings.items.downloadExternalFeatureImages.desc)
-        .addToggle(toggle =>
-            toggle.setValue(plugin.settings.downloadExternalFeatureImages).onChange(async value => {
-                plugin.settings.downloadExternalFeatureImages = value;
-                await plugin.saveSettingsAndUpdate();
-            })
-        );
 
     const showFilePropertiesSetting = notePropertyGroup.addSetting(setting => {
         setting.setName(strings.settings.items.showFileProperties.name).setDesc(strings.settings.items.showFileProperties.desc);

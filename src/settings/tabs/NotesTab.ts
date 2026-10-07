@@ -26,7 +26,6 @@ import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { attachColorSwatchSetting } from '../colorSwatchSetting';
 import { DEFAULT_SETTINGS } from '../defaultSettings';
 import { createDropdownDefinition, createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
-import { isFeatureImagePixelSizeSetting, isFeatureImageSizeSetting } from '../types';
 import {
     normalizeFileNameIconMapKey,
     normalizeFileTypeIconMapKey,
@@ -34,7 +33,6 @@ import {
     serializeIconMapRecord,
     type IconMapParseResult
 } from '../../utils/iconizeFormat';
-import { formatCommaSeparatedList, parseCommaSeparatedList } from '../../utils/commaSeparatedListUtils';
 import { isFileTypeIconPreset } from '../../utils/fileTypeIconPresets';
 import { ItemType, PROPERTIES_ROOT_VIRTUAL_FOLDER_ID } from '../../types';
 
@@ -140,68 +138,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
             createToggleDefinition('useFolderColorForTitles', {
                 name: strings.settings.items.useFolderColor.name,
                 desc: strings.settings.items.useFolderColor.desc
-            })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.featureImage, [
-            createToggleDefinition('showFeatureImage', {
-                name: strings.settings.items.showFeatureImage.name,
-                desc: strings.settings.items.showFeatureImage.desc
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.featureImageProperties.name,
-                desc: strings.settings.items.featureImageProperties.desc,
-                aliases: [strings.settings.items.featureImageProperties.placeholder],
-                visible: () => plugin.settings.showFeatureImage,
-                render: setting =>
-                    renderCommaSeparatedTextSetting(setting, context, {
-                        name: strings.settings.items.featureImageProperties.name,
-                        desc: strings.settings.items.featureImageProperties.desc,
-                        placeholder: strings.settings.items.featureImageProperties.placeholder,
-                        getValue: () => formatCommaSeparatedList(plugin.settings.featureImageProperties),
-                        setValue: value => {
-                            plugin.settings.featureImageProperties = parseCommaSeparatedList(value);
-                        }
-                    })
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.featureImageExcludeProperties.name,
-                desc: strings.settings.items.featureImageExcludeProperties.desc,
-                aliases: [strings.settings.items.featureImageExcludeProperties.placeholder],
-                visible: () => plugin.settings.showFeatureImage,
-                render: setting =>
-                    renderCommaSeparatedTextSetting(setting, context, {
-                        name: strings.settings.items.featureImageExcludeProperties.name,
-                        desc: strings.settings.items.featureImageExcludeProperties.desc,
-                        placeholder: strings.settings.items.featureImageExcludeProperties.placeholder,
-                        getValue: () => formatCommaSeparatedList(plugin.settings.featureImageExcludeProperties),
-                        setValue: value => {
-                            plugin.settings.featureImageExcludeProperties = parseCommaSeparatedList(value);
-                        }
-                    })
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.featureImageDisplaySize.name,
-                desc: strings.settings.items.featureImageDisplaySize.desc,
-                aliases: Object.values(strings.settings.items.featureImageDisplaySize.options),
-                visible: () => plugin.settings.showFeatureImage,
-                render: setting => renderFeatureImageSizeSetting(setting, context)
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.featureImagePixelSize.name,
-                desc: strings.settings.items.featureImagePixelSize.desc,
-                aliases: Object.values(strings.settings.items.featureImagePixelSize.options),
-                visible: () => plugin.settings.showFeatureImage,
-                render: setting => renderFeatureImagePixelSizeSetting(setting, context)
-            }),
-            createToggleDefinition('forceSquareFeatureImage', {
-                name: strings.settings.items.forceSquareFeatureImage.name,
-                desc: strings.settings.items.forceSquareFeatureImage.desc,
-                visible: () => plugin.settings.showFeatureImage
-            }),
-            createToggleDefinition('downloadExternalFeatureImages', {
-                name: strings.settings.items.downloadExternalFeatureImages.name,
-                desc: strings.settings.items.downloadExternalFeatureImages.desc,
-                visible: () => plugin.settings.showFeatureImage
             })
         ]),
         createGroupDefinition(strings.settings.pages.fileDisplay.groups.properties, [
@@ -404,48 +340,4 @@ function renderCommaSeparatedTextSetting(
         options.onAfterUpdate
     );
     setting.controlEl.addClass('nn-setting-wide-input');
-}
-
-function renderFeatureImageSizeSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.featureImageDisplaySize.name)
-        .setDesc(strings.settings.items.featureImageDisplaySize.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('64', strings.settings.items.featureImageDisplaySize.options['64'])
-                .addOption('96', strings.settings.items.featureImageDisplaySize.options['96'])
-                .addOption('128', strings.settings.items.featureImageDisplaySize.options['128'])
-                .setValue(plugin.settings.featureImageSize)
-                .onChange(value => {
-                    if (!isFeatureImageSizeSetting(value)) {
-                        return;
-                    }
-                    plugin.setFeatureImageSize(value);
-                })
-        );
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'featureImageSize' });
-}
-
-function renderFeatureImagePixelSizeSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.featureImagePixelSize.name)
-        .setDesc(strings.settings.items.featureImagePixelSize.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('256', strings.settings.items.featureImagePixelSize.options['256x144'])
-                .addOption('384', strings.settings.items.featureImagePixelSize.options['384x216'])
-                .addOption('512', strings.settings.items.featureImagePixelSize.options['512x288'])
-                .setValue(plugin.settings.featureImagePixelSize)
-                .onChange(value => {
-                    if (!isFeatureImagePixelSizeSetting(value)) {
-                        return;
-                    }
-                    plugin.setFeatureImagePixelSize(value);
-                })
-        );
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'featureImagePixelSize' });
 }

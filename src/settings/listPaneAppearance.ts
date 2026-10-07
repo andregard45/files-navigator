@@ -33,7 +33,6 @@ export const SEARCH_EXCERPT_ROWS = 2;
 export interface ListPaneAppearanceSettings {
     mode: ListDisplayMode;
     titleRows: number;
-    showImage: boolean;
     showProperties: boolean;
     groupBy: ListNoteGroupingOption;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
@@ -206,7 +205,6 @@ export function resolveListPaneAppearance({
     return {
         mode,
         titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
-        showImage: !isCompact && settings.showFeatureImage,
         showProperties,
         // The file-display preview feature was removed; excerpt sizing is a fixed internal constant.
         previewRows: isCompact ? 1 : SEARCH_EXCERPT_ROWS,
