@@ -33,7 +33,6 @@ export interface CacheRebuildNoticeState {
 
 function isFileContentType(value: unknown): value is FileContentType {
     return (
-        value === 'preview' ||
         value === 'tags' ||
         value === 'metadata' ||
         value === 'properties'

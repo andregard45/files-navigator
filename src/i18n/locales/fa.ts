@@ -2321,7 +2321,6 @@ export const STRINGS_FA = {
                 localCache: 'کش محلی',
                 items: 'آیتم',
                 withTags: 'با برچسب',
-                withPreviewText: 'با متن پیش‌نمایش',
                 withMetadata: 'با متادیتا'
             },
             metadataInfo: {

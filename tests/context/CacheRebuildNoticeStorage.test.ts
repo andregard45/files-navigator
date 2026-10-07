@@ -50,9 +50,9 @@ describe('cacheRebuildNoticeStorage', () => {
         clearCacheRebuildNoticeState();
     });
 
-    it('restores persisted notices that track word count and tasks', () => {
-        setCacheRebuildNoticeState({ total: 12, types: ['wordCount', 'tasks'] });
+    it('restores persisted notices that track file content types', () => {
+        setCacheRebuildNoticeState({ total: 12, types: ['properties', 'metadata'] });
 
-        expect(getCacheRebuildNoticeState()).toEqual({ total: 12, types: ['wordCount', 'tasks'] });
+        expect(getCacheRebuildNoticeState()).toEqual({ total: 12, types: ['properties', 'metadata'] });
     });
 });

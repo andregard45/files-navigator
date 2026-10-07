@@ -2332,7 +2332,6 @@ export const STRINGS_FR = {
                 localCache: 'Cache local',
                 items: 'éléments',
                 withTags: 'avec mots-clés',
-                withPreviewText: 'avec texte de prévisualisation',
                 withMetadata: 'avec métadonnées'
             },
             metadataInfo: {

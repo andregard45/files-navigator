@@ -2320,7 +2320,6 @@ export const STRINGS_VI = {
                 localCache: 'Cache cục bộ',
                 items: 'mục',
                 withTags: 'có thẻ',
-                withPreviewText: 'có văn bản xem trước',
                 withMetadata: 'có metadata'
             },
             metadataInfo: {

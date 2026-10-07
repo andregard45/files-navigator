@@ -2315,7 +2315,6 @@ export const STRINGS_KO = {
                 localCache: '로컬 캐시',
                 items: '항목',
                 withTags: '태그 포함',
-                withPreviewText: '미리보기 텍스트 포함',
                 withMetadata: '메타데이터 포함'
             },
             metadataInfo: {

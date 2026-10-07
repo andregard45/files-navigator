@@ -73,7 +73,6 @@ describe('Content provider retry-later semantics', () => {
             tags: ['old-tag'],
             wordCount: null,
             properties: null,
-            previewStatus: 'none',
             metadata: {}
         };
 
@@ -113,7 +112,6 @@ describe('Content provider retry-later semantics', () => {
             tags: ['old-tag'],
             wordCount: null,
             properties: null,
-            previewStatus: 'none',
             metadata: {}
         };
 
@@ -141,7 +139,6 @@ describe('Content provider retry-later semantics', () => {
             tags: null,
             wordCount: null,
             properties: null,
-            previewStatus: 'none',
             metadata: {}
         };
 
@@ -176,7 +173,6 @@ describe('Content provider retry-later semantics', () => {
             tags: null,
             wordCount: null,
             properties: null,
-            previewStatus: 'none',
             metadata: {}
         };
 
@@ -248,7 +244,6 @@ describe('Content provider retry-later semantics', () => {
             tags: [],
             wordCount: 10,
             properties: null,
-            previewStatus: 'has',
             metadata: {}
         };
 

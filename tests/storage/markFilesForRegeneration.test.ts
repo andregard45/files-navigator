@@ -62,7 +62,6 @@ function createFileData(overrides: Partial<FileData>): FileData {
         characterCountWithSpaces: null,
         characterCountWithoutSpaces: null,
         properties: null,
-        previewStatus: 'unprocessed',
         metadata: null,
         ...overrides
     };

@@ -17,7 +17,7 @@
  */
 
 import type { TFile } from 'obsidian';
-import type { FileData as DBFileData, PreviewTextBatchOp } from '../../storage/IndexedDBStorage';
+import type { FileData as DBFileData } from '../../storage/IndexedDBStorage';
 import { runAsyncAction } from '../../utils/async';
 
 /**
@@ -48,7 +48,6 @@ export interface PendingRenameFlushBuffer {
 export interface RenameFlushStore {
     seedMemoryFile(path: string, data: DBFileData): void;
     setFiles(files: { path: string; data: DBFileData }[]): Promise<void>;
-    movePreviewTexts(ops: PreviewTextBatchOp[]): Promise<void>;
 }
 
 export interface RenameFlushController {
@@ -87,7 +86,6 @@ export function excludeReoccupiedRenameTargets(params: {
 
 /**
  * Persists a buffered rename burst: one `setFiles` for the burst's seeded records, one batched
- * blob move and one batched preview text move per store (each replayed in vault event order),
  * then a content refresh and a diff reschedule. Callers buffer moves into `buffer.moves` at
  * rename-event time and call `scheduleFlush()`.
  */
@@ -139,8 +137,6 @@ export function createRenameFlushController(params: {
             //
             // Content providers can still run during the rename window (before the next diff reconciles the
             // vault). Provider writes fetch the main IndexedDB record for the path first. If the record is
-            // missing, the provider layer creates a default record, which resets preview content fields
-            // and also drops any cached preview text for the path.
             //
             // Keeping real records in IndexedDB avoids the default-record path and preserves the seeded fields
             // until the diff finishes and deletes the old paths.
@@ -149,7 +145,6 @@ export function createRenameFlushController(params: {
             // persists it as-is. When the mtime advanced between the event and the flush (an edit landed
             // in the window), the record is re-stamped and the memory mirror refreshed now, synchronously:
             // `setFiles` never touches the memory cache, so no deferred re-stamp of the seeded records can
-            // overwrite a preview-move cache reconciliation that lands between the transactions' completion
             // callbacks (the two stores' transactions commit in unspecified relative order).
             const records: { path: string; data: DBFileData }[] = [];
             for (const move of moves) {
@@ -161,12 +156,10 @@ export function createRenameFlushController(params: {
                 records.push({ path: move.newPath, data });
                 db.seedMemoryFile(move.newPath, data);
             }
-            const previewOps: PreviewTextBatchOp[] = [];
+
             for (const move of moves) {
                 if (move.wasMarkdown && move.isMarkdown) {
-                    previewOps.push({ type: 'move', oldPath: move.oldPath, newPath: move.newPath });
                 } else if (move.wasMarkdown) {
-                    previewOps.push({ type: 'delete', path: move.oldPath });
                 }
             }
 
@@ -186,10 +179,8 @@ export function createRenameFlushController(params: {
                 }
             );
             // The batched move method handles its own failures and never rejects.
-            const previewMovePromise = db.movePreviewTexts(previewOps);
 
             const persisted = await persistPromise;
-            await previewMovePromise;
 
             if (persisted) {
                 consumePendingRenameData(moves);
@@ -221,7 +212,6 @@ export function createRenameFlushController(params: {
         if (typeof window !== 'undefined') {
             // Zero delay: a folder move fires its rename events in one burst, and the flush's move
             // transactions must be created before the debounced diff (FILE_OPERATION_DELAY) deletes the
-            // old-path records and their stored blobs/preview text.
             buffer.timerId = window.setTimeout(flush, 0);
             return;
         }

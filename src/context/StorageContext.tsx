@@ -93,7 +93,6 @@ interface StorageContextValue {
     getAllTagPaths: () => string[];
     getTagDisplayPath: (path: string) => string;
     getFiles: (paths: string[]) => Map<string, DBFileData>;
-    hasPreview: (path: string) => boolean;
     // Storage initialization state
     isStorageReady: boolean;
     stopAllProcessing: () => void;
@@ -399,7 +398,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         [getFrontmatterMetadata, settings]
     );
 
-    const hasPreview = useCallback((path: string): boolean => getDBInstance().hasPreview(path), []);
 
     /**
      * Memoized context value to prevent unnecessary re-renders
@@ -450,7 +448,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
             getDB: getDBInstance,
             getFile: (path: string) => getDBInstance().getFile(path),
             getFiles: (paths: string[]) => getDBInstance().getFiles(paths),
-            hasPreview,
             isStorageReady,
             getTagTree,
             getPropertyTree,
@@ -466,7 +463,6 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         getFileModifiedTime,
         getFileTimestamps,
         getFileMetadata,
-        hasPreview,
         isStorageReady,
         rebuildCache
     ]);

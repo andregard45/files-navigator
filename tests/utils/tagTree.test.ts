@@ -58,7 +58,6 @@ function createFileData(tags: string[] | null): FileData {
         tags,
         wordCount: null,
         properties: null,
-        previewStatus: 'unprocessed',
         metadata: null
     };
 }

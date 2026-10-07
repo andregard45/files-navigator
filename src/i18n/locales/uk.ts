@@ -2321,7 +2321,6 @@ export const STRINGS_UK = {
                 localCache: 'Локальний кеш',
                 items: 'елементів',
                 withTags: 'з мітками',
-                withPreviewText: 'з текстом попереднього перегляду',
                 withMetadata: 'з метаданими'
             },
             metadataInfo: {

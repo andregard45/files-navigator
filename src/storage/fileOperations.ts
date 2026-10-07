@@ -48,10 +48,6 @@ let isInitializing = false;
 let isShuttingDown = false;
 let isShutdownState = false;
 let initializationPromise: Promise<void> | null = null;
-// Configured preview text LRU size for the current platform.
-let previewTextCacheMaxEntries: number | null = null;
-// Configured preview text load batch size for the current platform.
-let previewLoadMaxBatch: number | null = null;
 
 /**
  * Indicates whether a database shutdown is currently in progress.
@@ -72,20 +68,7 @@ export function getDBInstance(): IndexedDBStorage {
         if (!appId) {
             throw new Error('Database not initialized. Call initializeDatabase(appId) first.');
         }
-        // Build the constructor options from the configured module-level settings.
-        const options: {
-            previewTextCacheMaxEntries?: number;
-            previewLoadMaxBatch?: number;
-        } = {};
-        if (previewTextCacheMaxEntries !== null) {
-            options.previewTextCacheMaxEntries = previewTextCacheMaxEntries;
-        }
-        if (previewLoadMaxBatch !== null) {
-            options.previewLoadMaxBatch = previewLoadMaxBatch;
-        }
-
-        // Only pass options when at least one value is configured.
-        dbInstance = new IndexedDBStorage(appId, Object.keys(options).length > 0 ? options : undefined);
+        dbInstance = new IndexedDBStorage(appId);
     }
     return dbInstance;
 }
@@ -108,13 +91,7 @@ export function getDBInstanceOrNull(): IndexedDBStorage | null {
  *
  * @param appIdParam - The app ID to use for database naming
  */
-export async function initializeDatabase(
-    appIdParam: string,
-    options?: {
-        previewTextCacheMaxEntries?: number;
-        previewLoadMaxBatch?: number;
-    }
-): Promise<void> {
+export async function initializeDatabase(appIdParam: string): Promise<void> {
     if (isShuttingDown) {
         return;
     }
@@ -141,12 +118,6 @@ export async function initializeDatabase(
                 return;
             }
             appId = appIdParam;
-            if (options?.previewTextCacheMaxEntries !== undefined) {
-                previewTextCacheMaxEntries = options.previewTextCacheMaxEntries;
-            }
-            if (options?.previewLoadMaxBatch !== undefined) {
-                previewLoadMaxBatch = options.previewLoadMaxBatch;
-            }
             const db = getDBInstance();
             await db.init();
             if (isShutdownInProgress() || dbInstance !== db) {
@@ -243,8 +214,6 @@ export function shutdownDatabase(): void {
         appId = null;
         isInitializing = false;
         initializationPromise = null;
-        previewTextCacheMaxEntries = null;
-        previewLoadMaxBatch = null;
         isShuttingDown = false;
     }
 }
@@ -300,7 +269,6 @@ export async function recordFileChanges(
                 metadataMtime: renamed.metadataMtime,
                 tags: renamed.tags,
                 properties: renamed.properties,
-                previewStatus: renamed.previewStatus,
                 metadata: renamed.metadata
             };
             const createdData: FileData = { ...renamed, mtime: file.stat.mtime };

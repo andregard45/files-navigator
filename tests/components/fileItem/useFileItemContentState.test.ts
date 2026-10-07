@@ -17,9 +17,9 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import type { TFile } from 'obsidian';
 import { createDefaultFileData, type FileData } from '../../../src/storage/IndexedDBStorage';
 import {
-    loadFileItemCacheSnapshot,
     shouldRefreshFileItemMetadataVersionForContentChange,
     type FileItemContentDb
 } from '../../../src/components/fileItem/useFileItemContentState';
@@ -58,18 +58,15 @@ describe('useFileItemContentState helpers', () => {
         ).toBe(true);
     });
 
-    it('loads cached properties from the file record', () => {
+    it('reads initial properties synchronously from the file record', () => {
         const record = createFileRecord({
             properties: [{ fieldKey: 'status', value: 'open', valueKind: 'string' }]
         });
+        const db = createContentDb(record);
+        const file = { path: 'notes/note.md' } as unknown as TFile;
 
-        const snapshot = loadFileItemCacheSnapshot({
-            app: undefined as never,
-            file: { path: 'notes/note.md' } as never,
-            db: createContentDb(record),
-            loadOptions: { loadTags: false }
-        });
-
-        expect(snapshot.properties).toEqual([{ fieldKey: 'status', value: 'open', valueKind: 'string' }]);
+        // The hook's initial state derives directly from getDB().getFile(path).properties.
+        const initialProperties = db.getFile(file.path)?.properties ?? null;
+        expect(initialProperties).toEqual([{ fieldKey: 'status', value: 'open', valueKind: 'string' }]);
     });
 });

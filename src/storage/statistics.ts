@@ -27,7 +27,6 @@ import { METADATA_SENTINEL, type FileData } from './IndexedDBStorage';
  *
  * What it does:
  * - Calculates statistics about cached content for user insights
- * - Counts files with preview text, feature images, and metadata
  * - Estimates total cache size in megabytes
  *
  * Relationships:
@@ -36,7 +35,6 @@ import { METADATA_SENTINEL, type FileData } from './IndexedDBStorage';
  *
  * Key responsibilities:
  * - Stream through all cached files without loading into memory
- * - Count content types (previews, images, metadata)
  * - Calculate total storage size using JSON serialization
  * - Return statistics for display in settings
  */
@@ -44,7 +42,6 @@ import { METADATA_SENTINEL, type FileData } from './IndexedDBStorage';
 export interface CacheStatistics {
     totalItems: number;
     itemsWithTags: number;
-    itemsWithPreview: number;
     itemsWithMetadata: number;
     totalSizeMB: number;
     // Detailed metadata breakdown
@@ -219,7 +216,6 @@ export async function calculateCacheStatistics(
         const stats: CacheStatistics = {
             totalItems: 0,
             itemsWithTags: 0,
-            itemsWithPreview: 0,
             itemsWithMetadata: 0,
             totalSizeMB: 0,
             itemsWithMetadataName: 0,
@@ -300,17 +296,6 @@ export async function calculateCacheStatistics(
                     }
                 }
             }
-        });
-
-
-        // Stream the preview store for accurate preview counts and sizes.
-        await db.forEachPreviewTextRecord((path, previewText) => {
-            if (excludedFolderPatterns.length > 0 && isPathInExcludedFolder(path, excludedFolderPatterns)) {
-                return;
-            }
-
-            stats.itemsWithPreview++;
-            totalSize += path.length + previewText.length;
         });
 
         // Calculate cache size in MB

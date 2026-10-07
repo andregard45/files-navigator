@@ -31,7 +31,7 @@ import {
     parseFilterSearchTokens
 } from '../../utils/filterSearch';
 import { getDateField } from '../../utils/sortUtils';
-import { normalizeExcerpt } from '../../utils/previewText/previewPipeline';
+import { normalizeExcerpt } from '../../utils/excerptNormalize';
 import { getCachedFileTags } from '../../utils/tagUtils';
 import { createOmnisearchHighlightQueryTokenContext, sanitizeOmnisearchHighlightTokens } from '../../utils/omnisearchHighlight';
 import { foldSearchText } from '../../utils/recordUtils';

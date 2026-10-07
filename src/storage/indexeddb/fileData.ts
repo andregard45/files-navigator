@@ -19,7 +19,7 @@
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
 import { casefold, isPlainObjectRecordValue } from '../../utils/recordUtils';
 
-export type PreviewStatus = 'unprocessed' | 'none' | 'has';
+
 export type PropertyValueKind = 'string' | 'number' | 'boolean';
 
 function isPropertyValueKind(value: unknown): value is PropertyValueKind {
@@ -108,10 +108,6 @@ export function getChangedPropertyKeys(previous: readonly PropertyItem[] | null,
         .sort();
 }
 
-export function getDefaultPreviewStatusForPath(path: string): PreviewStatus {
-    return isMarkdownPath(path) ? 'unprocessed' : 'none';
-}
-
 export function createDefaultFileData(params: { mtime: number; path: string }): FileData {
     const isMarkdown = isMarkdownPath(params.path);
     return {
@@ -121,7 +117,6 @@ export function createDefaultFileData(params: { mtime: number; path: string }): 
         metadataMtime: 0,
         tags: isMarkdown ? null : [],
         properties: null,
-        previewStatus: getDefaultPreviewStatusForPath(params.path),
         metadata: isMarkdown ? null : {}
     };
 }
@@ -147,7 +142,7 @@ export interface FileData {
     /**
      * Last file mtime processed by the markdown pipeline provider.
      *
-     * Used to detect markdown changes even when existing preview/feature image/property values remain visible
+     * Used to detect markdown changes even when existing property values remain visible
      * until regeneration completes.
      */
     markdownPipelineMtime: number;
@@ -161,15 +156,6 @@ export interface FileData {
     metadataMtime: number;
     tags: string[] | null; // null = not extracted yet (e.g. when tags disabled)
     properties: PropertyItem[] | null; // null = not generated yet
-    /**
-     * Preview text processing state.
-     *
-     * Semantics:
-     * - `unprocessed`: content provider has not run yet for this file
-     * - `none`: processed, but no preview text was produced
-     * - `has`: processed and a non-empty preview string exists in the preview store
-     */
-    previewStatus: PreviewStatus;
     metadata: {
         name?: string;
         created?: number; // Valid timestamp, 0 = field not configured, -1 = parse failed
@@ -184,8 +170,6 @@ export interface FileData {
 export interface FileContentChange {
     path: string;
     changes: {
-        preview?: string | null;
-        previewStatus?: PreviewStatus;
         metadata?: FileData['metadata'] | null;
         tags?: string[] | null;
         properties?: FileData['properties'];

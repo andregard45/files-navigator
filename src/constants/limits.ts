@@ -61,20 +61,10 @@ export const LIMITS = {
          * - Values are defaults that can still be overridden by constructor options where supported.
          */
         /**
-         * Maximum number of preview text entries cached in memory.
-         * Previews are small strings; 10k keeps scrolling snappy in large vaults without being too memory heavy.
-         */
-        previewTextCacheMaxEntriesDefault: 10_000,
-        /**
          * Maximum number of formatted date/time strings cached in memory.
          * Keys include the format, timestamp, timezone offset, and UI language.
          */
-        dateFormatCacheMaxEntries: 8192,
-        /**
-         * Maximum number of previews loaded in a single batch when warming the preview cache.
-         * Keeps IndexedDB transactions short and avoids long main-thread stalls.
-         */
-        previewLoadMaxBatchDefault: 50
+        dateFormatCacheMaxEntries: 8192
     },
     contentProvider: {
         /**

@@ -91,7 +91,6 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
             const runToken = cacheRebuildRunTokenRef.current;
             const title = strings.settings.items.rebuildCache.indexingTitle;
             const description = strings.settings.items.rebuildCache.progress;
-            const trackPreview = enabledTypes.includes('preview');
             const trackTags = enabledTypes.includes('tags');
             const trackMetadata = enabledTypes.includes('metadata');
             const trackProperties = enabledTypes.includes('properties');
@@ -182,12 +181,11 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
                         }
                         return trackedFile;
                     };
-                    const needsPreview = trackPreview && isMarkdown && data.previewStatus === 'unprocessed';
                     const needsTags = trackTags && isMarkdown && data.tags === null;
                     const needsMetadata = trackMetadata && isMarkdown && data.metadata === null;
                     const needsProperties = trackProperties && isMarkdown && data.properties === null;
 
-                    if (!needsPreview && !needsTags && !needsMetadata && !needsProperties) {
+                    if (!needsTags && !needsMetadata && !needsProperties) {
                         return;
                     }
 
@@ -201,8 +199,7 @@ export function useCacheRebuildNotice(params: { app: App; stoppedRef: MutableRef
                     }
 
                     const hasMetadataCache = Boolean(app.metadataCache.getFileCache(file));
-                    const isMetadataReady =
-                        hasMetadataCache && (needsPreview || needsProperties || needsTags || needsMetadata);
+                    const isMetadataReady = hasMetadataCache && (needsProperties || needsTags || needsMetadata);
 
                     if (isMetadataReady) {
                         // Track only work that can be queued immediately. Before metadata is ready, providers that

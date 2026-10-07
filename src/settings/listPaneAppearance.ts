@@ -37,8 +37,6 @@ export interface ListPaneAppearanceSettings {
     groupBy: ListNoteGroupingOption;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
     showSearchExcerpt?: boolean;
-    /** Row count used to reserve/clamp the Omnisearch excerpt line area. */
-    readonly previewRows: number;
 }
 
 /**
@@ -206,8 +204,6 @@ export function resolveListPaneAppearance({
         mode,
         titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
         showProperties,
-        // The file-display preview feature was removed; excerpt sizing is a fixed internal constant.
-        previewRows: isCompact ? 1 : SEARCH_EXCERPT_ROWS,
         groupBy: grouping.effectiveGrouping
     };
 }

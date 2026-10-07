@@ -2320,7 +2320,6 @@ export const STRINGS_TR = {
                 localCache: 'Yerel önbellek',
                 items: 'öğe',
                 withTags: 'etiketli',
-                withPreviewText: 'önizleme metinli',
                 withMetadata: 'meta verili'
             },
             metadataInfo: {

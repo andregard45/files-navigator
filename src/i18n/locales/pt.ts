@@ -2326,7 +2326,6 @@ export const STRINGS_PT = {
                 localCache: 'Cache local',
                 items: 'itens',
                 withTags: 'com etiquetas',
-                withPreviewText: 'com texto de pré-visualização',
                 withMetadata: 'com metadados'
             },
             metadataInfo: {

@@ -18,22 +18,20 @@
 
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
 import { type MemoryFileCache } from '../MemoryFileCache';
-import { PREVIEW_STORE_NAME, STORE_NAME } from './constants';
+import { STORE_NAME } from './constants';
 import {
     applyFileMetadataPatch,
-    getDefaultPreviewStatusForPath,
     hasMetadataDecorationChanged,
     hasMetadataHiddenChanged,
     hasMetadataNameChanged,
     type FileContentChange,
-    type FileData,
-    type PreviewStatus
+    type FileData
 } from './fileData';
 
 interface ContentMutationOperationDeps {
     db: IDBDatabase;
     cache: MemoryFileCache;
-    normalizeFileData: (data: Partial<FileData> & { preview?: string | null }) => FileData;
+    normalizeFileData: (data: Partial<FileData>) => FileData;
     emitChanges: (changes: FileContentChange[]) => void;
     normalizeIdbError: (error: unknown, fallbackMessage: string) => Error;
     rejectWithTransactionError: (
@@ -156,30 +154,17 @@ export async function runUpdateFileMetadata(
 
 export async function runBatchClearAllFileContent(
     deps: ContentMutationOperationDeps,
-    params: { type: 'preview' | 'metadata' | 'tags' | 'properties' | 'all' }
+    params: { type: 'metadata' | 'tags' | 'properties' | 'all' }
 ): Promise<void> {
     const { type } = params;
-    const transaction = deps.db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+    const transaction = deps.db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
-    const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
     const changeNotifications: FileContentChange[] = [];
     const cacheUpdates: { path: string; data: FileData }[] = [];
     const op = 'batchClearAllFileContent';
     let lastRequestError: DOMException | Error | null = null;
 
     await new Promise<void>((resolve, reject) => {
-        if (type === 'preview' || type === 'all') {
-            const clearReq = previewStore.clear();
-            clearReq.onerror = () => {
-                lastRequestError = clearReq.error || null;
-                console.error('[IndexedDB] clear failed', {
-                    store: PREVIEW_STORE_NAME,
-                    op,
-                    name: clearReq.error?.name,
-                    message: clearReq.error?.message
-                });
-            };
-        }
         const request = store.openCursor();
 
         request.onsuccess = () => {
@@ -200,15 +185,6 @@ export async function runBatchClearAllFileContent(
                 }
                 const isMarkdown = isMarkdownPath(path);
 
-                if (type === 'preview' || type === 'all') {
-                    const nextPreviewStatus = isMarkdown ? 'unprocessed' : 'none';
-                    if (updated.previewStatus !== nextPreviewStatus) {
-                        updated.previewStatus = nextPreviewStatus;
-                        changes.preview = null;
-                        changes.previewStatus = nextPreviewStatus;
-                        hasChanges = true;
-                    }
-                }
                 if (type === 'metadata' || type === 'all') {
                     if (isMarkdown) {
                         if (updated.metadata !== null) {
@@ -265,10 +241,7 @@ export async function runBatchClearAllFileContent(
                         }
                     };
                     cacheUpdates.push({ path, data: updated });
-                    const hasContentCleared =
-                        changes.preview === null ||
-                        changes.previewStatus !== undefined ||
-                        changes.properties === null;
+                    const hasContentCleared = changes.properties === null;
                     const hasMetadataCleared = changes.metadata === null || changes.tags !== undefined;
                     const clearType = hasContentCleared && hasMetadataCleared ? 'both' : hasContentCleared ? 'content' : 'metadata';
                     const contentChange: FileContentChange = { path, changes, changeType: clearType };
@@ -326,12 +299,11 @@ export async function runBatchClearAllFileContent(
 
 export async function runBatchClearFileContent(
     deps: ContentMutationOperationDeps,
-    params: { paths: string[]; type: 'preview' | 'metadata' | 'tags' | 'properties' | 'all' }
+    params: { paths: string[]; type: 'metadata' | 'tags' | 'properties' | 'all' }
 ): Promise<void> {
     const { paths, type } = params;
-    const transaction = deps.db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+    const transaction = deps.db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
-    const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
     const updates: { path: string; data: FileData }[] = [];
     const changeNotifications: FileContentChange[] = [];
     const op = 'batchClearFileContent';
@@ -356,26 +328,6 @@ export async function runBatchClearFileContent(
                 let metadataNameChanged = false;
                 let metadataDecorationChanged = false;
                 let hasChanges = false;
-                if (type === 'preview' || type === 'all') {
-                    const nextPreviewStatus = getDefaultPreviewStatusForPath(path);
-                    if (file.previewStatus !== nextPreviewStatus) {
-                        file.previewStatus = nextPreviewStatus;
-                        changes.preview = null;
-                        changes.previewStatus = nextPreviewStatus;
-                        hasChanges = true;
-                    }
-                    const deleteReq = previewStore.delete(path);
-                    deleteReq.onerror = () => {
-                        lastRequestError = deleteReq.error || null;
-                        console.error('[IndexedDB] delete failed', {
-                            store: PREVIEW_STORE_NAME,
-                            op,
-                            path,
-                            name: deleteReq.error?.name,
-                            message: deleteReq.error?.message
-                        });
-                    };
-                }
                 if ((type === 'metadata' || type === 'all') && file.metadata !== null) {
                     metadataHiddenChanged = hasMetadataHiddenChanged(file.metadata, null);
                     metadataNameChanged = hasMetadataNameChanged(file.metadata, null);
@@ -407,10 +359,7 @@ export async function runBatchClearFileContent(
                         });
                     };
                     updates.push({ path, data: file });
-                    const hasContentCleared =
-                        changes.preview === null ||
-                        changes.previewStatus !== undefined ||
-                        changes.properties === null;
+                    const hasContentCleared = changes.properties === null;
                     const hasMetadataCleared = changes.metadata === null || changes.tags !== undefined;
                     const clearType = hasContentCleared && hasMetadataCleared ? 'both' : hasContentCleared ? 'content' : 'metadata';
                     const contentChange: FileContentChange = { path, changes, changeType: clearType };

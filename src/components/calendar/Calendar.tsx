@@ -208,7 +208,6 @@ export function Calendar({
     );
 
     const [vaultVersion, setVaultVersion] = useState(0);
-    const [hoverTooltipPreviewVersion, setHoverTooltipPreviewVersion] = useState(0);
     const [metadataVersion, setMetadataVersion] = useState(0);
     const [profileVisibilityVersion, setProfileVisibilityVersion] = useState(0);
     const resolveNoteTarget = useCallback(
@@ -293,17 +292,13 @@ export function Calendar({
         hoverTooltipStyle,
         hoverTooltipRef,
         hoverTooltipStateRef,
-        hoverTooltipPreviewText,
-        shouldShowHoverTooltipPreview,
         hoverTooltipDateText,
         handleShowTooltip,
         handleHideTooltip,
         clearHoverTooltip
     } = useCalendarHoverTooltip({
-        db,
         dateFormat: settings.dateFormat,
-        isMobile,
-        previewVersion: hoverTooltipPreviewVersion
+        isMobile
     });
 
     useEffect(() => {
@@ -391,26 +386,13 @@ export function Calendar({
         }
 
         return db.onContentChange(changes => {
-            const hoverTooltipState = hoverTooltipStateRef.current;
-            const hoverPreviewPath =
-                hoverTooltipState && hoverTooltipState.tooltipData.previewEnabled ? hoverTooltipState.tooltipData.previewPath : null;
-            const shouldTrackHoverPreview = Boolean(hoverPreviewPath);
+            if (!hasFrontmatterVisibilityRules && !hasTagVisibilityRules) {
+                return;
+            }
             // The calendar always shows hidden items, so profile-visibility tracking is unconditional.
-            const shouldTrackProfileVisibility = hasFrontmatterVisibilityRules || hasTagVisibilityRules;
-
-            let hasHoverPreviewChange = !shouldTrackHoverPreview;
-            let hasProfileVisibilityChange = !shouldTrackProfileVisibility;
+            let hasProfileVisibilityChange = false;
 
             for (const change of changes) {
-                if (
-                    !hasHoverPreviewChange &&
-                    hoverPreviewPath &&
-                    change.path === hoverPreviewPath &&
-                    change.changes.preview !== undefined
-                ) {
-                    hasHoverPreviewChange = true;
-                }
-
                 if (
                     !hasProfileVisibilityChange &&
                     profileVisibilityNotePathsRef.current.has(change.path) &&
@@ -418,18 +400,11 @@ export function Calendar({
                         (hasTagVisibilityRules && change.changes.tags !== undefined))
                 ) {
                     hasProfileVisibilityChange = true;
-                }
-
-                if (hasHoverPreviewChange && hasProfileVisibilityChange) {
                     break;
                 }
             }
 
-            if (shouldTrackHoverPreview && hasHoverPreviewChange) {
-                setHoverTooltipPreviewVersion(v => v + 1);
-            }
-
-            if (shouldTrackProfileVisibility && hasProfileVisibilityChange) {
+            if (hasProfileVisibilityChange) {
                 scheduleProfileVisibilityUpdate();
             }
         });
@@ -1614,8 +1589,6 @@ export function Calendar({
                 hoverTooltip={hoverTooltip}
                 hoverTooltipStyle={hoverTooltipStyle}
                 hoverTooltipRef={hoverTooltipRef}
-                hoverTooltipPreviewText={hoverTooltipPreviewText}
-                shouldShowHoverTooltipPreview={shouldShowHoverTooltipPreview}
                 hoverTooltipDateText={hoverTooltipDateText}
             />
             <div

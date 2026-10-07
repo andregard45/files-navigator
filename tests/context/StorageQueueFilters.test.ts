@@ -59,7 +59,6 @@ function createFileData(overrides: Partial<FileData>): FileData {
         tags: null,
         wordCount: null,
         properties: null,
-        previewStatus: 'unprocessed',
         metadata: null,
         ...overrides
     };

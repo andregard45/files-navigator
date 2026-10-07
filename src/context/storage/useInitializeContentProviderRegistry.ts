@@ -27,7 +27,7 @@ import { TagContentProvider } from '../../services/content/TagContentProvider';
 /**
  * Creates and tears down the `ContentProviderRegistry` used by `StorageContext`.
  *
- * The registry owns background queues that generate derived content (preview text, feature images, tags, metadata).
+ * The registry owns background queues that generate derived content (tags, metadata, properties).
  * It is stored in a ref so that:
  * - Event handlers and async callbacks can always reach the current registry instance.
  * - We can stop processing synchronously during teardown without waiting for a render cycle.

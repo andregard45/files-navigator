@@ -2331,7 +2331,6 @@ export const STRINGS_ES = {
                 localCache: 'Caché local',
                 items: 'elementos',
                 withTags: 'con etiquetas',
-                withPreviewText: 'con texto de vista previa',
                 withMetadata: 'con metadatos'
             },
             metadataInfo: {

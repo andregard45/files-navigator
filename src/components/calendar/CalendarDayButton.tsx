@@ -48,17 +48,15 @@ export const CalendarDayButton = React.memo(function CalendarDayButton({
     onShowTooltip
 }: CalendarDayButtonProps) {
     const buttonRef = useRef<HTMLButtonElement | null>(null);
-    const { dateTimestamp, imageUrl, previewEnabled, previewPath, showDate, title } = tooltipData;
+    const { dateTimestamp, imageUrl, showDate, title } = tooltipData;
     const tooltipDataMemo = useMemo<CalendarHoverTooltipData>(
         () => ({
             imageUrl,
             title,
             dateTimestamp,
-            previewPath,
-            previewEnabled,
             showDate
         }),
-        [dateTimestamp, imageUrl, previewEnabled, previewPath, showDate, title]
+        [dateTimestamp, imageUrl, showDate, title]
     );
 
     const handleMouseEnter = useCallback(() => {

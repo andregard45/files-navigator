@@ -21,16 +21,8 @@ import { localStorage } from '../utils/localStorage';
 import type { ContentProviderType, FileContentType } from '../interfaces/IContentProvider';
 import { isMarkdownPath } from '../utils/fileTypeUtils';
 import { MemoryFileCache } from './MemoryFileCache';
-import { PreviewTextCoordinator, type PreviewTextBatchOp } from './indexeddb/previewTextOps';
 import { hydrateCacheFromMainStore } from './indexeddb/cacheHydration';
-import {
-    DB_CONTENT_VERSION,
-    DB_SCHEMA_VERSION,
-    DEFAULT_PREVIEW_LOAD_MAX_BATCH,
-    DEFAULT_PREVIEW_TEXT_CACHE_MAX_ENTRIES,
-    PREVIEW_STORE_NAME,
-    STORE_NAME
-} from './indexeddb/constants';
+import { DB_CONTENT_VERSION, DB_SCHEMA_VERSION, STORE_NAME } from './indexeddb/constants';
 import {
     isVersionError as isVersionErrorValue,
     normalizeIdbError as normalizeIdbErrorValue,
@@ -39,7 +31,7 @@ import {
 import { normalizeFileData as normalizeFileDataValue } from './indexeddb/normalizeFileData';
 import { handleUpgradeNeeded } from './indexeddb/schemaUpgrade';
 import { createDefaultFileData, METADATA_SENTINEL } from './indexeddb/fileData';
-import type { PropertyItem, PropertyValueKind, FileContentChange, FileData, PreviewStatus } from './indexeddb/fileData';
+import type { PropertyItem, PropertyValueKind, FileContentChange, FileData } from './indexeddb/fileData';
 import {
     runBatchUpdateFileContentAndProviderProcessedMtimes,
     type BatchUpdateFileContentAndProviderProcessedMtimesParams
@@ -51,11 +43,9 @@ import {
 } from './indexeddb/contentMutationOperations';
 
 export { createDefaultFileData, METADATA_SENTINEL };
-export type { PropertyItem, PropertyValueKind, FileContentChange, FileData, PreviewStatus, PreviewTextBatchOp };
+export type { PropertyItem, PropertyValueKind, FileContentChange, FileData };
 
 interface IndexedDBStorageOptions {
-    previewTextCacheMaxEntries?: number;
-    previewLoadMaxBatch?: number;
     cache?: MemoryFileCache;
 }
 
@@ -63,7 +53,7 @@ interface IndexedDBStorageOptions {
  * IndexedDBStorage - Browser's IndexedDB wrapper for persistent file storage
  *
  * What it does:
- * - Stores file metadata and generated content (previews, images, frontmatter) in browser IndexedDB
+ * - Stores file metadata and generated content (frontmatter properties, tags) in browser IndexedDB
  * - Provides efficient batch operations for large vaults
  * - Emits real-time change notifications for UI updates
  *
@@ -83,7 +73,6 @@ export class IndexedDBStorage {
     private changeListeners = new Set<(changes: FileContentChange[]) => void>();
     private db: IDBDatabase | null = null;
     private dbName: string;
-    private readonly previewTexts: PreviewTextCoordinator;
     private fileChangeListeners = new Map<string, Set<(changes: FileContentChange['changes']) => void>>();
     private isClosing = false;
     private initPromise: Promise<void> | null = null;
@@ -91,21 +80,7 @@ export class IndexedDBStorage {
 
     constructor(appId: string, options?: IndexedDBStorageOptions) {
         this.dbName = `notebooknavigator/cache/${appId}`;
-        const previewTextCacheMaxEntries = options?.previewTextCacheMaxEntries ?? DEFAULT_PREVIEW_TEXT_CACHE_MAX_ENTRIES;
-        this.cache = options?.cache ?? new MemoryFileCache({ previewTextCacheMaxEntries });
-        const normalizedPreviewTextCacheMaxEntries = Math.max(0, previewTextCacheMaxEntries);
-        const previewLoadMaxBatch = Math.max(1, options?.previewLoadMaxBatch ?? DEFAULT_PREVIEW_LOAD_MAX_BATCH);
-        this.previewTexts = new PreviewTextCoordinator({
-            deps: {
-                cache: this.cache,
-                getDb: () => this.db,
-                init: () => this.init(),
-                isClosing: () => this.isClosing,
-                emitChanges: changes => this.emitChanges(changes)
-            },
-            previewTextCacheMaxEntries: normalizedPreviewTextCacheMaxEntries,
-            previewLoadMaxBatch
-        });
+        this.cache = options?.cache ?? new MemoryFileCache();
     }
 
     consumePendingRebuildNotice(): boolean {
@@ -114,13 +89,13 @@ export class IndexedDBStorage {
         return pending;
     }
 
-    private normalizeFileData(data: Partial<FileData> & { preview?: string | null }): FileData {
+    private normalizeFileData(data: Partial<FileData>): FileData {
         return normalizeFileDataValue(data);
     }
 
     /**
      * Subscribe to content change notifications.
-     * Listeners are called whenever file content (preview, image, metadata) is updated.
+     * Listeners are called whenever file content (properties, tags, metadata) is updated.
      *
      * @param listener - Function to call with content changes
      * @returns Unsubscribe function
@@ -456,9 +431,8 @@ export class IndexedDBStorage {
      */
     private async clearStores(db: IDBDatabase): Promise<void> {
         // Clear stores in one transaction to keep the cache consistent.
-        const transaction = db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+        const transaction = db.transaction([STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
 
         return new Promise((resolve, reject) => {
             const op = 'clear';
@@ -470,15 +444,6 @@ export class IndexedDBStorage {
                     store: STORE_NAME,
                     name: request.error?.name,
                     message: request.error?.message
-                });
-            };
-            const previewRequest = previewStore.clear();
-            previewRequest.onerror = () => {
-                lastRequestError = previewRequest.error || null;
-                console.error('[IndexedDB] clear failed', {
-                    store: PREVIEW_STORE_NAME,
-                    name: previewRequest.error?.name,
-                    message: previewRequest.error?.message
                 });
             };
             transaction.oncomplete = () => {
@@ -531,10 +496,6 @@ export class IndexedDBStorage {
         this.cache.setClonedFile(path, data);
     }
 
-    beginPreviewTextMove(oldPath: string, newPath: string): void {
-        this.previewTexts.beginMove(oldPath, newPath);
-    }
-
     /**
      * Delete a single file from the database by path.
      *
@@ -544,9 +505,8 @@ export class IndexedDBStorage {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
 
-        const transaction = this.db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+        const transaction = this.db.transaction([STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
 
         return new Promise((resolve, reject) => {
             const op = 'delete';
@@ -559,16 +519,6 @@ export class IndexedDBStorage {
                     path,
                     name: request.error?.name,
                     message: request.error?.message
-                });
-            };
-            const previewRequest = previewStore.delete(path);
-            previewRequest.onerror = () => {
-                lastRequestError = previewRequest.error || null;
-                console.error('[IndexedDB] delete failed', {
-                    store: PREVIEW_STORE_NAME,
-                    path,
-                    name: previewRequest.error?.name,
-                    message: previewRequest.error?.message
                 });
             };
             transaction.oncomplete = () => {
@@ -617,8 +567,7 @@ export class IndexedDBStorage {
      *
      * Does not update the memory cache: callers (the rename flush) seed the memory mirror before
      * persisting. A completion-time re-stamp could otherwise run after, and overwrite, a cache
-     * reconciliation performed by another store's completion callback (for example the preview
-     * mover's status downgrade for a missing record).
+     * reconciliation performed by another store's completion callback.
      *
      * @param files - Array of file data with paths to store
      */
@@ -787,9 +736,8 @@ export class IndexedDBStorage {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
 
-        const transaction = this.db.transaction([STORE_NAME, PREVIEW_STORE_NAME], 'readwrite');
+        const transaction = this.db.transaction([STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        const previewStore = transaction.objectStore(PREVIEW_STORE_NAME);
 
         return new Promise((resolve, reject) => {
             const op = 'delete:batch';
@@ -808,16 +756,6 @@ export class IndexedDBStorage {
                         path,
                         name: request.error?.name,
                         message: request.error?.message
-                    });
-                };
-                const previewRequest = previewStore.delete(path);
-                previewRequest.onerror = () => {
-                    lastRequestError = previewRequest.error || null;
-                    console.error('[IndexedDB] delete failed', {
-                        store: PREVIEW_STORE_NAME,
-                        path,
-                        name: previewRequest.error?.name,
-                        message: previewRequest.error?.message
                     });
                 };
             });
@@ -847,23 +785,7 @@ export class IndexedDBStorage {
         });
     }
 
-    /**
-     * Get files with content synchronously.
-     * Returns files that have the specified content type generated.
-     *
-     * @param type - Type of content to check for
-     * @returns Array of files with content
-     */
-    getFilesWithContent(type: 'preview' | 'metadata'): FileData[] {
-        if (!this.cache.isReady()) {
-            return [];
-        }
-        return this.cache.getAllFiles().filter(file => {
-            if (type === 'preview') return file.previewStatus !== 'unprocessed';
-            if (type === 'metadata') return file.metadata !== null;
-            return false;
-        });
-    }
+
 
     /**
      * Count files synchronously.
@@ -918,7 +840,6 @@ export class IndexedDBStorage {
         this.cache.forEachFile((path, data) => {
             if (
                 (type === 'tags' && isMarkdownPath(path) && data.tags === null) ||
-                (type === 'preview' && isMarkdownPath(path) && data.previewStatus === 'unprocessed') ||
                 (type === 'metadata' && isMarkdownPath(path) && data.metadata === null) ||
                 (type === 'properties' && isMarkdownPath(path) && data.properties === null)
             ) {
@@ -934,7 +855,6 @@ export class IndexedDBStorage {
         }
 
         const needsTags = types.includes('tags');
-        const needsPreview = types.includes('preview');
         const needsMetadata = types.includes('metadata');
         const needsProperties = types.includes('properties');
 
@@ -943,7 +863,6 @@ export class IndexedDBStorage {
             const isMarkdown = isMarkdownPath(path);
             if (
                 (needsTags && isMarkdown && data.tags === null) ||
-                (needsPreview && isMarkdown && data.previewStatus === 'unprocessed') ||
                 (needsMetadata && isMarkdown && data.metadata === null) ||
                 (needsProperties && isMarkdown && data.properties === null)
             ) {
@@ -968,9 +887,6 @@ export class IndexedDBStorage {
         this.cache.forEachFile((path, data) => {
             itemCount++;
             totalSize += path.length + JSON.stringify(data).length;
-        });
-        await this.forEachPreviewTextRecord((path, previewText) => {
-            totalSize += path.length + previewText.length;
         });
         const sizeMB = totalSize / 1024 / 1024;
         return { itemCount, sizeMB };
@@ -1039,9 +955,7 @@ export class IndexedDBStorage {
      *
      * @param type - Type of content to clear or 'all'
      */
-    async batchClearAllFileContent(
-        type: 'preview' | 'metadata' | 'tags' | 'properties' | 'all'
-    ): Promise<void> {
+    async batchClearAllFileContent(type: 'metadata' | 'tags' | 'properties' | 'all'): Promise<void> {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
         await runBatchClearAllFileContent(
@@ -1069,7 +983,7 @@ export class IndexedDBStorage {
      */
     async batchClearFileContent(
         paths: string[],
-        type: 'preview' | 'metadata' | 'tags' | 'properties' | 'all'
+        type: 'metadata' | 'tags' | 'properties' | 'all'
     ): Promise<void> {
         await this.init();
         if (!this.db) throw new Error('Database not initialized');
@@ -1132,19 +1046,6 @@ export class IndexedDBStorage {
     }
 
     /**
-     * Check if a file has preview text synchronously.
-     *
-     * @param path - File path to check
-     * @returns True if the file has preview text
-     */
-    hasPreview(path: string): boolean {
-        if (!this.cache.isReady()) {
-            return false;
-        }
-        return this.cache.hasPreview(path);
-    }
-
-    /**
      * Check if a file exists in the database.
      *
      * @param path - File path to check
@@ -1155,25 +1056,6 @@ export class IndexedDBStorage {
             return false;
         }
         return this.cache.hasFile(path);
-    }
-
-    /**
-     * Get preview text from memory cache, returning empty string if null.
-     * Helper method for UI components that need non-null strings.
-     *
-     * @param path - File path to get preview for
-     * @returns Preview text or empty string
-     */
-    getCachedPreviewText(path: string): string {
-        return this.previewTexts.getCachedPreviewText(path);
-    }
-
-    /**
-     * Loads preview text for a single file path into the in-memory cache.
-     * Used by UI components that need preview text without hydrating the full preview store on startup.
-     */
-    async ensurePreviewTextLoaded(path: string): Promise<void> {
-        return this.previewTexts.ensurePreviewTextLoaded(path);
     }
 
     /**
@@ -1191,21 +1073,6 @@ export class IndexedDBStorage {
     }
 
     /**
-     * Stream all preview text records without hydrating them into the main in-memory cache.
-     * Only yields non-empty strings with a string key.
-     */
-    async forEachPreviewTextRecord(callback: (path: string, previewText: string) => void): Promise<void> {
-        await this.previewTexts.forEachPreviewTextRecord(callback);
-    }
-
-    /**
-     * Apply a rename burst's preview store moves and deletes in one transaction, replayed in vault event order.
-     */
-    async movePreviewTexts(ops: PreviewTextBatchOp[]): Promise<void> {
-        await this.previewTexts.movePreviewTexts(ops);
-    }
-
-    /**
      * Close the database connection.
      * Should be called when the plugin is unloaded.
      */
@@ -1217,6 +1084,5 @@ export class IndexedDBStorage {
         }
         this.initPromise = null;
         this.cache.clear();
-        this.previewTexts.close();
     }
 }

@@ -25,7 +25,6 @@ class MockIndexedDBStorage {
     public readonly appId: string;
     public closeCallCount = 0;
     public initCallCount = 0;
-    public warmupCallCount = 0;
 
     constructor(appId: string) {
         this.appId = appId;
@@ -39,10 +38,6 @@ class MockIndexedDBStorage {
     async init(): Promise<void> {
         this.initCallCount += 1;
         this.initialized = true;
-    }
-
-    startPreviewTextWarmup(): void {
-        this.warmupCallCount += 1;
     }
 
     close(): void {
@@ -108,11 +103,4 @@ describe('fileOperations lifecycle', () => {
         expect(indexedDbInstances[1]?.appId).toBe('vault-b');
     });
 
-    it('does not start preview text warmup during database initialization', async () => {
-        const fileOperations = await import('../../src/storage/fileOperations');
-
-        await fileOperations.initializeDatabase('vault-a');
-
-        expect(indexedDbInstances[0]?.warmupCallCount).toBe(0);
-    });
 });

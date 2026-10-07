@@ -2321,7 +2321,6 @@ export const STRINGS_JA = {
                 localCache: 'ローカルキャッシュ',
                 items: '項目',
                 withTags: 'タグ付き',
-                withPreviewText: 'プレビューテキスト付き',
                 withMetadata: 'メタデータ付き'
             },
             metadataInfo: {

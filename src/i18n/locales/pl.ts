@@ -2327,7 +2327,6 @@ export const STRINGS_PL = {
                 localCache: 'Lokalna pamięć podręczna',
                 items: 'elementy',
                 withTags: 'z tagami',
-                withPreviewText: 'z tekstem podglądu',
                 withMetadata: 'z metadanymi'
             },
             metadataInfo: {

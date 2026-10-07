@@ -2313,7 +2313,6 @@ export const STRINGS_TH = {
                 localCache: 'แคชท้องถิ่น',
                 items: 'รายการ',
                 withTags: 'มีแท็ก',
-                withPreviewText: 'มีข้อความตัวอย่าง',
                 withMetadata: 'มีเมตาดาต้า'
             },
             metadataInfo: {

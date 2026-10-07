@@ -75,7 +75,7 @@ async function ensureFrontmatterMetadataCacheMatchesSettings(settings: NotebookN
  * - Initial load: diff the vault against the database, update the cache, build the initial tag tree, and mark
  *   storage as ready.
  * - Live updates: listen to vault events (create/delete/rename/modify) and reconcile the database via diffs.
- * - Derived content: queue content providers for files that changed or still need content (tags, preview text,
+ * - Derived content: queue content providers for files that changed or still need content (tags,
  *   feature images, metadata, properties).
  *
  * Design notes:
@@ -560,30 +560,18 @@ export function useStorageVaultSync(params: {
                     if (existing) {
                         // Renames are handled as "seed + batched move":
                         // - Seed the new path in the in-memory mirror so synchronous reads during the rename window see a consistent record.
-                        // - Begin blob/preview move markers so reads fall back to the old path until the stores move.
-                        // - Buffer the move in event order; the zero-delay flush persists the burst's seeded records
-                        //   and moves stored blobs/preview text in one batched transaction per store.
+                        // - Buffer the move in event order; the zero-delay flush persists the burst's seeded records.
                         // - Schedule a diff afterwards to reconcile final state and update mtimes.
                         const wasMarkdown = isMarkdownPath(oldPath);
                         const isMarkdown = isMarkdownPath(file.path);
-                        const nextPreviewStatus: DBFileData['previewStatus'] = isMarkdown
-                            ? wasMarkdown
-                                ? existing.previewStatus
-                                : 'unprocessed'
-                            : 'none';
                         const seeded: DBFileData = {
                             ...existing,
-                            previewStatus: nextPreviewStatus,
                             markdownPipelineMtime: wasMarkdown && isMarkdown ? 0 : existing.markdownPipelineMtime,
                             metadataMtime: wasMarkdown && isMarkdown ? 0 : existing.metadataMtime
                         };
 
                         pendingRenameDataRef.current.set(file.path, seeded);
                         db.seedMemoryFile(file.path, seeded);
-                        if (wasMarkdown && isMarkdown) {
-                            // Prevent preview status repairs while the preview store key is moving from oldPath -> newPath.
-                            db.beginPreviewTextMove(oldPath, file.path);
-                        }
                         renameFlushBuffer.moves.push({
                             file,
                             oldPath,

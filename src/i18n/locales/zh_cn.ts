@@ -2305,7 +2305,6 @@ export const STRINGS_ZH_CN = {
                 localCache: '本地缓存',
                 items: '项',
                 withTags: '包含标签',
-                withPreviewText: '包含预览文本',
                 withMetadata: '包含元数据'
             },
             metadataInfo: {
