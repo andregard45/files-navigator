@@ -18,6 +18,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Menu, TFolder, type App, type TFile } from 'obsidian';
+import type { PropertyTreeService } from '../services/PropertyTreeService';
+
 import { useSelectionState, useSelectionDispatch } from '../context/SelectionContext';
 import { useServices, useFileSystemOps, useMetadataService } from '../context/ServicesContext';
 import { useSettingsState, useSettingsUpdate } from '../context/SettingsContext';
@@ -56,7 +58,9 @@ import type { ListPaneAppearance } from '../settings/listPaneAppearance';
 import { getFilesForFolder } from '../utils/fileFinder';
 import { runAsyncAction } from '../utils/async';
 import { FILE_VISIBILITY } from '../utils/fileTypeUtils';
-mport { resolveIconForMenu, resolveUXIcon, resolveUXIconForMenu } from '../utils/uxIcons';
+import { ConfirmModal } from '../modals/ConfirmModal';
+import { resolveIconForMenu, resolveUXIcon, resolveUXIconForMenu } from '../utils/uxIcons';
+import { doesFolderContainPath } from '../utils/pathUtils';
 import { buildPropertyKeyNodeId, parsePropertyNodeId } from '../utils/propertyTree';
 import { getFilesForNavigationSelection } from '../utils/selectionUtils';
 import { findVaultProfileById } from '../utils/vaultProfiles';
@@ -85,6 +89,84 @@ type DescendantApplyStats = {
     affectedCount: number;
     disabled: boolean;
 };
+
+function buildDescendantApplyStats(params: {
+    descendantCount: number;
+    descendantEntries: readonly (readonly [string, unknown])[];
+    hasCurrentOverride: boolean;
+    matchesCurrentOverride: (entry: readonly [string, unknown]) => boolean;
+}): DescendantApplyStats {
+    const savedDescendantCount = params.descendantEntries.length;
+    const matchingSavedDescendantCount = params.hasCurrentOverride
+        ? params.descendantEntries.filter(entry => params.matchesCurrentOverride(entry)).length
+        : 0;
+    const changedSavedDescendantCount = savedDescendantCount - matchingSavedDescendantCount;
+    const missingSavedDescendantCount = params.hasCurrentOverride
+        ? Math.max(params.descendantCount - savedDescendantCount, 0)
+        : 0;
+    const affectedCount = changedSavedDescendantCount + missingSavedDescendantCount;
+    return {
+        descendantCount: params.descendantCount,
+        savedDescendantCount,
+        matchingSavedDescendantCount,
+        changedSavedDescendantCount,
+        missingSavedDescendantCount,
+        affectedCount,
+        disabled: params.descendantCount === 0 || affectedCount === 0
+    };
+}
+
+function samePropertySortKey(left: string | undefined, right: string | undefined): boolean {
+    if (left === undefined || right === undefined) {
+        return left === right;
+    }
+    return casefold(left) === casefold(right);
+}
+
+function isFolderDescendantSettingKey(folderPath: string, candidateKey: string): boolean {
+    return doesFolderContainPath(folderPath, candidateKey);
+}
+
+function isTagDescendantSettingKey(tagPath: string, candidateKey: string): boolean {
+    return candidateKey === tagPath || candidateKey.startsWith(`${tagPath}/`);
+}
+
+function isPropertyDescendantSettingKey(nodeId: string, candidateKey: string): boolean {
+    return candidateKey === nodeId || candidateKey.startsWith(`${nodeId}/`);
+}
+
+function collectFolderDescendantPaths(folder: TFolder): string[] {
+    const descendants: string[] = [];
+    const visit = (current: TFolder): void => {
+        for (const child of current.children ?? []) {
+            if (child instanceof TFolder) {
+                descendants.push(child.path);
+                visit(child);
+            }
+        }
+    };
+    visit(folder);
+    return descendants;
+}
+
+function countFolderDescendants(folder: TFolder): number {
+    return collectFolderDescendantPaths(folder).length;
+}
+
+function collectAllPropertyNodeIds(propertyTreeService: PropertyTreeService): string[] {
+    const ids: string[] = [];
+    for (const keyNode of propertyTreeService.getPropertyTree().values()) {
+        ids.push(keyNode.id);
+        for (const id of propertyTreeService.collectDescendantNodeIds(keyNode.id)) {
+            ids.push(id);
+        }
+    }
+    return ids;
+}
+
+function isPropertyRootSelection(selectedProperty: string | null | undefined): boolean {
+    return selectedProperty === PROPERTIES_ROOT_VIRTUAL_FOLDER_ID;
+}
 
 interface UseListActionsOptions {
     trackRevealFileAvailability?: boolean;
@@ -799,7 +881,10 @@ export function useListActions({
                 matchesCurrentOverride: ([, descendantAppearance]) =>
                     hasSelectionAppearanceOverride &&
                     selectionAppearanceOverride !== undefined &&
-                    areStoredListPaneAppearanceFieldsEqual(descendantAppearance, selectionAppearanceOverride)
+                    areStoredListPaneAppearanceFieldsEqual(
+                        descendantAppearance as ListPaneAppearance | undefined,
+                        selectionAppearanceOverride
+                    )
             });
         },
         [
