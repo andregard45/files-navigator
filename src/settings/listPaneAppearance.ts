@@ -33,7 +33,6 @@ export const SEARCH_EXCERPT_ROWS = 2;
 export interface ListPaneAppearanceSettings {
     mode: ListDisplayMode;
     titleRows: number;
-    showProperties: boolean;
     groupBy: ListNoteGroupingOption;
     /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
     showSearchExcerpt?: boolean;
@@ -41,10 +40,9 @@ export interface ListPaneAppearanceSettings {
 
 /**
  * Content toggles that can be stored per folder, tag, or property selection.
- * Both `true` and `false` are persisted so a selection can enable content that
- * the global setting turns off, and hide content that the global setting shows.
+ * The file-display property pills feature was removed; no content toggles remain.
  */
-export const LIST_PANE_TOGGLE_KEYS = ['showProperties'] as const;
+export const LIST_PANE_TOGGLE_KEYS = [] as const;
 
 export type ListPaneToggleKey = (typeof LIST_PANE_TOGGLE_KEYS)[number];
 
@@ -191,9 +189,6 @@ export function resolveListPaneAppearance({
     selectionType: ItemType;
 }): ListPaneAppearanceSettings {
     const mode = resolveListMode({ appearance, defaultMode: getDefaultListMode(settings) });
-    const isCompact = mode === 'compact';
-    const showProperties =
-        (appearance?.showProperties ?? settings.showFileProperties) && (!isCompact || settings.showFilePropertiesInCompactMode);
     const grouping = resolveListGroupingOverride({
         noteGrouping: settings.noteGrouping,
         selectionType,
@@ -203,7 +198,6 @@ export function resolveListPaneAppearance({
     return {
         mode,
         titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
-        showProperties,
         groupBy: grouping.effectiveGrouping
     };
 }

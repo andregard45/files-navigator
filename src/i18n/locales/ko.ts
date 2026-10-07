@@ -434,7 +434,6 @@ export const STRINGS_KO = {
             option: (rows: number) => `${rows}개 제목 행`
         },
         groupBy: '그룹화 기준',
-        properties: '속성',
         resetAppearance: '모양 재설정',
         openPluginSettings: '플러그인 설정 열기…'
     },
@@ -1087,8 +1086,7 @@ export const STRINGS_KO = {
                 description: '제목, 미리보기 텍스트, 대표 이미지, 태그, 속성, 날짜, 단어 수 및 문자 수.',
                 groups: {
                     icon: '아이콘',
-                    title: '제목',
-                    properties: '속성'
+                    title: '제목'
                 }
             },
             calendar: {
@@ -1847,22 +1845,6 @@ export const STRINGS_KO = {
                 desc: '하위 폴더에서 노트를 모을 때 제외할 폴더의 쉼표로 구분된 목록입니다. 폴더는 계속 표시되며, 선택하면 해당 노트가 계속 표시됩니다. 폴더 숨기기와 같은 패턴을 사용합니다.',
                 placeholder: '일지, 자료, /아카이브'
             },
-            showFileProperties: {
-                name: '파일 속성 표시',
-                desc: '파일 항목에 속성을 표시합니다. "속성 키 표시 설정" 대화상자에서 표시할 속성을 선택하세요.'
-            },
-            colorFileProperties: {
-                name: '파일 속성에 색상 적용',
-                desc: '파일 항목의 속성 배지에 속성 색상을 적용합니다.'
-            },
-            showColoredPropertiesFirst: {
-                name: '색상 속성을 먼저 표시',
-                desc: '파일 항목에서 색상 속성을 다른 속성보다 먼저 정렬합니다.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: '컴팩트 모드에서 속성 표시',
-                desc: '컴팩트 모드가 활성화되면 속성을 표시합니다.'
-            },
             propertyKeys: {
                 name: '속성 키 (보관함 프로필)',
                 desc: 'frontmatter 속성 키. 키별로 탐색 창 및 파일 목록의 표시 여부를 설정할 수 있습니다.',
@@ -1870,18 +1852,6 @@ export const STRINGS_KO = {
                 noneConfigured: '구성된 속성 없음',
                 singleConfigured: '1개 속성 구성됨: {properties}',
                 multipleConfigured: '{count}개 속성 구성됨: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: '속성을 별도 행에 표시',
-                desc: '각 속성을 개별 행에 표시합니다.'
-            },
-            linkPropertyPillsToNotes: {
-                name: '속성 배지를 노트에 연결',
-                desc: '속성 배지를 클릭하여 연결된 노트를 엽니다.'
-            },
-            linkPropertyPillsToUrls: {
-                name: '속성 배지를 URL에 연결',
-                desc: '속성 배지를 클릭하여 연결된 URL을 엽니다.'
             },
             dateFormat: {
                 name: '날짜 형식',

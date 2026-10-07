@@ -436,7 +436,6 @@ export const STRINGS_TR = {
             option: (rows: number) => `${rows} başlık satırı`
         },
         groupBy: 'Gruplama ölçütü',
-        properties: 'Özellikler',
         resetAppearance: 'Görünümü sıfırla',
         openPluginSettings: 'Eklenti ayarlarını aç…'
     },
@@ -1089,8 +1088,7 @@ export const STRINGS_TR = {
                     'Başlıklar, önizleme metni, öne çıkan görseller, etiketler, özellikler, tarihler, kelime sayıları ve karakter sayıları.',
                 groups: {
                     icon: 'Simge',
-                    title: 'Başlık',
-                    properties: 'Özellikler'
+                    title: 'Başlık'
                 }
             },
             calendar: {
@@ -1851,22 +1849,6 @@ export const STRINGS_TR = {
                 desc: 'Alt klasörlerden notlar toplanırken atlanacak klasörlerin virgülle ayrılmış listesi. Klasörler görünür kalır ve birini seçmek yine notlarını gösterir. Klasörleri gizle ile aynı desenleri kullanır.',
                 placeholder: 'günlük, kaynaklar, /arşiv'
             },
-            showFileProperties: {
-                name: 'Dosya özelliklerini göster',
-                desc: 'Dosya öğelerinde özellikleri görüntüle. Gösterilecek özellikleri seçmek için "Özellik anahtarı görünürlüğü" iletişim kutusunu kullanın.'
-            },
-            colorFileProperties: {
-                name: 'Dosya özelliklerini renklendir',
-                desc: 'Dosya öğelerindeki özellik rozetlerine özellik renklerini uygula.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Renkli özellikleri önce göster',
-                desc: 'Dosya öğelerinde renkli özellikleri diğer özelliklerden önce sırala.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Kompakt modda özellikleri göster',
-                desc: 'Kompakt mod etkinken özellikleri görüntüle.'
-            },
             propertyKeys: {
                 name: 'Özellik anahtarları (kasa profili)',
                 desc: 'Gezinme ve dosya listesi için anahtar bazında görünürlük ayarlı frontmatter özellik anahtarları.',
@@ -1874,18 +1856,6 @@ export const STRINGS_TR = {
                 noneConfigured: 'Yapılandırılmış özellik yok',
                 singleConfigured: '1 özellik yapılandırıldı: {properties}',
                 multipleConfigured: '{count} özellik yapılandırıldı: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Özellikleri ayrı satırlarda göster',
-                desc: 'Her özelliği kendi satırında göster.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Özellik rozetlerini notlara bağla',
-                desc: 'Bağlantılı notu açmak için bir özellik rozetine tıklayın.'
-            },
-            linkPropertyPillsToUrls: {
-                name: "Özellik rozetlerini URL'lere bağla",
-                desc: "Bağlantılı URL'yi açmak için bir özellik rozetine tıklayın."
             },
             dateFormat: {
                 name: 'Tarih formatı',

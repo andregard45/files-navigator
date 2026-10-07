@@ -439,7 +439,6 @@ export const STRINGS_FR = {
             option: (rows: number) => `${rows} ligne${rows === 1 ? '' : 's'} de titre`
         },
         groupBy: 'Grouper par',
-        properties: 'Propriétés',
         resetAppearance: 'Réinitialiser l’apparence',
         openPluginSettings: 'Ouvrir les paramètres du plugin…'
     },
@@ -1097,8 +1096,7 @@ export const STRINGS_FR = {
                     'Titres, texte d’aperçu, images vedettes, mots-clés, propriétés, dates, nombres de mots et nombres de caractères.',
                 groups: {
                     icon: 'Icône',
-                    title: 'Titre',
-                    properties: 'Propriétés'
+                    title: 'Titre'
                 }
             },
             calendar: {
@@ -1863,22 +1861,6 @@ export const STRINGS_FR = {
                     desc: "Crée la note périodique au démarrage ou via la commande si elle n'existe pas."
                 }
             },
-            showFileProperties: {
-                name: 'Afficher les propriétés de fichier',
-                desc: 'Afficher les propriétés dans les éléments de fichier. Utilisez la fenêtre « Visibilité des clés de propriété » pour choisir les propriétés affichées.'
-            },
-            colorFileProperties: {
-                name: 'Colorer les propriétés de fichier',
-                desc: 'Appliquer les couleurs de propriété aux badges de propriété dans les éléments de fichier.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Afficher les propriétés colorées en premier',
-                desc: 'Trier les propriétés colorées avant les autres propriétés dans les éléments de fichier.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Afficher les propriétés en mode compact',
-                desc: 'Afficher les propriétés lorsque le mode compact est actif.'
-            },
             propertyKeys: {
                 name: 'Clés de propriétés (profil du coffre)',
                 desc: 'Clés de propriétés frontmatter, avec visibilité par clé pour la navigation et la liste de fichiers.',
@@ -1886,18 +1868,6 @@ export const STRINGS_FR = {
                 noneConfigured: 'Aucune propriété configurée',
                 singleConfigured: '1 propriété configurée : {properties}',
                 multipleConfigured: '{count} propriétés configurées : {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Afficher les propriétés sur des lignes séparées',
-                desc: 'Afficher chaque propriété sur sa propre ligne.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Lier les pastilles de propriété aux notes',
-                desc: 'Cliquer sur une pastille de propriété pour ouvrir la note liée.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Lier les pastilles de propriété aux URLs',
-                desc: "Cliquer sur une pastille de propriété pour ouvrir l'URL liée."
             },
             dateFormat: {
                 name: 'Format de date',

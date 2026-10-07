@@ -511,7 +511,6 @@ export interface ListPaneAppearance {
     mode?: ListDisplayMode;
     titleRows?: number;
     groupBy?: ListNoteGroupingOption;
-    showProperties?: boolean;
 }
 
 const PROPERTY_GROUPING_PREFIX = 'property:';
@@ -834,13 +833,6 @@ export interface NotebookNavigatorSettings {
     fileTypeIconPreset: FileTypeIconPreset;
     fileNameRows: number;
     useFolderColorForTitles: boolean;
-    showFileProperties: boolean;
-    colorFileProperties: boolean;
-    prioritizeColoredFileProperties: boolean;
-    showFilePropertiesInCompactMode: boolean;
-    showPropertiesOnSeparateRows: boolean;
-    enablePropertyInternalLinks: boolean;
-    enablePropertyExternalLinks: boolean;
 
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
     calendarPlacement: CalendarPlacement;

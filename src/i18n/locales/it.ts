@@ -435,7 +435,6 @@ export const STRINGS_IT = {
             option: (rows: number) => `${rows} ${rows === 1 ? 'riga' : 'righe'} titolo`
         },
         groupBy: 'Raggruppa per',
-        properties: 'Proprietà',
         resetAppearance: 'Reimposta aspetto',
         openPluginSettings: 'Apri impostazioni del plugin…'
     },
@@ -1090,8 +1089,7 @@ export const STRINGS_IT = {
                     'Titoli, testo anteprima, immagini in evidenza, etichette, proprietà, date, conteggio parole e conteggio caratteri.',
                 groups: {
                     icon: 'Icona',
-                    title: 'Titolo',
-                    properties: 'Proprietà'
+                    title: 'Titolo'
                 }
             },
             calendar: {
@@ -1856,22 +1854,6 @@ export const STRINGS_IT = {
                 desc: 'Lista di cartelle separate da virgola da ignorare quando vengono raccolte le note dalle sottocartelle. Le cartelle restano visibili e selezionandone una vengono comunque mostrate le sue note. Usa gli stessi pattern di Nascondi cartelle.',
                 placeholder: 'giornaliere, risorse, /archivio'
             },
-            showFileProperties: {
-                name: 'Mostra proprietà file',
-                desc: 'Visualizza le proprietà negli elementi file. Usa la finestra "Visibilità chiavi proprietà" per scegliere quali proprietà mostrare.'
-            },
-            colorFileProperties: {
-                name: 'Colora proprietà file',
-                desc: 'Applica i colori delle proprietà ai badge delle proprietà negli elementi file.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Mostra proprietà colorate prima',
-                desc: 'Ordina le proprietà colorate prima delle altre proprietà negli elementi file.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Mostra proprietà in modalità compatta',
-                desc: 'Visualizza le proprietà quando la modalità compatta è attiva.'
-            },
             propertyKeys: {
                 name: 'Chiavi proprietà (profilo vault)',
                 desc: "Chiavi proprietà frontmatter, con visibilità per singola chiave nella navigazione e nell'elenco file.",
@@ -1879,18 +1861,6 @@ export const STRINGS_IT = {
                 noneConfigured: 'Nessuna proprietà configurata',
                 singleConfigured: '1 proprietà configurata: {properties}',
                 multipleConfigured: '{count} proprietà configurate: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Mostra proprietà su righe separate',
-                desc: 'Mostra ogni proprietà sulla propria riga.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Collega i badge proprietà alle note',
-                desc: 'Fai clic su un badge proprietà per aprire la nota collegata.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Collega i badge proprietà agli URL',
-                desc: "Fai clic su un badge proprietà per aprire l'URL collegato."
             },
             dateFormat: {
                 name: 'Formato data',

@@ -16,7 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { TFile } from 'obsidian';
 import { SEARCH_EXCERPT_ROWS } from '../settings/listPaneAppearance';
 import { ItemType, ListPaneItemType, type NavigationItemType } from '../types';
 import type { FileData } from '../storage/IndexedDBStorage';
@@ -107,9 +106,8 @@ export function getSelectedPropertyValuePillToHide({
 }
 
 type FrontmatterPropertyEntry = NonNullable<FileData['properties']>[number];
-type FrontmatterPropertyEntries = NonNullable<FileData['properties']>;
 
-export interface VisibleFrontmatterPropertyEntry {
+interface VisibleFrontmatterPropertyEntry {
     entry: FrontmatterPropertyEntry;
     trimmedFieldKey: string;
     rawValue: string;
@@ -118,7 +116,7 @@ export interface VisibleFrontmatterPropertyEntry {
     propertyNodeId?: string;
 }
 
-export function forEachVisibleFrontmatterProperty({
+function forEachVisibleFrontmatterProperty({
     properties,
     visiblePropertyKeys,
     hiddenPropertyValueNodeId,
@@ -185,9 +183,8 @@ export function forEachVisibleFrontmatterProperty({
 const SEARCH_EXCERPT_SLOT_HEIGHT = DESKTOP_MEASUREMENTS.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
 
 export interface FileRowHeightInputs {
-    /** True when the row carries an Omnisearch excerpt string (only possible during search). */
-    hasSearchExcerptContent: boolean;
-    visiblePillRowCount: number;
+    /** Unused placeholder kept so callers can pass per-item inputs; row height no longer depends on file properties. */
+    hasSearchExcerptContent?: boolean;
 }
 
 export interface FileRowHeightConfig {
@@ -199,179 +196,37 @@ export interface FileRowHeightConfig {
     compactPaddingTotal: number;
 }
 
-/** Flat estimator for regular (non-search) file rows: title + property pill rows only. */
-export function estimatePlainRowHeight(config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>, visiblePillRowCount: number): number {
+/** Flat estimator for regular (non-search) file rows: title only. */
+export function estimatePlainRowHeight(config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>): number {
     const titleContentHeight = config.heights.titleLineHeight * config.titleRows;
-    if (visiblePillRowCount <= 0) {
-        return config.heights.basePadding + titleContentHeight;
-    }
-    if (visiblePillRowCount === 1) {
-        return config.heights.basePadding + titleContentHeight + config.heights.tagRowHeight;
-    }
-    return config.heights.basePadding + titleContentHeight + config.heights.tagRowHeight * visiblePillRowCount;
+    return config.heights.basePadding + titleContentHeight;
 }
 
 /**
  * Flat estimator for Omnisearch search-result rows. The excerpt slot always reserves
- * `SEARCH_EXCERPT_ROWS` clamped lines; extra property pill rows add to that baseline.
+ * `SEARCH_EXCERPT_ROWS` clamped lines.
  */
 export function estimateSearchRowHeight(
-    config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>,
-    { visiblePillRowCount }: { visiblePillRowCount: number }
+    config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>
 ): number {
     const titleContentHeight = config.heights.titleLineHeight * config.titleRows;
-    const pillRowsExtraHeight = Math.max(0, config.heights.tagRowHeight * visiblePillRowCount - SEARCH_EXCERPT_SLOT_HEIGHT);
-    return config.heights.basePadding + titleContentHeight + SEARCH_EXCERPT_SLOT_HEIGHT + pillRowsExtraHeight;
+    return config.heights.basePadding + titleContentHeight + SEARCH_EXCERPT_SLOT_HEIGHT;
 }
 
 export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
     const { heights, titleRows, compactPaddingTotal } = config;
-    const visiblePillRowCount = Math.max(0, inputs.visiblePillRowCount);
 
     if (config.isCompactMode) {
-        const textContentHeight = heights.titleLineHeight * titleRows + heights.tagRowHeight * visiblePillRowCount;
+        const textContentHeight = heights.titleLineHeight * titleRows;
         return compactPaddingTotal + textContentHeight;
     }
 
     // Excerpt rows are only ever reserved while the Omnisearch excerpt feature is on;
     // it no longer matters whether this particular row actually has excerpt text.
     if (config.showSearchExcerpt) {
-        return estimateSearchRowHeight(config, { visiblePillRowCount });
+        return estimateSearchRowHeight(config);
     }
 
-    return estimatePlainRowHeight(config, visiblePillRowCount);
+    return estimatePlainRowHeight(config);
 }
 
-type VisibleFrontmatterPropertySummary = {
-    hasVisiblePills: boolean;
-    separateRowCount: number;
-};
-
-const EMPTY_VISIBLE_FRONTMATTER_PROPERTY_SUMMARY: VisibleFrontmatterPropertySummary = {
-    hasVisiblePills: false,
-    separateRowCount: 0
-};
-
-type VisibleFrontmatterPropertySummaryCache = {
-    unfiltered: Map<string, VisibleFrontmatterPropertySummary>;
-    filtered: WeakMap<ReadonlySet<string>, Map<string, VisibleFrontmatterPropertySummary>>;
-};
-
-const visibleFrontmatterPropertySummaryCache = new WeakMap<FrontmatterPropertyEntries, VisibleFrontmatterPropertySummaryCache>();
-
-function getVisibleFrontmatterPropertySummary({
-    properties,
-    visiblePropertyKeys,
-    hiddenPropertyValueNodeId
-}: {
-    properties: FileData['properties'] | undefined;
-    visiblePropertyKeys?: ReadonlySet<string>;
-    hiddenPropertyValueNodeId?: string | null;
-}): VisibleFrontmatterPropertySummary {
-    if (!properties || properties.length === 0) {
-        return EMPTY_VISIBLE_FRONTMATTER_PROPERTY_SUMMARY;
-    }
-
-    let cacheContainer = visibleFrontmatterPropertySummaryCache.get(properties);
-    if (!cacheContainer) {
-        cacheContainer = {
-            unfiltered: new Map<string, VisibleFrontmatterPropertySummary>(),
-            filtered: new WeakMap<ReadonlySet<string>, Map<string, VisibleFrontmatterPropertySummary>>()
-        };
-        visibleFrontmatterPropertySummaryCache.set(properties, cacheContainer);
-    }
-
-    let cacheBucket: Map<string, VisibleFrontmatterPropertySummary>;
-    if (!visiblePropertyKeys) {
-        cacheBucket = cacheContainer.unfiltered;
-    } else {
-        const existingFilteredBucket = cacheContainer.filtered.get(visiblePropertyKeys);
-        if (existingFilteredBucket) {
-            cacheBucket = existingFilteredBucket;
-        } else {
-            cacheBucket = new Map<string, VisibleFrontmatterPropertySummary>();
-            cacheContainer.filtered.set(visiblePropertyKeys, cacheBucket);
-        }
-    }
-
-    const hiddenPropertyCacheKey = hiddenPropertyValueNodeId ?? '';
-    const cachedSummary = cacheBucket.get(hiddenPropertyCacheKey);
-    if (cachedSummary) {
-        return cachedSummary;
-    }
-
-    let hasVisiblePills = false;
-    let hasUnkeyedRow = false;
-    const separateRows = new Set<string>();
-
-    forEachVisibleFrontmatterProperty({
-        properties,
-        visiblePropertyKeys,
-        hiddenPropertyValueNodeId,
-        visitor: ({ trimmedFieldKey }) => {
-            hasVisiblePills = true;
-
-            if (trimmedFieldKey.length === 0) {
-                hasUnkeyedRow = true;
-                return;
-            }
-
-            separateRows.add(trimmedFieldKey);
-        }
-    });
-
-    const summary = {
-        hasVisiblePills,
-        separateRowCount: separateRows.size + (hasUnkeyedRow ? 1 : 0)
-    };
-    cacheBucket.set(hiddenPropertyCacheKey, summary);
-    return summary;
-}
-
-export function getPropertyRowCount({
-    showFileProperties,
-    showPropertiesOnSeparateRows,
-    showFilePropertiesInCompactMode,
-    isCompactMode,
-    file,
-    properties,
-    visiblePropertyKeys,
-    hiddenPropertyValueNodeId
-}: {
-    showFileProperties: boolean;
-    showPropertiesOnSeparateRows: boolean;
-    showFilePropertiesInCompactMode: boolean;
-    isCompactMode: boolean;
-    file: TFile | null;
-    properties: FileData['properties'] | undefined;
-    visiblePropertyKeys?: ReadonlySet<string>;
-    hiddenPropertyValueNodeId?: string | null;
-}): number {
-    // Computes the number of visual rows the property area will occupy.
-    // This is used by the list pane virtualizer height estimator and must stay consistent with FileItem rendering.
-    if (!file || file.extension !== 'md') {
-        return 0;
-    }
-
-    if (isCompactMode && !showFilePropertiesInCompactMode) {
-        return 0;
-    }
-
-    const propertySummary = showFileProperties
-        ? getVisibleFrontmatterPropertySummary({
-              properties,
-              visiblePropertyKeys,
-              hiddenPropertyValueNodeId
-          })
-        : EMPTY_VISIBLE_FRONTMATTER_PROPERTY_SUMMARY;
-
-    if (!propertySummary.hasVisiblePills) {
-        return 0;
-    }
-
-    if (!showPropertiesOnSeparateRows) {
-        return 1;
-    }
-
-    return propertySummary.separateRowCount;
-}

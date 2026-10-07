@@ -115,13 +115,6 @@ const BOOLEAN_SETTING_KEYS = [
     'showFilenameMatchIcons',
     'showCategoryIcons',
     'useFolderColorForTitles',
-    'showFileProperties',
-    'colorFileProperties',
-    'prioritizeColoredFileProperties',
-    'showFilePropertiesInCompactMode',
-    'showPropertiesOnSeparateRows',
-    'enablePropertyInternalLinks',
-    'enablePropertyExternalLinks',
     'showSelectedNavigationPills',
     'colorListPaneTitle',
     'stickyGroupHeaders',
@@ -200,8 +193,6 @@ export const NATIVE_SETTING_DOM_STATE_REFRESH_KEYS: ReadonlySet<NativeSettingCon
     'showFileIcons',
     'showFilenameMatchIcons',
     'showCategoryIcons',
-    'showFileProperties',
-    'colorFileProperties',
     'showNoteCount',
     'springLoadedFolders'
 ]);

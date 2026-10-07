@@ -23,8 +23,7 @@ import {
     hasStoredListPaneAppearanceOverride,
     mergeListPaneAppearanceAndGrouping,
     resolveListPaneAppearance,
-    type ListPaneAppearance,
-    type ListPaneToggleKey
+    type ListPaneAppearance
 } from '../settings/listPaneAppearance';
 import { strings } from '../i18n';
 import type { ListDisplayMode, NotebookNavigatorSettings } from '../settings/types';
@@ -65,15 +64,6 @@ interface ChoiceOption<T> {
     value: T;
     title: string;
     checked: boolean;
-}
-
-interface ContentToggle {
-    key: ListPaneToggleKey;
-    title: string;
-    icon: string;
-    globalDefault: boolean;
-    /** Toggles are hidden when the current mode or a master setting cannot render the content. */
-    available: boolean;
 }
 
 export function showListPaneAppearanceMenu({
@@ -262,43 +252,6 @@ export function showListPaneAppearanceMenu({
         })),
         onSelect: titleRows => updateAppearance({ titleRows: titleRows === settings.fileNameRows ? undefined : titleRows })
     });
-
-    const contentToggles: ContentToggle[] = [
-        {
-            key: 'showProperties',
-            title: strings.folderAppearance.properties,
-            icon: resolveUXIconForMenu(settings.interfaceIcons, 'nav-properties'),
-            globalDefault: settings.showFileProperties,
-            available: !isCompact || settings.showFilePropertiesInCompactMode
-        }
-    ];
-
-    // Each group opens with a separator. A group whose toggles are all unavailable is skipped
-    // entirely so the menu never renders a separator with nothing below it.
-    const addToggleGroup = (toggles: ContentToggle[]): void => {
-        const visibleToggles = toggles.filter(toggle => toggle.available);
-        if (visibleToggles.length === 0) {
-            return;
-        }
-        menu.addSeparator();
-        visibleToggles.forEach(toggle => {
-            const stored = storedFields?.[toggle.key];
-            const effective = stored ?? toggle.globalDefault;
-            menu.addItem(item => {
-                setItemTitle(item, toggle.title, stored !== undefined);
-                item.setIcon(toggle.icon)
-                    .setChecked(effective)
-                    .onClick(() => {
-                        // A toggle matching the global setting is stored as inherited, so it follows future global changes.
-                        const next = !effective;
-                        const updates: Partial<ListPaneAppearance> = {};
-                        updates[toggle.key] = next === toggle.globalDefault ? undefined : next;
-                        updateAppearance(updates);
-                    });
-            });
-        });
-    };
-    addToggleGroup(contentToggles);
 
     if (descendantAction) {
         menu.addSeparator();

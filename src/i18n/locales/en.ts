@@ -435,7 +435,6 @@ export const STRINGS_EN = {
             option: (rows: number) => `${rows} title row${rows === 1 ? '' : 's'}`
         },
         groupBy: 'Group by',
-        properties: 'Properties',
         resetAppearance: 'Reset appearance',
         openPluginSettings: 'Open plugin settings…'
     },
@@ -1084,8 +1083,7 @@ export const STRINGS_EN = {
                 description: 'Titles, preview text, feature images, tags, properties, and dates.',
                 groups: {
                     icon: 'Icon',
-                    title: 'Title',
-                    properties: 'Properties'
+                    title: 'Title'
                 }
             },
             calendar: {
@@ -1845,22 +1843,6 @@ export const STRINGS_EN = {
                 desc: 'Comma-separated list of folders to omit when collecting notes from subfolders. Folders remain visible, and selecting one still shows its notes. Uses the same patterns as Hide folders.',
                 placeholder: 'daily, resources, /archive'
             },
-            showFileProperties: {
-                name: 'Show file properties',
-                desc: 'Display properties on file items. Use the property key visibility modal to choose which properties are shown.'
-            },
-            colorFileProperties: {
-                name: 'Color file properties',
-                desc: 'Apply property colors to property badges on file items.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Show colored properties first',
-                desc: 'Sort colored properties before other properties on file items.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Show properties in compact mode',
-                desc: 'Display properties when compact mode is active.'
-            },
             propertyKeys: {
                 name: 'Property keys (vault profile)',
                 desc: 'Frontmatter property keys, with per-key visibility for navigation and file list.',
@@ -1868,18 +1850,6 @@ export const STRINGS_EN = {
                 noneConfigured: 'No properties configured',
                 singleConfigured: '1 property configured: {properties}',
                 multipleConfigured: '{count} properties configured: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Show properties on separate rows',
-                desc: 'Display each property on its own row.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Link property pills to notes',
-                desc: 'Click a property pill to open the linked note.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Link property pills to URLs',
-                desc: 'Click a property pill to open the linked URL.'
             },
             dateFormat: {
                 name: 'Date format',

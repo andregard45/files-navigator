@@ -53,7 +53,6 @@ import { ListPaneItemType, OVERSCAN } from '../types';
 import { Align, ListScrollIntent, getListAlign, rankListPending } from '../types/scroll';
 import type { ListPaneItem } from '../types/virtualization';
 import { type NotebookNavigatorSettings, type SortOption } from '../settings/types';
-import type { FileContentChange, FileData, IndexedDBStorage } from '../storage/IndexedDBStorage';
 import type { SelectionDispatch, SelectionState } from '../context/SelectionContext';
 import { calculateCompactListMetrics } from '../utils/listPaneMetrics';
 import {
@@ -62,8 +61,7 @@ import {
     type FileRowHeightInputs,
     getSelectedPropertyValuePillToHide,
     getListPaneHeaderHeight,
-    getListPaneMeasurements,
-    getPropertyRowCount
+    getListPaneMeasurements
 } from '../utils/listPaneMeasurements';
 import type { PropertySelectionNodeId } from '../utils/propertyTree';
 import { getListSortOverrideForSelection, resolveListSort } from '../utils/sortUtils';
@@ -107,10 +105,6 @@ interface UseListPaneScrollParams {
     includeDescendantNotes: boolean;
     /** Signature that changes when any list group collapse state changes */
     groupCollapseStateSignature: string;
-    /** Visible frontmatter property keys for file list rows (normalized keys) */
-    visiblePropertyKeys: ReadonlySet<string>;
-    /** Stable key signature for visible frontmatter property keys */
-    visiblePropertyKeySignature: string;
     /** Scroll margin used to offset the visible range and scrollToIndex alignment */
     scrollMargin?: number;
     /**
@@ -152,30 +146,18 @@ type ListLayoutSignatureSettings = Pick<
     NotebookNavigatorSettings,
     | 'compactItemHeight'
     | 'compactItemHeightScaleText'
-    | 'showFilePropertiesInCompactMode'
-    | 'showPropertiesOnSeparateRows'
     | 'showSelectedNavigationPills'
 >;
 
 export interface ListFileRowSizingConfig extends FileRowHeightConfig {
     isCompactMode: boolean;
-    frontmatterPropertyRowsPossible: boolean;
-    propertyRowsPossible: boolean;
-    showFileProperties: boolean;
-    showPropertiesOnSeparateRows: boolean;
-    showFilePropertiesInCompactMode: boolean;
     selectionType: SelectionState['selectionType'];
     includeDescendantNotes: boolean;
     selectedPropertyValueNodeIdToHide: string | null;
-    visiblePropertyKeys: ReadonlySet<string>;
 }
 
-export type ListRowHeightAffectingContentChangeConfig = Pick<ListFileRowSizingConfig, 'frontmatterPropertyRowsPossible'>;
-
 interface ResolveListFileRowHeightInputsParams {
-    db: IndexedDBStorage;
     item: ListPaneItem;
-    file: TFile;
     config: ListFileRowSizingConfig;
 }
 
@@ -218,7 +200,6 @@ interface ListLayoutSignatureParams {
     selectionType: SelectionState['selectionType'];
     selectedPropertyValueNodeIdToHide: string | null;
     includeDescendantNotes: boolean;
-    visiblePropertyKeySignature: string;
     listMeasurements: ReturnType<typeof getListPaneMeasurements>;
 }
 
@@ -245,7 +226,6 @@ function getListLayoutSignature({
     selectionType,
     selectedPropertyValueNodeIdToHide,
     includeDescendantNotes,
-    visiblePropertyKeySignature,
     listMeasurements
 }: ListLayoutSignatureParams): string {
     // Lightweight tagged concat instead of JSON.stringify; runs on every layout input change.
@@ -255,11 +235,7 @@ function getListLayoutSignature({
         'titleRows', folderSettings.titleRows,
         'groupBy', folderSettings.groupBy,
         'searchExcerpt', folderSettings.showSearchExcerpt ? 1 : 0,
-        'showProperties', folderSettings.showProperties ? 1 : 0,
-        'propsCompact', settings.showFilePropertiesInCompactMode ? 1 : 0,
-        'propsSeparate', settings.showPropertiesOnSeparateRows ? 1 : 0,
         'selectedPills', settings.showSelectedNavigationPills ? 1 : 0,
-        'visibleKeys', visiblePropertyKeySignature,
         'selectionType', selectionType ?? '',
         'hiddenPill', selectedPropertyValueNodeIdToHide ?? '',
         'descendants', includeDescendantNotes ? 1 : 0,
@@ -293,13 +269,6 @@ function getScrollPreservationSignature({
         'propSortKey', propertySortKey ?? '',
         'propSortSecondary', propertySortSecondary ?? ''
     ].join('|');
-}
-
-export function isListRowHeightAffectingContentChange(
-    change: FileContentChange,
-    config: ListRowHeightAffectingContentChangeConfig
-): boolean {
-    return change.changes.properties !== undefined && config.frontmatterPropertyRowsPossible;
 }
 
 export function createRemeasureScheduler(measure: () => void): { schedule: () => void; cancel: () => void } {
@@ -348,35 +317,14 @@ function getStickyHeaderHeightBeforeIndex(
 }
 
 export function resolveListFileRowHeightInputs({
-    db,
     item,
-    file,
     config
 }: ResolveListFileRowHeightInputsParams): FileRowHeightInputs {
-    let fileRecord: FileData | null = null;
-    if (config.propertyRowsPossible) {
-        fileRecord = db.getFile(file.path);
-    }
-
     const hasSearchExcerptContent =
         config.showSearchExcerpt && typeof item.searchMeta?.excerpt === 'string' && item.searchMeta.excerpt.length > 0;
 
-    const propertyRowCount = config.propertyRowsPossible
-        ? getPropertyRowCount({
-                  showFileProperties: config.showFileProperties,
-                  showPropertiesOnSeparateRows: config.showPropertiesOnSeparateRows,
-                  showFilePropertiesInCompactMode: config.showFilePropertiesInCompactMode,
-                  isCompactMode: config.isCompactMode,
-                  file,
-                  properties: fileRecord?.properties ?? undefined,
-                  visiblePropertyKeys: config.visiblePropertyKeys,
-                  hiddenPropertyValueNodeId: config.selectedPropertyValueNodeIdToHide
-              })
-        : 0;
-
     return {
-        hasSearchExcerptContent,
-        visiblePillRowCount: propertyRowCount
+        hasSearchExcerptContent
     };
 }
 
@@ -405,8 +353,6 @@ export function useListPaneScroll({
     topSpacerHeight,
     includeDescendantNotes,
     groupCollapseStateSignature,
-    visiblePropertyKeys,
-    visiblePropertyKeySignature,
     scrollMargin = 0,
     scrollPaddingEnd = 0,
     onVirtualizerScrollingChange,
@@ -496,42 +442,26 @@ export function useListPaneScroll({
             }),
         [selectionState.selectedProperty, selectionState.selectionType, settings.showSelectedNavigationPills]
     );
-    const rowSizingConfig = useMemo<ListFileRowSizingConfig>(() => {
-        const canShowPropertiesInCurrentMode = !isCompactMode || settings.showFilePropertiesInCompactMode;
-        const showFrontmatterPropertyRows = folderSettings.showProperties && visiblePropertyKeys.size > 0;
-        const frontmatterPropertyRowsPossible = canShowPropertiesInCurrentMode && showFrontmatterPropertyRows;
-
-        return {
-            heights: listMeasurements,
-            titleRows: folderSettings.titleRows || 1,
-            showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
-            compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
-            isCompactMode,
-            frontmatterPropertyRowsPossible,
-            propertyRowsPossible: canShowPropertiesInCurrentMode && showFrontmatterPropertyRows,
-            showFileProperties: folderSettings.showProperties,
-            showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
-            showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
-            selectionType: selectionState.selectionType,
-            includeDescendantNotes,
-            selectedPropertyValueNodeIdToHide,
-            visiblePropertyKeys
-        };
-    }, [
+    const rowSizingConfig = useMemo<ListFileRowSizingConfig>(() => ({
+        heights: listMeasurements,
+        titleRows: folderSettings.titleRows || 1,
+        showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
+        compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
+        isCompactMode,
+        selectionType: selectionState.selectionType,
+        includeDescendantNotes,
+        selectedPropertyValueNodeIdToHide
+    }), [
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
         folderSettings.showSearchExcerpt,
-        folderSettings.showProperties,
         folderSettings.titleRows,
         includeDescendantNotes,
         isCompactMode,
         isMobile,
         listMeasurements,
         selectedPropertyValueNodeIdToHide,
-        selectionState.selectionType,
-        settings.showFilePropertiesInCompactMode,
-        settings.showPropertiesOnSeparateRows,
-        visiblePropertyKeys
+        selectionState.selectionType
     ]);
     const getListItemKey = useCallback((index: number) => listItems[index]?.key ?? index, [listItems]);
 
@@ -580,9 +510,7 @@ export function useListPaneScroll({
             if (item.type === ListPaneItemType.FILE && item.data instanceof TFile) {
                 return estimateFileRowHeight(
                     resolveListFileRowHeightInputs({
-                        db,
                         item,
-                        file: item.data,
                         config: rowSizingConfig
                     }),
                     rowSizingConfig
@@ -687,15 +615,11 @@ export function useListPaneScroll({
         () => ({
             compactItemHeight: settings.compactItemHeight,
             compactItemHeightScaleText: settings.compactItemHeightScaleText,
-            showFilePropertiesInCompactMode: settings.showFilePropertiesInCompactMode,
-            showPropertiesOnSeparateRows: settings.showPropertiesOnSeparateRows,
             showSelectedNavigationPills: settings.showSelectedNavigationPills
         }),
         [
             settings.compactItemHeight,
             settings.compactItemHeightScaleText,
-            settings.showFilePropertiesInCompactMode,
-            settings.showPropertiesOnSeparateRows,
             settings.showSelectedNavigationPills
         ]
     );
@@ -708,7 +632,6 @@ export function useListPaneScroll({
                 selectionType: selectionState.selectionType,
                 selectedPropertyValueNodeIdToHide,
                 includeDescendantNotes,
-                visiblePropertyKeySignature,
                 listMeasurements
             }),
         [
@@ -718,7 +641,6 @@ export function useListPaneScroll({
             selectionState.selectionType,
             selectedPropertyValueNodeIdToHide,
             includeDescendantNotes,
-            visiblePropertyKeySignature,
             listMeasurements
         ]
     );
@@ -995,29 +917,18 @@ export function useListPaneScroll({
     }, [executePendingScroll, rowVirtualizer, isScrollContainerReady, pendingScrollVersion, selectedFilePath]);
 
     /**
-     * Subscribe to database content changes and refresh virtualizer size estimates when needed.
-     * Handles preview text, feature images, tags, properties, and word count changes.
+     * Cancel any pending remeasure frame when the virtualizer is torn down.
+     * File row heights no longer depend on frontmatter properties (property pills were
+     * removed from the file display), so content-change-driven remeasures are unnecessary.
      */
     useEffect(() => {
-        if (!enabled || !rowVirtualizer) return;
+        if (!enabled) return;
 
-        const db = getDB();
         const remeasureScheduler = remeasureSchedulerRef.current;
-        const unsubscribe = db.onContentChange(changes => {
-            const needsRemeasure = changes.some(change => {
-                return filePathToIndex.has(change.path) && isListRowHeightAffectingContentChange(change, rowSizingConfig);
-            });
-
-            if (needsRemeasure) {
-                remeasureScheduler?.schedule();
-            }
-        });
-
         return () => {
-            unsubscribe();
             remeasureScheduler?.cancel();
         };
-    }, [enabled, filePathToIndex, getDB, rowSizingConfig, rowVirtualizer]);
+    }, [enabled]);
 
     /**
      * Listen for mobile drawer visibility events.

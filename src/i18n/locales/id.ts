@@ -436,7 +436,6 @@ export const STRINGS_ID = {
             option: (rows: number) => `${rows} baris judul`
         },
         groupBy: 'Kelompokkan berdasarkan',
-        properties: 'Properti',
         resetAppearance: 'Atur ulang tampilan',
         openPluginSettings: 'Buka pengaturan plugin…'
     },
@@ -1091,8 +1090,7 @@ export const STRINGS_ID = {
                 description: 'Judul, teks pratinjau, gambar unggulan, tag, properti, tanggal, jumlah kata, dan jumlah karakter.',
                 groups: {
                     icon: 'Ikon',
-                    title: 'Judul',
-                    properties: 'Properti'
+                    title: 'Judul'
                 }
             },
             calendar: {
@@ -1853,22 +1851,6 @@ export const STRINGS_ID = {
                 desc: 'Daftar folder yang dipisahkan koma untuk dilewati saat mengumpulkan catatan dari subfolder. Folder tetap terlihat, dan memilih folder tetap menampilkan catatannya. Menggunakan pola yang sama seperti Sembunyikan folder.',
                 placeholder: 'harian, sumber-daya, /arsip'
             },
-            showFileProperties: {
-                name: 'Tampilkan properti file',
-                desc: 'Tampilkan properti di item file. Gunakan dialog visibilitas kunci properti untuk memilih properti yang ditampilkan.'
-            },
-            colorFileProperties: {
-                name: 'Warnai properti file',
-                desc: 'Terapkan warna properti pada lencana properti di item file.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Tampilkan properti berwarna terlebih dahulu',
-                desc: 'Urutkan properti berwarna sebelum properti lain di item file.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Tampilkan properti dalam mode kompak',
-                desc: 'Tampilkan properti saat mode kompak aktif.'
-            },
             propertyKeys: {
                 name: 'Kunci properti (profil vault)',
                 desc: 'Kunci properti frontmatter, dengan visibilitas per kunci untuk navigasi dan daftar file.',
@@ -1876,18 +1858,6 @@ export const STRINGS_ID = {
                 noneConfigured: 'Tidak ada properti yang dikonfigurasi',
                 singleConfigured: '1 properti dikonfigurasi: {properties}',
                 multipleConfigured: '{count} properti dikonfigurasi: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Tampilkan properti pada baris terpisah',
-                desc: 'Tampilkan setiap properti pada barisnya sendiri.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Tautkan pil properti ke catatan',
-                desc: 'Klik pil properti untuk membuka catatan yang ditautkan.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Tautkan pil properti ke URL',
-                desc: 'Klik pil properti untuk membuka URL yang ditautkan.'
             },
             dateFormat: {
                 name: 'Format tanggal',

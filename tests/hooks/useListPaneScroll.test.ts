@@ -18,27 +18,16 @@
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TFile } from 'obsidian';
-import { ItemType, ListPaneItemType } from '../../src/types';
+import { ListPaneItemType } from '../../src/types';
 import type { ListPaneItem } from '../../src/types/virtualization';
 import { getListPaneMeasurements } from '../../src/utils/listPaneMeasurements';
-import type { FileContentChange, IndexedDBStorage } from '../../src/storage/IndexedDBStorage';
 import {
     createRemeasureScheduler,
     isPendingFileScrollStale,
-    isListRowHeightAffectingContentChange,
-    type ListRowHeightAffectingContentChangeConfig,
     resolveListFileRowHeightInputs,
     type ListFileRowSizingConfig
 } from '../../src/hooks/useListPaneScroll';
 import { createTestTFile } from '../utils/createTestTFile';
-
-function createContentChange(patch: Partial<FileContentChange>): FileContentChange {
-    return {
-        path: 'Notes/Daily.md',
-        changes: {},
-        ...patch
-    };
-}
 
 function createFileItem(file: TFile, overrides: Partial<ListPaneItem> = {}): ListPaneItem {
     return {
@@ -55,27 +44,13 @@ function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {})
     return {
         heights: getListPaneMeasurements(false),
         titleRows: 1,
-        previewRows: 3,
-        showDate: true,
         showSearchExcerpt,
         compactPaddingTotal: 18,
         isCompactMode: false,
-        frontmatterPropertyRowsPossible: false,
-        propertyRowsPossible: false,
-        showFileProperties: false,
-        showPropertiesOnSeparateRows: false,
-        showFilePropertiesInCompactMode: false,
-        selectionType: ItemType.FOLDER,
+        selectionType: 'folder' as never,
         includeDescendantNotes: false,
         selectedPropertyValueNodeIdToHide: null,
-        visiblePropertyKeys: new Set(),
         ...overrides
-    };
-}
-
-function createDb(record: unknown = null) {
-    return {
-        getFile: vi.fn(() => record)
     };
 }
 
@@ -129,118 +104,33 @@ afterEach(() => {
     vi.unstubAllGlobals();
 });
 
-describe('isListRowHeightAffectingContentChange', () => {
-    function createHeightChangeConfig(
-        overrides: Partial<ListRowHeightAffectingContentChangeConfig> = {}
-    ): ListRowHeightAffectingContentChangeConfig {
-        return {
-            showSearchExcerpt: true,
-            frontmatterPropertyRowsPossible: true,
-            ...overrides
-        };
-    }
-
-    it('detects content fields that can change estimated list row height', () => {
-        const config = createHeightChangeConfig();
-
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(true);
-    });
-
-    it('ignores content fields disabled by the active row sizing config', () => {
-        const config = createHeightChangeConfig({
-            showSearchExcerpt: false,
-            frontmatterPropertyRowsPossible: false
-        });
-
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(false);
-    });
-
-    it('ignores property changes when only text-count property rows can be shown', () => {
-        const config = createHeightChangeConfig({
-            frontmatterPropertyRowsPossible: false
-        });
-
-        expect(isListRowHeightAffectingContentChange(createContentChange({ changes: { properties: [] } }), config)).toBe(false);
-    });
-
-
-    it('ignores content fields that do not change estimated row height', () => {
-        const config = createHeightChangeConfig();
-
-        expect(
-            isListRowHeightAffectingContentChange(
-                createContentChange({
-                    changes: { metadata: { name: 'Daily note', icon: 'lucide-star', color: '#ff0000', hidden: true } },
-                    metadataHiddenChanged: true,
-                    metadataNameChanged: true
-                }),
-                config
-            )
-        ).toBe(false);
-    });
-
-});
-
 describe('resolveListFileRowHeightInputs', () => {
-    it('skips db reads when row features are disabled', () => {
+    it('reports search excerpt content only when the feature is enabled', () => {
         const file = createTestTFile('Notes/Daily.md');
-        const db = createDb();
-        const inputs = resolveListFileRowHeightInputs({
-            db: db as unknown as IndexedDBStorage,
-            item: createFileItem(file),
-            file,
-            config: createRowSizingConfig({
-                showSearchExcerpt: false,
-                propertyRowsPossible: false
-            })
-        });
+        const item = createFileItem(file, { searchMeta: { excerpt: 'Some excerpt' } as never });
 
-        expect(inputs.visiblePillRowCount).toBe(0);
-        expect(db.getFile).not.toHaveBeenCalled();
+        const inputs = resolveListFileRowHeightInputs({
+            item,
+            config: createRowSizingConfig({ showSearchExcerpt: true })
+        });
+        expect(inputs.hasSearchExcerptContent).toBe(true);
+
+        const disabled = resolveListFileRowHeightInputs({
+            item,
+            config: createRowSizingConfig({ showSearchExcerpt: false })
+        });
+        expect(disabled.hasSearchExcerptContent).toBe(false);
     });
 
-    it('skips db reads when frontmatter properties are enabled without visible list property keys', () => {
+    it('does not report excerpt content for items without an excerpt', () => {
         const file = createTestTFile('Notes/Daily.md');
-        const db = createDb({
-            properties: [{ fieldKey: 'status', value: 'active', valueKind: 'text' }]
-        });
 
         const inputs = resolveListFileRowHeightInputs({
-            db: db as unknown as IndexedDBStorage,
             item: createFileItem(file),
-            file,
-            config: createRowSizingConfig({
-                showSearchExcerpt: false,
-                showFileProperties: true,
-                visiblePropertyKeys: new Set(),
-                propertyRowsPossible: false
-            })
+            config: createRowSizingConfig({ showSearchExcerpt: true })
         });
 
-        expect(inputs.visiblePillRowCount).toBe(0);
-        expect(db.getFile).not.toHaveBeenCalled();
-    });
-
-    it('reads the file record when visible property rows can affect height', () => {
-        const file = createTestTFile('Notes/Daily.md');
-        const db = createDb({
-            properties: [{ fieldKey: 'status', value: 'active', valueKind: 'text' }]
-        });
-
-        const inputs = resolveListFileRowHeightInputs({
-            db: db as unknown as IndexedDBStorage,
-            item: createFileItem(file),
-            file,
-            config: createRowSizingConfig({
-                showSearchExcerpt: false,
-                propertyRowsPossible: true,
-                showFileProperties: true,
-                visiblePropertyKeys: new Set(['status'])
-            })
-        });
-
-        expect(inputs.visiblePillRowCount).toBe(1);
-        expect(db.getFile).toHaveBeenCalledWith(file.path);
+        expect(inputs.hasSearchExcerptContent).toBeFalsy();
     });
 
 });

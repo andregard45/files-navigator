@@ -108,9 +108,6 @@ describe('migrateLegacySyncedSettings property key migration', () => {
             { key: 'status', showInNavigation: true, showInList: true, showInFileMenu: false },
             { key: 'type', showInNavigation: true, showInList: true, showInFileMenu: false }
         ]);
-        expect(settings.showFilePropertiesInCompactMode).toBe(true);
-        expect(settings.showPropertiesOnSeparateRows).toBe(false);
-
         expect(Object.prototype.hasOwnProperty.call(settingsRecord, 'propertyFields')).toBe(false);
         expect(Object.prototype.hasOwnProperty.call(settingsRecord, 'customPropertyType')).toBe(false);
         expect(Object.prototype.hasOwnProperty.call(settingsRecord, 'customPropertyFields')).toBe(false);
@@ -118,12 +115,17 @@ describe('migrateLegacySyncedSettings property key migration', () => {
         expect(Object.prototype.hasOwnProperty.call(settingsRecord, 'showCustomPropertiesOnSeparateRows')).toBe(false);
     });
 
-    it('defaults property link settings when missing', () => {
+    it('drops persisted file-display property pill settings (feature removed)', () => {
         const settings = createSettings();
         const settingsRecord = settings as unknown as Record<string, unknown>;
 
-        delete settingsRecord['enablePropertyInternalLinks'];
-        delete settingsRecord['enablePropertyExternalLinks'];
+        settingsRecord['showFileProperties'] = true;
+        settingsRecord['colorFileProperties'] = true;
+        settingsRecord['prioritizeColoredFileProperties'] = true;
+        settingsRecord['showFilePropertiesInCompactMode'] = true;
+        settingsRecord['showPropertiesOnSeparateRows'] = true;
+        settingsRecord['enablePropertyInternalLinks'] = true;
+        settingsRecord['enablePropertyExternalLinks'] = true;
 
         migrateLegacySyncedSettings({
             settings,
@@ -132,8 +134,21 @@ describe('migrateLegacySyncedSettings property key migration', () => {
             defaultSettings: DEFAULT_SETTINGS
         });
 
-        expect(settings.enablePropertyInternalLinks).toBe(true);
-        expect(settings.enablePropertyExternalLinks).toBe(true);
+        for (const key of [
+            'showFileProperties',
+            'colorFileProperties',
+            'prioritizeColoredFileProperties',
+            'showFilePropertiesInCompactMode',
+            'showPropertiesOnSeparateRows',
+            'enablePropertyInternalLinks',
+            'enablePropertyExternalLinks'
+        ]) {
+            expect(Object.prototype.hasOwnProperty.call(settingsRecord, key)).toBe(false);
+        }
+
+        // Navigation-panel property settings must be preserved.
+        expect(typeof settings.showProperties).toBe('boolean');
+        expect(typeof settings.showPropertyIcons).toBe('boolean');
     });
 
     it('migrates old note property word count setting to the word count title setting', () => {

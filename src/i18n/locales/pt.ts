@@ -436,7 +436,6 @@ export const STRINGS_PT = {
             option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de título`
         },
         groupBy: 'Agrupar por',
-        properties: 'Propriedades',
         resetAppearance: 'Repor aparência',
         openPluginSettings: 'Abrir definições do plugin…'
     },
@@ -1092,8 +1091,7 @@ export const STRINGS_PT = {
                     'Títulos, texto de pré-visualização, imagens de destaque, etiquetas, propriedades, datas, contagem de palavras e contagem de caracteres.',
                 groups: {
                     icon: 'Ícone',
-                    title: 'Título',
-                    properties: 'Propriedades'
+                    title: 'Título'
                 }
             },
             calendar: {
@@ -1857,22 +1855,6 @@ export const STRINGS_PT = {
                 desc: 'Lista de pastas separadas por vírgulas a omitir ao reunir notas de subpastas. As pastas permanecem visíveis, e selecionar uma continua a mostrar as suas notas. Usa os mesmos padrões de Ocultar pastas.',
                 placeholder: 'diário, recursos, /arquivo'
             },
-            showFileProperties: {
-                name: 'Mostrar propriedades de ficheiros',
-                desc: 'Exibir propriedades nos itens de ficheiro. Use o diálogo "Visibilidade das chaves de propriedade" para escolher que propriedades são mostradas.'
-            },
-            colorFileProperties: {
-                name: 'Colorir propriedades de ficheiros',
-                desc: 'Aplicar cores de propriedade aos emblemas de propriedade nos itens de ficheiro.'
-            },
-            showColoredPropertiesFirst: {
-                name: 'Mostrar propriedades coloridas primeiro',
-                desc: 'Ordenar propriedades coloridas antes de outras propriedades nos itens de ficheiro.'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'Mostrar propriedades no modo compacto',
-                desc: 'Exibir propriedades quando o modo compacto está ativo.'
-            },
             propertyKeys: {
                 name: 'Chaves de propriedades (perfil do cofre)',
                 desc: 'Chaves de propriedades do frontmatter, com visibilidade por chave para navegação e lista de ficheiros.',
@@ -1880,18 +1862,6 @@ export const STRINGS_PT = {
                 noneConfigured: 'Nenhuma propriedade configurada',
                 singleConfigured: '1 propriedade configurada: {properties}',
                 multipleConfigured: '{count} propriedades configuradas: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'Mostrar propriedades em linhas separadas',
-                desc: 'Mostrar cada propriedade na sua própria linha.'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'Ligar etiquetas de propriedade a notas',
-                desc: 'Clique numa etiqueta de propriedade para abrir a nota ligada.'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'Ligar etiquetas de propriedade a URLs',
-                desc: 'Clique numa etiqueta de propriedade para abrir o URL ligado.'
             },
             dateFormat: {
                 name: 'Formato de data',

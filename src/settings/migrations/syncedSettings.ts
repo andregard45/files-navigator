@@ -213,40 +213,11 @@ export function migrateLegacySyncedSettings(params: {
     }
     delete mutableSettings['customPropertyFields'];
 
-    const legacyShowPropertiesOnSeparateRows = mutableSettings['showCustomPropertiesOnSeparateRows'];
-    if (typeof storedData?.['showPropertiesOnSeparateRows'] === 'undefined' && typeof legacyShowPropertiesOnSeparateRows === 'boolean') {
-        settings.showPropertiesOnSeparateRows = legacyShowPropertiesOnSeparateRows;
-    }
+    // File-display property pills feature was removed; drop any persisted keys.
     delete mutableSettings['showCustomPropertiesOnSeparateRows'];
-
-    const legacyShowFilePropertiesInCompactMode = mutableSettings['showCustomPropertyInCompactMode'];
-    if (
-        typeof storedData?.['showFilePropertiesInCompactMode'] === 'undefined' &&
-        typeof legacyShowFilePropertiesInCompactMode === 'boolean'
-    ) {
-        settings.showFilePropertiesInCompactMode = legacyShowFilePropertiesInCompactMode;
-    }
-    delete mutableSettings['showCustomPropertyInCompactMode'];
-
-    const previousShowFilePropertiesInCompactMode = mutableSettings['showNotePropertyInCompactMode'];
-    if (
-        typeof storedData?.['showFilePropertiesInCompactMode'] === 'undefined' &&
-        typeof previousShowFilePropertiesInCompactMode === 'boolean'
-    ) {
-        settings.showFilePropertiesInCompactMode = previousShowFilePropertiesInCompactMode;
-    }
     delete mutableSettings['showNotePropertyInCompactMode'];
-
-    if (typeof settings.showPropertiesOnSeparateRows !== 'boolean') {
-        settings.showPropertiesOnSeparateRows = defaultSettings.showPropertiesOnSeparateRows;
-    }
-
     delete mutableSettings['customPropertyColorFields'];
     delete mutableSettings['customPropertyColorMap'];
-
-    if (typeof settings.showFilePropertiesInCompactMode !== 'boolean') {
-        settings.showFilePropertiesInCompactMode = defaultSettings.showFilePropertiesInCompactMode;
-    }
 
     // Parent folder feature in file display was removed; drop any persisted keys.
     delete mutableSettings['showParentFolder'];
@@ -269,17 +240,15 @@ export function migrateLegacySyncedSettings(params: {
         settings.useFolderIconForFiles = defaultSettings.useFolderIconForFiles;
     }
 
-    if (typeof settings.showFileProperties !== 'boolean') {
-        settings.showFileProperties = defaultSettings.showFileProperties;
-    }
-
-    if (typeof settings.colorFileProperties !== 'boolean') {
-        settings.colorFileProperties = defaultSettings.colorFileProperties;
-    }
-
-    if (typeof settings.prioritizeColoredFileProperties !== 'boolean') {
-        settings.prioritizeColoredFileProperties = defaultSettings.prioritizeColoredFileProperties;
-    }
+    // File-display property pills feature was removed; drop any persisted keys.
+    delete mutableSettings['showFileProperties'];
+    delete mutableSettings['colorFileProperties'];
+    delete mutableSettings['prioritizeColoredFileProperties'];
+    delete mutableSettings['showFilePropertiesInCompactMode'];
+    delete mutableSettings['showPropertiesOnSeparateRows'];
+    delete mutableSettings['enablePropertyInternalLinks'];
+    delete mutableSettings['enablePropertyExternalLinks'];
+    delete mutableSettings['showCustomPropertyInCompactMode'];
 
     if (typeof settings.showProperties !== 'boolean') {
         settings.showProperties = defaultSettings.showProperties;
@@ -299,14 +268,6 @@ export function migrateLegacySyncedSettings(params: {
 
     if (typeof settings.scopePropertiesToCurrentContext !== 'boolean') {
         settings.scopePropertiesToCurrentContext = defaultSettings.scopePropertiesToCurrentContext;
-    }
-
-    if (typeof settings.enablePropertyInternalLinks !== 'boolean') {
-        settings.enablePropertyInternalLinks = defaultSettings.enablePropertyInternalLinks;
-    }
-
-    if (typeof settings.enablePropertyExternalLinks !== 'boolean') {
-        settings.enablePropertyExternalLinks = defaultSettings.enablePropertyExternalLinks;
     }
 
     if (!isTagSortOrder(settings.propertySortOrder)) {
@@ -356,6 +317,8 @@ export function migrateLegacySyncedSettings(params: {
                 const appearanceRecord = migratedAppearance as unknown as Record<string, unknown>;
                 delete appearanceRecord['notePropertyType'];
                 delete appearanceRecord['customPropertyType'];
+                // File-display property pills feature was removed; drop the per-folder toggle.
+                delete appearanceRecord['showProperties'];
                 collection[key] = migratedAppearance;
             }
         });

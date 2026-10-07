@@ -437,7 +437,6 @@ export const STRINGS_JA = {
             option: (rows: number) => `タイトル${rows}行`
         },
         groupBy: 'グループ化',
-        properties: 'プロパティ',
         resetAppearance: '外観をリセット',
         openPluginSettings: 'プラグイン設定を開く…'
     },
@@ -1091,8 +1090,7 @@ export const STRINGS_JA = {
                 description: 'タイトル、プレビューテキスト、アイキャッチ画像、タグ、プロパティ、日付、単語数、文字数。',
                 groups: {
                     icon: 'アイコン',
-                    title: 'タイトル',
-                    properties: 'プロパティ'
+                    title: 'タイトル'
                 }
             },
             calendar: {
@@ -1852,22 +1850,6 @@ export const STRINGS_JA = {
                     desc: '起動時またはコマンド実行時に、定期ノートが存在しなければ作成します。'
                 }
             },
-            showFileProperties: {
-                name: 'ファイルプロパティを表示',
-                desc: 'ファイル項目にプロパティを表示します。「プロパティキーの表示設定」ダイアログで表示するプロパティを選択してください。'
-            },
-            colorFileProperties: {
-                name: 'ファイルプロパティに色を付ける',
-                desc: 'ファイル項目のプロパティバッジにプロパティの色を適用します。'
-            },
-            showColoredPropertiesFirst: {
-                name: '色付きプロパティを先に表示',
-                desc: 'ファイル項目で色付きプロパティを他のプロパティより前に並べ替えます。'
-            },
-            showFilePropertiesInCompactMode: {
-                name: 'コンパクトモードでプロパティを表示',
-                desc: 'コンパクトモードが有効な時にプロパティを表示します。'
-            },
             propertyKeys: {
                 name: 'プロパティキー（保管庫プロファイル）',
                 desc: 'フロントマターのプロパティキー。キーごとにナビゲーションとファイルリストの表示を設定できます。',
@@ -1875,18 +1857,6 @@ export const STRINGS_JA = {
                 noneConfigured: 'プロパティが設定されていません',
                 singleConfigured: '1件のプロパティが設定済み: {properties}',
                 multipleConfigured: '{count}件のプロパティが設定済み: {properties}'
-            },
-            showPropertiesOnSeparateRows: {
-                name: 'プロパティを別の行に表示',
-                desc: '各プロパティを個別の行に表示します。'
-            },
-            linkPropertyPillsToNotes: {
-                name: 'プロパティピルをノートにリンク',
-                desc: 'プロパティピルをクリックしてリンク先のノートを開きます。'
-            },
-            linkPropertyPillsToUrls: {
-                name: 'プロパティピルをURLにリンク',
-                desc: 'プロパティピルをクリックしてリンク先のURLを開きます。'
             },
             dateFormat: {
                 name: '日付形式',

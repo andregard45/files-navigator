@@ -30,8 +30,6 @@ import type { ListPaneItem } from '../../types/virtualization';
 import type { ListPaneAppearanceSettings } from '../../settings/listPaneAppearance';
 import { useManualSortKeyboard } from '../../hooks/useManualSortKeyboard';
 import type { FileNameIconNeedle } from '../../utils/fileIconUtils';
-import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
-import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 import type { FolderDecorationModel } from '../../utils/folderDecoration';
 import { typeFilteredCollisionDetection, verticalAxisOnly } from '../../utils/dndConfig';
 import {
@@ -68,15 +66,10 @@ interface ManualSortListContentProps {
     sortOption?: SortOption;
     fileIconSize: number;
     appearanceSettings: ListPaneAppearanceSettings;
-    includeDescendantNotes: boolean;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
-    visibleListPropertyKeys: ReadonlySet<string>;
-    visibleNavigationPropertyKeys: ReadonlySet<string>;
     fileItemStorage: FileItemStorageHelpers;
     noteShortcutKeysByPath: ReadonlyMap<string, string>;
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
-    fileItemPillOrderModel: FileItemPillOrderModel;
     getSolidBackground: (color?: string | null) => string | undefined;
     selectedFiles: ReadonlySet<string>;
     selectedFilePath: string | null;
@@ -168,10 +161,6 @@ function getManualSortRowClassName({
     if (hasPreviousCustomBackground) classes.push('nn-manual-sort-row-has-custom-background-previous');
     if (hasNextCustomBackground) classes.push('nn-manual-sort-row-has-custom-background-next');
     return classes.join(' ');
-}
-
-function noopModifySearch(): void {
-    return;
 }
 
 async function noopToggleShortcut(): Promise<void> {
@@ -497,15 +486,10 @@ export function ManualSortListContent({
     sortOption,
     fileIconSize,
     appearanceSettings,
-    includeDescendantNotes,
     fileNameIconNeedles,
-    visibleListPropertyKeys,
-    visibleNavigationPropertyKeys,
     fileItemStorage,
     noteShortcutKeysByPath,
     folderDecorationModel,
-    fileItemPillDecorationModel,
-    fileItemPillOrderModel,
     getSolidBackground,
     selectedFiles,
     selectedFilePath,
@@ -575,18 +559,12 @@ export function ManualSortListContent({
             onFileClick,
             selectionType,
             sortOption,
-            onModifySearchWithProperty: noopModifySearch,
             fileIconSize,
             appearanceSettings,
-            includeDescendantNotes,
             fileNameIconNeedles,
-            visiblePropertyKeys: visibleListPropertyKeys,
-            visibleNavigationPropertyKeys,
             fileItemStorage,
             onToggleNoteShortcut: noopToggleShortcut,
             folderDecorationModel,
-            fileItemPillDecorationModel,
-            fileItemPillOrderModel,
             getSolidBackground,
             disableNativeDrag: true
         }),
@@ -596,14 +574,9 @@ export function ManualSortListContent({
             sortOption,
             fileIconSize,
             appearanceSettings,
-            includeDescendantNotes,
             fileNameIconNeedles,
-            visibleListPropertyKeys,
-            visibleNavigationPropertyKeys,
             fileItemStorage,
             folderDecorationModel,
-            fileItemPillDecorationModel,
-            fileItemPillOrderModel,
             getSolidBackground
         ]
     );
