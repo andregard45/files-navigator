@@ -693,7 +693,6 @@ interface ExclusionFilterState {
     excludedPropertyMatcher: FrontmatterPropertyExclusionMatcher;
     excludedFolderPatterns: string[];
     includeHiddenItems: boolean;
-    hideDrawingPreviewImages: boolean;
     fileNameMatcher: HiddenFileNameMatcher | null;
     hiddenFileTagVisibility: ReturnType<typeof createHiddenTagVisibility> | null;
     db: CachedFileTagsDB | null;
@@ -713,7 +712,6 @@ function createExclusionFilterState(settings: NotebookNavigatorSettings, options
         excludedPropertyMatcher,
         excludedFolderPatterns: getActiveHiddenFolders(settings),
         includeHiddenItems,
-        hideDrawingPreviewImages: settings.hideDrawingPreviewImages,
         fileNameMatcher,
         hiddenFileTagVisibility,
         db
@@ -725,13 +723,12 @@ function passesExclusionFilters(file: TFile, state: ExclusionFilterState, app: A
         excludedPropertyMatcher,
         excludedFolderPatterns,
         includeHiddenItems,
-        hideDrawingPreviewImages,
         fileNameMatcher,
         hiddenFileTagVisibility,
         db
     } = state;
 
-    if (!includeHiddenItems && shouldHideDrawingCompanionImageFile(app, file, { hideDrawingPreviewImages })) {
+    if (!includeHiddenItems && shouldHideDrawingCompanionImageFile(app, file)) {
         return false;
     }
 

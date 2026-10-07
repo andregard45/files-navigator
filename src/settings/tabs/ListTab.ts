@@ -234,17 +234,6 @@ export function createListPaneSettingDefinitions(context: SettingsTabContext): S
                           render: setting => renderQuickActionsSetting(setting, context)
                       })
                   ])
-        ]),
-        createGroupDefinition(strings.settings.pages.listPane.groups.drawingPreviews, [
-            createToggleDefinition('hideDrawingPreviewImages', {
-                name: strings.settings.items.hideExportedPreviewImages.name,
-                desc: strings.settings.items.hideExportedPreviewImages.desc
-            }),
-            createRenderDefinition({
-                name: strings.settings.items.drawingIntegrationInfo.intro,
-                searchable: false,
-                render: setting => renderInstructionSetting(setting, strings.settings.items.drawingIntegrationInfo)
-            })
         ])
     ];
 

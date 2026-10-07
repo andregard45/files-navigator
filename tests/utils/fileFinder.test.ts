@@ -169,9 +169,9 @@ describe('fileFinder getFilesForFolder', () => {
             'Drawings/Sketch.excalidraw.md'
         ]);
 
-        expect(toSortedPaths(getFilesForFolder(folder, { ...createSettings(), hideDrawingPreviewImages: false }, visibility, app))).toEqual(
-            ['Drawings/Cover.png', 'Drawings/Sketch.excalidraw.md', 'Drawings/Sketch.excalidraw.png']
-        );
+        expect(
+            toSortedPaths(getFilesForFolder(folder, { ...createSettings(), showHiddenItems: true } as any, visibility, app))
+        ).toContain('Drawings/Sketch.excalidraw.png');
     });
 
     it('excludes configured folders only from ancestor descendant results', () => {

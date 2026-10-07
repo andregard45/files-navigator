@@ -1068,8 +1068,7 @@ export const STRINGS_FA = {
                     groupHeaders: 'هدرهای گروه',
                     manualSort: 'مرتب‌سازی دستی',
                     pinnedNotes: 'یادداشت‌های سنجاق‌شده',
-                    behavior: 'رفتار',
-                    drawingPreviews: 'پیش‌نمایش‌های طراحی'
+                    behavior: 'رفتار'
                 }
             },
             fileOperations: {
@@ -1886,19 +1885,6 @@ export const STRINGS_FA = {
             useFolderColor: {
                 name: 'استفاده از رنگ پوشه',
                 desc: 'رنگ‌آمیزی عناوین یادداشت و آیکون‌های فایل با رنگ پوشه والد هنگامی که رنگ فایل سفارشی تنظیم نشده است. اولویت: رنگ فایل سفارشی > رنگ پوشه > رنگ پیش‌فرض.'
-            },
-            hideExportedPreviewImages: {
-                name: 'پنهان کردن تصاویر پیش‌نمایش صادر شده',
-                desc: 'پنهان کردن فایل‌های PNG پیش‌نمایش طراحی صادر شده. برای نمایش آن‌ها، «نمایش آیتم‌های مخفی» را روشن کنید.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator فایل‌های PNG صادر شده توسط Excalidraw را به‌عنوان پیش‌نمایش طراحی نمایش می‌دهد.',
-                items: [
-                    'در **تنظیمات Excalidraw**، **Embedding Excalidraw into your Notes and Exporting** را باز کنید، سپس **Export Settings**، سپس **Auto-export Settings**.',
-                    '**Auto-export PNG** را فعال کنید. به‌صورت اختیاری **Export both dark- and light-themed image** را فعال کنید.',
-                    'Notebook Navigator به دنبال **Drawing.excalidraw.png**، **Drawing.excalidraw.dark.png** یا **Drawing.excalidraw.light.png** می‌گردد.',
-                    'هنگامی که **پنهان کردن تصاویر پیش‌نمایش صادر شده** روشن است، فایل‌های PNG فقط زمانی نمایش داده می‌شوند که **نمایش آیتم‌های مخفی** نیز روشن باشد.'
-                ]
             },
             showRootFolder: {
                 name: 'نمایش پوشه اصلی',

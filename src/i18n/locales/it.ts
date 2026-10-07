@@ -1066,8 +1066,7 @@ export const STRINGS_IT = {
                     groupHeaders: 'Intestazioni di gruppo',
                     manualSort: 'Ordinamento manuale',
                     pinnedNotes: 'Note fissate',
-                    behavior: 'Comportamento',
-                    drawingPreviews: 'Anteprime dei disegni'
+                    behavior: 'Comportamento'
                 }
             },
             fileOperations: {
@@ -1890,19 +1889,6 @@ export const STRINGS_IT = {
             useFolderColor: {
                 name: 'Usa colore cartella',
                 desc: 'Colora i titoli delle note e le icone file con il colore della cartella genitore quando non è impostato un colore file personalizzato. Priorità: colore file personalizzato > colore cartella > colore predefinito.'
-            },
-            hideExportedPreviewImages: {
-                name: 'Nascondi le immagini di anteprima esportate',
-                desc: 'Nasconde i file PNG di anteprima dei disegni esportati. Attiva "Mostra elementi nascosti" per visualizzarli.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator mostra i file PNG esportati da Excalidraw come anteprime dei disegni.',
-                items: [
-                    'Nelle **impostazioni di Excalidraw**, apri **Embedding Excalidraw into your Notes and Exporting**, poi **Export Settings**, poi **Auto-export Settings**.',
-                    'Attiva **Auto-export PNG**. Facoltativamente, attiva **Export both dark- and light-themed image**.',
-                    'Notebook Navigator cerca **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** o **Drawing.excalidraw.light.png**.',
-                    'Quando **Nascondi le immagini di anteprima esportate** è attivo, i file PNG vengono mostrati solo se anche **Mostra elementi nascosti** è attivo.'
-                ]
             },
             showRootFolder: {
                 name: 'Mostra cartella root',

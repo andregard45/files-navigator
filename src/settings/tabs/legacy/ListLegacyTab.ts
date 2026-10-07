@@ -541,26 +541,4 @@ export function renderListPaneTab(context: SettingsTabContext): void {
 
         updateButtonsDisabledState(plugin.settings.showQuickActions);
     }
-
-    const drawingPreviewsGroup = createGroup(strings.settings.pages.listPane.groups.drawingPreviews);
-
-    addToggleSetting(
-        drawingPreviewsGroup.addSetting,
-        strings.settings.items.hideExportedPreviewImages.name,
-        strings.settings.items.hideExportedPreviewImages.desc,
-        () => plugin.settings.hideDrawingPreviewImages,
-        value => {
-            plugin.settings.hideDrawingPreviewImages = value;
-        }
-    );
-
-    addInfoSetting(drawingPreviewsGroup.addSetting, ['nn-setting-info-container', 'nn-setting-info-list'], descEl => {
-        const info = strings.settings.items.drawingIntegrationInfo;
-        descEl.createDiv({ text: info.intro });
-        const listEl = descEl.createEl('ol');
-        info.items.forEach(item => {
-            const itemEl = listEl.createEl('li');
-            appendSettingText(itemEl, item);
-        });
-    });
 }

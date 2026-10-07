@@ -1067,8 +1067,7 @@ export const STRINGS_VI = {
                     groupHeaders: 'Header nhóm',
                     manualSort: 'Sắp xếp thủ công',
                     pinnedNotes: 'Ghi chú đã ghim',
-                    behavior: 'Hành vi',
-                    drawingPreviews: 'Xem trước bản vẽ'
+                    behavior: 'Hành vi'
                 }
             },
             fileOperations: {
@@ -1885,19 +1884,6 @@ export const STRINGS_VI = {
             useFolderColor: {
                 name: 'Dùng màu thư mục',
                 desc: 'Tô màu tiêu đề ghi chú và biểu tượng tệp bằng màu của thư mục cha khi không có màu tệp tùy chỉnh được đặt. Ưu tiên: màu tệp tùy chỉnh > màu thư mục > màu mặc định.'
-            },
-            hideExportedPreviewImages: {
-                name: 'Ẩn ảnh xem trước đã xuất',
-                desc: 'Ẩn các tệp PNG xem trước bản vẽ đã xuất. Bật "Hiện mục ẩn" để hiển thị chúng.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator hiển thị các tệp PNG được xuất từ Excalidraw làm bản xem trước của hình vẽ.',
-                items: [
-                    'Trong **cài đặt Excalidraw**, mở **Embedding Excalidraw into your Notes and Exporting**, rồi **Export Settings**, rồi **Auto-export Settings**.',
-                    'Bật **Auto-export PNG**. Tùy chọn bật thêm **Export both dark- and light-themed image**.',
-                    'Notebook Navigator tìm **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** hoặc **Drawing.excalidraw.light.png**.',
-                    'Khi **Ẩn ảnh xem trước đã xuất** đang bật, các tệp PNG chỉ xuất hiện khi **Hiện mục ẩn** cũng được bật.'
-                ]
             },
             showRootFolder: {
                 name: 'Hiện thư mục gốc',

@@ -1072,8 +1072,7 @@ export const STRINGS_DE = {
                     groupHeaders: 'Gruppenüberschriften',
                     manualSort: 'Manuelle Sortierung',
                     pinnedNotes: 'Angeheftete Notizen',
-                    behavior: 'Verhalten',
-                    drawingPreviews: 'Zeichnungsvorschauen'
+                    behavior: 'Verhalten'
                 }
             },
             fileOperations: {
@@ -1895,19 +1894,6 @@ export const STRINGS_DE = {
             useFolderColor: {
                 name: 'Ordnerfarbe verwenden',
                 desc: 'Notizentitel und Dateisymbole mit der Farbe des übergeordneten Ordners einfärben, wenn keine benutzerdefinierte Dateifarbe festgelegt ist. Priorität: Benutzerdefinierte Dateifarbe > Ordnerfarbe > Standardfarbe.'
-            },
-            hideExportedPreviewImages: {
-                name: 'Exportierte Vorschaubilder ausblenden',
-                desc: 'Exportierte PNG-Dateien der Zeichnungsvorschau ausblenden. Aktiviere „Ausgeblendete Elemente anzeigen“, um sie anzuzeigen.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator zeigt von Excalidraw exportierte PNG-Dateien als Zeichnungsvorschauen an.',
-                items: [
-                    'Öffne in den **Excalidraw-Einstellungen** **Embedding Excalidraw into your Notes and Exporting**, dann **Export Settings**, dann **Auto-export Settings**.',
-                    'Aktiviere **Auto-export PNG**. Optional kannst du **Export both dark- and light-themed image** aktivieren.',
-                    'Notebook Navigator sucht nach **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** oder **Drawing.excalidraw.light.png**.',
-                    'Solange **Exportierte Vorschaubilder ausblenden** aktiv ist, erscheinen die PNG-Dateien nur, wenn **Ausgeblendete Elemente anzeigen** ebenfalls aktiv ist.'
-                ]
             },
             showRootFolder: {
                 name: 'Wurzelordner anzeigen',

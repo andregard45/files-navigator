@@ -1062,8 +1062,7 @@ export const STRINGS_EN = {
                     groupHeaders: 'Group headers',
                     manualSort: 'Manual sort',
                     pinnedNotes: 'Pinned notes',
-                    behavior: 'Behavior',
-                    drawingPreviews: 'Drawing previews'
+                    behavior: 'Behavior'
                 }
             },
             fileOperations: {
@@ -1879,19 +1878,6 @@ export const STRINGS_EN = {
             useFolderColor: {
                 name: 'Use folder color',
                 desc: 'Color note titles and file icons with their parent folder color when no custom file color is set. Priority: custom file color > folder color > default color.'
-            },
-            hideExportedPreviewImages: {
-                name: 'Hide exported preview images',
-                desc: 'Hide exported drawing preview PNG files. Turn on Show hidden items to display them.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator shows PNG files exported by Excalidraw as drawing previews.',
-                items: [
-                    'In **Excalidraw settings**, open **Embedding Excalidraw into your Notes and Exporting**, then **Export Settings**, then **Auto-export Settings**.',
-                    'Enable **Auto-export PNG**. Optionally enable **Export both dark- and light-themed image**.',
-                    'Notebook Navigator looks for **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png**, or **Drawing.excalidraw.light.png**.',
-                    'While **Hide exported preview images** is on, the PNG files appear only when **Show hidden items** is also on.'
-                ]
             },
             showRootFolder: {
                 name: 'Show root folder',

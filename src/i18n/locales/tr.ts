@@ -1066,8 +1066,7 @@ export const STRINGS_TR = {
                     groupHeaders: 'Grup başlıkları',
                     manualSort: 'Manuel sıralama',
                     pinnedNotes: 'Sabitlenmiş notlar',
-                    behavior: 'Davranış',
-                    drawingPreviews: 'Çizim önizlemeleri'
+                    behavior: 'Davranış'
                 }
             },
             fileOperations: {
@@ -1885,19 +1884,6 @@ export const STRINGS_TR = {
             useFolderColor: {
                 name: 'Klasör rengini kullan',
                 desc: 'Özel dosya rengi ayarlanmadığında not başlıklarını ve dosya simgelerini üst klasörün rengiyle renklendir. Öncelik: özel dosya rengi > klasör rengi > varsayılan renk.'
-            },
-            hideExportedPreviewImages: {
-                name: 'Dışa aktarılmış önizleme görsellerini gizle',
-                desc: 'Dışa aktarılan çizim önizleme PNG dosyalarını gizler. Görüntülemek için "Gizli öğeleri göster" seçeneğini açın.'
-            },
-            drawingIntegrationInfo: {
-                intro: 'Notebook Navigator, Excalidraw tarafından dışa aktarılan PNG dosyalarını çizim önizlemeleri olarak gösterir.',
-                items: [
-                    '**Excalidraw ayarları** içinde **Embedding Excalidraw into your Notes and Exporting** öğesini açın, ardından **Export Settings**, ardından **Auto-export Settings** öğesini açın.',
-                    '**Auto-export PNG** seçeneğini etkinleştirin. İsteğe bağlı olarak **Export both dark- and light-themed image** seçeneğini de etkinleştirebilirsiniz.',
-                    'Notebook Navigator **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** veya **Drawing.excalidraw.light.png** dosyalarını arar.',
-                    '**Dışa aktarılmış önizleme görsellerini gizle** açıkken PNG dosyaları yalnızca **Gizli öğeleri göster** de açıksa görünür.'
-                ]
             },
             showRootFolder: {
                 name: 'Kök klasörü göster',

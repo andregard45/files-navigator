@@ -112,7 +112,6 @@ interface ScopedSelectionVisibilityOptions {
     fileNameMatcher: ReturnType<typeof createHiddenFileNameMatcherForVisibility>;
     shouldFilterHiddenFileTags: boolean;
     hiddenFileTagVisibility: ReturnType<typeof createHiddenTagVisibility>;
-    hideDrawingPreviewImages: boolean;
     app: App;
     db: ReturnType<typeof getDBInstanceOrNull>;
 }
@@ -134,7 +133,6 @@ function createScopedSelectionVisibilityOptions(
         fileNameMatcher: createHiddenFileNameMatcherForVisibility(excludedFileNamePatterns, visibility.showHiddenItems),
         shouldFilterHiddenFileTags: hiddenFileTagVisibility.hasHiddenRules && !visibility.showHiddenItems,
         hiddenFileTagVisibility,
-        hideDrawingPreviewImages: settings.hideDrawingPreviewImages,
         app,
         db: getDBInstanceOrNull()
     };
@@ -162,7 +160,6 @@ function isFileVisibleForScopedSelection(file: TFile, options: ScopedSelectionVi
         fileNameMatcher,
         shouldFilterHiddenFileTags,
         hiddenFileTagVisibility,
-        hideDrawingPreviewImages,
         app,
         db
     } = options;
@@ -171,7 +168,7 @@ function isFileVisibleForScopedSelection(file: TFile, options: ScopedSelectionVi
         return false;
     }
 
-    if (!showHiddenItems && shouldHideDrawingCompanionImageFile(app, file, { hideDrawingPreviewImages })) {
+    if (!showHiddenItems && shouldHideDrawingCompanionImageFile(app, file)) {
         return false;
     }
 
@@ -419,10 +416,7 @@ export function getFilesForFolder(
                 // Check if file should be displayed based on visibility setting
                 if (
                     shouldDisplayFile(child, fileVisibility, app) &&
-                    (visibility.showHiddenItems ||
-                        !shouldHideDrawingCompanionImageFile(app, child, {
-                            hideDrawingPreviewImages: settings.hideDrawingPreviewImages
-                        }))
+                    (visibility.showHiddenItems || !shouldHideDrawingCompanionImageFile(app, child))
                 ) {
                     files.push(child);
                 }

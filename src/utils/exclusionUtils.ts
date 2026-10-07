@@ -48,7 +48,6 @@ interface HiddenFileMatcherRules {
     hiddenFolders: string[];
     hiddenFileNames: string[];
     hiddenFileTags: string[];
-    hideDrawingPreviewImages?: boolean;
 }
 
 /**
@@ -59,11 +58,11 @@ export function createFileHiddenMatcher(rules: HiddenFileMatcherRules, app: App,
         return () => false;
     }
 
-    const { hiddenFileProperties, hiddenFolders, hiddenFileNames, hiddenFileTags, hideDrawingPreviewImages = true } = rules;
+    const { hiddenFileProperties, hiddenFolders, hiddenFileNames, hiddenFileTags } = rules;
     const hiddenFileTagVisibility = hiddenFileTags.length > 0 ? createHiddenTagVisibility(hiddenFileTags, false) : null;
 
     return (file: TFile): boolean => {
-        if (shouldHideDrawingCompanionImageFile(app, file, { hideDrawingPreviewImages })) {
+        if (shouldHideDrawingCompanionImageFile(app, file)) {
             return true;
         }
 
@@ -109,8 +108,7 @@ function createFileHiddenBySettingsMatcher(
             hiddenFileProperties,
             hiddenFolders,
             hiddenFileNames,
-            hiddenFileTags,
-            hideDrawingPreviewImages: settings.hideDrawingPreviewImages
+            hiddenFileTags
         },
         app,
         showHiddenItems
