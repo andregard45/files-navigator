@@ -19,7 +19,7 @@
 import { useCallback, useEffect, useRef, type MutableRefObject } from 'react';
 import type { App, TFile } from 'obsidian';
 import { TIMEOUTS } from '../../types/obsidian-extended';
-import type { ContentProviderType, FileContentType } from '../../interfaces/IContentProvider';
+import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
 import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { calculateFileDiff } from '../../storage/diffCalculator';

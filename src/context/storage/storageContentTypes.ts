@@ -18,7 +18,7 @@
 
 import type { TFile } from 'obsidian';
 import type { NotebookNavigatorSettings } from '../../settings/types';
-import type { ContentProviderType, FileContentType } from '../../interfaces/IContentProvider';
+import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
 import { isMarkdownPath } from '../../utils/fileTypeUtils';
 import { getActiveHiddenFileProperties } from '../../utils/vaultProfiles';
 import { getMarkdownPipelineContentTypes, hasMarkdownPipelineContent } from '../../utils/markdownPipelineContentTypes';

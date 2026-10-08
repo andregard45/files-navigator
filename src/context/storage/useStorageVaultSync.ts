@@ -21,7 +21,7 @@ import { App, EventRef, TAbstractFile, TFile, TFolder, debounce } from 'obsidian
 import { TIMEOUTS } from '../../types/obsidian-extended';
 import { INTERNAL_NOTEBOOK_NAVIGATOR_API, type NotebookNavigatorAPI } from '../../api/NotebookNavigatorAPI';
 import type { NotebookNavigatorSettings } from '../../settings/types';
-import type { ContentProviderType, FileContentType } from '../../interfaces/IContentProvider';
+import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
 import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
 import type { PropertyTreeNode, TagTreeNode } from '../../types/storage';
 import { calculateFileDiff } from '../../storage/diffCalculator';

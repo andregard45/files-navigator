@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { ContentProviderType } from '../../interfaces/IContentProvider';
+import type { ContentProviderType } from '../../types/contentProviders';
 import { MemoryFileCache } from '../MemoryFileCache';
 import { getProviderProcessedMtimeField } from '../providerMtime';
 import { STORE_NAME } from './constants';

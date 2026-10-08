@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { FileContentType } from '../interfaces/IContentProvider';
+import type { FileContentType } from '../types/contentProviders';
 import type { NotebookNavigatorSettings } from '../settings/types';
 
 export function getMarkdownPipelineContentTypes(_settings: NotebookNavigatorSettings): FileContentType[] {

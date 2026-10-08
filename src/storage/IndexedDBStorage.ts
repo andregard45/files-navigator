@@ -18,7 +18,7 @@
 
 import { STORAGE_KEYS } from '../types';
 import { localStorage } from '../utils/localStorage';
-import type { ContentProviderType, FileContentType } from '../interfaces/IContentProvider';
+import type { ContentProviderType, FileContentType } from '../types/contentProviders';
 import { isMarkdownPath } from '../utils/fileTypeUtils';
 import { MemoryFileCache } from './MemoryFileCache';
 import { hydrateCacheFromMainStore } from './indexeddb/cacheHydration';
