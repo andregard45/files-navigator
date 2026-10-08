@@ -72,11 +72,7 @@ export const STRINGS_JA = {
         folders: 'フォルダ',
         tags: 'タグ',
         calendar: 'カレンダー',
-        reorderRootFoldersTitle: 'ナビゲーションを並べ替え',
-        reorderRootFoldersHint: '矢印またはドラッグで並べ替え',
         vaultRootLabel: '保管庫',
-        resetRootToAlpha: 'アルファベット順にリセット',
-        resetRootToFrequency: '頻度順にリセット',
         pinShortcuts: 'ショートカットを固定',
         pinShortcutsAndRecentFiles: 'ショートカットと最近のファイルを固定',
         unpinShortcuts: 'ショートカットの固定を解除',
@@ -156,8 +152,6 @@ export const STRINGS_JA = {
         childValues: '子の値',
         applySortAndGroupToDescendants: (target: string) => `${target}に並べ替えとグループ化を適用`,
         showFolders: 'ナビゲーションを表示', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'ナビゲーションを並べ替え',
-        finishRootFolderReorder: '完了',
         showExcludedItems: '非表示のフォルダ・タグ・ノートを表示', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: '非表示のフォルダ・タグ・ノートを非表示', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'デュアルペインを表示', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -466,7 +460,6 @@ export const STRINGS_JA = {
                 'nav-tree-expand': 'ツリー矢印: 展開',
                 'nav-tree-collapse': 'ツリー矢印: 折りたたみ',
                 'nav-hidden-items': '非表示項目',
-                'nav-root-reorder': 'ルートフォルダの並べ替え',
                 'nav-new-folder': '新規フォルダ',
                 'nav-show-single-pane': 'シングルペインを表示',
                 'nav-show-dual-pane': 'デュアルペインを表示',

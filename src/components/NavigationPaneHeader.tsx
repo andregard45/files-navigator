@@ -33,17 +33,11 @@ import { resolveUXIcon } from '../utils/uxIcons';
 
 interface NavigationPaneHeaderProps {
     onTreeUpdateComplete?: () => void;
-    onToggleRootFolderReorder?: () => void;
-    rootReorderActive?: boolean;
-    rootReorderDisabled?: boolean;
     showVaultTitleInHeader: boolean;
 }
 
 export const NavigationPaneHeader = React.memo(function NavigationPaneHeader({
     onTreeUpdateComplete,
-    onToggleRootFolderReorder,
-    rootReorderActive,
-    rootReorderDisabled,
     showVaultTitleInHeader
 }: NavigationPaneHeaderProps) {
     const { plugin } = useServices();
@@ -71,7 +65,6 @@ export const NavigationPaneHeader = React.memo(function NavigationPaneHeader({
     const showExpandCollapseButton = navigationVisibility.expandCollapse;
     const showCalendarButton = navigationVisibility.calendar && settings.calendarPlacement !== 'right-sidebar';
     const showHiddenItemsButton = navigationVisibility.hiddenItems;
-    const showRootReorderButton = navigationVisibility.rootReorder;
     const showNewFolderButton = navigationVisibility.newFolder;
 
     if (!hasProfiles) {
@@ -131,7 +124,6 @@ export const NavigationPaneHeader = React.memo(function NavigationPaneHeader({
         showExpandCollapseButton ||
         showHiddenItemsButton ||
         showCalendarButton ||
-        showRootReorderButton ||
         showNewFolderButton;
 
     if (!shouldRenderDesktopHeader) {
@@ -220,19 +212,6 @@ export const NavigationPaneHeader = React.memo(function NavigationPaneHeader({
                             type="button"
                         >
                             <ServiceIcon iconId={resolveUXIcon(settings.interfaceIcons, 'nav-calendar')} />
-                        </button>
-                    ) : null}
-                    {showRootReorderButton ? (
-                        <button
-                            className={`nn-icon-button ${rootReorderActive ? 'nn-icon-button-active' : ''}`}
-                            aria-label={
-                                rootReorderActive ? strings.paneHeader.finishRootFolderReorder : strings.paneHeader.reorderRootFolders
-                            }
-                            onClick={onToggleRootFolderReorder}
-                            disabled={rootReorderDisabled}
-                            tabIndex={-1}
-                        >
-                            <ServiceIcon iconId={resolveUXIcon(settings.interfaceIcons, 'nav-root-reorder')} />
                         </button>
                     ) : null}
                     {showNewFolderButton ? (

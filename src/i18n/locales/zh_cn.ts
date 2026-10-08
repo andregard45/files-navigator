@@ -72,11 +72,7 @@ export const STRINGS_ZH_CN = {
         folders: '文件夹',
         tags: '标签',
         calendar: '导航日历',
-        reorderRootFoldersTitle: '重新排列导航',
-        reorderRootFoldersHint: '使用箭头或拖动来重新排列',
         vaultRootLabel: '仓库',
-        resetRootToAlpha: '重置为字母顺序',
-        resetRootToFrequency: '重置为频率排序',
         pinShortcuts: '固定快捷方式',
         pinShortcutsAndRecentFiles: '固定快捷方式和最近文件',
         unpinShortcuts: '取消固定快捷方式',
@@ -154,8 +150,6 @@ export const STRINGS_ZH_CN = {
         childValues: '子值',
         applySortAndGroupToDescendants: (target: string) => `将排序和分组应用到${target}`,
         showFolders: '显示导航', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: '重新排列导航',
-        finishRootFolderReorder: '完成',
         showExcludedItems: '显示隐藏的文件夹、标签和笔记', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: '隐藏隐藏的文件夹、标签和笔记', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: '显示双窗格', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -462,7 +456,6 @@ export const STRINGS_ZH_CN = {
                 'nav-tree-expand': '树形箭头：展开',
                 'nav-tree-collapse': '树形箭头：折叠',
                 'nav-hidden-items': '隐藏项目',
-                'nav-root-reorder': '重新排列根文件夹',
                 'nav-new-folder': '新建文件夹',
                 'nav-show-single-pane': '显示单窗格',
                 'nav-show-dual-pane': '显示双窗格',

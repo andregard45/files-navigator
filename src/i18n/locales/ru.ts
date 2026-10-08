@@ -73,11 +73,7 @@ export const STRINGS_RU = {
         folders: 'Папки',
         tags: 'Теги',
         calendar: 'Календарь',
-        reorderRootFoldersTitle: 'Изменить порядок навигации',
-        reorderRootFoldersHint: 'Используйте стрелки или перетаскивание',
         vaultRootLabel: 'Хранилище',
-        resetRootToAlpha: 'Сбросить в алфавитный порядок',
-        resetRootToFrequency: 'Сбросить по частоте',
         pinShortcuts: 'Закрепить ярлыки',
         pinShortcutsAndRecentFiles: 'Закрепить ярлыки и недавние файлы',
         unpinShortcuts: 'Открепить ярлыки',
@@ -155,8 +151,6 @@ export const STRINGS_RU = {
         childValues: 'дочерних значений',
         applySortAndGroupToDescendants: (target: string) => `Применить сортировку и группировку для ${target}`,
         showFolders: 'Показать навигацию', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Изменить порядок навигации',
-        finishRootFolderReorder: 'Готово',
         showExcludedItems: 'Показать скрытые папки, теги и заметки', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Скрыть скрытые папки, теги и заметки', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Показать двойную панель', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -465,7 +459,6 @@ export const STRINGS_RU = {
                 'nav-tree-expand': 'Стрелка дерева: развернуть',
                 'nav-tree-collapse': 'Стрелка дерева: свернуть',
                 'nav-hidden-items': 'Скрытые элементы',
-                'nav-root-reorder': 'Изменить порядок корневых папок',
                 'nav-new-folder': 'Новая папка',
                 'nav-show-single-pane': 'Показать одну панель',
                 'nav-show-dual-pane': 'Показать двойную панель',

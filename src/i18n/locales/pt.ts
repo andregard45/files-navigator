@@ -73,11 +73,7 @@ export const STRINGS_PT = {
         folders: 'Pastas',
         tags: 'Etiquetas',
         calendar: 'Calendário',
-        reorderRootFoldersTitle: 'Reordenar navegação',
-        reorderRootFoldersHint: 'Use setas ou arraste para reordenar',
         vaultRootLabel: 'Cofre',
-        resetRootToAlpha: 'Repor ordem alfabética',
-        resetRootToFrequency: 'Repor ordem por frequência',
         pinShortcuts: 'Fixar atalhos',
         pinShortcutsAndRecentFiles: 'Fixar atalhos e ficheiros recentes',
         unpinShortcuts: 'Desafixar atalhos',
@@ -155,8 +151,6 @@ export const STRINGS_PT = {
         childValues: 'valores secundários',
         applySortAndGroupToDescendants: (target: string) => `Aplicar ordenação e agrupamento a ${target}`,
         showFolders: 'Mostrar navegação', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Reordenar navegação',
-        finishRootFolderReorder: 'Concluído',
         showExcludedItems: 'Mostrar pastas, etiquetas e notas ocultas', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Ocultar pastas, etiquetas e notas ocultas', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Mostrar painéis duplos', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -465,7 +459,6 @@ export const STRINGS_PT = {
                 'nav-tree-expand': 'Seta da árvore: expandir',
                 'nav-tree-collapse': 'Seta da árvore: recolher',
                 'nav-hidden-items': 'Itens ocultos',
-                'nav-root-reorder': 'Reordenar pastas raiz',
                 'nav-new-folder': 'Nova pasta',
                 'nav-show-single-pane': 'Mostrar painel único',
                 'nav-show-dual-pane': 'Mostrar painéis duplos',

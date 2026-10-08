@@ -73,11 +73,7 @@ export const STRINGS_UK = {
         folders: 'Теки',
         tags: 'Мітки',
         calendar: 'Календар',
-        reorderRootFoldersTitle: 'Змінити порядок навігації',
-        reorderRootFoldersHint: 'Використовуйте стрілки або перетягування',
         vaultRootLabel: 'Сховище',
-        resetRootToAlpha: 'Скинути до алфавітного порядку',
-        resetRootToFrequency: 'Скинути до порядку за частотою',
         pinShortcuts: 'Закріпити ярлики',
         pinShortcutsAndRecentFiles: 'Закріпити ярлики та останні файли',
         unpinShortcuts: 'Відкріпити ярлики',
@@ -155,8 +151,6 @@ export const STRINGS_UK = {
         childValues: 'дочірніх значень',
         applySortAndGroupToDescendants: (target: string) => `Застосувати сортування та групування для ${target}`,
         showFolders: 'Показати навігацію', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Змінити порядок навігації',
-        finishRootFolderReorder: 'Готово',
         showExcludedItems: 'Показати приховані теки, мітки та нотатки', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Сховати приховані теки, мітки та нотатки', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Показати подвійну панель', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -465,7 +459,6 @@ export const STRINGS_UK = {
                 'nav-tree-expand': 'Стрілка дерева: розгорнути',
                 'nav-tree-collapse': 'Стрілка дерева: згорнути',
                 'nav-hidden-items': 'Приховані елементи',
-                'nav-root-reorder': 'Змінити порядок кореневих тек',
                 'nav-new-folder': 'Нова тека',
                 'nav-show-single-pane': 'Показати одну панель',
                 'nav-show-dual-pane': 'Показати подвійну панель',

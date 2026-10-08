@@ -72,11 +72,7 @@ export const STRINGS_FR = {
         folders: 'Dossiers',
         tags: 'Mots-clés',
         calendar: 'Calendrier',
-        reorderRootFoldersTitle: 'Réorganiser la navigation',
-        reorderRootFoldersHint: 'Utilisez les flèches ou glissez pour réorganiser',
         vaultRootLabel: 'Coffre',
-        resetRootToAlpha: "Réinitialiser l'ordre alphabétique",
-        resetRootToFrequency: 'Réinitialiser selon la fréquence',
         pinShortcuts: 'Épingler les raccourcis',
         pinShortcutsAndRecentFiles: 'Épingler les raccourcis et fichiers récents',
         unpinShortcuts: 'Détacher les raccourcis',
@@ -156,8 +152,6 @@ export const STRINGS_FR = {
         childValues: 'valeurs enfants',
         applySortAndGroupToDescendants: (target: string) => `Appliquer le tri et le regroupement aux ${target}`,
         showFolders: 'Afficher la navigation', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Réorganiser la navigation',
-        finishRootFolderReorder: 'Terminé',
         showExcludedItems: 'Afficher les dossiers, mots-clés et notes masqués', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Masquer les dossiers, mots-clés et notes masqués', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Afficher les panneaux doubles', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -467,7 +461,6 @@ export const STRINGS_FR = {
                 'nav-tree-expand': "Chevron d'arbre : déplier",
                 'nav-tree-collapse': "Chevron d'arbre : replier",
                 'nav-hidden-items': 'Éléments cachés',
-                'nav-root-reorder': 'Réorganiser les dossiers racine',
                 'nav-new-folder': 'Nouveau dossier',
                 'nav-show-single-pane': 'Afficher le panneau unique',
                 'nav-show-dual-pane': 'Afficher les panneaux doubles',

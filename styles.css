@@ -145,8 +145,6 @@ body {
     /* Header font sizes */
     --nn-desktop-header-font-size: 13px; /* Fixed desktop header font size */
     --nn-mobile-header-font-size: 17px; /* Fixed mobile header font size */
-    --nn-root-reorder-hint-font-size: var(--font-ui-smaller);
-    --nn-root-reorder-hint-font-size-mobile: var(--font-ui-small);
 
     /* ========================================================================
        Pane Width Constraints
@@ -2281,147 +2279,6 @@ button.nn-icon-button.nn-navitem-hover-action-button {
 .nn-drag-handle svg {
     width: 16px;
     height: 16px;
-}
-
-.nn-root-reorder-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 0.75rem 0;
-}
-
-.nn-root-reorder-header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    align-items: center;
-}
-
-.nn-root-reorder-title {
-    font-size: var(--nn-desktop-header-font-size);
-    font-weight: var(--nn-theme-list-header-breadcrumb-font-weight);
-    line-height: 1.3;
-}
-
-.notebook-navigator-mobile .nn-root-reorder-title {
-    font-size: var(--nn-mobile-header-font-size);
-}
-
-.nn-root-reorder-title,
-.nn-root-reorder-hint {
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.nn-root-reorder-hint {
-    font-size: var(--nn-root-reorder-hint-font-size);
-    color: var(--nn-theme-foreground-muted);
-    line-height: 1.25;
-}
-
-.notebook-navigator-mobile .nn-root-reorder-hint {
-    font-size: var(--nn-root-reorder-hint-font-size-mobile);
-}
-
-.nn-root-reorder-list {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-}
-
-.nn-root-reorder-section {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.nn-root-reorder-item {
-    cursor: default;
-}
-
-.nn-root-reorder-item .nn-shortcut-label {
-    font-weight: var(--nn-theme-navitem-name-font-weight);
-}
-
-.nn-root-reorder-item .nn-shortcut-label[data-has-color='true'] {
-    font-weight: var(--nn-theme-navitem-custom-color-name-font-weight);
-}
-
-.nn-root-reorder-item--missing .nn-shortcut-label {
-    text-decoration: line-through;
-    color: var(--nn-theme-foreground-muted);
-}
-
-.nn-root-reorder-actions {
-    margin-top: 0.75rem;
-    display: flex;
-    justify-content: center;
-}
-
-.nn-root-reorder-remove {
-    color: var(--text-accent);
-    font-size: var(--nn-setting-nav-font-size);
-    font-weight: var(--font-semibold);
-    cursor: pointer;
-    display: inline;
-    text-decoration: underline;
-}
-
-.nn-root-reorder-remove:hover,
-.nn-root-reorder-remove:focus {
-    color: var(--text-accent);
-    text-decoration: underline;
-}
-
-.nn-root-reorder-remove:focus-visible {
-    outline: none;
-}
-
-.nn-root-reorder-reset {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0 1rem;
-    cursor: pointer;
-}
-
-.nn-root-reorder-reset-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-}
-
-.nn-root-reorder-section-controls {
-    display: flex;
-    gap: 0.25rem;
-}
-
-.nn-root-reorder-section-button {
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border-radius: 6px;
-    color: var(--nn-theme-header-button-icon-color);
-    flex-shrink: 0;
-}
-
-.nn-root-reorder-section-button svg {
-    width: 16px;
-    height: 16px;
-}
-
-.nn-desktop .nn-root-reorder-section-button:hover {
-    background-color: var(--nn-theme-header-button-hover-bg);
-}
-
-.nn-root-reorder-section-button:disabled {
-    color: var(--nn-theme-header-button-disabled-icon-color);
-    opacity: 0.4;
-    cursor: not-allowed;
 }
 
 .nn-shortcut-disabled {
@@ -6918,9 +6775,6 @@ button.nn-toolbar-visibility-toggle.nn-mobile-toolbar-button.nn-mobile-toolbar-b
     --nn-indent-guide-chevron-slot-width: 32px;
 }
 
-.notebook-navigator-mobile .nn-root-reorder-remove {
-    font-size: var(--nn-setting-nav-font-size-mobile);
-}
 /* Source: src/styles/sections/mobile-panes.css */
 
 /* ========================================================================
@@ -7394,13 +7248,6 @@ body.is-phone .notebook-navigator-android .nn-split-container {
 .notebook-navigator-android .nn-mobile .nn-navitem-count {
     font-size: calc(
         var(--nn-navitem-count-font-size-mobile, var(--nn-navitem-count-font-size)) * var(--nn-android-font-scale-reciprocal, 1)
-    );
-}
-
-/* Root reorder panel text */
-.notebook-navigator-android .nn-mobile .nn-root-reorder-hint {
-    font-size: calc(
-        var(--nn-root-reorder-hint-font-size-mobile, var(--nn-root-reorder-hint-font-size)) * var(--nn-android-font-scale-reciprocal, 1)
     );
 }
 

@@ -72,11 +72,7 @@ export const STRINGS_DE = {
         folders: 'Ordner',
         tags: 'Tags',
         calendar: 'Kalender',
-        reorderRootFoldersTitle: 'Navigation neu anordnen',
-        reorderRootFoldersHint: 'Pfeile oder Ziehen zum Neuanordnen',
         vaultRootLabel: 'Vault',
-        resetRootToAlpha: 'Auf alphabetische Reihenfolge zurücksetzen',
-        resetRootToFrequency: 'Auf Häufigkeitsreihenfolge zurücksetzen',
         pinShortcuts: 'Verknüpfungen anheften',
         pinShortcutsAndRecentFiles: 'Verknüpfungen und zuletzt verwendete Dateien anheften',
         unpinShortcuts: 'Anheftung von Verknüpfungen aufheben',
@@ -155,8 +151,6 @@ export const STRINGS_DE = {
         childValues: 'Unterwerte',
         applySortAndGroupToDescendants: (target: string) => `Sortierung und Gruppierung auf ${target} anwenden`,
         showFolders: 'Navigation anzeigen', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Navigation neu anordnen',
-        finishRootFolderReorder: 'Neuordnung fertig',
         showExcludedItems: 'Ausgeblendete Ordner, Tags und Notizen anzeigen', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Ausgeblendete Ordner, Tags und Notizen ausblenden', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Zweispaltige Ansicht anzeigen', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -466,7 +460,6 @@ export const STRINGS_DE = {
                 'nav-tree-expand': 'Baumpfeil: ausklappen',
                 'nav-tree-collapse': 'Baumpfeil: einklappen',
                 'nav-hidden-items': 'Ausgeblendete Elemente',
-                'nav-root-reorder': 'Stammordner neu anordnen',
                 'nav-new-folder': 'Neuer Ordner',
                 'nav-show-single-pane': 'Einspaltige Ansicht anzeigen',
                 'nav-show-dual-pane': 'Zweispaltige Ansicht anzeigen',

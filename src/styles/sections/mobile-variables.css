@@ -42,6 +42,3 @@
     --nn-indent-guide-chevron-slot-width: 32px;
 }
 
-.notebook-navigator-mobile .nn-root-reorder-remove {
-    font-size: var(--nn-setting-nav-font-size-mobile);
-}

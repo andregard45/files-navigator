@@ -79,8 +79,6 @@ interface UseNavigationPaneDataParams {
     recentNotesExpanded: boolean;
     /** Whether shortcuts should be pinned at the top of the pane */
     pinShortcuts: boolean;
-    /** Preferred ordering of navigation sections */
-    sectionOrder: NavigationSectionId[];
 }
 
 /**
@@ -155,8 +153,7 @@ export function useNavigationPaneData({
     propertyRainbowColors,
     shortcutsExpanded,
     recentNotesExpanded,
-    pinShortcuts,
-    sectionOrder
+    pinShortcuts
 }: UseNavigationPaneDataParams): UseNavigationPaneDataResult {
     const { app } = useServices();
     const { fileNameIconNeedles } = useSettingsDerived();
@@ -239,7 +236,6 @@ export function useNavigationPaneData({
         navRainbowState,
         tagRainbowColors,
         propertyRainbowColors,
-        sectionOrder,
         showHiddenItems,
         pinShortcuts,
         shouldPinRecentNotes,

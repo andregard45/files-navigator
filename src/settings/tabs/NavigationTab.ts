@@ -46,7 +46,6 @@ export function createNavigationPaneSettingDefinitions(context: SettingsTabConte
                     strings.paneHeader.expandAllFolders,
                     strings.paneHeader.showExcludedItems,
                     strings.paneHeader.showCalendar,
-                    strings.paneHeader.reorderRootFolders,
                     strings.paneHeader.newFolder
                 ],
                 render: setting => {

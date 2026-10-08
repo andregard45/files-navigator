@@ -72,11 +72,7 @@ export const STRINGS_PL = {
         folders: 'Foldery',
         tags: 'Tagi',
         calendar: 'Kalendarz',
-        reorderRootFoldersTitle: 'Zmień kolejność elementów',
-        reorderRootFoldersHint: 'Użyj strzałek lub przeciągnij, aby zmienić kolejność',
         vaultRootLabel: 'Sejf',
-        resetRootToAlpha: 'Ustaw alfabetycznie',
-        resetRootToFrequency: 'Ustaw według częstotliwości',
         pinShortcuts: 'Przypnij skróty',
         pinShortcutsAndRecentFiles: 'Przypnij skróty i ostatnie pliki',
         unpinShortcuts: 'Odepnij skróty',
@@ -154,8 +150,6 @@ export const STRINGS_PL = {
         childValues: 'wartości podrzędnych',
         applySortAndGroupToDescendants: (target: string) => `Zastosuj sortowanie i grupowanie dla ${target}`,
         showFolders: 'Pokaż nawigację', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Zmień kolejność elementów',
-        finishRootFolderReorder: 'Gotowe',
         showExcludedItems: 'Pokaż ukryte foldery, tagi i notatki', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Ukryj ukryte foldery, tagi i notatki', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Pokaż oba panele', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -464,7 +458,6 @@ export const STRINGS_PL = {
                 'nav-tree-expand': 'Strzałka drzewka: rozwiń',
                 'nav-tree-collapse': 'Strzałka drzewka: zwiń',
                 'nav-hidden-items': 'Ukryte elementy',
-                'nav-root-reorder': 'Zmień kolejność folderów głównych',
                 'nav-new-folder': 'Nowy folder',
                 'nav-show-single-pane': 'Pokaż jeden panel',
                 'nav-show-dual-pane': 'Pokaż oba panele',

@@ -72,11 +72,7 @@ export const STRINGS_KO = {
         folders: '폴더',
         tags: '태그',
         calendar: '달력',
-        reorderRootFoldersTitle: '탐색 재정렬',
-        reorderRootFoldersHint: '화살표 또는 드래그로 재정렬',
         vaultRootLabel: '보관함',
-        resetRootToAlpha: '알파벳 순서로 재설정',
-        resetRootToFrequency: '빈도 순으로 재설정',
         pinShortcuts: '바로가기를 고정',
         pinShortcutsAndRecentFiles: '바로가기와 최근 파일을 고정',
         unpinShortcuts: '바로가기 고정을 해제',
@@ -154,8 +150,6 @@ export const STRINGS_KO = {
         childValues: '하위 값',
         applySortAndGroupToDescendants: (target: string) => `${target}에 정렬 및 그룹 적용`,
         showFolders: '탐색 표시', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: '탐색 재정렬',
-        finishRootFolderReorder: '완료',
         showExcludedItems: '숨긴 폴더, 태그, 노트 표시', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: '숨긴 폴더, 태그, 노트 숨기기', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: '이중 창 표시', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -462,7 +456,6 @@ export const STRINGS_KO = {
                 'nav-tree-expand': '트리 화살표: 펼치기',
                 'nav-tree-collapse': '트리 화살표: 접기',
                 'nav-hidden-items': '숨겨진 항목',
-                'nav-root-reorder': '루트 폴더 재정렬',
                 'nav-new-folder': '새 폴더',
                 'nav-show-single-pane': '단일 창 표시',
                 'nav-show-dual-pane': '이중 창 표시',

@@ -44,7 +44,6 @@ interface HydratedShortcutDndItem {
 interface UseNavigationPaneShortcutDnDProps {
     app: App;
     isMobile: boolean;
-    isRootReorderMode: boolean;
     isShortcutContextMenuOpen: boolean;
     shortcutsExpanded: boolean;
     showShortcuts: boolean;
@@ -84,7 +83,6 @@ function getInternalPropertyDragNodeId(session: InternalDragSession): string | n
 export function useNavigationPaneShortcutDnD({
     app,
     isMobile,
-    isRootReorderMode,
     isShortcutContextMenuOpen,
     shortcutsExpanded,
     showShortcuts,
@@ -100,7 +98,7 @@ export function useNavigationPaneShortcutDnD({
     const isShortcutDnDEnabled = shortcutsExpanded && shortcutCount > 0 && showShortcuts;
     const shortcutIds = useMemo(() => hydratedShortcuts.map(entry => entry.key), [hydratedShortcuts]);
     const shortcutSensors = useSensors(useSensor(PointerSensor, { activationConstraint: SHORTCUT_POINTER_CONSTRAINT }));
-    const shouldUseShortcutDnd = isShortcutDnDEnabled && shortcutIds.length > 1 && !isRootReorderMode && !isShortcutContextMenuOpen;
+    const shouldUseShortcutDnd = isShortcutDnDEnabled && shortcutIds.length > 1 && !isShortcutContextMenuOpen;
     const [activeShortcutId, setActiveShortcutId] = useState<string | null>(null);
     const isShortcutSorting = shouldUseShortcutDnd && Boolean(activeShortcutId);
 
