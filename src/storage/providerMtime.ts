@@ -1,4 +1,4 @@
-import type { ContentProviderType } from '../interfaces/IContentProvider';
+import type { ContentProviderType } from '../types/contentProviders';
 
 export type ProviderProcessedMtimeField = `${ContentProviderType}Mtime`;
 

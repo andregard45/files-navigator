@@ -18,7 +18,7 @@
 
 import { useCallback, type Dispatch, type MutableRefObject, type SetStateAction } from 'react';
 import { debounce, type App, type TFile } from 'obsidian';
-import type { FileContentType } from '../../interfaces/IContentProvider';
+import type { FileContentType } from '../../types/contentProviders';
 import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { getDBInstance } from '../../storage/fileOperations';

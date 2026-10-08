@@ -18,7 +18,7 @@
 
 import { useCallback, type MutableRefObject } from 'react';
 import { App, TFile } from 'obsidian';
-import type { ContentProviderType, FileContentType } from '../../interfaces/IContentProvider';
+import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
 import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { getDBInstance } from '../../storage/fileOperations';

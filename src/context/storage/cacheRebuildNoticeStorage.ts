@@ -19,7 +19,7 @@
 import { STORAGE_KEYS } from '../../types';
 import { localStorage } from '../../utils/localStorage';
 import { isRecord } from '../../utils/typeGuards';
-import type { FileContentType } from '../../interfaces/IContentProvider';
+import type { FileContentType } from '../../types/contentProviders';
 
 // Persists minimal rebuild-notice state so a cache rebuild progress notice can be restored after an Obsidian restart.
 export type CacheRebuildNoticeSource = 'rebuild' | 'settings';

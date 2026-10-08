@@ -18,7 +18,7 @@
 
 import { useCallback, useRef, type MutableRefObject } from 'react';
 import { TFile, type App } from 'obsidian';
-import type { FileContentType } from '../../interfaces/IContentProvider';
+import type { FileContentType } from '../../types/contentProviders';
 import { strings } from '../../i18n';
 import { getDBInstance } from '../../storage/fileOperations';
 import { showNotice } from '../../utils/noticeUtils';

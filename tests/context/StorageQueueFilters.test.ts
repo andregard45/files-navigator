@@ -20,7 +20,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
 import type { CachedMetadata } from 'obsidian';
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
-import type { ContentProviderType } from '../../src/interfaces/IContentProvider';
+import type { ContentProviderType } from '../../src/types/contentProviders';
 import type { NotebookNavigatorSettings } from '../../src/settings/types';
 import type { FileData } from '../../src/storage/IndexedDBStorage';
 import { filterFilesRequiringMetadataSources } from '../../src/context/storageQueueFilters';

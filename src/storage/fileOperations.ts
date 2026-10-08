@@ -18,7 +18,7 @@
 
 import { TFile } from 'obsidian';
 import { createDefaultFileData, IndexedDBStorage, type FileData } from './IndexedDBStorage';
-import type { ContentProviderType } from '../interfaces/IContentProvider';
+import type { ContentProviderType } from '../types/contentProviders';
 import { getProviderProcessedMtimeField } from './providerMtime';
 
 /**

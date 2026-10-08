@@ -18,7 +18,7 @@
 
 import { App, TFile } from 'obsidian';
 import type { CachedMetadata } from 'obsidian';
-import type { ContentProviderType } from '../interfaces/IContentProvider';
+import type { ContentProviderType } from '../types/contentProviders';
 import type { NotebookNavigatorSettings } from '../settings/types';
 import { getDBInstance } from '../storage/fileOperations';
 import { createFrontmatterPropertyExclusionMatcher } from '../utils/fileFilters';
