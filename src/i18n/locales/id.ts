@@ -1021,11 +1021,6 @@ export const STRINGS_ID = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(tidak disinkronkan)',
-            enableSync: 'Aktifkan sinkronisasi',
-            disableSync: 'Nonaktifkan sinkronisasi'
-        },
         items: {
             listPaneTitle: {
                 name: 'Judul panel daftar',

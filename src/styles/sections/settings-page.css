@@ -75,17 +75,6 @@
     font-weight: var(--font-semibold);
 }
 
-/* Sync mode toggle button (cloud/device) */
-.nn-setting-sync-toggle {
-    color: var(--text-muted);
-    opacity: 0.85;
-}
-
-.nn-setting-sync-toggle:hover {
-    color: var(--text-normal);
-    opacity: 1;
-}
-
 /* Container for additional info below settings */
 .nn-setting-info-container {
     margin-top: 8px;

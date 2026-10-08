@@ -43,7 +43,7 @@ interface SettingsControllerHarness {
     settings: NotebookNavigatorSettings;
     applySettingsRecord: ReturnType<typeof vi.fn>;
     prepareImportedUiScalePersistence: ReturnType<typeof vi.fn>;
-    mirrorAllSyncModeSettingsToLocalStorage: ReturnType<typeof vi.fn>;
+    mirrorUiScalesToLocalStorage: ReturnType<typeof vi.fn>;
     saveSettings: ReturnType<typeof vi.fn>;
     clearAllLocalStorage: ReturnType<typeof vi.fn>;
     setLocalStorageVersion: ReturnType<typeof vi.fn>;
@@ -97,7 +97,7 @@ function createPluginHarness(): PluginHarness {
         settings,
         applySettingsRecord: vi.fn(),
         prepareImportedUiScalePersistence: vi.fn(),
-        mirrorAllSyncModeSettingsToLocalStorage: vi.fn(),
+        mirrorUiScalesToLocalStorage: vi.fn(),
         saveSettings: vi.fn().mockResolvedValue(undefined),
         clearAllLocalStorage: vi.fn(),
         setLocalStorageVersion: vi.fn(),
@@ -157,7 +157,7 @@ describe('NotebookNavigatorPlugin settings orchestration', () => {
         expect(plugin.notifySettingsUpdateWithFullRefresh).toHaveBeenCalledTimes(1);
     });
 
-    it('applies an import with record-local precedence and persists once without rereading', async () => {
+    it('applies an import through the settings pipeline and persists once without rereading', async () => {
         const plugin = createPluginHarness();
         const calls: string[] = [];
         plugin.settingsController.applySettingsRecord.mockImplementation((record: Record<string, unknown>) => {
@@ -165,7 +165,7 @@ describe('NotebookNavigatorPlugin settings orchestration', () => {
             plugin.settingsController.settings = { ...structuredClone(DEFAULT_SETTINGS), ...record };
         });
         plugin.settingsController.prepareImportedUiScalePersistence.mockImplementation(() => calls.push('prepare-scale'));
-        plugin.settingsController.mirrorAllSyncModeSettingsToLocalStorage.mockImplementation(() => calls.push('mirror'));
+        plugin.settingsController.mirrorUiScalesToLocalStorage.mockImplementation(() => calls.push('mirror'));
         plugin.settingsController.saveSettings.mockImplementation(() => {
             calls.push('save');
         });
@@ -173,20 +173,16 @@ describe('NotebookNavigatorPlugin settings orchestration', () => {
         await plugin.importSettingsTransfer({ folderSortOrder: 'alpha-desc' });
 
         expect(plugin.settingsController.applySettingsRecord).toHaveBeenCalledWith(expect.any(Object), {
-            isFirstLaunch: false,
-            preferRecordLocalValues: true
+            isFirstLaunch: false
         });
         expect(plugin.settings.folderSortOrder).toBe('alpha-desc');
         expect(calls).toEqual(['apply', 'prepare-scale', 'save']);
-        expect(plugin.settingsController.mirrorAllSyncModeSettingsToLocalStorage).not.toHaveBeenCalled();
+        expect(plugin.settingsController.mirrorUiScalesToLocalStorage).not.toHaveBeenCalled();
         expect(plugin.settingsController.saveSettings).toHaveBeenCalledTimes(1);
     });
 
     it('resets through the pipeline and invokes one settings save', async () => {
         const plugin = createPluginHarness();
-        const preservedSyncModes = structuredClone(plugin.settings.syncModes);
-        preservedSyncModes.folderSortOrder = 'local';
-        plugin.settings.syncModes = preservedSyncModes;
         plugin.settingsController.applySettingsRecord.mockImplementation(() => {
             const defaults = structuredClone(DEFAULT_SETTINGS);
             defaults.showRootFolder = false;
@@ -197,9 +193,8 @@ describe('NotebookNavigatorPlugin settings orchestration', () => {
 
         expect(plugin.settingsController.clearAllLocalStorage).toHaveBeenCalledTimes(1);
         expect(plugin.settingsController.applySettingsRecord).toHaveBeenCalledWith({}, { isFirstLaunch: false });
-        expect(plugin.settings.syncModes.folderSortOrder).toBe('local');
         expect(plugin.saveSettingsAndUpdate).toHaveBeenCalledTimes(1);
-        expect(plugin.settingsController.mirrorAllSyncModeSettingsToLocalStorage).toHaveBeenCalledTimes(1);
+        expect(plugin.settingsController.mirrorUiScalesToLocalStorage).toHaveBeenCalledTimes(1);
     });
 
     it('reports local-only metadata cleanup without saving synced settings', async () => {

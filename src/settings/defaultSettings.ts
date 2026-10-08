@@ -24,9 +24,7 @@ import { DEFAULT_UI_SCALE } from '../utils/uiScale';
 import type { ListPaneAppearance } from './listPaneAppearance';
 import {
     NARROW_SIDEBAR_CUSTOM_WIDTH_DEFAULT,
-    SYNC_MODE_SETTING_IDS,
     type NotebookNavigatorSettings,
-    type SettingSyncMode,
     type FolderTemplateMapping
 } from './types';
 import { sanitizeRecord } from '../utils/recordUtils';
@@ -39,11 +37,6 @@ import {
 } from '../utils/calendarCustomNotePatterns';
 import { DEFAULT_FILE_TYPE_ICON_PRESET } from '../utils/fileTypeIconPresets';
 import { FOLDER_NOTE_NAME_PATTERN_TOKEN } from '../utils/folderNoteName';
-
-const defaultSettingsSync = sanitizeRecord<SettingSyncMode>(undefined);
-SYNC_MODE_SETTING_IDS.forEach(settingId => {
-    defaultSettingsSync[settingId] = 'synced';
-});
 
 /**
  * Default settings for the plugin
@@ -69,7 +62,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     ],
     vaultProfile: 'default',
     vaultTitle: 'navigation',
-    syncModes: defaultSettingsSync,
 
     // General tab - Behavior
     createNewNotesInNewTab: false,

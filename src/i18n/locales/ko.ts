@@ -1017,11 +1017,6 @@ export const STRINGS_KO = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(동기화되지 않음)',
-            enableSync: '동기화 활성화',
-            disableSync: '동기화 비활성화'
-        },
         items: {
             listPaneTitle: {
                 name: '목록 창 제목',

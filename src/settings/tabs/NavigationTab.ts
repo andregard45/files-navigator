@@ -24,7 +24,6 @@ import type { SettingsTabContext } from './SettingsTabContext';
 import { runAsyncAction } from '../../utils/async';
 import { supportsKeyboardInteractions } from '../../utils/paneLayout';
 import { getActiveVaultProfile } from '../../utils/vaultProfiles';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { createDropdownDefinition, createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
 import { formatPixelSliderValue, formatSecondsSliderValue, renderSliderSetting } from './SliderSetting';
 import { renderToolbarButtonsSetting } from './ToolbarButtonsSetting';
@@ -204,7 +203,6 @@ function renderNavIndentSetting(setting: Setting, context: SettingsTabContext): 
         }
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'navIndent' });
 }
 
 function renderNavItemHeightSetting(setting: Setting, context: SettingsTabContext): void {
@@ -224,7 +222,6 @@ function renderNavItemHeightSetting(setting: Setting, context: SettingsTabContex
         }
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'navItemHeight' });
 }
 
 function renderSpringLoadedFoldersInitialDelaySetting(setting: Setting, context: SettingsTabContext): void {
@@ -279,5 +276,4 @@ function renderNavItemHeightScaleTextSetting(setting: Setting, context: Settings
             })
         );
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'navItemHeightScaleText' });
 }

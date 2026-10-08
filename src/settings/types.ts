@@ -24,12 +24,6 @@ import type { ShortcutEntry } from '../types/shortcuts';
 import type { SearchProvider } from '../types/search';
 import type { FileTypeIconPreset } from '../utils/fileTypeIconPresets';
 
-export type SettingSyncMode = 'local' | 'synced';
-
-export function isSettingSyncMode(value: unknown): value is SettingSyncMode {
-    return value === 'local' || value === 'synced';
-}
-
 export type DeleteAttachmentsSetting = 'ask' | 'always' | 'never';
 
 export function isDeleteAttachmentsSetting(value: unknown): value is DeleteAttachmentsSetting {
@@ -69,35 +63,6 @@ export interface HomepageSetting {
     file: string | null;
     createMissingPeriodicNote: boolean;
 }
-
-/** Identifiers for settings that can be switched between synced and local storage. */
-export const SYNC_MODE_SETTING_IDS = [
-    'vaultProfile',
-    'homepage',
-    'folderSortOrder',
-    'tagSortOrder',
-    'propertySortOrder',
-    'includeDescendantNotes',
-    'useFloatingToolbars',
-    'dualPane',
-    'dualPaneOrientation',
-    'narrowSidebarLayout',
-    'narrowSidebarTriggerMode',
-    'narrowSidebarCustomWidth',
-    'paneTransitionDuration',
-    'toolbarVisibility',
-    'navIndent',
-    'navItemHeight',
-    'navItemHeightScaleText',
-    'calendarPlacement',
-    'calendarLeftPlacement',
-    'calendarWeeksToShow',
-    'compactItemHeight',
-    'compactItemHeightScaleText',
-    'uiScale'
-] as const;
-
-export type SyncModeSettingId = (typeof SYNC_MODE_SETTING_IDS)[number];
 
 /** Available sort options for file listing */
 export type SortOption =
@@ -577,7 +542,6 @@ export interface NotebookNavigatorSettings {
     vaultProfiles: VaultProfile[];
     vaultProfile: string;
     vaultTitle: VaultTitleOption;
-    syncModes: Record<SyncModeSettingId, SettingSyncMode>;
 
     // General tab - Behavior
     createNewNotesInNewTab: boolean;

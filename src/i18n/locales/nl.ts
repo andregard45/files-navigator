@@ -1025,11 +1025,6 @@ export const STRINGS_NL = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(niet gesynchroniseerd)',
-            enableSync: 'Synchronisatie inschakelen',
-            disableSync: 'Synchronisatie uitschakelen'
-        },
         items: {
             listPaneTitle: {
                 name: 'Titel lijstpaneel',

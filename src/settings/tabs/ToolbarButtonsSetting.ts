@@ -23,7 +23,6 @@ import { getIconService } from '../../services/icons';
 import { runAsyncAction } from '../../utils/async';
 import { isDualPaneSupported } from '../../utils/paneLayout';
 import { resolveUXIcon, type UXIconId } from '../../utils/uxIcons';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import type { ListToolbarButtonId, NavigationToolbarButtonId } from '../types';
 
 type ToolbarButtonConfig<T extends string> = {
@@ -101,7 +100,6 @@ export function renderToolbarButtonsSetting(
         });
     }
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'toolbarVisibility' });
 }
 
 interface ToolbarButtonGroupProps<T extends string> {

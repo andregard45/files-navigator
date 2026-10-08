@@ -1019,11 +1019,6 @@ export const STRINGS_RU = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(не синхронизировано)',
-            enableSync: 'Включить синхронизацию',
-            disableSync: 'Отключить синхронизацию'
-        },
         items: {
             listPaneTitle: {
                 name: 'Заголовок панели списка',

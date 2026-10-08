@@ -30,7 +30,6 @@ import {
     type NotebookNavigatorSettings,
     type NarrowSidebarLayout,
     type NarrowSidebarTriggerMode,
-    type SyncModeSettingId,
     type TagSortOrder
 } from '../../settings/types';
 import RecentDataManager from '../recent/RecentDataManager';
@@ -57,9 +56,8 @@ interface PluginPreferencesControllerOptions {
     notifySettingsUpdate: () => void;
     saveSettings: () => Promise<void>;
     isShuttingDown: () => boolean;
-    isLocal: (settingId: SyncModeSettingId) => boolean;
-    persistSyncModeSettingUpdate: (settingId: SyncModeSettingId) => void;
-    persistSyncModeSettingUpdateAsync: (settingId: SyncModeSettingId) => Promise<void>;
+    persistSettingUpdate: () => void;
+    persistSettingUpdateAsync: () => Promise<void>;
     isOmnisearchAvailable: () => boolean;
     refreshMatcherCachesIfNeeded: () => void;
 }
@@ -253,7 +251,7 @@ export class PluginPreferencesController {
         const settings = this.options.getSettings();
         settings.dualPane = next;
         localStorage.set(this.options.keys.dualPaneKey, next ? '1' : '0');
-        this.options.persistSyncModeSettingUpdate('dualPane');
+        this.options.persistSettingUpdate();
     }
 
     public toggleDualPanePreference(): void {
@@ -274,7 +272,7 @@ export class PluginPreferencesController {
         const settings = this.options.getSettings();
         settings.dualPaneOrientation = normalized;
         localStorage.set(this.options.keys.dualPaneOrientationKey, normalized);
-        await this.options.persistSyncModeSettingUpdateAsync('dualPaneOrientation');
+        await this.options.persistSettingUpdateAsync();
     }
 
     public setNarrowSidebarLayout(layout: NarrowSidebarLayout): void {
@@ -286,7 +284,7 @@ export class PluginPreferencesController {
 
         settings.narrowSidebarLayout = normalized;
         localStorage.set(this.options.keys.narrowSidebarLayoutKey, normalized);
-        this.options.persistSyncModeSettingUpdate('narrowSidebarLayout');
+        this.options.persistSettingUpdate();
     }
 
     public setNarrowSidebarTriggerMode(mode: NarrowSidebarTriggerMode): void {
@@ -298,7 +296,7 @@ export class PluginPreferencesController {
 
         settings.narrowSidebarTriggerMode = normalized;
         localStorage.set(this.options.keys.narrowSidebarTriggerModeKey, normalized);
-        this.options.persistSyncModeSettingUpdate('narrowSidebarTriggerMode');
+        this.options.persistSettingUpdate();
     }
 
     public setNarrowSidebarCustomWidth(width: number): void {
@@ -315,7 +313,7 @@ export class PluginPreferencesController {
 
         settings.narrowSidebarCustomWidth = normalized;
         localStorage.set(this.options.keys.narrowSidebarCustomWidthKey, normalized);
-        this.options.persistSyncModeSettingUpdate('narrowSidebarCustomWidth');
+        this.options.persistSettingUpdate();
     }
 
     public getUIScale(): number {
@@ -340,7 +338,7 @@ export class PluginPreferencesController {
             return;
         }
 
-        this.options.persistSyncModeSettingUpdate('uiScale');
+        this.options.persistSettingUpdate();
     }
 
     public getTagSortOrder(): TagSortOrder {
@@ -363,7 +361,7 @@ export class PluginPreferencesController {
 
         settings.tagSortOrder = order;
         localStorage.set(this.options.keys.tagSortOrderKey, order);
-        this.options.persistSyncModeSettingUpdate('tagSortOrder');
+        this.options.persistSettingUpdate();
     }
 
     public setPropertySortOrder(order: TagSortOrder): void {
@@ -374,7 +372,7 @@ export class PluginPreferencesController {
 
         settings.propertySortOrder = order;
         localStorage.set(this.options.keys.propertySortOrderKey, order);
-        this.options.persistSyncModeSettingUpdate('propertySortOrder');
+        this.options.persistSettingUpdate();
     }
 
     public setFolderSortOrder(order: AlphaSortOrder): void {
@@ -385,7 +383,7 @@ export class PluginPreferencesController {
 
         settings.folderSortOrder = order;
         localStorage.set(this.options.keys.folderSortOrderKey, order);
-        this.options.persistSyncModeSettingUpdate('folderSortOrder');
+        this.options.persistSettingUpdate();
     }
 
     public getRecentColors(): string[] {
@@ -434,10 +432,6 @@ export class PluginPreferencesController {
     public persistToolbarVisibility(): void {
         localStorage.set(this.options.keys.toolbarVisibilityKey, this.options.getSettings().toolbarVisibility);
         this.options.notifySettingsUpdate();
-        if (this.options.isLocal('toolbarVisibility')) {
-            return;
-        }
-
         runAsyncAction(() => this.options.saveSettings());
     }
 
@@ -549,7 +543,7 @@ export class PluginPreferencesController {
         this.initializeRecentDataManager();
 
         this.options.refreshMatcherCachesIfNeeded();
-        this.options.persistSyncModeSettingUpdate('vaultProfile');
+        this.options.persistSettingUpdate();
     }
 
     public setSearchActive(value: boolean): void {
@@ -565,7 +559,7 @@ export class PluginPreferencesController {
         const settings = this.options.getSettings();
         settings.includeDescendantNotes = next;
         this.updateUXPreference('includeDescendantNotes', next);
-        this.options.persistSyncModeSettingUpdate('includeDescendantNotes');
+        this.options.persistSettingUpdate();
     }
 
     public toggleIncludeDescendantNotes(): void {
@@ -645,7 +639,7 @@ export class PluginPreferencesController {
         }
     }
 
-    private updateSettingAndMirrorToLocalStorage<K extends SyncModeSettingId & keyof NotebookNavigatorSettings>(params: {
+    private updateSettingAndMirrorToLocalStorage<K extends keyof NotebookNavigatorSettings>(params: {
         settingId: K;
         localStorageKey: string;
         nextValue: NotebookNavigatorSettings[K];
@@ -657,7 +651,7 @@ export class PluginPreferencesController {
 
         settings[params.settingId] = params.nextValue;
         localStorage.set(params.localStorageKey, params.nextValue);
-        this.options.persistSyncModeSettingUpdate(params.settingId);
+        this.options.persistSettingUpdate();
     }
 
     private updateBoundedNumberSettingAndMirror(params: {

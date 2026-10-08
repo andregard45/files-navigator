@@ -22,7 +22,6 @@ import { strings } from '../../i18n';
 import { isTagSortOrder } from '../types';
 import type { SettingsTabContext } from './SettingsTabContext';
 import { createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 
 /** Builds native 1.13 setting definitions for tag settings. */
 export function createTagsSettingDefinitions(context: SettingsTabContext, heading?: string): SettingDefinitionItem[] {
@@ -97,5 +96,4 @@ function renderTagSortOrderSetting(setting: Setting, context: SettingsTabContext
             });
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'tagSortOrder' });
 }

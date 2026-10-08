@@ -1021,11 +1021,6 @@ export const STRINGS_JA = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '（未同期）',
-            enableSync: '同期を有効化',
-            disableSync: '同期を無効化'
-        },
         items: {
             listPaneTitle: {
                 name: 'リストペインのタイトル',

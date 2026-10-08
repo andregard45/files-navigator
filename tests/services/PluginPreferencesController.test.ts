@@ -55,8 +55,7 @@ describe('PluginPreferencesController', () => {
     let controller: PluginPreferencesController;
     let settings: typeof DEFAULT_SETTINGS;
     let isShuttingDown = false;
-    let isLocal = false;
-    let persistSyncModeSettingUpdate: ReturnType<typeof vi.fn>;
+    let persistSettingUpdate: ReturnType<typeof vi.fn>;
     let notifySettingsUpdate: ReturnType<typeof vi.fn>;
     let saveSettings: ReturnType<typeof vi.fn>;
 
@@ -65,12 +64,10 @@ describe('PluginPreferencesController', () => {
         mockLocalStorageStore.clear();
         vi.clearAllMocks();
         isShuttingDown = false;
-        isLocal = false;
         settings = {
-            ...DEFAULT_SETTINGS,
-            syncModes: { ...DEFAULT_SETTINGS.syncModes }
+            ...DEFAULT_SETTINGS
         };
-        persistSyncModeSettingUpdate = vi.fn();
+        persistSettingUpdate = vi.fn();
         notifySettingsUpdate = vi.fn();
         saveSettings = vi.fn(async () => undefined);
 
@@ -80,9 +77,8 @@ describe('PluginPreferencesController', () => {
             notifySettingsUpdate,
             saveSettings,
             isShuttingDown: () => isShuttingDown,
-            isLocal: vi.fn(() => isLocal),
-            persistSyncModeSettingUpdate,
-            persistSyncModeSettingUpdateAsync: vi.fn(async () => undefined),
+            persistSettingUpdate,
+            persistSettingUpdateAsync: vi.fn(async () => undefined),
             isOmnisearchAvailable: vi.fn(() => true),
             refreshMatcherCachesIfNeeded: vi.fn()
         });

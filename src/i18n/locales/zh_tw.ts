@@ -1013,11 +1013,6 @@ export const STRINGS_ZH_TW = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '（未同步）',
-            enableSync: '啟用同步',
-            disableSync: '停用同步'
-        },
         items: {
             listPaneTitle: {
                 name: '列表窗格標題',

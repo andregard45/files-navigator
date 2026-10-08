@@ -16,8 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { Platform } from 'obsidian';
 import { DEFAULT_SETTINGS } from '../../settings/defaultSettings';
-import { migrateCollapsedPinnedContexts, migrateRecentColors } from '../../settings/migrations/localPreferences';
+import { migrateCollapsedPinnedContexts, migrateRecentColors, migrateUIScales } from '../../settings/migrations/localPreferences';
 import { migrateMomentDateFormats } from '../../settings/migrations/momentFormats';
 import {
     applyExistingUserDefaults,
@@ -42,9 +43,6 @@ import {
     type ListSortOverrideValue,
     NARROW_SIDEBAR_CUSTOM_WIDTH_MAX,
     NARROW_SIDEBAR_CUSTOM_WIDTH_MIN,
-    SYNC_MODE_SETTING_IDS,
-    type SettingSyncMode,
-    type SyncModeSettingId,
     type TagSortOrder,
     type VaultProfile,
     isAlphaSortOrder,
@@ -60,7 +58,6 @@ import {
     isNarrowSidebarTriggerMode,
     normalizeNarrowSidebarLayout,
     isRecentNotesHideMode,
-    isSettingSyncMode,
     isSortOption,
     isTagSortOrder,
     normalizeAppearanceGroupBy,
@@ -73,6 +70,7 @@ import {
     sanitizeTemplateCommands
 } from '../../settings/types';
 import { LEGACY_STORAGE_KEYS, LOCALSTORAGE_VERSION, localStorage } from '../../utils/localStorage';
+import { sanitizeUIScale } from '../../utils/uiScale';
 import { clearHiddenFileNameMatcherCache } from '../../utils/fileFilters';
 import {
     normalizeCanonicalIconId,
@@ -105,22 +103,18 @@ import {
     MIN_PANE_TRANSITION_DURATION_MS,
     PROPERTIES_ROOT_VIRTUAL_FOLDER_ID,
     STORAGE_KEYS,
-    type LocalStorageKeys,
-    type UXPreferences
+    type LocalStorageKeys
 } from '../../types';
 import {
     getStoredListPaneAppearanceFields,
     mergeListPaneAppearanceAndGrouping,
     type ListPaneAppearance
 } from '../../settings/listPaneAppearance';
-import { createSyncModeRegistry, type SyncModeRegistry } from './syncModeRegistry';
-import { getDefaultUXPreferences, isUXPreferencesRecord } from './uxPreferences';
 
 interface PluginSettingsControllerOptions {
     keys: LocalStorageKeys;
     loadData: () => Promise<unknown>;
     saveData: (data: unknown) => Promise<void>;
-    mirrorUXPreferences: (update: Partial<UXPreferences>) => void;
 }
 
 /**
@@ -148,26 +142,8 @@ export type StartupSettingsLoadResult = 'first-launch' | 'loaded' | 'missing' | 
 const STARTUP_SETTINGS_RETRY_ATTEMPTS = 4;
 const STARTUP_SETTINGS_RETRY_DELAY_MS = 500;
 
-const LEGACY_LOCAL_SYNC_MODE_SETTING_IDS = new Set<SyncModeSettingId>([
-    'vaultProfile',
-    'tagSortOrder',
-    'includeDescendantNotes',
-    'dualPane',
-    'dualPaneOrientation',
-    'paneTransitionDuration',
-    'toolbarVisibility',
-    'navIndent',
-    'navItemHeight',
-    'navItemHeightScaleText',
-    'calendarWeeksToShow',
-    'compactItemHeight',
-    'compactItemHeightScaleText',
-    'uiScale'
-]);
-
 export class PluginSettingsController {
     private currentSettings: NotebookNavigatorSettings = structuredClone(DEFAULT_SETTINGS);
-    private syncModeRegistry: SyncModeRegistry | null = null;
     private shouldPersistDesktopScale = false;
     private shouldPersistMobileScale = false;
     private hiddenFolderCacheKey: string | null = null;
@@ -187,47 +163,13 @@ export class PluginSettingsController {
         this.currentSettings = settings;
     }
 
-    public getSyncMode(settingId: SyncModeSettingId): SettingSyncMode {
-        return this.currentSettings.syncModes?.[settingId] === 'local' ? 'local' : 'synced';
-    }
-
-    public isLocal(settingId: SyncModeSettingId): boolean {
-        return this.getSyncMode(settingId) === 'local';
-    }
-
-    public isSynced(settingId: SyncModeSettingId): boolean {
-        return this.getSyncMode(settingId) === 'synced';
-    }
-
-    public async setSyncMode(settingId: SyncModeSettingId, mode: SettingSyncMode): Promise<boolean> {
-        const nextMode: SettingSyncMode = mode === 'local' ? 'local' : 'synced';
-        const currentMode = this.getSyncMode(settingId);
-        if (currentMode === nextMode) {
-            return false;
-        }
-
-        if (nextMode === 'local') {
-            this.seedLocalValue(settingId);
-        }
-
-        const next = sanitizeRecord<SettingSyncMode>(this.currentSettings.syncModes, isSettingSyncMode);
-        next[settingId] = nextMode;
-        this.currentSettings.syncModes = next;
-        return true;
-    }
-
-    public mirrorAllSyncModeSettingsToLocalStorage(): void {
-        const registry = this.getSyncModeRegistry();
-        SYNC_MODE_SETTING_IDS.forEach(settingId => {
-            registry[settingId].mirrorToLocalStorage();
-        });
+    public mirrorUiScalesToLocalStorage(): void {
+        const settings = this.currentSettings;
+        const next = sanitizeUIScale(Platform.isMobile ? settings.mobileScale : settings.desktopScale);
+        localStorage.set(this.options.keys.uiScaleKey, next);
     }
 
     public prepareImportedUiScalePersistence(): void {
-        if (!this.isLocal('uiScale')) {
-            return;
-        }
-
         this.shouldPersistDesktopScale = true;
         this.shouldPersistMobileScale = true;
     }
@@ -365,10 +307,9 @@ export class PluginSettingsController {
      */
     public applySettingsRecord(
         storedData: Record<string, unknown> | null,
-        options: { isFirstLaunch: boolean; preferRecordLocalValues?: boolean }
+        options: { isFirstLaunch: boolean }
     ): boolean {
         const { isFirstLaunch } = options;
-        const preferRecordValue = options.preferRecordLocalValues ?? false;
         const hadLegacyPropertyFieldsInStoredData = Boolean(
             storedData && Object.prototype.hasOwnProperty.call(storedData, 'propertyFields')
         );
@@ -489,9 +430,6 @@ export class PluginSettingsController {
         if (!isEnterKeyAction(this.currentSettings.cmdCtrlEnterOpenContext)) {
             this.currentSettings.cmdCtrlEnterOpenContext = DEFAULT_SETTINGS.cmdCtrlEnterOpenContext;
         }
-        this.normalizeSyncModes({ storedData, isFirstLaunch });
-        const syncModeRegistry = this.getSyncModeRegistry();
-
         migrateLegacySyncedSettings({
             settings: this.currentSettings,
             storedData,
@@ -563,17 +501,22 @@ export class PluginSettingsController {
             DEFAULT_SETTINGS.templateEngine
         );
 
-        let uiScaleMigrated = false;
-        SYNC_MODE_SETTING_IDS.forEach(settingId => {
-            const entry = syncModeRegistry[settingId];
-            if (entry.loadPhase !== 'preProfiles') {
-                return;
-            }
+        // Scales for the *opposite* device type stay synced in data.json (so they survive
+        // moving to a device of that type). The current device's effective scale lives in
+        // localStorage per-device, so its key is pruned from data.json after first save.
+        if (!this.shouldPersistDesktopScale && Platform.isMobile) {
+            this.shouldPersistDesktopScale = true;
+        }
+        if (!this.shouldPersistMobileScale && !Platform.isMobile) {
+            this.shouldPersistMobileScale = true;
+        }
 
-            const result = entry.resolveOnLoad({ storedData, preferRecordValue });
-            if (settingId === 'uiScale') {
-                uiScaleMigrated = result.migrated;
-            }
+        const migratedUiScales = migrateUIScales({
+            settings: this.currentSettings,
+            storedData,
+            keys: this.options.keys,
+            shouldPersistDesktopScale: false,
+            shouldPersistMobileScale: false
         });
 
         if (!Array.isArray(this.currentSettings.rootFolderOrder)) {
@@ -594,20 +537,6 @@ export class PluginSettingsController {
             storedData,
             keys: this.options.keys
         });
-        const hadLocalValuesInSettings = Boolean(
-            storedData &&
-            SYNC_MODE_SETTING_IDS.some(settingId => {
-                const entry = syncModeRegistry[settingId];
-                if (!entry.cleanupOnLoad) {
-                    return false;
-                }
-                if (!this.isLocal(settingId)) {
-                    return false;
-                }
-                return entry.hasPersistedValue(storedData);
-            })
-        );
-
         const migratedFolderNoteSettings = migrateFolderNoteSettings({
             settings: this.currentSettings,
             storedData,
@@ -629,7 +558,6 @@ export class PluginSettingsController {
         this.normalizeIconSettings();
         this.normalizeFileIconMapSettings();
         this.normalizeInterfaceIconsSettings();
-        syncModeRegistry.vaultProfile.resolveOnLoad({ storedData, preferRecordValue });
         this.normalizeTagSettings();
         this.normalizePropertySettings();
         this.normalizeNavigationSeparatorSettings();
@@ -638,7 +566,6 @@ export class PluginSettingsController {
         const needsPersistedCleanup =
             migratedRecentColors ||
             migratedCollapsedPinnedContexts ||
-            hadLocalValuesInSettings ||
             hadLegacySearchProviderInSettings ||
             hadLegacyLastAnnouncedReleaseInSettings ||
             hadLegacyPropertyFieldsInStoredData ||
@@ -660,7 +587,7 @@ export class PluginSettingsController {
             hadInvalidCmdCtrlEnterOpenContextInStoredData ||
             prunedUnavailablePropertySortOverrides ||
             prunedUnavailablePropertyGroupingOverrides ||
-            uiScaleMigrated ||
+            migratedUiScales.migrated ||
             migratedMomentFormats ||
             migratedFolderNoteSettings ||
             migratedShortcutNegationSyntax;
@@ -814,14 +741,14 @@ export class PluginSettingsController {
         const rest = { ...this.currentSettings } as Record<string, unknown>;
         this.removeNonPersistableSettings(rest);
 
-        const syncModeRegistry = this.getSyncModeRegistry();
-        SYNC_MODE_SETTING_IDS.forEach(settingId => {
-            if (!this.isLocal(settingId)) {
-                return;
-            }
-
-            syncModeRegistry[settingId].deleteFromPersisted(rest);
-        });
+        // UI scales remain per-device: the effective value lives in localStorage, so
+        // device-specific scale keys are omitted from data.json when not persisted.
+        if (!this.shouldPersistDesktopScale) {
+            delete rest['desktopScale'];
+        }
+        if (!this.shouldPersistMobileScale) {
+            delete rest['mobileScale'];
+        }
 
         return rest as unknown as NotebookNavigatorSettings;
     }
@@ -833,6 +760,12 @@ export class PluginSettingsController {
         ensureVaultProfiles(defaults);
         const rest = defaults as unknown as Record<string, unknown>;
         this.removeNonPersistableSettings(rest);
+        // Mirror the first-launch pruning: the current device's scale lives in localStorage only.
+        if (!Platform.isMobile) {
+            delete rest['desktopScale'];
+        } else {
+            delete rest['mobileScale'];
+        }
         return rest as unknown as NotebookNavigatorSettings;
     }
 
@@ -849,6 +782,7 @@ export class PluginSettingsController {
         delete rest.optimizeNoteHeight;
         delete rest.showPinnedIcon;
         delete rest.showPinnedGroupHeader;
+        delete rest['syncModes'];
     }
 
     public refreshMatcherCachesIfNeeded(): void {
@@ -1083,77 +1017,6 @@ export class PluginSettingsController {
         return profiles[0]?.id ?? DEFAULT_VAULT_PROFILE_ID;
     }
 
-    private normalizeSyncModes(params: { storedData: Record<string, unknown> | null; isFirstLaunch: boolean }): void {
-        const { storedData, isFirstLaunch } = params;
-        const storedModes = storedData?.['syncModes'];
-        const source = isPlainObjectRecordValue(storedModes) ? storedModes : null;
-
-        const resolved = sanitizeRecord<SettingSyncMode>(undefined);
-        SYNC_MODE_SETTING_IDS.forEach(settingId => {
-            const defaultMode: SettingSyncMode = isFirstLaunch
-                ? 'synced'
-                : LEGACY_LOCAL_SYNC_MODE_SETTING_IDS.has(settingId)
-                  ? 'local'
-                  : 'synced';
-            const value = source ? source[settingId] : undefined;
-            resolved[settingId] = isSettingSyncMode(value) ? value : defaultMode;
-        });
-
-        this.currentSettings.syncModes = resolved;
-    }
-
-    private getSyncModeRegistry(): SyncModeRegistry {
-        if (this.syncModeRegistry) {
-            return this.syncModeRegistry;
-        }
-
-        this.syncModeRegistry = createSyncModeRegistry({
-            keys: this.options.keys,
-            defaultSettings: DEFAULT_SETTINGS,
-            isLocal: settingId => this.isLocal(settingId),
-            getSettings: () => this.currentSettings,
-            resolveActiveVaultProfileId: () => this.resolveActiveVaultProfileId(),
-            sanitizeVaultProfileId: value => this.sanitizeVaultProfileId(value),
-            parseDualPanePreference: raw => this.parseDualPanePreference(raw),
-            parseDualPaneOrientation: raw => this.parseDualPaneOrientation(raw),
-            sanitizeBooleanSetting: (value, fallback) => this.sanitizeBooleanSetting(value, fallback),
-            sanitizeHomepageSetting: value => this.sanitizeHomepageSetting(value),
-            sanitizeDualPaneOrientationSetting: value => this.sanitizeDualPaneOrientationSetting(value),
-            sanitizeNarrowSidebarLayoutSetting: value => this.sanitizeNarrowSidebarLayoutSetting(value),
-            sanitizeNarrowSidebarTriggerModeSetting: value => this.sanitizeNarrowSidebarTriggerModeSetting(value),
-            sanitizeNarrowSidebarCustomWidthSetting: value => this.sanitizeNarrowSidebarCustomWidthSetting(value),
-            sanitizeTagSortOrderSetting: value => this.sanitizeTagSortOrderSetting(value),
-            sanitizeFolderSortOrderSetting: value => this.sanitizeFolderSortOrderSetting(value),
-            sanitizePaneTransitionDurationSetting: value => this.sanitizePaneTransitionDurationSetting(value),
-            sanitizeToolbarVisibilitySetting: value => this.sanitizeToolbarVisibilitySetting(value),
-            sanitizeNavIndentSetting: value => this.sanitizeNavIndentSetting(value),
-            sanitizeNavItemHeightSetting: value => this.sanitizeNavItemHeightSetting(value),
-            sanitizeCalendarWeeksToShowSetting: value => this.sanitizeCalendarWeeksToShowSetting(value),
-            sanitizeCalendarPlacementSetting: value => this.sanitizeCalendarPlacementSetting(value),
-            sanitizeCalendarLeftPlacementSetting: value => this.sanitizeCalendarLeftPlacementSetting(value),
-            sanitizeCompactItemHeightSetting: value => this.sanitizeCompactItemHeightSetting(value),
-            defaultUXPreferences: getDefaultUXPreferences(),
-            isUXPreferencesRecord,
-            mirrorUXPreferences: update => {
-                this.options.mirrorUXPreferences(update);
-            },
-            getShouldPersistDesktopScale: () => this.shouldPersistDesktopScale,
-            getShouldPersistMobileScale: () => this.shouldPersistMobileScale,
-            setShouldPersistDesktopScale: value => {
-                this.shouldPersistDesktopScale = value;
-            },
-            setShouldPersistMobileScale: value => {
-                this.shouldPersistMobileScale = value;
-            }
-        });
-
-        return this.syncModeRegistry;
-    }
-
-    private seedLocalValue(settingId: SyncModeSettingId): void {
-        this.getSyncModeRegistry()[settingId].mirrorToLocalStorage();
-    }
-
     private sanitizeSettingsRecords(): void {
         const sanitizeStringMap = (record?: Record<string, string>): Record<string, string> => sanitizeRecord(record, isStringRecordValue);
         const sanitizeSortMap = (record?: Record<string, ListSortOverrideValue>): Record<string, ListSortOverrideValue> => {
@@ -1194,8 +1057,6 @@ export class PluginSettingsController {
         };
         const sanitizeBooleanMap = (record?: Record<string, boolean>): Record<string, boolean> =>
             sanitizeRecord(record, isBooleanRecordValue);
-        const sanitizeSettingsSyncMap = (record?: Record<string, SettingSyncMode>): Record<string, SettingSyncMode> =>
-            sanitizeRecord(record, isSettingSyncMode);
 
         this.currentSettings.folderColors = sanitizeStringMap(this.currentSettings.folderColors);
         this.currentSettings.folderTemplates = sanitizeRecord(this.currentSettings.folderTemplates, isFolderTemplateMapping);
@@ -1219,7 +1080,6 @@ export class PluginSettingsController {
         this.currentSettings.tagAppearances = sanitizeAppearanceMap(this.currentSettings.tagAppearances);
         this.currentSettings.propertyAppearances = sanitizeAppearanceMap(this.currentSettings.propertyAppearances);
         this.currentSettings.navigationSeparators = sanitizeBooleanMap(this.currentSettings.navigationSeparators);
-        this.currentSettings.syncModes = sanitizeSettingsSyncMap(this.currentSettings.syncModes);
         this.currentSettings.calendarMonthHighlights = sanitizeStringMap(this.currentSettings.calendarMonthHighlights);
         this.currentSettings.pinnedNotes = clonePinnedNotesRecord(this.currentSettings.pinnedNotes);
     }

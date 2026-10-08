@@ -1014,11 +1014,6 @@ export const STRINGS_TH = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(ไม่ซิงค์)',
-            enableSync: 'เปิดใช้งานการซิงค์',
-            disableSync: 'ปิดใช้งานการซิงค์'
-        },
         items: {
             listPaneTitle: {
                 name: 'ชื่อแผงรายการ',

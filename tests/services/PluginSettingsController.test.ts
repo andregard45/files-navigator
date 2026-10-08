@@ -49,6 +49,7 @@ vi.mock('../../src/utils/localStorage', () => {
 
 import { PluginSettingsController } from '../../src/services/settings/PluginSettingsController';
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
+import { Platform } from 'obsidian';
 import { STORAGE_KEYS } from '../../src/types';
 import { buildPropertySeparatorKey, buildTagSeparatorKey } from '../../src/utils/navigationSeparators';
 import { buildPropertyKeyNodeId, buildPropertyValueNodeId } from '../../src/utils/propertyTree';
@@ -64,7 +65,6 @@ describe('PluginSettingsController.normalizeTagSettings', () => {
             keys: STORAGE_KEYS,
             loadData: vi.fn().mockResolvedValue(null),
             saveData: vi.fn().mockResolvedValue(undefined),
-            mirrorUXPreferences: vi.fn()
         });
         const settings = structuredClone(DEFAULT_SETTINGS);
 
@@ -91,7 +91,6 @@ describe('PluginSettingsController.normalizeNavigationSeparatorSettings', () => 
             keys: STORAGE_KEYS,
             loadData: vi.fn().mockResolvedValue(null),
             saveData: vi.fn().mockResolvedValue(undefined),
-            mirrorUXPreferences: vi.fn()
         });
         const settings = structuredClone(DEFAULT_SETTINGS);
         const normalizedPropertyKey = buildPropertySeparatorKey(buildPropertyValueNodeId('status', 'todo'));
@@ -112,7 +111,7 @@ describe('PluginSettingsController.normalizeNavigationSeparatorSettings', () => 
 });
 
 describe('PluginSettingsController.prepareImportedUiScalePersistence', () => {
-    it('preserves the opposite-platform scale across an import save and reload when uiScale is local', async () => {
+    it('preserves the opposite-platform scale across an import save and reload', async () => {
         let storedData: Record<string, unknown> | null = null;
 
         const controller = new PluginSettingsController({
@@ -120,17 +119,15 @@ describe('PluginSettingsController.prepareImportedUiScalePersistence', () => {
             loadData: vi.fn(async () => (storedData ? structuredClone(storedData) : null)),
             saveData: vi.fn(async data => {
                 storedData = structuredClone(data) as Record<string, unknown>;
-            }),
-            mirrorUXPreferences: vi.fn()
+            })
         });
         const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.syncModes.uiScale = 'local';
         settings.desktopScale = 1.3;
         settings.mobileScale = 0.9;
 
         controller.settings = settings;
         controller.prepareImportedUiScalePersistence();
-        controller.mirrorAllSyncModeSettingsToLocalStorage();
+        controller.mirrorUiScalesToLocalStorage();
         await controller.saveSettings();
         await controller.loadSettings();
         await controller.saveSettings();
@@ -138,7 +135,8 @@ describe('PluginSettingsController.prepareImportedUiScalePersistence', () => {
         expect(mockLocalStorageStore.get(STORAGE_KEYS.uiScaleKey)).toBe(1.3);
         expect(controller.settings.desktopScale).toBe(1.3);
         expect(controller.settings.mobileScale).toBe(0.9);
-        expect(storedData?.['desktopScale']).toBeUndefined();
+        // The imported record carried both scale keys, so both remain persisted (no legacy cleanup needed).
+        expect(storedData?.['desktopScale']).toBe(1.3);
         expect(storedData?.['mobileScale']).toBe(0.9);
     });
 });
@@ -157,7 +155,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 }
             })),
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -178,7 +175,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 openFolderNotesInNewTab: true
             })),
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -200,7 +196,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 useFolderColorForTitles: true
             })),
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -227,7 +222,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 }
             })),
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -249,7 +243,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 }
             })),
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -278,7 +271,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 }
             })),
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -313,7 +305,6 @@ describe('PluginSettingsController.loadSettings', () => {
                 }
             })),
             saveData: vi.fn().mockResolvedValue(undefined),
-            mirrorUXPreferences: vi.fn()
         });
 
         await controller.loadSettings();
@@ -334,7 +325,6 @@ describe('PluginSettingsController.loadSettings result classification', () => {
             keys: STORAGE_KEYS,
             loadData: loadDataMock,
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
         return { controller, saveData, loadDataMock };
     };
@@ -425,7 +415,6 @@ describe('PluginSettingsController.loadSettingsAtStartup', () => {
             keys: STORAGE_KEYS,
             loadData: loadDataMock,
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
         return { controller, saveData, loadDataMock };
     };
@@ -568,7 +557,6 @@ describe('PluginSettingsController.applySettingsRecord', () => {
             keys: STORAGE_KEYS,
             loadData: loadDataMock,
             saveData,
-            mirrorUXPreferences: vi.fn()
         });
         return { controller, saveData, loadDataMock };
     };
@@ -628,14 +616,8 @@ describe('PluginSettingsController.applySettingsRecord', () => {
         expect(controller.settings.folderNoteNamePattern).toBe('_{{folder}}');
     });
 
-    it('uses imported values instead of existing device mirrors for local-mode settings', () => {
+    it('applies imported record values over existing device mirrors', () => {
         const { controller } = createController();
-        const syncModes = structuredClone(DEFAULT_SETTINGS.syncModes);
-        syncModes.folderSortOrder = 'local';
-        syncModes.includeDescendantNotes = 'local';
-        syncModes.vaultProfile = 'local';
-        syncModes.dualPane = 'local';
-        syncModes.uiScale = 'local';
         mockLocalStorageStore.set(STORAGE_KEYS.folderSortOrderKey, 'alpha-asc');
         mockLocalStorageStore.set(STORAGE_KEYS.uxPreferencesKey, { includeDescendantNotes: false });
         mockLocalStorageStore.set(STORAGE_KEYS.vaultProfileKey, 'default');
@@ -647,7 +629,6 @@ describe('PluginSettingsController.applySettingsRecord', () => {
 
         controller.applySettingsRecord(
             {
-                syncModes,
                 vaultProfiles: [structuredClone(DEFAULT_SETTINGS.vaultProfiles[0]), secondaryProfile],
                 vaultProfile: 'secondary',
                 folderSortOrder: 'alpha-desc',
@@ -656,20 +637,17 @@ describe('PluginSettingsController.applySettingsRecord', () => {
                 desktopScale: 1.3,
                 mobileScale: 0.9
             },
-            { isFirstLaunch: false, preferRecordLocalValues: true }
+            { isFirstLaunch: false }
         );
 
         expect(controller.settings.folderSortOrder).toBe('alpha-desc');
         expect(controller.settings.includeDescendantNotes).toBe(true);
         expect(controller.settings.vaultProfile).toBe('secondary');
         expect(controller.settings.dualPane).toBe(true);
-        expect(controller.settings.desktopScale).toBe(1.3);
+        // The current device's effective scale always comes from per-device localStorage (Opsi B),
+        // so the imported record value applies only to the opposite-platform key in data.json.
+        expect(controller.settings.desktopScale).toBe(1.1);
         expect(controller.settings.mobileScale).toBe(0.9);
-        expect(mockLocalStorageStore.get(STORAGE_KEYS.folderSortOrderKey)).toBe('alpha-desc');
-        expect(mockLocalStorageStore.get(STORAGE_KEYS.uxPreferencesKey)).toMatchObject({ includeDescendantNotes: true });
-        expect(mockLocalStorageStore.get(STORAGE_KEYS.vaultProfileKey)).toBe('secondary');
-        expect(mockLocalStorageStore.get(STORAGE_KEYS.dualPaneKey)).toBe('1');
-        expect(mockLocalStorageStore.get(STORAGE_KEYS.uiScaleKey)).toBe(1.3);
     });
 
     it('builds persistable first-launch defaults without changing current settings or local mirrors', () => {
@@ -682,8 +660,14 @@ describe('PluginSettingsController.applySettingsRecord', () => {
         const persistedDefaults = controller.getPersistableDefaultSettings() as unknown as Record<string, unknown>;
 
         expect(persistedDefaults.recentNotesCount).toBe(DEFAULT_SETTINGS.recentNotesCount);
-        expect(persistedDefaults.desktopScale).toBe(DEFAULT_SETTINGS.desktopScale);
-        expect(persistedDefaults.mobileScale).toBe(DEFAULT_SETTINGS.mobileScale);
+        // Current-device scale is pruned (lives in localStorage); opposite-device scale is kept.
+        if (Platform.isMobile) {
+            expect(persistedDefaults).not.toHaveProperty('mobileScale');
+            expect(persistedDefaults.desktopScale).toBe(DEFAULT_SETTINGS.desktopScale);
+        } else {
+            expect(persistedDefaults).not.toHaveProperty('desktopScale');
+            expect(persistedDefaults.mobileScale).toBe(DEFAULT_SETTINGS.mobileScale);
+        }
         expect(controller.settings.recentNotesCount).toBe(40);
         expect(mockLocalStorageStore.get(STORAGE_KEYS.folderSortOrderKey)).toBe('alpha-desc');
     });
@@ -726,7 +710,7 @@ describe('PluginSettingsController.applySettingsRecord', () => {
 });
 
 describe('PluginSettingsController.saveSettings', () => {
-    it('updates local homepage storage when homepage is local', async () => {
+    it('persists homepage to the settings record and mirrors it to local storage', async () => {
         let storedData: Record<string, unknown> | null = null;
 
         const controller = new PluginSettingsController({
@@ -735,11 +719,9 @@ describe('PluginSettingsController.saveSettings', () => {
             saveData: vi.fn(async data => {
                 storedData = structuredClone(data) as Record<string, unknown>;
             }),
-            mirrorUXPreferences: vi.fn()
         });
         const settings = structuredClone(DEFAULT_SETTINGS);
 
-        settings.syncModes.homepage = 'local';
         settings.homepage = {
             source: 'daily-note',
             file: null,
@@ -760,13 +742,16 @@ describe('PluginSettingsController.saveSettings', () => {
             file: null,
             createMissingPeriodicNote: true
         });
-        expect(storedData?.['homepage']).toBeUndefined();
+        expect(storedData?.['homepage']).toEqual({
+            source: 'daily-note',
+            file: null,
+            createMissingPeriodicNote: true
+        });
 
         const reloadedController = new PluginSettingsController({
             keys: STORAGE_KEYS,
             loadData: vi.fn(async () => (storedData ? structuredClone(storedData) : null)),
             saveData: vi.fn().mockResolvedValue(undefined),
-            mirrorUXPreferences: vi.fn()
         });
 
         await reloadedController.loadSettings();
@@ -788,7 +773,6 @@ describe('PluginSettingsController.saveSettings', () => {
             saveData: vi.fn(async data => {
                 storedData = structuredClone(data) as Record<string, unknown>;
             }),
-            mirrorUXPreferences: vi.fn()
         });
         const settings = structuredClone(DEFAULT_SETTINGS);
 
