@@ -33,13 +33,6 @@
     );
 }
 
-/* Root reorder panel text */
-.notebook-navigator-android .nn-mobile .nn-root-reorder-hint {
-    font-size: calc(
-        var(--nn-root-reorder-hint-font-size-mobile, var(--nn-root-reorder-hint-font-size)) * var(--nn-android-font-scale-reciprocal, 1)
-    );
-}
-
 /* Emoji and webfont icons - Android scales font-size but not SVG dimensions.
    Only apply to .nn-emoji-icon and .nn-iconfont to avoid breaking Lucide SVG icons. */
 .notebook-navigator-android .nn-mobile .nn-emoji-icon,

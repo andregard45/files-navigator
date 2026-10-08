@@ -73,11 +73,7 @@ export const STRINGS_IT = {
         folders: 'Cartelle',
         tags: 'Etichette',
         calendar: 'Calendario',
-        reorderRootFoldersTitle: 'Riordina navigazione',
-        reorderRootFoldersHint: 'Usa frecce o trascina per riordinare',
         vaultRootLabel: 'Vault',
-        resetRootToAlpha: 'Ripristina ordine alfabetico',
-        resetRootToFrequency: 'Ripristina ordine per frequenza',
         pinShortcuts: 'Fissa scorciatoie',
         pinShortcutsAndRecentFiles: 'Fissa scorciatoie e file recenti',
         unpinShortcuts: 'Rimuovi fissatura scorciatoie',
@@ -155,8 +151,6 @@ export const STRINGS_IT = {
         childValues: 'valori figli',
         applySortAndGroupToDescendants: (target: string) => `Applica ordinamento e raggruppamento a ${target}`,
         showFolders: 'Mostra navigazione', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Riordina navigazione',
-        finishRootFolderReorder: 'Fatto',
         showExcludedItems: 'Mostra cartelle, etichette e note nascoste', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Nascondi cartelle, etichette e note nascoste', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Mostra doppio pannello', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -464,7 +458,6 @@ export const STRINGS_IT = {
                 'nav-tree-expand': 'Freccia albero: espandi',
                 'nav-tree-collapse': 'Freccia albero: comprimi',
                 'nav-hidden-items': 'Elementi nascosti',
-                'nav-root-reorder': 'Riordina cartelle radice',
                 'nav-new-folder': 'Nuova cartella',
                 'nav-show-single-pane': 'Mostra pannello singolo',
                 'nav-show-dual-pane': 'Mostra doppio pannello',

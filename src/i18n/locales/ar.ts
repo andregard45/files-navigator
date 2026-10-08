@@ -73,11 +73,7 @@ export const STRINGS_AR = {
         folders: 'مجلدات',
         tags: 'وسوم',
         calendar: 'التقويم',
-        reorderRootFoldersTitle: 'إعادة ترتيب التنقل',
-        reorderRootFoldersHint: 'استخدم الأسهم أو اسحب لإعادة الترتيب',
         vaultRootLabel: 'الخزنة',
-        resetRootToAlpha: 'إعادة الترتيب الأبجدي',
-        resetRootToFrequency: 'إعادة الترتيب حسب التكرار',
         pinShortcuts: 'تثبيت الاختصارات',
         pinShortcutsAndRecentFiles: 'تثبيت الاختصارات والملفات الحديثة',
         unpinShortcuts: 'إلغاء تثبيت الاختصارات',
@@ -155,8 +151,6 @@ export const STRINGS_AR = {
         childValues: 'القيم الفرعية',
         applySortAndGroupToDescendants: (target: string) => `تطبيق الفرز والتجميع على ${target}`,
         showFolders: 'إظهار التنقل', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'إعادة ترتيب التنقل',
-        finishRootFolderReorder: 'تم',
         showExcludedItems: 'إظهار المجلدات والوسوم والملاحظات المخفية', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'إخفاء المجلدات والوسوم والملاحظات المخفية', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'إظهار لوحتين', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -463,7 +457,6 @@ export const STRINGS_AR = {
                 'nav-tree-expand': 'سهم الشجرة: توسيع',
                 'nav-tree-collapse': 'سهم الشجرة: طي',
                 'nav-hidden-items': 'العناصر المخفية',
-                'nav-root-reorder': 'إعادة ترتيب المجلدات الجذرية',
                 'nav-new-folder': 'مجلد جديد',
                 'nav-show-single-pane': 'إظهار لوحة واحدة',
                 'nav-show-dual-pane': 'إظهار لوحتين',

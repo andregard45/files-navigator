@@ -27,19 +27,10 @@ import { resolveUXIcon } from '../utils/uxIcons';
 
 interface NavigationToolbarProps {
     onTreeUpdateComplete?: () => void;
-    onToggleRootFolderReorder?: () => void;
-    rootReorderActive?: boolean;
-    rootReorderDisabled?: boolean;
     useFloatingLayout?: boolean;
 }
 
-export function NavigationToolbar({
-    onTreeUpdateComplete,
-    onToggleRootFolderReorder,
-    rootReorderActive,
-    rootReorderDisabled,
-    useFloatingLayout = false
-}: NavigationToolbarProps) {
+export function NavigationToolbar({ onTreeUpdateComplete, useFloatingLayout = false }: NavigationToolbarProps) {
     const settings = useSettingsState();
     const uxPreferences = useUXPreferences();
     const { toggleShowCalendar } = useUXPreferenceActions();
@@ -53,12 +44,9 @@ export function NavigationToolbar({
     const showExpandCollapseButton = navigationVisibility.expandCollapse;
     const showCalendarButton = navigationVisibility.calendar && settings.calendarPlacement !== 'right-sidebar';
     const showHiddenItemsButton = navigationVisibility.hiddenItems;
-    const showRootReorderButton = navigationVisibility.rootReorder;
     const showNewFolderButton = navigationVisibility.newFolder;
 
-    const leftButtonCount = [showExpandCollapseButton, showCalendarButton, showHiddenItemsButton, showRootReorderButton].filter(
-        Boolean
-    ).length;
+    const leftButtonCount = [showExpandCollapseButton, showCalendarButton, showHiddenItemsButton].filter(Boolean).length;
     const totalButtonCount = leftButtonCount + (showNewFolderButton ? 1 : 0);
     const leftGroupClassName = leftButtonCount === 1 ? 'nn-mobile-toolbar-circle' : 'nn-mobile-toolbar-pill';
     const leftButtonBaseClassName =
@@ -116,18 +104,6 @@ export function NavigationToolbar({
                 tabIndex={-1}
             >
                 <ServiceIcon iconId={resolveUXIcon(settings.interfaceIcons, 'nav-calendar')} />
-            </button>
-        ) : null,
-        showRootReorderButton ? (
-            <button
-                key="root-reorder"
-                className={`${leftButtonBaseClassName}${rootReorderActive ? ' nn-mobile-toolbar-button-active' : ''}`}
-                aria-label={rootReorderActive ? strings.paneHeader.finishRootFolderReorder : strings.paneHeader.reorderRootFolders}
-                onClick={onToggleRootFolderReorder}
-                disabled={rootReorderDisabled}
-                tabIndex={-1}
-            >
-                <ServiceIcon iconId={resolveUXIcon(settings.interfaceIcons, 'nav-root-reorder')} />
             </button>
         ) : null
     ].filter(Boolean);

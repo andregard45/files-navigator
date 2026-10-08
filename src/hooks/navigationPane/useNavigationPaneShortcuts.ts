@@ -59,7 +59,6 @@ import type { NavigationPaneShortcutsResult } from './navigationPaneShortcutType
 
 interface UseNavigationPaneShortcutsProps {
     rootContainerRef: React.RefObject<HTMLDivElement | null>;
-    isRootReorderMode: boolean;
     onExecuteSearchShortcut?: (shortcutKey: string, searchShortcut: SearchShortcut) => Promise<void> | void;
     onNavigateToFolder: (folderPath: string, options?: NavigateToFolderOptions) => void;
     onRevealTag: (tagPath: string, options?: RevealTagOptions) => void;
@@ -74,7 +73,6 @@ interface UseNavigationPaneShortcutsProps {
 
 export function useNavigationPaneShortcuts({
     rootContainerRef,
-    isRootReorderMode,
     onExecuteSearchShortcut,
     onNavigateToFolder,
     onRevealTag,
@@ -193,7 +191,6 @@ export function useNavigationPaneShortcuts({
     const shortcutDnD = useNavigationPaneShortcutDnD({
         app,
         isMobile,
-        isRootReorderMode,
         isShortcutContextMenuOpen: shortcutState.isShortcutContextMenuOpen,
         shortcutsExpanded: shortcutState.shortcutsExpanded,
         showShortcuts: settings.showShortcuts,

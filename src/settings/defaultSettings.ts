@@ -198,7 +198,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
             expandCollapse: true,
             calendar: true,
             hiddenItems: true,
-            rootReorder: true,
             newFolder: true
         },
         list: {

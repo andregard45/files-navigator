@@ -73,11 +73,7 @@ export const STRINGS_VI = {
         folders: 'Thư mục',
         tags: 'Thẻ',
         calendar: 'Lịch',
-        reorderRootFoldersTitle: 'Sắp xếp lại điều hướng',
-        reorderRootFoldersHint: 'Dùng mũi tên hoặc kéo để sắp xếp lại',
         vaultRootLabel: 'Vault',
-        resetRootToAlpha: 'Đặt lại theo thứ tự bảng chữ cái',
-        resetRootToFrequency: 'Đặt lại theo tần suất',
         pinShortcuts: 'Ghim lối tắt',
         pinShortcutsAndRecentFiles: 'Ghim lối tắt và tệp gần đây',
         unpinShortcuts: 'Bỏ ghim lối tắt',
@@ -155,8 +151,6 @@ export const STRINGS_VI = {
         childValues: 'giá trị con',
         applySortAndGroupToDescendants: (target: string) => `Áp dụng sắp xếp và nhóm cho ${target}`,
         showFolders: 'Hiện điều hướng', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Sắp xếp lại điều hướng',
-        finishRootFolderReorder: 'Hoàn tất',
         showExcludedItems: 'Hiện thư mục, thẻ và ghi chú ẩn', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Ẩn thư mục, thẻ và ghi chú ẩn', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Hiện hai ngăn', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -464,7 +458,6 @@ export const STRINGS_VI = {
                 'nav-tree-expand': 'Mũi tên cây: mở rộng',
                 'nav-tree-collapse': 'Mũi tên cây: thu gọn',
                 'nav-hidden-items': 'Mục ẩn',
-                'nav-root-reorder': 'Sắp xếp lại thư mục gốc',
                 'nav-new-folder': 'Thư mục mới',
                 'nav-show-single-pane': 'Hiện một ngăn',
                 'nav-show-dual-pane': 'Hiện hai ngăn',

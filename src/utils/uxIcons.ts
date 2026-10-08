@@ -28,7 +28,6 @@ export type UXIconId =
     | 'nav-collapse-all'
     | 'nav-calendar'
     | 'nav-hidden-items'
-    | 'nav-root-reorder'
     | 'nav-new-folder'
     | 'nav-recent-files'
     | 'nav-tree-expand'
@@ -72,7 +71,6 @@ export const UX_ICON_DEFINITIONS: UXIconDefinition[] = [
     { id: 'nav-expand-all', category: 'navigationPane', defaultIconId: 'chevrons-up-down' },
     { id: 'nav-collapse-all', category: 'navigationPane', defaultIconId: 'chevrons-down-up' },
     { id: 'nav-hidden-items', category: 'navigationPane', defaultIconId: 'eye' },
-    { id: 'nav-root-reorder', category: 'navigationPane', defaultIconId: 'list-tree' },
     { id: 'nav-new-folder', category: 'navigationPane', defaultIconId: 'folder-plus' },
     { id: 'nav-recent-files', category: 'navigationPane', defaultIconId: 'history' },
     { id: 'nav-tree-expand', category: 'navigationPane', defaultIconId: 'chevron-right' },

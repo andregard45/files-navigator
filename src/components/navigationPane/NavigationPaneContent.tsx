@@ -31,7 +31,6 @@ import { useUIState, useUIDispatch } from '../../context/UIStateContext';
 import { useNavigationPaneKeyboard } from '../../hooks/useNavigationPaneKeyboard';
 import { useNavigationPaneData } from '../../hooks/navigationPane/useNavigationPaneData';
 import { useNavigationPaneScroll } from '../../hooks/useNavigationPaneScroll';
-import { useNavigationRootReorder } from '../../hooks/useNavigationRootReorder';
 import { useMeasuredElementHeight } from '../../hooks/useMeasuredElementHeight';
 import { usePointerDrag } from '../../hooks/usePointerDrag';
 import { useSurfaceColorVariables } from '../../hooks/useSurfaceColorVariables';
@@ -49,6 +48,7 @@ import {
     NavigationPaneItemType,
     NavigationSectionId,
     NAVIGATION_PANE_DIMENSIONS,
+    NAVIGATION_SECTION_ORDER,
     RECENT_NOTES_VIRTUAL_FOLDER_ID,
     SHORTCUTS_VIRTUAL_FOLDER_ID,
     TAGS_ROOT_VIRTUAL_FOLDER_ID,
@@ -57,7 +57,6 @@ import {
 import { STORAGE_KEYS } from '../../types';
 import { Calendar } from '../calendar';
 import { NavigationBanner } from '../NavigationBanner';
-import { NavigationRootReorderPanel } from '../NavigationRootReorderPanel';
 import { NavigationToolbar } from '../NavigationToolbar';
 import { localStorage } from '../../utils/localStorage';
 import { getSelectedPath } from '../../utils/selectionUtils';
@@ -74,7 +73,6 @@ import {
     toggleNavigationExpansionTarget
 } from '../../utils/navigationExpansion';
 import type { TagTreeNode } from '../../types/storage';
-import { normalizeNavigationSectionOrderInput } from '../../utils/navigationSections';
 import { usesMobileChrome } from '../../utils/paneLayout';
 import { getActiveVaultProfile } from '../../utils/vaultProfiles';
 import { PropertyKeyVisibilityModal } from '../../modals/PropertyKeyVisibilityModal';
@@ -320,10 +318,6 @@ export const NavigationPane = React.memo(
             [isMobile, pinnedShortcutsScrollElement, scaleFactor, schedulePinnedShortcutsHeightUpdate, startPointerDrag]
         );
 
-        const [sectionOrder, setSectionOrder] = useState<NavigationSectionId[]>(() => {
-            const stored = localStorage.get<unknown>(STORAGE_KEYS.navigationSectionOrderKey);
-            return normalizeNavigationSectionOrderInput(stored);
-        });
         const [foldersSectionExpanded, setFoldersSectionExpanded] = useState(true);
         const [tagsSectionExpanded, setTagsSectionExpanded] = useState(true);
         const [propertiesSectionExpanded, setPropertiesSectionExpanded] = useState(true);
@@ -337,7 +331,6 @@ export const NavigationPane = React.memo(
         const handleTogglePropertiesSection = useCallback(() => {
             setPropertiesSectionExpanded(prev => !prev);
         }, []);
-        const [isRootReorderMode, setRootReorderMode] = useState(false);
 
         const handleConfigurePropertyKeysFromSectionMenu = useCallback(() => {
             const profile = getActiveVaultProfile(plugin.settings);
@@ -357,7 +350,6 @@ export const NavigationPane = React.memo(
 
         const shortcuts = useNavigationPaneShortcuts({
             rootContainerRef,
-            isRootReorderMode,
             onExecuteSearchShortcut,
             onNavigateToFolder,
             onRevealTag,
@@ -456,8 +448,7 @@ export const NavigationPane = React.memo(
             propertyRainbowColors: fileItemPillDecorationModel.propertyRainbowColors,
             shortcutsExpanded: shortcuts.shortcutsExpanded,
             recentNotesExpanded: shortcuts.recentNotesExpanded,
-            pinShortcuts: uiState.pinShortcuts && settings.showShortcuts,
-            sectionOrder
+            pinShortcuts: uiState.pinShortcuts && settings.showShortcuts
         });
         folderCountsRef.current = folderCounts;
         tagCountsRef.current = tagCounts;
@@ -541,10 +532,9 @@ export const NavigationPane = React.memo(
         const pinnedNavigationItems = useMemo(() => {
             const pinnedShortcutItems = uiState.pinShortcuts && settings.showShortcuts ? shortcutItems : [];
             const pinnedRecentItems = shouldPinRecentNotes ? pinnedRecentNotesItems : [];
-            const pinnedNavigationOrder = normalizeNavigationSectionOrderInput(sectionOrder);
 
             const ordered: CombinedNavigationItem[] = [];
-            pinnedNavigationOrder.forEach(sectionId => {
+            NAVIGATION_SECTION_ORDER.forEach(sectionId => {
                 if (sectionId === NavigationSectionId.RECENT && shouldPinRecentNotes) {
                     ordered.push(...pinnedRecentItems);
                 }
@@ -553,12 +543,12 @@ export const NavigationPane = React.memo(
                 }
             });
             return ordered;
-        }, [pinnedRecentNotesItems, sectionOrder, settings.showShortcuts, shortcutItems, shouldPinRecentNotes, uiState.pinShortcuts]);
+        }, [pinnedRecentNotesItems, settings.showShortcuts, shortcutItems, shouldPinRecentNotes, uiState.pinShortcuts]);
 
-        const shouldRenderNavigationBanner = Boolean(navigationBannerPath && !isRootReorderMode);
+        const shouldRenderNavigationBanner = Boolean(navigationBannerPath);
         const navigationBannerContent =
             shouldRenderNavigationBanner && navigationBannerPath ? <NavigationBanner path={navigationBannerPath} /> : null;
-        const shouldRenderPinnedShortcuts = pinnedNavigationItems.length > 0 && !isRootReorderMode;
+        const shouldRenderPinnedShortcuts = pinnedNavigationItems.length > 0;
 
         useLayoutEffect(() => {
             updatePinnedShortcutsOverflow(pinnedShortcutsScrollElement);
@@ -577,71 +567,6 @@ export const NavigationPane = React.memo(
             variables: NAVIGATION_PANE_SURFACE_COLOR_MAPPINGS,
             solidBackgroundRevision: activeNavRainbow
         });
-
-        const {
-            reorderableRootFolders,
-            reorderableRootTags,
-            reorderableRootProperties,
-            sectionReorderItems,
-            folderReorderItems,
-            tagReorderItems,
-            propertyReorderItems,
-            canReorderSections,
-            canReorderRootFolders,
-            canReorderRootTags,
-            canReorderRootProperties,
-            canReorderRootItems,
-            showRootFolderSection,
-            showRootTagSection,
-            showRootPropertySection,
-            resetRootTagOrderLabel,
-            resetRootPropertyOrderLabel,
-            handleResetRootFolderOrder,
-            handleResetRootTagOrder,
-            handleResetRootPropertyOrder,
-            reorderSectionOrder,
-            reorderRootFolderOrder,
-            reorderRootTagOrder,
-            reorderRootPropertyOrder
-        } = useNavigationRootReorder({
-            app,
-            items,
-            settings,
-            showHiddenItems,
-            updateSettings,
-            sectionOrder,
-            setSectionOrder,
-            rootLevelFolders,
-            missingRootFolderPaths,
-            resolvedRootTagKeys,
-            rootOrderingTagTree,
-            missingRootTagPaths,
-            resolvedRootPropertyKeys,
-            rootOrderingPropertyTree,
-            missingRootPropertyKeys,
-            metadataService,
-            foldersSectionExpanded,
-            tagsSectionExpanded,
-            propertiesSectionExpanded,
-            propertiesSectionActive,
-            handleToggleFoldersSection,
-            handleToggleTagsSection,
-            handleTogglePropertiesSection,
-            activeProfile
-        });
-
-        useEffect(() => {
-            if (isRootReorderMode && !canReorderRootItems) {
-                setRootReorderMode(false);
-            }
-        }, [canReorderRootItems, isRootReorderMode]);
-
-        const handleToggleRootReorder = useCallback(() => {
-            if (!canReorderRootItems) {
-                return;
-            }
-            setRootReorderMode(prev => !prev);
-        }, [canReorderRootItems]);
 
         const isAndroid = Platform.isAndroidApp;
         // Mobile chrome (profile-only header, mobile toolbars) applies to phones only.
@@ -682,30 +607,8 @@ export const NavigationPane = React.memo(
         }, [props.rootContainerRef, scrollContainerRef]);
 
         useEffect(() => {
-            if (isRootReorderMode) {
-                return;
-            }
             rowVirtualizer.measure();
-        }, [
-            isRootReorderMode,
-            navigationScrollMargin,
-            reorderableRootFolders,
-            reorderableRootProperties,
-            reorderableRootTags,
-            rowVirtualizer,
-            sectionOrder
-        ]);
-
-        useEffect(() => {
-            if (!isRootReorderMode) {
-                return;
-            }
-            rowVirtualizer.scrollToOffset(0, { align: 'start', behavior: 'auto' });
-            const scroller = scrollContainerRef.current;
-            if (scroller) {
-                scroller.scrollTo({ top: 0, behavior: 'auto' });
-            }
-        }, [isRootReorderMode, rowVirtualizer, scrollContainerRef]);
+        }, [navigationScrollMargin, rowVirtualizer]);
 
         const handleTreeUpdateComplete = useCallback(() => {
             const selectedPath = getSelectedPath(selectionState);
@@ -760,10 +663,6 @@ export const NavigationPane = React.memo(
         }, [expansionDispatch, expansionState.expandedVirtualFolders, settings.showAllTagsFolder]);
 
         const getSelectedRenderedItem = useCallback((): CombinedNavigationItem | null => {
-            if (isRootReorderMode) {
-                return null;
-            }
-
             const resolveItem = (itemType: ItemType, path: string): CombinedNavigationItem | null => {
                 const index = getNavigationIndex(pathToIndex, itemType, path);
                 if (index === undefined) {
@@ -786,7 +685,6 @@ export const NavigationPane = React.memo(
 
             return null;
         }, [
-            isRootReorderMode,
             items,
             pathToIndex,
             selectionState.selectedFolder,
@@ -818,10 +716,6 @@ export const NavigationPane = React.memo(
 
         const handleStartFolderInlineRename = useCallback(
             (folder: TFolder): boolean => {
-                if (isRootReorderMode) {
-                    return false;
-                }
-
                 const index = getNavigationIndex(pathToIndex, ItemType.FOLDER, folder.path);
                 if (index === undefined) {
                     return false;
@@ -841,7 +735,7 @@ export const NavigationPane = React.memo(
                 requestScroll(folder.path, { align: 'auto', itemType: ItemType.FOLDER });
                 return true;
             },
-            [buildRenameTarget, isRootReorderMode, items, pathToIndex, requestScroll]
+            [buildRenameTarget, items, pathToIndex, requestScroll]
         );
 
         const handleCancelInlineRename = useCallback(() => {
@@ -896,12 +790,6 @@ export const NavigationPane = React.memo(
             [app.vault, fileSystemOps, propertyOperations, settings, tagOperations]
         );
 
-        useEffect(() => {
-            if (isRootReorderMode) {
-                setInlineRenameTarget(null);
-            }
-        }, [isRootReorderMode]);
-
         const triggerSelectedItemCollapse = useCallback((): boolean => {
             const item = getSelectedRenderedItem();
             if (!item) {
@@ -939,13 +827,11 @@ export const NavigationPane = React.memo(
             [pathToIndex, requestScroll, rowVirtualizer, scrollContainerRef, shortcuts.openShortcutByNumber, triggerSelectedItemCollapse]
         );
 
-        const keyboardItems = isRootReorderMode ? [] : items;
-        const keyboardPathToIndex = isRootReorderMode ? new Map<string, number>() : pathToIndex;
         useNavigationPaneKeyboard({
-            items: keyboardItems,
+            items,
             virtualizer: rowVirtualizer,
             containerRef: props.rootContainerRef,
-            pathToIndex: keyboardPathToIndex,
+            pathToIndex,
             onStartRename: handleStartInlineRename
         });
 
@@ -960,13 +846,10 @@ export const NavigationPane = React.memo(
             return (
                 <NavigationToolbar
                     onTreeUpdateComplete={handleTreeUpdateComplete}
-                    onToggleRootFolderReorder={handleToggleRootReorder}
-                    rootReorderActive={isRootReorderMode}
-                    rootReorderDisabled={!canReorderRootItems}
                     useFloatingLayout={shouldUseFloatingToolbars}
                 />
             );
-        }, [canReorderRootItems, handleToggleRootReorder, handleTreeUpdateComplete, isRootReorderMode, shouldUseFloatingToolbars]);
+        }, [handleTreeUpdateComplete, shouldUseFloatingToolbars]);
 
         const showVaultTitleInHeader =
             !useMobileChrome && (settings.vaultProfiles ?? []).length > 1 && (settings.vaultTitle ?? 'navigation') === 'header';
@@ -1154,38 +1037,6 @@ export const NavigationPane = React.memo(
             [rowContext]
         );
 
-        const rootReorderContent = (
-            <NavigationRootReorderPanel
-                sectionItems={sectionReorderItems}
-                folderItems={folderReorderItems}
-                tagItems={tagReorderItems}
-                propertyItems={propertyReorderItems}
-                showRootFolderSection={showRootFolderSection}
-                showRootTagSection={showRootTagSection}
-                showRootPropertySection={showRootPropertySection}
-                foldersSectionExpanded={foldersSectionExpanded}
-                tagsSectionExpanded={tagsSectionExpanded}
-                propertiesSectionExpanded={propertiesSectionExpanded}
-                showRootFolderReset={settings.rootFolderOrder.length > 0}
-                showRootTagReset={settings.rootTagOrder.length > 0}
-                showRootPropertyReset={settings.rootPropertyOrder.length > 0}
-                resetRootTagOrderLabel={resetRootTagOrderLabel}
-                resetRootPropertyOrderLabel={resetRootPropertyOrderLabel}
-                onResetRootFolderOrder={handleResetRootFolderOrder}
-                onResetRootTagOrder={handleResetRootTagOrder}
-                onResetRootPropertyOrder={handleResetRootPropertyOrder}
-                onReorderSections={reorderSectionOrder}
-                onReorderFolders={reorderRootFolderOrder}
-                onReorderTags={reorderRootTagOrder}
-                onReorderProperties={reorderRootPropertyOrder}
-                canReorderSections={canReorderSections}
-                canReorderFolders={canReorderRootFolders}
-                canReorderTags={canReorderRootTags}
-                canReorderProperties={canReorderRootProperties}
-                isMobile={isMobile}
-            />
-        );
-
         return (
             <DndContext
                 sensors={shortcuts.shouldUseShortcutDnd ? shortcuts.shortcutSensors : []}
@@ -1205,9 +1056,6 @@ export const NavigationPane = React.memo(
                         isMobile={isMobile}
                         isPinnedShortcutsResizing={isPinnedShortcutsResizing}
                         onTreeUpdateComplete={handleTreeUpdateComplete}
-                        onToggleRootReorder={handleToggleRootReorder}
-                        rootReorderActive={isRootReorderMode}
-                        rootReorderDisabled={!canReorderRootItems}
                         showVaultTitleInHeader={showVaultTitleInHeader}
                         shouldShowVaultTitleInNavigationPane={shouldShowVaultTitleInNavigationPane}
                         showAndroidToolbar={useMobileChrome && isAndroid}
@@ -1230,8 +1078,6 @@ export const NavigationPane = React.memo(
                         scrollContainerRefCallback={scrollContainerRefCallback}
                         hasNavigationBannerConfigured={hasNavigationBannerConfigured}
                         navigationBannerRef={navigationBannerRef}
-                        rootReorderContent={rootReorderContent}
-                        isRootReorderMode={isRootReorderMode}
                         items={items}
                         rowVirtualizer={rowVirtualizer}
                         navigationScrollMargin={navigationScrollMargin}

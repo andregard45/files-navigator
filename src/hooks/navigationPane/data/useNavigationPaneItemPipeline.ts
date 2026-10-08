@@ -21,6 +21,7 @@ import type { App, TFile } from 'obsidian';
 import type { MetadataService } from '../../../services/MetadataService';
 import type { NotebookNavigatorSettings } from '../../../settings/types';
 import {
+    NAVIGATION_SECTION_ORDER,
     NavigationPaneItemType,
     NavigationSectionId,
     RECENT_NOTES_VIRTUAL_FOLDER_ID,
@@ -37,7 +38,6 @@ import {
     type PropertyRainbowColors,
     type TagRainbowColors
 } from '../../../utils/navigationRainbow';
-import { sanitizeNavigationSectionOrder } from '../../../utils/navigationSections';
 import {
     buildFolderSeparatorKey,
     buildPropertySeparatorKey,
@@ -67,7 +67,6 @@ export interface UseNavigationPaneItemPipelineParams {
     tagRainbowColors: TagRainbowColors;
     /** Property rainbow colors shared with the list pane, assigned from the unfiltered property tree rather than propertyItems */
     propertyRainbowColors: PropertyRainbowColors;
-    sectionOrder: NavigationSectionIdType[];
     showHiddenItems: boolean;
     pinShortcuts: boolean;
     shouldPinRecentNotes: boolean;
@@ -123,7 +122,6 @@ export function useNavigationPaneItemPipeline({
     navRainbowState,
     tagRainbowColors,
     propertyRainbowColors,
-    sectionOrder,
     showHiddenItems,
     pinShortcuts,
     shouldPinRecentNotes,
@@ -136,7 +134,6 @@ export function useNavigationPaneItemPipeline({
     parsedExcludedFolders,
     metadataDecorationVersion
 }: UseNavigationPaneItemPipelineParams): NavigationPaneItemPipelineResult {
-    const normalizedSectionOrder = useMemo(() => sanitizeNavigationSectionOrder(sectionOrder), [sectionOrder]);
     const { navRainbow, navRainbowPalettes } = navRainbowState;
 
     const { items, sectionSpacerMap, firstSectionId } = useMemo(() => {
@@ -157,7 +154,7 @@ export function useNavigationPaneItemPipeline({
 
         const orderedSections: SectionItems[] = [];
 
-        normalizedSectionOrder.forEach(identifier => {
+        NAVIGATION_SECTION_ORDER.forEach(identifier => {
             switch (identifier) {
                 case NavigationSectionId.SHORTCUTS:
                     if (shouldIncludeShortcutsSection) {
@@ -217,7 +214,6 @@ export function useNavigationPaneItemPipeline({
         return { items: allItems, sectionSpacerMap: spacerMap, firstSectionId: firstVisibleSectionId };
     }, [
         folderItems,
-        normalizedSectionOrder,
         pinShortcuts,
         propertiesSectionActive,
         propertyItems,

@@ -40,9 +40,6 @@ interface NavigationPaneLayoutProps {
     isMobile: boolean;
     isPinnedShortcutsResizing: boolean;
     onTreeUpdateComplete: () => void;
-    onToggleRootReorder: () => void;
-    rootReorderActive: boolean;
-    rootReorderDisabled: boolean;
     showVaultTitleInHeader: boolean;
     shouldShowVaultTitleInNavigationPane: boolean;
     showAndroidToolbar: boolean;
@@ -65,8 +62,6 @@ interface NavigationPaneLayoutProps {
     scrollContainerRefCallback: (node: HTMLDivElement | null) => void;
     hasNavigationBannerConfigured: boolean;
     navigationBannerRef: React.MutableRefObject<HTMLDivElement | null>;
-    rootReorderContent: React.ReactNode;
-    isRootReorderMode: boolean;
     items: CombinedNavigationItem[];
     rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
     navigationScrollMargin: number;
@@ -147,9 +142,6 @@ export function NavigationPaneLayout({
     isMobile,
     isPinnedShortcutsResizing,
     onTreeUpdateComplete,
-    onToggleRootReorder,
-    rootReorderActive,
-    rootReorderDisabled,
     showVaultTitleInHeader,
     shouldShowVaultTitleInNavigationPane,
     showAndroidToolbar,
@@ -172,8 +164,6 @@ export function NavigationPaneLayout({
     scrollContainerRefCallback,
     hasNavigationBannerConfigured,
     navigationBannerRef,
-    rootReorderContent,
-    isRootReorderMode,
     items,
     rowVirtualizer,
     navigationScrollMargin,
@@ -193,9 +183,6 @@ export function NavigationPaneLayout({
             <div className="nn-navigation-pane-chrome">
                 <NavigationPaneHeader
                     onTreeUpdateComplete={onTreeUpdateComplete}
-                    onToggleRootFolderReorder={onToggleRootReorder}
-                    rootReorderActive={rootReorderActive}
-                    rootReorderDisabled={rootReorderDisabled}
                     showVaultTitleInHeader={showVaultTitleInHeader}
                 />
                 {shouldShowVaultTitleInNavigationPane ? <VaultTitleArea /> : null}
@@ -259,48 +246,46 @@ export function NavigationPaneLayout({
                                 {navigationBannerContent}
                             </div>
                         ) : null}
-                        <div role={isRootReorderMode ? 'list' : 'tree'}>
-                            {isRootReorderMode
-                                ? rootReorderContent
-                                : items.length > 0 && (
-                                      <div
-                                          className="nn-virtual-container"
-                                          style={{
-                                              height: `${rowVirtualizer.getTotalSize()}px`
-                                          }}
-                                      >
-                                          {rowVirtualizer.getVirtualItems().map(virtualItem => {
-                                              const item =
-                                                  virtualItem.index >= 0 && virtualItem.index < items.length
-                                                      ? items[virtualItem.index]
-                                                      : null;
-                                              if (!item) {
-                                                  return null;
-                                              }
+                        <div role="tree">
+                            {items.length > 0 && (
+                                <div
+                                    className="nn-virtual-container"
+                                    style={{
+                                        height: `${rowVirtualizer.getTotalSize()}px`
+                                    }}
+                                >
+                                    {rowVirtualizer.getVirtualItems().map(virtualItem => {
+                                        const item =
+                                            virtualItem.index >= 0 && virtualItem.index < items.length
+                                                ? items[virtualItem.index]
+                                                : null;
+                                        if (!item) {
+                                            return null;
+                                        }
 
-                                              const hotState = getRowHotState(item);
-                                              return (
-                                                  <NavigationPaneRow
-                                                      key={virtualItem.key}
-                                                      item={item}
-                                                      index={virtualItem.index}
-                                                      top={Math.max(0, virtualItem.start - navigationScrollMargin)}
-                                                      adjacentFilledClassName={getAdjacentFilledClassName(
-                                                          item,
-                                                          virtualItem.index,
-                                                          items,
-                                                          isNavigationItemFilled
-                                                      )}
-                                                      isSelected={hotState.isSelected}
-                                                      isExpanded={hotState.isExpanded}
-                                                      renameTarget={hotState.renameTarget}
-                                                      isDragSource={hotState.isDragSource}
-                                                      renderNavigationItem={renderNavigationItem}
-                                                  />
-                                              );
-                                          })}
-                                      </div>
-                                  )}
+                                        const hotState = getRowHotState(item);
+                                        return (
+                                            <NavigationPaneRow
+                                                key={virtualItem.key}
+                                                item={item}
+                                                index={virtualItem.index}
+                                                top={Math.max(0, virtualItem.start - navigationScrollMargin)}
+                                                adjacentFilledClassName={getAdjacentFilledClassName(
+                                                    item,
+                                                    virtualItem.index,
+                                                    items,
+                                                    isNavigationItemFilled
+                                                )}
+                                                isSelected={hotState.isSelected}
+                                                isExpanded={hotState.isExpanded}
+                                                renameTarget={hotState.renameTarget}
+                                                isDragSource={hotState.isDragSource}
+                                                renderNavigationItem={renderNavigationItem}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

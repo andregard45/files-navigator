@@ -175,9 +175,10 @@ export const NavigationSectionId = {
 export type NavigationSectionId = (typeof NavigationSectionId)[keyof typeof NavigationSectionId];
 
 /**
- * Default ordering for navigation sections
+ * Hardcoded ordering for navigation sections.
+ * The order is fixed: shortcuts -> recent items -> folders -> tags -> properties.
  */
-export const DEFAULT_NAVIGATION_SECTION_ORDER: NavigationSectionId[] = [
+export const NAVIGATION_SECTION_ORDER: readonly NavigationSectionId[] = [
     NavigationSectionId.SHORTCUTS,
     NavigationSectionId.RECENT,
     NavigationSectionId.FOLDERS,
@@ -277,7 +278,6 @@ export interface LocalStorageKeys {
     recentNotesExpandedKey: string;
     recentNotesKey: string;
     recentIconsKey: string;
-    navigationSectionOrderKey: string;
     pinnedShortcutsMaxHeightKey: string;
     uxPreferencesKey: string;
     databaseSchemaVersionKey: string;
@@ -338,7 +338,6 @@ export const STORAGE_KEYS: LocalStorageKeys = {
     recentNotesExpandedKey: 'notebook-navigator-recent-notes-expanded',
     recentNotesKey: 'notebook-navigator-recent-notes',
     recentIconsKey: 'notebook-navigator-recent-icons',
-    navigationSectionOrderKey: 'notebook-navigator-section-order',
     pinnedShortcutsMaxHeightKey: 'notebook-navigator-pinned-shortcuts-max-height',
     uxPreferencesKey: 'notebook-navigator-ux-preferences',
     databaseSchemaVersionKey: 'notebook-navigator-db-schema-version',

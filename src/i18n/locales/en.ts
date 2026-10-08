@@ -73,11 +73,7 @@ export const STRINGS_EN = {
         folders: 'Folders',
         tags: 'Tags',
         calendar: 'Calendar',
-        reorderRootFoldersTitle: 'Reorder navigation',
-        reorderRootFoldersHint: 'Use arrows or drag to reorder',
         vaultRootLabel: 'Vault',
-        resetRootToAlpha: 'Reset to alphabetical order',
-        resetRootToFrequency: 'Reset to frequency order',
         pinShortcuts: 'Pin shortcuts',
         pinShortcutsAndRecentFiles: 'Pin shortcuts and recent files',
         unpinShortcuts: 'Unpin shortcuts',
@@ -155,8 +151,6 @@ export const STRINGS_EN = {
         childValues: 'child values',
         applySortAndGroupToDescendants: (target: string) => `Apply sort and group to ${target}`,
         showFolders: 'Show navigation', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Reorder navigation',
-        finishRootFolderReorder: 'Done reordering',
         showExcludedItems: 'Show hidden folders, tags, and notes', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Hide hidden folders, tags, and notes', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Show dual panes', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -463,7 +457,6 @@ export const STRINGS_EN = {
                 'nav-tree-expand': 'Tree chevron: expand',
                 'nav-tree-collapse': 'Tree chevron: collapse',
                 'nav-hidden-items': 'Hidden items',
-                'nav-root-reorder': 'Reorder root folders',
                 'nav-new-folder': 'New folder',
                 'nav-show-single-pane': 'Show single pane',
                 'nav-show-dual-pane': 'Show dual panes',

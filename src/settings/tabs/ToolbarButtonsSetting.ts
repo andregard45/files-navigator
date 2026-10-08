@@ -38,8 +38,7 @@ function getNavigationToolbarButtons(): ToolbarButtonConfig<NavigationToolbarBut
         { id: 'expandCollapse', iconType: 'ux', iconId: 'nav-expand-all', label: strings.paneHeader.expandAllFolders },
         { id: 'hiddenItems', iconType: 'ux', iconId: 'nav-hidden-items', label: strings.paneHeader.showExcludedItems },
         { id: 'calendar', iconType: 'ux', iconId: 'nav-calendar', label: strings.paneHeader.showCalendar },
-        { id: 'rootReorder', iconType: 'ux', iconId: 'nav-root-reorder', label: strings.paneHeader.reorderRootFolders },
-        { id: 'newFolder', iconType: 'ux', iconId: 'nav-new-folder', label: strings.paneHeader.newFolder }
+                { id: 'newFolder', iconType: 'ux', iconId: 'nav-new-folder', label: strings.paneHeader.newFolder }
     ];
 }
 

@@ -73,11 +73,7 @@ export const STRINGS_TR = {
         folders: 'Klasörler',
         tags: 'Etiketler',
         calendar: 'Takvim',
-        reorderRootFoldersTitle: 'Gezinmeyi yeniden sırala',
-        reorderRootFoldersHint: 'Yeniden sıralamak için okları veya sürüklemeyi kullanın',
         vaultRootLabel: 'Kasa',
-        resetRootToAlpha: 'Alfabetik sıraya sıfırla',
-        resetRootToFrequency: 'Sıklık sırasına sıfırla',
         pinShortcuts: 'Kısayolları sabitle',
         pinShortcutsAndRecentFiles: 'Kısayolları ve son dosyaları sabitle',
         unpinShortcuts: 'Kısayolları sabitlemeden çıkar',
@@ -155,8 +151,6 @@ export const STRINGS_TR = {
         childValues: 'alt değerler',
         applySortAndGroupToDescendants: (target: string) => `Sıralama ve gruplandırmayı ${target} için uygula`,
         showFolders: 'Gezinmeyi göster', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: 'Gezinmeyi yeniden sırala',
-        finishRootFolderReorder: 'Tamamlandı',
         showExcludedItems: 'Gizli klasörleri, etiketleri ve notları göster', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: 'Gizli klasörleri, etiketleri ve notları gizle', // Tooltip for button to hide hidden items (English: Hide hidden items)
         showDualPane: 'Çift bölme göster', // Tooltip for button to show dual-pane layout (English: Show dual panes)
@@ -464,7 +458,6 @@ export const STRINGS_TR = {
                 'nav-tree-expand': 'Ağaç oku: genişlet',
                 'nav-tree-collapse': 'Ağaç oku: daralt',
                 'nav-hidden-items': 'Gizli öğeler',
-                'nav-root-reorder': 'Kök klasörleri yeniden sırala',
                 'nav-new-folder': 'Yeni klasör',
                 'nav-show-single-pane': 'Tek bölme göster',
                 'nav-show-dual-pane': 'Çift bölme göster',

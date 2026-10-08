@@ -315,7 +315,6 @@ describe('useNavigationPaneTreeSections', () => {
                         navRainbowState,
                         tagRainbowColors: model.tagRainbowColors,
                         propertyRainbowColors: model.propertyRainbowColors,
-                        sectionOrder: [NavigationSectionId.TAGS, NavigationSectionId.PROPERTIES],
                         showHiddenItems: false,
                         pinShortcuts: false,
                         shouldPinRecentNotes: false,

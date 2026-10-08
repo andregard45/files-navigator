@@ -573,7 +573,7 @@ export function normalizeAppearanceGroupBy<T extends AppearanceGroupingValue>(ap
 }
 
 /** Buttons available in the navigation toolbar */
-export type NavigationToolbarButtonId = 'toggleDualPane' | 'expandCollapse' | 'calendar' | 'hiddenItems' | 'rootReorder' | 'newFolder';
+export type NavigationToolbarButtonId = 'toggleDualPane' | 'expandCollapse' | 'calendar' | 'hiddenItems' | 'newFolder';
 
 /** Buttons available in the list toolbar */
 export type ListToolbarButtonId = 'back' | 'search' | 'reveal' | 'descendants' | 'groupExpansion' | 'sort' | 'newNote';
