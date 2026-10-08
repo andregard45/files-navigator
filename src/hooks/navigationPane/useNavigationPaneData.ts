@@ -40,7 +40,6 @@ import { PropertyTreeNode, TagTreeNode } from '../../types/storage';
 import type { CombinedNavigationItem } from '../../types/virtualization';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import type { NoteCountInfo } from '../../types/noteCounts';
-import type { NavigationRainbowState } from '../useNavigationRainbowState';
 import { useSettingsDerived } from '../../context/SettingsContext';
 import { useNavigationNoteCounts } from './data/useNavigationNoteCounts';
 import { useNavigationPaneItemPipeline } from './data/useNavigationPaneItemPipeline';
@@ -48,7 +47,6 @@ import { useNavigationPaneListSections } from './data/useNavigationPaneListSecti
 import type { NavigationPaneSourceState } from './data/useNavigationPaneSourceState';
 import type { NavigationPaneTreeSectionsResult } from './data/useNavigationPaneTreeSections';
 import type { FolderDecorationModel } from '../../utils/folderDecoration';
-import type { PropertyRainbowColors, TagRainbowColors } from '../../utils/navigationRainbow';
 
 /**
  * Parameters for the useNavigationPaneData hook
@@ -64,15 +62,6 @@ interface UseNavigationPaneDataParams {
     treeSections: NavigationPaneTreeSectionsResult;
     /** Shared folder decoration model */
     folderDecorationModel: FolderDecorationModel;
-    /** Shared navigation rainbow state */
-    navRainbowState: NavigationRainbowState;
-    /**
-     * Tag and property rainbow colors shared with the list pane. They are assigned from the unfiltered trees so
-     * navigation rows, list pane pills, and the list pane title show the same colors, and so the colors do not
-     * change when filter by selection narrows the rendered tree.
-     */
-    tagRainbowColors: TagRainbowColors;
-    propertyRainbowColors: PropertyRainbowColors;
     /** Whether the shortcuts virtual folder is expanded */
     shortcutsExpanded: boolean;
     /** Whether the recent files virtual folder is expanded */
@@ -132,7 +121,6 @@ interface UseNavigationPaneDataResult {
     /** Version marker that bumps when vault file structure changes */
     vaultChangeVersion: number;
     /** Path to the navigation banner from the active vault profile */
-    navigationBannerPath: string | null;
 }
 
 /**
@@ -148,9 +136,6 @@ export function useNavigationPaneData({
     sourceState,
     treeSections,
     folderDecorationModel,
-    navRainbowState,
-    tagRainbowColors,
-    propertyRainbowColors,
     shortcutsExpanded,
     recentNotesExpanded,
     pinShortcuts
@@ -170,7 +155,6 @@ export function useNavigationPaneData({
         descendantExcludedFolders,
         hiddenFileTags,
         fileVisibility,
-        navigationBannerPath,
         folderCountFileNameMatcher,
         rootLevelFolders,
         missingRootFolderPaths,
@@ -233,9 +217,6 @@ export function useNavigationPaneData({
         fileNameIconNeedles,
         getFileDisplayName,
         folderDecorationModel,
-        navRainbowState,
-        tagRainbowColors,
-        propertyRainbowColors,
         showHiddenItems,
         pinShortcuts,
         shouldPinRecentNotes,
@@ -296,7 +277,6 @@ export function useNavigationPaneData({
         rootOrderingPropertyTree,
         rootPropertyOrderMap,
         missingRootPropertyKeys,
-        vaultChangeVersion: fileChangeVersion,
-        navigationBannerPath
+        vaultChangeVersion: fileChangeVersion
     };
 }

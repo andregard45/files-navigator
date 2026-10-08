@@ -35,7 +35,6 @@ export const STRINGS_NL = {
         restoreDefault: 'Standaard herstellen', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Verzenden',
         save: 'Opslaan', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Configureren', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Lichte modus', // Label for light theme mode (English: Light mode)
         darkMode: 'Donkere modus', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Geen selectie',
@@ -433,9 +432,6 @@ export const STRINGS_NL = {
             moveSourcesToTrash: 'Bronnotities naar prullenbak verplaatsen na samenvoegen',
             mergeButton: 'Samenvoegen'
         },
-        navRainbowSection: {
-            title: (section: string) => `Regenboogkleuren: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Pictogrammen zoeken...',
             recentlyUsedHeader: 'Recent gebruikt',
@@ -656,15 +652,6 @@ export const STRINGS_NL = {
             instructions: {
                 navigate: 'om te navigeren',
                 select: 'om sjabloon te selecteren',
-                dismiss: 'om te sluiten'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Afbeeldingen zoeken...',
-            svgMissingDimensions: 'Het geselecteerde SVG-bestand definieert geen breedte, hoogte of viewBox.',
-            instructions: {
-                navigate: 'om te navigeren',
-                select: 'om banner in te stellen',
                 dismiss: 'om te sluiten'
             }
         },
@@ -957,11 +944,9 @@ export const STRINGS_NL = {
                 description: 'Indeling, uiterlijk, aantal bestanden, inklapgedrag en regenboogkleuren.',
                 groups: {
                     appearance: 'Uiterlijk',
-                    banner: 'Banner',
                     collapseItems: 'Items inklappen',
                     dragAndDrop: 'Slepen en neerzetten',
-                    fileCounts: 'Bestandstellingen',
-                    rainbowColors: 'Regenboogkleuren'
+                    fileCounts: 'Bestandstellingen'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1018,8 +1003,7 @@ export const STRINGS_NL = {
                 description:
                     'Titels, voorbeeldtekst, uitgelichte afbeeldingen, tags, eigenschappen, datums, aantal woorden en aantal tekens.',
                 groups: {
-                    icon: 'Pictogram',
-                    title: 'Titel'
+                    icon: 'Pictogram'
                 }
             },
             calendar: {
@@ -1347,16 +1331,6 @@ export const STRINGS_NL = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Uitvouwen bij slepen: Vertraging bij volgende uitvouwen',
                 desc: 'Vertraging voordat extra mappen of tags uitvouwen tijdens dezelfde sleepactie (seconden).'
-            },
-            navigationBanner: {
-                name: 'Navigatiebanner (kluisprofiel)',
-                desc: 'Een afbeelding weergeven boven het navigatiepaneel. Verandert met het geselecteerde kluisprofiel.',
-                current: 'Huidige banner: {path}',
-                chooseButton: 'Afbeelding kiezen'
-            },
-            pinNavigationBanner: {
-                name: 'Banner vastpinnen',
-                desc: 'De navigatiebanner boven de navigatieboom vastpinnen.'
             },
             showShortcuts: {
                 name: 'Snelkoppelingen tonen',
@@ -1706,7 +1680,7 @@ export const STRINGS_NL = {
             },
             vaultProfiles: {
                 name: 'Kluisprofiel',
-                desc: 'Profielen bewaren bestandstypezichtbaarheid, verborgen bestanden, verborgen mappen, verborgen tags, eigenschapsregels voor verborgen notities, snelkoppelingen en navigatiebanner. Wissel van profiel hier of via de kluisprofielwisselaar in het navigatiepaneel.',
+                desc: 'Profielen bewaren bestandstypezichtbaarheid, verborgen bestanden, verborgen mappen, verborgen tags, eigenschapsregels voor verborgen notities, snelkoppelingen. Wissel van profiel hier of via de kluisprofielwisselaar in het navigatiepaneel.',
                 defaultName: 'Standaard',
                 addButton: 'Profiel toevoegen',
                 editProfilesButton: 'Profielen bewerken',
@@ -1768,10 +1742,6 @@ export const STRINGS_NL = {
                 helpTooltip: 'Formaat met Moment',
                 momentLinkText: 'Moment-formaat'
             },
-            useFolderColor: {
-                name: 'Mapkleur gebruiken',
-                desc: 'Notitietitels en bestandspictogrammen kleuren met de kleur van de bovenliggende map wanneer er geen aangepaste bestandskleur is ingesteld. Prioriteit: aangepaste bestandskleur > mapkleur > standaardkleur.'
-            },
             showRootFolder: {
                 name: 'Hoofdmap tonen',
                 desc: 'De kluisnaam als hoofdmap in de structuur weergeven.'
@@ -1809,87 +1779,7 @@ export const STRINGS_NL = {
                 name: 'Kleur alleen op pictogrammen toepassen',
                 desc: 'Indien ingeschakeld, worden aangepaste kleuren alleen op pictogrammen toegepast. Indien uitgeschakeld, worden kleuren toegepast op zowel pictogrammen als tekstlabels.'
             },
-            navRainbowMode: {
-                name: 'Regenboogkleurmodus (kluisprofiel)',
-                desc: 'Regenboogkleuren toepassen in het navigatiepaneel.',
-                options: {
-                    off: 'Uit',
-                    textColor: 'Tekstkleur',
-                    backgroundColor: 'Achtergrondkleur'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Eerste kleur',
-                desc: 'Eerste kleur in het regenboogverloop.'
-            },
-            navRainbowLastColor: {
-                name: 'Laatste kleur',
-                desc: 'Laatste kleur in het regenboogverloop.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Overgangsstijl',
-                desc: 'Interpolatie tussen de eerste en laatste kleur.',
-                options: {
-                    hue: 'Tint',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Toepassen op snelkoppelingen',
-                desc: 'Regenboogkleuren toepassen op snelkoppelingen.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Toepassen op recente items',
-                desc: 'Regenboogkleuren toepassen op recente items.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Toepassen op mappen',
-                desc: 'Regenboogkleuren toepassen op mappen.'
-            },
-            navRainbowFolderScope: {
-                name: 'Mappenbereik',
-                desc: 'Selecteer welke mapniveaus kleurtoewijzingen starten.',
-                options: {
-                    root: 'Hoofdniveau',
-                    child: 'Subniveau',
-                    all: 'Elk niveau'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Toepassen op tags',
-                desc: 'Regenboogkleuren toepassen op tags.'
-            },
-            navRainbowTagScope: {
-                name: 'Tagbereik',
-                desc: 'Selecteer welke tagniveaus kleurtoewijzingen starten.',
-                options: {
-                    root: 'Hoofdniveau',
-                    child: 'Subniveau',
-                    all: 'Elk niveau'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Toepassen op eigenschappen',
-                desc: 'Regenboogkleuren toepassen op eigenschappen.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Consistente helderheid over kleurtonen', // (English: Consistent brightness across hues)
-                desc: 'Interpoleert de helderheid tussen de begin- en eindkleuren tijdens kleurtoonovergangen.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Aparte kleuren voor lichte en donkere modus', // (English: Separate light and dark mode colors)
-                desc: 'Gebruik verschillende regenboogkleuren voor de lichte en donkere modus.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Kleur van lichte modus naar donkere modus kopiëren', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Eigenschappenbereik',
-                desc: 'Selecteer welke eigenschapsniveaus kleurtoewijzingen starten.',
-                options: {
-                    root: 'Hoofdniveau',
-                    child: 'Subniveau',
-                    all: 'Elk niveau'
-                }
-            },
+            copyLightToDark: 'Kleur van lichte modus naar donkere modus kopiëren', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Items inklappen',
                 desc: 'Kies wat de knop Alles in-/uitklappen beïnvloedt.',

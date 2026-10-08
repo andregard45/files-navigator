@@ -449,14 +449,6 @@ export class PluginPreferencesController {
         });
     }
 
-    public setPinNavigationBanner(enabled: boolean): void {
-        this.updateSettingAndMirrorToLocalStorage({
-            settingId: 'pinNavigationBanner',
-            localStorageKey: this.options.keys.pinNavigationBannerKey,
-            nextValue: Boolean(enabled)
-        });
-    }
-
     public setNavIndent(indent: number): void {
         this.updateBoundedNumberSettingAndMirror({
             settingId: 'navIndent',

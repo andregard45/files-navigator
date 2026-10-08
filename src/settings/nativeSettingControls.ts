@@ -113,7 +113,6 @@ const BOOLEAN_SETTING_KEYS = [
     'useFolderIconForFiles',
     'showFilenameMatchIcons',
     'showCategoryIcons',
-    'useFolderColorForTitles',
     'showSelectedNavigationPills',
     'colorListPaneTitle',
     'stickyGroupHeaders',

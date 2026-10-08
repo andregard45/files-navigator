@@ -714,70 +714,9 @@ function createSimpleHueInterpolator(start: RGBA, end: RGBA): (t: number) => RGB
 }
 
 /** Builds a fixed-size palette for a start/end gradient and a transition style. */
-export function buildRainbowPalette(params: {
-    steps: number;
-    start: RGBA;
-    end: RGBA;
-    style: 'hue' | 'rgb';
-    balanceHueLuminance?: boolean;
-}): string[] {
-    const steps = Math.max(2, Math.floor(params.steps));
-    const maxIndex = steps - 1;
 
-    const palette = new Array<string>(steps);
-    if (params.style === 'hue') {
-        const interpolate =
-            params.balanceHueLuminance === false
-                ? createSimpleHueInterpolator(params.start, params.end)
-                : createHueInterpolator(params.start, params.end);
-        for (let i = 0; i < steps; i++) {
-            palette[i] = toCssRgba(interpolate(i / maxIndex));
-        }
-        return palette;
-    }
 
-    for (let i = 0; i < steps; i++) {
-        palette[i] = toCssRgba(interpolateRgb(params.start, params.end, i / maxIndex));
-    }
 
-    return palette;
-}
-
-/** Assigns key-to-color entries by indexing into a precomputed palette. */
-export function assignRainbowColorsFromPalette(params: {
-    keys: readonly string[];
-    palette: readonly string[];
-    target: Map<string, string>;
-}): void {
-    const { keys, palette, target } = params;
-    if (keys.length === 0 || palette.length === 0) {
-        return;
-    }
-
-    const maxIndex = Math.max(1, keys.length - 1);
-    const paletteMax = palette.length - 1;
-    for (let i = 0; i < keys.length; i++) {
-        const t = i / maxIndex;
-        const paletteIndex = Math.min(paletteMax, Math.max(0, Math.round(t * paletteMax)));
-        const value = palette[paletteIndex];
-        if (value) {
-            target.set(keys[i], value);
-        }
-    }
-}
-
-/** Builds a key-to-color map by indexing into a precomputed palette. */
-export function buildRainbowColorMapFromPalette(params: { keys: readonly string[]; palette: readonly string[] }): Map<string, string> {
-    const result = new Map<string, string>();
-    assignRainbowColorsFromPalette({ ...params, target: result });
-    return result;
-}
-
-/**
- * Formats an RGBA object into an rgb() string without alpha.
- * Always returns a solid (opaque) color string suitable for CSS.
- * Example: {r: 100, g: 150, b: 200, a: 0.5} → "rgb(100, 150, 200)"
- */
 function formatRgb(color: RGBA): string {
     const r = Math.round(clampChannel(color.r));
     const g = Math.round(clampChannel(color.g));

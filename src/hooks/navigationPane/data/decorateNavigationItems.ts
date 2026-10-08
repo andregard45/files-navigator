@@ -21,28 +21,22 @@ import type { App } from 'obsidian';
 
 import {
     NavigationPaneItemType,
-    RECENT_NOTES_VIRTUAL_FOLDER_ID,
     PROPERTIES_ROOT_VIRTUAL_FOLDER_ID,
-    SHORTCUTS_VIRTUAL_FOLDER_ID,
     TAGS_ROOT_VIRTUAL_FOLDER_ID
 } from '../../../types';
-import type { NavRainbowSettings, NotebookNavigatorSettings } from '../../../settings/types';
+import type { NotebookNavigatorSettings } from '../../../settings/types';
 import type { MetadataService } from '../../../services/MetadataService';
 import type { CombinedNavigationItem } from '../../../types/virtualization';
-import type { NavigationRainbowPalettes } from '../../../utils/navigationRainbow';
 import type { FileNameIconNeedle } from '../../../utils/fileIconUtils';
 import { resolveUXIcon } from '../../../utils/uxIcons';
 import {
-    applyScopedRainbow,
     createNavigationItemDecorationContext,
     inheritVirtualFolderStyle,
-    overlayItemWithRainbow,
     resolveFolderItemDecorationColors,
     resolveRecentDecorationColors,
     resolveNavigationFileIconId,
     type DecorationColors,
-    type NavigationItemDecorationContext,
-    type NavigationRainbowColors
+    type NavigationItemDecorationContext
 } from './navigationItemDecorationShared';
 import { decorateShortcutNavigationItem } from './shortcutNavigationDecorators';
 
@@ -103,21 +97,6 @@ function decorateTagLikeNavigationItem(ctx: NavigationItemDecorationContext, ite
         };
     }
 
-    const tagRainbow = ctx.rainbow.tag;
-    if (tagRainbow.isEnabled) {
-        const ownRainbowColor = tagRainbow.colors.colorsByPath.get(tagNode.path);
-        const inheritedRainbowColor = ownRainbowColor ? undefined : tagRainbow.colors.getInheritedColor(tagNode.path);
-        const rainbowColor = ownRainbowColor ?? inheritedRainbowColor;
-        const shouldApplyByScope =
-            tagRainbow.scope === 'all'
-                ? true
-                : tagRainbow.scope === 'root'
-                  ? item.level === tagRainbow.rootLevel || Boolean(inheritedRainbowColor)
-                  : item.level > tagRainbow.rootLevel;
-
-        colors = applyScopedRainbow({ ctx, shouldApply: shouldApplyByScope, rainbowColor, colors });
-    }
-
     return {
         ...item,
         color: colors.color,
@@ -156,25 +135,6 @@ function decoratePropertyLikeNavigationItem(
         };
     }
 
-    const propertyRainbow = ctx.rainbow.property;
-    if (propertyRainbow.isEnabled) {
-        const ownRainbowColor = propertyRainbow.colors.colorsByNodeId.get(propertyNode.id);
-        const inheritedRainbowColor =
-            ownRainbowColor || propertyRainbow.scope !== 'root' || !ctx.settings.inheritPropertyColors || propertyNode.kind !== 'value'
-                ? undefined
-                : propertyRainbow.colors.rootColorsByKey.get(propertyNode.key);
-        const rainbowColor = ownRainbowColor ?? inheritedRainbowColor;
-        const isPropertyRootNode = propertyNode.kind === 'key' && item.level === propertyRainbow.rootLevel;
-        const shouldApplyByScope =
-            propertyRainbow.scope === 'all'
-                ? true
-                : propertyRainbow.scope === 'root'
-                  ? isPropertyRootNode || Boolean(inheritedRainbowColor)
-                  : !isPropertyRootNode;
-
-        colors = applyScopedRainbow({ ctx, shouldApply: shouldApplyByScope, rainbowColor, colors });
-    }
-
     return { ...item, color: colors.color, backgroundColor: colors.backgroundColor, icon };
 }
 
@@ -194,18 +154,7 @@ function decorateVirtualFolderNavigationItem(
               }
             : item;
 
-    let rainbowColor: string | undefined;
-    if (item.data.id === TAGS_ROOT_VIRTUAL_FOLDER_ID) {
-        rainbowColor = ctx.rainbow.tag.colors.rootColor;
-    } else if (item.data.id === PROPERTIES_ROOT_VIRTUAL_FOLDER_ID) {
-        rainbowColor = ctx.rainbow.property.colors.rootColor;
-    } else if (item.data.id === SHORTCUTS_VIRTUAL_FOLDER_ID) {
-        rainbowColor = ctx.rainbow.shortcut.colors.rootColor;
-    } else if (item.data.id === RECENT_NOTES_VIRTUAL_FOLDER_ID) {
-        rainbowColor = ctx.rainbow.recent.colors.rootColor;
-    }
-
-    return overlayItemWithRainbow(ctx, nextItem, rainbowColor);
+    return nextItem;
 }
 
 function decorateRecentNoteNavigationItem(ctx: NavigationItemDecorationContext, item: RecentNoteNavigationItem): CombinedNavigationItem {
@@ -258,14 +207,11 @@ function decorateNavigationItem(ctx: NavigationItemDecorationContext, item: Comb
 export interface DecorateNavigationItemsParams {
     app: App;
     settings: NotebookNavigatorSettings;
-    navRainbow: NavRainbowSettings;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     getFileDisplayName: (file: TFile) => string;
     metadataService: MetadataService;
     parsedExcludedFolders: string[];
     folderDecorationModel: NavigationItemDecorationContext['folderDecorationModel'];
-    navRainbowPalettes: NavigationRainbowPalettes;
-    navRainbowColors: NavigationRainbowColors;
 }
 
 export function createNavigationItemDecorator(
@@ -274,30 +220,23 @@ export function createNavigationItemDecorator(
     const {
         app,
         settings,
-        navRainbow,
         fileNameIconNeedles,
         getFileDisplayName,
         metadataService,
         parsedExcludedFolders,
-        folderDecorationModel,
-        navRainbowPalettes,
-        navRainbowColors
+        folderDecorationModel
     } = params;
 
     const ctx = createNavigationItemDecorationContext({
         app,
         settings,
-        navRainbow,
         fileNameIconNeedles,
         getFileDisplayName,
         metadataService,
         parsedExcludedFolders,
-        folderDecorationModel,
-        navRainbowPalettes,
-        navRainbowColors
+        folderDecorationModel
     });
 
     return (item: CombinedNavigationItem): CombinedNavigationItem => decorateNavigationItem(ctx, item);
 }
 
-export type { NavigationRainbowColors };

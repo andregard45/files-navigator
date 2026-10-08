@@ -67,7 +67,6 @@ export interface NavigationPaneSourceState {
     hiddenFileNames: string[];
     hiddenFileTags: string[];
     fileVisibility: ActiveProfileState['fileVisibility'];
-    navigationBannerPath: string | null;
     folderCountFileNameMatcher: HiddenFileNameMatcher | null;
     hiddenFilePropertyMatcher: ReturnType<typeof createFrontmatterPropertyExclusionMatcher>;
     rootFolders: TFolder[];
@@ -119,10 +118,8 @@ export function useNavigationPaneSourceState({
         hiddenFileNames,
         hiddenTags,
         hiddenFileTags,
-        fileVisibility,
-        navigationBanner
+        fileVisibility
     } = activeProfile;
-    const navigationBannerPath = navigationBanner;
     const effectiveFrontmatterExclusions = getEffectiveFrontmatterExclusions(settings, showHiddenItems);
 
     const folderCountFileNameMatcher = useMemo(() => {
@@ -256,7 +253,6 @@ export function useNavigationPaneSourceState({
             hiddenFileNames,
             hiddenFileTags,
             fileVisibility,
-            navigationBannerPath,
             folderCountFileNameMatcher,
             hiddenFilePropertyMatcher,
             rootFolders,
@@ -299,7 +295,6 @@ export function useNavigationPaneSourceState({
             hiddenFileNames,
             hiddenFileTags,
             fileVisibility,
-            navigationBannerPath,
             folderCountFileNameMatcher,
             hiddenFilePropertyMatcher,
             rootFolders,

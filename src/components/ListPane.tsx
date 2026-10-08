@@ -85,7 +85,6 @@ import { getListPaneMeasurements } from '../utils/listPaneMeasurements';
 import { usesMobileChrome } from '../utils/paneLayout';
 import { DateUtils } from '../utils/dateUtils';
 import type { NavigateToFolderOptions, RevealPropertyOptions, RevealTagOptions } from '../hooks/useNavigatorReveal';
-import type { FileItemPillDecorationModel } from '../utils/fileItemPillDecoration';
 import { getFilesForNavigationSelection, getPinnedSectionCollapseKey } from '../utils/selectionUtils';
 import { buildListGroupCollapseKeyPrefix } from '../utils/listGroupCollapse';
 import { strings } from '../i18n';
@@ -142,7 +141,6 @@ interface ListPaneProps {
      */
     onSearchTokensChange?: (state: SearchNavFilterState) => void;
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
     onNavigateToFolder: (folderPath: string, options?: NavigateToFolderOptions) => void;
     onRevealTag: (tagPath: string, options?: RevealTagOptions) => void;
     onRevealProperty: (propertyNodeId: string, options?: RevealPropertyOptions) => boolean;
@@ -158,7 +156,6 @@ interface ListPaneTitleChromeProps {
     actionsDisabled?: boolean;
     shouldShowDesktopTitleArea: boolean;
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
     children: React.ReactNode;
 }
 
@@ -172,13 +169,9 @@ function ListPaneTitleChrome({
     actionsDisabled,
     shouldShowDesktopTitleArea,
     folderDecorationModel,
-    fileItemPillDecorationModel,
     children
 }: ListPaneTitleChromeProps) {
-    const { desktopTitle, breadcrumbSegments, iconName, showIcon, titleColor } = useListPaneTitle({
-        folderDecorationModel,
-        fileItemPillDecorationModel
-    });
+    const { desktopTitle, breadcrumbSegments, iconName, showIcon, titleColor } = useListPaneTitle({ folderDecorationModel });
     return (
         <>
             <ListPaneHeader
@@ -208,8 +201,7 @@ export const ListPane = React.memo(
             onNavigateToFolder,
             onRevealTag,
             onRevealProperty,
-            folderDecorationModel,
-            fileItemPillDecorationModel
+            folderDecorationModel
         } = props;
         const selectionState = useSelectionState();
         const selectionDispatch = useSelectionDispatch();
@@ -915,7 +907,6 @@ export const ListPane = React.memo(
                         onToggleGroupExpansion={toggleGroupExpansion}
                         shouldShowDesktopTitleArea={shouldShowDesktopTitleArea}
                         folderDecorationModel={folderDecorationModel}
-                        fileItemPillDecorationModel={fileItemPillDecorationModel}
                     >
                         {/* Android - toolbar at top */}
                         {useMobileChrome && isAndroid ? listToolbar : null}

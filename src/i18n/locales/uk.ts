@@ -35,7 +35,6 @@ export const STRINGS_UK = {
         restoreDefault: 'Відновити значення за замовчуванням', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Надіслати', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Зберегти', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Налаштувати', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Світлий режим', // Label for light theme mode (English: Light mode)
         darkMode: 'Темний режим', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Нічого не вибрано', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -430,9 +429,6 @@ export const STRINGS_UK = {
             moveSourcesToTrash: 'Перемістити вихідні нотатки до кошика після об’єднання',
             mergeButton: 'Об’єднати'
         },
-        navRainbowSection: {
-            title: (section: string) => `Кольори веселки: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Пошук іконок...',
             recentlyUsedHeader: 'Нещодавно використані',
@@ -652,15 +648,6 @@ export const STRINGS_UK = {
             instructions: {
                 navigate: 'для навігації',
                 select: 'для вибору шаблону',
-                dismiss: 'для закриття'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Пошук зображень...',
-            svgMissingDimensions: 'Вибраний SVG-файл не задає ширину, висоту або viewBox.',
-            instructions: {
-                navigate: 'для навігації',
-                select: 'для встановлення банера',
                 dismiss: 'для закриття'
             }
         },
@@ -951,11 +938,9 @@ export const STRINGS_UK = {
                 description: 'Розмітка, вигляд, кількість файлів, поведінка згортання та кольори веселки.',
                 groups: {
                     appearance: 'Вигляд',
-                    banner: 'Банер',
                     collapseItems: 'Згортати елементи',
                     dragAndDrop: 'Перетягування',
-                    fileCounts: 'Кількість файлів',
-                    rainbowColors: 'Кольори веселки'
+                    fileCounts: 'Кількість файлів'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1012,8 +997,7 @@ export const STRINGS_UK = {
                 description:
                     'Заголовки, текст попереднього перегляду, головні зображення, мітки, властивості, дати, кількість слів і кількість символів.',
                 groups: {
-                    icon: 'Іконка',
-                    title: 'Заголовок'
+                    icon: 'Іконка'
                 }
             },
             calendar: {
@@ -1341,16 +1325,6 @@ export const STRINGS_UK = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Розгортати під час перетягування: Затримка наступних розгортань',
                 desc: 'Затримка перед розгортанням додаткових тек або міток під час того ж перетягування (секунди).'
-            },
-            navigationBanner: {
-                name: 'Банер навігації (профіль сховища)',
-                desc: 'Відображати зображення над панеллю навігації. Змінюється з вибраним профілем сховища.',
-                current: 'Поточний банер: {path}',
-                chooseButton: 'Вибрати зображення'
-            },
-            pinNavigationBanner: {
-                name: 'Закріпити банер',
-                desc: 'Закріпити банер навігації над деревом навігації.'
             },
             showShortcuts: {
                 name: 'Показувати ярлики',
@@ -1760,10 +1734,6 @@ export const STRINGS_UK = {
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment'
             },
-            useFolderColor: {
-                name: 'Використовувати колір теки',
-                desc: 'Забарвлювати заголовки нотаток та значки файлів кольором батьківської теки, коли не задано користувацький колір файлу. Пріоритет: користувацький колір файлу > колір теки > колір за замовчуванням.'
-            },
             showRootFolder: {
                 name: 'Показувати кореневу теку',
                 desc: 'Відображати назву сховища як кореневу теку в дереві.'
@@ -1801,87 +1771,7 @@ export const STRINGS_UK = {
                 name: 'Застосовувати колір лише до іконок',
                 desc: 'При увімкненні користувацькі кольори застосовуються лише до іконок. При вимкненні кольори застосовуються як до іконок, так і до текстових міток.'
             },
-            navRainbowMode: {
-                name: 'Режим кольорів веселки (профіль сховища)',
-                desc: 'Застосувати кольори веселки в панелі навігації.',
-                options: {
-                    off: 'Вимкнено',
-                    textColor: 'Колір тексту',
-                    backgroundColor: 'Колір фону'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Перший колір',
-                desc: 'Перший колір у градієнті веселки.'
-            },
-            navRainbowLastColor: {
-                name: 'Останній колір',
-                desc: 'Останній колір у градієнті веселки.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Стиль переходу',
-                desc: 'Інтерполяція між першим і останнім кольором.',
-                options: {
-                    hue: 'Тон',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Застосувати до ярликів',
-                desc: 'Застосувати кольори веселки до ярликів.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Застосувати до нещодавніх елементів',
-                desc: 'Застосувати кольори веселки до нещодавніх елементів.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Застосувати до тек',
-                desc: 'Застосувати кольори веселки до тек.'
-            },
-            navRainbowFolderScope: {
-                name: 'Область тек',
-                desc: 'Вибрати рівні тек для початку призначення кольорів.',
-                options: {
-                    root: 'Кореневий рівень',
-                    child: 'Дочірній рівень',
-                    all: 'Кожний рівень'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Застосувати до міток',
-                desc: 'Застосувати кольори веселки до міток.'
-            },
-            navRainbowTagScope: {
-                name: 'Область міток',
-                desc: 'Вибрати рівні міток для початку призначення кольорів.',
-                options: {
-                    root: 'Кореневий рівень',
-                    child: 'Дочірній рівень',
-                    all: 'Кожний рівень'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Застосувати до властивостей',
-                desc: 'Застосувати кольори веселки до властивостей.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Рівномірна яскравість між відтінками', // (English: Consistent brightness across hues)
-                desc: 'Інтерполює яскравість між початковим і кінцевим кольорами під час переходів відтінків.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Окремі кольори для світлого і темного режимів', // (English: Separate light and dark mode colors)
-                desc: 'Використовувати різні кольори веселки для світлого і темного режимів.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Копіювати колір світлого режиму в темний режим', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Область властивостей',
-                desc: 'Вибрати рівні властивостей для початку призначення кольорів.',
-                options: {
-                    root: 'Кореневий рівень',
-                    child: 'Дочірній рівень',
-                    all: 'Кожний рівень'
-                }
-            },
+            copyLightToDark: 'Копіювати колір світлого режиму в темний режим', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Згортати елементи',
                 desc: 'Виберіть, на що впливає кнопка розгортання/згортання всього.',

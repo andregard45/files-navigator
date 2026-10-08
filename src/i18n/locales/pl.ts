@@ -35,7 +35,6 @@ export const STRINGS_PL = {
         restoreDefault: 'Przywróć domyślne', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Wyślij', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Zapisz', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Konfiguruj', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Tryb jasny', // Label for light theme mode (English: Light mode)
         darkMode: 'Tryb ciemny', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Nie wybrano', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -429,9 +428,6 @@ export const STRINGS_PL = {
             moveSourcesToTrash: 'Przenieś notatki źródłowe do kosza po scaleniu',
             mergeButton: 'Scal'
         },
-        navRainbowSection: {
-            title: (section: string) => `Kolory tęczy: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Wyszukaj ikonki...',
             recentlyUsedHeader: 'Ostatnio używane',
@@ -654,15 +650,6 @@ export const STRINGS_PL = {
             instructions: {
                 navigate: 'aby przejść',
                 select: 'aby wybrać szablon',
-                dismiss: 'aby anulować'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Wyszukaj obrazy...',
-            svgMissingDimensions: 'Wybrany plik SVG nie definiuje szerokości, wysokości ani viewBox.',
-            instructions: {
-                navigate: 'aby przejść',
-                select: 'aby ustawić baner',
                 dismiss: 'aby anulować'
             }
         },
@@ -955,11 +942,9 @@ export const STRINGS_PL = {
                 description: 'Układ, wygląd, liczba plików, zachowanie zwijania i kolory tęczy.',
                 groups: {
                     appearance: 'Wygląd',
-                    banner: 'Baner',
                     collapseItems: 'Zwiń elementy',
                     dragAndDrop: 'Przeciągnij i upuść',
-                    fileCounts: 'Liczba plików',
-                    rainbowColors: 'Kolory tęczy'
+                    fileCounts: 'Liczba plików'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1015,8 +1000,7 @@ export const STRINGS_PL = {
                 label: 'Wyświetlanie plików',
                 description: 'Tytuły, tekst podglądu, wyróżnione obrazy, tagi, atrybuty, daty, liczba słów i liczba znaków.',
                 groups: {
-                    icon: 'Ikonka',
-                    title: 'Tytuł'
+                    icon: 'Ikonka'
                 }
             },
             calendar: {
@@ -1344,16 +1328,6 @@ export const STRINGS_PL = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Rozwiń podczas przeciągania: Opóźnienie kolejnych rozwinięć',
                 desc: 'Opóźnienie przed rozwinięciem kolejnych folderów lub tagów podczas tego samego przeciągania (w sekundach).'
-            },
-            navigationBanner: {
-                name: 'Baner nawigacji (profil sejfu)',
-                desc: 'Wyświetla obraz nad panelem nawigacji. Zmienia się wraz z wybranym profilem sejfu.',
-                current: 'Aktywny baner: {path}',
-                chooseButton: 'Wybierz obraz'
-            },
-            pinNavigationBanner: {
-                name: 'Przypnij baner',
-                desc: 'Przypnij baner nad drzewem nawigacji.'
             },
             showShortcuts: {
                 name: 'Pokaż skróty',
@@ -1765,10 +1739,6 @@ export const STRINGS_PL = {
                 helpTooltip: 'Format z Moment',
                 momentLinkText: 'format Moment'
             },
-            useFolderColor: {
-                name: 'Użyj koloru folderu',
-                desc: 'Koloruje tytuły notatek i ikonki plików kolorem folderu nadrzędnego, gdy nie ustawiono niestandardowego koloru pliku. Priorytet: niestandardowy kolor pliku > kolor folderu > kolor domyślny.'
-            },
             showRootFolder: {
                 name: 'Pokaż folder główny',
                 desc: 'Wyświetla nazwę sejfu jako folder główny w strukturze folderów.'
@@ -1806,87 +1776,7 @@ export const STRINGS_PL = {
                 name: 'Zastosuj kolor tylko do ikonek',
                 desc: 'Po włączeniu niestandardowe kolory są stosowane tylko do ikonek. Po wyłączeniu kolory są stosowane zarówno do ikonek, jak i etykiet tekstowych.'
             },
-            navRainbowMode: {
-                name: 'Tryb kolorów tęczy (profil sejfu)',
-                desc: 'Zastosuj kolory tęczy w panelu nawigacji.',
-                options: {
-                    off: 'Wyłączone',
-                    textColor: 'Kolor tekstu',
-                    backgroundColor: 'Kolor tła'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Pierwszy kolor',
-                desc: 'Pierwszy kolor w gradiencie tęczy.'
-            },
-            navRainbowLastColor: {
-                name: 'Ostatni kolor',
-                desc: 'Ostatni kolor w gradiencie tęczy.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Styl przejścia',
-                desc: 'Interpolacja między pierwszym a ostatnim kolorem.',
-                options: {
-                    hue: 'Barwa',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Zastosuj do skrótów',
-                desc: 'Zastosuj kolory tęczy do skrótów.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Zastosuj do ostatnich elementów',
-                desc: 'Zastosuj kolory tęczy do ostatnich elementów.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Zastosuj do folderów',
-                desc: 'Zastosuj kolory tęczy do folderów.'
-            },
-            navRainbowFolderScope: {
-                name: 'Zakres folderów',
-                desc: 'Wybierz, które poziomy folderów rozpoczynają przypisywanie kolorów.',
-                options: {
-                    root: 'Poziom główny',
-                    child: 'Poziom podrzędny',
-                    all: 'Każdy poziom'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Zastosuj do tagów',
-                desc: 'Zastosuj kolory tęczy do tagów.'
-            },
-            navRainbowTagScope: {
-                name: 'Zakres tagów',
-                desc: 'Wybierz, które poziomy tagów rozpoczynają przypisywanie kolorów.',
-                options: {
-                    root: 'Poziom główny',
-                    child: 'Poziom podrzędny',
-                    all: 'Każdy poziom'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Zastosuj do atrybutów',
-                desc: 'Zastosuj kolory tęczy do atrybutów.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Spójna jasność dla odcieni', // (English: Consistent brightness across hues)
-                desc: 'Interpoluje jasność między kolorami początkowymi i końcowymi podczas przejść odcieni.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Oddzielne kolory dla trybu jasnego i ciemnego', // (English: Separate light and dark mode colors)
-                desc: 'Użyj różnych kolorów tęczy dla trybu jasnego i trybu ciemnego.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Kopiuj kolor trybu jasnego do trybu ciemnego', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Zakres atrybutów',
-                desc: 'Wybierz, które poziomy atrybutów rozpoczynają przypisywanie kolorów.',
-                options: {
-                    root: 'Poziom główny',
-                    child: 'Poziom podrzędny',
-                    all: 'Każdy poziom'
-                }
-            },
+            copyLightToDark: 'Kopiuj kolor trybu jasnego do trybu ciemnego', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Zwiń elementy',
                 desc: 'Wybierz na co wpływa przycisk służący do zwijania i rozwijania elementów.',

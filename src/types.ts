@@ -284,7 +284,6 @@ export interface LocalStorageKeys {
     databaseContentVersionKey: string;
     frontmatterMetadataCacheSignatureKey: string;
     cacheRebuildNoticeKey: string;
-    lastShownVersionKey: string;
     localStorageVersionKey: string;
     vaultProfileKey: string;
     searchProviderKey: string;
@@ -296,7 +295,6 @@ export interface LocalStorageKeys {
     paneTransitionDurationKey: string;
     toolbarVisibilityKey: string;
     useFloatingToolbarsKey: string;
-    pinNavigationBannerKey: string;
     navIndentKey: string;
     navItemHeightKey: string;
     navItemHeightScaleTextKey: string;
@@ -344,7 +342,6 @@ export const STORAGE_KEYS: LocalStorageKeys = {
     databaseContentVersionKey: 'notebook-navigator-db-content-version',
     frontmatterMetadataCacheSignatureKey: 'notebook-navigator-frontmatter-metadata-cache-signature',
     cacheRebuildNoticeKey: 'notebook-navigator-cache-rebuild-notice',
-    lastShownVersionKey: 'notebook-navigator-last-shown-version',
     localStorageVersionKey: 'notebook-navigator-localstorage-version',
     vaultProfileKey: 'notebook-navigator-vault-profile',
     searchProviderKey: 'notebook-navigator-search-provider',
@@ -356,7 +353,6 @@ export const STORAGE_KEYS: LocalStorageKeys = {
     paneTransitionDurationKey: 'notebook-navigator-pane-transition-duration',
     toolbarVisibilityKey: 'notebook-navigator-toolbar-visibility',
     useFloatingToolbarsKey: 'notebook-navigator-use-floating-toolbars',
-    pinNavigationBannerKey: 'notebook-navigator-pin-navigation-banner',
     navIndentKey: 'notebook-navigator-nav-indent',
     navItemHeightKey: 'notebook-navigator-nav-item-height',
     navItemHeightScaleTextKey: 'notebook-navigator-nav-item-height-scale-text',

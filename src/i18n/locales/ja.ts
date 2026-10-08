@@ -35,7 +35,6 @@ export const STRINGS_JA = {
         restoreDefault: 'デフォルトに戻す', // Button text for restoring values to defaults (English: Restore default)
         submit: '送信', // Button text for submitting forms and dialogs (English: Submit)
         save: '保存', // Button text for saving settings and dialogs (English: Save)
-        configure: '設定', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'ライトモード', // Label for light theme mode (English: Light mode)
         darkMode: 'ダークモード', // Label for dark theme mode (English: Dark mode)
         noSelection: '選択なし', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -431,9 +430,6 @@ export const STRINGS_JA = {
             moveSourcesToTrash: '結合後に元のノートをゴミ箱に移動',
             mergeButton: '結合'
         },
-        navRainbowSection: {
-            title: (section: string) => `レインボーカラー: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'アイコンを検索...',
             recentlyUsedHeader: '最近使用したアイコン',
@@ -654,15 +650,6 @@ export const STRINGS_JA = {
             instructions: {
                 navigate: 'でナビゲート',
                 select: 'でテンプレートを選択',
-                dismiss: 'でキャンセル'
-            }
-        },
-        navigationBanner: {
-            placeholder: '画像を検索...',
-            svgMissingDimensions: '選択したSVGファイルには幅、高さ、またはviewBoxが定義されていません。',
-            instructions: {
-                navigate: 'でナビゲート',
-                select: 'でバナーを設定',
                 dismiss: 'でキャンセル'
             }
         },
@@ -955,11 +942,9 @@ export const STRINGS_JA = {
                 description: 'レイアウト、外観、ファイル数、折りたたみ動作、レインボーカラー。',
                 groups: {
                     appearance: '外観',
-                    banner: 'バナー',
                     collapseItems: '項目を折りたたむ',
                     dragAndDrop: 'ドラッグ＆ドロップ',
-                    fileCounts: 'ファイル数',
-                    rainbowColors: 'レインボーカラー'
+                    fileCounts: 'ファイル数'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1014,8 +999,7 @@ export const STRINGS_JA = {
                 label: 'ファイル表示',
                 description: 'タイトル、プレビューテキスト、アイキャッチ画像、タグ、プロパティ、日付、単語数、文字数。',
                 groups: {
-                    icon: 'アイコン',
-                    title: 'タイトル'
+                    icon: 'アイコン'
                 }
             },
             calendar: {
@@ -1343,16 +1327,6 @@ export const STRINGS_JA = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'ドラッグ時に展開: 次の展開遅延',
                 desc: '同じドラッグ操作中に追加のフォルダまたはタグを展開するまでの遅延（秒）。'
-            },
-            navigationBanner: {
-                name: 'ナビゲーションバナー（保管庫プロファイル）',
-                desc: 'ナビゲーションペイン上部に画像を表示します。選択された保管庫プロファイルに応じて変更されます。',
-                current: '現在のバナー: {path}',
-                chooseButton: '画像を選択'
-            },
-            pinNavigationBanner: {
-                name: 'バナーを固定',
-                desc: 'ナビゲーションバナーをナビゲーションツリーの上に固定します。'
             },
             showShortcuts: {
                 name: 'ショートカットを表示',
@@ -1761,10 +1735,6 @@ export const STRINGS_JA = {
                 helpTooltip: 'Moment形式',
                 momentLinkText: 'Moment フォーマット'
             },
-            useFolderColor: {
-                name: 'フォルダの色を使用',
-                desc: 'カスタムファイル色が設定されていない場合に、ノートタイトルとファイルアイコンを親フォルダの色で表示します。優先順位: カスタムファイル色 > フォルダの色 > デフォルト色。'
-            },
             showRootFolder: {
                 name: 'ルートフォルダを表示',
                 desc: '保管庫名をツリーのルートフォルダとして表示します。'
@@ -1802,87 +1772,7 @@ export const STRINGS_JA = {
                 name: 'アイコンのみに色を適用',
                 desc: '有効にすると、カスタムカラーはアイコンのみに適用されます。無効にすると、アイコンとテキストラベルの両方に色が適用されます。'
             },
-            navRainbowMode: {
-                name: 'レインボーカラーモード（保管庫プロファイル）',
-                desc: 'ナビゲーションペインにレインボーカラーを適用します。',
-                options: {
-                    off: 'オフ',
-                    textColor: 'テキストカラー',
-                    backgroundColor: '背景色'
-                }
-            },
-            navRainbowFirstColor: {
-                name: '最初の色',
-                desc: 'レインボーグラデーションの最初の色。'
-            },
-            navRainbowLastColor: {
-                name: '最後の色',
-                desc: 'レインボーグラデーションの最後の色。'
-            },
-            navRainbowTransitionStyle: {
-                name: 'トランジションスタイル',
-                desc: '最初の色と最後の色の間で使用される補間。',
-                options: {
-                    hue: '色相',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'ショートカットに適用',
-                desc: 'レインボーカラーをショートカットに適用します。'
-            },
-            navRainbowApplyToRecentItems: {
-                name: '最近の項目に適用',
-                desc: 'レインボーカラーを最近の項目に適用します。'
-            },
-            navRainbowApplyToFolders: {
-                name: 'フォルダに適用',
-                desc: 'レインボーカラーをフォルダに適用します。'
-            },
-            navRainbowFolderScope: {
-                name: 'フォルダ範囲',
-                desc: 'カラー割り当てを開始するフォルダレベルを選択します。',
-                options: {
-                    root: 'ルートレベル',
-                    child: '子レベル',
-                    all: 'すべてのレベル'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'タグに適用',
-                desc: 'レインボーカラーをタグに適用します。'
-            },
-            navRainbowTagScope: {
-                name: 'タグ範囲',
-                desc: 'カラー割り当てを開始するタグレベルを選択します。',
-                options: {
-                    root: 'ルートレベル',
-                    child: '子レベル',
-                    all: 'すべてのレベル'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'プロパティに適用',
-                desc: 'レインボーカラーをプロパティに適用します。'
-            },
-            navRainbowConsistentBrightness: {
-                name: '色相間で一貫した明るさ', // (English: Consistent brightness across hues)
-                desc: '色相の遷移中に開始色と終了色の間で明るさを補間します。' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'ライトモードとダークモードの色を分離', // (English: Separate light and dark mode colors)
-                desc: 'ライトモードとダークモードで異なるレインボーカラーを使用します。' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'ライトモードの色をダークモードにコピー', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'プロパティ範囲',
-                desc: 'カラー割り当てを開始するプロパティレベルを選択します。',
-                options: {
-                    root: 'ルートレベル',
-                    child: '子レベル',
-                    all: 'すべてのレベル'
-                }
-            },
+            copyLightToDark: 'ライトモードの色をダークモードにコピー', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: '項目を折りたたむ',
                 desc: '展開/折りたたみボタンが影響する項目を選択します。',

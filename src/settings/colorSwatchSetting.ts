@@ -76,8 +76,8 @@ export function attachColorSwatchSetting(params: ColorSwatchSettingParams): void
               cls: 'clickable-icon nn-setting-color-copy-button',
               attr: {
                   type: 'button',
-                  'aria-label': strings.settings.items.navRainbowCopyLightToDark,
-                  title: strings.settings.items.navRainbowCopyLightToDark
+                  'aria-label': strings.settings.items.copyLightToDark,
+                  title: strings.settings.items.copyLightToDark
               }
           })
         : null;

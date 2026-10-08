@@ -35,7 +35,6 @@ export const STRINGS_TR = {
         restoreDefault: 'Varsayılana geri yükle', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Gönder', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Kaydet', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Yapılandır', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Açık mod', // Label for light theme mode (English: Light mode)
         darkMode: 'Koyu mod', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Seçim yok', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -429,9 +428,6 @@ export const STRINGS_TR = {
             moveSourcesToTrash: 'Birleştirdikten sonra kaynak notları çöp kutusuna taşı',
             mergeButton: 'Birleştir'
         },
-        navRainbowSection: {
-            title: (section: string) => `Gökkuşağı renkleri: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Simge ara...',
             recentlyUsedHeader: 'Son kullanılanlar',
@@ -653,15 +649,6 @@ export const STRINGS_TR = {
             instructions: {
                 navigate: 'gezinmek için',
                 select: 'şablon seçmek için',
-                dismiss: 'kapatmak için'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Görsel ara...',
-            svgMissingDimensions: 'Seçilen SVG dosyası genişlik, yükseklik veya viewBox tanımlamıyor.',
-            instructions: {
-                navigate: 'gezinmek için',
-                select: 'afiş olarak ayarlamak için',
                 dismiss: 'kapatmak için'
             }
         },
@@ -952,11 +939,9 @@ export const STRINGS_TR = {
                 description: 'Yerleşim, görünüm, dosya sayıları, daraltma davranışı ve gökkuşağı renkleri.',
                 groups: {
                     appearance: 'Görünüm',
-                    banner: 'Afiş',
                     collapseItems: 'Öğeleri daralt',
                     dragAndDrop: 'Sürükle ve bırak',
-                    fileCounts: 'Dosya sayıları',
-                    rainbowColors: 'Gökkuşağı renkleri'
+                    fileCounts: 'Dosya sayıları'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1012,8 +997,7 @@ export const STRINGS_TR = {
                 description:
                     'Başlıklar, önizleme metni, öne çıkan görseller, etiketler, özellikler, tarihler, kelime sayıları ve karakter sayıları.',
                 groups: {
-                    icon: 'Simge',
-                    title: 'Başlık'
+                    icon: 'Simge'
                 }
             },
             calendar: {
@@ -1341,16 +1325,6 @@ export const STRINGS_TR = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Sürüklerken genişlet: Sonraki genişletme gecikmesi',
                 desc: 'Aynı sürükleme sırasında ek klasörler veya etiketler genişlemeden önceki gecikme (saniye).'
-            },
-            navigationBanner: {
-                name: 'Gezinme afişi (kasa profili)',
-                desc: 'Gezinme bölmesinin üzerinde bir görsel görüntüle. Seçili kasa profiliyle değişir.',
-                current: 'Mevcut afiş: {path}',
-                chooseButton: 'Görsel seç'
-            },
-            pinNavigationBanner: {
-                name: 'Afişi sabitle',
-                desc: 'Gezinme afişini gezinme ağacının üstüne sabitle.'
             },
             showShortcuts: {
                 name: 'Kısayolları göster',
@@ -1760,10 +1734,6 @@ export const STRINGS_TR = {
                 helpTooltip: 'Moment formatı',
                 momentLinkText: 'Moment formatı'
             },
-            useFolderColor: {
-                name: 'Klasör rengini kullan',
-                desc: 'Özel dosya rengi ayarlanmadığında not başlıklarını ve dosya simgelerini üst klasörün rengiyle renklendir. Öncelik: özel dosya rengi > klasör rengi > varsayılan renk.'
-            },
             showRootFolder: {
                 name: 'Kök klasörü göster',
                 desc: 'Ağaçta kasa adını kök klasör olarak görüntüle.'
@@ -1801,87 +1771,7 @@ export const STRINGS_TR = {
                 name: 'Rengi yalnızca simgelere uygula',
                 desc: 'Etkinleştirildiğinde, özel renkler yalnızca simgelere uygulanır. Devre dışı bırakıldığında, renkler hem simgelere hem de metin etiketlerine uygulanır.'
             },
-            navRainbowMode: {
-                name: 'Gökkuşağı renk modu (kasa profili)',
-                desc: 'Gezinme bölmesinde gökkuşağı renkleri uygula.',
-                options: {
-                    off: 'Kapalı',
-                    textColor: 'Metin rengi',
-                    backgroundColor: 'Arka plan rengi'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'İlk renk',
-                desc: 'Gökkuşağı gradyanındaki ilk renk.'
-            },
-            navRainbowLastColor: {
-                name: 'Son renk',
-                desc: 'Gökkuşağı gradyanındaki son renk.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Geçiş stili',
-                desc: 'İlk ve son renkler arasında kullanılan enterpolasyon.',
-                options: {
-                    hue: 'Ton',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Kısayollara uygula',
-                desc: 'Gökkuşağı renklerini kısayollara uygula.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Son öğelere uygula',
-                desc: 'Gökkuşağı renklerini son öğelere uygula.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Klasörlere uygula',
-                desc: 'Gökkuşağı renklerini klasörlere uygula.'
-            },
-            navRainbowFolderScope: {
-                name: 'Klasör kapsamı',
-                desc: 'Renk atamalarını hangi klasör düzeylerinin başlatacağını seçin.',
-                options: {
-                    root: 'Kök düzey',
-                    child: 'Alt düzey',
-                    all: 'Her düzey'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Etiketlere uygula',
-                desc: 'Gökkuşağı renklerini etiketlere uygula.'
-            },
-            navRainbowTagScope: {
-                name: 'Etiket kapsamı',
-                desc: 'Renk atamalarını hangi etiket düzeylerinin başlatacağını seçin.',
-                options: {
-                    root: 'Kök düzey',
-                    child: 'Alt düzey',
-                    all: 'Her düzey'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Özelliklere uygula',
-                desc: 'Gökkuşağı renklerini özelliklere uygula.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Tonlar arasında tutarlı parlaklık', // (English: Consistent brightness across hues)
-                desc: 'Ton geçişleri sırasında başlangıç ve bitiş renkleri arasındaki parlaklığa enterpolasyon uygular.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Açık ve koyu mod için ayrı renkler', // (English: Separate light and dark mode colors)
-                desc: 'Açık mod ve koyu mod için farklı gökkuşağı renkleri kullanın.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Açık mod rengini koyu moda kopyala', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Özellik kapsamı',
-                desc: 'Renk atamalarını hangi özellik düzeylerinin başlatacağını seçin.',
-                options: {
-                    root: 'Kök düzey',
-                    child: 'Alt düzey',
-                    all: 'Her düzey'
-                }
-            },
+            copyLightToDark: 'Açık mod rengini koyu moda kopyala', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Öğeleri daralt',
                 desc: 'Tümünü genişlet/daralt düğmesinin neyi etkilediğini seçin.',

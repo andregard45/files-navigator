@@ -20,7 +20,7 @@ import { TFile } from 'obsidian';
 import type { App } from 'obsidian';
 
 import { RECENT_NOTES_VIRTUAL_FOLDER_ID, SHORTCUTS_VIRTUAL_FOLDER_ID } from '../../../types';
-import type { NavRainbowSettings, NotebookNavigatorSettings } from '../../../settings/types';
+import type { NotebookNavigatorSettings } from '../../../settings/types';
 import type { MetadataService } from '../../../services/MetadataService';
 import { shouldDisplayFile, FILE_VISIBILITY } from '../../../utils/fileTypeUtils';
 import {
@@ -29,48 +29,7 @@ import {
     type FileIconResolutionSettings,
     type FileNameIconNeedle
 } from '../../../utils/fileIconUtils';
-import {
-    applyRainbowOverlay,
-    type NavigationRainbowPalettes,
-    type PropertyRainbowColors,
-    type RecentRainbowColors,
-    type ShortcutRainbowColors,
-    type TagRainbowColors
-} from '../../../utils/navigationRainbow';
 import { resolveFolderDecorationColors, type FolderDecorationModel } from '../../../utils/folderDecoration';
-
-interface TagRainbowContext {
-    isEnabled: boolean;
-    scope: NavRainbowSettings['tags']['scope'];
-    rootLevel: number;
-    colors: TagRainbowColors;
-}
-
-interface PropertyRainbowContext {
-    isEnabled: boolean;
-    scope: NavRainbowSettings['properties']['scope'];
-    rootLevel: number;
-    colors: PropertyRainbowColors;
-}
-
-interface ShortcutRainbowContext {
-    isEnabled: boolean;
-    colors: ShortcutRainbowColors;
-}
-
-interface RecentRainbowContext {
-    isEnabled: boolean;
-    colors: RecentRainbowColors;
-}
-
-interface NavigationRainbowContext {
-    mode: NavRainbowSettings['mode'];
-    isEnabled: boolean;
-    tag: TagRainbowContext;
-    property: PropertyRainbowContext;
-    shortcut: ShortcutRainbowContext;
-    recent: RecentRainbowContext;
-}
 
 interface NavigationFileIconContext {
     settings: FileIconResolutionSettings;
@@ -87,39 +46,25 @@ export interface NavigationItemDecorationContext {
     getFolderDisplayData: (folderPath: string) => ReturnType<MetadataService['getFolderDisplayData']>;
     folderDecorationModel: FolderDecorationModel;
     fileIcons: NavigationFileIconContext;
-    rainbow: NavigationRainbowContext;
-}
-
-export interface NavigationRainbowColors {
-    tag: TagRainbowColors;
-    property: PropertyRainbowColors;
-    shortcut: ShortcutRainbowColors;
-    recent: RecentRainbowColors;
 }
 
 export function createNavigationItemDecorationContext(params: {
     app: App;
     settings: NotebookNavigatorSettings;
-    navRainbow: NavRainbowSettings;
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     getFileDisplayName: (file: TFile) => string;
     metadataService: MetadataService;
     parsedExcludedFolders: string[];
     folderDecorationModel: NavigationItemDecorationContext['folderDecorationModel'];
-    navRainbowPalettes: NavigationRainbowPalettes;
-    navRainbowColors: NavigationRainbowColors;
 }): NavigationItemDecorationContext {
     const {
         app,
         settings,
-        navRainbow,
         fileNameIconNeedles,
         getFileDisplayName,
         metadataService,
         parsedExcludedFolders,
-        folderDecorationModel,
-        navRainbowPalettes,
-        navRainbowColors
+        folderDecorationModel
     } = params;
 
     const folderDisplayDataByPath = new Map<string, ReturnType<MetadataService['getFolderDisplayData']>>();
@@ -149,17 +94,6 @@ export function createNavigationItemDecorationContext(params: {
         return getFileDisplayName(file);
     };
 
-    const rainbowMode = navRainbow.mode;
-    const isRainbowEnabled = rainbowMode !== 'none';
-
-    const tagRootLevel = settings.showAllTagsFolder ? 1 : 0;
-    const propertyRootLevel = settings.showAllPropertiesFolder ? 1 : 0;
-
-    const tagPalette = navRainbowPalettes.tag;
-    const propertyPalette = navRainbowPalettes.property;
-    const shortcutPalette = navRainbowPalettes.shortcut;
-    const recentPalette = navRainbowPalettes.recent;
-
     return {
         app,
         settings,
@@ -172,24 +106,6 @@ export function createNavigationItemDecorationContext(params: {
             fallbackMode: fileIconFallbackMode,
             fileNameIconNeedles,
             getFileNameForMatch
-        },
-        rainbow: {
-            mode: rainbowMode,
-            isEnabled: isRainbowEnabled,
-            tag: {
-                isEnabled: Boolean(tagPalette),
-                scope: navRainbow.tags.scope,
-                rootLevel: tagRootLevel,
-                colors: navRainbowColors.tag
-            },
-            property: {
-                isEnabled: Boolean(propertyPalette),
-                scope: navRainbow.properties.scope,
-                rootLevel: propertyRootLevel,
-                colors: navRainbowColors.property
-            },
-            shortcut: { isEnabled: Boolean(shortcutPalette), colors: navRainbowColors.shortcut },
-            recent: { isEnabled: Boolean(recentPalette), colors: navRainbowColors.recent }
         }
     };
 }
@@ -212,50 +128,6 @@ export function resolveFolderItemDecorationColors(params: {
         color,
         backgroundColor
     });
-}
-
-function applyRainbowOverlayToColors(params: {
-    ctx: NavigationItemDecorationContext;
-    rainbowColor: string | undefined;
-    color: string | undefined;
-    backgroundColor: string | undefined;
-}): { color?: string; backgroundColor?: string } {
-    const { ctx, rainbowColor, color, backgroundColor } = params;
-
-    if (!ctx.rainbow.isEnabled || !rainbowColor) {
-        return { color, backgroundColor };
-    }
-
-    return applyRainbowOverlay({
-        mode: ctx.rainbow.mode,
-        rainbowColor,
-        color,
-        backgroundColor
-    });
-}
-
-export function applyScopedRainbow(params: {
-    ctx: NavigationItemDecorationContext;
-    shouldApply: boolean;
-    rainbowColor: string | undefined;
-    colors: DecorationColors;
-}): DecorationColors {
-    const { ctx, shouldApply, rainbowColor, colors } = params;
-    if (!shouldApply || !rainbowColor) {
-        return colors;
-    }
-
-    const next = applyRainbowOverlayToColors({
-        ctx,
-        rainbowColor,
-        color: colors.color,
-        backgroundColor: colors.backgroundColor
-    });
-
-    return {
-        color: next.color,
-        backgroundColor: next.backgroundColor
-    };
 }
 
 export function inheritVirtualFolderStyle(params: {
@@ -315,31 +187,6 @@ function inheritRecentRootStyle(
     });
 }
 
-export function overlayItemWithRainbow<T extends { color?: string; backgroundColor?: string }>(
-    ctx: NavigationItemDecorationContext,
-    item: T,
-    rainbowColor: string | undefined
-): T {
-    if (!ctx.rainbow.isEnabled || !rainbowColor) {
-        return item;
-    }
-
-    const baseColor = item.color ?? undefined;
-    const baseBackgroundColor = item.backgroundColor ?? undefined;
-    const next = applyRainbowOverlayToColors({
-        ctx,
-        rainbowColor,
-        color: baseColor,
-        backgroundColor: baseBackgroundColor
-    });
-
-    if (next.color === baseColor && next.backgroundColor === baseBackgroundColor) {
-        return item;
-    }
-
-    return { ...item, ...next };
-}
-
 export function resolveNavigationFileIconId(
     ctx: NavigationItemDecorationContext,
     file: TFile,
@@ -358,28 +205,13 @@ export function resolveNavigationFileIconId(
     return resolvedIconId ?? undefined;
 }
 
-function resolveShortcutRainbowColor(ctx: NavigationItemDecorationContext, key: string): string | undefined {
-    if (!ctx.rainbow.shortcut.isEnabled) {
-        return undefined;
-    }
-    return ctx.rainbow.shortcut.colors.colorsByKey.get(key);
-}
-
-function resolveRecentRainbowColor(ctx: NavigationItemDecorationContext, key: string): string | undefined {
-    if (!ctx.rainbow.recent.isEnabled) {
-        return undefined;
-    }
-    return ctx.rainbow.recent.colors.colorsByKey.get(key);
-}
-
 export function resolveShortcutDecorationColors(params: {
     ctx: NavigationItemDecorationContext;
     itemKey: string;
     color: string | undefined;
     backgroundColor: string | undefined;
-    allowRainbow?: boolean;
 }): DecorationColors {
-    const { ctx, itemKey, color, backgroundColor, allowRainbow = true } = params;
+    const { ctx, color, backgroundColor } = params;
 
     let nextColor = color;
     let nextBackgroundColor = backgroundColor;
@@ -390,19 +222,7 @@ export function resolveShortcutDecorationColors(params: {
         nextBackgroundColor = inheritedRoot.backgroundColor;
     }
 
-    if (!allowRainbow) {
-        return { color: nextColor, backgroundColor: nextBackgroundColor };
-    }
-
-    return applyScopedRainbow({
-        ctx,
-        shouldApply: true,
-        rainbowColor: resolveShortcutRainbowColor(ctx, itemKey),
-        colors: {
-            color: nextColor,
-            backgroundColor: nextBackgroundColor
-        }
-    });
+    return { color: nextColor, backgroundColor: nextBackgroundColor };
 }
 
 export function resolveRecentDecorationColors(params: {
@@ -411,7 +231,7 @@ export function resolveRecentDecorationColors(params: {
     color: string | undefined;
     backgroundColor: string | undefined;
 }): DecorationColors {
-    const { ctx, itemKey, color, backgroundColor } = params;
+    const { ctx, color, backgroundColor } = params;
     let nextColor = color;
     let nextBackgroundColor = backgroundColor;
 
@@ -421,13 +241,5 @@ export function resolveRecentDecorationColors(params: {
         nextBackgroundColor = inheritedRoot.backgroundColor;
     }
 
-    return applyScopedRainbow({
-        ctx,
-        shouldApply: true,
-        rainbowColor: resolveRecentRainbowColor(ctx, itemKey),
-        colors: {
-            color: nextColor,
-            backgroundColor: nextBackgroundColor
-        }
-    });
+    return { color: nextColor, backgroundColor: nextBackgroundColor };
 }

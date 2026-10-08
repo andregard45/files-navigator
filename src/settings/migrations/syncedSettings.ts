@@ -43,7 +43,6 @@ export interface LegacyVisibilityMigration {
     hiddenFolders: string[];
     hiddenFileProperties: string[];
     hiddenTags: string[];
-    navigationBanner: string | null;
     shouldApplyToProfiles: boolean;
 }
 
@@ -226,15 +225,9 @@ export function migrateLegacySyncedSettings(params: {
     delete mutableSettings['showParentFolderColor'];
     delete mutableSettings['showParentFolderIcon'];
 
-    const previousUseFolderColorForTitles = mutableSettings['useFolderColorForFileTitles'];
-    if (typeof storedData?.['useFolderColorForTitles'] === 'undefined' && typeof previousUseFolderColorForTitles === 'boolean') {
-        settings.useFolderColorForTitles = previousUseFolderColorForTitles;
-    }
+    // The "Use folder color" file-display option was removed; drop any persisted keys.
     delete mutableSettings['useFolderColorForFileTitles'];
-
-    if (typeof settings.useFolderColorForTitles !== 'boolean') {
-        settings.useFolderColorForTitles = defaultSettings.useFolderColorForTitles;
-    }
+    delete mutableSettings['useFolderColorForTitles'];
 
     if (typeof settings.useFolderIconForFiles !== 'boolean') {
         settings.useFolderIconForFiles = defaultSettings.useFolderIconForFiles;
@@ -587,17 +580,7 @@ export function extractLegacyVisibilitySettings(params: {
     const storedHiddenTags = toUniqueStringList(storedData?.['hiddenTags']);
     // Legacy hidden tags are captured for migration but not applied to top-level settings
 
-    const rawNavigationBanner = mutableSettings['navigationBanner'];
-    const legacyNavigationBanner = typeof rawNavigationBanner === 'string' ? rawNavigationBanner : null;
-    const storedNavigationBannerPath = storedData?.['navigationBannerPath'];
-    const legacyBannerPath = typeof storedNavigationBannerPath === 'string' ? storedNavigationBannerPath : null;
-    const navigationBanner =
-        legacyNavigationBanner && legacyNavigationBanner.length > 0
-            ? legacyNavigationBanner
-            : legacyBannerPath && legacyBannerPath.length > 0
-              ? legacyBannerPath
-              : null;
-
+    // Legacy banner keys are removed outright (feature retired).
     delete mutableSettings['navigationBanner'];
     delete mutableSettings['navigationBannerPath'];
 
@@ -605,7 +588,6 @@ export function extractLegacyVisibilitySettings(params: {
         hiddenFolders: legacyHiddenFolders,
         hiddenFileProperties: legacyHiddenFileProperties,
         hiddenTags: storedHiddenTags,
-        navigationBanner,
         shouldApplyToProfiles: !Array.isArray(storedData?.['vaultProfiles'])
     };
 }
@@ -617,12 +599,9 @@ export function applyLegacyVisibilityMigration(params: {
 }): void {
     const { settings, migration } = params;
 
-    const hasNavigationBanner = typeof migration.navigationBanner === 'string' && migration.navigationBanner.length > 0;
-
     if (
         !migration.shouldApplyToProfiles ||
-        (!hasNavigationBanner &&
-            migration.hiddenFolders.length === 0 &&
+        (migration.hiddenFolders.length === 0 &&
             migration.hiddenFileProperties.length === 0 &&
             migration.hiddenTags.length === 0)
     ) {
@@ -648,10 +627,6 @@ export function applyLegacyVisibilityMigration(params: {
 
     if (migration.hiddenTags.length > 0) {
         targetProfile.hiddenTags = [...migration.hiddenTags];
-    }
-
-    if (hasNavigationBanner) {
-        targetProfile.navigationBanner = migration.navigationBanner;
     }
 }
 

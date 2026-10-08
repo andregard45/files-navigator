@@ -1565,13 +1565,6 @@ button.nn-icon-button.nn-icon-button-active svg:not(.nn-vault-icon-svg) {
     flex: 1 0 auto;
 }
 
-.nn-navigation-pane-scroller[data-banner='true'] {
-    /* Classic Windows scrollbars consume layout width when they appear. Setting a stable gutter
-       keeps the width constant so TanStack Virtual's ResizeObserver doesn't retrigger endlessly
-       when the navigation banner forces the content to overflow during resizing. */
-    scrollbar-gutter: stable;
-}
-
 /* Container for pinned shortcuts displayed above the scrollable navigation tree */
 .nn-shortcut-pinned {
     flex: 0 1 auto;
@@ -1596,16 +1589,6 @@ button.nn-icon-button.nn-icon-button-active svg:not(.nn-vault-icon-svg) {
 .nn-shortcut-pinned[data-scroll='true'] .nn-shortcut-pinned-scroll {
     overflow-y: auto;
     overscroll-behavior: contain;
-}
-
-/* Remove top padding when banner is present to avoid double spacing */
-.nn-shortcut-pinned[data-has-banner='true'] .nn-shortcut-pinned-scroll {
-    padding-top: 0;
-}
-
-/* Add top margin to banner inside pinned shortcuts area for consistent spacing */
-.nn-shortcut-pinned[data-has-banner='true'] .nn-nav-banner {
-    margin-top: 8px;
 }
 
 /* Inner wrapper for pinned shortcut items */
@@ -1742,24 +1725,6 @@ button.nn-icon-button.nn-icon-button-active svg:not(.nn-vault-icon-svg) {
     content: none;
 }
 
-/* Navigation banner displayed above tree items */
-.nn-nav-banner {
-    padding: var(--nn-nav-banner-padding-vertical, 8px) var(--nn-nav-item-padding-horizontal);
-    box-sizing: border-box;
-}
-
-.nn-navigation-pane-banner {
-    margin-inline-start: calc(-1 * var(--nn-scroller-padding));
-    margin-inline-end: calc(-1 * var(--nn-scroller-padding));
-}
-
-.nn-nav-banner-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: min(14px, var(--nn-theme-navitem-border-radius));
-    background-color: var(--background-tertiary);
-}
 /* Source: src/styles/sections/navigation-tree.css */
 
 /* ========================================================================
@@ -4430,33 +4395,6 @@ body.nn-resizing {
     justify-content: flex-end;
     gap: 8px;
     margin-top: 16px;
-}
-
-/* YouTube play overlay shared by modal thumbnail links */
-.nn-youtube-play {
-    position: absolute;
-    top: var(--nn-youtube-play-y, 50%);
-    left: var(--nn-youtube-play-x, 50%);
-    width: 52px;
-    height: 36px;
-    transform: translate(-50%, -50%) scale(var(--nn-youtube-play-scale, 1));
-    border-radius: 8px;
-    background-color: #ff0000;
-    opacity: 0.9;
-    pointer-events: none;
-}
-
-.nn-youtube-play::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 8px 0 8px 14px;
-    border-color: transparent transparent transparent #ffffff;
 }
 
 .nn-folder-note-type-modal .modal-content {
@@ -7645,7 +7583,7 @@ settings:
     -
         id: nn-theme-navitem-custom-color-name-font-weight
         title: Custom color text weight
-        description: Font weight for custom or rainbow-colored names, group headers, parent folders, and tag pills.
+        description: Font weight for custom-colored names, group headers, parent folders, and tag pills.
         type: variable-number-slider
         default: 600
         min: 100

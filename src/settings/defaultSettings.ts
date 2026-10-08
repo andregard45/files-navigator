@@ -25,7 +25,6 @@ import type { ListPaneAppearance } from './listPaneAppearance';
 import {
     NARROW_SIDEBAR_CUSTOM_WIDTH_DEFAULT,
     SYNC_MODE_SETTING_IDS,
-    type NavRainbowSettings,
     type NotebookNavigatorSettings,
     type SettingSyncMode,
     type FolderTemplateMapping
@@ -46,78 +45,6 @@ SYNC_MODE_SETTING_IDS.forEach(settingId => {
     defaultSettingsSync[settingId] = 'synced';
 });
 
-const NAV_RAINBOW_FIRST_COLOR_DEFAULT = '#ef4444';
-const NAV_RAINBOW_LAST_COLOR_DEFAULT = '#8b5cf6';
-const NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT = '#fb7185';
-const NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT = '#c084fc';
-
-export const NAV_RAINBOW_DEFAULTS: NavRainbowSettings = {
-    mode: 'none',
-    balanceHueLuminance: true,
-    separateThemeColors: false,
-
-    shortcuts: {
-        enabled: false,
-        firstColor: NAV_RAINBOW_FIRST_COLOR_DEFAULT,
-        lastColor: NAV_RAINBOW_LAST_COLOR_DEFAULT,
-        darkFirstColor: NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT,
-        darkLastColor: NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT,
-        transitionStyle: 'rgb'
-    },
-
-    recent: {
-        enabled: false,
-        firstColor: NAV_RAINBOW_FIRST_COLOR_DEFAULT,
-        lastColor: NAV_RAINBOW_LAST_COLOR_DEFAULT,
-        darkFirstColor: NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT,
-        darkLastColor: NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT,
-        transitionStyle: 'rgb'
-    },
-
-    folders: {
-        enabled: true,
-        firstColor: NAV_RAINBOW_FIRST_COLOR_DEFAULT,
-        lastColor: NAV_RAINBOW_LAST_COLOR_DEFAULT,
-        darkFirstColor: NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT,
-        darkLastColor: NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT,
-        transitionStyle: 'hue',
-        scope: 'root'
-    },
-
-    tags: {
-        enabled: false,
-        firstColor: NAV_RAINBOW_FIRST_COLOR_DEFAULT,
-        lastColor: NAV_RAINBOW_LAST_COLOR_DEFAULT,
-        darkFirstColor: NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT,
-        darkLastColor: NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT,
-        transitionStyle: 'hue',
-        scope: 'root'
-    },
-
-    properties: {
-        enabled: false,
-        firstColor: NAV_RAINBOW_FIRST_COLOR_DEFAULT,
-        lastColor: NAV_RAINBOW_LAST_COLOR_DEFAULT,
-        darkFirstColor: NAV_RAINBOW_DARK_FIRST_COLOR_DEFAULT,
-        darkLastColor: NAV_RAINBOW_DARK_LAST_COLOR_DEFAULT,
-        transitionStyle: 'hue',
-        scope: 'root'
-    }
-};
-
-function createDefaultNavRainbowSettings(): NavRainbowSettings {
-    return {
-        mode: NAV_RAINBOW_DEFAULTS.mode,
-        balanceHueLuminance: NAV_RAINBOW_DEFAULTS.balanceHueLuminance,
-        separateThemeColors: NAV_RAINBOW_DEFAULTS.separateThemeColors,
-        shortcuts: { ...NAV_RAINBOW_DEFAULTS.shortcuts },
-        recent: { ...NAV_RAINBOW_DEFAULTS.recent },
-        folders: { ...NAV_RAINBOW_DEFAULTS.folders },
-        tags: { ...NAV_RAINBOW_DEFAULTS.tags },
-        properties: { ...NAV_RAINBOW_DEFAULTS.properties }
-    };
-}
-
 /**
  * Default settings for the plugin
  * Used when plugin is first installed or settings are reset
@@ -136,10 +63,8 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
             hiddenFileNames: [],
             hiddenFileTags: [],
             hiddenFileProperties: [],
-            navigationBanner: null,
             periodicNotesFolder: '',
-            shortcuts: [],
-            navRainbow: createDefaultNavRainbowSettings()
+            shortcuts: []
         }
     ],
     vaultProfile: 'default',
@@ -230,7 +155,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     moveFileConflicts: 'ask',
 
     // Navigation pane tab - Appearance
-    pinNavigationBanner: true,
     showNoteCount: true,
     separateNoteCounts: true,
     showIndentGuides: false,
@@ -338,7 +262,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showCategoryIcons: false,
     fileTypeIconMap: sanitizeRecord<string>(undefined),
     fileTypeIconPreset: DEFAULT_FILE_TYPE_ICON_PRESET,
-    useFolderColorForTitles: false,
 
     // Calendar tab - Calendar (always enabled)
     calendarPlacement: 'left-sidebar',
@@ -399,7 +322,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     virtualFolderBackgroundColors: sanitizeRecord<string>(undefined),
     navigationSeparators: sanitizeRecord<boolean>(undefined),
     userColors: [...DEFAULT_CUSTOM_COLORS],
-    lastShownVersion: '',
     rootFolderOrder: [],
     rootTagOrder: [],
     rootPropertyOrder: []

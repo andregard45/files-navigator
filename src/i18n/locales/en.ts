@@ -35,7 +35,6 @@ export const STRINGS_EN = {
         restoreDefault: 'Restore default', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Submit', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Save', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Configure', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Light mode',
         darkMode: 'Dark mode',
         noSelection: 'No selection', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -428,9 +427,6 @@ export const STRINGS_EN = {
             moveSourcesToTrash: 'Move source notes to trash after merging',
             mergeButton: 'Merge'
         },
-        navRainbowSection: {
-            title: (section: string) => `Rainbow colors: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Search icons...',
             recentlyUsedHeader: 'Recently used',
@@ -649,15 +645,6 @@ export const STRINGS_EN = {
             instructions: {
                 navigate: 'to navigate',
                 select: 'to select template',
-                dismiss: 'to dismiss'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Search images...',
-            svgMissingDimensions: 'The selected SVG does not define a width, height, or viewBox.',
-            instructions: {
-                navigate: 'to navigate',
-                select: 'to set banner',
                 dismiss: 'to dismiss'
             }
         },
@@ -945,14 +932,12 @@ export const STRINGS_EN = {
             },
             navigationPane: {
                 label: 'Navigation pane',
-                description: 'Layout, appearance, file counts, collapse behavior, and rainbow colors.',
+                description: 'Layout, appearance, file counts, collapse behavior.',
                 groups: {
                     appearance: 'Appearance',
-                    banner: 'Banner',
                     collapseItems: 'Collapse items',
                     dragAndDrop: 'Drag and drop',
-                    fileCounts: 'File counts',
-                    rainbowColors: 'Rainbow colors'
+                    fileCounts: 'File counts'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1007,8 +992,7 @@ export const STRINGS_EN = {
                 label: 'File display',
                 description: 'Titles, preview text, feature images, tags, properties, and dates.',
                 groups: {
-                    icon: 'Icon',
-                    title: 'Title'
+                    icon: 'Icon'
                 }
             },
             calendar: {
@@ -1336,16 +1320,6 @@ export const STRINGS_EN = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Spring-loaded folders: Subsequent expand delay',
                 desc: 'Delay before expanding additional folders or tags during the same drag operation (seconds).'
-            },
-            navigationBanner: {
-                name: 'Navigation banner (vault profile)',
-                desc: 'Display an image above the navigation pane. Changes with the selected vault profile.',
-                current: 'Current banner: {path}',
-                chooseButton: 'Choose image'
-            },
-            pinNavigationBanner: {
-                name: 'Pin banner',
-                desc: 'Pin the navigation banner above the navigation tree.'
             },
             showShortcuts: {
                 name: 'Show shortcuts',
@@ -1692,7 +1666,7 @@ export const STRINGS_EN = {
             },
             vaultProfiles: {
                 name: 'Vault profile',
-                desc: 'Profiles store file type visibility, hidden files, hidden folders, hidden tags, property rules for hidden notes, shortcuts, and navigation banner. Switch profiles here or from the vault profile switcher in the navigation pane.',
+                desc: 'Profiles store file type visibility, hidden files, hidden folders, hidden tags, property rules for hidden notes, shortcuts, . Switch profiles here or from the vault profile switcher in the navigation pane.',
                 defaultName: 'Default',
                 addButton: 'Add profile',
                 editProfilesButton: 'Edit profiles',
@@ -1754,10 +1728,6 @@ export const STRINGS_EN = {
                 helpTooltip: 'Format using Moment',
                 momentLinkText: 'Moment format'
             },
-            useFolderColor: {
-                name: 'Use folder color',
-                desc: 'Color note titles and file icons with their parent folder color when no custom file color is set. Priority: custom file color > folder color > default color.'
-            },
             showRootFolder: {
                 name: 'Show root folder',
                 desc: 'Display the vault name as the root folder in the tree.'
@@ -1795,87 +1765,7 @@ export const STRINGS_EN = {
                 name: 'Apply color to icons only',
                 desc: 'When enabled, custom colors are applied only to icons. When disabled, colors are applied to both icons and text labels.'
             },
-            navRainbowMode: {
-                name: 'Rainbow color mode (vault profile)',
-                desc: 'Apply rainbow colors in the navigation pane.',
-                options: {
-                    off: 'Off',
-                    textColor: 'Text color',
-                    backgroundColor: 'Background color'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'First color',
-                desc: 'First color in the rainbow gradient.'
-            },
-            navRainbowLastColor: {
-                name: 'Last color',
-                desc: 'Last color in the rainbow gradient.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Transition style',
-                desc: 'Interpolation used between the first and last colors.',
-                options: {
-                    hue: 'Hue',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Apply to shortcuts',
-                desc: 'Apply rainbow colors to shortcuts.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Apply to recent items',
-                desc: 'Apply rainbow colors to recent items.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Apply to folders',
-                desc: 'Apply rainbow colors to folders.'
-            },
-            navRainbowFolderScope: {
-                name: 'Folder scope',
-                desc: 'Select which folder levels start color assignments.',
-                options: {
-                    root: 'Root level',
-                    child: 'Child level',
-                    all: 'Every level'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Apply to tags',
-                desc: 'Apply rainbow colors to tags.'
-            },
-            navRainbowTagScope: {
-                name: 'Tag scope',
-                desc: 'Select which tag levels start color assignments.',
-                options: {
-                    root: 'Root level',
-                    child: 'Child level',
-                    all: 'Every level'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Apply to properties',
-                desc: 'Apply rainbow colors to properties.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Consistent brightness across hues',
-                desc: 'Interpolates brightness between the start and end colors during hue transitions.'
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Separate light and dark mode colors',
-                desc: 'Use different rainbow colors for light mode and dark mode.'
-            },
-            navRainbowCopyLightToDark: 'Copy light mode color to dark mode',
-            navRainbowPropertyScope: {
-                name: 'Property scope',
-                desc: 'Select which property levels start color assignments.',
-                options: {
-                    root: 'Root level',
-                    child: 'Child level',
-                    all: 'Every level'
-                }
-            },
+            copyLightToDark: 'Copy light mode color to dark mode',
             collapseItems: {
                 name: 'Collapse items',
                 desc: 'Choose what the expand/collapse all button affects.',

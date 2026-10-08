@@ -57,8 +57,7 @@ function decorateShortcutFolderNavigationItem(
         ctx,
         itemKey: item.key,
         color: folderDisplayData?.color,
-        backgroundColor: undefined,
-        allowRainbow: !item.isExcluded
+        backgroundColor: undefined
     });
 
     return {

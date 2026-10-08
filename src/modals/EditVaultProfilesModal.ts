@@ -491,7 +491,6 @@ export class EditVaultProfilesModal extends Modal {
             hiddenFileNames: Array.isArray(profile.hiddenFileNames) ? [...profile.hiddenFileNames] : [],
             hiddenFileTags: Array.isArray(profile.hiddenFileTags) ? [...profile.hiddenFileTags] : [],
             hiddenFileProperties: Array.isArray(profile.hiddenFileProperties) ? [...profile.hiddenFileProperties] : [],
-            navigationBanner: typeof profile.navigationBanner === 'string' ? profile.navigationBanner : null,
             shortcuts: cloneShortcuts(profile.shortcuts)
         }));
     }
@@ -509,7 +508,6 @@ export class EditVaultProfilesModal extends Modal {
                 hiddenFileNames: Array.isArray(profile.hiddenFileNames) ? [...profile.hiddenFileNames] : [],
                 hiddenFileTags: Array.isArray(profile.hiddenFileTags) ? [...profile.hiddenFileTags] : [],
                 hiddenFileProperties: Array.isArray(profile.hiddenFileProperties) ? [...profile.hiddenFileProperties] : [],
-                navigationBanner: profile.navigationBanner ?? null,
                 fileVisibility: profile.fileVisibility,
                 shortcuts: cloneShortcuts(profile.shortcuts)
             }))

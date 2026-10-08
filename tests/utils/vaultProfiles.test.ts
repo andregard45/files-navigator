@@ -19,8 +19,6 @@ import { describe, expect, it } from 'vitest';
 import type { NotebookNavigatorSettings } from '../../src/settings/types';
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
 import {
-    areNavRainbowSettingsEqual,
-    cloneNavRainbowSettings,
     cloneShortcuts,
     createValidatedVaultProfileFromTemplate,
     getActiveDescendantExcludedFolders,
@@ -762,29 +760,6 @@ describe('property key selectors', () => {
         ];
 
         expect(getPropertyFieldsFromPropertyKeys(propertyKeys)).toBe('Status, Priority');
-    });
-});
-
-describe('areNavRainbowSettingsEqual', () => {
-    it('returns true for distinct clones with the same values', () => {
-        const navRainbow = createSettings().vaultProfiles[0].navRainbow;
-        const cloned = cloneNavRainbowSettings(navRainbow);
-
-        expect(areNavRainbowSettingsEqual(navRainbow, cloned)).toBe(true);
-    });
-
-    it('returns false when any section setting changes', () => {
-        const navRainbow = createSettings().vaultProfiles[0].navRainbow;
-        const nextScope = navRainbow.folders.scope === 'root' ? 'all' : 'root';
-        const changed = {
-            ...cloneNavRainbowSettings(navRainbow),
-            folders: {
-                ...navRainbow.folders,
-                scope: nextScope
-            }
-        } satisfies typeof navRainbow;
-
-        expect(areNavRainbowSettingsEqual(navRainbow, changed)).toBe(false);
     });
 });
 

@@ -42,7 +42,7 @@ interface FlattenFolderTreeOptions {
 interface BuildVisibleFolderTraversalStateParams extends FlattenFolderTreeOptions {
     /** Root folders used by the navigation tree. May be the vault root or ordered root-level folders. */
     rootFolders: TFolder[];
-    /** Patterns used to exclude folders from navigation and rainbow assignment. */
+    /** Patterns used to exclude folders from navigation. */
     excludePatterns: string[];
     /** Whether child sibling groups should be traversed beyond the root level. */
     includeDescendantSiblingGroups?: boolean;

@@ -35,7 +35,6 @@ export const STRINGS_FR = {
         restoreDefault: 'Restaurer la valeur par défaut', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Soumettre', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Enregistrer', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Configurer', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Mode clair', // Label for light theme mode (English: Light mode)
         darkMode: 'Mode sombre', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Aucune sélection', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -432,9 +431,6 @@ export const STRINGS_FR = {
             moveSourcesToTrash: 'Déplacer les notes sources vers la corbeille après la fusion',
             mergeButton: 'Fusionner'
         },
-        navRainbowSection: {
-            title: (section: string) => `Couleurs arc-en-ciel : ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Rechercher des icônes...',
             recentlyUsedHeader: 'Récemment utilisées',
@@ -657,15 +653,6 @@ export const STRINGS_FR = {
             instructions: {
                 navigate: 'pour naviguer',
                 select: 'pour sélectionner le modèle',
-                dismiss: 'pour annuler'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Rechercher des images...',
-            svgMissingDimensions: 'Le fichier SVG sélectionné ne définit ni largeur, ni hauteur, ni viewBox.',
-            instructions: {
-                navigate: 'pour naviguer',
-                select: 'pour définir la bannière',
                 dismiss: 'pour annuler'
             }
         },
@@ -958,11 +945,9 @@ export const STRINGS_FR = {
                 description: 'Disposition, apparence, comptage des fichiers, comportement de repli et couleurs arc-en-ciel.',
                 groups: {
                     appearance: 'Apparence',
-                    banner: 'Bannière',
                     collapseItems: 'Replier les éléments',
                     dragAndDrop: 'Glisser-déposer',
-                    fileCounts: 'Nombre de fichiers',
-                    rainbowColors: 'Couleurs arc-en-ciel'
+                    fileCounts: 'Nombre de fichiers'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1019,8 +1004,7 @@ export const STRINGS_FR = {
                 description:
                     'Titres, texte d’aperçu, images vedettes, mots-clés, propriétés, dates, nombres de mots et nombres de caractères.',
                 groups: {
-                    icon: 'Icône',
-                    title: 'Titre'
+                    icon: 'Icône'
                 }
             },
             calendar: {
@@ -1348,16 +1332,6 @@ export const STRINGS_FR = {
             springLoadedFoldersSubsequentDelay: {
                 name: "Développer au survol : Délai d'expansion suivante",
                 desc: "Délai avant de développer d'autres dossiers ou mots-clés pendant le même glisser-déposer (secondes)."
-            },
-            navigationBanner: {
-                name: 'Bannière de navigation (profil du coffre)',
-                desc: 'Afficher une image au-dessus du panneau de navigation. Change avec le profil de coffre sélectionné.',
-                current: 'Bannière actuelle : {path}',
-                chooseButton: 'Choisir une image'
-            },
-            pinNavigationBanner: {
-                name: 'Épingler la bannière',
-                desc: "Épingler la bannière de navigation au-dessus de l'arborescence de navigation."
             },
             showShortcuts: {
                 name: 'Afficher les raccourcis',
@@ -1771,10 +1745,6 @@ export const STRINGS_FR = {
                 helpTooltip: 'Format avec Moment',
                 momentLinkText: 'format Moment'
             },
-            useFolderColor: {
-                name: 'Utiliser la couleur du dossier',
-                desc: "Colorer les titres de notes et les icônes de fichier avec la couleur du dossier parent lorsqu'aucune couleur de fichier personnalisée n'est définie. Priorité : couleur de fichier personnalisée > couleur du dossier > couleur par défaut."
-            },
             showRootFolder: {
                 name: 'Afficher le dossier racine',
                 desc: "Afficher le nom du coffre comme dossier racine dans l'arborescence."
@@ -1812,87 +1782,7 @@ export const STRINGS_FR = {
                 name: 'Appliquer la couleur uniquement aux icônes',
                 desc: "Lorsqu'activé, les couleurs personnalisées sont appliquées uniquement aux icônes. Lorsque désactivé, les couleurs sont appliquées aux icônes et aux étiquettes de texte."
             },
-            navRainbowMode: {
-                name: 'Mode couleurs arc-en-ciel (profil du coffre)',
-                desc: 'Appliquer les couleurs arc-en-ciel dans le panneau de navigation.',
-                options: {
-                    off: 'Désactivé',
-                    textColor: 'Couleur du texte',
-                    backgroundColor: 'Couleur de fond'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Première couleur',
-                desc: 'Première couleur du dégradé arc-en-ciel.'
-            },
-            navRainbowLastColor: {
-                name: 'Dernière couleur',
-                desc: 'Dernière couleur du dégradé arc-en-ciel.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Style de transition',
-                desc: 'Interpolation utilisée entre la première et la dernière couleur.',
-                options: {
-                    hue: 'Teinte',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Appliquer aux raccourcis',
-                desc: 'Appliquer les couleurs arc-en-ciel aux raccourcis.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Appliquer aux éléments récents',
-                desc: 'Appliquer les couleurs arc-en-ciel aux éléments récents.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Appliquer aux dossiers',
-                desc: 'Appliquer les couleurs arc-en-ciel aux dossiers.'
-            },
-            navRainbowFolderScope: {
-                name: 'Portée des dossiers',
-                desc: 'Sélectionner les niveaux de dossier qui démarrent les attributions de couleur.',
-                options: {
-                    root: 'Niveau racine',
-                    child: 'Niveau enfant',
-                    all: 'Tous les niveaux'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Appliquer aux mots-clés',
-                desc: 'Appliquer les couleurs arc-en-ciel aux mots-clés.'
-            },
-            navRainbowTagScope: {
-                name: 'Portée des mots-clés',
-                desc: 'Sélectionner les niveaux de mot-clé qui démarrent les attributions de couleur.',
-                options: {
-                    root: 'Niveau racine',
-                    child: 'Niveau enfant',
-                    all: 'Tous les niveaux'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Appliquer aux propriétés',
-                desc: 'Appliquer les couleurs arc-en-ciel aux propriétés.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Luminosité uniforme entre les teintes', // (English: Consistent brightness across hues)
-                desc: 'Interpole la luminosité entre les couleurs de début et de fin lors des transitions de teinte.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Couleurs séparées pour les modes clair et sombre', // (English: Separate light and dark mode colors)
-                desc: 'Utiliser des couleurs arc-en-ciel différentes pour le mode clair et le mode sombre.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Copier la couleur du mode clair vers le mode sombre', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Portée des propriétés',
-                desc: 'Sélectionner les niveaux de propriété qui démarrent les attributions de couleur.',
-                options: {
-                    root: 'Niveau racine',
-                    child: 'Niveau enfant',
-                    all: 'Tous les niveaux'
-                }
-            },
+            copyLightToDark: 'Copier la couleur du mode clair vers le mode sombre', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Replier les éléments',
                 desc: 'Choisissez ce que le bouton déplier/replier tout affecte.',

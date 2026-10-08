@@ -39,12 +39,7 @@ import { resolveFolderDisplayName, resolveFolderDisplayPathSegments } from '../u
 import { resolveRootFolderNoteSourceName } from '../utils/folderNoteLookup';
 import { isFolderEffectivelyExpanded } from '../utils/navigationExpansion';
 import { resolveFolderDecorationColors, type FolderDecorationModel } from '../utils/folderDecoration';
-import {
-    resolveFileItemPropertyDecorationColors,
-    resolveFileItemTagDecorationColors,
-    type FileItemPillDecorationModel
-} from '../utils/fileItemPillDecoration';
-import { applyRainbowOverlay } from '../utils/navigationRainbow';
+import { resolveFileItemPropertyDecorationColors, resolveFileItemTagDecorationColors } from '../utils/fileItemPillDecoration';
 
 const FOLDER_NOTE_EXTENSIONS = Object.values(FOLDER_NOTE_TYPE_EXTENSIONS);
 
@@ -91,7 +86,6 @@ export type BreadcrumbSegment =
 
 interface UseListPaneTitleParams {
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
 }
 
 interface UseListPaneTitleResult {
@@ -109,7 +103,7 @@ interface ListPaneTitleMemoResult {
     breadcrumbSegments: BreadcrumbSegment[];
 }
 
-export function useListPaneTitle({ folderDecorationModel, fileItemPillDecorationModel }: UseListPaneTitleParams): UseListPaneTitleResult {
+export function useListPaneTitle({ folderDecorationModel }: UseListPaneTitleParams): UseListPaneTitleResult {
     const { app } = useServices();
     const settings = useSettingsState();
     const uxPreferences = useUXPreferences();
@@ -314,8 +308,7 @@ export function useListPaneTitle({ folderDecorationModel, fileItemPillDecoration
     ]);
 
     // Resolves the color the navigation pane shows for the current selection so the title matches the
-    // selected item: custom colors, colors inherited from ancestors or the Tags/Properties root folders,
-    // and rainbow colors. Only the foreground color is used because the title has no background.
+    // selected item: custom colors, colors inherited from ancestors or the Tags/Properties root folders. Only the foreground color is used because the title has no background.
     const titleColor = useMemo((): string | undefined => {
         // Forces recompute when folder note metadata or color records change.
         void metadataVersion;
@@ -338,18 +331,11 @@ export function useListPaneTitle({ folderDecorationModel, fileItemPillDecoration
             const tagsRootColor = settings.virtualFolderColors[TAGS_ROOT_VIRTUAL_FOLDER_ID];
             // The tagged collection is selected through the Tags root folder, so it shows that folder's color.
             if (tag === TAGGED_TAG_ID) {
-                return applyRainbowOverlay({
-                    mode: fileItemPillDecorationModel.navRainbowMode,
-                    rainbowColor: fileItemPillDecorationModel.tagRainbowColors.rootColor,
-                    color: tagsRootColor,
-                    backgroundColor: undefined
-                }).color;
+                return tagsRootColor;
             }
 
             const inheritsRootColor = settings.showAllTagsFolder && settings.inheritTagColors;
             return resolveFileItemTagDecorationColors({
-                model: fileItemPillDecorationModel,
-                tagPath: tag,
                 color: metadataService.getTagColor(tag) ?? (inheritsRootColor ? tagsRootColor : undefined),
                 backgroundColor: undefined
             }).color;
@@ -359,18 +345,11 @@ export function useListPaneTitle({ folderDecorationModel, fileItemPillDecoration
             const nodeId = selectionState.selectedProperty;
             const propertiesRootColor = settings.virtualFolderColors[PROPERTIES_ROOT_VIRTUAL_FOLDER_ID];
             if (nodeId === PROPERTIES_ROOT_VIRTUAL_FOLDER_ID) {
-                return applyRainbowOverlay({
-                    mode: fileItemPillDecorationModel.navRainbowMode,
-                    rainbowColor: fileItemPillDecorationModel.propertyRainbowColors.rootColor,
-                    color: propertiesRootColor,
-                    backgroundColor: undefined
-                }).color;
+                return propertiesRootColor;
             }
 
             const inheritsRootColor = settings.showAllPropertiesFolder && settings.inheritPropertyColors;
             return resolveFileItemPropertyDecorationColors({
-                model: fileItemPillDecorationModel,
-                nodeId,
                 color: metadataService.getPropertyColor(nodeId) ?? (inheritsRootColor ? propertiesRootColor : undefined),
                 backgroundColor: undefined
             }).color;
@@ -378,7 +357,6 @@ export function useListPaneTitle({ folderDecorationModel, fileItemPillDecoration
 
         return undefined;
     }, [
-        fileItemPillDecorationModel,
         folderDecorationModel,
         metadataService,
         metadataVersion,
