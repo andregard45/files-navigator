@@ -27,71 +27,21 @@ import {
 export type { ListPaneAppearance } from './types';
 
 export interface ListPaneAppearanceSettings {
-    titleRows: number;
     groupBy: ListNoteGroupingOption;
 }
 
 /**
- * Content toggles that can be stored per folder, tag, or property selection.
- * The file-display property pills feature was removed; no content toggles remain.
+ * Returns the stored display-appearance intent for a folder/tag/property record.
+ * Title rows are hardcoded to one row everywhere, so no display fields remain and
+ * this always returns null; callers use it to drop stale records while preserving grouping.
  */
-export const LIST_PANE_TOGGLE_KEYS = [] as const;
-
-export type ListPaneToggleKey = (typeof LIST_PANE_TOGGLE_KEYS)[number];
-
-export type ListPaneAppearanceFields = Omit<ListPaneAppearance, 'groupBy'>;
-
-const LIST_PANE_APPEARANCE_FIELD_KEYS = [
-    'titleRows',
-    ...LIST_PANE_TOGGLE_KEYS
-] as const satisfies readonly (keyof ListPaneAppearanceFields)[];
-
-function isValidTitleRows(value: unknown): value is number {
-    return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 3;
-}
-
-/**
- * Returns the stored appearance intent without grouping, dropping invalid and unknown fields.
- * Returns null when the appearance stores no valid field, so callers can delete the record.
- */
-export function getStoredListPaneAppearanceFields(appearance: ListPaneAppearance | undefined): ListPaneAppearanceFields | null {
-    if (!appearance) {
-        return null;
-    }
-
-    const normalized: ListPaneAppearanceFields = {};
-    if (isValidTitleRows(appearance.titleRows)) {
-        normalized.titleRows = appearance.titleRows;
-    }
-    LIST_PANE_TOGGLE_KEYS.forEach(key => {
-        if (typeof appearance[key] === 'boolean') {
-            normalized[key] = appearance[key];
-        }
-    });
-
-    return Object.keys(normalized).length > 0 ? normalized : null;
-}
-
-export function hasStoredListPaneAppearanceOverride(appearance: ListPaneAppearance | undefined): boolean {
-    return getStoredListPaneAppearanceFields(appearance) !== null;
-}
-
-export function areStoredListPaneAppearanceFieldsEqual(
-    left: ListPaneAppearance | undefined,
-    right: ListPaneAppearance | undefined
-): boolean {
-    const normalizedLeft = getStoredListPaneAppearanceFields(left);
-    const normalizedRight = getStoredListPaneAppearanceFields(right);
-    if (!normalizedLeft || !normalizedRight) {
-        return normalizedLeft === normalizedRight;
-    }
-
-    return LIST_PANE_APPEARANCE_FIELD_KEYS.every(key => normalizedLeft[key] === normalizedRight[key]);
+export function getStoredListPaneAppearanceFields(): null {
+    return null;
 }
 
 /** Combines appearance-only fields with grouping while keeping the two toolbar concerns independent. */
 export function mergeListPaneAppearanceAndGrouping(
-    appearanceFields: ListPaneAppearanceFields | null,
+    appearanceFields: Record<string, never> | null,
     groupBy: ListNoteGroupingOption | undefined
 ): ListPaneAppearance | null {
     const merged: ListPaneAppearance = appearanceFields ? { ...appearanceFields } : {};
@@ -151,7 +101,8 @@ export function snapshotListPaneAppearanceMap<T extends ListPaneAppearance>(
 /**
  * Resolves the effective list pane appearance for a selection.
  *
- * Compact is the only list mode, so per-selection overrides cover title rows and grouping only.
+ * Compact is the only list mode and titles always render on a single row, so per-selection
+ * overrides cover grouping only.
  */
 export function resolveListPaneAppearance({
     settings,
@@ -169,7 +120,6 @@ export function resolveListPaneAppearance({
     });
 
     return {
-        titleRows: isValidTitleRows(appearance?.titleRows) ? appearance.titleRows : settings.fileNameRows,
         groupBy: grouping.effectiveGrouping
     };
 }

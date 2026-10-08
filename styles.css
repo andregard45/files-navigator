@@ -3595,7 +3595,7 @@ button.nn-navigation-calendar-day {
     justify-content: flex-start; /* Top-align content */
 }
 
-/* File name - primary text with ellipsis overflow */
+/* File name - primary text with ellipsis overflow (single row, hardcoded) */
 .nn-file-name {
     font-size: var(--nn-file-name-size-mobile, var(--nn-file-name-size));
     font-weight: var(--nn-theme-file-name-font-weight);
@@ -3603,15 +3603,9 @@ button.nn-navigation-calendar-day {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: var(--filename-rows, 1);
-    -webkit-box-orient: vertical;
     line-height: var(--nn-file-title-line-height);
-    word-break: break-word;
-    max-height: calc(var(--nn-file-title-line-height) * var(--filename-rows, 1));
-}
-
-.nn-file-name[data-title-rows='1'] {
+    max-height: var(--nn-file-title-line-height);
+    /* Titles are hardcoded to a single row: render as a nowrap block. */
     display: block;
     white-space: nowrap;
     word-break: normal;
@@ -3749,14 +3743,9 @@ button.nn-navigation-calendar-day {
     flex-shrink: 0;
 }
 
-/* Compact mode with 1 title row: center the quick actions vertically */
-.nn-quick-actions-panel.nn-compact-mode[data-title-rows='1'] {
+/* Compact mode (single title row): center the quick actions vertically */
+.nn-quick-actions-panel.nn-compact-mode {
     top: max(0px, calc((var(--nn-file-title-line-height) + var(--nn-file-padding-vertical-compact) * 2 - 20px) / 2));
-}
-
-/* Compact mode with more than 1 title row: align with compact padding */
-.nn-quick-actions-panel.nn-compact-mode:not([data-title-rows='1']) {
-    top: var(--nn-file-padding-vertical-compact);
 }
 
 /* Source: src/styles/sections/list-tags.css */
@@ -7424,7 +7413,7 @@ body.is-phone .notebook-navigator-android .nn-split-container {
 
 /* Clamp height compensation - Android doesn't scale max-height, so match the compensated line-height after textZoom applies. */
 .notebook-navigator-android .nn-file-name {
-    max-height: calc(var(--nn-file-title-line-height) * var(--filename-rows, 1) * var(--nn-android-font-scale, 1));
+    max-height: calc(var(--nn-file-title-line-height) * var(--nn-android-font-scale, 1));
 }
 
 

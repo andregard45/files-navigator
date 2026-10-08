@@ -155,8 +155,6 @@ export const STRINGS_ES = {
         subtags: 'subetiquetas',
         childValues: 'valores secundarios',
         applySortAndGroupToDescendants: (target: string) => `Aplicar orden y agrupación a ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Aplicar apariencia a ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Restablecer la apariencia en ${target}`,
         showFolders: 'Mostrar navegación', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'Reordenar navegación',
         finishRootFolderReorder: 'Listo',
@@ -166,8 +164,6 @@ export const STRINGS_ES = {
         showSinglePane: 'Mostrar panel único', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Los paneles dobles no están disponibles cuando la barra lateral es demasiado estrecha. Para cambiarlo, establece "Cuando la barra lateral es demasiado estrecha" en "No hacer nada" en Ajustes > Apariencia y comportamiento.',
-        changeAppearance: 'Cambiar apariencia', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Cambiar apariencia, personalizada',
         showNotesFromSubfolders: 'Mostrar notas de subcarpetas',
         showFilesFromSubfolders: 'Mostrar archivos de subcarpetas',
         showNotesFromDescendants: 'Mostrar notas de descendientes',
@@ -409,17 +405,10 @@ export const STRINGS_ES = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Apariencia',
         sortBy: 'Ordenar por',
         defaultSuffix: '(predeterminado)',
         defaultLabel: 'Predeterminado',
-        titleRows: {
-            label: 'Filas de título',
-            option: (rows: number) => `${rows} fila${rows === 1 ? '' : 's'} de título`
-        },
-        groupBy: 'Agrupar por',
-        resetAppearance: 'Restablecer apariencia',
-        openPluginSettings: 'Abrir ajustes del plugin…'
+        groupBy: 'Agrupar por'
     },
 
     // Modal dialogs
@@ -427,12 +416,6 @@ export const STRINGS_ES = {
         bulkApply: {
             applyButton: 'Aplicar',
             applySortAndGroupTitle: (target: string) => `¿Aplicar orden y agrupación a ${target}?`,
-            applyAppearanceTitle: (target: string) => `¿Aplicar apariencia a ${target}?`,
-            resetAppearanceTitle: (target: string) => `¿Restablecer la apariencia en ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `La apariencia cambiará para ${count} ${count === 1 ? 'elemento' : 'elementos'}. Apariencias personalizadas existentes reemplazadas: ${replacedCount}. Las preferencias de apariencia guardadas se copian una vez; se conservan la ordenación y la agrupación. Los cambios futuros y los nuevos descendientes no quedan vinculados.`,
-            resetAppearanceMessage: (count: number) =>
-                `La apariencia se restablecerá para ${count} ${count === 1 ? 'elemento' : 'elementos'}. Se conservan la ordenación y la agrupación. Es un cambio único; los cambios futuros y los nuevos descendientes no quedan vinculados.`,
             affectedCountMessage: (count: number) => `Anulaciones existentes que cambiarán: ${count}.`
         },
         mergeNotes: {
@@ -501,7 +484,6 @@ export const STRINGS_ES = {
                 'list-sort-title': 'Ordenar por título',
                 'list-sort-filename': 'Ordenar por nombre de archivo',
                 'list-sort-property': 'Ordenar por propiedad',
-                'list-appearance': 'Cambiar apariencia',
                 'list-new-note': 'Nueva nota',
                 'list-pinned': 'Notas fijadas',
                 'nav-folder-open': 'Carpeta abierta',
@@ -1794,15 +1776,6 @@ export const STRINGS_ES = {
                 help: 'Formatos comunes:\nHH:mm = 14:30 (24 horas)\nh:mm a = 2:30 PM (12 horas)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Filas de título',
-                desc: 'Número de filas a mostrar para los títulos de las notas.',
-                options: {
-                    '1': '1 fila',
-                    '2': '2 filas',
-                    '3': '3 filas'
-                }
             },
             useFolderColor: {
                 name: 'Usar color de carpeta',

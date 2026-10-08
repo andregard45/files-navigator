@@ -155,8 +155,6 @@ export const STRINGS_PT_BR = {
         subtags: 'subetiquetas',
         childValues: 'valores filhos',
         applySortAndGroupToDescendants: (target: string) => `Aplicar classificação e agrupamento a ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Aplicar aparência a ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Redefinir aparência em ${target}`,
         showFolders: 'Mostrar navegação',
         reorderRootFolders: 'Reordenar navegação',
         finishRootFolderReorder: 'Concluído',
@@ -166,8 +164,6 @@ export const STRINGS_PT_BR = {
         showSinglePane: 'Mostrar painel único',
         dualPaneAutoFallbackNotice:
             'Os painéis duplos não estão disponíveis quando a barra lateral está estreita demais. Para mudar isso, defina "Quando a barra lateral está estreita demais" como "Não fazer nada" em Configurações > Aparência e comportamento.',
-        changeAppearance: 'Alterar aparência',
-        changeAppearanceCustomized: 'Alterar aparência, personalizada',
         showNotesFromSubfolders: 'Mostrar notas de subpastas',
         showFilesFromSubfolders: 'Mostrar arquivos de subpastas',
         showNotesFromDescendants: 'Mostrar notas de descendentes',
@@ -409,17 +405,10 @@ export const STRINGS_PT_BR = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Aparência',
         sortBy: 'Classificar por',
         defaultSuffix: '(padrão)',
         defaultLabel: 'Padrão',
-        titleRows: {
-            label: 'Linhas do título',
-            option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de título`
-        },
-        groupBy: 'Agrupar por',
-        resetAppearance: 'Redefinir aparência',
-        openPluginSettings: 'Abrir configurações do plugin…'
+        groupBy: 'Agrupar por'
     },
 
     // Modal dialogs
@@ -427,12 +416,6 @@ export const STRINGS_PT_BR = {
         bulkApply: {
             applyButton: 'Aplicar',
             applySortAndGroupTitle: (target: string) => `Aplicar classificação e agrupamento a ${target}?`,
-            applyAppearanceTitle: (target: string) => `Aplicar aparência a ${target}?`,
-            resetAppearanceTitle: (target: string) => `Redefinir aparência em ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `A aparência mudará para ${count} ${count === 1 ? 'item' : 'itens'}. Aparências personalizadas existentes substituídas: ${replacedCount}. As preferências de aparência salvas são copiadas uma vez; a ordenação e o agrupamento são preservados. Alterações futuras e novos descendentes não ficam vinculados.`,
-            resetAppearanceMessage: (count: number) =>
-                `A aparência será redefinida para ${count} ${count === 1 ? 'item' : 'itens'}. A ordenação e o agrupamento são preservados. Esta é uma alteração única; alterações futuras e novos descendentes não ficam vinculados.`,
             affectedCountMessage: (count: number) => `Substituições existentes que serão alteradas: ${count}.`
         },
         mergeNotes: {
@@ -501,7 +484,6 @@ export const STRINGS_PT_BR = {
                 'list-sort-title': 'Classificar por título',
                 'list-sort-filename': 'Classificar por nome do arquivo',
                 'list-sort-property': 'Classificar por propriedade',
-                'list-appearance': 'Alterar aparência',
                 'list-new-note': 'Nova nota',
                 'list-pinned': 'Notas fixadas',
                 'nav-folder-open': 'Pasta aberta',
@@ -1793,15 +1775,6 @@ export const STRINGS_PT_BR = {
                 help: 'Formatos comuns:\nh:mm a = 2:30 PM (12 horas)\nHH:mm = 14:30 (24 horas)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Linhas de título',
-                desc: 'Número de linhas a exibir para títulos de notas.',
-                options: {
-                    '1': '1 linha',
-                    '2': '2 linhas',
-                    '3': '3 linhas'
-                }
             },
             useFolderColor: {
                 name: 'Usar cor da pasta',

@@ -154,8 +154,6 @@ export const STRINGS_FA = {
         subtags: 'زیربرچسب‌ها',
         childValues: 'مقادیر فرزند',
         applySortAndGroupToDescendants: (target: string) => `اعمال مرتب‌سازی و گروه‌بندی به ${target}`,
-        applyAppearanceToDescendants: (target: string) => `اعمال ظاهر به ${target}`,
-        resetAppearanceInDescendants: (target: string) => `بازنشانی ظاهر در ${target}`,
         showFolders: 'نمایش ناوبری',
         reorderRootFolders: 'مرتب‌سازی مجدد ناوبری',
         finishRootFolderReorder: 'تمام',
@@ -165,8 +163,6 @@ export const STRINGS_FA = {
         showSinglePane: 'نمایش پنل تکی',
         dualPaneAutoFallbackNotice:
             'وقتی نوار کناری خیلی باریک است، پنل‌های دوگانه در دسترس نیستند. برای تغییر این حالت، در تنظیمات > ظاهر و رفتار، گزینهٔ «وقتی نوار کناری خیلی باریک است» را روی «هیچ کاری نکن» بگذارید.',
-        changeAppearance: 'تغییر ظاهر',
-        changeAppearanceCustomized: 'تغییر ظاهر، سفارشی‌شده',
         showNotesFromSubfolders: 'نمایش یادداشت‌ها از زیرپوشه‌ها',
         showFilesFromSubfolders: 'نمایش فایل‌ها از زیرپوشه‌ها',
         showNotesFromDescendants: 'نمایش یادداشت‌ها از زیرمجموعه‌ها',
@@ -406,17 +402,10 @@ export const STRINGS_FA = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'ظاهر',
         sortBy: 'مرتب‌سازی بر اساس',
         defaultSuffix: '(پیش‌فرض)',
         defaultLabel: 'پیش‌فرض',
-        titleRows: {
-            label: 'ردیف‌های عنوان',
-            option: (rows: number) => `${rows} ردیف عنوان`
-        },
-        groupBy: 'گروه‌بندی بر اساس',
-        resetAppearance: 'بازنشانی ظاهر',
-        openPluginSettings: 'باز کردن تنظیمات افزونه…'
+        groupBy: 'گروه‌بندی بر اساس'
     },
 
     // Modal dialogs
@@ -424,12 +413,6 @@ export const STRINGS_FA = {
         bulkApply: {
             applyButton: 'اعمال',
             applySortAndGroupTitle: (target: string) => `مرتب‌سازی و گروه‌بندی به ${target} اعمال شود؟`,
-            applyAppearanceTitle: (target: string) => `ظاهر به ${target} اعمال شود؟`,
-            resetAppearanceTitle: (target: string) => `ظاهر در ${target} بازنشانی شود؟`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `ظاهر ${count} مورد تغییر می‌کند. ظاهرهای سفارشی موجود که جایگزین می‌شوند: ${replacedCount}. ترجیحات ذخیره‌شدهٔ ظاهر یک‌بار کپی می‌شوند؛ مرتب‌سازی و گروه‌بندی حفظ می‌شوند. تغییرات آینده و موارد فرزند جدید پیوند داده نمی‌شوند.`,
-            resetAppearanceMessage: (count: number) =>
-                `ظاهر ${count} مورد بازنشانی می‌شود. مرتب‌سازی و گروه‌بندی حفظ می‌شوند. این تغییر یک‌باره است؛ تغییرات آینده و موارد فرزند جدید پیوند داده نمی‌شوند.`,
             affectedCountMessage: (count: number) => `بازنویسی‌های موجود که تغییر خواهند کرد: ${count}.`
         },
         mergeNotes: {
@@ -498,7 +481,6 @@ export const STRINGS_FA = {
                 'list-sort-title': 'مرتب‌سازی بر اساس عنوان',
                 'list-sort-filename': 'مرتب‌سازی بر اساس نام فایل',
                 'list-sort-property': 'مرتب‌سازی بر اساس ویژگی',
-                'list-appearance': 'تغییر ظاهر',
                 'list-new-note': 'یادداشت جدید',
                 'list-pinned': 'یادداشت‌های سنجاق‌شده',
                 'nav-folder-open': 'پوشه باز',
@@ -1785,15 +1767,6 @@ export const STRINGS_FA = {
                 help: 'قالب‌های رایج:\nHH:mm = ۱۴:۳۰ (۲۴ ساعته)\nh:mm a = 2:30 PM (۱۲ ساعته)\nHH:mm:ss = ۱۴:۳۰:۴۵\nh:mm:ss a = 2:30:45 PM\n\nتوکن‌ها:\nHH/H = ۲۴ ساعته\nhh/h = ۱۲ ساعته\nmm = دقیقه\nss = ثانیه\na = صبح/عصر',
                 helpTooltip: 'قالب با استفاده از Moment',
                 momentLinkText: 'قالب Moment'
-            },
-            titleRows: {
-                name: 'ردیف‌های عنوان',
-                desc: 'تعداد ردیف‌ها برای نمایش عناوین یادداشت.',
-                options: {
-                    '1': '۱ ردیف',
-                    '2': '۲ ردیف',
-                    '3': '۳ ردیف'
-                }
             },
             useFolderColor: {
                 name: 'استفاده از رنگ پوشه',

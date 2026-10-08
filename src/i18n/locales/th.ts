@@ -154,8 +154,6 @@ export const STRINGS_TH = {
         subtags: 'แท็กย่อย',
         childValues: 'ค่าย่อย',
         applySortAndGroupToDescendants: (target: string) => `ใช้การเรียงและการจัดกลุ่มกับ${target}`,
-        applyAppearanceToDescendants: (target: string) => `ใช้ลักษณะกับ${target}`,
-        resetAppearanceInDescendants: (target: string) => `รีเซ็ตลักษณะใน${target}`,
         showFolders: 'แสดงการนำทาง',
         reorderRootFolders: 'จัดเรียงการนำทางใหม่',
         finishRootFolderReorder: 'เสร็จสิ้น',
@@ -165,8 +163,6 @@ export const STRINGS_TH = {
         showSinglePane: 'แสดงแผงเดียว',
         dualPaneAutoFallbackNotice:
             'ไม่สามารถใช้สองแผงได้เมื่อแถบด้านข้างแคบเกินไป หากต้องการเปลี่ยน ให้ตั้ง "เมื่อแถบด้านข้างแคบเกินไป" เป็น "ไม่ต้องทำอะไร" ในการตั้งค่า > ลักษณะและพฤติกรรม',
-        changeAppearance: 'เปลี่ยนลักษณะ',
-        changeAppearanceCustomized: 'เปลี่ยนลักษณะ กำหนดเองแล้ว',
         showNotesFromSubfolders: 'แสดงโน้ตจากโฟลเดอร์ย่อย',
         showFilesFromSubfolders: 'แสดงไฟล์จากโฟลเดอร์ย่อย',
         showNotesFromDescendants: 'แสดงโน้ตจากรายการย่อย',
@@ -406,17 +402,10 @@ export const STRINGS_TH = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'ลักษณะ',
         sortBy: 'เรียงตาม',
         defaultSuffix: '(ค่าเริ่มต้น)',
         defaultLabel: 'ค่าเริ่มต้น',
-        titleRows: {
-            label: 'แถวชื่อเรื่อง',
-            option: (rows: number) => `${rows} แถวชื่อเรื่อง`
-        },
-        groupBy: 'จัดกลุ่มตาม',
-        resetAppearance: 'รีเซ็ตลักษณะ',
-        openPluginSettings: 'เปิดการตั้งค่าปลั๊กอิน…'
+        groupBy: 'จัดกลุ่มตาม'
     },
 
     // Modal dialogs
@@ -424,12 +413,6 @@ export const STRINGS_TH = {
         bulkApply: {
             applyButton: 'ใช้',
             applySortAndGroupTitle: (target: string) => `ใช้การเรียงและการจัดกลุ่มกับ${target}?`,
-            applyAppearanceTitle: (target: string) => `ใช้ลักษณะกับ${target}?`,
-            resetAppearanceTitle: (target: string) => `รีเซ็ตลักษณะใน${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `ลักษณะจะเปลี่ยนสำหรับ ${count} รายการ ลักษณะแบบกำหนดเองเดิมที่จะถูกแทนที่: ${replacedCount} ค่าลักษณะที่บันทึกไว้จะถูกคัดลอกครั้งเดียว โดยคงการเรียงลำดับและการจัดกลุ่มไว้ การเปลี่ยนแปลงในอนาคตและรายการย่อยใหม่จะไม่เชื่อมโยงกัน`,
-            resetAppearanceMessage: (count: number) =>
-                `ลักษณะจะถูกรีเซ็ตสำหรับ ${count} รายการ โดยคงการเรียงลำดับและการจัดกลุ่มไว้ นี่เป็นการเปลี่ยนแปลงครั้งเดียว การเปลี่ยนแปลงในอนาคตและรายการย่อยใหม่จะไม่เชื่อมโยงกัน`,
             affectedCountMessage: (count: number) => `การแทนที่ที่มีอยู่ซึ่งจะเปลี่ยนแปลง: ${count}`
         },
         mergeNotes: {
@@ -497,7 +480,6 @@ export const STRINGS_TH = {
                 'list-sort-title': 'จัดเรียงตามชื่อเรื่อง',
                 'list-sort-filename': 'จัดเรียงตามชื่อไฟล์',
                 'list-sort-property': 'จัดเรียงตามคุณสมบัติ',
-                'list-appearance': 'เปลี่ยนลักษณะ',
                 'list-new-note': 'โน้ตใหม่',
                 'list-pinned': 'โน้ตที่ปักหมุด',
                 'nav-folder-open': 'โฟลเดอร์เปิด',
@@ -1778,15 +1760,6 @@ export const STRINGS_TH = {
                 help: 'รูปแบบทั่วไป:\nHH:mm = 14:30 (24 ชั่วโมง)\nh:mm a = 2:30 PM (12 ชั่วโมง)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nโทเคน:\nHH/H = 24 ชั่วโมง\nhh/h = 12 ชั่วโมง\nmm = นาที\nss = วินาที\na = AM/PM',
                 helpTooltip: 'รูปแบบโดยใช้ Moment',
                 momentLinkText: 'รูปแบบ Moment'
-            },
-            titleRows: {
-                name: 'แถวชื่อเรื่อง',
-                desc: 'จำนวนแถวที่จะแสดงสำหรับชื่อโน้ต',
-                options: {
-                    '1': '1 แถว',
-                    '2': '2 แถว',
-                    '3': '3 แถว'
-                }
             },
             useFolderColor: {
                 name: 'ใช้สีโฟลเดอร์',

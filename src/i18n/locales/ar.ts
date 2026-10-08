@@ -154,8 +154,6 @@ export const STRINGS_AR = {
         subtags: 'الوسوم الفرعية',
         childValues: 'القيم الفرعية',
         applySortAndGroupToDescendants: (target: string) => `تطبيق الفرز والتجميع على ${target}`,
-        applyAppearanceToDescendants: (target: string) => `تطبيق المظهر على ${target}`,
-        resetAppearanceInDescendants: (target: string) => `إعادة تعيين المظهر في ${target}`,
         showFolders: 'إظهار التنقل', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'إعادة ترتيب التنقل',
         finishRootFolderReorder: 'تم',
@@ -165,8 +163,6 @@ export const STRINGS_AR = {
         showSinglePane: 'إظهار لوحة واحدة', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'لا تتوفر اللوحتان عندما يكون الشريط الجانبي ضيقًا جدًا. لتغيير ذلك، اضبط "عندما يكون الشريط الجانبي ضيقًا جدًا" على "عدم فعل شيء" في الإعدادات > المظهر والسلوك.',
-        changeAppearance: 'تغيير المظهر', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'تغيير المظهر، مخصص',
         showNotesFromSubfolders: 'إظهار الملاحظات من المجلدات الفرعية',
         showFilesFromSubfolders: 'إظهار الملفات من المجلدات الفرعية',
         showNotesFromDescendants: 'إظهار الملاحظات من الفروع',
@@ -406,17 +402,10 @@ export const STRINGS_AR = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'المظهر',
         sortBy: 'فرز حسب',
         defaultSuffix: '(افتراضي)',
         defaultLabel: 'افتراضي',
-        titleRows: {
-            label: 'صفوف العنوان',
-            option: (rows: number) => (rows === 1 ? 'صف عنوان واحد' : rows === 2 ? 'صفا عنوان' : `${rows} صفوف عنوان`)
-        },
-        groupBy: 'تجميع حسب',
-        resetAppearance: 'إعادة تعيين المظهر',
-        openPluginSettings: 'فتح إعدادات الإضافة…'
+        groupBy: 'تجميع حسب'
     },
 
     // Modal dialogs
@@ -424,12 +413,6 @@ export const STRINGS_AR = {
         bulkApply: {
             applyButton: 'تطبيق',
             applySortAndGroupTitle: (target: string) => `تطبيق الفرز والتجميع على ${target}؟`,
-            applyAppearanceTitle: (target: string) => `تطبيق المظهر على ${target}؟`,
-            resetAppearanceTitle: (target: string) => `إعادة تعيين المظهر في ${target}؟`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `سيتغير المظهر لـ ${count} من العناصر. المظاهر المخصصة الحالية التي ستُستبدل: ${replacedCount}. تُنسخ تفضيلات المظهر المحفوظة مرة واحدة؛ ويُحتفظ بالفرز والتجميع. لا ترتبط التغييرات المستقبلية والعناصر الفرعية الجديدة.`,
-            resetAppearanceMessage: (count: number) =>
-                `سيُعاد تعيين المظهر لـ ${count} من العناصر. يُحتفظ بالفرز والتجميع. هذا تغيير لمرة واحدة؛ ولا ترتبط التغييرات المستقبلية والعناصر الفرعية الجديدة.`,
             affectedCountMessage: (count: number) => `التجاوزات الحالية التي ستتغير: ${count}.`
         },
         mergeNotes: {
@@ -497,7 +480,6 @@ export const STRINGS_AR = {
                 'list-sort-title': 'الفرز حسب العنوان',
                 'list-sort-filename': 'الفرز حسب اسم الملف',
                 'list-sort-property': 'الفرز حسب الخاصية',
-                'list-appearance': 'تغيير المظهر',
                 'list-new-note': 'ملاحظة جديدة',
                 'list-pinned': 'الملاحظات المثبتة',
                 'nav-folder-open': 'مجلد مفتوح',
@@ -1780,15 +1762,6 @@ export const STRINGS_AR = {
                 help: 'التنسيقات الشائعة:\nh:mm a = 2:30 م (12 ساعة)\nHH:mm = 14:30 (24 ساعة)\nh:mm:ss a = 2:30:45 م\nHH:mm:ss = 14:30:45\n\nالرموز:\nHH/H = 24 ساعة\nhh/h = 12 ساعة\nmm = الدقائق\nss = الثواني\na = ص/م',
                 helpTooltip: 'تنسيق باستخدام Moment',
                 momentLinkText: 'تنسيق Moment'
-            },
-            titleRows: {
-                name: 'صفوف العنوان',
-                desc: 'عدد الصفوف المعروضة لعناوين الملاحظات.',
-                options: {
-                    '1': 'صف واحد',
-                    '2': 'صفان',
-                    '3': '3 صفوف'
-                }
             },
             useFolderColor: {
                 name: 'استخدام لون المجلد',

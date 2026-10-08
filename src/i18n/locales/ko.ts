@@ -153,8 +153,6 @@ export const STRINGS_KO = {
         subtags: '하위 태그',
         childValues: '하위 값',
         applySortAndGroupToDescendants: (target: string) => `${target}에 정렬 및 그룹 적용`,
-        applyAppearanceToDescendants: (target: string) => `${target}에 모양 적용`,
-        resetAppearanceInDescendants: (target: string) => `${target}의 모양 재설정`,
         showFolders: '탐색 표시', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: '탐색 재정렬',
         finishRootFolderReorder: '완료',
@@ -164,8 +162,6 @@ export const STRINGS_KO = {
         showSinglePane: '단일 창 표시', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             '사이드바가 너무 좁으면 이중 창을 사용할 수 없습니다. 이를 변경하려면 설정 > 모양 및 동작에서 "사이드바가 너무 좁을 때"를 "아무것도 하지 않음"으로 설정하세요.',
-        changeAppearance: '모양 변경', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: '모양 변경, 사용자 지정됨',
         showNotesFromSubfolders: '하위 폴더 노트 표시',
         showFilesFromSubfolders: '하위 폴더 파일 표시',
         showNotesFromDescendants: '하위 항목 노트 표시',
@@ -405,17 +401,10 @@ export const STRINGS_KO = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: '모양',
         sortBy: '정렬 기준',
         defaultSuffix: '(기본값)',
         defaultLabel: '기본',
-        titleRows: {
-            label: '제목 행',
-            option: (rows: number) => `${rows}개 제목 행`
-        },
-        groupBy: '그룹화 기준',
-        resetAppearance: '모양 재설정',
-        openPluginSettings: '플러그인 설정 열기…'
+        groupBy: '그룹화 기준'
     },
 
     // Modal dialogs
@@ -423,12 +412,6 @@ export const STRINGS_KO = {
         bulkApply: {
             applyButton: '적용',
             applySortAndGroupTitle: (target: string) => `${target}에 정렬 및 그룹을 적용하시겠습니까?`,
-            applyAppearanceTitle: (target: string) => `${target}에 모양을 적용하시겠습니까?`,
-            resetAppearanceTitle: (target: string) => `${target}의 모양을 재설정하시겠습니까?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `${count}개 항목의 모양이 변경됩니다. 교체되는 기존 사용자 지정 모양: ${replacedCount}개. 저장된 모양 설정이 한 번 복사되며 정렬과 그룹화는 유지됩니다. 이후 변경 사항과 새 하위 항목은 연결되지 않습니다.`,
-            resetAppearanceMessage: (count: number) =>
-                `${count}개 항목의 모양이 재설정됩니다. 정렬과 그룹화는 유지됩니다. 일회성 변경이며 이후 변경 사항과 새 하위 항목은 연결되지 않습니다.`,
             affectedCountMessage: (count: number) => `변경될 기존 재정의: ${count}.`
         },
         mergeNotes: {
@@ -496,7 +479,6 @@ export const STRINGS_KO = {
                 'list-sort-title': '제목으로 정렬',
                 'list-sort-filename': '파일 이름으로 정렬',
                 'list-sort-property': '속성으로 정렬',
-                'list-appearance': '모양 변경',
                 'list-new-note': '새 노트',
                 'list-pinned': '고정된 노트',
                 'nav-folder-open': '열린 폴더',
@@ -1780,15 +1762,6 @@ export const STRINGS_KO = {
                 help: '일반적인 형식:\na h:mm = 오후 2:30 (12시간)\nHH:mm = 14:30 (24시간)\na h:mm:ss = 오후 2:30:45\nHH:mm:ss = 14:30:45\n\n토큰:\nHH/H = 24시간\nhh/h = 12시간\nmm = 분\nss = 초\na = 오전/오후',
                 helpTooltip: 'Moment 형식',
                 momentLinkText: 'Moment 형식'
-            },
-            titleRows: {
-                name: '제목 행',
-                desc: '노트 제목에 표시할 행 수입니다.',
-                options: {
-                    '1': '1행',
-                    '2': '2행',
-                    '3': '3행'
-                }
             },
             useFolderColor: {
                 name: '폴더 색상 사용',

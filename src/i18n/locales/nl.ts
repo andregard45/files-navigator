@@ -156,8 +156,6 @@ export const STRINGS_NL = {
         subtags: 'subtags',
         childValues: 'onderliggende waarden',
         applySortAndGroupToDescendants: (target: string) => `Sortering en groepering toepassen op ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Uiterlijk toepassen op ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Uiterlijk in ${target} herstellen`,
         showFolders: 'Navigatie tonen',
         reorderRootFolders: 'Navigatie herschikken',
         finishRootFolderReorder: 'Klaar',
@@ -167,8 +165,6 @@ export const STRINGS_NL = {
         showSinglePane: 'Enkel paneel tonen',
         dualPaneAutoFallbackNotice:
             'Dubbele panelen zijn niet beschikbaar wanneer de zijbalk te smal is. Stel "Wanneer de zijbalk te smal is" in op "Niets doen" in Instellingen > Uiterlijk & gedrag om dit te wijzigen.',
-        changeAppearance: 'Uiterlijk wijzigen',
-        changeAppearanceCustomized: 'Uiterlijk wijzigen, aangepast',
         showNotesFromSubfolders: 'Notities uit submappen tonen',
         showFilesFromSubfolders: 'Bestanden uit submappen tonen',
         showNotesFromDescendants: 'Notities uit afstammelingen tonen',
@@ -410,17 +406,10 @@ export const STRINGS_NL = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Uiterlijk',
         sortBy: 'Sorteren op',
         defaultSuffix: '(standaard)',
         defaultLabel: 'Standaard',
-        titleRows: {
-            label: 'Titelrijen',
-            option: (rows: number) => `${rows} titelrij${rows === 1 ? '' : 'en'}`
-        },
-        groupBy: 'Groeperen op',
-        resetAppearance: 'Uiterlijk herstellen',
-        openPluginSettings: 'Plugin-instellingen openen…'
+        groupBy: 'Groeperen op'
     },
 
     // Modal dialogs
@@ -428,12 +417,6 @@ export const STRINGS_NL = {
         bulkApply: {
             applyButton: 'Toepassen',
             applySortAndGroupTitle: (target: string) => `Sortering en groepering toepassen op ${target}?`,
-            applyAppearanceTitle: (target: string) => `Uiterlijk toepassen op ${target}?`,
-            resetAppearanceTitle: (target: string) => `Uiterlijk in ${target} herstellen?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `Het uiterlijk verandert voor ${count} ${count === 1 ? 'item' : 'items'}. Bestaande aangepaste uiterlijkinstellingen vervangen: ${replacedCount}. Opgeslagen voorkeuren voor uiterlijk worden eenmaal gekopieerd; sortering en groepering blijven behouden. Toekomstige wijzigingen en nieuwe onderliggende items worden niet gekoppeld.`,
-            resetAppearanceMessage: (count: number) =>
-                `Het uiterlijk wordt hersteld voor ${count} ${count === 1 ? 'item' : 'items'}. Sortering en groepering blijven behouden. Dit is een eenmalige wijziging; toekomstige wijzigingen en nieuwe onderliggende items worden niet gekoppeld.`,
             affectedCountMessage: (count: number) => `Bestaande overschrijvingen die wijzigen: ${count}.`
         },
         mergeNotes: {
@@ -502,7 +485,6 @@ export const STRINGS_NL = {
                 'list-sort-title': 'Sorteren op titel',
                 'list-sort-filename': 'Sorteren op bestandsnaam',
                 'list-sort-property': 'Sorteren op eigenschap',
-                'list-appearance': 'Uiterlijk wijzigen',
                 'list-new-note': 'Nieuwe notitie',
                 'list-pinned': 'Vastgepinde notities',
                 'nav-folder-open': 'Map open',
@@ -1792,15 +1774,6 @@ export const STRINGS_NL = {
                 help: 'Veelvoorkomende formaten:\nHH:mm = 14:30 (24-uurs)\nh:mm a = 2:30 PM (12-uurs)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24-uurs\nhh/h = 12-uurs\nmm = minuten\nss = seconden\na = AM/PM',
                 helpTooltip: 'Formaat met Moment',
                 momentLinkText: 'Moment-formaat'
-            },
-            titleRows: {
-                name: 'Titelrijen',
-                desc: 'Aantal weer te geven rijen voor notitietitels.',
-                options: {
-                    '1': '1 rij',
-                    '2': '2 rijen',
-                    '3': '3 rijen'
-                }
             },
             useFolderColor: {
                 name: 'Mapkleur gebruiken',

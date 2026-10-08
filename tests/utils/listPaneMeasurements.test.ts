@@ -29,35 +29,30 @@ import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
 describe('listPaneMeasurements layout helpers', () => {
     const desktopHeights = getListPaneMeasurements(false);
 
-    it('estimates compact file rows from compact padding and title rows', () => {
+    it('estimates compact file rows from compact padding and a single hardcoded title row', () => {
         expect(
             estimateFileRowHeight(
                 {},
                 {
                     heights: desktopHeights,
-                    titleRows: 2,
                     compactPaddingTotal: 18
                 }
             )
-        ).toBe(18 + desktopHeights.titleLineHeight * 2);
+        ).toBe(18 + desktopHeights.titleLineHeight);
     });
 
     it('does not reserve any excerpt slot for search rows', () => {
         const config = {
             heights: desktopHeights,
-            titleRows: 1,
             compactPaddingTotal: 18
         };
 
         expect(estimateFileRowHeight({}, config)).toBe(18 + desktopHeights.titleLineHeight);
     });
 
-    it('computes plain (non-search) row height from base padding and title rows', () => {
-        expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 1 })).toBe(
+    it('computes plain (non-search) row height from base padding and the single title row', () => {
+        expect(estimatePlainRowHeight({ heights: desktopHeights })).toBe(
             desktopHeights.basePadding + desktopHeights.titleLineHeight
-        );
-        expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 2 })).toBe(
-            desktopHeights.basePadding + desktopHeights.titleLineHeight * 2
         );
     });
 

@@ -91,14 +91,12 @@ export const ListPaneHeader = React.memo(function ListPaneHeader({
         canCreateNewFile,
         handleRevealFile,
         canRevealFile,
-        handleAppearanceMenu,
         handleSortMenu,
         handleToggleDescendants,
         descendantsTooltip,
         getSortIcon,
         hasAppearanceOrSortSelection,
-        hasCustomSortOrGroup,
-        hasCustomAppearance
+        hasCustomSortOrGroup
     } = useListActions({
         trackRevealFileAvailability: !useMobileChrome && showRevealButton
     });
@@ -107,7 +105,6 @@ export const ListPaneHeader = React.memo(function ListPaneHeader({
     const showDescendantsButton = listToolbarVisibility.descendants;
     const showGroupExpansionButton = listToolbarVisibility.groupExpansion;
     const showSortButton = listToolbarVisibility.sort;
-    const showAppearanceButton = listToolbarVisibility.appearance;
     const showNewNoteButton = listToolbarVisibility.newNote;
     const hasNavigationSelection = Boolean(selectionState.selectedFolder || selectionState.selectedTag || selectionState.selectedProperty);
 
@@ -122,7 +119,6 @@ export const ListPaneHeader = React.memo(function ListPaneHeader({
         showDescendantsButton ||
         showGroupExpansionButton ||
         showSortButton ||
-        showAppearanceButton ||
         showNewNoteButton;
 
     const backIconId = useMemo(() => {
@@ -473,20 +469,6 @@ export const ListPaneHeader = React.memo(function ListPaneHeader({
                             tabIndex={-1}
                         >
                             <ServiceIcon iconId={sortIconId} />
-                        </button>
-                    ) : null}
-                    {showAppearanceButton ? (
-                        <button
-                            className={`nn-icon-button ${hasCustomAppearance ? 'nn-icon-button-active' : ''}`}
-                            aria-label={
-                                hasCustomAppearance ? strings.paneHeader.changeAppearanceCustomized : strings.paneHeader.changeAppearance
-                            }
-                            aria-haspopup="menu"
-                            onClick={handleAppearanceMenu}
-                            disabled={actionsDisabled || !hasAppearanceOrSortSelection}
-                            tabIndex={-1}
-                        >
-                            <ServiceIcon iconId={resolveUXIcon(settings.interfaceIcons, 'list-appearance')} />
                         </button>
                     ) : null}
                     {showNewNoteButton ? (

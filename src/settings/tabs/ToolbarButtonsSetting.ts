@@ -56,7 +56,6 @@ function getListToolbarButtons(): ToolbarButtonConfig<ListToolbarButtonId>[] {
         { id: 'descendants', iconType: 'ux', iconId: 'list-descendants', label: strings.settings.items.includeDescendantNotes.name },
         { id: 'groupExpansion', iconType: 'ux', iconId: 'list-expand-all', label: strings.commands.collapseExpandListGroups },
         { id: 'sort', iconType: 'ux', iconId: 'list-sort-ascending', label: strings.paneHeader.changeSortAndGroup },
-        { id: 'appearance', iconType: 'ux', iconId: 'list-appearance', label: strings.paneHeader.changeAppearance },
         { id: 'newNote', iconType: 'ux', iconId: 'list-new-note', label: strings.paneHeader.newNote }
     ];
 }

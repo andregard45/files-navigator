@@ -208,7 +208,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
             descendants: true,
             groupExpansion: false,
             sort: true,
-            appearance: true,
             newNote: true
         }
     },
@@ -340,7 +339,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     showCategoryIcons: false,
     fileTypeIconMap: sanitizeRecord<string>(undefined),
     fileTypeIconPreset: DEFAULT_FILE_TYPE_ICON_PRESET,
-    fileNameRows: 1,
     useFolderColorForTitles: false,
 
     // Calendar tab - Calendar (always enabled)

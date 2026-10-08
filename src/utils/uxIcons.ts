@@ -53,7 +53,6 @@ export type UXIconId =
     | 'list-sort-title'
     | 'list-sort-filename'
     | 'list-sort-property'
-    | 'list-appearance'
     | 'list-new-note'
     | 'list-pinned';
 
@@ -98,7 +97,6 @@ export const UX_ICON_DEFINITIONS: UXIconDefinition[] = [
     { id: 'list-sort-title', category: 'listPane', defaultIconId: 'type' },
     { id: 'list-sort-filename', category: 'listPane', defaultIconId: 'file-text' },
     { id: 'list-sort-property', category: 'listPane', defaultIconId: 'align-left' },
-    { id: 'list-appearance', category: 'listPane', defaultIconId: 'palette' },
     { id: 'list-new-note', category: 'listPane', defaultIconId: 'pen-box' },
     { id: 'list-pinned', category: 'listPane', defaultIconId: '' },
     { id: 'nav-calendar', category: 'calendar', defaultIconId: 'calendar-days' }

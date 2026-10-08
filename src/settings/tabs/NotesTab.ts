@@ -129,12 +129,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
             })
         ]),
         createGroupDefinition(strings.settings.pages.fileDisplay.groups.title, [
-            createRenderDefinition({
-                name: strings.settings.items.titleRows.name,
-                desc: strings.settings.items.titleRows.desc,
-                aliases: Object.values(strings.settings.items.titleRows.options),
-                render: setting => renderFileNameRowsSetting(setting, context)
-            }),
             createToggleDefinition('useFolderColorForTitles', {
                 name: strings.settings.items.useFolderColor.name,
                 desc: strings.settings.items.useFolderColor.desc
@@ -260,25 +254,6 @@ function renderIconMapSetting(
             })
     );
     setting.controlEl.addClass('nn-setting-wide-input');
-}
-
-function renderFileNameRowsSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.titleRows.name)
-        .setDesc(strings.settings.items.titleRows.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('1', strings.settings.items.titleRows.options['1'])
-                .addOption('2', strings.settings.items.titleRows.options['2'])
-                .addOption('3', strings.settings.items.titleRows.options['3'])
-                .setValue(plugin.settings.fileNameRows.toString())
-                .onChange(async value => {
-                    plugin.settings.fileNameRows = parseInt(value, 10);
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
 }
 
 function renderCommaSeparatedTextSetting(

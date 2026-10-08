@@ -181,23 +181,22 @@ export interface FileRowHeightInputs {
 
 export interface FileRowHeightConfig {
     heights: ListPaneMeasurements;
-    titleRows: number;
     compactPaddingTotal: number;
 }
 
-/** Flat estimator for regular (non-search) file rows: title only. */
-export function estimatePlainRowHeight(config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>): number {
-    const titleContentHeight = config.heights.titleLineHeight * config.titleRows;
+/** Flat estimator for regular (non-search) file rows: single-line title only. */
+export function estimatePlainRowHeight(config: Pick<FileRowHeightConfig, 'heights'>): number {
+    const titleContentHeight = config.heights.titleLineHeight;
     return config.heights.basePadding + titleContentHeight;
 }
 
 /**
  * Compact is the only list layout, so every row uses the compact padding formula.
- * Rows render the file name only; there are no excerpt slots.
+ * Titles are hardcoded to a single row.
  */
 export function estimateFileRowHeight(_inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
-    const { heights, titleRows, compactPaddingTotal } = config;
-    const textContentHeight = heights.titleLineHeight * titleRows;
+    const { heights, compactPaddingTotal } = config;
+    const textContentHeight = heights.titleLineHeight;
     return compactPaddingTotal + textContentHeight;
 }
 

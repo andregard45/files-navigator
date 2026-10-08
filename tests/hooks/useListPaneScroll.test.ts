@@ -41,7 +41,6 @@ function createFileItem(file: TFile, overrides: Partial<ListPaneItem> = {}): Lis
 function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {}): ListFileRowSizingConfig {
     return {
         heights: getListPaneMeasurements(false),
-        titleRows: 1,
         compactPaddingTotal: 18,
         selectionType: 'folder' as never,
         includeDescendantNotes: false,

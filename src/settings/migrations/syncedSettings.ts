@@ -290,12 +290,23 @@ export function migrateLegacySyncedSettings(params: {
             delete appearanceRecord['showImage'];
             delete appearanceRecord['showDate'];
             delete appearanceRecord['mode'];
+            // Title rows are hardcoded to 1; drop the stored per-selection override.
+            delete appearanceRecord['titleRows'];
             collection[key] = appearance;
         });
     };
 
     migrateLegacyAppearances(settings.folderAppearances);
     migrateLegacyAppearances(settings.tagAppearances);
+    migrateLegacyAppearances(settings.propertyAppearances);
+
+    // The list-pane Appearance menu was removed: drop its toolbar toggle and the global title-rows setting.
+    delete mutableSettings['fileNameRows'];
+    const legacyToolbarVisibility = mutableSettings['toolbarVisibility'] as Record<string, unknown> | undefined;
+    const legacyListToolbarVisibility = legacyToolbarVisibility?.['list'] as Record<string, unknown> | undefined;
+    if (legacyListToolbarVisibility) {
+        delete legacyListToolbarVisibility['appearance'];
+    }
 
     delete mutableSettings['applyTagColorsToFileTags'];
 

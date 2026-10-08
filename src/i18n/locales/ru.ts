@@ -154,8 +154,6 @@ export const STRINGS_RU = {
         subtags: 'подтегов',
         childValues: 'дочерних значений',
         applySortAndGroupToDescendants: (target: string) => `Применить сортировку и группировку для ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Применить оформление для ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Сбросить оформление для ${target}`,
         showFolders: 'Показать навигацию', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'Изменить порядок навигации',
         finishRootFolderReorder: 'Готово',
@@ -165,8 +163,6 @@ export const STRINGS_RU = {
         showSinglePane: 'Показать одну панель', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Две панели недоступны, когда боковая панель слишком узкая. Чтобы изменить это, установите «Когда боковая панель слишком узкая» в значение «Ничего не делать» в Настройки > Оформление и поведение.',
-        changeAppearance: 'Изменить оформление', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Изменить оформление, настроено',
         showNotesFromSubfolders: 'Показать заметки из подпапок',
         showFilesFromSubfolders: 'Показать файлы из подпапок',
         showNotesFromDescendants: 'Показать заметки из потомков',
@@ -407,17 +403,10 @@ export const STRINGS_RU = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Оформление',
         sortBy: 'Сортировать по',
         defaultSuffix: '(по умолчанию)',
         defaultLabel: 'По умолчанию',
-        titleRows: {
-            label: 'Строки заголовка',
-            option: (rows: number) => `${rows} ${rows === 1 ? 'строка' : rows < 5 ? 'строки' : 'строк'} заголовка`
-        },
-        groupBy: 'Группировать по',
-        resetAppearance: 'Сбросить оформление',
-        openPluginSettings: 'Открыть настройки плагина…'
+        groupBy: 'Группировать по'
     },
 
     // Modal dialogs
@@ -425,12 +414,6 @@ export const STRINGS_RU = {
         bulkApply: {
             applyButton: 'Применить',
             applySortAndGroupTitle: (target: string) => `Применить сортировку и группировку для ${target}?`,
-            applyAppearanceTitle: (target: string) => `Применить оформление для ${target}?`,
-            resetAppearanceTitle: (target: string) => `Сбросить оформление для ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `Оформление изменится для ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'элемента' : 'элементов'}. Заменено существующих индивидуальных оформлений: ${replacedCount}. Сохранённые настройки оформления копируются один раз; сортировка и группировка сохраняются. Будущие изменения и новые дочерние элементы не связываются.`,
-            resetAppearanceMessage: (count: number) =>
-                `Оформление будет сброшено для ${count} ${count % 10 === 1 && count % 100 !== 11 ? 'элемента' : 'элементов'}. Сортировка и группировка сохраняются. Это разовое изменение; будущие изменения и новые дочерние элементы не связываются.`,
             affectedCountMessage: (count: number) => `Существующих переопределений, которые изменятся: ${count}.`
         },
         mergeNotes: {
@@ -499,7 +482,6 @@ export const STRINGS_RU = {
                 'list-sort-title': 'Сортировать по заголовку',
                 'list-sort-filename': 'Сортировать по имени файла',
                 'list-sort-property': 'Сортировать по свойству',
-                'list-appearance': 'Изменить оформление',
                 'list-new-note': 'Новая заметка',
                 'list-pinned': 'Закреплённые заметки',
                 'nav-folder-open': 'Папка открыта',
@@ -1784,15 +1766,6 @@ export const STRINGS_RU = {
                 help: 'Распространённые форматы:\nHH:mm = 14:30 (24-часовой)\nh:mm a = 2:30 PM (12-часовой)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nТокены:\nHH/H = 24-часовой\nhh/h = 12-часовой\nmm = минуты\nss = секунды\na = AM/PM',
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment'
-            },
-            titleRows: {
-                name: 'Строки заголовка',
-                desc: 'Количество строк для отображения названий заметок.',
-                options: {
-                    '1': '1 строка',
-                    '2': '2 строки',
-                    '3': '3 строки'
-                }
             },
             useFolderColor: {
                 name: 'Использовать цвет папки',
