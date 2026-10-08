@@ -187,41 +187,4 @@ describe('migrateLegacySyncedSettings property key migration', () => {
         expect(Object.prototype.hasOwnProperty.call(settingsRecord, 'wordCountPlacement')).toBe(false);
     });
 
-    it('migrates legacy folder appearance customPropertyType override', () => {
-        const settings = createSettings();
-        settings.folderAppearances = { Inbox: {} };
-
-        const appearanceRecord = settings.folderAppearances['Inbox'] as unknown as Record<string, unknown>;
-        appearanceRecord['customPropertyType'] = 'frontmatter';
-
-        migrateLegacySyncedSettings({
-            settings,
-            storedData: null,
-            keys: STORAGE_KEYS,
-            defaultSettings: DEFAULT_SETTINGS
-        });
-
-        expect(Object.prototype.hasOwnProperty.call(appearanceRecord, 'notePropertyType')).toBe(false);
-        expect(Object.prototype.hasOwnProperty.call(appearanceRecord, 'customPropertyType')).toBe(false);
-    });
-
-    it('preserves none grouping', () => {
-        const settings = createSettings();
-        settings.noteGrouping = 'none';
-        settings.folderAppearances = { Inbox: { groupBy: 'none' } };
-        settings.tagAppearances = { '#work': { groupBy: 'none' } };
-        settings.propertyAppearances = { 'key:status': { groupBy: 'none' } };
-
-        migrateLegacySyncedSettings({
-            settings,
-            storedData: { noteGrouping: 'none' },
-            keys: STORAGE_KEYS,
-            defaultSettings: DEFAULT_SETTINGS
-        });
-
-        expect(settings.noteGrouping).toBe('none');
-        expect(settings.folderAppearances.Inbox?.groupBy).toBe('none');
-        expect(settings.tagAppearances['#work']?.groupBy).toBe('none');
-        expect(settings.propertyAppearances['key:status']?.groupBy).toBe('none');
-    });
 });

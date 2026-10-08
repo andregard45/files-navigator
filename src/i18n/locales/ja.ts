@@ -166,8 +166,6 @@ export const STRINGS_JA = {
         showSinglePane: 'シングルペインを表示', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'サイドバーが狭すぎる場合、デュアルペインは使用できません。変更するには、設定 > 外観と動作で「サイドバーが狭すぎる場合」を「何もしない」に設定してください。',
-        changeAppearance: '外観を変更', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: '外観を変更（カスタマイズ済み）',
         showNotesFromSubfolders: 'サブフォルダのノートを表示',
         showFilesFromSubfolders: 'サブフォルダのファイルを表示',
         showNotesFromDescendants: '子孫のノートを表示',
@@ -408,17 +406,12 @@ export const STRINGS_JA = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: '外観',
         sortBy: '並べ替え',
         defaultSuffix: '(デフォルト)',
         defaultLabel: 'デフォルト',
         titleRows: {
-            label: 'タイトル行数',
             option: (rows: number) => `タイトル${rows}行`
-        },
-        groupBy: 'グループ化',
-        resetAppearance: '外観をリセット',
-        openPluginSettings: 'プラグイン設定を開く…'
+        }
     },
 
     // Modal dialogs
@@ -1785,15 +1778,6 @@ export const STRINGS_JA = {
                 help: '一般的な形式：\nHH:mm = 14:30（24時間制）\nh:mm a = 2:30 PM（12時間制）\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nトークン：\nHH/H = 24時間制\nhh/h = 12時間制\nmm = 分\nss = 秒\na = AM/PM',
                 helpTooltip: 'Moment形式',
                 momentLinkText: 'Moment フォーマット'
-            },
-            titleRows: {
-                name: 'タイトル行数',
-                desc: 'ノートタイトルの表示行数。',
-                options: {
-                    '1': '1行',
-                    '2': '2行',
-                    '3': '3行'
-                }
             },
             useFolderColor: {
                 name: 'フォルダの色を使用',

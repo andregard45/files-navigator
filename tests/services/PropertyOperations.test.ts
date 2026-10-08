@@ -164,9 +164,6 @@ describe('PropertyOperations settings updates', () => {
         settings.propertySortOverrides = {
             [oldKeyNodeId]: 'title-asc'
         };
-        settings.propertyAppearances = {
-            [oldKeyNodeId]: { groupBy: 'date' }
-        };
         settings.propertyTreeSortOverrides = {
             [oldKeyNodeId]: 'alpha-desc'
         };
@@ -185,9 +182,6 @@ describe('PropertyOperations settings updates', () => {
         });
         expect(settings.propertySortOverrides).toEqual({
             [newKeyNodeId]: 'title-asc'
-        });
-        expect(settings.propertyAppearances).toEqual({
-            [newKeyNodeId]: { groupBy: 'date' }
         });
         expect(settings.propertyTreeSortOverrides).toEqual({
             [newKeyNodeId]: 'alpha-desc'
@@ -216,10 +210,6 @@ describe('PropertyOperations settings updates', () => {
             [deletedKeyNodeId]: 'title-asc',
             [keptKeyNodeId]: 'title-desc'
         };
-        settings.propertyAppearances = {
-            [deletedKeyNodeId]: { groupBy: 'date' },
-            [keptKeyNodeId]: { groupBy: 'folder' }
-        };
         settings.propertyTreeSortOverrides = {
             [deletedKeyNodeId]: 'alpha-desc',
             [keptKeyNodeId]: 'alpha-asc'
@@ -239,9 +229,6 @@ describe('PropertyOperations settings updates', () => {
         });
         expect(settings.propertySortOverrides).toEqual({
             [keptKeyNodeId]: 'title-desc'
-        });
-        expect(settings.propertyAppearances).toEqual({
-            [keptKeyNodeId]: { groupBy: 'folder' }
         });
         expect(settings.propertyTreeSortOverrides).toEqual({
             [keptKeyNodeId]: 'alpha-asc'

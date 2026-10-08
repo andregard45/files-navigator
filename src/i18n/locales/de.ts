@@ -165,8 +165,6 @@ export const STRINGS_DE = {
         showSinglePane: 'Einspaltige Ansicht anzeigen', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Doppelbereiche sind nicht verfügbar, wenn die Seitenleiste zu schmal ist. Um dies zu ändern, setze „Wenn Seitenleiste zu schmal ist“ in Einstellungen > Darstellung & Verhalten auf „Nichts tun“.',
-        changeAppearance: 'Darstellung ändern', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Darstellung ändern, angepasst',
         showNotesFromSubfolders: 'Notizen aus Unterordnern anzeigen',
         showFilesFromSubfolders: 'Dateien aus Unterordnern anzeigen',
         showNotesFromDescendants: 'Notizen aus Nachkommen anzeigen',
@@ -408,17 +406,12 @@ export const STRINGS_DE = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Darstellung',
         sortBy: 'Sortieren nach',
         defaultSuffix: '(Standard)',
         defaultLabel: 'Standard',
         titleRows: {
-            label: 'Titelzeilen',
             option: (rows: number) => `${rows} Titelzeile${rows === 1 ? '' : 'n'}`
-        },
-        groupBy: 'Gruppieren nach',
-        resetAppearance: 'Darstellung zurücksetzen',
-        openPluginSettings: 'Plugin-Einstellungen öffnen…'
+        }
     },
 
     // Modal dialogs
@@ -1794,15 +1787,6 @@ export const STRINGS_DE = {
                 help: 'Gängige Formate:\nHH:mm = 14:30 (24-Stunden)\nh:mm a = 2:30 PM (12-Stunden)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24-Stunden\nhh/h = 12-Stunden\nmm = Minuten\nss = Sekunden\na = AM/PM',
                 helpTooltip: 'Format mit Moment',
                 momentLinkText: 'Moment-Format'
-            },
-            titleRows: {
-                name: 'Titelzeilen',
-                desc: 'Anzahl der Zeilen für Notizentitel.',
-                options: {
-                    '1': '1 Zeile',
-                    '2': '2 Zeilen',
-                    '3': '3 Zeilen'
-                }
             },
             useFolderColor: {
                 name: 'Ordnerfarbe verwenden',

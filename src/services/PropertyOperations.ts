@@ -38,8 +38,7 @@ import {
 import {
     reconcileDefaultNoteGrouping,
     updateDefaultNoteGroupingKey,
-    updatePropertyGroupKeySetting,
-    updatePropertyGroupingOverrideKeys
+    updatePropertyGroupKeySetting
 } from '../utils/listGrouping';
 import { buildUsageSummaryFromPaths, renderAffectedFilesPreview, yieldToEventLoop } from './operations/OperationBatchUtils';
 import { PropertyFileMutations } from './propertyOperations/PropertyFileMutations';
@@ -79,12 +78,6 @@ const PROPERTY_NODE_METADATA_ACCESSORS: readonly PropertyMetadataAccessor[] = [
         read: settings => settings.propertySortOverrides,
         write: (settings, next) => {
             settings.propertySortOverrides = next as NotebookNavigatorSettings['propertySortOverrides'];
-        }
-    },
-    {
-        read: settings => settings.propertyAppearances,
-        write: (settings, next) => {
-            settings.propertyAppearances = next as NotebookNavigatorSettings['propertyAppearances'];
         }
     }
 ];
@@ -687,7 +680,6 @@ export class PropertyOperations {
         changed = updatePropertySortKeySetting(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updatePropertyGroupKeySetting(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updateSortOverridePropertyKeySettings(settings, oldKeyNormalized, newKeyDisplay) || changed;
-        changed = updatePropertyGroupingOverrideKeys(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updateDefaultFolderSortPropertyKey(settings, oldKeyNormalized, newKeyDisplay) || changed;
         changed = updateDefaultNoteGroupingKey(settings, oldKeyNormalized, newKeyDisplay) || changed;
         // The rename can move a default onto an excluded key (or vice versa), which the
@@ -716,7 +708,6 @@ export class PropertyOperations {
         changed = updatePropertySortKeySetting(settings, normalizedKey, null) || changed;
         changed = updatePropertyGroupKeySetting(settings, normalizedKey, null) || changed;
         changed = updateSortOverridePropertyKeySettings(settings, normalizedKey, null) || changed;
-        changed = updatePropertyGroupingOverrideKeys(settings, normalizedKey, null) || changed;
         changed = updateDefaultFolderSortPropertyKey(settings, normalizedKey, null) || changed;
         changed = updateDefaultNoteGroupingKey(settings, normalizedKey, null) || changed;
         // Deleting a key can make previously excluded configured keys available and

@@ -733,7 +733,6 @@ export class FolderMetadataService extends BaseMetadataService {
             changed = this.updateNestedPaths(settings.folderIcons, oldPath, newPath) || changed;
             changed = this.updateNestedPaths(settings.folderSortOverrides, oldPath, newPath) || changed;
             changed = this.updateNestedPaths(settings.folderTreeSortOverrides, oldPath, newPath) || changed;
-            changed = this.updateNestedPaths(settings.folderAppearances, oldPath, newPath) || changed;
             changed = this.updateNestedPaths(settings.folderTemplates, oldPath, newPath) || changed;
             changed = renameTemplateReferences(settings, oldPath, newPath) || changed;
 
@@ -772,7 +771,6 @@ export class FolderMetadataService extends BaseMetadataService {
             changed = this.deleteNestedPaths(settings.folderIcons, folderPath) || changed;
             changed = this.deleteNestedPaths(settings.folderSortOverrides, folderPath) || changed;
             changed = this.deleteNestedPaths(settings.folderTreeSortOverrides, folderPath) || changed;
-            changed = this.deleteNestedPaths(settings.folderAppearances, folderPath) || changed;
             changed = this.deleteNestedPaths(settings.folderTemplates, folderPath) || changed;
 
             const shortcutsChanged = this.updateShortcuts(settings, shortcut => {
@@ -809,7 +807,6 @@ export class FolderMetadataService extends BaseMetadataService {
             this.cleanupMetadata(targetSettings, 'folderIcons', validator),
             this.cleanupMetadata(targetSettings, 'folderSortOverrides', validator),
             this.cleanupMetadata(targetSettings, 'folderTreeSortOverrides', validator),
-            this.cleanupMetadata(targetSettings, 'folderAppearances', validator),
             this.cleanupMetadata(targetSettings, 'folderTemplates', validator)
         ]);
 
@@ -835,7 +832,6 @@ export class FolderMetadataService extends BaseMetadataService {
             this.cleanupMetadata(targetSettings, 'folderIcons', validator),
             this.cleanupMetadata(targetSettings, 'folderSortOverrides', validator),
             this.cleanupMetadata(targetSettings, 'folderTreeSortOverrides', validator),
-            this.cleanupMetadata(targetSettings, 'folderAppearances', validator),
             this.cleanupMetadata(targetSettings, 'folderTemplates', validator)
         ]);
 

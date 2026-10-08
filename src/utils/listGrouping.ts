@@ -54,11 +54,7 @@ export function resolvePropertyGroupingDirection(groupBy: ListNoteGroupingOption
 }
 
 interface ResolveListGroupingParams {
-    settings: Pick<NotebookNavigatorSettings, 'noteGrouping' | 'folderAppearances' | 'tagAppearances' | 'propertyAppearances'>;
-    selectionType?: ItemType;
-    folderPath?: string | null;
-    tag?: string | null;
-    propertyNodeId?: string | null;
+    settings: Pick<NotebookNavigatorSettings, 'noteGrouping'>;
 }
 
 export interface ListGroupingResolution {
@@ -139,82 +135,6 @@ export function areListGroupingOptionsSameKind(left: ListNoteGroupingOption, rig
     return casefold(leftPropertyKey) === casefold(rightPropertyKey);
 }
 
-const APPEARANCE_RECORD_KEYS = ['folderAppearances', 'tagAppearances', 'propertyAppearances'] as const;
-
-/**
- * Removes property grouping overrides whose key is no longer configured in the grouping property list.
- * The manual sort key never appears as a grouping choice, so overrides referencing it are removed too.
- * Returns true when at least one appearance record changed; callers persist the settings on change.
- */
-export function pruneUnavailablePropertyGroupingOverrides(settings: NotebookNavigatorSettings): boolean {
-    const availablePropertyKeys = new Set(getAvailablePropertyGroupKeys(settings).map(propertyKey => casefold(propertyKey)));
-    let changed = false;
-
-    APPEARANCE_RECORD_KEYS.forEach(recordKey => {
-        const record = settings[recordKey];
-        if (!record) {
-            return;
-        }
-
-        Object.entries(record).forEach(([entryKey, appearance]) => {
-            const propertyKey = getPropertyGroupingKey(appearance?.groupBy);
-            if (propertyKey === null || availablePropertyKeys.has(casefold(propertyKey))) {
-                return;
-            }
-
-            delete appearance.groupBy;
-            // A grouping-only appearance becomes an empty object; drop the entry so no
-            // field-less record stays persisted and counted as stored metadata.
-            if (Object.keys(appearance).length === 0) {
-                delete record[entryKey];
-            }
-            changed = true;
-        });
-    });
-
-    return changed;
-}
-
-/**
- * Rewrites property grouping overrides after a frontmatter key rename, or removes them when the key is deleted.
- * Passing null as the new key deletes matching overrides. Returns true when at least one appearance record changed.
- */
-export function updatePropertyGroupingOverrideKeys(
-    settings: NotebookNavigatorSettings,
-    oldKeyNormalized: string,
-    newKeyDisplay: string | null
-): boolean {
-    let changed = false;
-
-    APPEARANCE_RECORD_KEYS.forEach(recordKey => {
-        const record = settings[recordKey];
-        if (!record) {
-            return;
-        }
-
-        Object.entries(record).forEach(([entryKey, appearance]) => {
-            const propertyKey = getPropertyGroupingKey(appearance?.groupBy);
-            if (propertyKey === null || casefold(propertyKey) !== oldKeyNormalized) {
-                return;
-            }
-
-            if (newKeyDisplay) {
-                appearance.groupBy = createPropertyGroupingOption(newKeyDisplay, getPropertyGroupingOrder(appearance?.groupBy) ?? 'asc');
-            } else {
-                delete appearance.groupBy;
-                // A grouping-only appearance becomes an empty object; drop the entry so no
-                // field-less record stays persisted and counted as stored metadata.
-                if (Object.keys(appearance).length === 0) {
-                    delete record[entryKey];
-                }
-            }
-            changed = true;
-        });
-    });
-
-    return changed;
-}
-
 /**
  * Validates the default note grouping against the configured grouping properties.
  * A property grouping whose key is missing from the configured list (or points at the manual-sort
@@ -280,95 +200,13 @@ export function updatePropertyGroupKeySetting(
     return true;
 }
 
-export function resolveListGroupingOverride({
-    noteGrouping,
-    selectionType,
-    groupBy
-}: {
-    noteGrouping: ListNoteGroupingOption;
-    selectionType?: ItemType | null;
-    groupBy?: ListNoteGroupingOption;
-}): ListGroupingResolution {
-    const globalDefault: ListNoteGroupingOption = noteGrouping ?? 'none';
-
-    if (selectionType === ItemType.FOLDER) {
-        return {
-            defaultGrouping: globalDefault,
-            effectiveGrouping: groupBy ?? globalDefault,
-            normalizedOverride: groupBy,
-            hasCustomOverride: groupBy !== undefined
-        };
-    }
-
-    if (selectionType === ItemType.TAG || selectionType === ItemType.PROPERTY) {
-        const defaultGrouping: ListNoteGroupingOption = globalDefault === 'folder' ? 'date' : globalDefault;
-
-        if (groupBy === undefined || groupBy === 'folder') {
-            return {
-                defaultGrouping,
-                effectiveGrouping: defaultGrouping,
-                normalizedOverride: undefined,
-                hasCustomOverride: false
-            };
-        }
-
-        return {
-            defaultGrouping,
-            effectiveGrouping: groupBy,
-            normalizedOverride: groupBy,
-            hasCustomOverride: true
-        };
-    }
-
-    return {
-        defaultGrouping: globalDefault,
-        effectiveGrouping: globalDefault,
-        normalizedOverride: undefined,
-        hasCustomOverride: false
-    };
-}
-
-
 /**
- * Calculates effective list grouping for the current selection.
- * Normalizes tag and property overrides that stored "folder" by falling back to the selection default.
+ * Calculates effective list grouping for the current selection. The per-folder/tag/property
+ * appearance override feature was removed, so grouping always follows the global default.
  */
-export function resolveListGrouping({
-    settings,
-    selectionType,
-    folderPath,
-    tag,
-    propertyNodeId
-}: ResolveListGroupingParams): ListGroupingResolution {
+export function resolveListGrouping({ settings }: Pick<ResolveListGroupingParams, 'settings'>): ListGroupingResolution {
     const globalDefault: ListNoteGroupingOption = settings.noteGrouping ?? 'none';
 
-    // Folder selection: use folder-specific override if set, otherwise use global default
-    if (selectionType === ItemType.FOLDER && folderPath) {
-        return resolveListGroupingOverride({
-            noteGrouping: globalDefault,
-            selectionType,
-            groupBy: settings.folderAppearances?.[folderPath]?.groupBy
-        });
-    }
-
-    // Tag and property selections don't support "folder" grouping.
-    if (selectionType === ItemType.TAG && tag) {
-        return resolveListGroupingOverride({
-            noteGrouping: globalDefault,
-            selectionType,
-            groupBy: settings.tagAppearances?.[tag]?.groupBy
-        });
-    }
-
-    if (selectionType === ItemType.PROPERTY && propertyNodeId) {
-        return resolveListGroupingOverride({
-            noteGrouping: globalDefault,
-            selectionType,
-            groupBy: settings.propertyAppearances?.[propertyNodeId]?.groupBy
-        });
-    }
-
-    // No specific selection or other selection types: use global default
     return {
         defaultGrouping: globalDefault,
         effectiveGrouping: globalDefault,

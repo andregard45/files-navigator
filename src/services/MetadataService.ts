@@ -611,16 +611,14 @@ export class MetadataService {
             settings.folderColors,
             settings.folderBackgroundColors,
             settings.folderIcons,
-            settings.folderSortOverrides,
-            settings.folderAppearances
+            settings.folderSortOverrides
         ]);
 
         const tagKeys = MetadataService.collectUniqueKeys([
             settings.tagColors,
             settings.tagBackgroundColors,
             settings.tagIcons,
-            settings.tagSortOverrides,
-            settings.tagAppearances
+            settings.tagSortOverrides
         ]);
 
         const fileKeys = MetadataService.collectUniqueKeys([settings.fileIcons, settings.fileColors, settings.fileBackgroundColors]);
@@ -629,7 +627,6 @@ export class MetadataService {
             settings.propertyBackgroundColors,
             settings.propertyIcons,
             settings.propertySortOverrides,
-            settings.propertyAppearances,
             settings.propertyTreeSortOverrides
         ]);
         settings.vaultProfiles.forEach(profile => {

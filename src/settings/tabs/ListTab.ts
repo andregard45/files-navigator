@@ -52,7 +52,6 @@ import {
 } from '../../utils/sortUtils';
 import {
     getAvailablePropertyGroupKeys,
-    pruneUnavailablePropertyGroupingOverrides,
     reconcileDefaultNoteGrouping
 } from '../../utils/listGrouping';
 import { formatPixelSliderValue, renderSliderSetting } from './SliderSetting';
@@ -82,7 +81,6 @@ export function createListPaneSettingDefinitions(context: SettingsTabContext): S
                     strings.settings.items.includeDescendantNotes.name,
                     strings.commands.collapseExpandListGroups,
                     strings.paneHeader.changeSortAndGroup,
-                    strings.paneHeader.changeAppearance,
                     strings.paneHeader.newNote
                 ],
                 render: setting => {
@@ -563,7 +561,6 @@ export function renderPropertyGroupKeySetting(setting: Setting, context: Setting
                     return;
                 }
                 plugin.settings.propertyGroupKey = value;
-                pruneUnavailablePropertyGroupingOverrides(plugin.settings);
                 reconcileDefaultsAfterPropertyKeysEdit(plugin.settings);
                 await plugin.saveSettingsAndUpdate();
             };

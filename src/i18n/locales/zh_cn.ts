@@ -164,8 +164,6 @@ export const STRINGS_ZH_CN = {
         showSinglePane: '显示单窗格', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             '侧边栏过窄时无法使用双窗格。若要更改此行为，请在设置 > 外观与行为中将“侧边栏过窄时”设为“不执行任何操作”。',
-        changeAppearance: '更改外观', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: '更改外观，已自定义',
         showNotesFromSubfolders: '显示子文件夹的笔记',
         showFilesFromSubfolders: '显示子文件夹的文件',
         showNotesFromDescendants: '显示后代的笔记',
@@ -405,17 +403,12 @@ export const STRINGS_ZH_CN = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: '外观',
         sortBy: '排序方式',
         defaultSuffix: '（默认）',
         defaultLabel: '默认',
         titleRows: {
-            label: '标题行数',
             option: (rows: number) => `标题${rows}行`
-        },
-        groupBy: '分组依据',
-        resetAppearance: '重置外观',
-        openPluginSettings: '打开插件设置…'
+        }
     },
 
     // Modal dialogs
@@ -1770,15 +1763,6 @@ export const STRINGS_ZH_CN = {
                 help: '常用格式：\nHH:mm = 14:30（24小时制）\nAh:mm = 下午2:30（12小时制）\nHH:mm:ss = 14:30:45\nAh:mm:ss = 下午2:30:45\n\n标记：\nHH/H = 24小时制\nhh/h = 12小时制\nmm = 分钟\nss = 秒\nA = 上午/下午',
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式'
-            },
-            titleRows: {
-                name: '标题行数',
-                desc: '笔记标题显示的行数。',
-                options: {
-                    '1': '1 行',
-                    '2': '2 行',
-                    '3': '3 行'
-                }
             },
             useFolderColor: {
                 name: '使用文件夹颜色',

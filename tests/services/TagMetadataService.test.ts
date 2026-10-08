@@ -70,7 +70,6 @@ function createSettings(): NotebookNavigatorSettings {
         tagBackgroundColors: {},
         tagIcons: {},
         tagSortOverrides: {},
-        tagAppearances: {},
         vaultProfiles: DEFAULT_SETTINGS.vaultProfiles.map(profile => ({
             ...profile,
             hiddenFolders: [...profile.hiddenFolders],

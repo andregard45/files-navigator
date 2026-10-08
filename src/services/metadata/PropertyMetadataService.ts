@@ -306,8 +306,7 @@ export class PropertyMetadataService extends BaseMetadataService {
             this.cleanupMetadata(targetSettings, 'propertyBackgroundColors', validator),
             this.cleanupMetadata(targetSettings, 'propertyIcons', validator),
             this.cleanupMetadata(targetSettings, 'propertySortOverrides', validator),
-            this.cleanupMetadata(targetSettings, 'propertyTreeSortOverrides', validator),
-            this.cleanupMetadata(targetSettings, 'propertyAppearances', validator)
+            this.cleanupMetadata(targetSettings, 'propertyTreeSortOverrides', validator)
         ]);
         const propertyKeyChanges = this.pruneConfiguredPropertyKeys(targetSettings, existingPropertyKeys);
 

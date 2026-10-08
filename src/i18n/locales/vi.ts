@@ -165,8 +165,6 @@ export const STRINGS_VI = {
         showSinglePane: 'Hiện một ngăn', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Không dùng được hai ngăn khi thanh bên quá hẹp. Để thay đổi, đặt "Khi thanh bên quá hẹp" thành "Không làm gì" trong Cài đặt > Giao diện & hành vi.',
-        changeAppearance: 'Đổi giao diện', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Đổi giao diện, đã tùy chỉnh',
         showNotesFromSubfolders: 'Hiện ghi chú từ thư mục con',
         showFilesFromSubfolders: 'Hiện tệp từ thư mục con',
         showNotesFromDescendants: 'Hiện ghi chú từ phần tử con',
@@ -406,17 +404,12 @@ export const STRINGS_VI = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Giao diện',
         sortBy: 'Sắp xếp theo',
         defaultSuffix: '(mặc định)',
         defaultLabel: 'Mặc định',
         titleRows: {
-            label: 'Dòng tiêu đề',
             option: (rows: number) => `${rows} dòng tiêu đề`
-        },
-        groupBy: 'Nhóm theo',
-        resetAppearance: 'Đặt lại giao diện',
-        openPluginSettings: 'Mở cài đặt plugin…'
+        }
     },
 
     // Modal dialogs
@@ -1784,15 +1777,6 @@ export const STRINGS_VI = {
                 help: 'Định dạng phổ biến:\nh:mm a = 2:30 PM (12 giờ)\nHH:mm = 14:30 (24 giờ)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nToken:\nHH/H = 24 giờ\nhh/h = 12 giờ\nmm = phút\nss = giây\na = SA/CH',
                 helpTooltip: 'Định dạng với Moment',
                 momentLinkText: 'định dạng Moment'
-            },
-            titleRows: {
-                name: 'Dòng tiêu đề',
-                desc: 'Số dòng hiển thị cho tiêu đề ghi chú.',
-                options: {
-                    '1': '1 dòng',
-                    '2': '2 dòng',
-                    '3': '3 dòng'
-                }
             },
             useFolderColor: {
                 name: 'Dùng màu thư mục',

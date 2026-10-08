@@ -166,8 +166,6 @@ export const STRINGS_FR = {
         showSinglePane: 'Afficher le panneau unique', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Les deux panneaux ne sont pas disponibles lorsque la barre latérale est trop étroite. Pour modifier cela, réglez « Lorsque la barre latérale est trop étroite » sur « Ne rien faire » dans Paramètres > Apparence et comportement.',
-        changeAppearance: "Changer l'apparence", // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: "Changer l'apparence, personnalisée",
         showNotesFromSubfolders: 'Afficher les notes des sous-dossiers',
         showFilesFromSubfolders: 'Afficher les fichiers des sous-dossiers',
         showNotesFromDescendants: 'Afficher les notes des descendants',
@@ -409,17 +407,12 @@ export const STRINGS_FR = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Apparence',
         sortBy: 'Trier par',
         defaultSuffix: '(par défaut)',
         defaultLabel: 'Par défaut',
         titleRows: {
-            label: 'Lignes de titre',
             option: (rows: number) => `${rows} ligne${rows === 1 ? '' : 's'} de titre`
-        },
-        groupBy: 'Grouper par',
-        resetAppearance: 'Réinitialiser l’apparence',
-        openPluginSettings: 'Ouvrir les paramètres du plugin…'
+        }
     },
 
     // Modal dialogs
@@ -1795,15 +1788,6 @@ export const STRINGS_FR = {
                 help: 'Formats courants :\nHH:mm = 14:30 (24 heures)\nh:mm a = 2:30 PM (12 heures)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nJetons :\nHH/H = 24 heures\nhh/h = 12 heures\nmm = minutes\nss = secondes\na = AM/PM',
                 helpTooltip: 'Format avec Moment',
                 momentLinkText: 'format Moment'
-            },
-            titleRows: {
-                name: 'Lignes de titre',
-                desc: 'Nombre de lignes à afficher pour les titres des notes.',
-                options: {
-                    '1': '1 ligne',
-                    '2': '2 lignes',
-                    '3': '3 lignes'
-                }
             },
             useFolderColor: {
                 name: 'Utiliser la couleur du dossier',

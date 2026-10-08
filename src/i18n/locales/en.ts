@@ -165,8 +165,6 @@ export const STRINGS_EN = {
         showSinglePane: 'Show single pane', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Dual panes are unavailable when the sidebar is too narrow. To change this, set "When sidebar is too narrow" to "Do nothing" in Settings > Appearance & behavior.',
-        changeAppearance: 'Change appearance', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Change appearance, customized',
         showNotesFromSubfolders: 'Show notes from subfolders',
         showFilesFromSubfolders: 'Show files from subfolders',
         showNotesFromDescendants: 'Show notes from descendants',
@@ -406,17 +404,12 @@ export const STRINGS_EN = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Appearance',
         sortBy: 'Sort by',
         defaultSuffix: '(default)',
         defaultLabel: 'Default',
         titleRows: {
-            label: 'Title rows',
             option: (rows: number) => `${rows} title row${rows === 1 ? '' : 's'}`
-        },
-        groupBy: 'Group by',
-        resetAppearance: 'Reset appearance',
-        openPluginSettings: 'Open plugin settings…'
+        }
     },
 
     // Modal dialogs
@@ -1778,15 +1771,6 @@ export const STRINGS_EN = {
                 help: 'Common formats:\nh:mm a = 2:30 PM (12-hour)\nHH:mm = 14:30 (24-hour)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nTokens:\nHH/H = 24-hour\nhh/h = 12-hour\nmm = minutes\nss = seconds\na = AM/PM',
                 helpTooltip: 'Format using Moment',
                 momentLinkText: 'Moment format'
-            },
-            titleRows: {
-                name: 'Title rows',
-                desc: 'Number of rows to display for note titles.',
-                options: {
-                    '1': '1 row',
-                    '2': '2 rows',
-                    '3': '3 rows'
-                }
             },
             useFolderColor: {
                 name: 'Use folder color',

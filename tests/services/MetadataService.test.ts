@@ -86,7 +86,6 @@ function createSettings(): NotebookNavigatorSettings {
     settings.tagIcons = {};
     settings.tagSortOverrides = {};
     settings.tagTreeSortOverrides = {};
-    settings.tagAppearances = {};
     settings.fileIcons = {};
     settings.fileColors = {};
     settings.fileBackgroundColors = {};

@@ -165,8 +165,6 @@ export const STRINGS_TR = {
         showSinglePane: 'Tek bölme göster', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Kenar çubuğu çok dar olduğunda çift bölmeler kullanılamaz. Bunu değiştirmek için Ayarlar > Görünüm ve davranış altında "Kenar çubuğu çok dar olduğunda" ayarını "Hiçbir şey yapma" olarak ayarlayın.',
-        changeAppearance: 'Görünümü değiştir', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Görünümü değiştir, özelleştirilmiş',
         showNotesFromSubfolders: 'Alt klasörlerden notları göster',
         showFilesFromSubfolders: 'Alt klasörlerden dosyaları göster',
         showNotesFromDescendants: 'Alt öğelerden notları göster',
@@ -407,17 +405,12 @@ export const STRINGS_TR = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Görünüm',
         sortBy: 'Sıralama ölçütü',
         defaultSuffix: '(varsayılan)',
         defaultLabel: 'Varsayılan',
         titleRows: {
-            label: 'Başlık satırları',
             option: (rows: number) => `${rows} başlık satırı`
-        },
-        groupBy: 'Gruplama ölçütü',
-        resetAppearance: 'Görünümü sıfırla',
-        openPluginSettings: 'Eklenti ayarlarını aç…'
+        }
     },
 
     // Modal dialogs
@@ -1784,15 +1777,6 @@ export const STRINGS_TR = {
                 help: 'Yaygın formatlar:\nh:mm a = 2:30 PM (12 saat)\nHH:mm = 14:30 (24 saat)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nBelirteçler:\nHH/H = 24 saat\nhh/h = 12 saat\nmm = dakika\nss = saniye\na = ÖÖ/ÖS',
                 helpTooltip: 'Moment formatı',
                 momentLinkText: 'Moment formatı'
-            },
-            titleRows: {
-                name: 'Başlık satırları',
-                desc: 'Not başlıkları için görüntülenecek satır sayısı.',
-                options: {
-                    '1': '1 satır',
-                    '2': '2 satır',
-                    '3': '3 satır'
-                }
             },
             useFolderColor: {
                 name: 'Klasör rengini kullan',

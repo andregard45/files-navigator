@@ -165,8 +165,6 @@ export const STRINGS_UK = {
         showSinglePane: 'Показати одну панель', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Дві панелі недоступні, коли бічна панель занадто вузька. Щоб змінити це, установіть «Коли бічна панель занадто вузька» на «Нічого не робити» в Налаштування > Вигляд і поведінка.',
-        changeAppearance: 'Змінити вигляд', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Змінити оформлення, налаштовано',
         showNotesFromSubfolders: 'Показати нотатки з підтек',
         showFilesFromSubfolders: 'Показати файли з підтек',
         showNotesFromDescendants: 'Показати нотатки з нащадків',
@@ -407,17 +405,12 @@ export const STRINGS_UK = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Вигляд',
         sortBy: 'Сортувати за',
         defaultSuffix: '(за замовчуванням)',
         defaultLabel: 'За замовчуванням',
         titleRows: {
-            label: 'Рядки заголовка',
             option: (rows: number) => `${rows} ${rows === 1 ? 'рядок' : rows < 5 ? 'рядки' : 'рядків'} заголовка`
-        },
-        groupBy: 'Групувати за',
-        resetAppearance: 'Скинути оформлення',
-        openPluginSettings: 'Відкрити налаштування плагіна…'
+        }
     },
 
     // Modal dialogs
@@ -1784,15 +1777,6 @@ export const STRINGS_UK = {
                 help: 'Поширені формати:\nh:mm a = 2:30 PM (12-годинний)\nHH:mm = 14:30 (24-годинний)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nТокени:\nHH/H = 24-годинний\nhh/h = 12-годинний\nmm = хвилини\nss = секунди\na = AM/PM',
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment'
-            },
-            titleRows: {
-                name: 'Рядки заголовка',
-                desc: 'Кількість рядків для відображення заголовків нотаток.',
-                options: {
-                    '1': '1 рядок',
-                    '2': '2 рядки',
-                    '3': '3 рядки'
-                }
             },
             useFolderColor: {
                 name: 'Використовувати колір теки',

@@ -165,8 +165,6 @@ export const STRINGS_FA = {
         showSinglePane: 'نمایش پنل تکی',
         dualPaneAutoFallbackNotice:
             'وقتی نوار کناری خیلی باریک است، پنل‌های دوگانه در دسترس نیستند. برای تغییر این حالت، در تنظیمات > ظاهر و رفتار، گزینهٔ «وقتی نوار کناری خیلی باریک است» را روی «هیچ کاری نکن» بگذارید.',
-        changeAppearance: 'تغییر ظاهر',
-        changeAppearanceCustomized: 'تغییر ظاهر، سفارشی‌شده',
         showNotesFromSubfolders: 'نمایش یادداشت‌ها از زیرپوشه‌ها',
         showFilesFromSubfolders: 'نمایش فایل‌ها از زیرپوشه‌ها',
         showNotesFromDescendants: 'نمایش یادداشت‌ها از زیرمجموعه‌ها',
@@ -406,17 +404,12 @@ export const STRINGS_FA = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'ظاهر',
         sortBy: 'مرتب‌سازی بر اساس',
         defaultSuffix: '(پیش‌فرض)',
         defaultLabel: 'پیش‌فرض',
         titleRows: {
-            label: 'ردیف‌های عنوان',
             option: (rows: number) => `${rows} ردیف عنوان`
-        },
-        groupBy: 'گروه‌بندی بر اساس',
-        resetAppearance: 'بازنشانی ظاهر',
-        openPluginSettings: 'باز کردن تنظیمات افزونه…'
+        }
     },
 
     // Modal dialogs
@@ -1785,15 +1778,6 @@ export const STRINGS_FA = {
                 help: 'قالب‌های رایج:\nHH:mm = ۱۴:۳۰ (۲۴ ساعته)\nh:mm a = 2:30 PM (۱۲ ساعته)\nHH:mm:ss = ۱۴:۳۰:۴۵\nh:mm:ss a = 2:30:45 PM\n\nتوکن‌ها:\nHH/H = ۲۴ ساعته\nhh/h = ۱۲ ساعته\nmm = دقیقه\nss = ثانیه\na = صبح/عصر',
                 helpTooltip: 'قالب با استفاده از Moment',
                 momentLinkText: 'قالب Moment'
-            },
-            titleRows: {
-                name: 'ردیف‌های عنوان',
-                desc: 'تعداد ردیف‌ها برای نمایش عناوین یادداشت.',
-                options: {
-                    '1': '۱ ردیف',
-                    '2': '۲ ردیف',
-                    '3': '۳ ردیف'
-                }
             },
             useFolderColor: {
                 name: 'استفاده از رنگ پوشه',

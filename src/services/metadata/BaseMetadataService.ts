@@ -26,7 +26,6 @@ import {
 } from '../../settings/types';
 import { ItemType, type CollapsedPinnedContexts, type NavigatorContext } from '../../types';
 import { ISettingsProvider } from '../../interfaces/ISettingsProvider';
-import type { ListPaneAppearance } from '../../settings/listPaneAppearance';
 import type { ShortcutEntry } from '../../types/shortcuts';
 import { mutateVaultProfileShortcuts } from '../../utils/vaultProfiles';
 import { normalizeCanonicalIconId } from '../../utils/iconizeFormat';
@@ -42,7 +41,6 @@ type MetadataFields = {
     folderBackgroundColors: Record<string, string>;
     folderSortOverrides: Record<string, ListSortOverrideValue>;
     folderTreeSortOverrides: Record<string, AlphaSortOrder>;
-    folderAppearances: Record<string, ListPaneAppearance>;
     folderTemplates: Record<string, FolderTemplateMapping>;
     fileIcons: Record<string, string>;
     fileColors: Record<string, string>;
@@ -52,13 +50,11 @@ type MetadataFields = {
     tagBackgroundColors: Record<string, string>;
     tagSortOverrides: Record<string, ListSortOverrideValue>;
     tagTreeSortOverrides: Record<string, AlphaSortOrder>;
-    tagAppearances: Record<string, ListPaneAppearance>;
     propertyIcons: Record<string, string>;
     propertyColors: Record<string, string>;
     propertyBackgroundColors: Record<string, string>;
     propertySortOverrides: Record<string, ListSortOverrideValue>;
     propertyTreeSortOverrides: Record<string, AlphaSortOrder>;
-    propertyAppearances: Record<string, ListPaneAppearance>;
 };
 
 type ColorRecordKey =

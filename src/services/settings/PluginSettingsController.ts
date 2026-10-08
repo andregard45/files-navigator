@@ -63,7 +63,6 @@ import {
     isSettingSyncMode,
     isSortOption,
     isTagSortOrder,
-    normalizeAppearanceGroupBy,
     normalizeListSortOverride,
     resolveDeleteAttachmentsSetting,
     type NotebookNavigatorSettings,
@@ -96,7 +95,7 @@ import { normalizeNavigationSeparatorKey } from '../../utils/navigationSeparator
 import { normalizeUXIconMapRecord } from '../../utils/uxIcons';
 import { sanitizeKeyboardShortcuts } from '../../utils/keyboardShortcuts';
 import { pruneUnavailablePropertySortOverrides, reconcileDefaultFolderSort } from '../../utils/sortUtils';
-import { pruneUnavailablePropertyGroupingOverrides, reconcileDefaultNoteGrouping } from '../../utils/listGrouping';
+import { reconcileDefaultNoteGrouping } from '../../utils/listGrouping';
 import { isRecord } from '../../utils/typeGuards';
 import { normalizeOptionalVaultFilePath } from '../../utils/pathUtils';
 import { isFileTypeIconPreset } from '../../utils/fileTypeIconPresets';
@@ -109,11 +108,6 @@ import {
     type LocalStorageKeys,
     type UXPreferences
 } from '../../types';
-import {
-    getStoredListPaneAppearanceFields,
-    mergeListPaneAppearanceAndGrouping,
-    type ListPaneAppearance
-} from '../../settings/listPaneAppearance';
 import { createSyncModeRegistry, type SyncModeRegistry } from './syncModeRegistry';
 import { getDefaultUXPreferences, isUXPreferencesRecord } from './uxPreferences';
 
@@ -580,9 +574,7 @@ export class PluginSettingsController {
         });
 
         this.sanitizeSettingsRecords();
-        this.pruneInheritedAppearanceValues();
         const prunedUnavailablePropertySortOverrides = pruneUnavailablePropertySortOverrides(this.currentSettings);
-        const prunedUnavailablePropertyGroupingOverrides = pruneUnavailablePropertyGroupingOverrides(this.currentSettings);
         // Load and external sync reconcile the global defaults silently; only direct settings-tab
         // edits announce a reset, so sync-driven cleanups never surface a notice.
         const reconciledDefaultFolderSort = reconcileDefaultFolderSort(this.currentSettings);
@@ -739,7 +731,6 @@ export class PluginSettingsController {
             hadInvalidShiftEnterOpenContextInStoredData ||
             hadInvalidCmdCtrlEnterOpenContextInStoredData ||
             prunedUnavailablePropertySortOverrides ||
-            prunedUnavailablePropertyGroupingOverrides ||
             uiScaleMigrated ||
             migratedMomentFormats ||
             migratedFolderNoteSettings ||
@@ -796,10 +787,6 @@ export class PluginSettingsController {
 
         if (this.currentSettings.tagTreeSortOverrides) {
             this.currentSettings.tagTreeSortOverrides = normalizeRecord(this.currentSettings.tagTreeSortOverrides);
-        }
-
-        if (this.currentSettings.tagAppearances) {
-            this.currentSettings.tagAppearances = normalizeRecord(this.currentSettings.tagAppearances);
         }
 
         if (Array.isArray(this.currentSettings.vaultProfiles)) {
@@ -866,9 +853,6 @@ export class PluginSettingsController {
             this.currentSettings.propertyTreeSortOverrides = normalizePropertyKeyRecord(this.currentSettings.propertyTreeSortOverrides);
         }
 
-        if (this.currentSettings.propertyAppearances) {
-            this.currentSettings.propertyAppearances = normalizePropertyNodeRecord(this.currentSettings.propertyAppearances);
-        }
     }
 
     public normalizeNavigationSeparatorSettings(): void {
@@ -888,7 +872,6 @@ export class PluginSettingsController {
     }
 
     public async saveSettings(): Promise<void> {
-        this.pruneInheritedAppearanceValues();
         ensureVaultProfiles(this.currentSettings);
         this.refreshMatcherCachesIfNeeded();
         localStorage.set(this.options.keys.homepageKey, this.currentSettings.homepage);
@@ -1262,24 +1245,6 @@ export class PluginSettingsController {
         const sanitizeAlphaSortOrderMap = (
             record?: Record<string, 'alpha-asc' | 'alpha-desc'>
         ): Record<string, 'alpha-asc' | 'alpha-desc'> => sanitizeRecord(record, isAlphaSortOrder);
-        const isAppearanceValue = (value: unknown): value is ListPaneAppearance => isPlainObjectRecordValue(value);
-        const sanitizeAppearanceMap = (record?: Record<string, ListPaneAppearance>): Record<string, ListPaneAppearance> => {
-            const sanitized = sanitizeRecord(record, isAppearanceValue);
-            Object.entries(sanitized).forEach(([key, appearance]) => {
-                delete (appearance as Record<string, unknown>)['notePropertyType'];
-                normalizeAppearanceGroupBy(appearance);
-                const normalizedAppearance = mergeListPaneAppearanceAndGrouping(
-                    getStoredListPaneAppearanceFields(appearance),
-                    appearance.groupBy
-                );
-                if (normalizedAppearance) {
-                    sanitized[key] = normalizedAppearance;
-                } else {
-                    delete sanitized[key];
-                }
-            });
-            return sanitized;
-        };
         const sanitizeBooleanMap = (record?: Record<string, boolean>): Record<string, boolean> =>
             sanitizeRecord(record, isBooleanRecordValue);
         const sanitizeSettingsSyncMap = (record?: Record<string, SettingSyncMode>): Record<string, SettingSyncMode> =>
@@ -1303,33 +1268,10 @@ export class PluginSettingsController {
         this.currentSettings.folderTreeSortOverrides = sanitizeAlphaSortOrderMap(this.currentSettings.folderTreeSortOverrides);
         this.currentSettings.tagTreeSortOverrides = sanitizeAlphaSortOrderMap(this.currentSettings.tagTreeSortOverrides);
         this.currentSettings.propertyTreeSortOverrides = sanitizeAlphaSortOrderMap(this.currentSettings.propertyTreeSortOverrides);
-        this.currentSettings.folderAppearances = sanitizeAppearanceMap(this.currentSettings.folderAppearances);
-        this.currentSettings.tagAppearances = sanitizeAppearanceMap(this.currentSettings.tagAppearances);
-        this.currentSettings.propertyAppearances = sanitizeAppearanceMap(this.currentSettings.propertyAppearances);
         this.currentSettings.navigationSeparators = sanitizeBooleanMap(this.currentSettings.navigationSeparators);
         this.currentSettings.syncModes = sanitizeSettingsSyncMap(this.currentSettings.syncModes);
         this.currentSettings.calendarMonthHighlights = sanitizeStringMap(this.currentSettings.calendarMonthHighlights);
         this.currentSettings.pinnedNotes = clonePinnedNotesRecord(this.currentSettings.pinnedNotes);
-    }
-
-    private pruneInheritedAppearanceValues(): void {
-        // Choices equal to their global settings are inheritance. Remove matching stored values so
-        // default-marked entries do not remain overrides after a global setting changes.
-        const appearanceMaps = [
-            this.currentSettings.folderAppearances,
-            this.currentSettings.tagAppearances,
-            this.currentSettings.propertyAppearances
-        ];
-        appearanceMaps.forEach(appearances => {
-            Object.entries(appearances).forEach(([key, appearance]) => {
-                if (appearance.titleRows === this.currentSettings.fileNameRows) {
-                    delete appearance.titleRows;
-                }
-                if (Object.keys(appearance).length === 0) {
-                    delete appearances[key];
-                }
-            });
-        });
     }
 
     private normalizeIconSettings(): void {

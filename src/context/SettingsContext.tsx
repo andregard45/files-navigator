@@ -39,7 +39,6 @@ import {
 } from '../utils/vaultProfiles';
 import { clonePinnedNotesRecord, isStringRecordValue, sanitizeRecord, type PinnedNoteContextValue } from '../utils/recordUtils';
 import { areStringArraysEqual } from '../utils/arrayUtils';
-import { snapshotListPaneAppearanceMap, type ListPaneAppearance } from '../settings/listPaneAppearance';
 import { buildFileNameIconNeedles, type FileNameIconNeedle } from '../utils/fileIconUtils';
 
 // Separate contexts for state and update function
@@ -223,11 +222,6 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
         sanitized: Record<string, string>;
     } | null>(null);
     const previousPinnedNotesRef = useRef<Record<string, PinnedNoteContextValue> | null>(null);
-    const previousAppearanceMapsRef = useRef<{
-        folders: Record<string, ListPaneAppearance>;
-        tags: Record<string, ListPaneAppearance>;
-        properties: Record<string, ListPaneAppearance>;
-    } | null>(null);
 
     const updateSettings = useCallback(
         async (updater: (settings: NotebookNavigatorSettings) => void) => {
@@ -271,15 +265,6 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
         const pinnedNotes =
             previousPinnedNotes && arePinnedNotesEqual(previousPinnedNotes, clonedPinnedNotes) ? previousPinnedNotes : clonedPinnedNotes;
         previousPinnedNotesRef.current = pinnedNotes;
-        const previousAppearanceMaps = previousAppearanceMapsRef.current;
-        const folderAppearances = snapshotListPaneAppearanceMap(plugin.settings.folderAppearances, previousAppearanceMaps?.folders);
-        const tagAppearances = snapshotListPaneAppearanceMap(plugin.settings.tagAppearances, previousAppearanceMaps?.tags);
-        const propertyAppearances = snapshotListPaneAppearanceMap(plugin.settings.propertyAppearances, previousAppearanceMaps?.properties);
-        previousAppearanceMapsRef.current = {
-            folders: folderAppearances,
-            tags: tagAppearances,
-            properties: propertyAppearances
-        };
         const nextSettings: SettingsStateValue = {
             ...plugin.settings,
             dualPaneOrientation: plugin.getDualPaneOrientation(),
@@ -293,9 +278,6 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
             propertyIcons,
             calendarMonthHighlights,
             interfaceIcons,
-            folderAppearances,
-            tagAppearances,
-            propertyAppearances,
             pinnedNotes
         };
         // Deep copy vault profiles to prevent mutations from affecting the original settings

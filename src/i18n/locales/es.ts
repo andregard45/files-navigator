@@ -166,8 +166,6 @@ export const STRINGS_ES = {
         showSinglePane: 'Mostrar panel único', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Los paneles dobles no están disponibles cuando la barra lateral es demasiado estrecha. Para cambiarlo, establece "Cuando la barra lateral es demasiado estrecha" en "No hacer nada" en Ajustes > Apariencia y comportamiento.',
-        changeAppearance: 'Cambiar apariencia', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Cambiar apariencia, personalizada',
         showNotesFromSubfolders: 'Mostrar notas de subcarpetas',
         showFilesFromSubfolders: 'Mostrar archivos de subcarpetas',
         showNotesFromDescendants: 'Mostrar notas de descendientes',
@@ -409,17 +407,12 @@ export const STRINGS_ES = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Apariencia',
         sortBy: 'Ordenar por',
         defaultSuffix: '(predeterminado)',
         defaultLabel: 'Predeterminado',
         titleRows: {
-            label: 'Filas de título',
             option: (rows: number) => `${rows} fila${rows === 1 ? '' : 's'} de título`
-        },
-        groupBy: 'Agrupar por',
-        resetAppearance: 'Restablecer apariencia',
-        openPluginSettings: 'Abrir ajustes del plugin…'
+        }
     },
 
     // Modal dialogs
@@ -1794,15 +1787,6 @@ export const STRINGS_ES = {
                 help: 'Formatos comunes:\nHH:mm = 14:30 (24 horas)\nh:mm a = 2:30 PM (12 horas)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Filas de título',
-                desc: 'Número de filas a mostrar para los títulos de las notas.',
-                options: {
-                    '1': '1 fila',
-                    '2': '2 filas',
-                    '3': '3 filas'
-                }
             },
             useFolderColor: {
                 name: 'Usar color de carpeta',

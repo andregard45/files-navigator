@@ -25,83 +25,49 @@ import {
     getPropertyGroupingKey,
     normalizeListNoteGroupingOption
 } from '../../src/settings/types';
-import { ItemType } from '../../src/types';
 import { buildPropertyKeyNodeId } from '../../src/utils/propertyTree';
+import { ItemType } from '../../src/types';
 import {
     areListGroupingOptionsEqual,
     areListGroupingOptionsSameKind,
-    pruneUnavailablePropertyGroupingOverrides,
     reconcileDefaultNoteGrouping,
     resolveEffectiveListGroupingForSort,
     resolveListGrouping,
     resolveListGroupingOverrideForDefault,
     resolvePropertyGroupingDirection,
     updateDefaultNoteGroupingKey,
-    updatePropertyGroupKeySetting,
-    updatePropertyGroupingOverrideKeys
+    updatePropertyGroupKeySetting
 } from '../../src/utils/listGrouping';
 
-type GroupingSettings = Pick<NotebookNavigatorSettings, 'noteGrouping' | 'folderAppearances' | 'tagAppearances' | 'propertyAppearances'>;
+type GroupingSettings = Pick<NotebookNavigatorSettings, 'noteGrouping'>;
 
 function createGroupingSettings(noteGrouping: GroupingSettings['noteGrouping']): GroupingSettings {
     return {
-        noteGrouping,
-        folderAppearances: {},
-        tagAppearances: {},
-        propertyAppearances: {}
+        noteGrouping
     };
 }
 
-describe('resolveListGrouping property selections', () => {
-    it('uses custom property grouping overrides when present', () => {
-        const propertyNodeId = buildPropertyKeyNodeId('status');
+describe('resolveListGrouping', () => {
+    it('follows the global default grouping (per-selection overrides were removed)', () => {
         const settings = createGroupingSettings('folder');
-        settings.propertyAppearances = {
-            [propertyNodeId]: { groupBy: 'date' }
-        };
 
         const result = resolveListGrouping({
-            settings,
-            selectionType: ItemType.PROPERTY,
-            propertyNodeId
+            settings
         });
 
         expect(result.defaultGrouping).toBe('folder');
-        expect(result.effectiveGrouping).toBe('date');
-        expect(result.normalizedOverride).toBe('date');
-        expect(result.hasCustomOverride).toBe(true);
-    });
-
-    it('normalizes invalid folder grouping overrides for properties', () => {
-        const propertyNodeId = buildPropertyKeyNodeId('status');
-        const settings = createGroupingSettings('folder');
-        settings.propertyAppearances = {
-            [propertyNodeId]: { groupBy: 'folder' }
-        };
-
-        const result = resolveListGrouping({
-            settings,
-            selectionType: ItemType.PROPERTY,
-            propertyNodeId
-        });
-
-        expect(result.defaultGrouping).toBe('date');
-        expect(result.effectiveGrouping).toBe('date');
+        expect(result.effectiveGrouping).toBe('folder');
         expect(result.normalizedOverride).toBeUndefined();
         expect(result.hasCustomOverride).toBe(false);
     });
 
-    it('falls back to normalized default grouping when no property override exists', () => {
-        const settings = createGroupingSettings('folder');
+    it('falls back to none when no global grouping is configured', () => {
+        const settings = createGroupingSettings(undefined as unknown as GroupingSettings['noteGrouping']);
 
-        const result = resolveListGrouping({
-            settings,
-            selectionType: ItemType.PROPERTY,
-            propertyNodeId: buildPropertyKeyNodeId('status')
-        });
+        const result = resolveListGrouping({ settings });
 
-        expect(result.defaultGrouping).toBe('date');
-        expect(result.effectiveGrouping).toBe('date');
+        expect(result.defaultGrouping).toBe('none');
+        expect(result.effectiveGrouping).toBe('none');
         expect(result.normalizedOverride).toBeUndefined();
         expect(result.hasCustomOverride).toBe(false);
     });
@@ -252,65 +218,6 @@ describe('property grouping option encoding', () => {
     it('removes a grouping override when the complete selection matches the default', () => {
         expect(resolveListGroupingOverrideForDefault('property:Status', 'property:status')).toBeUndefined();
         expect(resolveListGroupingOverrideForDefault('date', 'date')).toBeUndefined();
-    });
-});
-
-describe('pruneUnavailablePropertyGroupingOverrides', () => {
-    it('removes overrides for unregistered keys and keeps the rest', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.propertyGroupKey = 'status, genre';
-        settings.folderAppearances.Projects = { groupBy: 'property:status' };
-        settings.folderAppearances.Archive = { groupBy: 'property:removed' };
-        settings.folderAppearances.Mixed = { groupBy: 'property:removed', mode: 'compact' };
-        settings.tagAppearances.reading = { groupBy: 'date' };
-
-        expect(pruneUnavailablePropertyGroupingOverrides(settings)).toBe(true);
-        expect(settings.folderAppearances.Projects.groupBy).toBe('property:status');
-        // Grouping-only records are dropped entirely; records with other fields keep those fields.
-        expect(settings.folderAppearances.Archive).toBeUndefined();
-        expect(settings.folderAppearances.Mixed).toEqual({ mode: 'compact' });
-        expect(settings.tagAppearances.reading.groupBy).toBe('date');
-    });
-
-
-    it('reports no change when every override is available', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.propertyGroupKey = 'status';
-        settings.folderAppearances.Projects = { groupBy: 'property:Status' };
-
-        expect(pruneUnavailablePropertyGroupingOverrides(settings)).toBe(false);
-        expect(settings.folderAppearances.Projects.groupBy).toBe('property:Status');
-    });
-});
-
-describe('updatePropertyGroupingOverrideKeys', () => {
-    it('rewrites overrides after a property rename', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.folderAppearances.Projects = { groupBy: 'property:Status' };
-        settings.tagAppearances.reading = { groupBy: 'date' };
-
-        expect(updatePropertyGroupingOverrideKeys(settings, 'status', 'State')).toBe(true);
-        expect(settings.folderAppearances.Projects.groupBy).toBe('property:State');
-        expect(settings.tagAppearances.reading.groupBy).toBe('date');
-    });
-
-    it('preserves the group order direction across a rename', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.folderAppearances.Projects = { groupBy: 'property-desc:Status' };
-
-        expect(updatePropertyGroupingOverrideKeys(settings, 'status', 'State')).toBe(true);
-        expect(settings.folderAppearances.Projects.groupBy).toBe('property-desc:State');
-    });
-
-    it('removes overrides when the property is deleted', () => {
-        const settings = structuredClone(DEFAULT_SETTINGS);
-        settings.folderAppearances.Projects = { groupBy: 'property:status' };
-        settings.folderAppearances.Mixed = { groupBy: 'property:status', mode: 'compact' };
-
-        expect(updatePropertyGroupingOverrideKeys(settings, 'status', null)).toBe(true);
-        // Grouping-only records are dropped entirely; records with other fields keep those fields.
-        expect(settings.folderAppearances.Projects).toBeUndefined();
-        expect(settings.folderAppearances.Mixed).toEqual({ mode: 'compact' });
     });
 });
 

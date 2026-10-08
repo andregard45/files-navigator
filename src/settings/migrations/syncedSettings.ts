@@ -19,7 +19,6 @@
 // Imports
 import type { NotebookNavigatorSettings } from '../types';
 import type { LocalStorageKeys } from '../../types';
-import type { ListPaneAppearance } from '../listPaneAppearance';
 import { DEFAULT_SETTINGS } from '../defaultSettings';
 import { localStorage } from '../../utils/localStorage';
 import { cloneShortcuts, createPropertyKeysFromPropertyFields, DEFAULT_VAULT_PROFILE_ID } from '../../utils/vaultProfiles';
@@ -30,7 +29,6 @@ import {
     isRecentNotesHideMode,
     isTagSortOrder,
     normalizeNarrowSidebarLayout,
-    normalizeAppearanceGroupBy,
     normalizeListNoteGroupingOption
 } from '../types';
 import { normalizeCalendarCustomRootFolder } from '../../utils/calendarCustomNotePatterns';
@@ -153,16 +151,6 @@ export function migrateLegacySyncedSettings(params: {
     // encoded key is still configured is reconciled by the settings controller after migration.
     settings.noteGrouping = normalizeListNoteGroupingOption(settings.noteGrouping) ?? defaultSettings.noteGrouping;
 
-    const normalizeAppearanceGrouping = (collection: Record<string, ListPaneAppearance> | undefined): void => {
-        if (!collection) {
-            return;
-        }
-
-        Object.values(collection).forEach(normalizeAppearanceGroupBy);
-    };
-    normalizeAppearanceGrouping(settings.folderAppearances);
-    normalizeAppearanceGrouping(settings.tagAppearances);
-    normalizeAppearanceGrouping(settings.propertyAppearances);
 
     if (typeof settings.showSelectedNavigationPills !== 'boolean') {
         settings.showSelectedNavigationPills = defaultSettings.showSelectedNavigationPills;
@@ -274,28 +262,10 @@ export function migrateLegacySyncedSettings(params: {
         settings.propertySortOrder = defaultSettings.propertySortOrder;
     }
 
-    const migrateLegacyAppearances = (collection: Record<string, ListPaneAppearance> | undefined) => {
-        if (!collection) {
-            return;
-        }
-
-        Object.entries(collection).forEach(([key, appearance]) => {
-            const appearanceRecord = appearance as unknown as Record<string, unknown>;
-            delete appearanceRecord['notePropertyType'];
-            delete appearanceRecord['customPropertyType'];
-            // File-display property pills feature was removed; drop the per-folder toggle.
-            delete appearanceRecord['showProperties'];
-            // Compact is the only list mode; drop stored legacy content toggles and the mode field.
-            delete appearanceRecord['showPreview'];
-            delete appearanceRecord['showImage'];
-            delete appearanceRecord['showDate'];
-            delete appearanceRecord['mode'];
-            collection[key] = appearance;
-        });
-    };
-
-    migrateLegacyAppearances(settings.folderAppearances);
-    migrateLegacyAppearances(settings.tagAppearances);
+    // The list pane appearance override feature was removed entirely; drop the legacy records.
+    delete mutableSettings['folderAppearances'];
+    delete mutableSettings['tagAppearances'];
+    delete mutableSettings['propertyAppearances'];
 
     delete mutableSettings['applyTagColorsToFileTags'];
 

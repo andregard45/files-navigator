@@ -46,7 +46,7 @@ import {
 import { collectFileMenuPropertyActions, type FileMenuPropertyAction } from '../../utils/propertyMenuActions';
 import { INTERNAL_NOTEBOOK_NAVIGATOR_API } from '../../api/NotebookNavigatorAPI';
 import { addMergeNotesMenuItem } from './mergeNotesMenuItems';
-import { resolveEffectiveListGroupingForSort, resolveListGrouping } from '../listGrouping';
+import { resolveEffectiveListGroupingForSort } from '../listGrouping';
 import { resolveFileIconId } from '../fileIconUtils';
 
 type FileStyleTarget = { type: 'folder'; folderPath: string } | { type: 'files'; files: TFile[] };

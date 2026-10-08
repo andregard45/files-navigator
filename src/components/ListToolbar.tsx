@@ -55,21 +55,18 @@ export function ListToolbar({
         canCreateNewFile,
         handleRevealFile,
         canRevealFile,
-        handleAppearanceMenu,
         handleSortMenu,
         handleToggleDescendants,
         descendantsTooltip,
         getSortIcon,
-        hasAppearanceOrSortSelection,
-        hasCustomSortOrGroup,
-        hasCustomAppearance
+        hasSortSelection,
+        hasCustomSortOrGroup
     } = useListActions({ trackRevealFileAvailability: showRevealButton });
 
     const showSearchButton = listVisibility.search;
     const showDescendantsButton = listVisibility.descendants;
     const showGroupExpansionButton = listVisibility.groupExpansion;
     const showSortButton = listVisibility.sort;
-    const showAppearanceButton = listVisibility.appearance;
     const showNewNoteButton = listVisibility.newNote;
     const hasNavigationSelection = Boolean(selectionState.selectedFolder || selectionState.selectedTag || selectionState.selectedProperty);
 
@@ -78,8 +75,7 @@ export function ListToolbar({
         showRevealButton,
         showDescendantsButton,
         showGroupExpansionButton,
-        showSortButton,
-        showAppearanceButton
+        showSortButton
     ].filter(Boolean).length;
     const totalButtonCount = leftButtonCount + (showNewNoteButton ? 1 : 0);
     const leftGroupClassName = leftButtonCount === 1 ? 'nn-mobile-toolbar-circle' : 'nn-mobile-toolbar-pill';
@@ -151,23 +147,10 @@ export function ListToolbar({
                 className={`${leftButtonBaseClassName}${hasCustomSortOrGroup ? ' nn-mobile-toolbar-button-active' : ''}`}
                 aria-label={strings.paneHeader.changeSortAndGroup}
                 onClick={handleSortMenu}
-                disabled={!hasAppearanceOrSortSelection}
+                disabled={!hasSortSelection}
                 tabIndex={-1}
             >
                 <ServiceIcon iconId={getSortIcon()} />
-            </button>
-        ) : null,
-        showAppearanceButton ? (
-            <button
-                key="appearance"
-                className={`${leftButtonBaseClassName}${hasCustomAppearance ? ' nn-mobile-toolbar-button-active' : ''}`}
-                aria-label={hasCustomAppearance ? strings.paneHeader.changeAppearanceCustomized : strings.paneHeader.changeAppearance}
-                aria-haspopup="menu"
-                onClick={handleAppearanceMenu}
-                disabled={!hasAppearanceOrSortSelection}
-                tabIndex={-1}
-            >
-                <ServiceIcon iconId={resolveUXIcon(settings.interfaceIcons, 'list-appearance')} />
             </button>
         ) : null
     ].filter(Boolean);

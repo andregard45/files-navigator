@@ -165,8 +165,6 @@ export const STRINGS_TH = {
         showSinglePane: 'แสดงแผงเดียว',
         dualPaneAutoFallbackNotice:
             'ไม่สามารถใช้สองแผงได้เมื่อแถบด้านข้างแคบเกินไป หากต้องการเปลี่ยน ให้ตั้ง "เมื่อแถบด้านข้างแคบเกินไป" เป็น "ไม่ต้องทำอะไร" ในการตั้งค่า > ลักษณะและพฤติกรรม',
-        changeAppearance: 'เปลี่ยนลักษณะ',
-        changeAppearanceCustomized: 'เปลี่ยนลักษณะ กำหนดเองแล้ว',
         showNotesFromSubfolders: 'แสดงโน้ตจากโฟลเดอร์ย่อย',
         showFilesFromSubfolders: 'แสดงไฟล์จากโฟลเดอร์ย่อย',
         showNotesFromDescendants: 'แสดงโน้ตจากรายการย่อย',
@@ -406,17 +404,12 @@ export const STRINGS_TH = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'ลักษณะ',
         sortBy: 'เรียงตาม',
         defaultSuffix: '(ค่าเริ่มต้น)',
         defaultLabel: 'ค่าเริ่มต้น',
         titleRows: {
-            label: 'แถวชื่อเรื่อง',
             option: (rows: number) => `${rows} แถวชื่อเรื่อง`
-        },
-        groupBy: 'จัดกลุ่มตาม',
-        resetAppearance: 'รีเซ็ตลักษณะ',
-        openPluginSettings: 'เปิดการตั้งค่าปลั๊กอิน…'
+        }
     },
 
     // Modal dialogs
@@ -1778,15 +1771,6 @@ export const STRINGS_TH = {
                 help: 'รูปแบบทั่วไป:\nHH:mm = 14:30 (24 ชั่วโมง)\nh:mm a = 2:30 PM (12 ชั่วโมง)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nโทเคน:\nHH/H = 24 ชั่วโมง\nhh/h = 12 ชั่วโมง\nmm = นาที\nss = วินาที\na = AM/PM',
                 helpTooltip: 'รูปแบบโดยใช้ Moment',
                 momentLinkText: 'รูปแบบ Moment'
-            },
-            titleRows: {
-                name: 'แถวชื่อเรื่อง',
-                desc: 'จำนวนแถวที่จะแสดงสำหรับชื่อโน้ต',
-                options: {
-                    '1': '1 แถว',
-                    '2': '2 แถว',
-                    '3': '3 แถว'
-                }
             },
             useFolderColor: {
                 name: 'ใช้สีโฟลเดอร์',

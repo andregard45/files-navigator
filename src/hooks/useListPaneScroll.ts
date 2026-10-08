@@ -436,7 +436,7 @@ export function useListPaneScroll({
     );
     const rowSizingConfig = useMemo<ListFileRowSizingConfig>(() => ({
         heights: listMeasurements,
-        titleRows: folderSettings.titleRows || 1,
+        titleRows: 1,
         compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
         selectionType: selectionState.selectionType,
         includeDescendantNotes,
@@ -444,7 +444,6 @@ export function useListPaneScroll({
     }), [
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
-        folderSettings.titleRows,
         includeDescendantNotes,
         isMobile,
         listMeasurements,

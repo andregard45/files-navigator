@@ -314,7 +314,6 @@ export class TagMetadataService extends BaseMetadataService {
             settings.tagIcons,
             settings.tagSortOverrides,
             settings.tagTreeSortOverrides,
-            settings.tagAppearances
         ];
 
         for (const record of records) {
@@ -402,8 +401,7 @@ export class TagMetadataService extends BaseMetadataService {
               this.willUpdateNestedPaths(settingsSnapshot.tagBackgroundColors, normalizedOld, normalizedNew, preserveExisting) ||
               this.willUpdateNestedPaths(settingsSnapshot.tagIcons, normalizedOld, normalizedNew, preserveExisting) ||
               this.willUpdateNestedPaths(settingsSnapshot.tagSortOverrides, normalizedOld, normalizedNew, preserveExisting) ||
-              this.willUpdateNestedPaths(settingsSnapshot.tagTreeSortOverrides, normalizedOld, normalizedNew, preserveExisting) ||
-              this.willUpdateNestedPaths(settingsSnapshot.tagAppearances, normalizedOld, normalizedNew, preserveExisting)
+              this.willUpdateNestedPaths(settingsSnapshot.tagTreeSortOverrides, normalizedOld, normalizedNew, preserveExisting)
             : false;
 
         if (!requiresUpdate && !hasHiddenTags && !hasHiddenFileTags && !extraMutation) {
@@ -418,7 +416,6 @@ export class TagMetadataService extends BaseMetadataService {
                 changed = this.updateNestedPaths(settings.tagIcons, normalizedOld, normalizedNew, preserveExisting) || changed;
                 changed = this.updateNestedPaths(settings.tagSortOverrides, normalizedOld, normalizedNew, preserveExisting) || changed;
                 changed = this.updateNestedPaths(settings.tagTreeSortOverrides, normalizedOld, normalizedNew, preserveExisting) || changed;
-                changed = this.updateNestedPaths(settings.tagAppearances, normalizedOld, normalizedNew, preserveExisting) || changed;
             }
 
             changed = updateHiddenTagPrefixMatches(settings, normalizedOld, normalizedNew) || changed;
@@ -470,7 +467,6 @@ export class TagMetadataService extends BaseMetadataService {
                 changed = this.removeTagMetadataForPath(settings.tagIcons, normalized, prefix) || changed;
                 changed = this.removeTagMetadataForPath(settings.tagSortOverrides, normalized, prefix) || changed;
                 changed = this.removeTagMetadataForPath(settings.tagTreeSortOverrides, normalized, prefix) || changed;
-                changed = this.removeTagMetadataForPath(settings.tagAppearances, normalized, prefix) || changed;
             }
             changed = removeHiddenTagPrefixMatches(settings, normalized) || changed;
             changed = removeHiddenFileTagPrefixMatches(settings, normalized) || changed;
@@ -513,7 +509,6 @@ export class TagMetadataService extends BaseMetadataService {
             this.cleanupMetadata(targetSettings, 'tagIcons', validator),
             this.cleanupMetadata(targetSettings, 'tagSortOverrides', validator),
             this.cleanupMetadata(targetSettings, 'tagTreeSortOverrides', validator),
-            this.cleanupMetadata(targetSettings, 'tagAppearances', validator)
         ]);
 
         return collapsedPinnedContextChanges || results.some(changed => changed);
@@ -579,7 +574,6 @@ export class TagMetadataService extends BaseMetadataService {
             this.cleanupMetadata(targetSettings, 'tagIcons', validator),
             this.cleanupMetadata(targetSettings, 'tagSortOverrides', validator),
             this.cleanupMetadata(targetSettings, 'tagTreeSortOverrides', validator),
-            this.cleanupMetadata(targetSettings, 'tagAppearances', validator)
         ]);
 
         return {

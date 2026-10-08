@@ -165,8 +165,6 @@ export const STRINGS_ID = {
         showSinglePane: 'Tampilkan panel tunggal',
         dualPaneAutoFallbackNotice:
             'Panel ganda tidak tersedia saat bilah sisi terlalu sempit. Untuk mengubahnya, atur "Saat bilah sisi terlalu sempit" ke "Jangan lakukan apa pun" di Pengaturan > Tampilan & perilaku.',
-        changeAppearance: 'Ubah tampilan',
-        changeAppearanceCustomized: 'Ubah tampilan, disesuaikan',
         showNotesFromSubfolders: 'Tampilkan catatan dari subfolder',
         showFilesFromSubfolders: 'Tampilkan file dari subfolder',
         showNotesFromDescendants: 'Tampilkan catatan dari turunan',
@@ -407,17 +405,12 @@ export const STRINGS_ID = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Tampilan',
         sortBy: 'Urutkan berdasarkan',
         defaultSuffix: '(default)',
         defaultLabel: 'Bawaan',
         titleRows: {
-            label: 'Baris judul',
             option: (rows: number) => `${rows} baris judul`
-        },
-        groupBy: 'Kelompokkan berdasarkan',
-        resetAppearance: 'Atur ulang tampilan',
-        openPluginSettings: 'Buka pengaturan plugin…'
+        }
     },
 
     // Modal dialogs
@@ -1786,15 +1779,6 @@ export const STRINGS_ID = {
                 help: 'Format umum:\nHH:mm = 14:30 (24 jam)\nh:mm a = 2:30 PM (12 jam)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nToken:\nHH/H = 24 jam\nhh/h = 12 jam\nmm = menit\nss = detik\na = AM/PM',
                 helpTooltip: 'Format menggunakan Moment',
                 momentLinkText: 'format Moment'
-            },
-            titleRows: {
-                name: 'Baris judul',
-                desc: 'Jumlah baris yang ditampilkan untuk judul catatan.',
-                options: {
-                    '1': '1 baris',
-                    '2': '2 baris',
-                    '3': '3 baris'
-                }
             },
             useFolderColor: {
                 name: 'Gunakan warna folder',

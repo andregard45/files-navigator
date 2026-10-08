@@ -167,8 +167,6 @@ export const STRINGS_NL = {
         showSinglePane: 'Enkel paneel tonen',
         dualPaneAutoFallbackNotice:
             'Dubbele panelen zijn niet beschikbaar wanneer de zijbalk te smal is. Stel "Wanneer de zijbalk te smal is" in op "Niets doen" in Instellingen > Uiterlijk & gedrag om dit te wijzigen.',
-        changeAppearance: 'Uiterlijk wijzigen',
-        changeAppearanceCustomized: 'Uiterlijk wijzigen, aangepast',
         showNotesFromSubfolders: 'Notities uit submappen tonen',
         showFilesFromSubfolders: 'Bestanden uit submappen tonen',
         showNotesFromDescendants: 'Notities uit afstammelingen tonen',
@@ -410,17 +408,12 @@ export const STRINGS_NL = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Uiterlijk',
         sortBy: 'Sorteren op',
         defaultSuffix: '(standaard)',
         defaultLabel: 'Standaard',
         titleRows: {
-            label: 'Titelrijen',
             option: (rows: number) => `${rows} titelrij${rows === 1 ? '' : 'en'}`
-        },
-        groupBy: 'Groeperen op',
-        resetAppearance: 'Uiterlijk herstellen',
-        openPluginSettings: 'Plugin-instellingen openen…'
+        }
     },
 
     // Modal dialogs
@@ -1792,15 +1785,6 @@ export const STRINGS_NL = {
                 help: 'Veelvoorkomende formaten:\nHH:mm = 14:30 (24-uurs)\nh:mm a = 2:30 PM (12-uurs)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24-uurs\nhh/h = 12-uurs\nmm = minuten\nss = seconden\na = AM/PM',
                 helpTooltip: 'Formaat met Moment',
                 momentLinkText: 'Moment-formaat'
-            },
-            titleRows: {
-                name: 'Titelrijen',
-                desc: 'Aantal weer te geven rijen voor notitietitels.',
-                options: {
-                    '1': '1 rij',
-                    '2': '2 rijen',
-                    '3': '3 rijen'
-                }
             },
             useFolderColor: {
                 name: 'Mapkleur gebruiken',

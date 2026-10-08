@@ -59,7 +59,7 @@ import { useListPaneData } from '../hooks/useListPaneData';
 import { findCollapsedListGroupRevealTarget, resolveListGroupExpansionToggleState } from '../hooks/listPaneData/listItems';
 import { useListPaneScroll } from '../hooks/useListPaneScroll';
 import { useListPaneTitle } from '../hooks/useListPaneTitle';
-import { useListPaneAppearance } from '../hooks/useListPaneAppearance';
+import type { ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
 import { useListPaneSearch, type SearchQueryUpdateOptions } from '../hooks/useListPaneSearch';
 import { useListPaneSelectionCoordinator } from '../hooks/useListPaneSelectionCoordinator';
 import type { EnsureSelectionOptions, EnsureSelectionResult, SelectFileOptions } from '../hooks/useListPaneSelectionCoordinator';
@@ -222,7 +222,11 @@ export const ListPane = React.memo(
         const includeDescendantNotes = uxPreferences.includeDescendantNotes;
         const showHiddenItems = uxPreferences.showHiddenItems;
         const showCalendar = uxPreferences.showCalendar;
-        const appearanceSettings = useListPaneAppearance();
+        // List pane appearance: title rows are hardcoded to 1 and grouping follows the global default.
+        const appearanceSettings = useMemo<ListPaneAppearanceSettings>(
+            () => ({ titleRows: 1, groupBy: settings.noteGrouping }),
+            [settings.noteGrouping]
+        );
         const { getFileDisplayName, getDB, getFileTimestamps } = useFileCache();
         const { noteShortcutKeysByPath, addNoteShortcut, removeShortcut } = useShortcuts();
         const uiState = useUIState();

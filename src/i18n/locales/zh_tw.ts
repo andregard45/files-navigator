@@ -164,8 +164,6 @@ export const STRINGS_ZH_TW = {
         showSinglePane: '顯示單窗格',
         dualPaneAutoFallbackNotice:
             '側邊欄過窄時無法使用雙窗格。若要變更此行為，請在設定 > 外觀與行為中將「側邊欄過窄時」設為「不執行任何動作」。',
-        changeAppearance: '變更外觀',
-        changeAppearanceCustomized: '變更外觀，已自訂',
         showNotesFromSubfolders: '顯示子資料夾的筆記',
         showFilesFromSubfolders: '顯示子資料夾的檔案',
         showNotesFromDescendants: '顯示後代的筆記',
@@ -406,17 +404,12 @@ export const STRINGS_ZH_TW = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: '外觀',
         sortBy: '排序方式',
         defaultSuffix: '(預設)',
         defaultLabel: '預設',
         titleRows: {
-            label: '標題行數',
             option: (rows: number) => `標題${rows}行`
-        },
-        groupBy: '分組依據',
-        resetAppearance: '重設外觀',
-        openPluginSettings: '開啟外掛程式設定…'
+        }
     },
 
     // Modal dialogs
@@ -1771,15 +1764,6 @@ export const STRINGS_ZH_TW = {
                 help: '常用格式：\nHH:mm = 14:30（24小時制）\nAh:mm = 下午2:30（12小時制）\nHH:mm:ss = 14:30:45\nAh:mm:ss = 下午2:30:45\n\n標記：\nHH/H = 24小時制\nhh/h = 12小時制\nmm = 分鐘\nss = 秒\nA = 上午/下午',
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式'
-            },
-            titleRows: {
-                name: '標題行數',
-                desc: '筆記標題顯示的行數。',
-                options: {
-                    '1': '1 行',
-                    '2': '2 行',
-                    '3': '3 行'
-                }
             },
             useFolderColor: {
                 name: '使用資料夾顏色',

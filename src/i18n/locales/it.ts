@@ -165,8 +165,6 @@ export const STRINGS_IT = {
         showSinglePane: 'Mostra pannello singolo', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'I pannelli doppi non sono disponibili quando la barra laterale è troppo stretta. Per modificarlo, imposta "Quando la barra laterale è troppo stretta" su "Non fare nulla" in Impostazioni > Aspetto e comportamento.',
-        changeAppearance: 'Cambia aspetto', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Cambia aspetto, personalizzato',
         showNotesFromSubfolders: 'Mostra note da sottocartelle',
         showFilesFromSubfolders: 'Mostra file da sottocartelle',
         showNotesFromDescendants: 'Mostra note da discendenti',
@@ -406,17 +404,12 @@ export const STRINGS_IT = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Aspetto',
         sortBy: 'Ordina per',
         defaultSuffix: '(predefinito)',
         defaultLabel: 'Predefinito',
         titleRows: {
-            label: 'Righe titolo',
             option: (rows: number) => `${rows} ${rows === 1 ? 'riga' : 'righe'} titolo`
-        },
-        groupBy: 'Raggruppa per',
-        resetAppearance: 'Reimposta aspetto',
-        openPluginSettings: 'Apri impostazioni del plugin…'
+        }
     },
 
     // Modal dialogs
@@ -1788,15 +1781,6 @@ export const STRINGS_IT = {
                 help: 'Formati comuni:\nh:mm a = 2:30 PM (12 ore)\nHH:mm = 14:30 (24 ore)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nToken:\nHH/H = 24 ore\nhh/h = 12 ore\nmm = minuti\nss = secondi\na = AM/PM',
                 helpTooltip: 'Formato con Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Righe titolo',
-                desc: 'Numero di righe da visualizzare per i titoli note.',
-                options: {
-                    '1': '1 riga',
-                    '2': '2 righe',
-                    '3': '3 righe'
-                }
             },
             useFolderColor: {
                 name: 'Usa colore cartella',

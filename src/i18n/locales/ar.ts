@@ -165,8 +165,6 @@ export const STRINGS_AR = {
         showSinglePane: 'إظهار لوحة واحدة', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'لا تتوفر اللوحتان عندما يكون الشريط الجانبي ضيقًا جدًا. لتغيير ذلك، اضبط "عندما يكون الشريط الجانبي ضيقًا جدًا" على "عدم فعل شيء" في الإعدادات > المظهر والسلوك.',
-        changeAppearance: 'تغيير المظهر', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'تغيير المظهر، مخصص',
         showNotesFromSubfolders: 'إظهار الملاحظات من المجلدات الفرعية',
         showFilesFromSubfolders: 'إظهار الملفات من المجلدات الفرعية',
         showNotesFromDescendants: 'إظهار الملاحظات من الفروع',
@@ -406,17 +404,12 @@ export const STRINGS_AR = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'المظهر',
         sortBy: 'فرز حسب',
         defaultSuffix: '(افتراضي)',
         defaultLabel: 'افتراضي',
         titleRows: {
-            label: 'صفوف العنوان',
             option: (rows: number) => (rows === 1 ? 'صف عنوان واحد' : rows === 2 ? 'صفا عنوان' : `${rows} صفوف عنوان`)
-        },
-        groupBy: 'تجميع حسب',
-        resetAppearance: 'إعادة تعيين المظهر',
-        openPluginSettings: 'فتح إعدادات الإضافة…'
+        }
     },
 
     // Modal dialogs
@@ -1780,15 +1773,6 @@ export const STRINGS_AR = {
                 help: 'التنسيقات الشائعة:\nh:mm a = 2:30 م (12 ساعة)\nHH:mm = 14:30 (24 ساعة)\nh:mm:ss a = 2:30:45 م\nHH:mm:ss = 14:30:45\n\nالرموز:\nHH/H = 24 ساعة\nhh/h = 12 ساعة\nmm = الدقائق\nss = الثواني\na = ص/م',
                 helpTooltip: 'تنسيق باستخدام Moment',
                 momentLinkText: 'تنسيق Moment'
-            },
-            titleRows: {
-                name: 'صفوف العنوان',
-                desc: 'عدد الصفوف المعروضة لعناوين الملاحظات.',
-                options: {
-                    '1': 'صف واحد',
-                    '2': 'صفان',
-                    '3': '3 صفوف'
-                }
             },
             useFolderColor: {
                 name: 'استخدام لون المجلد',

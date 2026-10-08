@@ -492,11 +492,6 @@ export type PropertyGroupingOrder = PropertyGroupingDirection | 'follow';
 export type ListNoteGroupingOption =
     ListNoteGroupingBaseOption | `property:${string}` | `property-desc:${string}` | `property-follow:${string}`;
 
-export interface ListPaneAppearance {
-    titleRows?: number;
-    groupBy?: ListNoteGroupingOption;
-}
-
 const PROPERTY_GROUPING_PREFIX = 'property:';
 const PROPERTY_GROUPING_DESC_PREFIX = 'property-desc:';
 const PROPERTY_GROUPING_FOLLOW_PREFIX = 'property-follow:';
@@ -558,26 +553,11 @@ export function normalizeListNoteGroupingOption(value: unknown): ListNoteGroupin
     return parsed ? createPropertyGroupingOption(parsed.propertyKey, parsed.order) : null;
 }
 
-export interface AppearanceGroupingValue {
-    groupBy?: ListNoteGroupingOption;
-}
-
-export function normalizeAppearanceGroupBy<T extends AppearanceGroupingValue>(appearance: T): void {
-    const appearanceRecord = appearance as unknown as Record<string, unknown>;
-    const groupBy = normalizeListNoteGroupingOption(appearanceRecord.groupBy);
-    if (groupBy) {
-        appearance.groupBy = groupBy;
-        return;
-    }
-
-    delete appearance.groupBy;
-}
-
 /** Buttons available in the navigation toolbar */
 export type NavigationToolbarButtonId = 'toggleDualPane' | 'expandCollapse' | 'calendar' | 'hiddenItems' | 'rootReorder' | 'newFolder';
 
 /** Buttons available in the list toolbar */
-export type ListToolbarButtonId = 'back' | 'search' | 'reveal' | 'descendants' | 'groupExpansion' | 'sort' | 'appearance' | 'newNote';
+export type ListToolbarButtonId = 'back' | 'search' | 'reveal' | 'descendants' | 'groupExpansion' | 'sort' | 'newNote';
 
 /** Visibility toggles for toolbar buttons */
 export interface ToolbarVisibilitySettings {
@@ -809,7 +789,6 @@ export interface NotebookNavigatorSettings {
     showCategoryIcons: boolean;
     fileTypeIconMap: Record<string, string>;
     fileTypeIconPreset: FileTypeIconPreset;
-    fileNameRows: number;
     useFolderColorForTitles: boolean;
 
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
@@ -854,19 +833,16 @@ export interface NotebookNavigatorSettings {
     folderBackgroundColors: Record<string, string>;
     folderSortOverrides: Record<string, ListSortOverrideValue>;
     folderTreeSortOverrides: Record<string, AlphaSortOrder>;
-    folderAppearances: Record<string, ListPaneAppearance>;
     tagIcons: Record<string, string>;
     tagColors: Record<string, string>;
     tagBackgroundColors: Record<string, string>;
     tagSortOverrides: Record<string, ListSortOverrideValue>;
     tagTreeSortOverrides: Record<string, AlphaSortOrder>;
-    tagAppearances: Record<string, ListPaneAppearance>;
     propertyIcons: Record<string, string>;
     propertyColors: Record<string, string>;
     propertyBackgroundColors: Record<string, string>;
     propertySortOverrides: Record<string, ListSortOverrideValue>;
     propertyTreeSortOverrides: Record<string, AlphaSortOrder>;
-    propertyAppearances: Record<string, ListPaneAppearance>;
     virtualFolderColors: Record<string, string>;
     virtualFolderBackgroundColors: Record<string, string>;
     navigationSeparators: Record<string, boolean>;

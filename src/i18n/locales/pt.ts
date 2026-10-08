@@ -165,8 +165,6 @@ export const STRINGS_PT = {
         showSinglePane: 'Mostrar painel único', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Os painéis duplos não estão disponíveis quando a barra lateral é demasiado estreita. Para alterar isto, defina "Quando a barra lateral é demasiado estreita" como "Não fazer nada" em Definições > Aparência e comportamento.',
-        changeAppearance: 'Alterar aparência', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Alterar aparência, personalizada',
         showNotesFromSubfolders: 'Mostrar notas de subpastas',
         showFilesFromSubfolders: 'Mostrar ficheiros de subpastas',
         showNotesFromDescendants: 'Mostrar notas de descendentes',
@@ -407,17 +405,12 @@ export const STRINGS_PT = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Aparência',
         sortBy: 'Ordenar por',
         defaultSuffix: '(predefinido)',
         defaultLabel: 'Predefinido',
         titleRows: {
-            label: 'Linhas de título',
             option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de título`
-        },
-        groupBy: 'Agrupar por',
-        resetAppearance: 'Repor aparência',
-        openPluginSettings: 'Abrir definições do plugin…'
+        }
     },
 
     // Modal dialogs
@@ -1790,15 +1783,6 @@ export const STRINGS_PT = {
                 help: 'Formatos comuns:\nh:mm a = 2:30 PM (12 horas)\nHH:mm = 14:30 (24 horas)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Linhas de título',
-                desc: 'Número de linhas a exibir para títulos de notas.',
-                options: {
-                    '1': '1 linha',
-                    '2': '2 linhas',
-                    '3': '3 linhas'
-                }
             },
             useFolderColor: {
                 name: 'Usar cor da pasta',
