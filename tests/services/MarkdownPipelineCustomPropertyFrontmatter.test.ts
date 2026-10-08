@@ -17,18 +17,25 @@
  */
 import { describe, expect, it } from 'vitest';
 import { App, TFile, type CachedMetadata, type FrontMatterCache } from 'obsidian';
-import { MarkdownPipelineContentProvider } from '../../src/services/content/MarkdownPipelineContentProvider';
+import { extractPropertiesSync } from '../../src/services/content/frontmatterSyncService';
 import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
 import type { NotebookNavigatorSettings } from '../../src/settings/types';
 import type { FileData } from '../../src/storage/IndexedDBStorage';
 import { deriveFileMetadata } from '../utils/pathMetadata';
 import { setActivePropertyFields } from '../../src/utils/vaultProfiles';
 
-class TestMarkdownPipelineContentProvider extends MarkdownPipelineContentProvider {
-    async runCustomProperty(file: TFile, settings: NotebookNavigatorSettings): Promise<FileData['properties'] | null> {
-        const result = await this.processFile({ file, path: file.path }, null, settings);
-        return result.update?.properties ?? null;
-    }
+// Rewired for FrontmatterSyncService: the old provider's processFile() is gone; the equivalent
+// synchronous extraction entry point is extractPropertiesSync(). Settings are irrelevant to the
+// extraction itself (every supported frontmatter value is indexed regardless of display config),
+// but we keep passing them through createSettings() so the display-profile setup stays exercised.
+async function runCustomProperty(
+    context: ReturnType<typeof createApp>,
+    file: TFile,
+    _settings: NotebookNavigatorSettings
+): Promise<FileData['properties'] | null> {
+    const cache = context.app.metadataCache.getFileCache(file) as CachedMetadata | null;
+    const result = extractPropertiesSync(file, cache, null, file.path, new Map<string, number>());
+    return result.update?.properties ?? null;
 }
 
 function createSettings(overrides: Partial<NotebookNavigatorSettings> & { propertyFields?: string }): NotebookNavigatorSettings {
@@ -68,16 +75,15 @@ function setFrontmatter(context: ReturnType<typeof createApp>, file: TFile, fron
     context.cachedMetadataByPath.set(file.path, metadata);
 }
 
-describe('MarkdownPipelineContentProvider frontmatter custom properties', () => {
+describe('FrontmatterSyncService frontmatter custom properties', () => {
     // Custom property items persist the source field key, raw value, and value kind; styling is derived at render time.
     it('returns multiple properties as pills', async () => {
         const context = createApp();
         const settings = createSettings({ propertyFields: 'status, type' });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { status: 'Active', type: 'Project' });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'status', value: 'Active', valueKind: 'string' },
@@ -88,11 +94,10 @@ describe('MarkdownPipelineContentProvider frontmatter custom properties', () => 
     it('indexes supported properties that are not configured for display', async () => {
         const context = createApp();
         const settings = createSettings({ propertyFields: 'status' });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { status: 'Active', workflow: 'Waiting' });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'status', value: 'Active', valueKind: 'string' },
@@ -103,11 +108,10 @@ describe('MarkdownPipelineContentProvider frontmatter custom properties', () => 
     it('flattens list values into multiple pills', async () => {
         const context = createApp();
         const settings = createSettings({ propertyFields: 'status, type' });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { status: ['A', 'B'], type: 'Project' });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'status', value: 'A', valueKind: 'string' },
@@ -121,11 +125,10 @@ describe('MarkdownPipelineContentProvider frontmatter custom properties', () => 
         const settings = createSettings({
             propertyFields: 'status, type'
         });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { status: 'Active', type: 'Project' });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'status', value: 'Active', valueKind: 'string' },
@@ -136,11 +139,10 @@ describe('MarkdownPipelineContentProvider frontmatter custom properties', () => 
     it('preserves value kind metadata for string and boolean literals', async () => {
         const context = createApp();
         const settings = createSettings({ propertyFields: 'status, flag' });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { status: 'true', flag: true });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'status', value: 'true', valueKind: 'string' },
@@ -151,11 +153,10 @@ describe('MarkdownPipelineContentProvider frontmatter custom properties', () => 
     it('preserves value kind metadata for numeric literals', async () => {
         const context = createApp();
         const settings = createSettings({ propertyFields: 'rating, count' });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { rating: 4.5, count: 2 });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'rating', value: '4.5', valueKind: 'number' },
@@ -166,11 +167,10 @@ describe('MarkdownPipelineContentProvider frontmatter custom properties', () => 
     it('treats null frontmatter values as unassigned', async () => {
         const context = createApp();
         const settings = createSettings({ propertyFields: 'status, type' });
-        const provider = new TestMarkdownPipelineContentProvider(context.app);
         const file = createFile('notes/note.md');
 
         setFrontmatter(context, file, { status: null, type: 'Project' });
-        const result = await provider.runCustomProperty(file, settings);
+        const result = await runCustomProperty(context, file, settings);
 
         expect(result).toEqual([
             { fieldKey: 'status', value: '' },

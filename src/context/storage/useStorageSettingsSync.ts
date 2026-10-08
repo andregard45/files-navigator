@@ -20,7 +20,7 @@ import { useCallback, useEffect, useRef, type MutableRefObject } from 'react';
 import type { App, TFile } from 'obsidian';
 import { TIMEOUTS } from '../../types/obsidian-extended';
 import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
-import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
+import { RELEVANT_SETTINGS_BY_TYPE, type FrontmatterSyncService } from '../../services/content/frontmatterSyncService';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { calculateFileDiff } from '../../storage/diffCalculator';
 import { type FileData as DBFileData } from '../../storage/IndexedDBStorage';
@@ -47,8 +47,8 @@ import {
  * This hook batches those changes and ensures only one async "settings reaction" runs at a time.
  *
  * It handles two categories of updates:
- * - Content provider settings: forwarded to `ContentProviderRegistry.handleSettingsChange()` and then used to queue
- *   any required regeneration work.
+ * - Content provider settings: forwarded to the `handleProviderSettingsChange` adapter (which applies the
+ *   FrontmatterSyncService settings-change plan) and then used to queue any required regeneration work.
  * - Exclusions (hidden folders/file properties): triggers a diff so the database and navigation trees reflect the
  *   new visibility rules.
  */
@@ -56,7 +56,8 @@ export function useStorageSettingsSync(params: {
     app: App;
     settings: NotebookNavigatorSettings;
     stoppedRef: MutableRefObject<boolean>;
-    contentRegistryRef: MutableRefObject<ContentProviderRegistry | null>;
+    contentServiceRef: MutableRefObject<FrontmatterSyncService | null>;
+    handleProviderSettingsChange: (oldSettings: NotebookNavigatorSettings, newSettings: NotebookNavigatorSettings) => Promise<ContentProviderType[]>;
     hiddenFolders: string[];
     hiddenFileProperties: string[];
     hiddenFileNames: string[];
@@ -79,7 +80,8 @@ export function useStorageSettingsSync(params: {
         app,
         settings,
         stoppedRef,
-        contentRegistryRef,
+        contentServiceRef,
+        handleProviderSettingsChange,
         hiddenFolders,
         hiddenFileProperties,
         hiddenFileNames,
@@ -118,8 +120,8 @@ export function useStorageSettingsSync(params: {
 
     const handleSettingsChanges = useCallback(
         async (oldSettings: NotebookNavigatorSettings, newSettings: NotebookNavigatorSettings) => {
-            const registry = contentRegistryRef.current;
-            if (!registry) {
+            const service = contentServiceRef.current;
+            if (!service) {
                 return;
             }
 
@@ -133,7 +135,7 @@ export function useStorageSettingsSync(params: {
             };
 
             // Provider-level settings may change which files need content and which providers should run.
-            const affectedProviders = await registry.handleSettingsChange(oldSettings, newSettings);
+            const affectedProviders = await handleProviderSettingsChange(oldSettings, newSettings);
             if (haveFrontmatterMetadataCacheSettingsChanged(oldSettings, newSettings)) {
                 if (newSettings.useFrontmatterMetadata) {
                     markFrontmatterMetadataCacheCurrent(newSettings);
@@ -163,7 +165,7 @@ export function useStorageSettingsSync(params: {
                 }
             }
 
-            if (stoppedRef.current || !contentRegistryRef.current) {
+            if (stoppedRef.current || !contentServiceRef.current) {
                 return;
             }
 
@@ -176,7 +178,7 @@ export function useStorageSettingsSync(params: {
             }
 
             const allFiles = getIndexableFiles();
-            if (stoppedRef.current || !contentRegistryRef.current) {
+            if (stoppedRef.current || !contentServiceRef.current) {
                 return;
             }
 
@@ -188,7 +190,8 @@ export function useStorageSettingsSync(params: {
         [
             app,
             clearCacheRebuildNotice,
-            contentRegistryRef,
+            contentServiceRef,
+            handleProviderSettingsChange,
             getIndexableFiles,
             queueIndexableFilesForContentGeneration,
             queueMetadataContentWhenReady,
@@ -264,9 +267,10 @@ export function useStorageSettingsSync(params: {
             return;
         }
 
-        const registry = contentRegistryRef.current;
-        const relevantSettings = registry?.getAllRelevantSettings() ?? [];
-        const hasRelevantSettingsChange = !registry || relevantSettings.some(settingKey => previousSettings[settingKey] !== settings[settingKey]);
+        const service = contentServiceRef.current;
+        // Union of the per-provider relevant setting keys (formerly registry.getAllRelevantSettings()).
+        const relevantSettings = Object.values(RELEVANT_SETTINGS_BY_TYPE).flat();
+        const hasRelevantSettingsChange = !service || relevantSettings.some(settingKey => previousSettings[settingKey] !== settings[settingKey]);
         if (hasRelevantSettingsChange) {
             scheduleSettingsChanges(previousSettings, settings);
         }
@@ -317,7 +321,7 @@ export function useStorageSettingsSync(params: {
         prevSettingsRef.current = settings;
     }, [
         app,
-        contentRegistryRef,
+        contentServiceRef,
         getIndexableFiles,
         hiddenFileNames,
         hiddenFileTags,

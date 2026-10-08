@@ -22,7 +22,7 @@ import { TIMEOUTS } from '../../types/obsidian-extended';
 import { INTERNAL_NOTEBOOK_NAVIGATOR_API, type NotebookNavigatorAPI } from '../../api/NotebookNavigatorAPI';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
-import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
+import type { FrontmatterSyncService } from '../../services/content/frontmatterSyncService';
 import type { PropertyTreeNode, TagTreeNode } from '../../types/storage';
 import { calculateFileDiff } from '../../storage/diffCalculator';
 import { type FileData as DBFileData } from '../../storage/IndexedDBStorage';
@@ -105,7 +105,7 @@ export function useStorageVaultSync(params: {
     hasBuiltInitialCacheRef: MutableRefObject<boolean>;
     setIsStorageReady: Dispatch<SetStateAction<boolean>>;
     isStorageReadyRef: MutableRefObject<boolean>;
-    contentRegistryRef: MutableRefObject<ContentProviderRegistry | null>;
+    contentServiceRef: MutableRefObject<FrontmatterSyncService | null>;
     pendingSyncTimeoutIdRef: MutableRefObject<number | null>;
     pendingRenameDataRef: MutableRefObject<Map<string, DBFileData>>;
     modifyFlushBufferRef: MutableRefObject<PendingFileFlushBuffer>;
@@ -143,7 +143,7 @@ export function useStorageVaultSync(params: {
         hasBuiltInitialCacheRef,
         setIsStorageReady,
         isStorageReadyRef,
-        contentRegistryRef,
+        contentServiceRef,
         pendingSyncTimeoutIdRef,
         pendingRenameDataRef,
         modifyFlushBufferRef,
@@ -206,7 +206,7 @@ export function useStorageVaultSync(params: {
                     const metadataDependentTypes = getMetadataDependentTypes(settings);
                     const contentEnabled = metadataDependentTypes.length > 0;
 
-                    if (contentRegistryRef.current && contentEnabled) {
+                    if (contentServiceRef.current && contentEnabled) {
                         const markdownFiles: TFile[] = [];
 
                         for (const file of allFiles) {
@@ -335,7 +335,7 @@ export function useStorageVaultSync(params: {
         }
 
         const queueFilesContentRefresh = (files: TFile[]) => {
-            if (stoppedRef.current || !contentRegistryRef.current) {
+            if (stoppedRef.current || !contentServiceRef.current) {
                 return;
             }
 
@@ -685,7 +685,7 @@ export function useStorageVaultSync(params: {
         activeVaultEventRefsRef,
         buildFileCacheFnRef,
         cancelTreeRebuildDebouncer,
-        contentRegistryRef,
+        contentServiceRef,
         disposeMetadataWaitDisposers,
         getIndexableFiles,
         getVisibleMarkdownFiles,

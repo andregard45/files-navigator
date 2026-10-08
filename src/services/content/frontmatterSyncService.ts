@@ -31,7 +31,7 @@ import { createFrontmatterPropertyExclusionMatcher, shouldExcludeFileWithMatcher
 import { getActiveHiddenFileProperties } from '../../utils/vaultProfiles';
 
 /**
- * Synchronous replacement for the BaseContentProvider class hierarchy.
+ * Synchronous replacement for the former content-provider class hierarchy.
  *
  * All three remaining providers (markdownPipeline/properties, tags, metadata) only read
  * `app.metadataCache.getFileCache()` synchronously — no vault I/O, no markdown parsing. The queue,
@@ -67,7 +67,7 @@ export interface IFrontmatterSyncService {
     getDeferredPaths(): string[];
     /** Drops all pending work and per-path deferral counters (stop/rebuild equivalent). */
     stop(): void;
-    /** Restart after stop(); mirrors BaseContentProvider.startProcessing clearing the stopped flag. */
+    /** Restart after stop(); clears the stopped flag so new passes run again. */
     start(): void;
     /** Clears provider retry counters and the deferred set after a full content clear. */
     resetAfterClear(): void;
@@ -104,7 +104,7 @@ function resolvePropertyItemsFromFrontmatter(frontmatter: FrontMatterCache | nul
     return entries;
 }
 
-// Check if two tag arrays are equal. Handles null values properly (ported verbatim from TagContentProvider).
+// Check if two tag arrays are equal. Handles null values properly (ported from the former tag provider).
 function tagsEqual(tags1: string[] | null, tags2: string[] | null): boolean {
     if (tags1 === tags2) return true; // Both null or same reference
     if (tags1 === null || tags2 === null) return false; // One is null
@@ -112,7 +112,7 @@ function tagsEqual(tags1: string[] | null, tags2: string[] | null): boolean {
     return tags1.every((tag, i) => tag === tags2[i]);
 }
 
-// Check if two metadata objects are equal (ported verbatim from MetadataContentProvider).
+// Check if two metadata objects are equal (ported from the former metadata provider).
 // Null means "not generated yet" and must not be treated as equivalent to an empty object.
 function metadataEqual(meta1: FileData['metadata'] | null, meta2: FileData['metadata'] | null): boolean {
     if (meta1 === null && meta2 === null) return true;
@@ -130,7 +130,7 @@ function metadataEqual(meta1: FileData['metadata'] | null, meta2: FileData['meta
 }
 
 /**
- * Properties extraction — ported verbatim from MarkdownPipelineContentProvider.processFile.
+ * Properties extraction — ported verbatim from the former markdown-pipeline provider processFile().
  * `emptyRetryCounts` carries the per-path deferral state formerly owned by the provider instance.
  */
 export function extractPropertiesSync(
@@ -176,7 +176,7 @@ export function extractPropertiesSync(
 }
 
 /**
- * Tags extraction — ported verbatim from TagContentProvider.processFile (including the
+ * Tags extraction — ported verbatim from the former tag provider processFile() (including the
  * recentFileWindowMs guard that avoids overwriting existing tags with empty results while the
  * metadata cache has not caught up for files modified within the last 15 seconds).
  */
@@ -242,7 +242,7 @@ export function extractTagsSync(
 }
 
 /**
- * Metadata extraction — ported verbatim from MetadataContentProvider.processFile.
+ * Metadata extraction — ported verbatim from the former metadata provider processFile().
  * `pendingHiddenStates` replaces the class-field cache shared between needsProcessing and processFile;
  * callers compute hidden states during their staleness check and hand the map to the extractor.
  */
@@ -346,8 +346,8 @@ export function needsMetadataProcessing(fileData: FileData | null, file: TFile, 
 }
 
 // Settings keys that trigger each content type — ported verbatim from the providers' getRelevantSettings().
-const RELEVANT_SETTINGS_BY_TYPE: Record<ContentProviderType, (keyof NotebookNavigatorSettings)[]> = {
-    // defaultFolderSortPropertyKey is intentionally absent (see MarkdownPipelineContentProvider comments):
+export const RELEVANT_SETTINGS_BY_TYPE: Record<ContentProviderType, (keyof NotebookNavigatorSettings)[]> = {
+    // defaultFolderSortPropertyKey is intentionally absent (see former markdown-pipeline provider comments):
     // it does not change extracted content. Appearance maps are observed via useStorageSettingsSync.
     markdownPipeline: [
         'noteGrouping',
@@ -373,7 +373,7 @@ const RELEVANT_SETTINGS_BY_TYPE: Record<ContentProviderType, (keyof NotebookNavi
     ]
 };
 
-// Compares two arrays for same members regardless of order (ported from MetadataContentProvider).
+// Compares two arrays for same members regardless of order (ported from the former metadata provider).
 function haveSameMembers(left: string[], right: string[]): boolean {
     if (left === right) return true;
     if (left.length !== right.length) return false;
@@ -425,7 +425,7 @@ export type SettingsChangePlan = {
 };
 
 /**
- * Determines what a settings change implies — pure policy ported from ContentProviderRegistry.handleSettingsChange.
+ * Determines what a settings change implies — pure policy ported from the former registry handleSettingsChange.
  * The caller performs the actual clears (via `db.batchClearAllFileContent`) and then invokes `resetAfterClear()`
  * followed by a full-vault `processFiles()` pass.
  */
@@ -518,7 +518,7 @@ export class FrontmatterSyncService implements IFrontmatterSyncService {
     // Follow-up loop replacing the base class retry-timer machinery: after each pass we pick up
     // (a) merged trailing requests from concurrent triggers and (b) deferred paths whose metadata
     // cache has caught up since the previous pass. A path whose cache stays null is NOT swept again
-    // — it waits for the next external trigger, exactly like BaseContentProvider dropping retry
+    // — it waits for the next external trigger, exactly like the former base provider dropping retry
     // entries when `getAbstractFileByPath`/cache resolution found nothing to do. This keeps the loop
     // bounded: every iteration either writes DB updates or strictly shrinks the deferred set, so a
     // metadata cache that never catches up cannot spin forever.
@@ -662,7 +662,7 @@ export class FrontmatterSyncService implements IFrontmatterSyncService {
         return hadWrites;
     }
 
-    // Mirrors BaseContentProvider's post-processFile bookkeeping: retry scheduling becomes the deferred
+    // Mirrors the former base provider's post-processFile bookkeeping: retry scheduling becomes the deferred
     // set, guarded provider-mtime writes keep the CAS contract, and update paths stay canonical.
     // Returns true when anything was recorded for the DB write.
     private recordResult(

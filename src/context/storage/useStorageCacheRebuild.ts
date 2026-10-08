@@ -19,7 +19,7 @@
 import { useCallback, type Dispatch, type MutableRefObject, type SetStateAction } from 'react';
 import { debounce, type App, type TFile } from 'obsidian';
 import type { FileContentType } from '../../types/contentProviders';
-import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
+import type { FrontmatterSyncService } from '../../services/content/frontmatterSyncService';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { getDBInstance } from '../../storage/fileOperations';
 import type { PropertyTreeNode, TagTreeNode } from '../../types/storage';
@@ -49,7 +49,7 @@ interface PropertyTreeServiceLike {
  */
 export function useStorageCacheRebuild(params: {
     app: App;
-    contentRegistryRef: MutableRefObject<ContentProviderRegistry | null>;
+    contentServiceRef: MutableRefObject<FrontmatterSyncService | null>;
     pendingSyncTimeoutIdRef: MutableRefObject<number | null>;
     rebuildFileCacheRef: MutableRefObject<ReturnType<typeof debounce> | null>;
     cancelTreeRebuildDebouncer: (options?: { reset?: boolean }) => void;
@@ -71,7 +71,7 @@ export function useStorageCacheRebuild(params: {
 }): { rebuildCache: () => Promise<void> } {
     const {
         app,
-        contentRegistryRef,
+        contentServiceRef,
         pendingSyncTimeoutIdRef,
         rebuildFileCacheRef,
         cancelTreeRebuildDebouncer,
@@ -101,8 +101,12 @@ export function useStorageCacheRebuild(params: {
         const previousStopped = stoppedRef.current;
         stoppedRef.current = true;
 
-        if (contentRegistryRef.current) {
-            contentRegistryRef.current.stopAllProcessing();
+        if (contentServiceRef.current) {
+            // Stop drops all pending/deferred work; start() clears the stopped flag for the rebuild pass.
+            contentServiceRef.current.stop();
+            contentServiceRef.current.start();
+            // Database is fully cleared below — per-path deferral counters are stale afterwards.
+            contentServiceRef.current.resetAfterClear();
         }
 
         if (pendingSyncTimeoutIdRef.current !== null) {
@@ -186,7 +190,7 @@ export function useStorageCacheRebuild(params: {
         buildFileCacheFnRef,
         cancelTreeRebuildDebouncer,
         clearCacheRebuildNotice,
-        contentRegistryRef,
+        contentServiceRef,
         disposeMetadataWaitDisposers,
         getIndexableFiles,
         hasBuiltInitialCacheRef,
