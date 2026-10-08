@@ -39,12 +39,9 @@ function createFileItem(file: TFile, overrides: Partial<ListPaneItem> = {}): Lis
 }
 
 function createRowSizingConfig(overrides: Partial<ListFileRowSizingConfig> = {}): ListFileRowSizingConfig {
-    const showSearchExcerpt = overrides.showSearchExcerpt ?? true;
-
     return {
         heights: getListPaneMeasurements(false),
         titleRows: 1,
-        showSearchExcerpt,
         compactPaddingTotal: 18,
         selectionType: 'folder' as never,
         includeDescendantNotes: false,
@@ -104,34 +101,16 @@ afterEach(() => {
 });
 
 describe('resolveListFileRowHeightInputs', () => {
-    it('reports search excerpt content only when the feature is enabled', () => {
-        const file = createTestTFile('Notes/Daily.md');
-        const item = createFileItem(file, { searchMeta: { excerpt: 'Some excerpt' } as never });
-
-        const inputs = resolveListFileRowHeightInputs({
-            item,
-            config: createRowSizingConfig({ showSearchExcerpt: true })
-        });
-        expect(inputs.hasSearchExcerptContent).toBe(true);
-
-        const disabled = resolveListFileRowHeightInputs({
-            item,
-            config: createRowSizingConfig({ showSearchExcerpt: false })
-        });
-        expect(disabled.hasSearchExcerptContent).toBe(false);
-    });
-
-    it('does not report excerpt content for items without an excerpt', () => {
+    it('returns empty inputs since the search excerpt slot was removed', () => {
         const file = createTestTFile('Notes/Daily.md');
 
         const inputs = resolveListFileRowHeightInputs({
-            item: createFileItem(file),
-            config: createRowSizingConfig({ showSearchExcerpt: true })
+            item: createFileItem(file, { searchMeta: { matches: [] } as never }),
+            config: createRowSizingConfig()
         });
 
-        expect(inputs.hasSearchExcerptContent).toBeFalsy();
+        expect(inputs).toEqual({});
     });
-
 });
 
 describe('createRemeasureScheduler', () => {

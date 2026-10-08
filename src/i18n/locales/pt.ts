@@ -280,8 +280,7 @@ export const STRINGS_PT = {
                         'Quando uma pasta está selecionada, `path:"<folder>/"` é acrescentado à consulta para que o Omnisearch encontre correspondências nessa pasta e nas suas subpastas. Consultas que já contêm `path:` são enviadas sem alterações.',
                         'O Omnisearch retorna no máximo 50 resultados ordenados por relevância. Pesquisas com mais correspondências omitem as notas com classificação mais baixa.',
                         'Limitar a pesquisa a caminhos de pasta com caracteres não-ASCII requer o Omnisearch 1.30.0 ou posterior. Versões mais antigas pesquisam em todo o cofre e os resultados são depois filtrados pela pasta.',
-                        'Consultas com menos de 3 caracteres podem ser lentas em cofres grandes.',
-                        'As pré-visualizações das notas mostram excertos do Omnisearch em vez do texto de pré-visualização predefinido.'
+                        'Consultas com menos de 3 caracteres podem ser lentas em cofres grandes.'
                     ]
                 }
             }

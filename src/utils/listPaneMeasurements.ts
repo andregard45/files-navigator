@@ -16,7 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { SEARCH_EXCERPT_ROWS } from '../settings/listPaneAppearance';
 import { ItemType, ListPaneItemType, type NavigationItemType } from '../types';
 import type { FileData } from '../storage/IndexedDBStorage';
 import type { ListPaneItem } from '../types/virtualization';
@@ -175,23 +174,14 @@ function forEachVisibleFrontmatterProperty({
     }
 }
 
-/**
- * Shared clamp height for the Omnisearch excerpt area of a search-result row.
- * The excerpt always reserves `SEARCH_EXCERPT_ROWS` clamped lines regardless of
- * whether the excerpt text itself is rendered or replaced by property pills.
- */
-const SEARCH_EXCERPT_SLOT_HEIGHT = DESKTOP_MEASUREMENTS.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
-
 export interface FileRowHeightInputs {
-    /** True when this particular row carries an Omnisearch excerpt; reserves the excerpt slot in compact layout. */
-    hasSearchExcerptContent?: boolean;
+    /** Unused placeholder kept so call sites stay explicit about per-row inputs. */
+    _unused?: never;
 }
 
 export interface FileRowHeightConfig {
     heights: ListPaneMeasurements;
     titleRows: number;
-    /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
-    showSearchExcerpt: boolean;
     compactPaddingTotal: number;
 }
 
@@ -202,24 +192,12 @@ export function estimatePlainRowHeight(config: Pick<FileRowHeightConfig, 'height
 }
 
 /**
- * Flat estimator for Omnisearch search-result rows. The excerpt slot always reserves
- * `SEARCH_EXCERPT_ROWS` clamped lines.
- */
-export function estimateSearchRowHeight(
-    config: Pick<FileRowHeightConfig, 'heights' | 'titleRows'>
-): number {
-    const titleContentHeight = config.heights.titleLineHeight * config.titleRows;
-    return config.heights.basePadding + titleContentHeight + SEARCH_EXCERPT_SLOT_HEIGHT;
-}
-
-/**
  * Compact is the only list layout, so every row uses the compact padding formula.
- * Rows that actually carry an Omnisearch excerpt reserve one extra excerpt slot.
+ * Rows render the file name only; there are no excerpt slots.
  */
-export function estimateFileRowHeight(inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
+export function estimateFileRowHeight(_inputs: FileRowHeightInputs, config: FileRowHeightConfig): number {
     const { heights, titleRows, compactPaddingTotal } = config;
     const textContentHeight = heights.titleLineHeight * titleRows;
-    const excerptSlotHeight = inputs.hasSearchExcerptContent ? SEARCH_EXCERPT_SLOT_HEIGHT : 0;
-    return compactPaddingTotal + textContentHeight + excerptSlotHeight;
+    return compactPaddingTotal + textContentHeight;
 }
 

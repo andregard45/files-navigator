@@ -280,8 +280,7 @@ export const STRINGS_DE = {
                         'Wenn ein Ordner ausgewählt ist, wird `path:"<folder>/"` an die Abfrage angehängt, damit Omnisearch in diesem Ordner und seinen Unterordnern sucht. Abfragen, die bereits `path:` enthalten, werden unverändert gesendet.',
                         'Omnisearch gibt höchstens 50 nach Relevanz sortierte Ergebnisse zurück. Bei Suchen mit mehr Treffern fehlen die niedriger eingestuften Notizen.',
                         'Das Eingrenzen auf Ordnerpfade mit Nicht-ASCII-Zeichen erfordert Omnisearch 1.30.0 oder neuer. Ältere Versionen durchsuchen den gesamten Vault, und die Ergebnisse werden anschließend auf den Ordner gefiltert.',
-                        'Abfragen mit weniger als 3 Zeichen können in großen Vaults langsam sein.',
-                        'Notizvorschauen zeigen Omnisearch-Auszüge anstelle des Standard-Vorschautexts.'
+                        'Abfragen mit weniger als 3 Zeichen können in großen Vaults langsam sein.'
                     ]
                 }
             }

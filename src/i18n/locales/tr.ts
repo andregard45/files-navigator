@@ -280,8 +280,7 @@ export const STRINGS_TR = {
                         'Bir klasör seçildiğinde, sorguya `path:"<folder>/"` eklenir; böylece Omnisearch o klasör ve alt klasörleri içinde eşleşme arar. Zaten `path:` içeren sorgular değiştirilmeden gönderilir.',
                         'Omnisearch alaka düzeyine göre sıralanmış en fazla 50 sonuç döndürür. Bundan daha fazla eşleşmesi olan aramalarda düşük sıralı notlar gösterilmez.',
                         'ASCII olmayan karakterler içeren klasör yollarıyla kapsam belirlemek Omnisearch 1.30.0 veya sonrasını gerektirir. Daha eski sürümler kasanın tamamında arama yapar ve sonuçlar daha sonra klasöre göre filtrelenir.',
-                        '3 karakterden kısa sorgular büyük kasalarda yavaş olabilir.',
-                        'Not önizlemeleri varsayılan önizleme metni yerine Omnisearch alıntılarını gösterir.'
+                        '3 karakterden kısa sorgular büyük kasalarda yavaş olabilir.'
                     ]
                 }
             }

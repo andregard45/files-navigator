@@ -26,14 +26,9 @@ import {
 
 export type { ListPaneAppearance } from './types';
 
-/** Number of clamped excerpt rows reserved for Omnisearch search results in file items. */
-export const SEARCH_EXCERPT_ROWS = 2;
-
 export interface ListPaneAppearanceSettings {
     titleRows: number;
     groupBy: ListNoteGroupingOption;
-    /** True when the current row set is an Omnisearch result list (excerpt lines are shown). */
-    showSearchExcerpt?: boolean;
 }
 
 /**

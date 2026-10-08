@@ -35,12 +35,12 @@ export interface SearchResultMatch {
 
 /**
  * Metadata captured for search results when using external providers.
+ * `matches` drives file-name highlighting only; Omnisearch excerpt display was removed.
  */
 export interface SearchResultMeta {
     score: number;
     terms: string[];
     matches: SearchResultMatch[];
-    excerpt?: string;
 }
 
 export interface AliasSearchMatch {

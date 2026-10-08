@@ -59,7 +59,7 @@
  *    - Uses: calc(21px * var(--nn-android-font-scale-reciprocal, 1))
  *
  * 3. Fixed multi-line row heights (via CSS calc):
- *    - height/min-height for .nn-file-name and .nn-file-preview
+ *    - max-height for .nn-file-name
  *    - These use line-height vars which are pre-compensated, so we multiply by
  *      scale to get the fixed row height (which Android won't scale)
  *    - Uses: calc(var(--line-height) * rows * var(--nn-android-font-scale, 1))

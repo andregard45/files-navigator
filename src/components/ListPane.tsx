@@ -368,12 +368,6 @@ export const ListPane = React.memo(
                 effectiveGroupBy === appearanceSettings.groupBy ? appearanceSettings : { ...appearanceSettings, groupBy: effectiveGroupBy },
             [appearanceSettings, effectiveGroupBy]
         );
-        // Omnisearch excerpts render on the file-item secondary line while a search is active.
-        const layoutAppearanceSettings = useMemo(
-            () => ({ ...effectiveAppearanceSettings, showSearchExcerpt: Boolean(isSearchActive) }),
-            [effectiveAppearanceSettings, isSearchActive]
-        );
-
         // Determine if list pane is visible early to optimize
         const isVisible = !uiState.singlePane || uiState.currentSinglePaneView === 'files';
 
@@ -976,7 +970,7 @@ export const ListPane = React.memo(
                         onHoveredFilePathChange={handleHoveredFilePathChange}
                         onFileClick={handleFileItemClick}
                         fileIconSize={listMeasurements.fileIconSize}
-                        appearanceSettings={layoutAppearanceSettings}
+                        appearanceSettings={effectiveAppearanceSettings}
                         fileNameIconNeedles={fileNameIconNeedles}
                         fileItemStorage={fileItemStorage}
                         noteShortcutKeysByPath={noteShortcutKeysByPath}

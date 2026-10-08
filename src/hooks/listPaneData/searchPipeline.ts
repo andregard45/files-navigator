@@ -31,7 +31,6 @@ import {
     parseFilterSearchTokens
 } from '../../utils/filterSearch';
 import { getDateField } from '../../utils/sortUtils';
-import { normalizeExcerpt } from '../../utils/excerptNormalize';
 import { getCachedFileTags } from '../../utils/tagUtils';
 import { createOmnisearchHighlightQueryTokenContext, sanitizeOmnisearchHighlightTokens } from '../../utils/omnisearchHighlight';
 import { foldSearchText } from '../../utils/recordUtils';
@@ -252,14 +251,11 @@ export function useOmnisearchListResult({
 
                     files.push(hit.file);
                     const { matches, terms } = sanitizeOmnisearchHighlightTokens(hit.matches, hit.foundWords, queryTokenContext);
-                    const excerpt =
-                        typeof hit.excerpt === 'string' ? normalizeExcerpt(hit.excerpt, { stripHtml: false }) : undefined;
 
                     meta.set(hit.path, {
                         score: hit.score,
                         terms,
-                        matches,
-                        excerpt
+                        matches
                     });
                 });
 

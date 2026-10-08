@@ -204,7 +204,7 @@
     display: none;
 }
 
-/* File text content - left side container for name and search excerpt (compact is the only list mode) */
+/* File text content - left side container for the file name (compact is the only list mode) */
 .nn-compact-file-text-content {
     flex: 1;
     min-width: 0; /* Enable text truncation */
@@ -379,17 +379,3 @@
     top: var(--nn-file-padding-vertical-compact);
 }
 
-/* File preview text - search excerpt shown under the title while searching */
-.nn-file-preview {
-    font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
-    font-weight: var(--nn-theme-file-preview-font-weight);
-    color: var(--nn-theme-file-preview-color);
-    line-height: var(--nn-file-multiline-text-line-height);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: var(--preview-rows, 1);
-    -webkit-box-orient: vertical;
-    word-break: break-word;
-    max-height: calc(var(--nn-file-multiline-text-line-height) * var(--preview-rows, 1));
-}

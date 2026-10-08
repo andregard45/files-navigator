@@ -281,8 +281,7 @@ export const STRINGS_FR = {
                         'Lorsqu\'un dossier est sélectionné, `path:"<folder>/"` est ajouté à la requête afin qu\'Omnisearch cherche dans ce dossier et ses sous-dossiers. Les requêtes qui contiennent déjà `path:` sont envoyées telles quelles.',
                         'Omnisearch retourne au plus 50 résultats classés par pertinence. Les recherches avec plus de correspondances omettent les notes les moins bien classées.',
                         'Restreindre la recherche à des chemins de dossier avec des caractères non-ASCII nécessite Omnisearch 1.30.0 ou ultérieur. Les versions antérieures cherchent dans tout le coffre, puis les résultats sont filtrés par dossier.',
-                        'Les requêtes de moins de 3 caractères peuvent être lentes dans les grands coffres.',
-                        "Les aperçus de notes affichent les extraits Omnisearch au lieu du texte d'aperçu par défaut."
+                        'Les requêtes de moins de 3 caractères peuvent être lentes dans les grands coffres.'
                     ]
                 }
             }
