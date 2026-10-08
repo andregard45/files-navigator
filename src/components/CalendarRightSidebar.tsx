@@ -5,9 +5,7 @@ import { useSettingsState } from '../context/SettingsContext';
 import { isStorageRuntimeActive, subscribeStorageRuntimeActive } from '../context/StorageContext';
 import { runAsyncAction } from '../utils/async';
 import { getDBInstance } from '../storage/fileOperations';
-import { ContentProviderRegistry } from '../services/content/ContentProviderRegistry';
-import { ContentReadCache } from '../services/content/ContentReadCache';
-import { MarkdownPipelineContentProvider } from '../services/content/MarkdownPipelineContentProvider';
+import { FrontmatterSyncService } from '../services/content/frontmatterSyncService';
 import { NotebookNavigatorView } from '../view/NotebookNavigatorView';
 import { Calendar } from './calendar';
 
@@ -17,20 +15,19 @@ export function CalendarRightSidebar() {
     const isMountedRef = useRef(true);
     const latestSettingsRef = useRef(settings);
     latestSettingsRef.current = settings;
-    const calendarContentRegistryRef = useRef<ContentProviderRegistry | null>(null);
+    // Standalone adapter: the calendar sidebar must work without StorageContext, so it owns a local
+    // FrontmatterSyncService instance restricted to the markdownPipeline provider (properties only).
+    const calendarContentServiceRef = useRef<FrontmatterSyncService | null>(null);
     const visibleCalendarNoteFilesRef = useRef<TFile[]>([]);
     const visibleCalendarNotePathsRef = useRef<Set<string>>(new Set());
     const [storageRuntimeActive, setStorageRuntimeActive] = useState(() => isStorageRuntimeActive());
 
-    const getCalendarContentRegistry = useCallback(() => {
-        if (!calendarContentRegistryRef.current) {
-            const readCache = new ContentReadCache(app);
-            const registry = new ContentProviderRegistry();
-            registry.registerProvider(new MarkdownPipelineContentProvider(app, readCache));
-            calendarContentRegistryRef.current = registry;
+    const getCalendarContentService = useCallback(() => {
+        if (!calendarContentServiceRef.current) {
+            calendarContentServiceRef.current = new FrontmatterSyncService(app);
         }
 
-        return calendarContentRegistryRef.current;
+        return calendarContentServiceRef.current;
     }, [app]);
 
     const queueCalendarContentRefresh = useCallback(
@@ -44,11 +41,11 @@ export function CalendarRightSidebar() {
                 return;
             }
 
-            getCalendarContentRegistry().queueFilesForAllProviders(markdownFiles, latestSettingsRef.current, {
-                include: ['markdownPipeline']
+            void getCalendarContentService().processFiles(markdownFiles, latestSettingsRef.current, {
+                providers: ['markdownPipeline']
             });
         },
-        [getCalendarContentRegistry, storageRuntimeActive]
+        [getCalendarContentService, storageRuntimeActive]
     );
 
     useEffect(() => {
@@ -56,8 +53,8 @@ export function CalendarRightSidebar() {
 
         return () => {
             isMountedRef.current = false;
-            calendarContentRegistryRef.current?.stopAllProcessing();
-            calendarContentRegistryRef.current = null;
+            calendarContentServiceRef.current?.stop();
+            calendarContentServiceRef.current = null;
         };
     }, []);
 
@@ -65,10 +62,14 @@ export function CalendarRightSidebar() {
 
     useEffect(() => {
         if (storageRuntimeActive) {
-            calendarContentRegistryRef.current?.stopAllProcessing();
+            // Storage runtime owns content generation while active → drop the standalone pending work.
+            calendarContentServiceRef.current?.stop();
+            calendarContentServiceRef.current = null;
             return;
         }
 
+        // Restart after a previous stop() so queued refreshes are processed again.
+        calendarContentServiceRef.current?.start();
         queueCalendarContentRefresh(visibleCalendarNoteFilesRef.current);
     }, [queueCalendarContentRefresh, storageRuntimeActive]);
 

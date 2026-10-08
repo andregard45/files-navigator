@@ -35,7 +35,7 @@ export const LIMITS = {
          * Maximum markdown file size (bytes on disk) that we will read into a JS string via `vault.cachedRead()`.
          *
          * Used by:
-         * - `MarkdownPipelineContentProvider` when generating preview text and/or word count.
+         * - `FrontmatterSyncService` when generating preview text and/or word count.
          *
          * Why this exists:
          * - Reading large markdown files allocates a large JS string (often ~2 bytes per code unit), and preview/word-count
@@ -67,26 +67,10 @@ export const LIMITS = {
         dateFormatCacheMaxEntries: 8192
     },
     contentProvider: {
-        /**
-         * BaseContentProvider batch and retry controls.
-         *
-         * Rationale:
-         * - Keeps background work responsive: process in chunks, parallelize moderately, and backoff on failures.
-         */
-        queueBatchSize: 100,
-        parallelLimit: 10,
-        retry: {
-            /**
-             * Exponential backoff for retry-later semantics (e.g. waiting for metadata cache).
-             */
-            initialDelayMs: 1000,
-            maxDelayMs: 30_000,
-            maxAttempts: 5
-        },
         metadataCache: {
             /**
              * Controls for metadata-cache reads that can temporarily return empty results for recently created files.
-             * Providers can defer persisting empty values and allow BaseContentProvider retries.
+             * FrontmatterSyncService defers persisting empty values and retries on the next pass/trigger.
              */
             emptyValueRetryLimit: 2,
             recentFileWindowMs: 15_000

@@ -22,11 +22,11 @@
  * What it does:
  * - Monitors vault changes and syncs with database
  * - Builds and maintains the tag tree structure
- * - Coordinates content generation via ContentProviderRegistry
+ * - Coordinates content generation via FrontmatterSyncService
  * - Provides real-time content updates to UI components
  *
  * Relationships:
- * - Uses: IndexedDBStorage, ContentProviderRegistry, FileOperations, DiffCalculator
+ * - Uses: IndexedDBStorage, FrontmatterSyncService, FileOperations, DiffCalculator
  * - Provides: StorageContext to all child components
  * - Integrates with: Obsidian vault and metadata APIs
  *
@@ -43,11 +43,12 @@ import { createContext, useContext, useState, useRef, ReactNode, useMemo, useCal
 import { App, TFile, debounce, EventRef } from 'obsidian';
 import { ProcessedMetadata, extractMetadata } from '../utils/metadataExtractor';
 import { extractCurrentFrontmatterMetadataFromFileData } from '../utils/frontmatterMetadataCache';
-import { ContentProviderRegistry } from '../services/content/ContentProviderRegistry';
+import { FrontmatterSyncService, handleSettingsChange as planFrontmatterSettingsChange } from '../services/content/frontmatterSyncService';
+import type { ContentProviderType } from '../types/contentProviders';
+import type { NotebookNavigatorSettings } from '../settings/types';
+import { getMetadataDependentTypes } from './storage/storageContentTypes';
 import { useCacheRebuildNotice } from './storage/useCacheRebuildNotice';
 import { useIndexedDBReady } from './storage/useIndexedDBReady';
-import { useInitializeContentProviderRegistry } from './storage/useInitializeContentProviderRegistry';
-import { useMetadataCacheQueue } from './storage/useMetadataCacheQueue';
 import { useStorageCacheRebuild } from './storage/useStorageCacheRebuild';
 import { useStorageContentQueue } from './storage/useStorageContentQueue';
 import { useStorageFileQueries } from './storage/useStorageFileQueries';
@@ -172,8 +173,11 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         hiddenRootTags: new Map()
     });
 
-    // Registry managing content providers for generated file content
-    const contentRegistry = useRef<ContentProviderRegistry | null>(null);
+    // Service generating derived file content (properties, tags, metadata) synchronously from the metadata cache.
+    const contentService = useRef<FrontmatterSyncService | null>(null);
+    if (!contentService.current) {
+        contentService.current = new FrontmatterSyncService(app);
+    }
     const isFirstLoad = useRef(true);
     // ID of any scheduled timeout for deferred processing, used for cancellation on unmount
     const pendingSyncTimeoutId = useRef<number | null>(null);
@@ -275,19 +279,101 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         propertyTreeRebuildFnRef
     });
 
-    const { queueMetadataContentWhenReady, disposeMetadataWaitDisposers } = useMetadataCacheQueue({
-        app,
-        settings,
-        latestSettingsRef,
-        stoppedRef,
-        contentRegistryRef: contentRegistry,
-        metadataWaitDisposersRef,
-        pendingMetadataWaitPathsRef
-    });
+    /**
+     * Metadata-cache readiness gate for content processing (replaces the old `useMetadataCacheQueue` hook).
+     *
+     * The service itself defers files whose metadata cache entry is missing and sweeps them on follow-up
+     * passes. This wrapper additionally registers one-shot `metadataCache.changed` listeners per file so a
+     * cache catch-up immediately triggers a retry pass even when no vault event follows, mirroring the
+     * wait-disposer semantics of the removed queue.
+     */
+    const disposeMetadataWaitDisposers = useCallback(() => {
+        for (const disposer of metadataWaitDisposersRef.current) {
+            try {
+                disposer();
+            } catch {
+                // ignore
+            }
+        }
+        metadataWaitDisposersRef.current.clear();
+        pendingMetadataWaitPathsRef.current.clear();
+    }, []);
+
+    const queueMetadataContentWhenReady = useCallback(
+        (files: TFile[], includeTypes?: ContentProviderType[], settingsOverride?: NotebookNavigatorSettings) => {
+            const service = contentService.current;
+            if (!service || stoppedRef.current || files.length === 0) {
+                return;
+            }
+
+            const liveSettings = settingsOverride ?? latestSettingsRef.current;
+            // Only process provider types that are currently enabled in settings.
+            const providers = includeTypes ? getMetadataDependentTypes(liveSettings).filter(type => includeTypes.includes(type)) : undefined;
+            if (providers && providers.length === 0) {
+                return;
+            }
+            const options = providers ? { providers } : undefined;
+
+            runAsyncAction(async () => {
+                await service.processFiles(files, liveSettings, options);
+            });
+
+            if (typeof window === 'undefined') {
+                return;
+            }
+
+            // Watch for metadata-cache entries appearing for files whose cache is still missing; reprocess each once.
+            for (const file of files) {
+                const path = file.path;
+                if (app.metadataCache.getFileCache(file)) {
+                    continue;
+                }
+                if (pendingMetadataWaitPathsRef.current.has(path)) {
+                    // A listener for this path is already registered; keep it.
+                    continue;
+                }
+                pendingMetadataWaitPathsRef.current.set(path, 1);
+                let disposed = false;
+                const ref = app.metadataCache.on('changed', (changedFile, _data, cache) => {
+                    if (disposed || changedFile.path !== path || !cache) {
+                        return;
+                    }
+                    dispose();
+                    if (stoppedRef.current) {
+                        return;
+                    }
+                    const current = app.vault.getAbstractFileByPath(path);
+                    if (current instanceof TFile) {
+                        runAsyncAction(async () => {
+                            await service.processFiles([current], latestSettingsRef.current, options);
+                        });
+                    }
+                });
+                const dispose = (): void => {
+                    if (disposed) {
+                        return;
+                    }
+                    disposed = true;
+                    app.metadataCache.offref(ref);
+                    pendingMetadataWaitPathsRef.current.delete(path);
+                    metadataWaitDisposersRef.current.delete(dispose);
+                };
+                metadataWaitDisposersRef.current.add(dispose);
+            }
+        },
+        [app, contentService]
+    );
+
+    useEffect(() => {
+        return () => {
+            disposeMetadataWaitDisposers();
+            contentService.current?.stop();
+        };
+    }, [disposeMetadataWaitDisposers]);
 
     const { queueIndexableFilesForContentGeneration, queueIndexableFilesNeedingContentGeneration } = useStorageContentQueue({
         app,
-        contentRegistryRef: contentRegistry,
+        contentServiceRef: contentService,
         queueMetadataContentWhenReady
     });
 
@@ -295,7 +381,7 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
 
     const { rebuildCache } = useStorageCacheRebuild({
         app,
-        contentRegistryRef: contentRegistry,
+        contentServiceRef: contentService,
         pendingSyncTimeoutIdRef: pendingSyncTimeoutId,
         rebuildFileCacheRef,
         cancelTreeRebuildDebouncer,
@@ -467,19 +553,27 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         rebuildCache
     ]);
 
-    // Initializes providers before settings-sync hooks schedule any provider work.
-    useInitializeContentProviderRegistry({
-        app,
-        contentRegistryRef: contentRegistry,
-        pendingSyncTimeoutIdRef: pendingSyncTimeoutId,
-        clearCacheRebuildNotice
-    });
+    // The service instance is created eagerly above (during render) so settings-sync hooks can
+    // schedule work immediately — no separate initialization hook is needed anymore.
 
     const { resetPendingSettingsChanges } = useStorageSettingsSync({
         app,
         settings,
         stoppedRef,
-        contentRegistryRef: contentRegistry,
+        contentServiceRef: contentService,
+        handleProviderSettingsChange: async (oldSettings, newSettings) => {
+            // Pure policy ported from the former provider registry: which provider types
+            // are affected and which content fields must be cleared before regeneration.
+            const plan = planFrontmatterSettingsChange(oldSettings, newSettings);
+            if (plan.clearTypes.length > 0) {
+                const db = getDBInstance();
+                for (const clearType of plan.clearTypes) {
+                    await db.batchClearAllFileContent(clearType);
+                }
+                contentService.current?.resetAfterClear();
+            }
+            return plan.affectedTypes;
+        },
         hiddenFolders,
         hiddenFileProperties,
         hiddenFileNames,
@@ -508,7 +602,7 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
         hasBuiltInitialCacheRef: hasBuiltInitialCache,
         setIsStorageReady,
         isStorageReadyRef,
-        contentRegistryRef: contentRegistry,
+        contentServiceRef: contentService,
         pendingSyncTimeoutIdRef: pendingSyncTimeoutId,
         pendingRenameDataRef,
         modifyFlushBufferRef,
@@ -553,9 +647,9 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
                 // Mark stopped to gate any subsequent event handlers
                 stoppedRef.current = true;
                 resetPendingSettingsChanges();
-                // Stop all provider processing
-                if (contentRegistry.current) {
-                    contentRegistry.current.stopAllProcessing();
+                // Stop content processing and drop all pending/deferred work in the service.
+                if (contentService.current) {
+                    contentService.current.stop();
                 }
                 // Cancel any pending scheduled work initiated by StorageContext
                 if (pendingSyncTimeoutId.current !== null) {

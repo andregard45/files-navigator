@@ -19,7 +19,7 @@
 import { useCallback, type MutableRefObject } from 'react';
 import { App, TFile } from 'obsidian';
 import type { ContentProviderType, FileContentType } from '../../types/contentProviders';
-import type { ContentProviderRegistry } from '../../services/content/ContentProviderRegistry';
+import type { FrontmatterSyncService } from '../../services/content/frontmatterSyncService';
 import type { NotebookNavigatorSettings } from '../../settings/types';
 import { getDBInstance } from '../../storage/fileOperations';
 import { filterFilesRequiringMetadataSources } from '../storageQueueFilters';
@@ -29,13 +29,14 @@ import { getMarkdownPipelineContentTypes } from '../../utils/markdownPipelineCon
 /**
  * Queues files for derived-content generation.
  *
- * This hook is responsible for deciding which files should be handed to the `ContentProviderRegistry`.
+ * This hook decides which files should be handed to the `FrontmatterSyncService` (via
+ * `queueMetadataContentWhenReady`, an inline wrapper around `service.processFiles()` in StorageContext).
  * It separates:
  * - Markdown files, which are often gated by Obsidian metadata cache readiness.
  */
 export function useStorageContentQueue(params: {
     app: App;
-    contentRegistryRef: MutableRefObject<ContentProviderRegistry | null>;
+    contentServiceRef: MutableRefObject<FrontmatterSyncService | null>;
     queueMetadataContentWhenReady: (
         files: TFile[],
         includeTypes?: ContentProviderType[],
@@ -45,12 +46,12 @@ export function useStorageContentQueue(params: {
     queueIndexableFilesForContentGeneration: (files: TFile[], settings: NotebookNavigatorSettings) => { markdownFiles: TFile[] };
     queueIndexableFilesNeedingContentGeneration: (filesToCheck: TFile[], allFiles: TFile[], settings: NotebookNavigatorSettings) => void;
 } {
-    const { app, contentRegistryRef, queueMetadataContentWhenReady } = params;
+    const { app, contentServiceRef, queueMetadataContentWhenReady } = params;
 
     const queueIndexableFilesForContentGeneration = useCallback(
         (files: TFile[], settings: NotebookNavigatorSettings): { markdownFiles: TFile[] } => {
-            const registry = contentRegistryRef.current;
-            if (!registry || files.length === 0) {
+            const service = contentServiceRef.current;
+            if (!service || files.length === 0) {
                 return { markdownFiles: [] };
             }
 
@@ -66,12 +67,12 @@ export function useStorageContentQueue(params: {
 
             return { markdownFiles };
         },
-        [contentRegistryRef]
+        [contentServiceRef]
     );
 
     const queueIndexableFilesNeedingContentGeneration = useCallback(
         (filesToCheck: TFile[], allFiles: TFile[], settings: NotebookNavigatorSettings) => {
-            if (!contentRegistryRef.current) {
+            if (!contentServiceRef.current) {
                 return;
             }
 
@@ -129,7 +130,7 @@ export function useStorageContentQueue(params: {
                 queueMetadataContentWhenReady(markdownFiles, metadataDependentTypes, settings);
             }
         },
-        [app, contentRegistryRef, queueIndexableFilesForContentGeneration, queueMetadataContentWhenReady]
+        [app, contentServiceRef, queueIndexableFilesForContentGeneration, queueMetadataContentWhenReady]
     );
 
     return { queueIndexableFilesForContentGeneration, queueIndexableFilesNeedingContentGeneration };

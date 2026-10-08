@@ -181,7 +181,7 @@ describe('frontmatterSyncService', () => {
 
             // useFrontmatterMetadata defaults off in DEFAULT_SETTINGS and no hidden-file properties
             // are configured → the metadata provider processes everything as a no-op and must not be
-            // invoked at all (mirrors MetadataContentProvider.needsProcessing returning false).
+            // invoked at all (mirrors the former metadata provider needsProcessing returning false).
             const metaCall = db.batchCalls.find(c => c.provider === 'metadata');
             expect(metaCall).toBeUndefined();
 
@@ -271,7 +271,7 @@ describe('frontmatterSyncService', () => {
         });
 
         it('always defers clearing non-empty tags when the mtime was reset (verbatim policy, no age cutoff)', () => {
-            // Ported verbatim from TagContentProvider: shouldDeferExistingTagClearing does NOT check
+            // Ported verbatim from the former tag provider: shouldDeferExistingTagClearing does NOT check
             // file age — it relies on the emptyValueRetryLimit budget so old data is never wiped by a
             // transiently-empty cache. Only shouldDeferInitialEmptyTags uses recentFileWindowMs.
             const oldMtime = Date.now() - 60_000;
