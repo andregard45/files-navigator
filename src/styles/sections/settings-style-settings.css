@@ -144,7 +144,7 @@ settings:
     -
         id: nn-theme-navitem-custom-color-name-font-weight
         title: Custom color text weight
-        description: Font weight for custom or rainbow-colored names, group headers, parent folders, and tag pills.
+        description: Font weight for custom-colored names, group headers, parent folders, and tag pills.
         type: variable-number-slider
         default: 600
         min: 100

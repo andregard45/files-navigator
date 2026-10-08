@@ -44,8 +44,6 @@ interface NavigationPaneLayoutProps {
     shouldShowVaultTitleInNavigationPane: boolean;
     showAndroidToolbar: boolean;
     navigationToolbar: React.ReactNode;
-    pinNavigationBanner: boolean;
-    navigationBannerContent: React.ReactNode;
     shouldRenderPinnedShortcuts: boolean;
     pinnedShortcutsContainerRef: React.MutableRefObject<HTMLDivElement | null>;
     pinnedShortcutsHasOverflow: boolean;
@@ -60,11 +58,8 @@ interface NavigationPaneLayoutProps {
     isNavigationItemFilled: (item: CombinedNavigationItem) => boolean;
     onPinnedShortcutsResizePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
     scrollContainerRefCallback: (node: HTMLDivElement | null) => void;
-    hasNavigationBannerConfigured: boolean;
-    navigationBannerRef: React.MutableRefObject<HTMLDivElement | null>;
     items: CombinedNavigationItem[];
     rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
-    navigationScrollMargin: number;
     shouldRenderBottomToolbarInsidePanel: boolean;
     shouldRenderBottomToolbarOutsidePanel: boolean;
     calendarOverlay: React.ReactNode;
@@ -146,8 +141,6 @@ export function NavigationPaneLayout({
     shouldShowVaultTitleInNavigationPane,
     showAndroidToolbar,
     navigationToolbar,
-    pinNavigationBanner,
-    navigationBannerContent,
     shouldRenderPinnedShortcuts,
     pinnedShortcutsContainerRef,
     pinnedShortcutsHasOverflow,
@@ -162,11 +155,8 @@ export function NavigationPaneLayout({
     isNavigationItemFilled,
     onPinnedShortcutsResizePointerDown,
     scrollContainerRefCallback,
-    hasNavigationBannerConfigured,
-    navigationBannerRef,
     items,
     rowVirtualizer,
-    navigationScrollMargin,
     shouldRenderBottomToolbarInsidePanel,
     shouldRenderBottomToolbarOutsidePanel,
     calendarOverlay
@@ -187,7 +177,6 @@ export function NavigationPaneLayout({
                 />
                 {shouldShowVaultTitleInNavigationPane ? <VaultTitleArea /> : null}
                 {showAndroidToolbar ? navigationToolbar : null}
-                {pinNavigationBanner ? navigationBannerContent : null}
                 {shouldRenderPinnedShortcuts ? (
                     <div
                         className="nn-shortcut-pinned"
@@ -236,16 +225,10 @@ export function NavigationPaneLayout({
                 <div
                     ref={scrollContainerRefCallback}
                     className="nn-navigation-pane-scroller"
-                    data-banner={hasNavigationBannerConfigured ? 'true' : undefined}
                     data-pane="navigation"
                     tabIndex={-1}
                 >
                     <div className="nn-navigation-pane-content">
-                        {!pinNavigationBanner && navigationBannerContent ? (
-                            <div className="nn-navigation-pane-banner" ref={navigationBannerRef}>
-                                {navigationBannerContent}
-                            </div>
-                        ) : null}
                         <div role="tree">
                             {items.length > 0 && (
                                 <div
@@ -269,7 +252,7 @@ export function NavigationPaneLayout({
                                                 key={virtualItem.key}
                                                 item={item}
                                                 index={virtualItem.index}
-                                                top={Math.max(0, virtualItem.start - navigationScrollMargin)}
+                                                top={virtualItem.start}
                                                 adjacentFilledClassName={getAdjacentFilledClassName(
                                                     item,
                                                     virtualItem.index,

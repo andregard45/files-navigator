@@ -89,7 +89,6 @@ import { EMPTY_SEARCH_NAV_FILTER_STATE, type SearchNavFilterState } from '../typ
 import { getListPaneMeasurements } from '../utils/listPaneMeasurements';
 import type { InclusionOperator } from '../utils/filterSearch';
 import { useFolderDecorationState } from '../hooks/useFolderDecorationState';
-import { useFileItemPillDecorationState } from '../hooks/useFileItemPillDecorationState';
 import { useSelectedFolderFileVersion } from '../hooks/useSelectedFolderFileVersion';
 import type { FileItemPillOrderModel } from '../utils/fileItemPillOrder';
 import { useNavigationPaneTreeSections } from '../hooks/navigationPane/data/useNavigationPaneTreeSections';
@@ -1484,7 +1483,7 @@ export const NotebookNavigatorComponent = React.memo(
             uxPreferences.showCalendar &&
             settings.calendarPlacement === 'left-sidebar' &&
             settings.calendarLeftPlacement === 'below';
-        const { folderNavigationSource, folderDecorationModel, navRainbowState } = useFolderDecorationState();
+        const { folderNavigationSource, folderDecorationModel } = useFolderDecorationState();
         const navigationSourceState = useNavigationPaneSourceState({
             app,
             settings,
@@ -1505,12 +1504,6 @@ export const NotebookNavigatorComponent = React.memo(
             selectionScope: navigationSelectionScope,
             tagTreeService,
             propertyTreeService
-        });
-        const fileItemPillDecorationModel = useFileItemPillDecorationState({
-            sourceState: navigationSourceState,
-            treeSections: navigationTreeSections,
-            includeDescendantNotes: uxPreferences.includeDescendantNotes,
-            navRainbowState
         });
         const fileItemPillOrderModel = useMemo<FileItemPillOrderModel>(
             () => ({
@@ -1550,9 +1543,7 @@ export const NotebookNavigatorComponent = React.memo(
                         navigationSourceState={navigationSourceState}
                         navigationTreeSections={navigationTreeSections}
                         folderDecorationModel={folderDecorationModel}
-                        fileItemPillDecorationModel={fileItemPillDecorationModel}
                         fileItemPillOrderModel={fileItemPillOrderModel}
-                        navRainbowState={navRainbowState}
                         searchNavFilters={searchNavFilters}
                         onExecuteSearchShortcut={handleSearchShortcutExecution}
                         onNavigateToFolder={navigateToFolder}
@@ -1568,7 +1559,6 @@ export const NotebookNavigatorComponent = React.memo(
                         ref={listPaneRef}
                         rootContainerRef={containerRef}
                         folderDecorationModel={folderDecorationModel}
-                        fileItemPillDecorationModel={fileItemPillDecorationModel}
                         onSearchTokensChange={handleSearchTokensChange}
                         onNavigateToFolder={navigateToFolder}
                         onRevealTag={revealTag}

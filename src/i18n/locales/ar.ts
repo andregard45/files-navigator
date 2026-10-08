@@ -35,7 +35,6 @@ export const STRINGS_AR = {
         restoreDefault: 'استعادة الافتراضي', // Button text for restoring values to defaults (English: Restore default)
         submit: 'إرسال', // Button text for submitting forms and dialogs (English: Submit)
         save: 'حفظ', // Button text for saving settings and dialogs (English: Save)
-        configure: 'تكوين', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'الوضع الفاتح', // Label for light theme mode (English: Light mode)
         darkMode: 'الوضع الداكن', // Label for dark theme mode (English: Dark mode)
         noSelection: 'لا يوجد تحديد', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -428,9 +427,6 @@ export const STRINGS_AR = {
             moveSourcesToTrash: 'نقل الملاحظات المصدر إلى سلة المهملات بعد الدمج',
             mergeButton: 'دمج'
         },
-        navRainbowSection: {
-            title: (section: string) => `ألوان قوس قزح: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'البحث عن أيقونات...',
             recentlyUsedHeader: 'المستخدمة مؤخرًا',
@@ -651,15 +647,6 @@ export const STRINGS_AR = {
             instructions: {
                 navigate: 'للتنقل',
                 select: 'لتحديد القالب',
-                dismiss: 'للإغلاق'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'البحث عن صور...',
-            svgMissingDimensions: 'ملف SVG المحدد لا يحدد عرضًا أو ارتفاعًا أو viewBox.',
-            instructions: {
-                navigate: 'للتنقل',
-                select: 'لتعيين اللافتة',
                 dismiss: 'للإغلاق'
             }
         },
@@ -950,11 +937,9 @@ export const STRINGS_AR = {
                 description: 'التخطيط والمظهر وعدد الملفات وسلوك الطي وألوان قوس قزح.',
                 groups: {
                     appearance: 'المظهر',
-                    banner: 'اللافتة',
                     collapseItems: 'طي العناصر',
                     dragAndDrop: 'السحب والإفلات',
-                    fileCounts: 'عدد الملفات',
-                    rainbowColors: 'ألوان قوس قزح'
+                    fileCounts: 'عدد الملفات'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1009,8 +994,7 @@ export const STRINGS_AR = {
                 label: 'عرض الملفات',
                 description: 'العناوين ونص المعاينة والصور المميزة والوسوم والخصائص والتواريخ وعدد الكلمات وعدد الأحرف.',
                 groups: {
-                    icon: 'الأيقونة',
-                    title: 'العنوان'
+                    icon: 'الأيقونة'
                 }
             },
             calendar: {
@@ -1338,16 +1322,6 @@ export const STRINGS_AR = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'التوسيع أثناء السحب: تأخير التوسيع اللاحق',
                 desc: 'التأخير قبل توسيع مجلدات أو وسوم إضافية أثناء نفس عملية السحب (بالثواني).'
-            },
-            navigationBanner: {
-                name: 'لافتة التنقل (ملف تعريف الخزنة)',
-                desc: 'عرض صورة فوق لوحة التنقل. يتغير مع ملف تعريف الخزنة المحدد.',
-                current: 'اللافتة الحالية: {path}',
-                chooseButton: 'اختيار صورة'
-            },
-            pinNavigationBanner: {
-                name: 'تثبيت اللافتة',
-                desc: 'تثبيت لافتة التنقل فوق شجرة التنقل.'
             },
             showShortcuts: {
                 name: 'إظهار الاختصارات',
@@ -1756,10 +1730,6 @@ export const STRINGS_AR = {
                 helpTooltip: 'تنسيق باستخدام Moment',
                 momentLinkText: 'تنسيق Moment'
             },
-            useFolderColor: {
-                name: 'استخدام لون المجلد',
-                desc: 'تلوين عناوين الملاحظات وأيقونات الملفات بلون المجلد الأصلي عند عدم تعيين لون ملف مخصص. الأولوية: لون الملف المخصص > لون المجلد > اللون الافتراضي.'
-            },
             showRootFolder: {
                 name: 'إظهار المجلد الجذري',
                 desc: 'عرض اسم الخزنة كمجلد جذري في الشجرة.'
@@ -1797,87 +1767,7 @@ export const STRINGS_AR = {
                 name: 'تطبيق اللون على الأيقونات فقط',
                 desc: 'عند التمكين، تطبق الألوان المخصصة على الأيقونات فقط. عند التعطيل، تطبق الألوان على الأيقونات وتسميات النص.'
             },
-            navRainbowMode: {
-                name: 'وضع ألوان قوس قزح (ملف تعريف الخزنة)',
-                desc: 'تطبيق ألوان قوس قزح في لوحة التنقل.',
-                options: {
-                    off: 'إيقاف',
-                    textColor: 'لون النص',
-                    backgroundColor: 'لون الخلفية'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'اللون الأول',
-                desc: 'اللون الأول في تدرج قوس قزح.'
-            },
-            navRainbowLastColor: {
-                name: 'اللون الأخير',
-                desc: 'اللون الأخير في تدرج قوس قزح.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'نمط الانتقال',
-                desc: 'الاستيفاء المستخدم بين اللون الأول والأخير.',
-                options: {
-                    hue: 'درجة اللون',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'تطبيق على الاختصارات',
-                desc: 'تطبيق ألوان قوس قزح على الاختصارات.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'تطبيق على العناصر الأخيرة',
-                desc: 'تطبيق ألوان قوس قزح على العناصر الأخيرة.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'تطبيق على المجلدات',
-                desc: 'تطبيق ألوان قوس قزح على المجلدات.'
-            },
-            navRainbowFolderScope: {
-                name: 'نطاق المجلدات',
-                desc: 'تحديد مستويات المجلدات التي تبدأ تعيينات الألوان.',
-                options: {
-                    root: 'المستوى الجذر',
-                    child: 'المستوى الفرعي',
-                    all: 'كل مستوى'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'تطبيق على الوسوم',
-                desc: 'تطبيق ألوان قوس قزح على الوسوم.'
-            },
-            navRainbowTagScope: {
-                name: 'نطاق الوسوم',
-                desc: 'تحديد مستويات الوسوم التي تبدأ تعيينات الألوان.',
-                options: {
-                    root: 'المستوى الجذر',
-                    child: 'المستوى الفرعي',
-                    all: 'كل مستوى'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'تطبيق على الخصائص',
-                desc: 'تطبيق ألوان قوس قزح على الخصائص.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'سطوع متسق عبر الألوان', // (English: Consistent brightness across hues)
-                desc: 'استيفاء السطوع بين لون البداية ولون النهاية أثناء انتقالات درجة اللون.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'فصل ألوان الوضع الفاتح والداكن', // (English: Separate light and dark mode colors)
-                desc: 'استخدام ألوان قوس قزح مختلفة للوضع الفاتح والوضع الداكن.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'نسخ لون الوضع الفاتح إلى الوضع الداكن', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'نطاق الخصائص',
-                desc: 'تحديد مستويات الخصائص التي تبدأ تعيينات الألوان.',
-                options: {
-                    root: 'المستوى الجذر',
-                    child: 'المستوى الفرعي',
-                    all: 'كل مستوى'
-                }
-            },
+            copyLightToDark: 'نسخ لون الوضع الفاتح إلى الوضع الداكن', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'طي العناصر',
                 desc: 'اختر ما يؤثر عليه زر توسيع/طي الكل.',

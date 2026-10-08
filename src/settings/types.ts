@@ -86,7 +86,6 @@ export const SYNC_MODE_SETTING_IDS = [
     'narrowSidebarCustomWidth',
     'paneTransitionDuration',
     'toolbarVisibility',
-    'pinNavigationBanner',
     'navIndent',
     'navItemHeight',
     'navItemHeightScaleText',
@@ -203,44 +202,6 @@ export type ItemScope = 'all' | 'folders-only' | 'tags-only' | 'properties-only'
 
 export function isItemScope(value: unknown): value is ItemScope {
     return value === 'all' || value === 'folders-only' || value === 'tags-only' || value === 'properties-only';
-}
-
-export type NavRainbowColorMode = 'none' | 'foreground' | 'background';
-
-export function isNavRainbowColorMode(value: unknown): value is NavRainbowColorMode {
-    return value === 'none' || value === 'foreground' || value === 'background';
-}
-
-export type NavRainbowScope = 'root' | 'child' | 'all';
-
-export function isNavRainbowScope(value: unknown): value is NavRainbowScope {
-    return value === 'root' || value === 'child' || value === 'all';
-}
-
-export type NavRainbowTransitionStyle = 'hue' | 'rgb';
-
-export function isNavRainbowTransitionStyle(value: unknown): value is NavRainbowTransitionStyle {
-    return value === 'hue' || value === 'rgb';
-}
-
-export interface NavRainbowSectionSettings {
-    enabled: boolean;
-    firstColor: string;
-    lastColor: string;
-    darkFirstColor: string;
-    darkLastColor: string;
-    transitionStyle: NavRainbowTransitionStyle;
-}
-
-export interface NavRainbowSettings {
-    mode: NavRainbowColorMode;
-    balanceHueLuminance: boolean;
-    separateThemeColors: boolean;
-    shortcuts: NavRainbowSectionSettings;
-    recent: NavRainbowSectionSettings;
-    folders: NavRainbowSectionSettings & { scope: NavRainbowScope };
-    tags: NavRainbowSectionSettings & { scope: NavRainbowScope };
-    properties: NavRainbowSectionSettings & { scope: NavRainbowScope };
 }
 
 /** Modifier key used for multi-select operations */
@@ -604,10 +565,8 @@ export interface VaultProfile {
     hiddenFileNames: string[];
     hiddenFileTags: string[];
     hiddenFileProperties: string[];
-    navigationBanner: string | null;
     periodicNotesFolder: string;
     shortcuts: ShortcutEntry[];
-    navRainbow: NavRainbowSettings;
 }
 
 /**
@@ -685,7 +644,6 @@ export interface NotebookNavigatorSettings {
     moveFileConflicts: MoveFileConflictsSetting;
 
     // Navigation pane tab - Appearance
-    pinNavigationBanner: boolean;
     showNoteCount: boolean;
     separateNoteCounts: boolean;
     showIndentGuides: boolean;
@@ -808,7 +766,6 @@ export interface NotebookNavigatorSettings {
     showCategoryIcons: boolean;
     fileTypeIconMap: Record<string, string>;
     fileTypeIconPreset: FileTypeIconPreset;
-    useFolderColorForTitles: boolean;
 
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)
     calendarPlacement: CalendarPlacement;
@@ -869,7 +826,6 @@ export interface NotebookNavigatorSettings {
     virtualFolderBackgroundColors: Record<string, string>;
     navigationSeparators: Record<string, boolean>;
     userColors: string[];
-    lastShownVersion: string;
     rootFolderOrder: string[];
     rootTagOrder: string[];
     rootPropertyOrder: string[];

@@ -35,7 +35,6 @@ export const STRINGS_FA = {
         restoreDefault: 'بازگردانی پیش‌فرض', // Button text for restoring values to defaults (English: Restore default)
         submit: 'ارسال',
         save: 'ذخیره', // Button text for saving settings and dialogs (English: Save)
-        configure: 'پیکربندی', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'حالت روشن', // Label for light theme mode (English: Light mode)
         darkMode: 'حالت تاریک', // Label for dark theme mode (English: Dark mode)
         noSelection: 'بدون انتخاب',
@@ -429,9 +428,6 @@ export const STRINGS_FA = {
             moveSourcesToTrash: 'انتقال یادداشت‌های مبدأ به زباله‌دان پس از ادغام',
             mergeButton: 'ادغام'
         },
-        navRainbowSection: {
-            title: (section: string) => `رنگ‌های رنگین‌کمان: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'جستجوی آیکون...',
             recentlyUsedHeader: 'اخیراً استفاده شده',
@@ -654,15 +650,6 @@ export const STRINGS_FA = {
             instructions: {
                 navigate: 'برای ناوبری',
                 select: 'برای انتخاب الگو',
-                dismiss: 'برای بستن'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'جستجوی تصویر...',
-            svgMissingDimensions: 'فایل SVG انتخاب‌شده عرض، ارتفاع یا viewBox تعریف نمی‌کند.',
-            instructions: {
-                navigate: 'برای ناوبری',
-                select: 'برای تنظیم بنر',
                 dismiss: 'برای بستن'
             }
         },
@@ -954,11 +941,9 @@ export const STRINGS_FA = {
                 description: 'چیدمان، ظاهر، تعداد فایل‌ها، رفتار جمع‌شدن و رنگ‌های رنگین‌کمان.',
                 groups: {
                     appearance: 'ظاهر',
-                    banner: 'بنر',
                     collapseItems: 'جمع کردن آیتم‌ها',
                     dragAndDrop: 'کشیدن و رها کردن',
-                    fileCounts: 'تعداد فایل‌ها',
-                    rainbowColors: 'رنگ‌های رنگین‌کمان'
+                    fileCounts: 'تعداد فایل‌ها'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1013,8 +998,7 @@ export const STRINGS_FA = {
                 label: 'نمایش فایل',
                 description: 'عناوین، متن پیش‌نمایش، تصاویر ویژه، برچسب‌ها، ویژگی‌ها، تاریخ‌ها، تعداد کلمات و تعداد نویسه‌ها.',
                 groups: {
-                    icon: 'آیکون',
-                    title: 'عنوان'
+                    icon: 'آیکون'
                 }
             },
             calendar: {
@@ -1342,16 +1326,6 @@ export const STRINGS_FA = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'گسترش هنگام کشیدن: تأخیر گسترش‌های بعدی',
                 desc: 'تأخیر قبل از گسترش پوشه‌ها یا برچسب‌های بیشتر در همان عملیات کشیدن (ثانیه).'
-            },
-            navigationBanner: {
-                name: 'بنر ناوبری (پروفایل خزانه)',
-                desc: 'تصویری را بالای پنل ناوبری نمایش دهید. با پروفایل خزانه انتخابی تغییر می‌کند.',
-                current: 'بنر فعلی: {path}',
-                chooseButton: 'انتخاب تصویر'
-            },
-            pinNavigationBanner: {
-                name: 'سنجاق کردن بنر',
-                desc: 'سنجاق کردن بنر ناوبری بالای درخت ناوبری.'
             },
             showShortcuts: {
                 name: 'نمایش میانبرها',
@@ -1761,10 +1735,6 @@ export const STRINGS_FA = {
                 helpTooltip: 'قالب با استفاده از Moment',
                 momentLinkText: 'قالب Moment'
             },
-            useFolderColor: {
-                name: 'استفاده از رنگ پوشه',
-                desc: 'رنگ‌آمیزی عناوین یادداشت و آیکون‌های فایل با رنگ پوشه والد هنگامی که رنگ فایل سفارشی تنظیم نشده است. اولویت: رنگ فایل سفارشی > رنگ پوشه > رنگ پیش‌فرض.'
-            },
             showRootFolder: {
                 name: 'نمایش پوشه اصلی',
                 desc: 'نام خزانه را به عنوان پوشه اصلی در درخت نمایش دهید.'
@@ -1802,87 +1772,7 @@ export const STRINGS_FA = {
                 name: 'اعمال رنگ فقط به آیکون‌ها',
                 desc: 'وقتی فعال، رنگ‌های سفارشی فقط به آیکون‌ها اعمال می‌شوند. وقتی غیرفعال، رنگ‌ها به آیکون‌ها و برچسب‌های متن اعمال می‌شوند.'
             },
-            navRainbowMode: {
-                name: 'حالت رنگ‌های رنگین‌کمان (پروفایل خزانه)',
-                desc: 'اعمال رنگ‌های رنگین‌کمان در پنل ناوبری.',
-                options: {
-                    off: 'خاموش',
-                    textColor: 'رنگ متن',
-                    backgroundColor: 'رنگ پس‌زمینه'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'رنگ اول',
-                desc: 'رنگ اول در گرادیان رنگین‌کمان.'
-            },
-            navRainbowLastColor: {
-                name: 'رنگ آخر',
-                desc: 'رنگ آخر در گرادیان رنگین‌کمان.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'سبک انتقال',
-                desc: 'درون‌یابی استفاده‌شده بین رنگ اول و آخر.',
-                options: {
-                    hue: 'فام',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'اعمال بر میانبرها',
-                desc: 'اعمال رنگ‌های رنگین‌کمان بر میانبرها.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'اعمال بر موارد اخیر',
-                desc: 'اعمال رنگ‌های رنگین‌کمان بر موارد اخیر.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'اعمال بر پوشه‌ها',
-                desc: 'اعمال رنگ‌های رنگین‌کمان بر پوشه‌ها.'
-            },
-            navRainbowFolderScope: {
-                name: 'محدوده پوشه‌ها',
-                desc: 'انتخاب سطوح پوشه‌ای که تخصیص رنگ از آن‌ها شروع می‌شود.',
-                options: {
-                    root: 'سطح ریشه',
-                    child: 'سطح فرزند',
-                    all: 'هر سطح'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'اعمال بر برچسب‌ها',
-                desc: 'اعمال رنگ‌های رنگین‌کمان بر برچسب‌ها.'
-            },
-            navRainbowTagScope: {
-                name: 'محدوده برچسب‌ها',
-                desc: 'انتخاب سطوح برچسبی که تخصیص رنگ از آن‌ها شروع می‌شود.',
-                options: {
-                    root: 'سطح ریشه',
-                    child: 'سطح فرزند',
-                    all: 'هر سطح'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'اعمال بر ویژگی‌ها',
-                desc: 'اعمال رنگ‌های رنگین‌کمان بر ویژگی‌ها.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'روشنایی یکنواخت در بین رنگ‌ها', // (English: Consistent brightness across hues)
-                desc: 'روشنایی را بین رنگ‌های شروع و پایان در طول انتقال‌های رنگی درون‌یابی می‌کند.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'جداسازی رنگ‌های حالت روشن و تاریک', // (English: Separate light and dark mode colors)
-                desc: 'استفاده از رنگ‌های رنگین‌کمان متفاوت برای حالت روشن و حالت تاریک.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'کپی رنگ حالت روشن به حالت تاریک', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'محدوده ویژگی‌ها',
-                desc: 'انتخاب سطوح ویژگی که تخصیص رنگ از آن‌ها شروع می‌شود.',
-                options: {
-                    root: 'سطح ریشه',
-                    child: 'سطح فرزند',
-                    all: 'هر سطح'
-                }
-            },
+            copyLightToDark: 'کپی رنگ حالت روشن به حالت تاریک', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'جمع کردن آیتم‌ها',
                 desc: 'انتخاب کنید دکمه باز/بسته کردن همه چه چیزی را تحت تأثیر قرار دهد.',

@@ -35,7 +35,6 @@ export const STRINGS_RU = {
         restoreDefault: 'Восстановить значение по умолчанию', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Отправить', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Сохранить', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Настроить', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Светлый режим', // Label for light theme mode (English: Light mode)
         darkMode: 'Тёмный режим', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Ничего не выбрано', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -430,9 +429,6 @@ export const STRINGS_RU = {
             moveSourcesToTrash: 'Переместить исходные заметки в корзину после объединения',
             mergeButton: 'Объединить'
         },
-        navRainbowSection: {
-            title: (section: string) => `Цвета радуги: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Поиск иконок...',
             recentlyUsedHeader: 'Недавно использованные',
@@ -652,15 +648,6 @@ export const STRINGS_RU = {
             instructions: {
                 navigate: 'для навигации',
                 select: 'для выбора шаблона',
-                dismiss: 'для закрытия'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Поиск изображений...',
-            svgMissingDimensions: 'Выбранный SVG-файл не задаёт ширину, высоту или viewBox.',
-            instructions: {
-                navigate: 'для навигации',
-                select: 'для установки баннера',
                 dismiss: 'для закрытия'
             }
         },
@@ -952,11 +939,9 @@ export const STRINGS_RU = {
                 description: 'Компоновка, оформление, количество файлов, поведение сворачивания и цвета радуги.',
                 groups: {
                     appearance: 'Оформление',
-                    banner: 'Баннер',
                     collapseItems: 'Сворачивание элементов',
                     dragAndDrop: 'Перетаскивание',
-                    fileCounts: 'Количество файлов',
-                    rainbowColors: 'Цвета радуги'
+                    fileCounts: 'Количество файлов'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1012,8 +997,7 @@ export const STRINGS_RU = {
                 label: 'Отображение файлов',
                 description: 'Заголовки, текст превью, изображения-обложки, теги, свойства, даты, количество слов и количество символов.',
                 groups: {
-                    icon: 'Иконка',
-                    title: 'Заголовок'
+                    icon: 'Иконка'
                 }
             },
             calendar: {
@@ -1341,16 +1325,6 @@ export const STRINGS_RU = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Разворачивать при перетаскивании: Задержка последующих разворачиваний',
                 desc: 'Задержка перед разворачиванием дополнительных папок или тегов во время того же перетаскивания (секунды).'
-            },
-            navigationBanner: {
-                name: 'Баннер навигации (профиль хранилища)',
-                desc: 'Показывать изображение над панелью навигации. Меняется с выбранным профилем хранилища.',
-                current: 'Текущий баннер: {path}',
-                chooseButton: 'Выбрать изображение'
-            },
-            pinNavigationBanner: {
-                name: 'Закрепить баннер',
-                desc: 'Закрепить баннер навигации над деревом навигации.'
             },
             showShortcuts: {
                 name: 'Показывать ярлыки',
@@ -1760,10 +1734,6 @@ export const STRINGS_RU = {
                 helpTooltip: 'Формат Moment',
                 momentLinkText: 'формат Moment'
             },
-            useFolderColor: {
-                name: 'Использовать цвет папки',
-                desc: 'Окрашивать заголовки заметок и иконки файлов цветом родительской папки, когда не задан пользовательский цвет файла. Приоритет: пользовательский цвет файла > цвет папки > цвет по умолчанию.'
-            },
             showRootFolder: {
                 name: 'Показывать корневую папку',
                 desc: 'Отображать название хранилища как корневую папку в дереве.'
@@ -1801,87 +1771,7 @@ export const STRINGS_RU = {
                 name: 'Применять цвет только к иконкам',
                 desc: 'При включении пользовательские цвета применяются только к иконкам. При отключении цвета применяются и к иконкам, и к текстовым меткам.'
             },
-            navRainbowMode: {
-                name: 'Режим цветов радуги (профиль хранилища)',
-                desc: 'Применить цвета радуги в панели навигации.',
-                options: {
-                    off: 'Выкл.',
-                    textColor: 'Цвет текста',
-                    backgroundColor: 'Цвет фона'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Первый цвет',
-                desc: 'Первый цвет в радужном градиенте.'
-            },
-            navRainbowLastColor: {
-                name: 'Последний цвет',
-                desc: 'Последний цвет в радужном градиенте.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Стиль перехода',
-                desc: 'Интерполяция между первым и последним цветом.',
-                options: {
-                    hue: 'Оттенок',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Применить к ярлыкам',
-                desc: 'Применить цвета радуги к ярлыкам.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Применить к недавним элементам',
-                desc: 'Применить цвета радуги к недавним элементам.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Применить к папкам',
-                desc: 'Применить цвета радуги к папкам.'
-            },
-            navRainbowFolderScope: {
-                name: 'Область папок',
-                desc: 'Выбрать уровни папок для начала назначения цветов.',
-                options: {
-                    root: 'Корневой уровень',
-                    child: 'Дочерний уровень',
-                    all: 'Каждый уровень'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Применить к тегам',
-                desc: 'Применить цвета радуги к тегам.'
-            },
-            navRainbowTagScope: {
-                name: 'Область тегов',
-                desc: 'Выбрать уровни тегов для начала назначения цветов.',
-                options: {
-                    root: 'Корневой уровень',
-                    child: 'Дочерний уровень',
-                    all: 'Каждый уровень'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Применить к свойствам',
-                desc: 'Применить цвета радуги к свойствам.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Равномерная яркость между оттенками', // (English: Consistent brightness across hues)
-                desc: 'Интерполирует яркость между начальным и конечным цветами при переходах оттенков.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Раздельные цвета для светлого и тёмного режимов', // (English: Separate light and dark mode colors)
-                desc: 'Использовать разные цвета радуги для светлого и тёмного режимов.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Копировать цвет светлого режима в тёмный режим', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Область свойств',
-                desc: 'Выбрать уровни свойств для начала назначения цветов.',
-                options: {
-                    root: 'Корневой уровень',
-                    child: 'Дочерний уровень',
-                    all: 'Каждый уровень'
-                }
-            },
+            copyLightToDark: 'Копировать цвет светлого режима в тёмный режим', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Сворачивание элементов',
                 desc: 'Выберите, на что влияет кнопка развернуть/свернуть всё.',

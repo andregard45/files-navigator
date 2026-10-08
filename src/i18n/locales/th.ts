@@ -35,7 +35,6 @@ export const STRINGS_TH = {
         restoreDefault: 'คืนค่าเริ่มต้น', // Button text for restoring values to defaults (English: Restore default)
         submit: 'ส่ง',
         save: 'บันทึก', // Button text for saving settings and dialogs (English: Save)
-        configure: 'กำหนดค่า', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'โหมดสว่าง', // Label for light theme mode (English: Light mode)
         darkMode: 'โหมดมืด', // Label for dark theme mode (English: Dark mode)
         noSelection: 'ไม่มีการเลือก',
@@ -428,9 +427,6 @@ export const STRINGS_TH = {
             moveSourcesToTrash: 'ย้ายโน้ตต้นทางไปที่ถังขยะหลังจากรวม',
             mergeButton: 'รวม'
         },
-        navRainbowSection: {
-            title: (section: string) => `สีรุ้ง: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'ค้นหาไอคอน...',
             recentlyUsedHeader: 'ใช้ล่าสุด',
@@ -649,15 +645,6 @@ export const STRINGS_TH = {
             instructions: {
                 navigate: 'เพื่อนำทาง',
                 select: 'เพื่อเลือกเทมเพลต',
-                dismiss: 'เพื่อปิด'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'ค้นหารูปภาพ...',
-            svgMissingDimensions: 'ไฟล์ SVG ที่เลือกไม่ได้กำหนดความกว้าง ความสูง หรือ viewBox',
-            instructions: {
-                navigate: 'เพื่อนำทาง',
-                select: 'เพื่อตั้งแบนเนอร์',
                 dismiss: 'เพื่อปิด'
             }
         },
@@ -948,11 +935,9 @@ export const STRINGS_TH = {
                 description: 'เค้าโครง ลักษณะ จำนวนไฟล์ พฤติกรรมการยุบ และสีรุ้ง',
                 groups: {
                     appearance: 'ลักษณะ',
-                    banner: 'แบนเนอร์',
                     collapseItems: 'ยุบรายการ',
                     dragAndDrop: 'ลากและวาง',
-                    fileCounts: 'จำนวนไฟล์',
-                    rainbowColors: 'สีรุ้ง'
+                    fileCounts: 'จำนวนไฟล์'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1007,8 +992,7 @@ export const STRINGS_TH = {
                 label: 'การแสดงไฟล์',
                 description: 'ชื่อเรื่อง ข้อความตัวอย่าง รูปภาพเด่น แท็ก คุณสมบัติ วันที่ จำนวนคำ และจำนวนอักขระ',
                 groups: {
-                    icon: 'ไอคอน',
-                    title: 'ชื่อเรื่อง'
+                    icon: 'ไอคอน'
                 }
             },
             calendar: {
@@ -1336,16 +1320,6 @@ export const STRINGS_TH = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'ขยายระหว่างลาก: หน่วงเวลาการขยายครั้งถัดไป',
                 desc: 'หน่วงเวลาก่อนขยายโฟลเดอร์หรือแท็กเพิ่มเติมระหว่างการลากเดียวกัน (วินาที)'
-            },
-            navigationBanner: {
-                name: 'แบนเนอร์นำทาง (โปรไฟล์ห้องนิรภัย)',
-                desc: 'แสดงรูปภาพเหนือแผงนำทาง เปลี่ยนตามโปรไฟล์ห้องนิรภัยที่เลือก',
-                current: 'แบนเนอร์ปัจจุบัน: {path}',
-                chooseButton: 'เลือกรูปภาพ'
-            },
-            pinNavigationBanner: {
-                name: 'ปักหมุดแบนเนอร์',
-                desc: 'ปักหมุดแบนเนอร์การนำทางไว้เหนือแผนผังการนำทาง'
             },
             showShortcuts: {
                 name: 'แสดงทางลัด',
@@ -1754,10 +1728,6 @@ export const STRINGS_TH = {
                 helpTooltip: 'รูปแบบโดยใช้ Moment',
                 momentLinkText: 'รูปแบบ Moment'
             },
-            useFolderColor: {
-                name: 'ใช้สีโฟลเดอร์',
-                desc: 'ใส่สีให้กับชื่อโน้ตและไอคอนไฟล์ตามสีของโฟลเดอร์หลักเมื่อไม่มีการตั้งค่าสีไฟล์กำหนดเอง ลำดับความสำคัญ: สีไฟล์กำหนดเอง > สีโฟลเดอร์ > สีค่าเริ่มต้น'
-            },
             showRootFolder: {
                 name: 'แสดงโฟลเดอร์ราก',
                 desc: 'แสดงชื่อห้องนิรภัยเป็นโฟลเดอร์รากในต้นไม้'
@@ -1795,87 +1765,7 @@ export const STRINGS_TH = {
                 name: 'ใช้สีกับไอคอนเท่านั้น',
                 desc: 'เมื่อเปิดใช้งาน สีกำหนดเองจะใช้กับไอคอนเท่านั้น เมื่อปิดใช้งาน สีจะใช้กับทั้งไอคอนและป้ายข้อความ'
             },
-            navRainbowMode: {
-                name: 'โหมดสีรุ้ง (โปรไฟล์ห้องนิรภัย)',
-                desc: 'ใช้สีรุ้งในแผงนำทาง',
-                options: {
-                    off: 'ปิด',
-                    textColor: 'สีข้อความ',
-                    backgroundColor: 'สีพื้นหลัง'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'สีแรก',
-                desc: 'สีแรกในไล่ระดับสีรุ้ง'
-            },
-            navRainbowLastColor: {
-                name: 'สีสุดท้าย',
-                desc: 'สีสุดท้ายในไล่ระดับสีรุ้ง'
-            },
-            navRainbowTransitionStyle: {
-                name: 'รูปแบบการเปลี่ยน',
-                desc: 'การประมาณค่าที่ใช้ระหว่างสีแรกและสีสุดท้าย',
-                options: {
-                    hue: 'เฉดสี',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'ใช้กับทางลัด',
-                desc: 'ใช้สีรุ้งกับทางลัด'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'ใช้กับรายการล่าสุด',
-                desc: 'ใช้สีรุ้งกับรายการล่าสุด'
-            },
-            navRainbowApplyToFolders: {
-                name: 'ใช้กับโฟลเดอร์',
-                desc: 'ใช้สีรุ้งกับโฟลเดอร์'
-            },
-            navRainbowFolderScope: {
-                name: 'ขอบเขตโฟลเดอร์',
-                desc: 'เลือกระดับโฟลเดอร์ที่เริ่มกำหนดสี',
-                options: {
-                    root: 'ระดับราก',
-                    child: 'ระดับย่อย',
-                    all: 'ทุกระดับ'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'ใช้กับแท็ก',
-                desc: 'ใช้สีรุ้งกับแท็ก'
-            },
-            navRainbowTagScope: {
-                name: 'ขอบเขตแท็ก',
-                desc: 'เลือกระดับแท็กที่เริ่มกำหนดสี',
-                options: {
-                    root: 'ระดับราก',
-                    child: 'ระดับย่อย',
-                    all: 'ทุกระดับ'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'ใช้กับคุณสมบัติ',
-                desc: 'ใช้สีรุ้งกับคุณสมบัติ'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'ความสว่างสม่ำเสมอข้ามเฉดสี', // (English: Consistent brightness across hues)
-                desc: 'ประมาณค่าความสว่างระหว่างสีเริ่มต้นและสีสุดท้ายระหว่างการเปลี่ยนเฉดสี' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'แยกสีโหมดสว่างและโหมดมืด', // (English: Separate light and dark mode colors)
-                desc: 'ใช้สีรุ้งที่แตกต่างกันสำหรับโหมดสว่างและโหมดมืด' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'คัดลอกสีโหมดสว่างไปยังโหมดมืด', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'ขอบเขตคุณสมบัติ',
-                desc: 'เลือกระดับคุณสมบัติที่เริ่มกำหนดสี',
-                options: {
-                    root: 'ระดับราก',
-                    child: 'ระดับย่อย',
-                    all: 'ทุกระดับ'
-                }
-            },
+            copyLightToDark: 'คัดลอกสีโหมดสว่างไปยังโหมดมืด', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'ยุบรายการ',
                 desc: 'เลือกว่าปุ่มขยาย/ยุบทั้งหมดจะมีผลกับอะไร',

@@ -29,7 +29,6 @@ import type {
 } from '../../hooks/navigationPane/navigationPaneShortcutTypes';
 import type { NavigationPaneTreeInteractionsResult } from '../../hooks/navigationPane/useNavigationPaneTreeInteractions';
 import type { NavigationSearchHighlightsResult } from '../../hooks/navigationPane/useNavigationSearchHighlights';
-import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 export type NavigationInlineRenameTarget =
     | { type: 'folder'; id: string; initialValue: string }
@@ -70,7 +69,6 @@ export interface NavigationPaneRowContext {
     getFileDisplayName: (file: TFile) => string;
     getFileTimestamps: (file: TFile) => { created: number; modified: number };
     /** Pill models shared with the list pane so note tooltips render the same tag pills */
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
     fileItemPillOrderModel: FileItemPillOrderModel;
     getSolidBackground: (color?: string | null) => string | undefined;
     shortcuts: NavigationPaneShortcutRowHandlers;

@@ -44,7 +44,7 @@ Keep this list ordered: later files override earlier ones.
 @import './sections/layout-spacers.css';
 
 /* Navigation + list */
-/* navigation-scroller.css: navigation scroller chrome (`.nn-navigation-pane-scroller`), overlay stack, pinned shortcuts container, nav banner. */
+/* navigation-scroller.css: navigation scroller chrome (`.nn-navigation-pane-scroller`), overlay stack, pinned shortcuts container. */
 @import './sections/navigation-scroller.css';
 /* navigation-tree.css: navigation rows (`.nn-navitem`), chevrons/icons/counts, shortcut rows, root reorder panel. */
 @import './sections/navigation-tree.css';

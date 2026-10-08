@@ -35,7 +35,6 @@ export const STRINGS_ID = {
         restoreDefault: 'Pulihkan default', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Kirim',
         save: 'Simpan', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Konfigurasi', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Mode terang', // Label for light theme mode (English: Light mode)
         darkMode: 'Mode gelap', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Tidak ada pilihan',
@@ -430,9 +429,6 @@ export const STRINGS_ID = {
             moveSourcesToTrash: 'Pindahkan catatan sumber ke sampah setelah digabung',
             mergeButton: 'Gabungkan'
         },
-        navRainbowSection: {
-            title: (section: string) => `Warna pelangi: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Cari ikon...',
             recentlyUsedHeader: 'Baru digunakan',
@@ -654,15 +650,6 @@ export const STRINGS_ID = {
             instructions: {
                 navigate: 'untuk navigasi',
                 select: 'untuk memilih template',
-                dismiss: 'untuk menutup'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Cari gambar...',
-            svgMissingDimensions: 'File SVG yang dipilih tidak menentukan lebar, tinggi, atau viewBox.',
-            instructions: {
-                navigate: 'untuk navigasi',
-                select: 'untuk mengatur banner',
                 dismiss: 'untuk menutup'
             }
         },
@@ -954,11 +941,9 @@ export const STRINGS_ID = {
                 description: 'Tata letak, tampilan, jumlah file, perilaku menciutkan, dan warna pelangi.',
                 groups: {
                     appearance: 'Tampilan',
-                    banner: 'Banner',
                     collapseItems: 'Ciutkan item',
                     dragAndDrop: 'Seret dan lepas',
-                    fileCounts: 'Jumlah file',
-                    rainbowColors: 'Warna pelangi'
+                    fileCounts: 'Jumlah file'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1014,8 +999,7 @@ export const STRINGS_ID = {
                 label: 'Tampilan file',
                 description: 'Judul, teks pratinjau, gambar unggulan, tag, properti, tanggal, jumlah kata, dan jumlah karakter.',
                 groups: {
-                    icon: 'Ikon',
-                    title: 'Judul'
+                    icon: 'Ikon'
                 }
             },
             calendar: {
@@ -1343,16 +1327,6 @@ export const STRINGS_ID = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Luaskan saat menyeret: Tunda perluasan berikutnya',
                 desc: 'Penundaan sebelum meluaskan folder atau tag tambahan selama penyeretan yang sama (detik).'
-            },
-            navigationBanner: {
-                name: 'Banner navigasi (profil vault)',
-                desc: 'Tampilkan gambar di atas panel navigasi. Berubah dengan profil vault yang dipilih.',
-                current: 'Banner saat ini: {path}',
-                chooseButton: 'Pilih gambar'
-            },
-            pinNavigationBanner: {
-                name: 'Sematkan banner',
-                desc: 'Sematkan banner navigasi di atas pohon navigasi.'
             },
             showShortcuts: {
                 name: 'Tampilkan pintasan',
@@ -1700,7 +1674,7 @@ export const STRINGS_ID = {
             },
             vaultProfiles: {
                 name: 'Profil vault',
-                desc: 'Profil menyimpan visibilitas jenis file, file tersembunyi, folder tersembunyi, tag tersembunyi, aturan properti untuk catatan tersembunyi, pintasan, dan banner navigasi. Beralih profil di sini atau dari pengalih profil vault di panel navigasi.',
+                desc: 'Profil menyimpan visibilitas jenis file, file tersembunyi, folder tersembunyi, tag tersembunyi, aturan properti untuk catatan tersembunyi, pintasan. Beralih profil di sini atau dari pengalih profil vault di panel navigasi.',
                 defaultName: 'Default',
                 addButton: 'Tambah profil',
                 editProfilesButton: 'Edit profil',
@@ -1762,10 +1736,6 @@ export const STRINGS_ID = {
                 helpTooltip: 'Format menggunakan Moment',
                 momentLinkText: 'format Moment'
             },
-            useFolderColor: {
-                name: 'Gunakan warna folder',
-                desc: 'Warnai judul catatan dan ikon file dengan warna folder induk saat tidak ada warna file kustom yang ditetapkan. Prioritas: warna file kustom > warna folder > warna default.'
-            },
             showRootFolder: {
                 name: 'Tampilkan folder root',
                 desc: 'Tampilkan nama vault sebagai folder root di pohon.'
@@ -1803,87 +1773,7 @@ export const STRINGS_ID = {
                 name: 'Terapkan warna ke ikon saja',
                 desc: 'Saat diaktifkan, warna kustom hanya diterapkan ke ikon. Saat dinonaktifkan, warna diterapkan ke ikon dan label teks.'
             },
-            navRainbowMode: {
-                name: 'Mode warna pelangi (profil vault)',
-                desc: 'Terapkan warna pelangi di panel navigasi.',
-                options: {
-                    off: 'Mati',
-                    textColor: 'Warna teks',
-                    backgroundColor: 'Warna latar'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Warna pertama',
-                desc: 'Warna pertama dalam gradien pelangi.'
-            },
-            navRainbowLastColor: {
-                name: 'Warna terakhir',
-                desc: 'Warna terakhir dalam gradien pelangi.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Gaya transisi',
-                desc: 'Interpolasi yang digunakan antara warna pertama dan terakhir.',
-                options: {
-                    hue: 'Rona',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Terapkan ke pintasan',
-                desc: 'Terapkan warna pelangi ke pintasan.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Terapkan ke item terbaru',
-                desc: 'Terapkan warna pelangi ke item terbaru.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Terapkan ke folder',
-                desc: 'Terapkan warna pelangi ke folder.'
-            },
-            navRainbowFolderScope: {
-                name: 'Cakupan folder',
-                desc: 'Pilih level folder mana yang memulai penetapan warna.',
-                options: {
-                    root: 'Level akar',
-                    child: 'Level anak',
-                    all: 'Setiap level'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Terapkan ke tag',
-                desc: 'Terapkan warna pelangi ke tag.'
-            },
-            navRainbowTagScope: {
-                name: 'Cakupan tag',
-                desc: 'Pilih level tag mana yang memulai penetapan warna.',
-                options: {
-                    root: 'Level akar',
-                    child: 'Level anak',
-                    all: 'Setiap level'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Terapkan ke properti',
-                desc: 'Terapkan warna pelangi ke properti.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Kecerahan konsisten di seluruh warna', // (English: Consistent brightness across hues)
-                desc: 'Menginterpolasi kecerahan antara warna awal dan akhir selama transisi warna.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Pisahkan warna mode terang dan gelap', // (English: Separate light and dark mode colors)
-                desc: 'Gunakan warna pelangi yang berbeda untuk mode terang dan mode gelap.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Salin warna mode terang ke mode gelap', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Cakupan properti',
-                desc: 'Pilih level properti mana yang memulai penetapan warna.',
-                options: {
-                    root: 'Level akar',
-                    child: 'Level anak',
-                    all: 'Setiap level'
-                }
-            },
+            copyLightToDark: 'Salin warna mode terang ke mode gelap', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Ciutkan item',
                 desc: 'Pilih apa yang dipengaruhi tombol luaskan/ciutkan semua.',

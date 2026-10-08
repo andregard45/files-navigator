@@ -56,7 +56,6 @@ import {
 } from '../../types';
 import { STORAGE_KEYS } from '../../types';
 import { Calendar } from '../calendar';
-import { NavigationBanner } from '../NavigationBanner';
 import { NavigationToolbar } from '../NavigationToolbar';
 import { localStorage } from '../../utils/localStorage';
 import { getSelectedPath } from '../../utils/selectionUtils';
@@ -89,11 +88,9 @@ import type {
     NavigationPaneShortcutRowHandlers,
     NavigationPaneShortcutUiState
 } from '../../hooks/navigationPane/navigationPaneShortcutTypes';
-import type { NavigationRainbowState } from '../../hooks/useNavigationRainbowState';
 import type { NavigationPaneSourceState } from '../../hooks/navigationPane/data/useNavigationPaneSourceState';
 import type { NavigationPaneTreeSectionsResult } from '../../hooks/navigationPane/data/useNavigationPaneTreeSections';
 import type { FolderDecorationModel } from '../../utils/folderDecoration';
-import type { FileItemPillDecorationModel } from '../../utils/fileItemPillDecoration';
 import type { FileItemPillOrderModel } from '../../utils/fileItemPillOrder';
 import { focusElementPreventScroll } from '../../utils/domUtils';
 
@@ -115,9 +112,7 @@ interface NavigationPaneProps {
     navigationSourceState: NavigationPaneSourceState;
     navigationTreeSections: NavigationPaneTreeSectionsResult;
     folderDecorationModel: FolderDecorationModel;
-    fileItemPillDecorationModel: FileItemPillDecorationModel;
     fileItemPillOrderModel: FileItemPillOrderModel;
-    navRainbowState: NavigationRainbowState;
     searchNavFilters?: SearchNavFilterState;
     onExecuteSearchShortcut?: (shortcutKey: string, searchShortcut: import('../../types/shortcuts').SearchShortcut) => Promise<void> | void;
     onNavigateToFolder: (folderPath: string, options?: NavigateToFolderOptions) => void;
@@ -151,7 +146,6 @@ export const NavigationPane = React.memo(
             searchNavFilters,
             onExecuteSearchShortcut,
             rootContainerRef,
-            fileItemPillDecorationModel,
             fileItemPillOrderModel,
             onNavigateToFolder,
             onRevealTag,
@@ -181,7 +175,6 @@ export const NavigationPane = React.memo(
         }, [settings.calendarWeeksToShow]);
 
         const navigationPaneRef = useRef<HTMLDivElement | null>(null);
-        const navigationBannerRef = useRef<HTMLDivElement | null>(null);
         const pinnedShortcutsContainerRef = useRef<HTMLDivElement | null>(null);
         const [pinnedShortcutsScrollElement, setPinnedShortcutsScrollElement] = useState<HTMLDivElement | null>(null);
         const [pinnedShortcutsHasOverflow, setPinnedShortcutsHasOverflow] = useState(false);
@@ -436,16 +429,12 @@ export const NavigationPane = React.memo(
             rootOrderingPropertyTree,
             missingRootPropertyKeys,
             vaultChangeVersion,
-            navigationBannerPath
         } = useNavigationPaneData({
             settings,
             isVisible,
             sourceState: props.navigationSourceState,
             treeSections: props.navigationTreeSections,
             folderDecorationModel: props.folderDecorationModel,
-            navRainbowState: props.navRainbowState,
-            tagRainbowColors: fileItemPillDecorationModel.tagRainbowColors,
-            propertyRainbowColors: fileItemPillDecorationModel.propertyRainbowColors,
             shortcutsExpanded: shortcuts.shortcutsExpanded,
             recentNotesExpanded: shortcuts.recentNotesExpanded,
             pinShortcuts: uiState.pinShortcuts && settings.showShortcuts
@@ -545,27 +534,18 @@ export const NavigationPane = React.memo(
             return ordered;
         }, [pinnedRecentNotesItems, settings.showShortcuts, shortcutItems, shouldPinRecentNotes, uiState.pinShortcuts]);
 
-        const shouldRenderNavigationBanner = Boolean(navigationBannerPath);
-        const navigationBannerContent =
-            shouldRenderNavigationBanner && navigationBannerPath ? <NavigationBanner path={navigationBannerPath} /> : null;
         const shouldRenderPinnedShortcuts = pinnedNavigationItems.length > 0;
 
         useLayoutEffect(() => {
             updatePinnedShortcutsOverflow(pinnedShortcutsScrollElement);
         }, [pinnedNavigationItems, pinnedShortcutsScrollElement, updatePinnedShortcutsOverflow]);
 
-        const navigationBannerHeight = useMeasuredElementHeight(navigationBannerRef, {
-            enabled: Boolean(navigationBannerContent) && !settings.pinNavigationBanner
-        });
-        const navigationScrollMargin = navigationBannerHeight;
-        const hasNavigationBannerConfigured = Boolean(navigationBannerPath);
 
-        const activeNavRainbow = props.navRainbowState.navRainbow;
         const { getSolidBackground } = useSurfaceColorVariables(navigationPaneRef, {
             app,
             rootContainerRef,
             variables: NAVIGATION_PANE_SURFACE_COLOR_MAPPINGS,
-            solidBackgroundRevision: activeNavRainbow
+            solidBackgroundRevision: settings.vaultProfile
         });
 
         const isAndroid = Platform.isAndroidApp;
@@ -586,7 +566,7 @@ export const NavigationPane = React.memo(
             pathToIndex,
             isVisible,
             activeShortcutKey: shortcuts.activeShortcutKey,
-            scrollMargin: navigationScrollMargin,
+            scrollMargin: 0,
             scrollPaddingEnd
         });
 
@@ -608,7 +588,7 @@ export const NavigationPane = React.memo(
 
         useEffect(() => {
             rowVirtualizer.measure();
-        }, [navigationScrollMargin, rowVirtualizer]);
+        }, [rowVirtualizer]);
 
         const handleTreeUpdateComplete = useCallback(() => {
             const selectedPath = getSelectedPath(selectionState);
@@ -905,8 +885,7 @@ export const NavigationPane = React.memo(
                 descendantExcludedFolders: activeProfile.descendantExcludedFolders,
                 getFileDisplayName,
                 getFileTimestamps,
-                fileItemPillDecorationModel,
-                fileItemPillOrderModel,
+                    fileItemPillOrderModel,
                 getSolidBackground,
                 shortcuts: shortcutRowHandlers,
                 shortcutUiState,
@@ -930,8 +909,7 @@ export const NavigationPane = React.memo(
                 activeProfile.descendantExcludedFolders,
                 getFileDisplayName,
                 getFileTimestamps,
-                fileItemPillDecorationModel,
-                fileItemPillOrderModel,
+                    fileItemPillOrderModel,
                 getSolidBackground,
                 handleSectionContextMenu,
                 handleCancelInlineRename,
@@ -1060,8 +1038,6 @@ export const NavigationPane = React.memo(
                         shouldShowVaultTitleInNavigationPane={shouldShowVaultTitleInNavigationPane}
                         showAndroidToolbar={useMobileChrome && isAndroid}
                         navigationToolbar={navigationToolbar}
-                        pinNavigationBanner={settings.pinNavigationBanner}
-                        navigationBannerContent={navigationBannerContent}
                         shouldRenderPinnedShortcuts={shouldRenderPinnedShortcuts}
                         pinnedShortcutsContainerRef={pinnedShortcutsContainerRef}
                         pinnedShortcutsHasOverflow={pinnedShortcutsHasOverflow}
@@ -1076,11 +1052,8 @@ export const NavigationPane = React.memo(
                         isNavigationItemFilled={isNavigationItemFilledForAdjacency}
                         onPinnedShortcutsResizePointerDown={handlePinnedShortcutsResizePointerDown}
                         scrollContainerRefCallback={scrollContainerRefCallback}
-                        hasNavigationBannerConfigured={hasNavigationBannerConfigured}
-                        navigationBannerRef={navigationBannerRef}
                         items={items}
                         rowVirtualizer={rowVirtualizer}
-                        navigationScrollMargin={navigationScrollMargin}
                         shouldRenderBottomToolbarInsidePanel={useMobileChrome && !isAndroid && shouldUseFloatingToolbars}
                         shouldRenderBottomToolbarOutsidePanel={useMobileChrome && !isAndroid && !shouldUseFloatingToolbars}
                         calendarOverlay={

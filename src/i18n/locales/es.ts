@@ -35,7 +35,6 @@ export const STRINGS_ES = {
         restoreDefault: 'Restaurar predeterminado', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Enviar', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Guardar', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Configurar', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Modo claro', // Label for light theme mode (English: Light mode)
         darkMode: 'Modo oscuro', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Sin selección', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -432,9 +431,6 @@ export const STRINGS_ES = {
             moveSourcesToTrash: 'Mover las notas de origen a la papelera después de combinarlas',
             mergeButton: 'Combinar'
         },
-        navRainbowSection: {
-            title: (section: string) => `Colores arcoíris: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Buscar iconos...',
             recentlyUsedHeader: 'Usados recientemente',
@@ -656,15 +652,6 @@ export const STRINGS_ES = {
             instructions: {
                 navigate: 'para navegar',
                 select: 'para seleccionar la plantilla',
-                dismiss: 'para cancelar'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Buscar imágenes...',
-            svgMissingDimensions: 'El archivo SVG seleccionado no define ancho, alto ni viewBox.',
-            instructions: {
-                navigate: 'para navegar',
-                select: 'para establecer banner',
                 dismiss: 'para cancelar'
             }
         },
@@ -957,11 +944,9 @@ export const STRINGS_ES = {
                 description: 'Diseño, apariencia, recuento de archivos, comportamiento de colapso y colores arcoíris.',
                 groups: {
                     appearance: 'Apariencia',
-                    banner: 'Banner',
                     collapseItems: 'Contraer elementos',
                     dragAndDrop: 'Arrastrar y soltar',
-                    fileCounts: 'Recuentos de archivos',
-                    rainbowColors: 'Colores arcoíris'
+                    fileCounts: 'Recuentos de archivos'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1018,8 +1003,7 @@ export const STRINGS_ES = {
                 description:
                     'Títulos, texto de vista previa, imágenes destacadas, etiquetas, propiedades, fechas, recuento de palabras y recuento de caracteres.',
                 groups: {
-                    icon: 'Icono',
-                    title: 'Título'
+                    icon: 'Icono'
                 }
             },
             calendar: {
@@ -1349,16 +1333,6 @@ export const STRINGS_ES = {
                 name: 'Expandir al arrastrar: Retraso de expansión posterior',
                 desc: 'Retraso antes de expandir carpetas o etiquetas adicionales durante el mismo arrastre (segundos).'
             },
-            navigationBanner: {
-                name: 'Banner de navegación (perfil de bóveda)',
-                desc: 'Mostrar una imagen encima del panel de navegación. Cambia con el perfil de bóveda seleccionado.',
-                current: 'Banner actual: {path}',
-                chooseButton: 'Elegir imagen'
-            },
-            pinNavigationBanner: {
-                name: 'Fijar banner',
-                desc: 'Fijar el banner de navegación sobre el árbol de navegación.'
-            },
             showShortcuts: {
                 name: 'Mostrar accesos directos',
                 desc: 'Mostrar la sección de accesos directos en el panel de navegación.'
@@ -1676,7 +1650,7 @@ export const STRINGS_ES = {
             },
             vaultProfiles: {
                 name: 'Perfil de bóveda',
-                desc: 'Los perfiles almacenan visibilidad de tipos de archivo, archivos ocultos, carpetas ocultas, etiquetas ocultas, reglas de propiedades para notas ocultas, accesos directos y banner de navegación. Cambia de perfil aquí o desde el selector de perfil de bóveda en el panel de navegación.',
+                desc: 'Los perfiles almacenan visibilidad de tipos de archivo, archivos ocultos, carpetas ocultas, etiquetas ocultas, reglas de propiedades para notas ocultas, accesos directos. Cambia de perfil aquí o desde el selector de perfil de bóveda en el panel de navegación.',
                 defaultName: 'Predeterminado',
                 addButton: 'Añadir perfil',
                 editProfilesButton: 'Editar perfiles',
@@ -1770,10 +1744,6 @@ export const STRINGS_ES = {
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
             },
-            useFolderColor: {
-                name: 'Usar color de carpeta',
-                desc: 'Colorear los títulos de notas y los iconos de archivo con el color de la carpeta principal cuando no hay un color de archivo personalizado. Prioridad: color de archivo personalizado > color de carpeta > color predeterminado.'
-            },
             showRootFolder: {
                 name: 'Mostrar carpeta raíz',
                 desc: 'Muestra el nombre de la bóveda como carpeta raíz en el árbol.'
@@ -1811,87 +1781,7 @@ export const STRINGS_ES = {
                 name: 'Aplicar color solo a los iconos',
                 desc: 'Cuando está habilitado, los colores personalizados se aplican solo a los iconos. Cuando está deshabilitado, los colores se aplican tanto a los iconos como a las etiquetas de texto.'
             },
-            navRainbowMode: {
-                name: 'Modo de colores arcoíris (perfil de bóveda)',
-                desc: 'Aplicar colores arcoíris en el panel de navegación.',
-                options: {
-                    off: 'Desactivado',
-                    textColor: 'Color de texto',
-                    backgroundColor: 'Color de fondo'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Primer color',
-                desc: 'Primer color en el degradado arcoíris.'
-            },
-            navRainbowLastColor: {
-                name: 'Último color',
-                desc: 'Último color en el degradado arcoíris.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Estilo de transición',
-                desc: 'Interpolación utilizada entre el primer y el último color.',
-                options: {
-                    hue: 'Tono',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Aplicar a accesos directos',
-                desc: 'Aplicar colores arcoíris a los accesos directos.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Aplicar a elementos recientes',
-                desc: 'Aplicar colores arcoíris a los elementos recientes.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Aplicar a carpetas',
-                desc: 'Aplicar colores arcoíris a las carpetas.'
-            },
-            navRainbowFolderScope: {
-                name: 'Alcance de carpetas',
-                desc: 'Seleccionar qué niveles de carpeta inician asignaciones de color.',
-                options: {
-                    root: 'Nivel raíz',
-                    child: 'Nivel secundario',
-                    all: 'Todos los niveles'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Aplicar a etiquetas',
-                desc: 'Aplicar colores arcoíris a las etiquetas.'
-            },
-            navRainbowTagScope: {
-                name: 'Alcance de etiquetas',
-                desc: 'Seleccionar qué niveles de etiqueta inician asignaciones de color.',
-                options: {
-                    root: 'Nivel raíz',
-                    child: 'Nivel secundario',
-                    all: 'Todos los niveles'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Aplicar a propiedades',
-                desc: 'Aplicar colores arcoíris a las propiedades.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Brillo uniforme entre tonos', // (English: Consistent brightness across hues)
-                desc: 'Interpola el brillo entre los colores de inicio y fin durante las transiciones de tono.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Colores separados para modo claro y oscuro', // (English: Separate light and dark mode colors)
-                desc: 'Usar colores de arcoíris diferentes para el modo claro y el modo oscuro.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Copiar color del modo claro al modo oscuro', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Alcance de propiedades',
-                desc: 'Seleccionar qué niveles de propiedad inician asignaciones de color.',
-                options: {
-                    root: 'Nivel raíz',
-                    child: 'Nivel secundario',
-                    all: 'Todos los niveles'
-                }
-            },
+            copyLightToDark: 'Copiar color del modo claro al modo oscuro', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Contraer elementos',
                 desc: 'Elige qué afecta el botón de expandir/contraer todo.',

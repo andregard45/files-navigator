@@ -30,7 +30,6 @@ import {
     resolveNavItemHeight,
     resolveNavItemHeightScaleText,
     resolvePaneTransitionDuration,
-    resolvePinNavigationBanner,
     resolveTagSortOrder,
     resolvePropertySortOrder,
     resolveToolbarVisibility
@@ -467,15 +466,6 @@ export function createSyncModeRegistry(params: CreateSyncModeRegistryParams): Sy
             },
             sanitizeSynced: () =>
                 params.sanitizeBooleanSetting(params.getSettings().useFloatingToolbars, params.defaultSettings.useFloatingToolbars)
-        }),
-        pinNavigationBanner: createResolvedLocalStorageSettingEntry({
-            settingId: 'pinNavigationBanner',
-            loadPhase: 'preProfiles',
-            localStorageKey: params.keys.pinNavigationBannerKey,
-            resolveDeviceLocal: storedData =>
-                resolvePinNavigationBanner({ storedData, keys: params.keys, defaultSettings: params.defaultSettings }),
-            sanitizeSynced: () =>
-                params.sanitizeBooleanSetting(params.getSettings().pinNavigationBanner, params.defaultSettings.pinNavigationBanner)
         }),
         navIndent: createResolvedLocalStorageSettingEntry({
             settingId: 'navIndent',

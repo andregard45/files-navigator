@@ -29,15 +29,8 @@ import {
     type NavigationSectionId as NavigationSectionIdType
 } from '../../../types';
 import type { CombinedNavigationItem } from '../../../types/virtualization';
-import type { NavigationRainbowState } from '../../useNavigationRainbowState';
 import type { FolderDecorationModel } from '../../../utils/folderDecoration';
 import { buildNavigationPathIndexMap } from '../../../utils/navigationIndex';
-import {
-    buildRecentRainbowColors,
-    buildShortcutRainbowColors,
-    type PropertyRainbowColors,
-    type TagRainbowColors
-} from '../../../utils/navigationRainbow';
 import {
     buildFolderSeparatorKey,
     buildPropertySeparatorKey,
@@ -47,7 +40,7 @@ import {
 } from '../../../utils/navigationSeparators';
 import { normalizePropertyNodeId } from '../../../utils/propertyTree';
 import type { FileNameIconNeedle } from '../../../utils/fileIconUtils';
-import { createNavigationItemDecorator, type NavigationRainbowColors } from './decorateNavigationItems';
+import { createNavigationItemDecorator } from './decorateNavigationItems';
 import { insertRootSpacing, SPACER_ITEM_TYPES } from './rootSpacing';
 
 interface SectionItems {
@@ -62,11 +55,6 @@ export interface UseNavigationPaneItemPipelineParams {
     fileNameIconNeedles: readonly FileNameIconNeedle[];
     getFileDisplayName: (file: TFile) => string;
     folderDecorationModel: FolderDecorationModel;
-    navRainbowState: NavigationRainbowState;
-    /** Tag rainbow colors shared with the list pane, assigned from the unfiltered tag tree rather than tagItems */
-    tagRainbowColors: TagRainbowColors;
-    /** Property rainbow colors shared with the list pane, assigned from the unfiltered property tree rather than propertyItems */
-    propertyRainbowColors: PropertyRainbowColors;
     showHiddenItems: boolean;
     pinShortcuts: boolean;
     shouldPinRecentNotes: boolean;
@@ -119,9 +107,6 @@ export function useNavigationPaneItemPipeline({
     fileNameIconNeedles,
     getFileDisplayName,
     folderDecorationModel,
-    navRainbowState,
-    tagRainbowColors,
-    propertyRainbowColors,
     showHiddenItems,
     pinShortcuts,
     shouldPinRecentNotes,
@@ -134,8 +119,6 @@ export function useNavigationPaneItemPipeline({
     parsedExcludedFolders,
     metadataDecorationVersion
 }: UseNavigationPaneItemPipelineParams): NavigationPaneItemPipelineResult {
-    const { navRainbow, navRainbowPalettes } = navRainbowState;
-
     const { items, sectionSpacerMap, firstSectionId } = useMemo(() => {
         const allItems: CombinedNavigationItem[] = [];
         const spacerMap = new Map<NavigationSectionId, string>();
@@ -402,52 +385,16 @@ export function useNavigationPaneItemPipeline({
         return result;
     }, [firstSectionId, items, parsedNavigationSeparators, pinShortcuts, sectionSpacerMap, showHiddenItems]);
 
-    const shortcutRainbowColors = useMemo(() => {
-        const palette = navRainbowPalettes.shortcut;
-        if (!palette) {
-            return { colorsByKey: new Map<string, string>(), rootColor: undefined };
-        }
-
-        return buildShortcutRainbowColors({
-            items: shortcutItems,
-            palette
-        });
-    }, [navRainbowPalettes.shortcut, shortcutItems]);
-
-    const recentRainbowColors = useMemo(() => {
-        const palette = navRainbowPalettes.recent;
-        if (!palette) {
-            return { colorsByKey: new Map<string, string>(), rootColor: undefined };
-        }
-
-        return buildRecentRainbowColors({
-            items: recentNotesItems,
-            palette
-        });
-    }, [navRainbowPalettes.recent, recentNotesItems]);
-
-    const navRainbowColors = useMemo<NavigationRainbowColors>(
-        () => ({
-            tag: tagRainbowColors,
-            property: propertyRainbowColors,
-            shortcut: shortcutRainbowColors,
-            recent: recentRainbowColors
-        }),
-        [propertyRainbowColors, recentRainbowColors, shortcutRainbowColors, tagRainbowColors]
-    );
     const decorateItem = useMemo(() => {
         void metadataDecorationVersion;
         return createNavigationItemDecorator({
             app,
             settings,
-            navRainbow,
             fileNameIconNeedles,
             getFileDisplayName,
             metadataService,
             parsedExcludedFolders,
-            folderDecorationModel,
-            navRainbowPalettes,
-            navRainbowColors
+            folderDecorationModel
         });
     }, [
         app,
@@ -456,9 +403,6 @@ export function useNavigationPaneItemPipeline({
         metadataDecorationVersion,
         metadataService,
         folderDecorationModel,
-        navRainbow,
-        navRainbowColors,
-        navRainbowPalettes,
         parsedExcludedFolders,
         settings
     ]);

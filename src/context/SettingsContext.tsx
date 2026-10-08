@@ -31,8 +31,6 @@ import {
     isPropertyShortcut
 } from '../types/shortcuts';
 import {
-    areNavRainbowSettingsEqual,
-    cloneNavRainbowSettings,
     clonePropertyKeys,
     cloneShortcuts,
     getActiveVaultProfile
@@ -54,7 +52,6 @@ export interface ActiveProfileState {
     hiddenFileTags: string[];
     fileVisibility: FileVisibility;
     propertyKeys: VaultProfile['propertyKeys'];
-    navigationBanner: string | null;
 }
 
 const SettingsStateContext = createContext<SettingsStateValue | null>(null);
@@ -310,8 +307,7 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
                 hiddenTags: Array.isArray(profile.hiddenTags) ? [...profile.hiddenTags] : [],
                 hiddenFileTags: Array.isArray(profile.hiddenFileTags) ? [...profile.hiddenFileTags] : [],
                 propertyKeys: clonePropertyKeys(profile.propertyKeys),
-                shortcuts: cloneShortcuts(profile.shortcuts),
-                navRainbow: cloneNavRainbowSettings(profile.navRainbow)
+                shortcuts: cloneShortcuts(profile.shortcuts)
             }));
         }
         void version; // Keep dependency so settings snapshot recreates when updates are published
@@ -355,13 +351,10 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
         const hiddenTagsEqual = areStringArraysEqual(previous?.profile.hiddenTags ?? [], profile.hiddenTags);
         const hiddenFileTagsEqual = areStringArraysEqual(previous?.profile.hiddenFileTags ?? [], profile.hiddenFileTags);
         const fileVisibilityEqual = previous?.profile.fileVisibility === profile.fileVisibility;
-        const navigationBanner = profile.navigationBanner ?? null;
-        const navigationBannerEqual = previous?.navigationBanner === navigationBanner;
         const periodicNotesFolderEqual = previous?.profile.periodicNotesFolder === profile.periodicNotesFolder;
         const nameEqual = previous?.profile.name === profile.name;
         const propertyKeysEqual = arePropertyKeysEqual(previous?.profile.propertyKeys, profile.propertyKeys);
         const shortcutsEqual = areShortcutsEqual(previous?.profile.shortcuts, profile.shortcuts);
-        const navRainbowEqual = areNavRainbowSettingsEqual(previous?.profile.navRainbow, profile.navRainbow);
 
         if (
             isSameProfile &&
@@ -372,12 +365,10 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
             hiddenTagsEqual &&
             hiddenFileTagsEqual &&
             fileVisibilityEqual &&
-            navigationBannerEqual &&
             periodicNotesFolderEqual &&
             nameEqual &&
             propertyKeysEqual &&
             shortcutsEqual &&
-            navRainbowEqual &&
             previous
         ) {
             return previous;
@@ -392,8 +383,7 @@ export function SettingsProvider({ children, plugin }: SettingsProviderProps) {
             hiddenTags: profile.hiddenTags,
             hiddenFileTags: profile.hiddenFileTags,
             fileVisibility: profile.fileVisibility,
-            propertyKeys: propertyKeysEqual && previous ? previous.propertyKeys : profile.propertyKeys,
-            navigationBanner
+            propertyKeys: propertyKeysEqual && previous ? previous.propertyKeys : profile.propertyKeys
         };
 
         previousActiveProfileRef.current = nextActiveProfile;

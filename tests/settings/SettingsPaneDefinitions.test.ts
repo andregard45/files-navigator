@@ -29,6 +29,7 @@ vi.mock('obsidian', async importOriginal => {
     };
 });
 
+import { strings } from '../../src/i18n';
 import {
     SETTINGS_PAGE_GROUP_DEFINITIONS,
     SETTINGS_PANE_DEFINITION_MAP,
@@ -49,7 +50,7 @@ const EXPECTED_PANES: Array<{ id: SettingsPaneId; label: string; description: st
     {
         id: 'navigation-pane',
         label: 'Navigation pane',
-        description: 'Layout, appearance, file counts, collapse behavior, and rainbow colors.',
+        description: strings.settings.pages.navigationPane.description,
     },
     {
         id: 'shortcuts',
@@ -84,7 +85,7 @@ const EXPECTED_PANES: Array<{ id: SettingsPaneId; label: string; description: st
     {
         id: 'notes',
         label: 'File display',
-        description: 'Titles, preview text, feature images, tags, properties, dates, word counts, and character counts.',
+        description: 'Titles, preview text, feature images, tags, properties, and dates.',
     },
     {
         id: 'calendar',

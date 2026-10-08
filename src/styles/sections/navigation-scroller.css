@@ -38,13 +38,6 @@
     flex: 1 0 auto;
 }
 
-.nn-navigation-pane-scroller[data-banner='true'] {
-    /* Classic Windows scrollbars consume layout width when they appear. Setting a stable gutter
-       keeps the width constant so TanStack Virtual's ResizeObserver doesn't retrigger endlessly
-       when the navigation banner forces the content to overflow during resizing. */
-    scrollbar-gutter: stable;
-}
-
 /* Container for pinned shortcuts displayed above the scrollable navigation tree */
 .nn-shortcut-pinned {
     flex: 0 1 auto;
@@ -69,16 +62,6 @@
 .nn-shortcut-pinned[data-scroll='true'] .nn-shortcut-pinned-scroll {
     overflow-y: auto;
     overscroll-behavior: contain;
-}
-
-/* Remove top padding when banner is present to avoid double spacing */
-.nn-shortcut-pinned[data-has-banner='true'] .nn-shortcut-pinned-scroll {
-    padding-top: 0;
-}
-
-/* Add top margin to banner inside pinned shortcuts area for consistent spacing */
-.nn-shortcut-pinned[data-has-banner='true'] .nn-nav-banner {
-    margin-top: 8px;
 }
 
 /* Inner wrapper for pinned shortcut items */
@@ -215,21 +198,3 @@
     content: none;
 }
 
-/* Navigation banner displayed above tree items */
-.nn-nav-banner {
-    padding: var(--nn-nav-banner-padding-vertical, 8px) var(--nn-nav-item-padding-horizontal);
-    box-sizing: border-box;
-}
-
-.nn-navigation-pane-banner {
-    margin-inline-start: calc(-1 * var(--nn-scroller-padding));
-    margin-inline-end: calc(-1 * var(--nn-scroller-padding));
-}
-
-.nn-nav-banner-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: min(14px, var(--nn-theme-navitem-border-radius));
-    background-color: var(--background-tertiary);
-}

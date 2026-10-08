@@ -35,7 +35,6 @@ export const STRINGS_KO = {
         restoreDefault: '기본값 복원', // Button text for restoring values to defaults (English: Restore default)
         submit: '제출', // Button text for submitting forms and dialogs (English: Submit)
         save: '저장', // Button text for saving settings and dialogs (English: Save)
-        configure: '구성', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: '라이트 모드', // Label for light theme mode (English: Light mode)
         darkMode: '다크 모드', // Label for dark theme mode (English: Dark mode)
         noSelection: '선택 없음', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -427,9 +426,6 @@ export const STRINGS_KO = {
             moveSourcesToTrash: '병합 후 원본 노트를 휴지통으로 이동',
             mergeButton: '병합'
         },
-        navRainbowSection: {
-            title: (section: string) => `무지개 색상: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: '아이콘 검색...',
             recentlyUsedHeader: '최근 사용',
@@ -651,15 +647,6 @@ export const STRINGS_KO = {
             instructions: {
                 navigate: '이동',
                 select: '템플릿 선택',
-                dismiss: '닫기'
-            }
-        },
-        navigationBanner: {
-            placeholder: '이미지 검색...',
-            svgMissingDimensions: '선택한 SVG 파일에 너비, 높이 또는 viewBox가 정의되어 있지 않습니다.',
-            instructions: {
-                navigate: '이동',
-                select: '배너 설정',
                 dismiss: '닫기'
             }
         },
@@ -951,11 +938,9 @@ export const STRINGS_KO = {
                 description: '레이아웃, 모양, 파일 수, 접기 동작 및 무지개 색상.',
                 groups: {
                     appearance: '모양',
-                    banner: '배너',
                     collapseItems: '항목 접기',
                     dragAndDrop: '끌어서 놓기',
-                    fileCounts: '파일 수',
-                    rainbowColors: '무지개 색상'
+                    fileCounts: '파일 수'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1010,8 +995,7 @@ export const STRINGS_KO = {
                 label: '파일 표시',
                 description: '제목, 미리보기 텍스트, 대표 이미지, 태그, 속성, 날짜, 단어 수 및 문자 수.',
                 groups: {
-                    icon: '아이콘',
-                    title: '제목'
+                    icon: '아이콘'
                 }
             },
             calendar: {
@@ -1339,16 +1323,6 @@ export const STRINGS_KO = {
             springLoadedFoldersSubsequentDelay: {
                 name: '드래그 중 확장: 후속 확장 지연',
                 desc: '같은 드래그 작업 중 추가 폴더 또는 태그가 확장되기 전 지연(초).'
-            },
-            navigationBanner: {
-                name: '탐색 배너 (보관함 프로필)',
-                desc: '탐색 창 상단에 이미지를 표시합니다. 선택한 보관함 프로필에 따라 변경됩니다.',
-                current: '현재 배너: {path}',
-                chooseButton: '이미지 선택'
-            },
-            pinNavigationBanner: {
-                name: '배너 고정',
-                desc: '탐색 배너를 탐색 트리 위에 고정합니다.'
             },
             showShortcuts: {
                 name: '바로가기 표시',
@@ -1756,10 +1730,6 @@ export const STRINGS_KO = {
                 helpTooltip: 'Moment 형식',
                 momentLinkText: 'Moment 형식'
             },
-            useFolderColor: {
-                name: '폴더 색상 사용',
-                desc: '사용자 지정 파일 색상이 설정되지 않은 경우 노트 제목과 파일 아이콘에 상위 폴더 색상을 적용합니다. 우선순위: 사용자 지정 파일 색상 > 폴더 색상 > 기본 색상.'
-            },
             showRootFolder: {
                 name: '루트 폴더 표시',
                 desc: '트리에서 보관함 이름을 루트 폴더로 표시합니다.'
@@ -1797,87 +1767,7 @@ export const STRINGS_KO = {
                 name: '아이콘에만 색상 적용',
                 desc: '활성화하면 사용자 지정 색상이 아이콘에만 적용됩니다. 비활성화하면 아이콘과 텍스트 레이블 모두에 색상이 적용됩니다.'
             },
-            navRainbowMode: {
-                name: '무지개 색상 모드 (보관함 프로필)',
-                desc: '탐색 창에 무지개 색상을 적용합니다.',
-                options: {
-                    off: '끄기',
-                    textColor: '텍스트 색상',
-                    backgroundColor: '배경 색상'
-                }
-            },
-            navRainbowFirstColor: {
-                name: '첫 번째 색상',
-                desc: '무지개 그라데이션의 첫 번째 색상.'
-            },
-            navRainbowLastColor: {
-                name: '마지막 색상',
-                desc: '무지개 그라데이션의 마지막 색상.'
-            },
-            navRainbowTransitionStyle: {
-                name: '전환 스타일',
-                desc: '첫 번째와 마지막 색상 사이에 사용되는 보간.',
-                options: {
-                    hue: '색조',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: '바로가기에 적용',
-                desc: '무지개 색상을 바로가기에 적용합니다.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: '최근 항목에 적용',
-                desc: '무지개 색상을 최근 항목에 적용합니다.'
-            },
-            navRainbowApplyToFolders: {
-                name: '폴더에 적용',
-                desc: '무지개 색상을 폴더에 적용합니다.'
-            },
-            navRainbowFolderScope: {
-                name: '폴더 범위',
-                desc: '색상 할당을 시작할 폴더 수준을 선택합니다.',
-                options: {
-                    root: '루트 수준',
-                    child: '하위 수준',
-                    all: '모든 수준'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: '태그에 적용',
-                desc: '무지개 색상을 태그에 적용합니다.'
-            },
-            navRainbowTagScope: {
-                name: '태그 범위',
-                desc: '색상 할당을 시작할 태그 수준을 선택합니다.',
-                options: {
-                    root: '루트 수준',
-                    child: '하위 수준',
-                    all: '모든 수준'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: '속성에 적용',
-                desc: '무지개 색상을 속성에 적용합니다.'
-            },
-            navRainbowConsistentBrightness: {
-                name: '색상 간 일관된 밝기', // (English: Consistent brightness across hues)
-                desc: '색상 전환 중 시작 색상과 끝 색상 사이의 밝기를 보간합니다.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: '라이트 및 다크 모드 색상 분리', // (English: Separate light and dark mode colors)
-                desc: '라이트 모드와 다크 모드에서 서로 다른 레인보우 색상을 사용합니다.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: '라이트 모드 색상을 다크 모드로 복사', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: '속성 범위',
-                desc: '색상 할당을 시작할 속성 수준을 선택합니다.',
-                options: {
-                    root: '루트 수준',
-                    child: '하위 수준',
-                    all: '모든 수준'
-                }
-            },
+            copyLightToDark: '라이트 모드 색상을 다크 모드로 복사', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: '항목 접기',
                 desc: '모두 펼치기/접기 버튼이 영향을 미치는 항목을 선택하세요.',

@@ -16,9 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { NavRainbowColorMode, NavRainbowScope } from '../settings/types';
-import { resolveFolderRainbowDecorationColors, type FolderRainbowColors } from './navigationRainbow';
-
 export interface FolderDecorationColors {
     color: string | undefined;
     backgroundColor: string | undefined;
@@ -26,9 +23,6 @@ export interface FolderDecorationColors {
 
 export interface FolderDecorationModel {
     isExcludedPath: (folderPath: string) => boolean;
-    folderRainbowColors: FolderRainbowColors;
-    navRainbowMode: NavRainbowColorMode;
-    folderRainbowScope: NavRainbowScope;
     showRootFolder: boolean;
 }
 
@@ -38,26 +32,10 @@ export function resolveFolderDecorationColors(params: {
     color: string | null | undefined;
     backgroundColor: string | null | undefined;
 }): FolderDecorationColors {
-    const { model, folderPath, color, backgroundColor } = params;
-    if (model.isExcludedPath(folderPath)) {
-        return {
-            color: color ?? undefined,
-            backgroundColor: backgroundColor ?? undefined
-        };
-    }
-
-    const resolved = resolveFolderRainbowDecorationColors({
-        mode: model.navRainbowMode,
-        folderPath,
-        scope: model.folderRainbowScope,
-        showRootFolder: model.showRootFolder,
-        colors: model.folderRainbowColors,
-        color,
-        backgroundColor
-    });
+    const { color, backgroundColor } = params;
 
     return {
-        color: resolved.color,
-        backgroundColor: resolved.backgroundColor
+        color: color ?? undefined,
+        backgroundColor: backgroundColor ?? undefined
     };
 }

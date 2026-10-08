@@ -35,7 +35,6 @@ export const STRINGS_VI = {
         restoreDefault: 'Khôi phục mặc định', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Gửi', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Lưu', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Cấu hình', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Chế độ sáng', // Label for light theme mode (English: Light mode)
         darkMode: 'Chế độ tối', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Chưa chọn gì', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -429,9 +428,6 @@ export const STRINGS_VI = {
             moveSourcesToTrash: 'Di chuyển ghi chú nguồn vào thùng rác sau khi hợp nhất',
             mergeButton: 'Hợp nhất'
         },
-        navRainbowSection: {
-            title: (section: string) => `Màu cầu vồng: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Tìm biểu tượng...',
             recentlyUsedHeader: 'Dùng gần đây',
@@ -653,15 +649,6 @@ export const STRINGS_VI = {
             instructions: {
                 navigate: 'để điều hướng',
                 select: 'để chọn mẫu',
-                dismiss: 'để đóng'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Tìm ảnh...',
-            svgMissingDimensions: 'Tệp SVG đã chọn không xác định chiều rộng, chiều cao hoặc viewBox.',
-            instructions: {
-                navigate: 'để điều hướng',
-                select: 'để đặt banner',
                 dismiss: 'để đóng'
             }
         },
@@ -953,11 +940,9 @@ export const STRINGS_VI = {
                 description: 'Bố cục, giao diện, số lượng tệp, hành vi thu gọn và màu cầu vồng.',
                 groups: {
                     appearance: 'Giao diện',
-                    banner: 'Banner',
                     collapseItems: 'Thu gọn mục',
                     dragAndDrop: 'Kéo và thả',
-                    fileCounts: 'Số lượng tệp',
-                    rainbowColors: 'Màu cầu vồng'
+                    fileCounts: 'Số lượng tệp'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1012,8 +997,7 @@ export const STRINGS_VI = {
                 label: 'Hiển thị tệp',
                 description: 'Tiêu đề, văn bản xem trước, hình ảnh nổi bật, thẻ, thuộc tính, ngày, số từ và số ký tự.',
                 groups: {
-                    icon: 'Biểu tượng',
-                    title: 'Tiêu đề'
+                    icon: 'Biểu tượng'
                 }
             },
             calendar: {
@@ -1341,16 +1325,6 @@ export const STRINGS_VI = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Mở rộng khi kéo: Độ trễ mở rộng tiếp theo',
                 desc: 'Độ trễ trước khi mở rộng thêm thư mục hoặc thẻ trong cùng một lần kéo (giây).'
-            },
-            navigationBanner: {
-                name: 'Banner điều hướng (hồ sơ vault)',
-                desc: 'Hiển thị ảnh phía trên ngăn điều hướng. Thay đổi theo hồ sơ vault đã chọn.',
-                current: 'Banner hiện tại: {path}',
-                chooseButton: 'Chọn ảnh'
-            },
-            pinNavigationBanner: {
-                name: 'Ghim banner',
-                desc: 'Ghim banner điều hướng phía trên cây điều hướng.'
             },
             showShortcuts: {
                 name: 'Hiện lối tắt',
@@ -1698,7 +1672,7 @@ export const STRINGS_VI = {
             },
             vaultProfiles: {
                 name: 'Hồ sơ vault',
-                desc: 'Hồ sơ lưu trữ hiển thị loại tệp, tệp ẩn, thư mục ẩn, thẻ ẩn, quy tắc thuộc tính cho ghi chú ẩn, lối tắt và banner điều hướng. Chuyển hồ sơ tại đây hoặc từ trình chuyển hồ sơ vault trong ngăn điều hướng.',
+                desc: 'Hồ sơ lưu trữ hiển thị loại tệp, tệp ẩn, thư mục ẩn, thẻ ẩn, quy tắc thuộc tính cho ghi chú ẩn, lối tắt. Chuyển hồ sơ tại đây hoặc từ trình chuyển hồ sơ vault trong ngăn điều hướng.',
                 defaultName: 'Mặc định',
                 addButton: 'Thêm hồ sơ',
                 editProfilesButton: 'Sửa hồ sơ',
@@ -1760,10 +1734,6 @@ export const STRINGS_VI = {
                 helpTooltip: 'Định dạng với Moment',
                 momentLinkText: 'định dạng Moment'
             },
-            useFolderColor: {
-                name: 'Dùng màu thư mục',
-                desc: 'Tô màu tiêu đề ghi chú và biểu tượng tệp bằng màu của thư mục cha khi không có màu tệp tùy chỉnh được đặt. Ưu tiên: màu tệp tùy chỉnh > màu thư mục > màu mặc định.'
-            },
             showRootFolder: {
                 name: 'Hiện thư mục gốc',
                 desc: 'Hiển thị tên vault làm thư mục gốc trong cây.'
@@ -1801,87 +1771,7 @@ export const STRINGS_VI = {
                 name: 'Chỉ áp dụng màu cho biểu tượng',
                 desc: 'Khi bật, màu tùy chỉnh chỉ áp dụng cho biểu tượng. Khi tắt, màu áp dụng cho cả biểu tượng và nhãn văn bản.'
             },
-            navRainbowMode: {
-                name: 'Chế độ màu cầu vồng (hồ sơ vault)',
-                desc: 'Áp dụng màu cầu vồng trong ngăn điều hướng.',
-                options: {
-                    off: 'Tắt',
-                    textColor: 'Màu chữ',
-                    backgroundColor: 'Màu nền'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Màu đầu tiên',
-                desc: 'Màu đầu tiên trong dải chuyển màu cầu vồng.'
-            },
-            navRainbowLastColor: {
-                name: 'Màu cuối cùng',
-                desc: 'Màu cuối cùng trong dải chuyển màu cầu vồng.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Kiểu chuyển tiếp',
-                desc: 'Nội suy được sử dụng giữa màu đầu tiên và màu cuối cùng.',
-                options: {
-                    hue: 'Sắc độ',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Áp dụng cho lối tắt',
-                desc: 'Áp dụng màu cầu vồng cho lối tắt.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Áp dụng cho mục gần đây',
-                desc: 'Áp dụng màu cầu vồng cho mục gần đây.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Áp dụng cho thư mục',
-                desc: 'Áp dụng màu cầu vồng cho thư mục.'
-            },
-            navRainbowFolderScope: {
-                name: 'Phạm vi thư mục',
-                desc: 'Chọn cấp thư mục bắt đầu gán màu.',
-                options: {
-                    root: 'Cấp gốc',
-                    child: 'Cấp con',
-                    all: 'Mọi cấp'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Áp dụng cho thẻ',
-                desc: 'Áp dụng màu cầu vồng cho thẻ.'
-            },
-            navRainbowTagScope: {
-                name: 'Phạm vi thẻ',
-                desc: 'Chọn cấp thẻ bắt đầu gán màu.',
-                options: {
-                    root: 'Cấp gốc',
-                    child: 'Cấp con',
-                    all: 'Mọi cấp'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Áp dụng cho thuộc tính',
-                desc: 'Áp dụng màu cầu vồng cho thuộc tính.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Độ sáng đồng nhất giữa các sắc độ', // (English: Consistent brightness across hues)
-                desc: 'Nội suy độ sáng giữa màu bắt đầu và màu kết thúc trong quá trình chuyển đổi sắc độ.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Tách riêng màu chế độ sáng và tối', // (English: Separate light and dark mode colors)
-                desc: 'Sử dụng màu cầu vồng khác nhau cho chế độ sáng và chế độ tối.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Sao chép màu chế độ sáng sang chế độ tối', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Phạm vi thuộc tính',
-                desc: 'Chọn cấp thuộc tính bắt đầu gán màu.',
-                options: {
-                    root: 'Cấp gốc',
-                    child: 'Cấp con',
-                    all: 'Mọi cấp'
-                }
-            },
+            copyLightToDark: 'Sao chép màu chế độ sáng sang chế độ tối', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Thu gọn mục',
                 desc: 'Chọn nút mở rộng/thu gọn tất cả ảnh hưởng đến gì.',

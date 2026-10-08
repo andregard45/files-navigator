@@ -35,7 +35,6 @@ export const STRINGS_PT = {
         restoreDefault: 'Restaurar predefinição', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Submeter', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Guardar', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Configurar', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Modo claro', // Label for light theme mode (English: Light mode)
         darkMode: 'Modo escuro', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Sem seleção', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -430,9 +429,6 @@ export const STRINGS_PT = {
             moveSourcesToTrash: 'Mover notas de origem para o lixo após unir',
             mergeButton: 'Unir'
         },
-        navRainbowSection: {
-            title: (section: string) => `Cores arco-íris: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Pesquisar ícones...',
             recentlyUsedHeader: 'Usados recentemente',
@@ -654,15 +650,6 @@ export const STRINGS_PT = {
             instructions: {
                 navigate: 'para navegar',
                 select: 'para selecionar o modelo',
-                dismiss: 'para fechar'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Pesquisar imagens...',
-            svgMissingDimensions: 'O ficheiro SVG selecionado não define largura, altura ou viewBox.',
-            instructions: {
-                navigate: 'para navegar',
-                select: 'para definir banner',
                 dismiss: 'para fechar'
             }
         },
@@ -954,11 +941,9 @@ export const STRINGS_PT = {
                 description: 'Esquema, aparência, contagem de ficheiros, comportamento de recolha e cores arco-íris.',
                 groups: {
                     appearance: 'Aparência',
-                    banner: 'Banner',
                     collapseItems: 'Recolher itens',
                     dragAndDrop: 'Arrastar e largar',
-                    fileCounts: 'Contagens de ficheiros',
-                    rainbowColors: 'Cores arco-íris'
+                    fileCounts: 'Contagens de ficheiros'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1015,8 +1000,7 @@ export const STRINGS_PT = {
                 description:
                     'Títulos, texto de pré-visualização, imagens de destaque, etiquetas, propriedades, datas, contagem de palavras e contagem de caracteres.',
                 groups: {
-                    icon: 'Ícone',
-                    title: 'Título'
+                    icon: 'Ícone'
                 }
             },
             calendar: {
@@ -1344,16 +1328,6 @@ export const STRINGS_PT = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Expandir ao arrastar: Atraso das expansões seguintes',
                 desc: 'Atraso antes de expandir pastas ou etiquetas adicionais durante o mesmo arrasto (segundos).'
-            },
-            navigationBanner: {
-                name: 'Banner de navegação (perfil do cofre)',
-                desc: 'Exibir uma imagem acima do painel de navegação. Muda com o perfil do cofre selecionado.',
-                current: 'Banner atual: {path}',
-                chooseButton: 'Escolher imagem'
-            },
-            pinNavigationBanner: {
-                name: 'Fixar banner',
-                desc: 'Fixar o banner de navegação acima da árvore de navegação.'
             },
             showShortcuts: {
                 name: 'Mostrar atalhos',
@@ -1704,7 +1678,7 @@ export const STRINGS_PT = {
             },
             vaultProfiles: {
                 name: 'Perfil do cofre',
-                desc: 'Os perfis armazenam visibilidade de tipos de ficheiro, ficheiros ocultos, pastas ocultas, etiquetas ocultas, regras de propriedades para notas ocultas, atalhos e banner de navegação. Mude de perfil aqui ou a partir do seletor de perfil do cofre no painel de navegação.',
+                desc: 'Os perfis armazenam visibilidade de tipos de ficheiro, ficheiros ocultos, pastas ocultas, etiquetas ocultas, regras de propriedades para notas ocultas, atalhos. Mude de perfil aqui ou a partir do seletor de perfil do cofre no painel de navegação.',
                 defaultName: 'Predefinido',
                 addButton: 'Adicionar perfil',
                 editProfilesButton: 'Editar perfis',
@@ -1766,10 +1740,6 @@ export const STRINGS_PT = {
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
             },
-            useFolderColor: {
-                name: 'Usar cor da pasta',
-                desc: 'Colorir títulos de notas e ícones de ficheiros com a cor da pasta pai quando não está definida uma cor de ficheiro personalizada. Prioridade: cor de ficheiro personalizada > cor da pasta > cor predefinida.'
-            },
             showRootFolder: {
                 name: 'Mostrar pasta raiz',
                 desc: 'Exibir o nome do cofre como a pasta raiz na árvore.'
@@ -1807,87 +1777,7 @@ export const STRINGS_PT = {
                 name: 'Aplicar cor apenas aos ícones',
                 desc: 'Quando ativado, as cores personalizadas são aplicadas apenas aos ícones. Quando desativado, as cores são aplicadas aos ícones e às etiquetas de texto.'
             },
-            navRainbowMode: {
-                name: 'Modo de cores arco-íris (perfil do cofre)',
-                desc: 'Aplicar cores arco-íris no painel de navegação.',
-                options: {
-                    off: 'Desativado',
-                    textColor: 'Cor do texto',
-                    backgroundColor: 'Cor de fundo'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Primeira cor',
-                desc: 'Primeira cor no gradiente arco-íris.'
-            },
-            navRainbowLastColor: {
-                name: 'Última cor',
-                desc: 'Última cor no gradiente arco-íris.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Estilo de transição',
-                desc: 'Interpolação utilizada entre a primeira e a última cor.',
-                options: {
-                    hue: 'Matiz',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Aplicar a atalhos',
-                desc: 'Aplicar cores arco-íris aos atalhos.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Aplicar a itens recentes',
-                desc: 'Aplicar cores arco-íris aos itens recentes.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Aplicar a pastas',
-                desc: 'Aplicar cores arco-íris às pastas.'
-            },
-            navRainbowFolderScope: {
-                name: 'Âmbito de pastas',
-                desc: 'Selecionar quais níveis de pasta iniciam atribuições de cor.',
-                options: {
-                    root: 'Nível raiz',
-                    child: 'Nível secundário',
-                    all: 'Todos os níveis'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Aplicar a etiquetas',
-                desc: 'Aplicar cores arco-íris às etiquetas.'
-            },
-            navRainbowTagScope: {
-                name: 'Âmbito de etiquetas',
-                desc: 'Selecionar quais níveis de etiqueta iniciam atribuições de cor.',
-                options: {
-                    root: 'Nível raiz',
-                    child: 'Nível secundário',
-                    all: 'Todos os níveis'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Aplicar a propriedades',
-                desc: 'Aplicar cores arco-íris às propriedades.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Brilho consistente entre matizes', // (English: Consistent brightness across hues)
-                desc: 'Interpola o brilho entre as cores inicial e final durante as transições de matiz.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Cores separadas para modo claro e escuro', // (English: Separate light and dark mode colors)
-                desc: 'Usar cores de arco-íris diferentes para o modo claro e o modo escuro.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Copiar cor do modo claro para o modo escuro', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Âmbito de propriedades',
-                desc: 'Selecionar quais níveis de propriedade iniciam atribuições de cor.',
-                options: {
-                    root: 'Nível raiz',
-                    child: 'Nível secundário',
-                    all: 'Todos os níveis'
-                }
-            },
+            copyLightToDark: 'Copiar cor do modo claro para o modo escuro', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Recolher itens',
                 desc: 'Escolha o que o botão expandir/recolher tudo afeta.',

@@ -35,7 +35,6 @@ export const STRINGS_DE = {
         restoreDefault: 'Standard wiederherstellen', // Button text for restoring values to defaults (English: Restore default)
         submit: 'OK', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Speichern', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Konfigurieren', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Heller Modus', // Label for light theme mode (English: Light mode)
         darkMode: 'Dunkler Modus', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Keine Auswahl', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -431,9 +430,6 @@ export const STRINGS_DE = {
             moveSourcesToTrash: 'Quellnotizen nach dem Zusammenführen in den Papierkorb verschieben',
             mergeButton: 'Zusammenführen'
         },
-        navRainbowSection: {
-            title: (section: string) => `Regenbogenfarben: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Symbole suchen...',
             recentlyUsedHeader: 'Kürzlich verwendet',
@@ -655,15 +651,6 @@ export const STRINGS_DE = {
             instructions: {
                 navigate: 'zum Navigieren',
                 select: 'zum Auswählen der Vorlage',
-                dismiss: 'zum Abbrechen'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Bilder durchsuchen...',
-            svgMissingDimensions: 'Die ausgewählte SVG-Datei definiert weder Breite, Höhe noch viewBox.',
-            instructions: {
-                navigate: 'zum Navigieren',
-                select: 'um Banner zu setzen',
                 dismiss: 'zum Abbrechen'
             }
         },
@@ -958,11 +945,9 @@ export const STRINGS_DE = {
                 description: 'Layout, Darstellung, Dateianzahl, Einklappverhalten und Regenbogenfarben.',
                 groups: {
                     appearance: 'Darstellung',
-                    banner: 'Banner',
                     collapseItems: 'Elemente einklappen',
                     dragAndDrop: 'Drag-and-drop',
-                    fileCounts: 'Dateianzahlen',
-                    rainbowColors: 'Regenbogenfarben'
+                    fileCounts: 'Dateianzahlen'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1018,8 +1003,7 @@ export const STRINGS_DE = {
                 label: 'Dateianzeige',
                 description: 'Titel, Vorschautext, Feature-Bilder, Tags, Eigenschaften, Daten, Wortanzahlen und Zeichenanzahlen.',
                 groups: {
-                    icon: 'Symbol',
-                    title: 'Titel'
+                    icon: 'Symbol'
                 }
             },
             calendar: {
@@ -1348,16 +1332,6 @@ export const STRINGS_DE = {
                 name: 'Beim Ziehen erweitern: Verzögerung bei weiteren Erweiterungen',
                 desc: 'Verzögerung, bevor weitere Ordner oder Tags während desselben Ziehvorgangs erweitert werden (Sekunden).'
             },
-            navigationBanner: {
-                name: 'Navigationsbanner (Vault-Profil)',
-                desc: 'Bild oberhalb des Navigationsbereichs anzeigen. Ändert sich mit dem ausgewählten Vault-Profil.',
-                current: 'Aktuelles Banner: {path}',
-                chooseButton: 'Bild auswählen'
-            },
-            pinNavigationBanner: {
-                name: 'Banner anheften',
-                desc: 'Banner oberhalb des Navigationsbaums anheften.'
-            },
             showShortcuts: {
                 name: 'Verknüpfungen anzeigen',
                 desc: 'Verknüpfungsbereich im Navigationsbereich anzeigen.'
@@ -1676,7 +1650,7 @@ export const STRINGS_DE = {
             },
             vaultProfiles: {
                 name: 'Vault-Profil',
-                desc: 'Profile speichern Dateityp-Sichtbarkeit, ausgeblendete Dateien, ausgeblendete Ordner, ausgeblendete Tags, Eigenschaftsregeln für ausgeblendete Notizen, Verknüpfungen und Navigationsbanner. Profile können hier oder über den Vault-Profil-Umschalter im Navigationsbereich gewechselt werden.',
+                desc: 'Profile speichern Dateityp-Sichtbarkeit, ausgeblendete Dateien, ausgeblendete Ordner, ausgeblendete Tags, Eigenschaftsregeln für ausgeblendete Notizen, Verknüpfungen. Profile können hier oder über den Vault-Profil-Umschalter im Navigationsbereich gewechselt werden.',
                 defaultName: 'Standard',
                 addButton: 'Profil hinzufügen',
                 editProfilesButton: 'Profile bearbeiten',
@@ -1770,10 +1744,6 @@ export const STRINGS_DE = {
                 helpTooltip: 'Format mit Moment',
                 momentLinkText: 'Moment-Format'
             },
-            useFolderColor: {
-                name: 'Ordnerfarbe verwenden',
-                desc: 'Notizentitel und Dateisymbole mit der Farbe des übergeordneten Ordners einfärben, wenn keine benutzerdefinierte Dateifarbe festgelegt ist. Priorität: Benutzerdefinierte Dateifarbe > Ordnerfarbe > Standardfarbe.'
-            },
             showRootFolder: {
                 name: 'Wurzelordner anzeigen',
                 desc: 'Den Namen des Vaults als Wurzelordner im Baum anzeigen.'
@@ -1811,87 +1781,7 @@ export const STRINGS_DE = {
                 name: 'Farbe nur auf Symbole anwenden',
                 desc: 'Wenn aktiviert, werden benutzerdefinierte Farben nur auf Symbole angewendet. Wenn deaktiviert, werden Farben sowohl auf Symbole als auch auf Textbeschriftungen angewendet.'
             },
-            navRainbowMode: {
-                name: 'Regenbogen-Farbmodus (Vault-Profil)',
-                desc: 'Regenbogenfarben im Navigationsbereich anwenden.',
-                options: {
-                    off: 'Aus',
-                    textColor: 'Textfarbe',
-                    backgroundColor: 'Hintergrundfarbe'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Erste Farbe',
-                desc: 'Erste Farbe im Regenbogenverlauf.'
-            },
-            navRainbowLastColor: {
-                name: 'Letzte Farbe',
-                desc: 'Letzte Farbe im Regenbogenverlauf.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Übergangsstil',
-                desc: 'Interpolation zwischen der ersten und letzten Farbe.',
-                options: {
-                    hue: 'Farbton',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Auf Verknüpfungen anwenden',
-                desc: 'Regenbogenfarben auf Verknüpfungen anwenden.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Auf zuletzt verwendete Elemente anwenden',
-                desc: 'Regenbogenfarben auf zuletzt verwendete Elemente anwenden.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Auf Ordner anwenden',
-                desc: 'Regenbogenfarben auf Ordner anwenden.'
-            },
-            navRainbowFolderScope: {
-                name: 'Ordnerbereich',
-                desc: 'Auswählen, welche Ordnerebenen Farbzuweisungen starten.',
-                options: {
-                    root: 'Stammebene',
-                    child: 'Unterebene',
-                    all: 'Jede Ebene'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Auf Tags anwenden',
-                desc: 'Regenbogenfarben auf Tags anwenden.'
-            },
-            navRainbowTagScope: {
-                name: 'Tag-Bereich',
-                desc: 'Auswählen, welche Tag-Ebenen Farbzuweisungen starten.',
-                options: {
-                    root: 'Stammebene',
-                    child: 'Unterebene',
-                    all: 'Jede Ebene'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Auf Eigenschaften anwenden',
-                desc: 'Regenbogenfarben auf Eigenschaften anwenden.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Gleichmäßige Helligkeit über Farbtöne', // (English: Consistent brightness across hues)
-                desc: 'Interpoliert die Helligkeit zwischen den Start- und Endfarben bei Farbtonübergängen.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Separate Farben für hellen und dunklen Modus', // (English: Separate light and dark mode colors)
-                desc: 'Verschiedene Regenbogenfarben für den hellen und dunklen Modus verwenden.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Farbe des hellen Modus in den dunklen Modus kopieren', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Eigenschaftsbereich',
-                desc: 'Auswählen, welche Eigenschaftsebenen Farbzuweisungen starten.',
-                options: {
-                    root: 'Stammebene',
-                    child: 'Unterebene',
-                    all: 'Jede Ebene'
-                }
-            },
+            copyLightToDark: 'Farbe des hellen Modus in den dunklen Modus kopieren', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Elemente einklappen',
                 desc: 'Wähle, was die Schaltfläche zum Ein-/Ausklappen beeinflusst.',

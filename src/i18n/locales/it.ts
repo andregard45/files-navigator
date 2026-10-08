@@ -35,7 +35,6 @@ export const STRINGS_IT = {
         restoreDefault: 'Ripristina predefinito', // Button text for restoring values to defaults (English: Restore default)
         submit: 'Invia', // Button text for submitting forms and dialogs (English: Submit)
         save: 'Salva', // Button text for saving settings and dialogs (English: Save)
-        configure: 'Configura', // Generic button label used when opening a configuration dialog (English: Configure)
         lightMode: 'Modalità chiara', // Label for light theme mode (English: Light mode)
         darkMode: 'Modalità scura', // Label for dark theme mode (English: Dark mode)
         noSelection: 'Nessuna selezione', // Placeholder text when no folder or tag is selected (English: No selection)
@@ -429,9 +428,6 @@ export const STRINGS_IT = {
             moveSourcesToTrash: 'Sposta le note di origine nel cestino dopo averle unite',
             mergeButton: 'Unisci'
         },
-        navRainbowSection: {
-            title: (section: string) => `Colori arcobaleno: ${section}`
-        },
         iconPicker: {
             searchPlaceholder: 'Cerca icone...',
             recentlyUsedHeader: 'Usate di recente',
@@ -651,15 +647,6 @@ export const STRINGS_IT = {
             instructions: {
                 navigate: 'per navigare',
                 select: 'per selezionare il modello',
-                dismiss: 'per chiudere'
-            }
-        },
-        navigationBanner: {
-            placeholder: 'Cerca immagini...',
-            svgMissingDimensions: 'Il file SVG selezionato non definisce larghezza, altezza o viewBox.',
-            instructions: {
-                navigate: 'per navigare',
-                select: 'per impostare banner',
                 dismiss: 'per chiudere'
             }
         },
@@ -951,11 +938,9 @@ export const STRINGS_IT = {
                 description: 'Layout, aspetto, conteggio file, comportamento del collasso e colori arcobaleno.',
                 groups: {
                     appearance: 'Aspetto',
-                    banner: 'Banner',
                     collapseItems: 'Comprimi elementi',
                     dragAndDrop: 'Trascina e rilascia',
-                    fileCounts: 'Conteggi file',
-                    rainbowColors: 'Colori arcobaleno'
+                    fileCounts: 'Conteggi file'
                 }
             },
             shortcutsAndRecentFiles: {
@@ -1012,8 +997,7 @@ export const STRINGS_IT = {
                 description:
                     'Titoli, testo anteprima, immagini in evidenza, etichette, proprietà, date, conteggio parole e conteggio caratteri.',
                 groups: {
-                    icon: 'Icona',
-                    title: 'Titolo'
+                    icon: 'Icona'
                 }
             },
             calendar: {
@@ -1341,16 +1325,6 @@ export const STRINGS_IT = {
             springLoadedFoldersSubsequentDelay: {
                 name: 'Espandi durante il trascinamento: Ritardo espansioni successive',
                 desc: 'Ritardo prima di espandere cartelle o etichette aggiuntive durante lo stesso trascinamento (secondi).'
-            },
-            navigationBanner: {
-                name: 'Banner navigazione (profilo vault)',
-                desc: "Visualizza un'immagine sopra il pannello navigazione. Cambia con il profilo vault selezionato.",
-                current: 'Banner attuale: {path}',
-                chooseButton: 'Scegli immagine'
-            },
-            pinNavigationBanner: {
-                name: 'Fissa banner',
-                desc: "Fissa il banner di navigazione sopra l'albero di navigazione."
             },
             showShortcuts: {
                 name: 'Mostra scorciatoie',
@@ -1702,7 +1676,7 @@ export const STRINGS_IT = {
             },
             vaultProfiles: {
                 name: 'Profilo vault',
-                desc: 'I profili memorizzano visibilità tipi file, file nascosti, cartelle nascoste, etichette nascoste, regole di proprietà per note nascoste, scorciatoie e banner navigazione. Cambia profilo qui o dal selettore profilo vault nel pannello navigazione.',
+                desc: 'I profili memorizzano visibilità tipi file, file nascosti, cartelle nascoste, etichette nascoste, regole di proprietà per note nascoste, scorciatoie. Cambia profilo qui o dal selettore profilo vault nel pannello navigazione.',
                 defaultName: 'Predefinito',
                 addButton: 'Aggiungi profilo',
                 editProfilesButton: 'Modifica profili',
@@ -1764,10 +1738,6 @@ export const STRINGS_IT = {
                 helpTooltip: 'Formato con Moment',
                 momentLinkText: 'formato Moment'
             },
-            useFolderColor: {
-                name: 'Usa colore cartella',
-                desc: 'Colora i titoli delle note e le icone file con il colore della cartella genitore quando non è impostato un colore file personalizzato. Priorità: colore file personalizzato > colore cartella > colore predefinito.'
-            },
             showRootFolder: {
                 name: 'Mostra cartella root',
                 desc: "Visualizza il nome vault come cartella root nell'albero."
@@ -1805,87 +1775,7 @@ export const STRINGS_IT = {
                 name: 'Applica colore solo alle icone',
                 desc: 'Quando abilitato, i colori personalizzati sono applicati solo alle icone. Quando disabilitato, i colori sono applicati sia alle icone che al testo.'
             },
-            navRainbowMode: {
-                name: 'Modalità colori arcobaleno (profilo vault)',
-                desc: 'Applica colori arcobaleno nel pannello di navigazione.',
-                options: {
-                    off: 'Disattivato',
-                    textColor: 'Colore del testo',
-                    backgroundColor: 'Colore di sfondo'
-                }
-            },
-            navRainbowFirstColor: {
-                name: 'Primo colore',
-                desc: 'Primo colore nel gradiente arcobaleno.'
-            },
-            navRainbowLastColor: {
-                name: 'Ultimo colore',
-                desc: 'Ultimo colore nel gradiente arcobaleno.'
-            },
-            navRainbowTransitionStyle: {
-                name: 'Stile di transizione',
-                desc: "Interpolazione utilizzata tra il primo e l'ultimo colore.",
-                options: {
-                    hue: 'Tonalità',
-                    rgb: 'RGB'
-                }
-            },
-            navRainbowApplyToShortcuts: {
-                name: 'Applica alle scorciatoie',
-                desc: 'Applica colori arcobaleno alle scorciatoie.'
-            },
-            navRainbowApplyToRecentItems: {
-                name: 'Applica agli elementi recenti',
-                desc: 'Applica colori arcobaleno agli elementi recenti.'
-            },
-            navRainbowApplyToFolders: {
-                name: 'Applica alle cartelle',
-                desc: 'Applica colori arcobaleno alle cartelle.'
-            },
-            navRainbowFolderScope: {
-                name: 'Ambito cartelle',
-                desc: 'Seleziona quali livelli di cartella avviano le assegnazioni di colore.',
-                options: {
-                    root: 'Livello radice',
-                    child: 'Livello figlio',
-                    all: 'Ogni livello'
-                }
-            },
-            navRainbowApplyToTags: {
-                name: 'Applica alle etichette',
-                desc: 'Applica colori arcobaleno alle etichette.'
-            },
-            navRainbowTagScope: {
-                name: 'Ambito etichette',
-                desc: 'Seleziona quali livelli di etichette avviano le assegnazioni di colore.',
-                options: {
-                    root: 'Livello radice',
-                    child: 'Livello figlio',
-                    all: 'Ogni livello'
-                }
-            },
-            navRainbowApplyToProperties: {
-                name: 'Applica alle proprietà',
-                desc: 'Applica colori arcobaleno alle proprietà.'
-            },
-            navRainbowConsistentBrightness: {
-                name: 'Luminosità uniforme tra le tonalità', // (English: Consistent brightness across hues)
-                desc: 'Interpola la luminosità tra i colori iniziale e finale durante le transizioni di tonalità.' // (English: Interpolates brightness between the start and end colors during hue transitions.)
-            },
-            navRainbowSeparateThemeColors: {
-                name: 'Colori separati per modalità chiara e scura', // (English: Separate light and dark mode colors)
-                desc: 'Usa colori arcobaleno diversi per la modalità chiara e la modalità scura.' // (English: Use different rainbow colors for light mode and dark mode.)
-            },
-            navRainbowCopyLightToDark: 'Copia il colore della modalità chiara nella modalità scura', // (English: Copy light mode color to dark mode)
-            navRainbowPropertyScope: {
-                name: 'Ambito proprietà',
-                desc: 'Seleziona quali livelli di proprietà avviano le assegnazioni di colore.',
-                options: {
-                    root: 'Livello radice',
-                    child: 'Livello figlio',
-                    all: 'Ogni livello'
-                }
-            },
+            copyLightToDark: 'Copia il colore della modalità chiara nella modalità scura', // (English: Copy light mode color to dark mode)
             collapseItems: {
                 name: 'Comprimi elementi',
                 desc: 'Scegli cosa influenza il pulsante espandi/comprimi tutto.',

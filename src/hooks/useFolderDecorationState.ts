@@ -23,58 +23,21 @@ import { useActiveProfile, useSettingsState } from '../context/SettingsContext';
 import { useUXPreferences } from '../context/UXPreferencesContext';
 import type { NotebookNavigatorSettings } from '../settings/types';
 import { useFolderNavigationSourceState, type FolderNavigationSourceState } from './useFolderNavigationSourceState';
-import { buildFolderRainbowColorsFromSiblingPaths } from '../utils/navigationRainbow';
-import { buildVisibleFolderTraversalState } from '../utils/treeFlattener';
-import { useNavigationRainbowState, type NavigationRainbowState } from './useNavigationRainbowState';
 import { type FolderDecorationModel } from '../utils/folderDecoration';
-import { useThemeMode } from './useThemeMode';
 
 interface FolderDecorationState {
     folderNavigationSource: FolderNavigationSourceState;
     folderDecorationModel: FolderDecorationModel;
-    navRainbowState: NavigationRainbowState;
 }
 
 interface UseFolderDecorationResolverParams {
     settings: NotebookNavigatorSettings;
-    navRainbowState: NavigationRainbowState;
     source: FolderNavigationSourceState;
 }
 
-function useFolderDecorationModel({ settings, navRainbowState, source }: UseFolderDecorationResolverParams): FolderDecorationModel {
-    const { navRainbow, navRainbowPalettes } = navRainbowState;
+function useFolderDecorationModel({ settings, source }: UseFolderDecorationResolverParams): FolderDecorationModel {
     const isFolderExcluded = source.isFolderExcluded;
     const folderDisplayVersion = source.folderDisplayVersion;
-    const shouldBuildFolderTraversalState = navRainbowPalettes.folder !== null;
-    const shouldIncludeDescendantSiblingGroups = navRainbow.folders.scope !== 'root';
-    const visibleFolderTraversalState = useMemo(() => {
-        if (!shouldBuildFolderTraversalState) {
-            return {
-                siblingPathsByParent: new Map<string, readonly string[]>()
-            };
-        }
-
-        return buildVisibleFolderTraversalState({
-            rootFolders: source.rootFolders,
-            excludePatterns: source.hiddenFolders,
-            rootOrderMap: source.rootFolderOrderMap,
-            defaultSortOrder: settings.folderSortOrder,
-            childSortOrderOverrides: settings.folderTreeSortOverrides,
-            getFolderSortName: source.getFolderSortName,
-            isFolderExcluded: source.folderExclusionByFolderNote,
-            includeDescendantSiblingGroups: shouldIncludeDescendantSiblingGroups
-        });
-    }, [
-        settings.folderSortOrder,
-        settings.folderTreeSortOverrides,
-        source.folderExclusionByFolderNote,
-        source.getFolderSortName,
-        source.hiddenFolders,
-        source.rootFolderOrderMap,
-        source.rootFolders,
-        shouldBuildFolderTraversalState,
-        shouldIncludeDescendantSiblingGroups
-    ]);
     const isExcludedPath = useMemo(() => {
         const exclusionCache = new Map<string, boolean>();
         return (folderPath: string): boolean => {
@@ -91,37 +54,11 @@ function useFolderDecorationModel({ settings, navRainbowState, source }: UseFold
 
     return useMemo(() => {
         void folderDisplayVersion;
-        const folderRainbowColors =
-            navRainbowPalettes.folder !== null
-                ? buildFolderRainbowColorsFromSiblingPaths({
-                      siblingPathsByParent: visibleFolderTraversalState.siblingPathsByParent,
-                      palette: navRainbowPalettes.folder,
-                      scope: navRainbow.folders.scope,
-                      showRootFolder: settings.showRootFolder,
-                      inheritColors: settings.inheritFolderColors
-                  })
-                : {
-                      colorsByPath: new Map<string, string>(),
-                      rootColor: undefined,
-                      getInheritedColor: (_folderPath: string) => undefined
-                  };
         return {
             isExcludedPath,
-            folderRainbowColors,
-            navRainbowMode: navRainbow.mode,
-            folderRainbowScope: navRainbow.folders.scope,
             showRootFolder: settings.showRootFolder
         };
-    }, [
-        navRainbow.folders.scope,
-        navRainbow.mode,
-        navRainbowPalettes.folder,
-        isExcludedPath,
-        settings.inheritFolderColors,
-        settings.showRootFolder,
-        folderDisplayVersion,
-        visibleFolderTraversalState
-    ]);
+    }, [isExcludedPath, settings.showRootFolder, folderDisplayVersion]);
 }
 
 export function useFolderDecorationState(): FolderDecorationState {
@@ -137,20 +74,16 @@ export function useFolderDecorationState(): FolderDecorationState {
         metadataService,
         showHiddenItems: uxPreferences.showHiddenItems
     });
-    const isDarkTheme = useThemeMode(app) === 'dark';
-    const navRainbowState = useNavigationRainbowState(settings, isDarkTheme);
     const folderDecorationModel = useFolderDecorationModel({
         settings,
-        navRainbowState,
         source
     });
 
     return useMemo(
         () => ({
             folderNavigationSource: source,
-            folderDecorationModel,
-            navRainbowState
+            folderDecorationModel
         }),
-        [folderDecorationModel, navRainbowState, source]
+        [folderDecorationModel, source]
     );
 }

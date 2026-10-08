@@ -99,7 +99,6 @@ function createSettings(): NotebookNavigatorSettings {
                 hiddenTags: profile.hiddenTags,
                 hiddenFileTags: profile.hiddenFileTags,
                 fileVisibility: profile.fileVisibility,
-                navigationBanner: profile.navigationBanner,
                 shortcuts: profile.shortcuts
             })
         )

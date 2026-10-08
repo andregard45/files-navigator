@@ -298,11 +298,8 @@ export const FileItem = React.memo(function FileItem({
     const parentFolderSource = file.parent;
     const hasParentFolderSource = parentFolderSource instanceof TFolder;
     const shouldResolveFolderIcon = settings.useFolderIconForFiles && !fileIconId && hasParentFolderSource;
-    const shouldResolveFolderColorForFileDecoration =
-        !fileColor && hasParentFolderSource && (settings.useFolderColorForTitles || settings.useFolderIconForFiles);
-    const shouldResolveFolderColorForTitle =
-        !settings.colorIconOnly && settings.useFolderColorForTitles && !fileColor && hasParentFolderSource;
-    const shouldResolveFolderColor = shouldResolveFolderColorForFileDecoration || shouldResolveFolderColorForTitle;
+    const shouldResolveFolderColorForFileDecoration = !fileColor && hasParentFolderSource && settings.useFolderIconForFiles;
+    const shouldResolveFolderColor = shouldResolveFolderColorForFileDecoration;
     const parentFolderDisplayData =
         hasParentFolderSource && (shouldResolveFolderIcon || shouldResolveFolderColor)
             ? metadataService.getFolderDisplayData(parentFolderSource.path, {
@@ -372,9 +369,7 @@ export const FileItem = React.memo(function FileItem({
         settings.showCategoryIcons,
         settings.showFilenameMatchIcons
     ]);
-    const fileTitleColor = !settings.colorIconOnly
-        ? (fileColor ?? (settings.useFolderColorForTitles ? folderListColor : undefined))
-        : undefined;
+    const fileTitleColor = !settings.colorIconOnly ? (fileColor ?? undefined) : undefined;
     const applyColorToName = Boolean(fileTitleColor);
     const dragFallbackIconId = useMemo(() => {
         void metadataVersion;

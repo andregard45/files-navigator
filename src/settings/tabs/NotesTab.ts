@@ -127,12 +127,6 @@ export function createNotesSettingDefinitions(context: SettingsTabContext): Sett
                         normalizeKey: normalizeFileTypeIconMapKey
                     })
             })
-        ]),
-        createGroupDefinition(strings.settings.pages.fileDisplay.groups.title, [
-            createToggleDefinition('useFolderColorForTitles', {
-                name: strings.settings.items.useFolderColor.name,
-                desc: strings.settings.items.useFolderColor.desc
-            })
         ])
     ];
 }
