@@ -37,7 +37,7 @@ import { useServices } from '../context/ServicesContext';
 import { useMetadataService } from '../context/ServicesContext';
 import { useSettingsState } from '../context/SettingsContext';
 import type { FolderDecorationModel } from '../utils/folderDecoration';
-import { SEARCH_EXCERPT_ROWS, type ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
+import { type ListPaneAppearanceSettings } from '../settings/listPaneAppearance';
 import { strings } from '../i18n';
 import type { SortOption } from '../settings/types';
 import { type NavigationItemType } from '../types';
@@ -208,15 +208,15 @@ function renderPropertySearchEvidenceKey(group: PropertySearchEvidenceGroup): Re
 
 /**
  * Memoized FileItem component.
- * Renders an individual file row in the list pane: file name (with optional
- * Omnisearch excerpt line during search) and frontmatter property pills.
+ * Renders an individual file row in the list pane: file name (with search-term
+ * highlighting on the name) and frontmatter property pills.
  * Handles selection state, quick actions, and drag-and-drop functionality.
  *
  * @param props - The component props
  * @param props.file - The Obsidian TFile to display
  * @param props.isSelected - Whether this file is currently selected
  * @param props.onClick - Handler called when the file is clicked
- * @returns A file row element with title, optional search excerpt, and pills
+ * @returns A file row element with title and pills
  */
 export const FileItem = React.memo(function FileItem({
     file,
@@ -492,20 +492,6 @@ export const FileItem = React.memo(function FileItem({
             </div>
         );
     })();
-
-    // Omnisearch excerpts only: file-display markdown previews were removed.
-    const searchExcerpt = typeof searchMeta?.excerpt === 'string' ? searchMeta.excerpt : '';
-    const hasSearchExcerptContent = appearanceSettings.showSearchExcerpt === true && searchExcerpt.length > 0;
-    const highlightedPreview = useMemo(
-        // Only Omnisearch triggers highlighting in the excerpt line, not regular filter
-        () => (searchMeta ? renderHighlightedText(searchExcerpt, undefined, searchMeta) : searchExcerpt),
-        [searchExcerpt, searchMeta]
-    );
-    // Pinned rows clamp the excerpt to a single line; search rows use the shared constant.
-    const excerptRows = isPinned ? 1 : SEARCH_EXCERPT_ROWS;
-
-    // The excerpt text renders only when this row actually carries an Omnisearch excerpt.
-    const shouldShowMultilinePreview = hasSearchExcerptContent;
 
     const showTooltips = settings.showTooltips;
 
@@ -896,18 +882,9 @@ export const FileItem = React.memo(function FileItem({
                             ) : null}
                         </div>
                     ) : null}
-                    {/* Compact layout (the only list layout): file name plus the optional Omnisearch excerpt line. */}
+                    {/* Compact layout (the only list layout): file name only. */}
                     <div className="nn-compact-file-text-content">
                         <div className="nn-compact-file-header">{fileTitleElement}</div>
-                        {/* Search excerpt line (pinned rows clamp it to a single row). */}
-                        {shouldShowMultilinePreview && (
-                            <div
-                                className="nn-file-preview"
-                                style={{ '--preview-rows': excerptRows } as React.CSSProperties}
-                            >
-                                {highlightedPreview}
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>

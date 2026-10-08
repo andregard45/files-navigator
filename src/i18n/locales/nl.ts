@@ -283,8 +283,7 @@ export const STRINGS_NL = {
                         'Wanneer een map is geselecteerd, wordt `path:"<folder>/"` aan de zoekopdracht toegevoegd zodat Omnisearch binnen die map en de submappen zoekt. Zoekopdrachten die al `path:` bevatten, worden ongewijzigd verstuurd.',
                         'Omnisearch geeft maximaal 50 resultaten terug, gerangschikt op relevantie. Bij zoekopdrachten met meer overeenkomsten ontbreken de lager gerangschikte notities.',
                         'Het beperken tot mappaden met niet-ASCII-tekens vereist Omnisearch 1.30.0 of hoger. Oudere versies doorzoeken de hele kluis, waarna de resultaten op de map worden gefilterd.',
-                        'Zoekopdrachten met minder dan 3 tekens kunnen traag zijn in grote kluizen.',
-                        'Notitievoorbeelden tonen Omnisearch-fragmenten in plaats van de standaard voorbeeldtekst.'
+                        'Zoekopdrachten met minder dan 3 tekens kunnen traag zijn in grote kluizen.'
                     ]
                 }
             }

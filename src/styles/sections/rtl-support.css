@@ -13,15 +13,13 @@
     transform: translateX(100%);
 }
 
-.mod-rtl .nn-file-name,
-.mod-rtl .nn-file-preview {
+.mod-rtl .nn-file-name {
     text-align: right;
 }
 
 /* Bidi-safe text runs */
 .nn-navitem-name,
 .nn-file-name,
-.nn-file-preview,
 .nn-list-group-header {
     unicode-bidi: plaintext;
 }

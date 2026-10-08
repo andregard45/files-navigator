@@ -280,8 +280,7 @@ export const STRINGS_ID = {
                         'Saat folder dipilih, `path:"<folder>/"` ditambahkan ke kueri sehingga Omnisearch mencocokkan di dalam folder itu dan subfoldernya. Kueri yang sudah berisi `path:` dikirim tanpa perubahan.',
                         'Omnisearch mengembalikan paling banyak 50 hasil yang diurutkan berdasarkan relevansi. Pencarian dengan lebih banyak kecocokan tidak menampilkan catatan dengan peringkat lebih rendah.',
                         'Membatasi cakupan ke jalur folder dengan karakter non-ASCII memerlukan Omnisearch 1.30.0 atau yang lebih baru. Versi lama mencari di seluruh vault, lalu hasilnya difilter berdasarkan folder.',
-                        'Kueri dengan kurang dari 3 karakter bisa lambat di vault besar.',
-                        'Pratinjau catatan menampilkan kutipan Omnisearch alih-alih teks pratinjau default.'
+                        'Kueri dengan kurang dari 3 karakter bisa lambat di vault besar.'
                     ]
                 }
             }

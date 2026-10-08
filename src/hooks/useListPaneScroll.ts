@@ -232,7 +232,6 @@ function getListLayoutSignature({
         'topSpacer', topSpacerHeight,
         'titleRows', folderSettings.titleRows,
         'groupBy', folderSettings.groupBy,
-        'searchExcerpt', folderSettings.showSearchExcerpt ? 1 : 0,
         'selectedPills', settings.showSelectedNavigationPills ? 1 : 0,
         'selectionType', selectionType ?? '',
         'hiddenPill', selectedPropertyValueNodeIdToHide ?? '',
@@ -314,16 +313,12 @@ function getStickyHeaderHeightBeforeIndex(
     return 0;
 }
 
-export function resolveListFileRowHeightInputs({
-    item,
-    config
-}: ResolveListFileRowHeightInputsParams): FileRowHeightInputs {
-    const hasSearchExcerptContent =
-        config.showSearchExcerpt && typeof item.searchMeta?.excerpt === 'string' && item.searchMeta.excerpt.length > 0;
-
-    return {
-        hasSearchExcerptContent
-    };
+/**
+ * Per-row height inputs for the compact list layout. Rows render the file name only,
+ * so there are no excerpt-related inputs left to resolve.
+ */
+export function resolveListFileRowHeightInputs(_params: ResolveListFileRowHeightInputsParams): FileRowHeightInputs {
+    return {};
 }
 
 /**
@@ -442,7 +437,6 @@ export function useListPaneScroll({
     const rowSizingConfig = useMemo<ListFileRowSizingConfig>(() => ({
         heights: listMeasurements,
         titleRows: folderSettings.titleRows || 1,
-        showSearchExcerpt: Boolean(folderSettings.showSearchExcerpt),
         compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
         selectionType: selectionState.selectionType,
         includeDescendantNotes,
@@ -450,7 +444,6 @@ export function useListPaneScroll({
     }), [
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
-        folderSettings.showSearchExcerpt,
         folderSettings.titleRows,
         includeDescendantNotes,
         isMobile,

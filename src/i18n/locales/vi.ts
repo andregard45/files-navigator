@@ -279,8 +279,7 @@ export const STRINGS_VI = {
                         'Khi một thư mục được chọn, `path:"<folder>/"` được thêm vào truy vấn để Omnisearch tìm kết quả khớp bên trong thư mục đó và các thư mục con của nó. Truy vấn đã chứa `path:` được gửi nguyên vẹn.',
                         'Omnisearch trả về tối đa 50 kết quả được xếp hạng theo mức độ liên quan. Với các tìm kiếm có nhiều kết quả khớp hơn, những ghi chú xếp hạng thấp hơn sẽ không hiển thị.',
                         'Giới hạn phạm vi theo đường dẫn thư mục có ký tự không phải ASCII yêu cầu Omnisearch 1.30.0 trở lên. Các phiên bản cũ hơn tìm kiếm trong toàn bộ kho, sau đó kết quả được lọc theo thư mục.',
-                        'Truy vấn có ít hơn 3 ký tự có thể chậm trong kho lớn.',
-                        'Bản xem trước ghi chú hiển thị trích đoạn Omnisearch thay vì văn bản xem trước mặc định.'
+                        'Truy vấn có ít hơn 3 ký tự có thể chậm trong kho lớn.'
                     ]
                 }
             }

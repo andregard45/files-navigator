@@ -20,11 +20,9 @@ import { describe, expect, it } from 'vitest';
 import {
     estimateFileRowHeight,
     estimatePlainRowHeight,
-    estimateSearchRowHeight,
     getListPaneMeasurements,
     getSelectedPropertyValuePillToHide
 } from '../../src/utils/listPaneMeasurements';
-import { SEARCH_EXCERPT_ROWS } from '../../src/settings/listPaneAppearance';
 import { ItemType } from '../../src/types';
 import { buildPropertyValueNodeId } from '../../src/utils/propertyTree';
 
@@ -38,28 +36,19 @@ describe('listPaneMeasurements layout helpers', () => {
                 {
                     heights: desktopHeights,
                     titleRows: 2,
-                    showSearchExcerpt: false,
                     compactPaddingTotal: 18
                 }
             )
         ).toBe(18 + desktopHeights.titleLineHeight * 2);
     });
 
-    it('reserves the excerpt slot only for rows that carry search excerpt content', () => {
-        const excerptSlot = desktopHeights.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
+    it('does not reserve any excerpt slot for search rows', () => {
         const config = {
             heights: desktopHeights,
             titleRows: 1,
-            showSearchExcerpt: true,
             compactPaddingTotal: 18
         };
 
-        expect(estimateFileRowHeight({ hasSearchExcerptContent: true }, config)).toBe(
-            18 + desktopHeights.titleLineHeight + excerptSlot
-        );
-        expect(estimateFileRowHeight({ hasSearchExcerptContent: false }, config)).toBe(
-            18 + desktopHeights.titleLineHeight
-        );
         expect(estimateFileRowHeight({}, config)).toBe(18 + desktopHeights.titleLineHeight);
     });
 
@@ -69,17 +58,6 @@ describe('listPaneMeasurements layout helpers', () => {
         );
         expect(estimatePlainRowHeight({ heights: desktopHeights, titleRows: 2 })).toBe(
             desktopHeights.basePadding + desktopHeights.titleLineHeight * 2
-        );
-    });
-
-    it('reserves the shared search excerpt slot in the standalone search estimator', () => {
-        const excerptSlot = desktopHeights.multilineTextLineHeight * SEARCH_EXCERPT_ROWS;
-
-        expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 1 })).toBe(
-            desktopHeights.basePadding + desktopHeights.titleLineHeight + excerptSlot
-        );
-        expect(estimateSearchRowHeight({ heights: desktopHeights, titleRows: 2 })).toBe(
-            desktopHeights.basePadding + desktopHeights.titleLineHeight * 2 + excerptSlot
         );
     });
 

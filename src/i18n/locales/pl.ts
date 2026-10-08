@@ -279,8 +279,7 @@ export const STRINGS_PL = {
                         'Gdy wybrany jest folder, do zapytania dołączane jest `path:"<folder>/"`, dzięki czemu Omnisearch dopasowuje wyniki w tym folderze i jego podfolderach. Zapytania zawierające już `path:` są wysyłane bez zmian.',
                         'Omnisearch zwraca maksymalnie 50 wyników uporządkowanych według trafności. Wyszukiwania z większą liczbą dopasowań pomijają notatki o niższej trafności.',
                         'Ograniczenie wyszukiwania do ścieżek folderów zawierających znaki spoza ASCII wymaga Omnisearch w wersji 1.30.0 lub nowszej. Starsze wersje przeszukują cały sejf, a wyniki są następnie filtrowane do folderu.',
-                        'Zapytania krótsze niż 3 znaki mogą działać wolno w dużych sejfach.',
-                        'Podgląd notatek pokazuje fragmenty Omnisearch zamiast domyślnego tekstu podglądu.'
+                        'Zapytania krótsze niż 3 znaki mogą działać wolno w dużych sejfach.'
                     ]
                 }
             }

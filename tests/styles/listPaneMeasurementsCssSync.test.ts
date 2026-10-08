@@ -108,32 +108,25 @@ describe('List pane measurements stay in sync with CSS', () => {
         expect(mobileVars).not.toMatch(/--nn-file-tag-row-gap\\s*:/);
     });
 
-    test('android text zoom keeps title and preview clamps in sync', () => {
+    test('android text zoom keeps title clamps in sync and preview rules are gone', () => {
         const androidCss = readTextFile('src/styles/sections/android-textzoom.css');
         const titleRule = extractRuleBlock(androidCss, '.notebook-navigator-android .nn-file-name');
-        const previewRule = extractRuleBlock(androidCss, '.notebook-navigator-android .nn-file-preview');
 
         expect(titleRule).toMatch(
             /max-height:\s*calc\(var\(--nn-file-title-line-height\)\s*\*\s*var\(--filename-rows, 1\)\s*\*\s*var\(--nn-android-font-scale, 1\)\)/
         );
         expect(titleRule).not.toMatch(/(^|\n)\s*min-height:\s*/m);
         expect(titleRule).not.toMatch(/(^|\n)\s*height:\s*/m);
-        expect(previewRule).toMatch(
-            /max-height:\s*calc\(var\(--nn-file-multiline-text-line-height\)\s*\*\s*var\(--preview-rows, 1\)\s*\*\s*var\(--nn-android-font-scale, 1\)\)/
-        );
-        expect(previewRule).not.toMatch(/(^|\n)\s*min-height:\s*/m);
-        expect(previewRule).not.toMatch(/(^|\n)\s*height:\s*/m);
+        expect(androidCss).not.toMatch(/\.nn-file-preview/);
     });
 
-    test('pill height uses the fixed row height as border-box height', () => {
+    test('property pill rules are gone after compact-only cleanup', () => {
         const listTagsCss = readTextFile('src/styles/sections/list-tags.css');
-        const pillRule = listTagsCss.match(/(^|\n)\.nn-file-tag\s*\{([^}]*)\}/)?.[2];
-        if (!pillRule) {
-            throw new Error('Missing CSS rule for selector .nn-file-tag');
-        }
 
-        expect(pillRule).toMatch(/(^|\n)\s*box-sizing:\s*border-box\s*;/m);
-        expect(pillRule).toMatch(/(^|\n)\s*height:\s*var\(--nn-file-tag-row-height\)\s*;/m);
+        // The file display no longer renders property pills; their layout CSS
+        // must not come back, and excerpt/preview styling is fully removed too.
+        expect(listTagsCss).not.toMatch(/\.nn-file-tag\s*\{/);
+        expect(listTagsCss).not.toMatch(/\.nn-file-preview/);
     });
 
     test('file text stack top-aligns inside fixed virtual file rows', () => {
@@ -145,7 +138,6 @@ describe('List pane measurements stay in sync with CSS', () => {
         const fileInnerContentRule = extractRuleBlock(listFilesCss, '.nn-file-inner-content');
         const fileTextContentRule = extractRuleBlock(listFilesCss, '.nn-compact-file-text-content');
         const fileNameRule = extractRuleBlock(listFilesCss, '.nn-file-name');
-        const previewRule = extractRuleBlock(listFilesCss, '.nn-file-preview');
 
         expect(virtualFileItemRule).toMatch(/(^|\n)\s*height:\s*var\(--item-height\)\s*;/m);
         expect(fileRule).toMatch(/(^|\n)\s*height:\s*100%\s*;/m);
@@ -156,11 +148,6 @@ describe('List pane measurements stay in sync with CSS', () => {
         expect(fileNameRule).toMatch(
             /(^|\n)\s*max-height:\s*calc\(var\(--nn-file-title-line-height\)\s*\*\s*var\(--filename-rows, 1\)\)\s*;/m
         );
-        expect(previewRule).toMatch(
-            /(^|\n)\s*max-height:\s*calc\(var\(--nn-file-multiline-text-line-height\)\s*\*\s*var\(--preview-rows, 1\)\)\s*;/m
-        );
-        expect(previewRule).not.toMatch(/(^|\n)\s*flex:\s*1\s*;/m);
-        expect(previewRule).not.toMatch(/(^|\n)\s*min-height:\s*/m);
-        expect(previewRule).not.toMatch(/(^|\n)\s*height:\s*/m);
+        expect(listFilesCss).not.toMatch(/\.nn-file-preview/);
     });
 });

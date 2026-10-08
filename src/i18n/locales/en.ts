@@ -279,8 +279,7 @@ export const STRINGS_EN = {
                         'When a folder is selected, `path:"<folder>/"` is appended to the query so Omnisearch matches inside that folder and its subfolders. Queries that already contain `path:` are sent unchanged.',
                         'Omnisearch returns at most 50 results ranked by relevance. Searches with more matches omit the lower-ranked notes.',
                         'Folder scoping with non-ASCII folder paths requires Omnisearch 1.30.0 or later. Older versions search the whole vault, and results are filtered to the folder afterward.',
-                        'Queries with fewer than 3 characters can be slow in large vaults.',
-                        'Note previews show Omnisearch excerpts instead of the default preview text.'
+                        'Queries with fewer than 3 characters can be slow in large vaults.'
                     ]
                 }
             }

@@ -14,6 +14,3 @@
     color: var(--nn-file-name-custom-color);
 }
 
-.nn-file.nn-selected .nn-file-preview {
-    color: var(--nn-selected-file-preview-color);
-}

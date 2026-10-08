@@ -3584,7 +3584,7 @@ button.nn-navigation-calendar-day {
     display: none;
 }
 
-/* File text content - left side container for name and search excerpt (compact is the only list mode) */
+/* File text content - left side container for the file name (compact is the only list mode) */
 .nn-compact-file-text-content {
     flex: 1;
     min-width: 0; /* Enable text truncation */
@@ -3759,20 +3759,6 @@ button.nn-navigation-calendar-day {
     top: var(--nn-file-padding-vertical-compact);
 }
 
-/* File preview text - search excerpt shown under the title while searching */
-.nn-file-preview {
-    font-size: var(--nn-file-small-size-mobile, var(--nn-file-small-size));
-    font-weight: var(--nn-theme-file-preview-font-weight);
-    color: var(--nn-theme-file-preview-color);
-    line-height: var(--nn-file-multiline-text-line-height);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: var(--preview-rows, 1);
-    -webkit-box-orient: vertical;
-    word-break: break-word;
-    max-height: calc(var(--nn-file-multiline-text-line-height) * var(--preview-rows, 1));
-}
 /* Source: src/styles/sections/list-tags.css */
 
 /* ========================================================================
@@ -3789,9 +3775,6 @@ button.nn-navigation-calendar-day {
     color: var(--nn-file-name-custom-color);
 }
 
-.nn-file.nn-selected .nn-file-preview {
-    color: var(--nn-selected-file-preview-color);
-}
 /* Source: src/styles/sections/list-compact-mode.css */
 
 /* ========================================================================
@@ -7459,9 +7442,6 @@ body.is-phone .notebook-navigator-android .nn-split-container {
     max-height: calc(var(--nn-file-title-line-height) * var(--filename-rows, 1) * var(--nn-android-font-scale, 1));
 }
 
-.notebook-navigator-android .nn-file-preview {
-    max-height: calc(var(--nn-file-multiline-text-line-height) * var(--preview-rows, 1) * var(--nn-android-font-scale, 1));
-}
 
 /* Icon vertical centering - line-height is pre-compensated, icon size is not */
 .notebook-navigator-android .nn-file-icon-slot {
@@ -7491,15 +7471,13 @@ body.is-phone .notebook-navigator-android .nn-split-container {
     transform: translateX(100%);
 }
 
-.mod-rtl .nn-file-name,
-.mod-rtl .nn-file-preview {
+.mod-rtl .nn-file-name {
     text-align: right;
 }
 
 /* Bidi-safe text runs */
 .nn-navitem-name,
 .nn-file-name,
-.nn-file-preview,
 .nn-list-group-header {
     unicode-bidi: plaintext;
 }

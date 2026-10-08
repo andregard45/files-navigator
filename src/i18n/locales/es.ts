@@ -281,8 +281,7 @@ export const STRINGS_ES = {
                         'Cuando hay una carpeta seleccionada, se añade `path:"<folder>/"` a la consulta para que Omnisearch busque dentro de esa carpeta y sus subcarpetas. Las consultas que ya contienen `path:` se envían sin cambios.',
                         'Omnisearch devuelve como máximo 50 resultados ordenados por relevancia. Las búsquedas con más coincidencias omiten las notas con menor relevancia.',
                         'Delimitar rutas de carpeta con caracteres no ASCII requiere Omnisearch 1.30.0 o posterior. Las versiones anteriores buscan en toda la bóveda y los resultados se filtran después por carpeta.',
-                        'Las consultas con menos de 3 caracteres pueden ser lentas en bóvedas grandes.',
-                        'Las vistas previas de notas muestran extractos de Omnisearch en lugar del texto de vista previa predeterminado.'
+                        'Las consultas con menos de 3 caracteres pueden ser lentas en bóvedas grandes.'
                     ]
                 }
             }

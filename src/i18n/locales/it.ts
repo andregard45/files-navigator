@@ -279,8 +279,7 @@ export const STRINGS_IT = {
                         'Quando è selezionata una cartella, `path:"<folder>/"` viene aggiunto alla query in modo che Omnisearch cerchi in quella cartella e nelle sue sottocartelle. Le query che contengono già `path:` vengono inviate senza modifiche.',
                         'Omnisearch restituisce al massimo 50 risultati ordinati per rilevanza. Le ricerche con più corrispondenze omettono le note con classificazione più bassa.',
                         "Limitare la ricerca a percorsi di cartelle con caratteri non-ASCII richiede Omnisearch 1.30.0 o successivo. Le versioni precedenti cercano nell'intero vault e i risultati vengono poi filtrati per cartella.",
-                        'Le query con meno di 3 caratteri possono essere lente nei vault grandi.',
-                        'Le anteprime delle note mostrano estratti di Omnisearch invece del testo di anteprima predefinito.'
+                        'Le query con meno di 3 caratteri possono essere lente nei vault grandi.'
                     ]
                 }
             }
