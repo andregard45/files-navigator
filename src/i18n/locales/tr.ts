@@ -947,10 +947,6 @@ export const STRINGS_TR = {
             exportSuccess: 'Başarısız meta veri raporu dışa aktarıldı: {filename}',
             exportFailed: 'Meta veri raporu dışa aktarılamadı'
         },
-        index: {
-            label: 'Genel',
-            description: 'Sürüm notları, destek, kasa profili, dosya türleri ve özellik anahtarları.'
-        },
         pageGroups: {
             configuration: 'Yapılandırma',
             navigationPane: 'Gezinme bölmesi',

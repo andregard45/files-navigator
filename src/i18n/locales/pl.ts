@@ -951,10 +951,6 @@ export const STRINGS_PL = {
             exportSuccess: 'Raport nieprawidłowych metadanych wyeksportowany do: {filename}',
             exportFailed: 'Nie udało się wyeksportować raportu metadanych'
         },
-        index: {
-            label: 'Ogólne',
-            description: 'Informacje o wydaniu, wsparcie, profil sejfu, typy plików i klucze atrybutów.'
-        },
         pageGroups: {
             configuration: 'Konfiguracja',
             navigationPane: 'Panel nawigacji',

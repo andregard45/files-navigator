@@ -947,10 +947,6 @@ export const STRINGS_RU = {
             exportSuccess: 'Отчёт об ошибках метаданных экспортирован в: {filename}',
             exportFailed: 'Не удалось экспортировать отчёт о метаданных'
         },
-        index: {
-            label: 'Общие',
-            description: 'Заметки о выпуске, поддержка, профиль хранилища, типы файлов и ключи свойств.'
-        },
         pageGroups: {
             configuration: 'Конфигурация',
             navigationPane: 'Панель навигации',

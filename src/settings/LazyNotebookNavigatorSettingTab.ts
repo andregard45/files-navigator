@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { App, PluginSettingTab, requireApiVersion, type SettingDefinitionItem } from 'obsidian';
+import { App, PluginSettingTab, type SettingDefinitionItem } from 'obsidian';
 import type NotebookNavigatorPlugin from '../main';
 import type { NotebookNavigatorSettingTab } from '../settings';
 import { NOTEBOOK_NAVIGATOR_ICON_ID } from '../constants/notebookNavigatorIcon';
@@ -39,10 +39,6 @@ export class LazyNotebookNavigatorSettingTab extends PluginSettingTab {
     }
 
     getSettingDefinitions(): SettingDefinitionItem[] {
-        if (!requireApiVersion('1.13.0')) {
-            return [];
-        }
-
         this.definitionLanguage = strings;
         return this.getDelegate().getSettingDefinitions();
     }

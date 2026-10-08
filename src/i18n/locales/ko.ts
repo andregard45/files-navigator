@@ -946,10 +946,6 @@ export const STRINGS_KO = {
             exportSuccess: '메타데이터 오류 보고서를 내보냈습니다: {filename}',
             exportFailed: '메타데이터 보고서 내보내기 실패'
         },
-        index: {
-            label: '일반',
-            description: '릴리스 노트, 지원, 보관함 프로필, 파일 유형, 속성 키.'
-        },
         pageGroups: {
             configuration: '구성',
             navigationPane: '탐색 창',

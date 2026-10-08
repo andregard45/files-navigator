@@ -942,10 +942,6 @@ export const STRINGS_ZH_TW = {
             exportSuccess: '失敗的中繼資料報告已匯出至：{filename}',
             exportFailed: '匯出中繼資料報告失敗'
         },
-        index: {
-            label: '一般',
-            description: '發行說明、支援、儲存庫設定檔、檔案類型與屬性鍵。'
-        },
         pageGroups: {
             configuration: '設定',
             navigationPane: '導覽窗格',

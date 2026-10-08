@@ -949,10 +949,6 @@ export const STRINGS_FA = {
             exportSuccess: 'گزارش متادیتای ناموفق به {filename} صادر شد',
             exportFailed: 'صادر کردن گزارش متادیتا ناموفق بود'
         },
-        index: {
-            label: 'عمومی',
-            description: 'یادداشت‌های انتشار، پشتیبانی، پروفایل خزانه، انواع فایل و کلیدهای ویژگی.'
-        },
         pageGroups: {
             configuration: 'پیکربندی',
             navigationPane: 'پنل ناوبری',

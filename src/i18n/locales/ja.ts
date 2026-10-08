@@ -950,10 +950,6 @@ export const STRINGS_JA = {
             exportSuccess: '失敗したメタデータレポートをエクスポートしました: {filename}',
             exportFailed: 'メタデータレポートのエクスポートに失敗しました'
         },
-        index: {
-            label: '一般設定',
-            description: 'リリースノート、サポート、保管庫プロファイル、ファイルタイプ、プロパティキー。'
-        },
         pageGroups: {
             configuration: '設定',
             navigationPane: 'ナビゲーションペイン',

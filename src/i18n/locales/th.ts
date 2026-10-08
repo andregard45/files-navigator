@@ -943,10 +943,6 @@ export const STRINGS_TH = {
             exportSuccess: 'ส่งออกรายงานเมตาดาต้าที่ล้มเหลวไปยัง: {filename}',
             exportFailed: 'ส่งออกรายงานเมตาดาต้าล้มเหลว'
         },
-        index: {
-            label: 'ทั่วไป',
-            description: 'บันทึกประจำรุ่น การสนับสนุน โปรไฟล์ห้องนิรภัย ประเภทไฟล์ และคีย์คุณสมบัติ'
-        },
         pageGroups: {
             configuration: 'การกำหนดค่า',
             navigationPane: 'แผงนำทาง',

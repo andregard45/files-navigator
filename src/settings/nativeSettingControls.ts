@@ -25,7 +25,6 @@ import type {
     SettingTextControl,
     SettingToggleControl
 } from 'obsidian';
-import { requireApiVersion } from 'obsidian';
 import { DEFAULT_SETTINGS } from './defaultSettings';
 import type { NotebookNavigatorSettings } from './types';
 import { normalizeOptionalVaultFolderPath } from '../utils/pathUtils';
@@ -201,10 +200,10 @@ export function createGroupDefinition(
         items
     };
 
-    if (requireApiVersion('1.13.0') && heading) {
+    if (heading) {
         group.heading = heading;
     }
-    if (requireApiVersion('1.13.0') && options?.visible !== undefined) {
+    if (options?.visible !== undefined) {
         group.visible = options.visible;
     }
 
@@ -326,13 +325,13 @@ export function createRenderDefinition(options: DefinitionOptions & { render: Re
         render: (setting, group) => options.render(setting, group)
     };
 
-    if (requireApiVersion('1.13.0') && options.aliases) {
+    if (options.aliases) {
         setting.aliases = options.aliases;
     }
-    if (requireApiVersion('1.13.0') && options.searchable !== undefined) {
+    if (options.searchable !== undefined) {
         setting.searchable = options.searchable;
     }
-    if (requireApiVersion('1.13.0') && options.visible !== undefined) {
+    if (options.visible !== undefined) {
         setting.visible = options.visible;
     }
 
@@ -383,13 +382,13 @@ function createControlDefinition<K extends string>(
         control: options.control
     };
 
-    if (requireApiVersion('1.13.0') && options.aliases) {
+    if (options.aliases) {
         setting.aliases = options.aliases;
     }
-    if (requireApiVersion('1.13.0') && options.searchable !== undefined) {
+    if (options.searchable !== undefined) {
         setting.searchable = options.searchable;
     }
-    if (requireApiVersion('1.13.0') && options.visible !== undefined) {
+    if (options.visible !== undefined) {
         setting.visible = options.visible;
     }
 

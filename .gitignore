@@ -1,2 +1,6 @@
 # Dependencies
 node_modules/
+
+# Build Artifacts
+main.js
+styles.css
