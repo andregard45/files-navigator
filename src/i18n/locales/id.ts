@@ -154,8 +154,6 @@ export const STRINGS_ID = {
         subtags: 'subtag',
         childValues: 'nilai anak',
         applySortAndGroupToDescendants: (target: string) => `Terapkan urutan dan grup ke ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Terapkan tampilan ke ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Atur ulang tampilan di ${target}`,
         showFolders: 'Tampilkan navigasi',
         reorderRootFolders: 'Atur ulang navigasi',
         finishRootFolderReorder: 'Selesai',
@@ -165,8 +163,6 @@ export const STRINGS_ID = {
         showSinglePane: 'Tampilkan panel tunggal',
         dualPaneAutoFallbackNotice:
             'Panel ganda tidak tersedia saat bilah sisi terlalu sempit. Untuk mengubahnya, atur "Saat bilah sisi terlalu sempit" ke "Jangan lakukan apa pun" di Pengaturan > Tampilan & perilaku.',
-        changeAppearance: 'Ubah tampilan',
-        changeAppearanceCustomized: 'Ubah tampilan, disesuaikan',
         showNotesFromSubfolders: 'Tampilkan catatan dari subfolder',
         showFilesFromSubfolders: 'Tampilkan file dari subfolder',
         showNotesFromDescendants: 'Tampilkan catatan dari turunan',
@@ -407,17 +403,10 @@ export const STRINGS_ID = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Tampilan',
         sortBy: 'Urutkan berdasarkan',
         defaultSuffix: '(default)',
         defaultLabel: 'Bawaan',
-        titleRows: {
-            label: 'Baris judul',
-            option: (rows: number) => `${rows} baris judul`
-        },
-        groupBy: 'Kelompokkan berdasarkan',
-        resetAppearance: 'Atur ulang tampilan',
-        openPluginSettings: 'Buka pengaturan plugin…'
+        groupBy: 'Kelompokkan berdasarkan'
     },
 
     // Modal dialogs
@@ -425,12 +414,6 @@ export const STRINGS_ID = {
         bulkApply: {
             applyButton: 'Terapkan',
             applySortAndGroupTitle: (target: string) => `Terapkan urutan dan grup ke ${target}?`,
-            applyAppearanceTitle: (target: string) => `Terapkan tampilan ke ${target}?`,
-            resetAppearanceTitle: (target: string) => `Atur ulang tampilan di ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `Tampilan akan berubah untuk ${count} item. Tampilan khusus yang ada dan diganti: ${replacedCount}. Preferensi tampilan tersimpan disalin satu kali; pengurutan dan pengelompokan dipertahankan. Perubahan mendatang dan turunan baru tidak ditautkan.`,
-            resetAppearanceMessage: (count: number) =>
-                `Tampilan akan diatur ulang untuk ${count} item. Pengurutan dan pengelompokan dipertahankan. Ini adalah perubahan satu kali; perubahan mendatang dan turunan baru tidak ditautkan.`,
             affectedCountMessage: (count: number) => `Penimpaan yang ada dan akan berubah: ${count}.`
         },
         mergeNotes: {
@@ -499,7 +482,6 @@ export const STRINGS_ID = {
                 'list-sort-title': 'Urutkan berdasarkan judul',
                 'list-sort-filename': 'Urutkan berdasarkan nama file',
                 'list-sort-property': 'Urutkan berdasarkan properti',
-                'list-appearance': 'Ubah tampilan',
                 'list-new-note': 'Catatan baru',
                 'list-pinned': 'Catatan yang disematkan',
                 'nav-folder-open': 'Folder terbuka',
@@ -1786,15 +1768,6 @@ export const STRINGS_ID = {
                 help: 'Format umum:\nHH:mm = 14:30 (24 jam)\nh:mm a = 2:30 PM (12 jam)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nToken:\nHH/H = 24 jam\nhh/h = 12 jam\nmm = menit\nss = detik\na = AM/PM',
                 helpTooltip: 'Format menggunakan Moment',
                 momentLinkText: 'format Moment'
-            },
-            titleRows: {
-                name: 'Baris judul',
-                desc: 'Jumlah baris yang ditampilkan untuk judul catatan.',
-                options: {
-                    '1': '1 baris',
-                    '2': '2 baris',
-                    '3': '3 baris'
-                }
             },
             useFolderColor: {
                 name: 'Gunakan warna folder',

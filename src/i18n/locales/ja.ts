@@ -155,8 +155,6 @@ export const STRINGS_JA = {
         subtags: 'サブタグ',
         childValues: '子の値',
         applySortAndGroupToDescendants: (target: string) => `${target}に並べ替えとグループ化を適用`,
-        applyAppearanceToDescendants: (target: string) => `${target}に外観を適用`,
-        resetAppearanceInDescendants: (target: string) => `${target}の外観をリセット`,
         showFolders: 'ナビゲーションを表示', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'ナビゲーションを並べ替え',
         finishRootFolderReorder: '完了',
@@ -166,8 +164,6 @@ export const STRINGS_JA = {
         showSinglePane: 'シングルペインを表示', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'サイドバーが狭すぎる場合、デュアルペインは使用できません。変更するには、設定 > 外観と動作で「サイドバーが狭すぎる場合」を「何もしない」に設定してください。',
-        changeAppearance: '外観を変更', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: '外観を変更（カスタマイズ済み）',
         showNotesFromSubfolders: 'サブフォルダのノートを表示',
         showFilesFromSubfolders: 'サブフォルダのファイルを表示',
         showNotesFromDescendants: '子孫のノートを表示',
@@ -408,17 +404,10 @@ export const STRINGS_JA = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: '外観',
         sortBy: '並べ替え',
         defaultSuffix: '(デフォルト)',
         defaultLabel: 'デフォルト',
-        titleRows: {
-            label: 'タイトル行数',
-            option: (rows: number) => `タイトル${rows}行`
-        },
-        groupBy: 'グループ化',
-        resetAppearance: '外観をリセット',
-        openPluginSettings: 'プラグイン設定を開く…'
+        groupBy: 'グループ化'
     },
 
     // Modal dialogs
@@ -426,12 +415,6 @@ export const STRINGS_JA = {
         bulkApply: {
             applyButton: '適用',
             applySortAndGroupTitle: (target: string) => `${target}に並べ替えとグループ化を適用しますか？`,
-            applyAppearanceTitle: (target: string) => `${target}に外観を適用しますか？`,
-            resetAppearanceTitle: (target: string) => `${target}の外観をリセットしますか？`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `${count}件の外観が変更されます。既存のカスタム外観の置換数：${replacedCount}。保存済みの外観設定が一度だけコピーされ、並べ替えとグループ化は保持されます。今後の変更や新しい子項目は連動しません。`,
-            resetAppearanceMessage: (count: number) =>
-                `${count}件の外観がリセットされます。並べ替えとグループ化は保持されます。これは一度限りの変更で、今後の変更や新しい子項目は連動しません。`,
             affectedCountMessage: (count: number) => `変更される既存のオーバーライド: ${count}。`
         },
         mergeNotes: {
@@ -500,7 +483,6 @@ export const STRINGS_JA = {
                 'list-sort-title': 'タイトルで並べ替え',
                 'list-sort-filename': 'ファイル名で並べ替え',
                 'list-sort-property': 'プロパティで並べ替え',
-                'list-appearance': '外観を変更',
                 'list-new-note': '新規ノート',
                 'list-pinned': 'ピン留めされたノート',
                 'nav-folder-open': 'フォルダ（開）',
@@ -1785,15 +1767,6 @@ export const STRINGS_JA = {
                 help: '一般的な形式：\nHH:mm = 14:30（24時間制）\nh:mm a = 2:30 PM（12時間制）\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nトークン：\nHH/H = 24時間制\nhh/h = 12時間制\nmm = 分\nss = 秒\na = AM/PM',
                 helpTooltip: 'Moment形式',
                 momentLinkText: 'Moment フォーマット'
-            },
-            titleRows: {
-                name: 'タイトル行数',
-                desc: 'ノートタイトルの表示行数。',
-                options: {
-                    '1': '1行',
-                    '2': '2行',
-                    '3': '3行'
-                }
             },
             useFolderColor: {
                 name: 'フォルダの色を使用',

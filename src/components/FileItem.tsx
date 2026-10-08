@@ -412,10 +412,10 @@ export const FileItem = React.memo(function FileItem({
                 <div
                     className="nn-file-name nn-file-name--inline-renaming"
                     data-has-color={applyColorToName ? 'true' : 'false'}
-                    data-title-rows={appearanceSettings.titleRows}
+                    data-title-rows={1}
                     style={
                         {
-                            '--filename-rows': appearanceSettings.titleRows,
+                            '--filename-rows': 1,
                             ...(applyColorToName ? { '--nn-file-name-custom-color': fileTitleColor } : {})
                         } as React.CSSProperties
                     }
@@ -439,10 +439,10 @@ export const FileItem = React.memo(function FileItem({
             <div
                 className="nn-file-name"
                 data-has-color={applyColorToName ? 'true' : 'false'}
-                data-title-rows={appearanceSettings.titleRows}
+                data-title-rows={1}
                 style={
                     {
-                        '--filename-rows': appearanceSettings.titleRows,
+                        '--filename-rows': 1,
                         ...(applyColorToName ? { '--nn-file-name-custom-color': fileTitleColor } : {})
                     } as React.CSSProperties
                 }
@@ -859,7 +859,7 @@ export const FileItem = React.memo(function FileItem({
                 {!isMobile && hasQuickActions && showQuickActionsPanel && (
                     <div
                         className="nn-quick-actions-panel nn-compact-mode"
-                        data-title-rows={appearanceSettings.titleRows}
+                        data-title-rows={1}
                     >
                         {quickActionItems.map((action, index) => (
                             <React.Fragment key={action.key}>

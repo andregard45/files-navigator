@@ -154,8 +154,6 @@ export const STRINGS_PT = {
         subtags: 'subetiquetas',
         childValues: 'valores secundários',
         applySortAndGroupToDescendants: (target: string) => `Aplicar ordenação e agrupamento a ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Aplicar aparência a ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Repor aparência em ${target}`,
         showFolders: 'Mostrar navegação', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'Reordenar navegação',
         finishRootFolderReorder: 'Concluído',
@@ -165,8 +163,6 @@ export const STRINGS_PT = {
         showSinglePane: 'Mostrar painel único', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Os painéis duplos não estão disponíveis quando a barra lateral é demasiado estreita. Para alterar isto, defina "Quando a barra lateral é demasiado estreita" como "Não fazer nada" em Definições > Aparência e comportamento.',
-        changeAppearance: 'Alterar aparência', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Alterar aparência, personalizada',
         showNotesFromSubfolders: 'Mostrar notas de subpastas',
         showFilesFromSubfolders: 'Mostrar ficheiros de subpastas',
         showNotesFromDescendants: 'Mostrar notas de descendentes',
@@ -407,17 +403,10 @@ export const STRINGS_PT = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Aparência',
         sortBy: 'Ordenar por',
         defaultSuffix: '(predefinido)',
         defaultLabel: 'Predefinido',
-        titleRows: {
-            label: 'Linhas de título',
-            option: (rows: number) => `${rows} linha${rows === 1 ? '' : 's'} de título`
-        },
-        groupBy: 'Agrupar por',
-        resetAppearance: 'Repor aparência',
-        openPluginSettings: 'Abrir definições do plugin…'
+        groupBy: 'Agrupar por'
     },
 
     // Modal dialogs
@@ -425,12 +414,6 @@ export const STRINGS_PT = {
         bulkApply: {
             applyButton: 'Aplicar',
             applySortAndGroupTitle: (target: string) => `Aplicar ordenação e agrupamento a ${target}?`,
-            applyAppearanceTitle: (target: string) => `Aplicar aparência a ${target}?`,
-            resetAppearanceTitle: (target: string) => `Repor aparência em ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `A aparência será alterada para ${count} ${count === 1 ? 'item' : 'itens'}. Aparências personalizadas existentes substituídas: ${replacedCount}. As preferências de aparência guardadas são copiadas uma vez; a ordenação e o agrupamento são preservados. Alterações futuras e novos descendentes não ficam associados.`,
-            resetAppearanceMessage: (count: number) =>
-                `A aparência será reposta para ${count} ${count === 1 ? 'item' : 'itens'}. A ordenação e o agrupamento são preservados. Esta é uma alteração única; alterações futuras e novos descendentes não ficam associados.`,
             affectedCountMessage: (count: number) => `Substituições existentes que serão alteradas: ${count}.`
         },
         mergeNotes: {
@@ -499,7 +482,6 @@ export const STRINGS_PT = {
                 'list-sort-title': 'Ordenar por título',
                 'list-sort-filename': 'Ordenar por nome do ficheiro',
                 'list-sort-property': 'Ordenar por propriedade',
-                'list-appearance': 'Alterar aparência',
                 'list-new-note': 'Nova nota',
                 'list-pinned': 'Notas fixadas',
                 'nav-folder-open': 'Pasta aberta',
@@ -1790,15 +1772,6 @@ export const STRINGS_PT = {
                 help: 'Formatos comuns:\nh:mm a = 2:30 PM (12 horas)\nHH:mm = 14:30 (24 horas)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nTokens:\nHH/H = 24 horas\nhh/h = 12 horas\nmm = minutos\nss = segundos\na = AM/PM',
                 helpTooltip: 'Formato usando Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Linhas de título',
-                desc: 'Número de linhas a exibir para títulos de notas.',
-                options: {
-                    '1': '1 linha',
-                    '2': '2 linhas',
-                    '3': '3 linhas'
-                }
             },
             useFolderColor: {
                 name: 'Usar cor da pasta',

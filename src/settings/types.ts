@@ -493,7 +493,6 @@ export type ListNoteGroupingOption =
     ListNoteGroupingBaseOption | `property:${string}` | `property-desc:${string}` | `property-follow:${string}`;
 
 export interface ListPaneAppearance {
-    titleRows?: number;
     groupBy?: ListNoteGroupingOption;
 }
 
@@ -577,7 +576,7 @@ export function normalizeAppearanceGroupBy<T extends AppearanceGroupingValue>(ap
 export type NavigationToolbarButtonId = 'toggleDualPane' | 'expandCollapse' | 'calendar' | 'hiddenItems' | 'rootReorder' | 'newFolder';
 
 /** Buttons available in the list toolbar */
-export type ListToolbarButtonId = 'back' | 'search' | 'reveal' | 'descendants' | 'groupExpansion' | 'sort' | 'appearance' | 'newNote';
+export type ListToolbarButtonId = 'back' | 'search' | 'reveal' | 'descendants' | 'groupExpansion' | 'sort' | 'newNote';
 
 /** Visibility toggles for toolbar buttons */
 export interface ToolbarVisibilitySettings {
@@ -809,7 +808,6 @@ export interface NotebookNavigatorSettings {
     showCategoryIcons: boolean;
     fileTypeIconMap: Record<string, string>;
     fileTypeIconPreset: FileTypeIconPreset;
-    fileNameRows: number;
     useFolderColorForTitles: boolean;
 
     // Calendar tab - Calendar (the calendar feature is always enabled; there is no on/off setting)

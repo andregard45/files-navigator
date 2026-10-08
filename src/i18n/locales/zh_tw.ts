@@ -153,8 +153,6 @@ export const STRINGS_ZH_TW = {
         subtags: '子標籤',
         childValues: '子值',
         applySortAndGroupToDescendants: (target: string) => `將排序與分組套用到${target}`,
-        applyAppearanceToDescendants: (target: string) => `將外觀套用到${target}`,
-        resetAppearanceInDescendants: (target: string) => `重設${target}中的外觀`,
         showFolders: '顯示導覽',
         reorderRootFolders: '重新排列導覽',
         finishRootFolderReorder: '完成重新排列',
@@ -164,8 +162,6 @@ export const STRINGS_ZH_TW = {
         showSinglePane: '顯示單窗格',
         dualPaneAutoFallbackNotice:
             '側邊欄過窄時無法使用雙窗格。若要變更此行為，請在設定 > 外觀與行為中將「側邊欄過窄時」設為「不執行任何動作」。',
-        changeAppearance: '變更外觀',
-        changeAppearanceCustomized: '變更外觀，已自訂',
         showNotesFromSubfolders: '顯示子資料夾的筆記',
         showFilesFromSubfolders: '顯示子資料夾的檔案',
         showNotesFromDescendants: '顯示後代的筆記',
@@ -406,17 +402,10 @@ export const STRINGS_ZH_TW = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: '外觀',
         sortBy: '排序方式',
         defaultSuffix: '(預設)',
         defaultLabel: '預設',
-        titleRows: {
-            label: '標題行數',
-            option: (rows: number) => `標題${rows}行`
-        },
-        groupBy: '分組依據',
-        resetAppearance: '重設外觀',
-        openPluginSettings: '開啟外掛程式設定…'
+        groupBy: '分組依據'
     },
 
     // Modal dialogs
@@ -424,12 +413,6 @@ export const STRINGS_ZH_TW = {
         bulkApply: {
             applyButton: '套用',
             applySortAndGroupTitle: (target: string) => `將排序與分組套用到${target}？`,
-            applyAppearanceTitle: (target: string) => `將外觀套用到${target}？`,
-            resetAppearanceTitle: (target: string) => `重設${target}中的外觀？`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `將變更 ${count} 項的外觀。將取代現有自訂外觀：${replacedCount}。已儲存的外觀偏好只會複製一次；排序和分組保持不變。日後的變更和新增的後代項目不會連動。`,
-            resetAppearanceMessage: (count: number) =>
-                `將重設 ${count} 項的外觀。排序和分組保持不變。這是一次性變更；日後的變更和新增的後代項目不會連動。`,
             affectedCountMessage: (count: number) => `將更改的現有覆寫：${count}。`
         },
         mergeNotes: {
@@ -497,7 +480,6 @@ export const STRINGS_ZH_TW = {
                 'list-sort-title': '依標題排序',
                 'list-sort-filename': '依檔案名稱排序',
                 'list-sort-property': '依屬性排序',
-                'list-appearance': '變更外觀',
                 'list-new-note': '新筆記',
                 'list-pinned': '釘選筆記',
                 'nav-folder-open': '資料夾開啟',
@@ -1771,15 +1753,6 @@ export const STRINGS_ZH_TW = {
                 help: '常用格式：\nHH:mm = 14:30（24小時制）\nAh:mm = 下午2:30（12小時制）\nHH:mm:ss = 14:30:45\nAh:mm:ss = 下午2:30:45\n\n標記：\nHH/H = 24小時制\nhh/h = 12小時制\nmm = 分鐘\nss = 秒\nA = 上午/下午',
                 helpTooltip: '使用 Moment 格式',
                 momentLinkText: 'Moment 格式'
-            },
-            titleRows: {
-                name: '標題行數',
-                desc: '筆記標題顯示的行數。',
-                options: {
-                    '1': '1 行',
-                    '2': '2 行',
-                    '3': '3 行'
-                }
             },
             useFolderColor: {
                 name: '使用資料夾顏色',

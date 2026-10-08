@@ -153,8 +153,6 @@ export const STRINGS_PL = {
         subtags: 'podtagów',
         childValues: 'wartości podrzędnych',
         applySortAndGroupToDescendants: (target: string) => `Zastosuj sortowanie i grupowanie dla ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Zastosuj wygląd dla ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Zresetuj wygląd dla ${target}`,
         showFolders: 'Pokaż nawigację', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'Zmień kolejność elementów',
         finishRootFolderReorder: 'Gotowe',
@@ -164,8 +162,6 @@ export const STRINGS_PL = {
         showSinglePane: 'Pokaż jeden panel', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Podwójne panele są niedostępne, gdy pasek boczny jest zbyt wąski. Aby to zmienić, ustaw „Gdy pasek boczny jest zbyt wąski” na „Nic nie rób” w Ustawienia > Wygląd i zachowanie.',
-        changeAppearance: 'Zmień wygląd', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Zmień wygląd, dostosowany',
         showNotesFromSubfolders: 'Pokaż notatki z podfolderów',
         showFilesFromSubfolders: 'Pokaż pliki z podfolderów',
         showNotesFromDescendants: 'Pokaż notatki z potomnych',
@@ -406,18 +402,10 @@ export const STRINGS_PL = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Wygląd',
         sortBy: 'Sortuj według',
         defaultSuffix: '(domyślne)',
         defaultLabel: 'Domyślne',
-        titleRows: {
-            label: 'Wiersze tytułu',
-            option: (rows: number) =>
-                `${rows} ${rows === 1 ? 'wiersz' : rows === 2 || rows === 3 || rows === 4 ? 'wiersze' : 'wierszy'} tytułu`
-        },
-        groupBy: 'Grupuj według',
-        resetAppearance: 'Zresetuj wygląd',
-        openPluginSettings: 'Otwórz ustawienia wtyczki…'
+        groupBy: 'Grupuj według'
     },
 
     // Modal dialogs
@@ -425,12 +413,6 @@ export const STRINGS_PL = {
         bulkApply: {
             applyButton: 'Zastosuj',
             applySortAndGroupTitle: (target: string) => `Zastosuj sortowanie i grupowanie dla ${target}?`,
-            applyAppearanceTitle: (target: string) => `Zastosuj wygląd dla ${target}?`,
-            resetAppearanceTitle: (target: string) => `Zresetować wygląd dla ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `Wygląd zmieni się dla ${count} ${count === 1 ? 'elementu' : 'elementów'}. Zastąpione istniejące niestandardowe wyglądy: ${replacedCount}. Zapisane preferencje wyglądu zostaną skopiowane jednorazowo; sortowanie i grupowanie pozostaną bez zmian. Przyszłe zmiany i nowe elementy podrzędne nie będą połączone.`,
-            resetAppearanceMessage: (count: number) =>
-                `Wygląd zostanie zresetowany dla ${count} ${count === 1 ? 'elementu' : 'elementów'}. Sortowanie i grupowanie pozostaną bez zmian. Jest to jednorazowa zmiana; przyszłe zmiany i nowe elementy podrzędne nie będą połączone.`,
             affectedCountMessage: (count: number) => `Istniejące nadpisania do zmiany: ${count}.`
         },
         mergeNotes: {
@@ -499,7 +481,6 @@ export const STRINGS_PL = {
                 'list-sort-title': 'Sortuj według tytułu',
                 'list-sort-filename': 'Sortuj według nazwy pliku',
                 'list-sort-property': 'Sortuj według atrybutu',
-                'list-appearance': 'Zmień wygląd',
                 'list-new-note': 'Nowa notatka',
                 'list-pinned': 'Przypięte notatki',
                 'nav-folder-open': 'Folder otwarty',
@@ -1790,15 +1771,6 @@ export const STRINGS_PL = {
                 help: 'Popularne formaty:\nHH:mm = 14:30 (24-godzinny)\nh:mm a = 2:30 PM (12-godzinny)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokeny:\nHH/H = 24-godzinny\nhh/h = 12-godzinny\nmm = minuty\nss = sekundy\na = AM/PM',
                 helpTooltip: 'Format z Moment',
                 momentLinkText: 'format Moment'
-            },
-            titleRows: {
-                name: 'Wiersze tytułu',
-                desc: 'Liczba widocznych wierszy tytułów notatek.',
-                options: {
-                    '1': '1 wiersz',
-                    '2': '2 wiersze',
-                    '3': '3 wiersze'
-                }
             },
             useFolderColor: {
                 name: 'Użyj koloru folderu',

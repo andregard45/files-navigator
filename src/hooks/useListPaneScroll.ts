@@ -230,7 +230,6 @@ function getListLayoutSignature({
     // Lightweight tagged concat instead of JSON.stringify; runs on every layout input change.
     return [
         'topSpacer', topSpacerHeight,
-        'titleRows', folderSettings.titleRows,
         'groupBy', folderSettings.groupBy,
         'selectedPills', settings.showSelectedNavigationPills ? 1 : 0,
         'selectionType', selectionType ?? '',
@@ -436,7 +435,6 @@ export function useListPaneScroll({
     );
     const rowSizingConfig = useMemo<ListFileRowSizingConfig>(() => ({
         heights: listMeasurements,
-        titleRows: folderSettings.titleRows || 1,
         compactPaddingTotal: isMobile ? compactListMetrics.mobilePaddingTotal : compactListMetrics.desktopPaddingTotal,
         selectionType: selectionState.selectionType,
         includeDescendantNotes,
@@ -444,7 +442,6 @@ export function useListPaneScroll({
     }), [
         compactListMetrics.desktopPaddingTotal,
         compactListMetrics.mobilePaddingTotal,
-        folderSettings.titleRows,
         includeDescendantNotes,
         isMobile,
         listMeasurements,

@@ -154,8 +154,6 @@ export const STRINGS_DE = {
         subtags: 'Unter-Tags',
         childValues: 'Unterwerte',
         applySortAndGroupToDescendants: (target: string) => `Sortierung und Gruppierung auf ${target} anwenden`,
-        applyAppearanceToDescendants: (target: string) => `Darstellung auf ${target} anwenden`,
-        resetAppearanceInDescendants: (target: string) => `Darstellung für ${target} zurücksetzen`,
         showFolders: 'Navigation anzeigen', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'Navigation neu anordnen',
         finishRootFolderReorder: 'Neuordnung fertig',
@@ -165,8 +163,6 @@ export const STRINGS_DE = {
         showSinglePane: 'Einspaltige Ansicht anzeigen', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'Doppelbereiche sind nicht verfügbar, wenn die Seitenleiste zu schmal ist. Um dies zu ändern, setze „Wenn Seitenleiste zu schmal ist“ in Einstellungen > Darstellung & Verhalten auf „Nichts tun“.',
-        changeAppearance: 'Darstellung ändern', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Darstellung ändern, angepasst',
         showNotesFromSubfolders: 'Notizen aus Unterordnern anzeigen',
         showFilesFromSubfolders: 'Dateien aus Unterordnern anzeigen',
         showNotesFromDescendants: 'Notizen aus Nachkommen anzeigen',
@@ -408,17 +404,10 @@ export const STRINGS_DE = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Darstellung',
         sortBy: 'Sortieren nach',
         defaultSuffix: '(Standard)',
         defaultLabel: 'Standard',
-        titleRows: {
-            label: 'Titelzeilen',
-            option: (rows: number) => `${rows} Titelzeile${rows === 1 ? '' : 'n'}`
-        },
-        groupBy: 'Gruppieren nach',
-        resetAppearance: 'Darstellung zurücksetzen',
-        openPluginSettings: 'Plugin-Einstellungen öffnen…'
+        groupBy: 'Gruppieren nach'
     },
 
     // Modal dialogs
@@ -426,12 +415,6 @@ export const STRINGS_DE = {
         bulkApply: {
             applyButton: 'Anwenden',
             applySortAndGroupTitle: (target: string) => `Sortierung und Gruppierung auf ${target} anwenden?`,
-            applyAppearanceTitle: (target: string) => `Darstellung auf ${target} anwenden?`,
-            resetAppearanceTitle: (target: string) => `Darstellung für ${target} zurücksetzen?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `Die Darstellung ändert sich für ${count} ${count === 1 ? 'Element' : 'Elemente'}. Ersetzte vorhandene Anpassungen: ${replacedCount}. Gespeicherte Darstellungseinstellungen werden einmalig kopiert; Sortierung und Gruppierung bleiben erhalten. Künftige Änderungen und neue Unterelemente sind nicht verknüpft.`,
-            resetAppearanceMessage: (count: number) =>
-                `Die Darstellung wird für ${count} ${count === 1 ? 'Element' : 'Elemente'} zurückgesetzt. Sortierung und Gruppierung bleiben erhalten. Dies ist eine einmalige Änderung; künftige Änderungen und neue Unterelemente sind nicht verknüpft.`,
             affectedCountMessage: (count: number) => `Vorhandene Überschreibungen, die sich ändern: ${count}.`
         },
         mergeNotes: {
@@ -500,7 +483,6 @@ export const STRINGS_DE = {
                 'list-sort-title': 'Nach Titel sortieren',
                 'list-sort-filename': 'Nach Dateiname sortieren',
                 'list-sort-property': 'Nach Eigenschaft sortieren',
-                'list-appearance': 'Darstellung ändern',
                 'list-new-note': 'Neue Notiz',
                 'list-pinned': 'Angeheftete Notizen',
                 'nav-folder-open': 'Ordner geöffnet',
@@ -1794,15 +1776,6 @@ export const STRINGS_DE = {
                 help: 'Gängige Formate:\nHH:mm = 14:30 (24-Stunden)\nh:mm a = 2:30 PM (12-Stunden)\nHH:mm:ss = 14:30:45\nh:mm:ss a = 2:30:45 PM\n\nTokens:\nHH/H = 24-Stunden\nhh/h = 12-Stunden\nmm = Minuten\nss = Sekunden\na = AM/PM',
                 helpTooltip: 'Format mit Moment',
                 momentLinkText: 'Moment-Format'
-            },
-            titleRows: {
-                name: 'Titelzeilen',
-                desc: 'Anzahl der Zeilen für Notizentitel.',
-                options: {
-                    '1': '1 Zeile',
-                    '2': '2 Zeilen',
-                    '3': '3 Zeilen'
-                }
             },
             useFolderColor: {
                 name: 'Ordnerfarbe verwenden',

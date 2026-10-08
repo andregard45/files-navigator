@@ -154,8 +154,6 @@ export const STRINGS_IT = {
         subtags: 'sottoetichette',
         childValues: 'valori figli',
         applySortAndGroupToDescendants: (target: string) => `Applica ordinamento e raggruppamento a ${target}`,
-        applyAppearanceToDescendants: (target: string) => `Applica aspetto a ${target}`,
-        resetAppearanceInDescendants: (target: string) => `Reimposta aspetto in ${target}`,
         showFolders: 'Mostra navigazione', // Tooltip for button to show the navigation pane (English: Show navigation)
         reorderRootFolders: 'Riordina navigazione',
         finishRootFolderReorder: 'Fatto',
@@ -165,8 +163,6 @@ export const STRINGS_IT = {
         showSinglePane: 'Mostra pannello singolo', // Tooltip for button to show single-pane layout (English: Show single pane)
         dualPaneAutoFallbackNotice:
             'I pannelli doppi non sono disponibili quando la barra laterale è troppo stretta. Per modificarlo, imposta "Quando la barra laterale è troppo stretta" su "Non fare nulla" in Impostazioni > Aspetto e comportamento.',
-        changeAppearance: 'Cambia aspetto', // Tooltip for button to change folder appearance settings (English: Change appearance)
-        changeAppearanceCustomized: 'Cambia aspetto, personalizzato',
         showNotesFromSubfolders: 'Mostra note da sottocartelle',
         showFilesFromSubfolders: 'Mostra file da sottocartelle',
         showNotesFromDescendants: 'Mostra note da discendenti',
@@ -406,17 +402,10 @@ export const STRINGS_IT = {
 
     // Folder appearance menu
     folderAppearance: {
-        appearance: 'Aspetto',
         sortBy: 'Ordina per',
         defaultSuffix: '(predefinito)',
         defaultLabel: 'Predefinito',
-        titleRows: {
-            label: 'Righe titolo',
-            option: (rows: number) => `${rows} ${rows === 1 ? 'riga' : 'righe'} titolo`
-        },
-        groupBy: 'Raggruppa per',
-        resetAppearance: 'Reimposta aspetto',
-        openPluginSettings: 'Apri impostazioni del plugin…'
+        groupBy: 'Raggruppa per'
     },
 
     // Modal dialogs
@@ -424,12 +413,6 @@ export const STRINGS_IT = {
         bulkApply: {
             applyButton: 'Applica',
             applySortAndGroupTitle: (target: string) => `Applicare ordinamento e raggruppamento a ${target}?`,
-            applyAppearanceTitle: (target: string) => `Applicare aspetto a ${target}?`,
-            resetAppearanceTitle: (target: string) => `Reimpostare aspetto in ${target}?`,
-            applyAppearanceMessage: (count: number, replacedCount: number) =>
-                `L'aspetto cambierà per ${count} ${count === 1 ? 'elemento' : 'elementi'}. Aspetti personalizzati esistenti sostituiti: ${replacedCount}. Le preferenze di aspetto salvate vengono copiate una sola volta; ordinamento e raggruppamento restano invariati. Le modifiche future e i nuovi discendenti non sono collegati.`,
-            resetAppearanceMessage: (count: number) =>
-                `L'aspetto verrà reimpostato per ${count} ${count === 1 ? 'elemento' : 'elementi'}. Ordinamento e raggruppamento restano invariati. È una modifica una tantum; le modifiche future e i nuovi discendenti non sono collegati.`,
             affectedCountMessage: (count: number) => `Sostituzioni esistenti che cambieranno: ${count}.`
         },
         mergeNotes: {
@@ -498,7 +481,6 @@ export const STRINGS_IT = {
                 'list-sort-title': 'Ordina per titolo',
                 'list-sort-filename': 'Ordina per nome file',
                 'list-sort-property': 'Ordina per proprietà',
-                'list-appearance': 'Cambia aspetto',
                 'list-new-note': 'Nuova nota',
                 'list-pinned': 'Note fissate',
                 'nav-folder-open': 'Cartella aperta',
@@ -1788,15 +1770,6 @@ export const STRINGS_IT = {
                 help: 'Formati comuni:\nh:mm a = 2:30 PM (12 ore)\nHH:mm = 14:30 (24 ore)\nh:mm:ss a = 2:30:45 PM\nHH:mm:ss = 14:30:45\n\nToken:\nHH/H = 24 ore\nhh/h = 12 ore\nmm = minuti\nss = secondi\na = AM/PM',
                 helpTooltip: 'Formato con Moment',
                 momentLinkText: 'formato Moment'
-            },
-            titleRows: {
-                name: 'Righe titolo',
-                desc: 'Numero di righe da visualizzare per i titoli note.',
-                options: {
-                    '1': '1 riga',
-                    '2': '2 righe',
-                    '3': '3 righe'
-                }
             },
             useFolderColor: {
                 name: 'Usa colore cartella',

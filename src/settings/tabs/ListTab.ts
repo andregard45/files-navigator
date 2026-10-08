@@ -82,7 +82,6 @@ export function createListPaneSettingDefinitions(context: SettingsTabContext): S
                     strings.settings.items.includeDescendantNotes.name,
                     strings.commands.collapseExpandListGroups,
                     strings.paneHeader.changeSortAndGroup,
-                    strings.paneHeader.changeAppearance,
                     strings.paneHeader.newNote
                 ],
                 render: setting => {
