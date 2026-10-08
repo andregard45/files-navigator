@@ -18,7 +18,6 @@
 
 import { IconProvider, IconDefinition, IconRenderResult } from '../types';
 import { resetIconContainer } from './providerUtils';
-import { getEmojiCatalogEntries } from '../emojiCatalog';
 import { extractFirstEmoji } from '../../../utils/emojiUtils';
 
 /**
@@ -78,21 +77,23 @@ export class EmojiIconProvider implements IconProvider {
     }
 
     /**
-     * Searches for emojis based on a query string.
+     * Matches emoji characters typed or pasted directly into the picker.
      *
-     * @param query - The search query (can be an emoji or keyword)
-     * @returns Array of matching emoji definitions, limited to 50 results
+     * Keyword-based dictionary search was removed intentionally: users can rely on
+     * the OS emoji picker (Win+. / Ctrl+Cmd+Space) and paste emojis directly here.
+     *
+     * @param query - The input text (only leading emoji characters are considered)
+     * @returns Array containing the extracted emoji definition, or empty if no emoji found
      */
     search(query: string): IconDefinition[] {
         if (!query || query.trim().length === 0) {
             return [];
         }
 
-        // Check if the query itself is a valid emoji or starts with one
+        // Only accept direct emoji input (typed or pasted emoji characters)
         const emoji = extractFirstEmoji(query);
 
         if (emoji) {
-            // Return the emoji as a search result
             return [
                 {
                     id: emoji,
@@ -102,43 +103,17 @@ export class EmojiIconProvider implements IconProvider {
             ];
         }
 
-        // Search for emojis by keyword using emojilib
-        const results: IconDefinition[] = [];
-        const searchLower = query.toLowerCase();
-
-        // Search through emojilib
-        for (const [emoji, keywords] of getEmojiCatalogEntries()) {
-            if (keywords.length === 0) {
-                continue;
-            }
-
-            // Check if any keyword matches the search query
-            const matches = keywords.some(keyword => keyword.toLowerCase().includes(searchLower));
-
-            if (matches) {
-                // Find the best matching keyword for display
-                const bestKeyword = keywords.find(k => k.toLowerCase().includes(searchLower)) || keywords[0];
-
-                results.push({
-                    id: emoji,
-                    displayName: bestKeyword,
-                    preview: emoji
-                });
-            }
-        }
-
-        // Limit results to prevent overwhelming the UI
-        return results.slice(0, 50);
+        return [];
     }
 
     /**
      * Gets all available emoji icons.
      *
-     * @returns Empty array - emojis must be searched or typed directly
+     * @returns Empty array - emojis must be typed or pasted directly
      */
     getAll(): IconDefinition[] {
         // Return empty array - we don't provide a full list
-        // Users must search/type to find emojis
+        // Users must type or paste emojis directly
         return [];
     }
 }

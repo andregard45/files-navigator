@@ -19,7 +19,6 @@
 import { App, Scope, TFile } from 'obsidian';
 import { strings } from '../i18n';
 import { getIconService, IconDefinition, IconProvider, RECENT_ICONS_PER_PROVIDER_LIMIT } from '../services/icons';
-import { getEmojiDisplayName } from '../services/icons/emojiCatalog';
 import { getProviderCatalogUrl } from '../services/icons/providerCatalogLinks';
 import { isVaultIconFile } from '../services/icons/providers/VaultIconProvider';
 import { ISettingsProvider } from '../interfaces/ISettingsProvider';
@@ -425,7 +424,7 @@ export class IconPickerSurface {
             if (provider.id === 'emoji') {
                 const iconDef = {
                     id: parsed.identifier,
-                    displayName: getEmojiDisplayName(parsed.identifier),
+                    displayName: parsed.identifier,
                     preview: parsed.identifier
                 };
                 const iconItem = this.createIconItem(iconDef, grid, provider);
