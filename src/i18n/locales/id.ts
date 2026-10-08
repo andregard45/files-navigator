@@ -949,10 +949,6 @@ export const STRINGS_ID = {
             exportSuccess: 'Laporan metadata yang gagal telah diekspor ke: {filename}',
             exportFailed: 'Gagal mengekspor laporan metadata'
         },
-        index: {
-            label: 'Umum',
-            description: 'Catatan rilis, dukungan, profil vault, tipe file, dan kunci properti.'
-        },
         pageGroups: {
             configuration: 'Konfigurasi',
             navigationPane: 'Panel navigasi',

@@ -946,10 +946,6 @@ export const STRINGS_IT = {
             exportSuccess: 'Report metadati falliti esportato in: {filename}',
             exportFailed: 'Impossibile esportare report metadati'
         },
-        index: {
-            label: 'Generale',
-            description: 'Note di rilascio, supporto, profilo vault, tipi di file e chiavi delle proprietà.'
-        },
         pageGroups: {
             configuration: 'Configurazione',
             navigationPane: 'Pannello di navigazione',

@@ -37,7 +37,6 @@ import { addSettingSyncModeToggle } from '../syncModeToggle';
 import type { VaultProfilePropertyKey } from '../types';
 import { isVaultTitleOption } from '../types';
 import { createGroupDefinition, createRenderDefinition } from '../nativeSettingControls';
-import { createSettingGroupFactory } from '../settingGroups';
 import type { SettingsTabContext } from './SettingsTabContext';
 import { renderTemplateEngineWarningSetting } from '../templateEngineStatus';
 
@@ -46,28 +45,6 @@ interface VaultSetupRenderers {
     renderVaultProfileSwitcherSetting(setting: Setting): void;
     renderFileVisibilitySetting(setting: Setting): void;
     renderPropertyKeysSetting(setting: Setting): void;
-}
-
-/** Renders the vault setup section inside the General settings page. */
-export function renderGeneralVaultSetupSection(context: SettingsTabContext): void {
-    renderVaultSetupSection(context);
-}
-
-function renderVaultSetupSection(context: SettingsTabContext): void {
-    const { containerEl } = context;
-    const renderers = createVaultSetupRenderers(context);
-    const createGroup = createSettingGroupFactory(containerEl);
-    const vaultSetupGroup = createGroup(undefined);
-
-    vaultSetupGroup.addSetting(setting => renderers.renderProfileSetting(setting));
-    // The switcher placement applies to the desktop chrome (desktop and tablets); phones
-    // always render the profile trigger in the mobile header instead
-    if (!usesMobileChrome()) {
-        vaultSetupGroup.addSetting(setting => renderers.renderVaultProfileSwitcherSetting(setting));
-    }
-    vaultSetupGroup.addSetting(setting => renderers.renderFileVisibilitySetting(setting));
-    vaultSetupGroup.addSetting(setting => renderers.renderPropertyKeysSetting(setting));
-    vaultSetupGroup.addSetting(setting => renderTemplateEngineWarningSetting(setting, context));
 }
 
 export function createVaultSetupSettingDefinitions(context: SettingsTabContext): SettingDefinitionGroup[] {

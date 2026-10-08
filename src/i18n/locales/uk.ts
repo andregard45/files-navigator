@@ -946,10 +946,6 @@ export const STRINGS_UK = {
             exportSuccess: 'Звіт про помилки метаданих експортовано до: {filename}',
             exportFailed: 'Не вдалося експортувати звіт метаданих'
         },
-        index: {
-            label: 'Загальне',
-            description: 'Примітки до випуску, підтримка, профіль сховища, типи файлів і ключі властивостей.'
-        },
         pageGroups: {
             configuration: 'Конфігурація',
             navigationPane: 'Панель навігації',

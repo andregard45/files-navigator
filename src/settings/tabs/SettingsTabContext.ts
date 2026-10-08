@@ -20,7 +20,6 @@ import type { App, ButtonComponent, Setting } from 'obsidian';
 import type NotebookNavigatorPlugin from '../../main';
 
 export type SettingsTabId =
-    | 'general'
     | 'vault-filters'
     | 'appearance-behavior'
     | 'navigation-pane'
@@ -32,9 +31,6 @@ export type SettingsTabId =
     | 'frontmatter'
     | 'notes'
     | 'calendar'
-    | 'files'
-    | 'tags'
-    | 'properties'
     | 'advanced';
 
 export type AddSettingFunction = (createSetting: (setting: Setting) => void) => Setting;
@@ -115,7 +111,7 @@ export type InfoSettingFactory = (
 
 /**
  * Context object passed to settings tab render functions
- * Shared by native render definitions and the legacy display() path.
+ * Used by native render definitions in the Obsidian 1.13 settings API.
  */
 export interface SettingsTabContext {
     app: App;

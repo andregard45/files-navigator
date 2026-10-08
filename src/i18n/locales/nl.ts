@@ -952,10 +952,6 @@ export const STRINGS_NL = {
             exportSuccess: 'Metadatarapport met fouten geëxporteerd naar: {filename}',
             exportFailed: 'Kan metadatarapport niet exporteren'
         },
-        index: {
-            label: 'Algemeen',
-            description: 'Releasenotities, ondersteuning, kluisprofiel, bestandstypen en eigenschapssleutels.'
-        },
         pageGroups: {
             configuration: 'Configuratie',
             navigationPane: 'Navigatiepaneel',

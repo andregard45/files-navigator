@@ -953,10 +953,6 @@ export const STRINGS_FR = {
             exportSuccess: 'Rapport de métadonnées échouées exporté vers : {filename}',
             exportFailed: "Échec de l'exportation du rapport de métadonnées"
         },
-        index: {
-            label: 'Général',
-            description: 'Notes de version, support, profil du coffre, types de fichiers et clés de propriétés.'
-        },
         pageGroups: {
             configuration: 'Configuration',
             navigationPane: 'Panneau de navigation',

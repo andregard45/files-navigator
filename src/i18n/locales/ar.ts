@@ -945,10 +945,6 @@ export const STRINGS_AR = {
             exportSuccess: 'تم تصدير تقرير البيانات الوصفية الفاشلة إلى: {filename}',
             exportFailed: 'فشل تصدير تقرير البيانات الوصفية'
         },
-        index: {
-            label: 'عام',
-            description: 'ملاحظات الإصدار والدعم وملف تعريف الخزنة وأنواع الملفات ومفاتيح الخصائص.'
-        },
         pageGroups: {
             configuration: 'التكوين',
             navigationPane: 'لوحة التنقل',

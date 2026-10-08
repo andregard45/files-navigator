@@ -943,10 +943,6 @@ export const STRINGS_EN = {
             exportSuccess: 'Failed metadata report exported to: {filename}',
             exportFailed: 'Failed to export metadata report'
         },
-        index: {
-            label: 'General',
-            description: 'Release notes, support, vault profile, file types, and property keys.'
-        },
         pageGroups: {
             configuration: 'Configuration',
             navigationPane: 'Navigation pane',

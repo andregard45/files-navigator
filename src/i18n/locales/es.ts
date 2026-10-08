@@ -952,10 +952,6 @@ export const STRINGS_ES = {
             exportSuccess: 'Informe de metadatos fallidos exportado a: {filename}',
             exportFailed: 'Error al exportar el informe de metadatos'
         },
-        index: {
-            label: 'General',
-            description: 'Notas de versión, soporte, perfil de bóveda, tipos de archivo y claves de propiedades.'
-        },
         pageGroups: {
             configuration: 'Configuración',
             navigationPane: 'Panel de navegación',

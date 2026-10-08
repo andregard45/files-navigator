@@ -953,10 +953,6 @@ export const STRINGS_DE = {
             exportSuccess: 'Bericht über fehlgeschlagene Metadaten exportiert nach: {filename}',
             exportFailed: 'Export des Metadaten-Berichts fehlgeschlagen'
         },
-        index: {
-            label: 'Allgemein',
-            description: 'Versionshinweise, Support, Vault-Profil, Dateitypen und Eigenschaftsschlüssel.'
-        },
         pageGroups: {
             configuration: 'Konfiguration',
             navigationPane: 'Navigationsbereich',

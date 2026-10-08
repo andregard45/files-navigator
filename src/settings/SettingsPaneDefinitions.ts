@@ -29,35 +29,34 @@ import { createNavigationPaneSettingDefinitions } from './tabs/NavigationTab';
 import { createNotesSettingDefinitions } from './tabs/NotesTab';
 import { createShortcutsSettingDefinitions } from './tabs/ShortcutsTab';
 import { createAppearanceBehaviorSettingDefinitions } from './tabs/AppearanceBehaviorTab';
-import { renderAdvancedTab } from './tabs/legacy/AdvancedLegacyTab';
-import { renderAppearanceBehaviorTab } from './tabs/legacy/AppearanceBehaviorLegacyTab';
-import { renderCalendarTab } from './tabs/legacy/CalendarLegacyTab';
-import { renderFoldersAndFolderNotesTab, renderTagsPropertiesTab } from './tabs/legacy/ContentLegacyTab';
-import { renderDisplayFiltersTab } from './tabs/legacy/DisplayFiltersLegacyTab';
-import { renderFilesTab } from './tabs/legacy/FilesLegacyTab';
-import { renderFrontmatterTab } from './tabs/legacy/FrontmatterLegacyTab';
-import { renderGeneralTab } from './tabs/legacy/GeneralLegacyTab';
-import { renderListPaneTab } from './tabs/legacy/ListLegacyTab';
-import { renderNavigationPaneTab } from './tabs/legacy/NavigationLegacyTab';
-import { renderNotesTab } from './tabs/legacy/NotesLegacyTab';
-import { renderShortcutsTab } from './tabs/legacy/ShortcutsLegacyTab';
-import type { SettingsTabContext, SettingsTabId } from './tabs/SettingsTabContext';
+import type { SettingsTabContext } from './tabs/SettingsTabContext';
 
 /** Identifiers for settings panes rendered as native settings pages. */
-export type SettingsPaneId = Exclude<SettingsTabId, 'files' | 'tags' | 'properties'>;
+export type SettingsPaneId =
+    | 'vault-filters'
+    | 'appearance-behavior'
+    | 'navigation-pane'
+    | 'shortcuts'
+    | 'folders'
+    | 'tags-properties'
+    | 'list-pane'
+    | 'file-operations'
+    | 'frontmatter'
+    | 'notes'
+    | 'calendar'
+    | 'advanced';
 
 export interface SettingsPageGroupDefinition {
     getHeading: () => string;
     items: SettingsPaneId[];
 }
 
-/** Registry entry shared by native setting pages and the legacy display() fallback. */
+/** Registry entry for a native setting page rendered through the Obsidian 1.13 settings API. */
 export interface SettingsPaneDefinition {
     id: SettingsPaneId;
     getLabel: () => string;
     getDescription: () => string;
-    render: (context: SettingsTabContext) => void;
-    createDefinitions?: (context: SettingsTabContext) => SettingDefinitionItem[];
+    createDefinitions: (context: SettingsTabContext) => SettingDefinitionItem[];
 }
 
 export const SETTINGS_PAGE_GROUP_DEFINITIONS: SettingsPageGroupDefinition[] = [
@@ -79,96 +78,77 @@ export const SETTINGS_PAGE_GROUP_DEFINITIONS: SettingsPageGroupDefinition[] = [
     }
 ];
 
-// Native pages use createDefinitions; legacy pages use render.
 const SETTINGS_PANE_DEFINITIONS: SettingsPaneDefinition[] = [
-    {
-        id: 'general',
-        getLabel: () => strings.settings.index.label,
-        getDescription: () => strings.settings.index.description,
-        render: renderGeneralTab
-    },
     {
         id: 'vault-filters',
         getLabel: () => strings.settings.pages.displayFilters.label,
         getDescription: () => strings.settings.pages.displayFilters.description,
-        render: renderDisplayFiltersTab,
         createDefinitions: createDisplayFiltersSettingDefinitions
     },
     {
         id: 'appearance-behavior',
         getLabel: () => strings.settings.pages.appearanceAndBehavior.label,
         getDescription: () => strings.settings.pages.appearanceAndBehavior.description,
-        render: renderAppearanceBehaviorTab,
         createDefinitions: createAppearanceBehaviorSettingDefinitions
     },
     {
         id: 'navigation-pane',
         getLabel: () => strings.settings.pages.navigationPane.label,
         getDescription: () => strings.settings.pages.navigationPane.description,
-        render: renderNavigationPaneTab,
         createDefinitions: createNavigationPaneSettingDefinitions
     },
     {
         id: 'shortcuts',
         getLabel: () => strings.settings.pages.shortcutsAndRecentFiles.label,
         getDescription: () => strings.settings.pages.shortcutsAndRecentFiles.description,
-        render: renderShortcutsTab,
         createDefinitions: createShortcutsSettingDefinitions
     },
     {
         id: 'folders',
         getLabel: () => strings.settings.pages.foldersAndFolderNotes.label,
         getDescription: () => strings.settings.pages.foldersAndFolderNotes.description,
-        render: renderFoldersAndFolderNotesTab,
         createDefinitions: createFoldersAndFolderNotesSettingDefinitions
     },
     {
         id: 'tags-properties',
         getLabel: () => strings.settings.pages.tagsAndProperties.label,
         getDescription: () => strings.settings.pages.tagsAndProperties.description,
-        render: renderTagsPropertiesTab,
         createDefinitions: createTagsPropertiesSettingDefinitions
     },
     {
         id: 'list-pane',
         getLabel: () => strings.settings.pages.listPane.label,
         getDescription: () => strings.settings.pages.listPane.description,
-        render: renderListPaneTab,
         createDefinitions: createListPaneSettingDefinitions
     },
     {
         id: 'file-operations',
         getLabel: () => strings.settings.pages.fileOperations.label,
         getDescription: () => strings.settings.pages.fileOperations.description,
-        render: renderFilesTab,
         createDefinitions: createFilesSettingDefinitions
     },
     {
         id: 'frontmatter',
         getLabel: () => strings.settings.pages.frontmatterFields.label,
         getDescription: () => strings.settings.pages.frontmatterFields.description,
-        render: renderFrontmatterTab,
         createDefinitions: createFrontmatterSettingDefinitions
     },
     {
         id: 'notes',
         getLabel: () => strings.settings.pages.fileDisplay.label,
         getDescription: () => strings.settings.pages.fileDisplay.description,
-        render: renderNotesTab,
         createDefinitions: createNotesSettingDefinitions
     },
     {
         id: 'calendar',
         getLabel: () => strings.settings.pages.calendar.label,
         getDescription: () => strings.settings.pages.calendar.description,
-        render: renderCalendarTab,
         createDefinitions: createCalendarSettingDefinitions
     },
     {
         id: 'advanced',
         getLabel: () => strings.settings.pages.advanced.label,
         getDescription: () => strings.settings.pages.advanced.description,
-        render: renderAdvancedTab,
         createDefinitions: createAdvancedSettingDefinitions
     }
 ];
