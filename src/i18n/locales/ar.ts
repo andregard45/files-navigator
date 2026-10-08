@@ -1016,11 +1016,6 @@ export const STRINGS_AR = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(غير متزامن)',
-            enableSync: 'تفعيل المزامنة',
-            disableSync: 'تعطيل المزامنة'
-        },
         items: {
             listPaneTitle: {
                 name: 'عنوان لوحة القائمة',

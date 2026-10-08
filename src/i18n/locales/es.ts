@@ -1026,11 +1026,6 @@ export const STRINGS_ES = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(no sincronizado)',
-            enableSync: 'Activar sincronización',
-            disableSync: 'Desactivar sincronización'
-        },
         items: {
             listPaneTitle: {
                 name: 'Título del panel de lista',

@@ -28,7 +28,6 @@ import {
     createTextDefinition,
     createToggleDefinition
 } from '../nativeSettingControls';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { FilePathInputSuggest } from '../../suggest/FilePathInputSuggest';
 import { FOLDER_NOTE_NAME_PATTERN_TOKEN } from '../../utils/folderNoteName';
 import { normalizeOptionalVaultFilePath } from '../../utils/pathUtils';
@@ -151,7 +150,6 @@ function renderFolderSortOrderSetting(setting: Setting, context: SettingsTabCont
             });
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'folderSortOrder' });
 }
 
 function renderFolderNoteTemplateSetting(setting: Setting, context: SettingsTabContext): void {

@@ -22,7 +22,6 @@ import { strings } from '../../i18n';
 import { showNotice } from '../../utils/noticeUtils';
 import type { SettingsTabContext } from './SettingsTabContext';
 import { runAsyncAction } from '../../utils/async';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { attachColorSwatchSetting } from '../colorSwatchSetting';
 import { DEFAULT_SETTINGS } from '../defaultSettings';
 import { createDropdownDefinition, createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';

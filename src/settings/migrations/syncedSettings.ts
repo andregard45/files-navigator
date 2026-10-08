@@ -134,7 +134,7 @@ export function migrateLegacySyncedSettings(params: {
     const legacyHomepage = normalizeOptionalVaultFilePath(
         typeof mutableSettings['homepage'] === 'string' ? mutableSettings['homepage'] : null
     );
-    const legacyUseMobileHomepage = mutableSettings['useMobileHomepage'] === true;
+
     if (!hasStructuredHomepage) {
         settings.homepage = {
             source: legacyHomepage ? 'file' : 'none',
@@ -142,11 +142,9 @@ export function migrateLegacySyncedSettings(params: {
             createMissingPeriodicNote: defaultSettings.homepage.createMissingPeriodicNote
         };
     }
-    if (legacyUseMobileHomepage) {
-        settings.syncModes.homepage = 'local';
-    }
     delete mutableSettings['mobileHomepage'];
     delete mutableSettings['useMobileHomepage'];
+    delete mutableSettings['syncModes'];
 
     // The global default accepts the same property encodings as appearance overrides; whether the
     // encoded key is still configured is reconciled by the settings controller after migration.

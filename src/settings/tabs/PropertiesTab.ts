@@ -22,7 +22,6 @@ import { strings } from '../../i18n';
 import { isTagSortOrder } from '../types';
 import type { SettingsTabContext } from './SettingsTabContext';
 import { createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 
 /** Builds native 1.13 setting definitions for property settings. */
 export function createPropertiesSettingDefinitions(context: SettingsTabContext, heading?: string): SettingDefinitionItem[] {
@@ -93,7 +92,6 @@ function renderPropertySortOrderSetting(setting: Setting, context: SettingsTabCo
             });
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'propertySortOrder' });
 }
 
 function renderPropertyKeysInfoSetting(setting: Setting): void {

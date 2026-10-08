@@ -1020,11 +1020,6 @@ export const STRINGS_FA = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(همگام نشده)',
-            enableSync: 'فعال‌سازی همگام‌سازی',
-            disableSync: 'غیرفعال‌سازی همگام‌سازی'
-        },
         items: {
             listPaneTitle: {
                 name: 'عنوان پنل لیست',

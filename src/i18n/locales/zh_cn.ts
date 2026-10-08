@@ -1012,11 +1012,6 @@ export const STRINGS_ZH_CN = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '（未同步）',
-            enableSync: '启用同步',
-            disableSync: '禁用同步'
-        },
         items: {
             listPaneTitle: {
                 name: '列表窗格标题',

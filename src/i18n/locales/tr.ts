@@ -1019,11 +1019,6 @@ export const STRINGS_TR = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(senkronize edilmedi)',
-            enableSync: 'Senkronizasyonu etkinleştir',
-            disableSync: 'Senkronizasyonu devre dışı bırak'
-        },
         items: {
             listPaneTitle: {
                 name: 'Liste bölmesi başlığı',

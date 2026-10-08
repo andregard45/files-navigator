@@ -70,9 +70,6 @@ import {
     type CalendarLeftPlacement,
     type CalendarWeeksToShow,
     type AlphaSortOrder,
-    isSettingSyncMode,
-    type SettingSyncMode,
-    type SyncModeSettingId,
     type TagSortOrder
 } from './settings/types';
 import { NOTEBOOK_NAVIGATOR_ICON_ID, NOTEBOOK_NAVIGATOR_ICON_SVG } from './constants/notebookNavigatorIcon';
@@ -166,8 +163,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     private readonly settingsController = new PluginSettingsController({
         keys: this.keys,
         loadData: () => this.loadData(),
-        saveData: data => this.saveData(data),
-        mirrorUXPreferences: update => this.preferencesController.mirrorUXPreferences(update)
+        saveData: data => this.saveData(data)
     });
     private readonly preferencesController = new PluginPreferencesController({
         keys: this.keys,
@@ -175,24 +171,11 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         notifySettingsUpdate: () => this.notifySettingsUpdate(),
         saveSettings: () => this.settingsController.saveSettings(),
         isShuttingDown: () => this.isUnloading,
-        isLocal: settingId => this.isLocal(settingId),
-        persistSyncModeSettingUpdate: settingId => this.persistSyncModeSettingUpdate(settingId),
-        persistSyncModeSettingUpdateAsync: settingId => this.persistSyncModeSettingUpdateAsync(settingId),
+        persistSettingUpdate: () => runAsyncAction(() => this.saveSettingsAndUpdate()),
+        persistSettingUpdateAsync: () => this.saveSettingsAndUpdate(),
         isOmnisearchAvailable: () => this.omnisearchService?.isAvailable() ?? false,
         refreshMatcherCachesIfNeeded: () => this.settingsController.refreshMatcherCachesIfNeeded()
     });
-
-    public getSyncMode(settingId: SyncModeSettingId): SettingSyncMode {
-        return this.settingsController.getSyncMode(settingId);
-    }
-
-    public isLocal(settingId: SyncModeSettingId): boolean {
-        return this.settingsController.isLocal(settingId);
-    }
-
-    public isSynced(settingId: SyncModeSettingId): boolean {
-        return this.settingsController.isSynced(settingId);
-    }
 
     public openSettings(): boolean {
         const settingsModal = getSettingsModal(this.app);
@@ -209,32 +192,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         }
     }
 
-
-    public async setSyncMode(settingId: SyncModeSettingId, mode: SettingSyncMode): Promise<void> {
-        const changed = await this.settingsController.setSyncMode(settingId, mode);
-        if (!changed) {
-            return;
-        }
-        await this.saveSettingsAndUpdate();
-    }
-
-    private persistSyncModeSettingUpdate(settingId: SyncModeSettingId): void {
-        if (this.isLocal(settingId)) {
-            this.notifySettingsUpdate();
-            return;
-        }
-
-        runAsyncAction(() => this.saveSettingsAndUpdate());
-    }
-
-    private async persistSyncModeSettingUpdateAsync(settingId: SyncModeSettingId): Promise<void> {
-        if (this.isLocal(settingId)) {
-            this.notifySettingsUpdate();
-            return;
-        }
-
-        await this.saveSettingsAndUpdate();
-    }
 
     /**
      * Called when external changes to settings are detected (e.g., from sync)
@@ -601,7 +558,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
             // Re-seed per-device mirrors cleared above
             this.preferencesController.resetUXPreferencesToDefaults();
-            this.settingsController.mirrorAllSyncModeSettingsToLocalStorage();
+            this.settingsController.mirrorUiScalesToLocalStorage();
             this.preferencesController.syncMirrorsFromSettings();
 
             // Ensure root folder is expanded on first launch (default is enabled)
@@ -1276,7 +1233,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Apply the merged record through the full settings pipeline in memory, then persist once.
         // No reread from disk: a transiently unreadable data.json cannot fail an import that already persisted.
         const mergedRecord = applyModifiedSettingsTransfer(this.settings, transferData);
-        this.settingsController.applySettingsRecord(mergedRecord, { isFirstLaunch: false, preferRecordLocalValues: true });
+        this.settingsController.applySettingsRecord(mergedRecord, { isFirstLaunch: false });
         this.settings = this.settingsController.settings;
         this.settingsController.prepareImportedUiScalePersistence();
         await this.settingsController.saveSettings();
@@ -1307,8 +1264,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             throw new Error('Plugin is unloading');
         }
 
-        const preservedSyncModes = sanitizeRecord<SettingSyncMode>(this.settings.syncModes, isSettingSyncMode);
-
         // Clear local storage first so the settings pipeline reseeds per-device mirrors from defaults.
         this.settingsController.clearAllLocalStorage();
 
@@ -1316,11 +1271,10 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // No disk roundtrip: a transiently unreadable data.json cannot abort the reset halfway.
         this.settingsController.applySettingsRecord({}, { isFirstLaunch: false });
         this.settings = this.settingsController.settings;
-        this.settings.syncModes = preservedSyncModes;
         await this.saveSettingsAndUpdate();
 
         this.preferencesController.resetUXPreferencesToDefaults();
-        this.settingsController.mirrorAllSyncModeSettingsToLocalStorage();
+        this.settingsController.mirrorUiScalesToLocalStorage();
         this.preferencesController.syncMirrorsFromSettings();
         this.settingsController.setLocalStorageVersion();
 

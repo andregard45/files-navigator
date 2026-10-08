@@ -1019,11 +1019,6 @@ export const STRINGS_VI = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(chưa đồng bộ)',
-            enableSync: 'Bật đồng bộ',
-            disableSync: 'Tắt đồng bộ'
-        },
         items: {
             listPaneTitle: {
                 name: 'Tiêu đề ngăn danh sách',

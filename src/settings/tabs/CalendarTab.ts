@@ -21,7 +21,6 @@ import { DropdownComponent } from 'obsidian';
 import { strings } from '../../i18n';
 import { getMomentApi } from '../../utils/moment';
 import { createDropdownDefinition, createGroupDefinition, createRenderDefinition, createToggleDefinition } from '../nativeSettingControls';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { isCalendarLeftPlacement, isCalendarPlacement, type CalendarWeeksToShow } from '../types';
 import { createCalendarIntegrationSettingDefinitions } from './CalendarIntegrationSection';
 import type { SettingsTabContext } from './SettingsTabContext';
@@ -119,7 +118,6 @@ function renderCalendarPlacementSetting(setting: Setting, context: SettingsTabCo
             });
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'calendarPlacement' });
 }
 
 function renderCalendarLocaleSetting(setting: Setting, context: SettingsTabContext): HTMLElement {
@@ -170,7 +168,6 @@ function renderCalendarLeftPlacementSetting(setting: Setting, context: SettingsT
             });
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'calendarLeftPlacement' });
 }
 
 function renderCalendarWeeksToShowSetting(setting: Setting, context: SettingsTabContext): void {
@@ -199,5 +196,4 @@ function renderCalendarWeeksToShowSetting(setting: Setting, context: SettingsTab
         });
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'calendarWeeksToShow' });
 }

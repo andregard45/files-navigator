@@ -1014,11 +1014,6 @@ export const STRINGS_EN = {
                 }
             }
         },
-        syncMode: {
-            notSynced: '(not synced)',
-            enableSync: 'Enable sync',
-            disableSync: 'Disable sync'
-        },
         items: {
             listPaneTitle: {
                 name: 'List pane title',

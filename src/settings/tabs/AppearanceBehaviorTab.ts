@@ -41,7 +41,6 @@ import {
     createRenderDefinition,
     createToggleControlDefinition
 } from '../nativeSettingControls';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import {
     isHomepageSource,
     isPeriodicHomepageSource,
@@ -240,7 +239,6 @@ function createDualPaneDefinitions(context: SettingsTabContext): SettingDefiniti
                             plugin.setDualPanePreference(value);
                         })
                     );
-                addSettingSyncModeToggle({ setting, plugin, settingId: 'dualPane' });
             }
         }),
         createRenderDefinition({
@@ -263,7 +261,6 @@ function createDualPaneDefinitions(context: SettingsTabContext): SettingDefiniti
                                 context.refreshSettingsDomState();
                             });
                     });
-                addSettingSyncModeToggle({ setting, plugin, settingId: 'dualPaneOrientation' });
             }
         }),
         createRenderDefinition({
@@ -289,7 +286,6 @@ function createDualPaneDefinitions(context: SettingsTabContext): SettingDefiniti
                                 context.refreshSettingsDomState();
                             });
                     });
-                addSettingSyncModeToggle({ setting, plugin, settingId: 'narrowSidebarLayout' });
             }
         }),
         createRenderDefinition({
@@ -367,7 +363,6 @@ function createMobileAppearanceDefinitionGroup(context: SettingsTabContext): Set
                                       plugin.setUseFloatingToolbars(value);
                                   })
                               );
-                          addSettingSyncModeToggle({ setting, plugin, settingId: 'useFloatingToolbars' });
                       }
                   })
               ])
@@ -470,7 +465,6 @@ function renderUIScaleSetting(setting: Setting, context: SettingsTabContext): vo
         }
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'uiScale' });
 }
 
 function renderPaneTransitionSetting(setting: Setting, context: SettingsTabContext): void {
@@ -491,7 +485,6 @@ function renderPaneTransitionSetting(setting: Setting, context: SettingsTabConte
         }
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'paneTransitionDuration' });
 }
 
 function renderNarrowSidebarTriggerSetting(setting: Setting, context: SettingsTabContext): void {
@@ -513,7 +506,6 @@ function renderNarrowSidebarTriggerSetting(setting: Setting, context: SettingsTa
                 });
         });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'narrowSidebarTriggerMode' });
 }
 
 function renderNarrowSidebarCustomWidthSetting(setting: Setting, context: SettingsTabContext): void {
@@ -534,7 +526,6 @@ function renderNarrowSidebarCustomWidthSetting(setting: Setting, context: Settin
         }
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'narrowSidebarCustomWidth' });
 }
 
 function renderHomepageSetting(setting: Setting, context: SettingsTabContext): void {
@@ -567,7 +558,6 @@ function renderHomepageSetting(setting: Setting, context: SettingsTabContext): v
                 })
         );
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'homepage' });
 }
 
 function renderHomepageFileSetting(setting: Setting, context: SettingsTabContext): void {

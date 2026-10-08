@@ -33,7 +33,6 @@ import {
 import { showNotice } from '../../utils/noticeUtils';
 import { usesMobileChrome } from '../../utils/paneLayout';
 import { setElementVisible } from '../dependentSettings';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import type { VaultProfilePropertyKey } from '../types';
 import { isVaultTitleOption } from '../types';
 import { createGroupDefinition, createRenderDefinition } from '../nativeSettingControls';
@@ -272,7 +271,6 @@ function createVaultSetupRenderers(context: SettingsTabContext): VaultSetupRende
         });
 
         profileSetting.controlEl.addClass('nn-setting-profile-dropdown');
-        addSettingSyncModeToggle({ setting: profileSetting, plugin, settingId: 'vaultProfile' });
     };
 
     const renderVaultProfileSwitcherSetting = (setting: Setting): void => {

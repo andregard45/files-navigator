@@ -33,7 +33,6 @@ import type { NotebookNavigatorSettings } from '../types';
 import type { SettingsTabContext } from './SettingsTabContext';
 import { runAsyncAction } from '../../utils/async';
 import { usesMobileChrome } from '../../utils/paneLayout';
-import { addSettingSyncModeToggle } from '../syncModeToggle';
 import { setElementVisible } from '../dependentSettings';
 import { appendSettingText, getPlainSettingText } from '../settingText';
 import { casefold } from '../../utils/recordUtils';
@@ -636,7 +635,6 @@ function renderIncludeDescendantNotesSetting(setting: Setting, context: Settings
             });
         });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'includeDescendantNotes' });
 }
 
 function renderCompactItemHeightSetting(setting: Setting, context: SettingsTabContext): void {
@@ -657,7 +655,6 @@ function renderCompactItemHeightSetting(setting: Setting, context: SettingsTabCo
         }
     });
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'compactItemHeight' });
 }
 
 function renderCompactItemHeightScaleTextSetting(setting: Setting, context: SettingsTabContext): void {
@@ -672,7 +669,6 @@ function renderCompactItemHeightScaleTextSetting(setting: Setting, context: Sett
             })
         );
 
-    addSettingSyncModeToggle({ setting, plugin, settingId: 'compactItemHeightScaleText' });
 }
 
 function renderPropertySortKeySetting(setting: Setting, context: SettingsTabContext): void {
