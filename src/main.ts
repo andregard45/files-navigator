@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { App, Platform, Plugin, TFile, FileView, TFolder, WorkspaceLeaf, addIcon } from 'obsidian';
+import { App, Plugin, TFile, FileView, TFolder, WorkspaceLeaf, addIcon } from 'obsidian';
 import type { NotebookNavigatorSettings } from './settings/types';
 import { LazyNotebookNavigatorSettingTab } from './settings/LazyNotebookNavigatorSettingTab';
 import type { NarrowSidebarLayout, NarrowSidebarTriggerMode } from './settings/types';
@@ -43,6 +43,12 @@ import { OmnisearchService } from './services/OmnisearchService';
 import { FileSystemOperations } from './services/FileSystemService';
 import { getIconService } from './services/icons';
 import { VaultIconProvider } from './services/icons/providers/VaultIconProvider';
+import {
+    disposeDebugLoggingService,
+    initDebugLoggingService,
+    readStartupDebugLoggingPreference,
+    recordStartupDiagnostic,
+} from './services/diagnostics/DebugLoggingService';
 import { RecentNotesService } from './services/RecentNotesService';
 import type { NavigateToFolderOptions } from './hooks/useNavigatorReveal';
 import { isNotebookNavigatorCalendarView, isNotebookNavigatorView } from './view/viewGuards';
@@ -304,6 +310,13 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * Plugin initialization - called when plugin is enabled
      */
     async onload() {
+        // Startup debug logging: initialized first so the timeline covers everything below.
+        // The toggle is a vault-local preference (localStorage, never synced through data.json).
+        // When disabled (default), every DebugLoggingService method is a no-op.
+        const debugLogging = initDebugLoggingService(this.app, this.manifest.version);
+        debugLogging.setEnabled(readStartupDebugLoggingPreference());
+        recordStartupDiagnostic('onload.start', { pluginVersion: this.manifest.version });
+
         // Initialize localStorage before database so version checks work
         localStorage.init(this.app);
 
@@ -356,6 +369,11 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
             return;
         }
         this.settings = this.settingsController.settings;
+        // Re-assert the vault-local toggle after settings load. The data.json field is
+        // non-persistable and may be stale/synced from another device, so localStorage
+        // remains the single source of truth for this preference.
+        debugLogging.setEnabled(readStartupDebugLoggingPreference());
+        recordStartupDiagnostic('database.initialized', { mode: 'indexeddb' });
         if (settingsLoadResult === 'unavailable') {
             // data.json exists but could not be read; stop before any code path can overwrite it with defaults
             this.enterSettingsUnavailableState();
@@ -686,6 +704,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
         this.app.workspace.onLayoutReady(() => {
             this.hasWorkspaceLayoutReady = true;
+            recordStartupDiagnostic('layout.ready');
             // Execute startup tasks asynchronously to avoid blocking the layout
             runAsyncAction(async () => {
                 if (this.isUnloading) {
@@ -707,6 +726,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
         // Process external settings changes that arrived while onload was still initializing
         this.hasStartedWithSettings = true;
+        recordStartupDiagnostic('services.initialized', { firstLaunch: isFirstLaunch });
         if (this.pendingExternalSettingsChange) {
             this.pendingExternalSettingsChange = false;
             runAsyncAction(() => this.onExternalSettingsChange());
@@ -1154,6 +1174,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * Per Obsidian guidelines: leaves should not be detached in onunload
      */
     onunload() {
+        disposeDebugLoggingService();
         this.initiateShutdown();
 
         this.preferencesController.dispose();

@@ -728,6 +728,12 @@ function passesExclusionFilters(file: TFile, state: ExclusionFilterState, app: A
         db
     } = state;
 
+    // Startup debug log files (nn-debug-*.md) are never indexed. They are written to the vault root by
+    // DebugLoggingService and would otherwise trigger re-indexing loops when logging is enabled.
+    if (/^nn-debug-.*\.md$/i.test(file.path)) {
+        return false;
+    }
+
     if (!includeHiddenItems && shouldHideDrawingCompanionImageFile(app, file)) {
         return false;
     }

@@ -740,6 +740,9 @@ export interface NotebookNavigatorSettings {
     searchProvider: SearchProvider | null;
     keyboardShortcuts: KeyboardShortcutConfig;
 
+    // Advanced tab - Diagnostics (device-local, never persisted to data.json)
+    startupDebugLogging: boolean;
+
     // Runtime state and cached data
     customVaultName: string;
     pinnedNotes: PinnedNotes;

@@ -1916,6 +1916,10 @@ export const STRINGS_FR = {
                 indexingTitle: 'Indexation du coffre...',
                 progress: 'Mise à jour du cache de Notebook Navigator.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Utiliser les métadonnées du frontmatter',
                 desc: 'Utiliser le frontmatter pour le nom de note, horodatages, icônes et couleurs'

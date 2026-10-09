@@ -1905,6 +1905,10 @@ export const STRINGS_TR = {
                 indexingTitle: 'Kasa dizinleniyor...',
                 progress: 'Notebook Navigator önbelleği güncelleniyor.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Frontmatter meta verilerini kullan',
                 desc: 'Not adı, zaman damgaları, simgeler ve renkler için frontmatter kullan'

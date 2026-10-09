@@ -1900,6 +1900,10 @@ export const STRINGS_KO = {
                 indexingTitle: '보관함을 인덱싱하는 중...',
                 progress: 'Notebook Navigator 캐시를 업데이트하는 중.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'frontmatter 메타데이터 사용',
                 desc: '노트 이름, 타임스탬프, 아이콘, 색상에 frontmatter 사용'

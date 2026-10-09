@@ -25,6 +25,14 @@ import type { ContentProviderType, FileContentType } from '../../types/contentPr
 import type { FrontmatterSyncService } from '../../services/content/frontmatterSyncService';
 import type { PropertyTreeNode, TagTreeNode } from '../../types/storage';
 import { calculateFileDiff } from '../../storage/diffCalculator';
+import { getDebugLoggingService, recordStartupDiagnostic } from '../../services/diagnostics/DebugLoggingService';
+
+/** Records storage-ready diagnostics; no-op when startup debug logging is disabled. */
+function recordDebugStorageReady(details: Record<string, unknown>): void {
+    const svc = getDebugLoggingService();
+    if (!svc || !svc.isEnabled()) return;
+    svc.recordStorageReady(details);
+}
 import { type FileData as DBFileData } from '../../storage/IndexedDBStorage';
 import { getDBInstance, markFilesForRegeneration, recordFileChanges, removeFilesFromCache } from '../../storage/fileOperations';
 import { createRenameFlushController, excludeReoccupiedRenameTargets, type PendingRenameFlushBuffer } from './renameFlush';
@@ -178,8 +186,10 @@ export function useStorageVaultSync(params: {
             }
 
             if (isInitialLoad) {
+                const initialLoadStartMs = performance.now();
                 try {
-                    const { toAdd, toUpdate, toRemove, existingData } = calculateFileDiff(allFiles);
+                    const { toAdd, toUpdate, toRemove, existingData, cachedFileCount } = calculateFileDiff(allFiles);
+                    const diffDoneMs = performance.now();
 
                     if (toRemove.length > 0) {
                         await removeFilesFromCache(toRemove);
@@ -218,7 +228,27 @@ export function useStorageVaultSync(params: {
                         if (metadataDependentTypes.length > 0 && markdownFiles.length > 0) {
                             queueMetadataContentWhenReady(markdownFiles, metadataDependentTypes, settings);
                         }
+
+                        recordStartupDiagnostic('content.queue', {
+                            provider: 'metadata',
+                            files: markdownFiles.length,
+                        });
                     }
+
+                    recordDebugStorageReady({
+                        status: 'storageReady',
+                        indexableFileCount: allFiles.length,
+                        cachedFileCount,
+                        diff: { toAdd: toAdd.length, toUpdate: toUpdate.length, toRemove: toRemove.length },
+                        queued: {
+                            markdownFiles: allFiles.reduce((count, file) => count + (file.extension === 'md' ? 1 : 0), 0),
+                            fileThumbnailFiles: 0,
+                        },
+                        timingsMs: {
+                            initialLoad: Math.round(performance.now() - initialLoadStartMs),
+                            diff: Math.round(diffDoneMs - initialLoadStartMs),
+                        },
+                    });
                 } catch (error: unknown) {
                     console.error('Failed during initial load sequence:', error);
                 }

@@ -1891,6 +1891,10 @@ export const STRINGS_ZH_CN = {
                 indexingTitle: '正在索引仓库...',
                 progress: '正在更新 Notebook Navigator 缓存。'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: '使用前置元数据',
                 desc: '使用前置元数据设置笔记名称、时间戳、图标和颜色'

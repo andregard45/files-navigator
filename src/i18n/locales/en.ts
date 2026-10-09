@@ -1899,6 +1899,10 @@ export const STRINGS_EN = {
                 indexingTitle: 'Indexing vault...',
                 progress: 'Updating Notebook Navigator cache.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Use frontmatter metadata',
                 desc: 'Use frontmatter for note name, timestamps, icons, and colors'

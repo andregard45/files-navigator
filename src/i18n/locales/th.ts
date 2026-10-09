@@ -1899,6 +1899,10 @@ export const STRINGS_TH = {
                 indexingTitle: 'กำลังสร้างดัชนีห้องนิรภัย...',
                 progress: 'Notebook Navigator กำลังอัปเดตแคช'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'ใช้เมตาดาต้า frontmatter',
                 desc: 'ใช้ frontmatter สำหรับชื่อโน้ต การประทับเวลา ไอคอน และสี'

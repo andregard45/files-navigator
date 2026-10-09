@@ -1906,6 +1906,10 @@ export const STRINGS_JA = {
                 indexingTitle: '保管庫をインデックス中...',
                 progress: 'Notebook Navigator のキャッシュを更新しています。'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'フロントマターメタデータを使用',
                 desc: 'ノート名、タイムスタンプ、アイコン、色にフロントマターを使用'

@@ -278,6 +278,9 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     searchProvider: 'internal',
     keyboardShortcuts: getDefaultKeyboardShortcuts(),
 
+    // Advanced tab - Diagnostics (device-local, never persisted to data.json)
+    startupDebugLogging: false,
+
     // Runtime state and cached data
     customVaultName: '',
     pinnedNotes: sanitizeRecord<PinnedNotes[string]>(undefined),

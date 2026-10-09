@@ -17,6 +17,7 @@
  */
 
 import { Platform } from 'obsidian';
+import { recordStartupDiagnostic } from '../diagnostics/DebugLoggingService';
 import { DEFAULT_SETTINGS } from '../../settings/defaultSettings';
 import { migrateCollapsedPinnedContexts, migrateRecentColors, migrateUIScales } from '../../settings/migrations/localPreferences';
 import { migrateMomentDateFormats } from '../../settings/migrations/momentFormats';
@@ -257,6 +258,7 @@ export class PluginSettingsController {
             }
             lastResult = attemptResult;
             if (lastResult === 'loaded') {
+                recordStartupDiagnostic('settings.loaded', { source: 'data.json' });
                 return 'loaded';
             }
             if (lastResult === 'unavailable') {
@@ -766,6 +768,7 @@ export class PluginSettingsController {
         delete rest.showPinnedIcon;
         delete rest.showPinnedGroupHeader;
         delete rest['syncModes'];
+        delete rest.startupDebugLogging;
     }
 
     public refreshMatcherCachesIfNeeded(): void {
