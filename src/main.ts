@@ -53,6 +53,7 @@ import { ExtendedApp } from './types/obsidian-extended';
 import { getLeafSplitLocation } from './utils/workspaceSplit';
 import { sanitizeRecord } from './utils/recordUtils';
 import { runAsyncAction } from './utils/async';
+import { beginStartupSession, endPhase, endStartupSession, logStartupInfo, startPhase } from './utils/startupDebugLogger';
 import WorkspaceCoordinator from './services/workspace/WorkspaceCoordinator';
 import { FolderNoteSidebarService } from './services/workspace/FolderNoteSidebarService';
 import {
@@ -304,8 +305,13 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * Plugin initialization - called when plugin is enabled
      */
     async onload() {
+        // Startup debug logging: open the console group and start the overall load timer
+        beginStartupSession(this.manifest.name ?? 'Notebook Navigator', this.manifest.version);
+
         // Initialize localStorage before database so version checks work
+        startPhase('local-storage', 'Initializing local storage');
         localStorage.init(this.app);
+        endPhase('local-storage');
 
         if (typeof addIcon === 'function') {
             addIcon(NOTEBOOK_NAVIGATOR_ICON_ID, NOTEBOOK_NAVIGATOR_ICON_SVG);
@@ -313,6 +319,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
         // Initialize database early for StorageContext consumers
         const appId = (this.app as ExtendedApp).appId || '';
+        startPhase('language-service', 'Initializing language service');
         this.languageService = new LanguageService(this.manifest.version, new LanguageDatabase(appId));
         const languageInitialization = this.languageService.initialize();
         this.register(
@@ -325,13 +332,17 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Read the small language cache before bulk vault-cache hydration can consume its timeout.
         // Only the local cache is awaited; downloads must not block settings or workspace restoration.
         await languageInitialization;
+        endPhase('language-service', { locale: this.languageService.locale });
         if (this.isUnloading) return;
 
         runAsyncAction(
             async () => {
                 try {
+                    startPhase('database', 'Initializing database');
                     await initializeDatabase(appId);
+                    endPhase('database');
                 } catch (error: unknown) {
+                    endPhase('database');
                     console.error('Failed to initialize database:', error);
                 }
             },
@@ -346,9 +357,11 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Runtime enablement uses the same grace period because sync can deliver data.json after the plugin files.
         const startupSettingsAbortController = new AbortController();
         this.startupSettingsAbortController = startupSettingsAbortController;
+        startPhase('settings', 'Loading settings');
         const settingsLoadResult = await this.settingsController.loadSettingsAtStartup({
             signal: startupSettingsAbortController.signal
         });
+        endPhase('settings', { result: settingsLoadResult });
         if (this.startupSettingsAbortController === startupSettingsAbortController) {
             this.startupSettingsAbortController = null;
         }
@@ -377,6 +390,8 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                 this.missingSettingsNoticeTimer = null;
                 this.enterSettingsUnavailableState();
             }, MISSING_SETTINGS_USER_ENABLE_WAIT_MS);
+            // Startup paused here; onUserEnable() resumes it and keeps the logging session open until
+            // recovery either completes startup or enters the aborted state (which closes the session)
             return;
         }
         await this.completeStartup(settingsLoadResult === 'first-launch');
@@ -544,6 +559,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * onLayoutReady callback executes immediately.
      */
     private async completeStartup(isFirstLaunch: boolean): Promise<void> {
+        logStartupInfo(`Completing startup (${isFirstLaunch ? 'first launch' : 'existing settings'})…`);
         this.preferencesController.syncMirrorsFromSettings();
         const storedLocalStorageVersion = this.settingsController.getStoredLocalStorageVersion();
         this.preferencesController.loadUXPreferences();
@@ -586,8 +602,11 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         }
 
         // Initialize recent data management
+        startPhase('recent-data', 'Initializing recent data manager');
         this.preferencesController.initializeRecentDataManager();
+        endPhase('recent-data');
 
+        startPhase('services', 'Initializing core services');
         this.recentNotesService = new RecentNotesService(this);
 
         // Initialize workspace coordination
@@ -641,7 +660,10 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         });
         const iconService = getIconService();
         iconService.registerProvider(new VaultIconProvider(this.app));
+        endPhase('services');
+
         // Register view
+        startPhase('views', 'Registering views');
         this.registerView(NOTEBOOK_NAVIGATOR_VIEW, leaf => {
             // eslint-disable-next-line @typescript-eslint/no-require-imports -- Obsidian registerView callbacks must construct views synchronously.
             const { NotebookNavigatorView } = require('./view/NotebookNavigatorView') as typeof import('./view/NotebookNavigatorView');
@@ -682,12 +704,17 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         this.addSettingTab(this.settingTab);
 
         // Register editor context menu
+        startPhase('ui', 'Registering setting tab and workspace events');
         registerWorkspaceEvents(this);
+        endPhase('ui');
+        endPhase('views');
 
         this.app.workspace.onLayoutReady(() => {
             this.hasWorkspaceLayoutReady = true;
+            logStartupInfo('Obsidian layout ready, finishing startup UI tasks.');
             // Execute startup tasks asynchronously to avoid blocking the layout
             runAsyncAction(async () => {
+                startPhase('layout-ready', 'Running layout-ready startup tasks');
                 if (this.isUnloading) {
                     return;
                 }
@@ -701,7 +728,10 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                 this.app.workspace.trigger('parse-style-settings');
 
                 this.applyCalendarPlacementView({ force: true, reveal: false });
+                endPhase('layout-ready');
 
+                // Startup complete: close the debug logging group and report total load duration
+                endStartupSession();
             });
         });
 
@@ -1154,6 +1184,9 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * Per Obsidian guidelines: leaves should not be detached in onunload
      */
     onunload() {
+        // Defensive cleanup for startup debug logging: close an open group if the plugin unloads
+        // before layout-ready finished (e.g., quick enable/disable or an aborted startup)
+        endStartupSession();
         this.initiateShutdown();
 
         this.preferencesController.dispose();
@@ -1287,6 +1320,8 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // The aborted state replaces the wait for onUserEnable(); an enable arriving after the notice is shown
         // must not resume startup on its own
         this.missingSettingsAwaitingUserEnable = false;
+        // Close any still-open startup debug logging session from the aborted load
+        endStartupSession();
         this.registerSettingsRecoveryCommand();
         showNotice(strings.plugin.settingsUnavailableNotice, { timeout: 30000, variant: 'warning' });
     }

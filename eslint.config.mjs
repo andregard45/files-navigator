@@ -118,5 +118,14 @@ export default tseslint.config(
         rules: {
             'no-restricted-syntax': 'off'
         }
+    },
+    {
+        // Intentional startup debug logging utility: diagnostics go to the developer console by design.
+        // The Obsidian guideline rule is obsidianmd/rule-custom-message (a wrapper around no-console);
+        // disabling plain "obsidianmd/no-console" here would be a no-op because that rule does not exist.
+        files: ['src/utils/startupDebugLogger.ts'],
+        rules: {
+            'obsidianmd/rule-custom-message': 'off'
+        }
     }
 );
