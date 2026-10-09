@@ -71,6 +71,7 @@ import type { NotebookNavigatorAPI } from '../api/NotebookNavigatorAPI';
 import { getCacheRebuildProgressTypes } from './storage/storageContentTypes';
 import { clearCacheRebuildNoticeState, getCacheRebuildNoticeState, setCacheRebuildNoticeState } from './storage/cacheRebuildNoticeStorage';
 import { runAsyncAction } from '../utils/async';
+import { logProbePair, recordStartupTimestamp } from '../utils/startupDebugLogger';
 
 /**
  * Context value providing both file data (tag tree) and the file cache
@@ -176,6 +177,9 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
     // Service generating derived file content (properties, tags, metadata) synchronously from the metadata cache.
     const contentService = useRef<FrontmatterSyncService | null>(null);
     if (!contentService.current) {
+        // Startup debug probe (black hole #2): FrontmatterSyncService is constructed at first React mount of the
+        // storage provider; this completes the frontmatterSync.init window opened in main.ts onload().
+        recordStartupTimestamp('frontmatterSync.init.complete');
         contentService.current = new FrontmatterSyncService(app);
     }
     const isFirstLoad = useRef(true);
@@ -314,8 +318,18 @@ export function StorageProvider({ app, api, children }: StorageProviderProps) {
             }
             const options = providers ? { providers } : undefined;
 
+            // Startup debug probe (black hole #2): bracket the content-provider queue handoff. processFiles is
+            // async, so the complete timestamp marks when the batch was accepted into the service pipeline.
+            recordStartupTimestamp('contentProvider.queue.start');
             runAsyncAction(async () => {
                 await service.processFiles(files, liveSettings, options);
+                recordStartupTimestamp('contentProvider.queue.complete');
+                logProbePair(
+                    'contentProvider.queue',
+                    'contentProvider.queue.start',
+                    'contentProvider.queue.complete',
+                    { count: files.length }
+                );
             });
 
             if (typeof window === 'undefined') {

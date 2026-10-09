@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { App, Platform, Plugin, TFile, FileView, TFolder, WorkspaceLeaf, addIcon } from 'obsidian';
+import { App, Plugin, PluginManifest, TFile, FileView, TFolder, WorkspaceLeaf, addIcon } from 'obsidian';
 import type { NotebookNavigatorSettings } from './settings/types';
 import { LazyNotebookNavigatorSettingTab } from './settings/LazyNotebookNavigatorSettingTab';
 import type { NarrowSidebarLayout, NarrowSidebarTriggerMode } from './settings/types';
@@ -51,9 +51,16 @@ import { INTERNAL_NOTEBOOK_NAVIGATOR_API, NotebookNavigatorAPI } from './api/Not
 import { initializeDatabase, shutdownDatabase } from './storage/fileOperations';
 import { ExtendedApp } from './types/obsidian-extended';
 import { getLeafSplitLocation } from './utils/workspaceSplit';
-import { sanitizeRecord } from './utils/recordUtils';
 import { runAsyncAction } from './utils/async';
-import { beginStartupSession, endPhase, endStartupSession, logStartupInfo, startPhase } from './utils/startupDebugLogger';
+import {
+    beginStartupSession,
+    endPhase,
+    endStartupSession,
+    logProbePair,
+    logStartupInfo,
+    recordStartupTimestamp,
+    startPhase
+} from './utils/startupDebugLogger';
 import WorkspaceCoordinator from './services/workspace/WorkspaceCoordinator';
 import { FolderNoteSidebarService } from './services/workspace/FolderNoteSidebarService';
 import {
@@ -116,6 +123,14 @@ const RECENT_INSTALL_WINDOW_MS = 10 * 60 * 1000;
  * Manages plugin lifecycle, settings, and view registration
  */
 export default class NotebookNavigatorPlugin extends Plugin implements ISettingsProvider {
+    // Startup debug logging: bottleneck probes around construction. Field initializers run after super() and
+    // before onload(); the constructor→onload.start window reveals bundle parse/eval + Obsidian setup cost.
+    constructor(app: App, manifest: PluginManifest) {
+        recordStartupTimestamp('plugin.constructor.start');
+        super(app, manifest);
+        recordStartupTimestamp('plugin.constructor.complete');
+    }
+
     ribbonIconEl: HTMLElement | undefined = undefined;
     metadataService: MetadataService | null = null;
     tagOperations: TagOperations | null = null;
@@ -305,13 +320,21 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * Plugin initialization - called when plugin is enabled
      */
     async onload() {
-        // Startup debug logging: open the console group and start the overall load timer
+        // Startup debug logging: open the console group and start the overall load timer.
+        // Bottleneck probes (recordStartupTimestamp) bracket the two unlogged startup gaps; they are
+        // single performance.now() reads that stay silent unless a session is open (debug toggle OFF = no-op).
+        recordStartupTimestamp('onload.start');
+        // All ES module imports for this bundle finished evaluating before onload runs (bundle parse/eval time
+        // shows up as the constructor→onload.start window via the plugin.constructor probes).
+        recordStartupTimestamp('modules.imported');
         beginStartupSession(this.manifest.name ?? 'Notebook Navigator', this.manifest.version);
 
         // Initialize localStorage before database so version checks work
         startPhase('local-storage', 'Initializing local storage');
         localStorage.init(this.app);
         endPhase('local-storage');
+        // localStorage wrapper ready: subsequent getItem calls hit the vault-scoped store (black hole #1 probe)
+        recordStartupTimestamp('localStorage.read');
 
         if (typeof addIcon === 'function') {
             addIcon(NOTEBOOK_NAVIGATOR_ICON_ID, NOTEBOOK_NAVIGATOR_ICON_SVG);
@@ -335,9 +358,17 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         endPhase('language-service', { locale: this.languageService.locale });
         if (this.isUnloading) return;
 
+        // Black hole #1 attribution: everything from onload.start to database.init.scheduled is now split into
+        // the localStorage-read segment and the remaining segment (dominated by the language-service await).
+        logProbePair('blackHole1.localStorageSegment (onload.start → localStorage.read)', 'onload.start', 'localStorage.read');
+        logProbePair('blackHole1.remainingSegment (localStorage.read → database.init.scheduled)', 'localStorage.read', 'database.init.scheduled');
+
         runAsyncAction(
             async () => {
                 try {
+                    // Black hole #1 end probe: the moment database initialization is scheduled. Everything between
+                    // onload.start and here (language-service await, localStorage) is now attributable via windows.
+                    recordStartupTimestamp('database.init.scheduled');
                     startPhase('database', 'Initializing database');
                     await initializeDatabase(appId);
                     endPhase('database');
@@ -661,6 +692,11 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         const iconService = getIconService();
         iconService.registerProvider(new VaultIconProvider(this.app));
         endPhase('services');
+        // Black hole #2 start probes: service registry complete. The FrontmatterSyncService itself is created
+        // later by React (StorageContext), so we mark its expected init window here and log the measured gap.
+        recordStartupTimestamp('services.registered');
+        recordStartupTimestamp('services.initialized');
+        recordStartupTimestamp('frontmatterSync.init.start');
 
         // Register view
         startPhase('views', 'Registering views');
@@ -705,9 +741,15 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
         // Register editor context menu
         startPhase('ui', 'Registering setting tab and workspace events');
+        recordStartupTimestamp('eventListeners.setup.start');
         registerWorkspaceEvents(this);
+        recordStartupTimestamp('eventListeners.setup.complete');
         endPhase('ui');
         endPhase('views');
+        // Black hole #2 attribution: split the services→storage-initial-load gap into its main.ts portion
+        // (view registration + event listeners) versus the later React-mount portion (FrontmatterSyncService).
+        logProbePair('eventListeners.setup', 'eventListeners.setup.start', 'eventListeners.setup.complete');
+        logProbePair('blackHole2.mainTsSegment (services.initialized → eventListeners.setup.complete)', 'services.initialized', 'eventListeners.setup.complete');
 
         this.app.workspace.onLayoutReady(() => {
             this.hasWorkspaceLayoutReady = true;
@@ -729,6 +771,19 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
                 this.applyCalendarPlacementView({ force: true, reveal: false });
                 endPhase('layout-ready');
+
+                // Black hole #2 attribution at layout ready: the React view mount (StorageContext creating its
+                // FrontmatterSyncService) usually lands by now; if its probes fired, log the service-init segment.
+                logProbePair(
+                    'blackHole2.reactMountSegment (eventListeners.setup.complete → frontmatterSync.init.complete)',
+                    'eventListeners.setup.complete',
+                    'frontmatterSync.init.complete'
+                );
+                logProbePair(
+                    'blackHole2.frontmatterSyncInit (frontmatterSync.init.start → frontmatterSync.init.complete)',
+                    'frontmatterSync.init.start',
+                    'frontmatterSync.init.complete'
+                );
 
                 // Startup complete: close the debug logging group and report total load duration
                 endStartupSession();

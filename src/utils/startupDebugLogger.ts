@@ -47,8 +47,90 @@ const activeTimers = new Map<string, ActiveTimer>();
 
 let sessionStarted = false;
 
+// Ids accepted by recordStartupTimestamp(). Each maps to one module-level timestamp slot below.
+// The set brackets the two unlogged startup gaps ("black holes") found in granular timing data:
+// #1 onload start → database init scheduled (310 ms) and #2 services initialized → storage initial
+// load (231 ms). frontmatterSync/eventListeners probes attribute black hole #2 within main.ts.
+export type StartupProbeId =
+    | 'plugin.constructor.start'
+    | 'plugin.constructor.complete'
+    | 'onload.start'
+    | 'modules.imported'
+    | 'services.registered'
+    | 'localStorage.read'
+    | 'database.init.scheduled'
+    | 'services.initialized'
+    | 'frontmatterSync.init.start'
+    | 'frontmatterSync.init.complete'
+    | 'eventListeners.setup.start'
+    | 'eventListeners.setup.complete'
+    | 'vault.getMarkdownFiles.start'
+    | 'vault.getMarkdownFiles.complete'
+    | 'contentProvider.queue.start'
+    | 'contentProvider.queue.complete';
+
+// Bottleneck-probe timestamps. Plain performance.now() reads (microseconds of overhead), recorded
+// on every load regardless of the debug toggle; they only surface through the console helpers
+// below when a startup session is open, keeping the probes zero-cost when logging is off.
+const probeTimestamps = new Map<StartupProbeId, number>();
+
+/** Returns milliseconds since the plugin class was constructed, or null when no constructor ran (tests). */
+export function getMsSinceConstructor(): number | null {
+    const startMs = probeTimestamps.get('plugin.constructor.start');
+    return startMs === undefined ? null : performance.now() - startMs;
+}
+
+/** Returns the recorded timestamp for a probe id, or null if it never fired. */
+export function getProbeMs(id: StartupProbeId): number | null {
+    return probeTimestamps.get(id) ?? null;
+}
+
 function formatDuration(elapsedMs: number): string {
     return elapsedMs >= 100 ? `${elapsedMs.toFixed(0)} ms` : `${elapsedMs.toFixed(1)} ms`;
+}
+
+// Formats a gap between two probe timestamps relative to the onload() entry point, e.g.
+// "284–310 ms". Returns an empty string when either timestamp or onload start is missing.
+function formatWindow(fromMs: number | null, toMs: number | null): string {
+    const onloadStart = probeTimestamps.get('onload.start');
+    if (onloadStart === undefined || fromMs === null || toMs === null) {
+        return '';
+    }
+    return `${Math.round(fromMs - onloadStart)}–${Math.round(toMs - onloadStart)} ms`;
+}
+
+/**
+ * Records a probe timestamp for a startup milestone used in bottleneck attribution. This is a single
+ * performance.now() read plus a Map.set — effectively zero overhead and safe to call even when no
+ * console session is open (the value only surfaces later through endPhase()/logProbePair() window
+ * annotations).
+ */
+export function recordStartupTimestamp(id: StartupProbeId): void {
+    probeTimestamps.set(id, performance.now());
+}
+
+// Window annotation appended to a phase completion line when both bracketing probes exist, e.g.
+// "{ windowSinceOnloadStart: '310–420 ms' }". Keeps the console lines parseable for gap analysis.
+function windowAnnotation(fromMs: number | null, toMs: number | null): Record<string, unknown> {
+    const window = formatWindow(fromMs, toMs);
+    return window ? { windowSinceOnloadStart: window } : {};
+}
+
+/**
+ * Logs a completed probe pair as a single console line with its duration, e.g.
+ * "✓ vault.getMarkdownFiles — 12 ms { count: 1543 }". No-op unless a startup session is open,
+ * which keeps all bottleneck attribution silent while the debug toggle is OFF.
+ */
+export function logProbePair(label: string, startId: StartupProbeId, endId: StartupProbeId, detail?: Record<string, unknown>): void {
+    if (!sessionStarted) {
+        return;
+    }
+    const from = probeTimestamps.get(startId) ?? null;
+    const to = probeTimestamps.get(endId) ?? null;
+    if (from === null || to === null) {
+        return;
+    }
+    console.log(`✓ ${label} — ${formatDuration(to - from)}`, { ...windowAnnotation(from, to), ...(detail ?? {}) });
 }
 
 /**

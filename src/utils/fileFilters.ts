@@ -18,6 +18,7 @@
 
 import { TFile, TFolder, App } from 'obsidian';
 import type { NotebookNavigatorSettings } from '../settings/types';
+import { logProbePair, recordStartupTimestamp } from './startupDebugLogger';
 import { isGeneratedThumbnailFile, isPrimaryDocumentFile, shouldDisplayFile } from './fileTypeUtils';
 import {
     getActiveFileVisibility,
@@ -768,7 +769,13 @@ export function getFilteredMarkdownFiles(app: App, settings: NotebookNavigatorSe
     if (!app || !settings) return [];
 
     const filterState = createExclusionFilterState(settings, options);
-    return app.vault.getMarkdownFiles().filter(file => passesExclusionFilters(file, filterState, app));
+    // Startup debug probe (black hole #2): time the vault markdown scan + exclusion filtering. The probes are
+    // performance.now() reads and logProbePair is a no-op unless a startup session is open — zero cost when off.
+    recordStartupTimestamp('vault.getMarkdownFiles.start');
+    const filtered = app.vault.getMarkdownFiles().filter(file => passesExclusionFilters(file, filterState, app));
+    recordStartupTimestamp('vault.getMarkdownFiles.complete');
+    logProbePair('vault.getMarkdownFiles', 'vault.getMarkdownFiles.start', 'vault.getMarkdownFiles.complete', { count: filtered.length });
+    return filtered;
 }
 
 /**
@@ -794,6 +801,8 @@ export function getFilteredIndexableFiles(app: App, settings: NotebookNavigatorS
     const filterState = createExclusionFilterState(settings, options);
     const result: TFile[] = [];
 
+    // Startup debug probe (black hole #2): time the full-vault indexable scan used by storage cache hydration.
+    recordStartupTimestamp('vault.getMarkdownFiles.start');
     for (const file of app.vault.getFiles()) {
         if (file.extension === 'md') {
             if (passesExclusionFilters(file, filterState, app)) {
@@ -816,6 +825,8 @@ export function getFilteredIndexableFiles(app: App, settings: NotebookNavigatorS
         }
     }
 
+    recordStartupTimestamp('vault.getMarkdownFiles.complete');
+    logProbePair('vault.getIndexableFiles', 'vault.getMarkdownFiles.start', 'vault.getMarkdownFiles.complete', { count: result.length });
     return result;
 }
 
