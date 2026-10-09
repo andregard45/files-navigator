@@ -107,7 +107,6 @@ export class FileMetadataService extends BaseMetadataService {
         changed = this.replaceIconValues(settings.folderIcons, oldIconId, newIconId) || changed;
         changed = this.replaceIconValues(settings.tagIcons, oldIconId, newIconId) || changed;
         changed = this.replaceIconValues(settings.fileIcons, oldIconId, newIconId) || changed;
-        changed = this.replaceIconValues(settings.interfaceIcons, oldIconId, newIconId) || changed;
         changed = this.replaceIconValues(settings.fileNameIconMap, oldIconId, newIconId) || changed;
         changed = this.replaceIconValues(settings.fileTypeIconMap, oldIconId, newIconId) || changed;
 

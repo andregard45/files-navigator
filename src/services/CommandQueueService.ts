@@ -32,8 +32,7 @@ export enum OperationType {
     OPEN_VERSION_HISTORY = 'open-version-history',
     OPEN_IN_NEW_CONTEXT = 'open-in-new-context',
     OPEN_BACKGROUND_FILE = 'open-background-file',
-    OPEN_ACTIVE_FILE = 'open-active-file',
-    OPEN_HOMEPAGE = 'open-homepage'
+    OPEN_ACTIVE_FILE = 'open-active-file'
 }
 
 /**
@@ -112,14 +111,6 @@ interface OpenActiveFileOperation extends BaseOperation {
     active: boolean;
 }
 
-/**
- * Operation for tracking homepage file opening
- */
-interface OpenHomepageOperation extends BaseOperation {
-    type: OperationType.OPEN_HOMEPAGE;
-    file: TFile;
-}
-
 interface BackgroundOpenMarker {
     operationId: string;
     filePath: string;
@@ -147,8 +138,7 @@ type Operation =
     | OpenVersionHistoryOperation
     | OpenInNewContextOperation
     | OpenBackgroundFileOperation
-    | OpenActiveFileOperation
-    | OpenHomepageOperation;
+    | OpenActiveFileOperation;
 
 /**
  * Result of a command execution
@@ -355,13 +345,6 @@ export class CommandQueueService {
      */
     isOpeningFolderNote(): boolean {
         return this.hasActiveOperation(OperationType.OPEN_FOLDER_NOTE);
-    }
-
-    /**
-     * Check if opening the homepage file
-     */
-    isOpeningHomepage(): boolean {
-        return this.hasActiveOperation(OperationType.OPEN_HOMEPAGE);
     }
 
     /**
@@ -721,35 +704,6 @@ export class CommandQueueService {
         );
 
         return task;
-    }
-
-    /**
-     * Execute opening the homepage file with context tracking
-     */
-    async executeHomepageOpen(file: TFile, openFile: () => Promise<void>): Promise<CommandResult> {
-        const operationId = this.generateOperationId();
-        const operation: OpenHomepageOperation = {
-            id: operationId,
-            type: OperationType.OPEN_HOMEPAGE,
-            timestamp: Date.now(),
-            file
-        };
-
-        this.activeOperations.set(operationId, operation);
-        this.markActive(OperationType.OPEN_HOMEPAGE);
-
-        try {
-            await openFile();
-            return { success: true };
-        } catch (error) {
-            return {
-                success: false,
-                error: error as Error
-            };
-        } finally {
-            this.activeOperations.delete(operationId);
-            this.markInactive(OperationType.OPEN_HOMEPAGE);
-        }
     }
 
     /**

@@ -39,7 +39,6 @@ import {
     type CalendarLeftPlacement,
     type CalendarPlacement,
     type CalendarWeeksToShow,
-    type HomepageSetting,
     type ListSortOverrideValue,
     NARROW_SIDEBAR_CUSTOM_WIDTH_MAX,
     NARROW_SIDEBAR_CUSTOM_WIDTH_MIN,
@@ -52,7 +51,6 @@ import {
     isCalendarPlacement,
     isEnterKeyAction,
     isFolderNoteOpenLocation,
-    isHomepageSource,
     isMouseBackForwardAction,
     isPropertySortSecondaryOption,
     isNarrowSidebarTriggerMode,
@@ -91,7 +89,6 @@ import { ensureVaultProfiles, DEFAULT_VAULT_PROFILE_ID, clearHiddenFolderMatcher
 import { getPathPatternCacheKey } from '../../utils/pathPatternMatcher';
 import { normalizePropertyKeyNodeId, normalizePropertyNodeId } from '../../utils/propertyTree';
 import { normalizeNavigationSeparatorKey } from '../../utils/navigationSeparators';
-import { normalizeUXIconMapRecord } from '../../utils/uxIcons';
 import { sanitizeKeyboardShortcuts } from '../../utils/keyboardShortcuts';
 import { pruneUnavailablePropertySortOverrides, reconcileDefaultFolderSort } from '../../utils/sortUtils';
 import { pruneUnavailablePropertyGroupingOverrides, reconcileDefaultNoteGrouping } from '../../utils/listGrouping';
@@ -313,12 +310,6 @@ export class PluginSettingsController {
         const hadLegacyPropertyFieldsInStoredData = Boolean(
             storedData && Object.prototype.hasOwnProperty.call(storedData, 'propertyFields')
         );
-        const hadLegacyHomepageSettingsInStoredData = Boolean(
-            storedData &&
-            (typeof storedData['homepage'] === 'string' ||
-                Object.prototype.hasOwnProperty.call(storedData, 'mobileHomepage') ||
-                Object.prototype.hasOwnProperty.call(storedData, 'useMobileHomepage'))
-        );
         const hadLegacyFolderColorTitleSettingInStoredData = Boolean(
             storedData && Object.prototype.hasOwnProperty.call(storedData, 'useFolderColorForFileTitles')
         );
@@ -328,10 +319,6 @@ export class PluginSettingsController {
         const hadShowPinnedIconInStoredData = Boolean(storedData && Object.prototype.hasOwnProperty.call(storedData, 'showPinnedIcon'));
         const hadShowPinnedGroupHeaderInStoredData = Boolean(
             storedData && Object.prototype.hasOwnProperty.call(storedData, 'showPinnedGroupHeader')
-        );
-        const storedInterfaceIcons = storedData?.['interfaceIcons'];
-        const hadPinnedSectionIconInStoredData = Boolean(
-            isRecord(storedInterfaceIcons) && Object.prototype.hasOwnProperty.call(storedInterfaceIcons, 'pinned-section')
         );
         const hadInvalidPropertySortKeyInStoredData = Boolean(
             storedData &&
@@ -557,7 +544,6 @@ export class PluginSettingsController {
         const migratedShortcutNegationSyntax = migrateSearchShortcutNegationSyntax({ settings: this.currentSettings });
         this.normalizeIconSettings();
         this.normalizeFileIconMapSettings();
-        this.normalizeInterfaceIconsSettings();
         this.normalizeTagSettings();
         this.normalizePropertySettings();
         this.normalizeNavigationSeparatorSettings();
@@ -569,12 +555,10 @@ export class PluginSettingsController {
             hadLegacySearchProviderInSettings ||
             hadLegacyLastAnnouncedReleaseInSettings ||
             hadLegacyPropertyFieldsInStoredData ||
-            hadLegacyHomepageSettingsInStoredData ||
             hadLegacyFolderColorTitleSettingInStoredData ||
             hadRemovedFolderColorTitleSettingInStoredData ||
             hadShowPinnedIconInStoredData ||
             hadShowPinnedGroupHeaderInStoredData ||
-            hadPinnedSectionIconInStoredData ||
             hadInvalidPropertySortKeyInStoredData ||
             hadInvalidDefaultFolderSortInStoredData ||
             hadInvalidDefaultFolderSortPropertyKeyInStoredData ||
@@ -733,7 +717,6 @@ export class PluginSettingsController {
     public async saveSettings(): Promise<void> {
         ensureVaultProfiles(this.currentSettings);
         this.refreshMatcherCachesIfNeeded();
-        localStorage.set(this.options.keys.homepageKey, this.currentSettings.homepage);
         await this.options.saveData(this.getPersistableSettings());
     }
 
@@ -850,26 +833,6 @@ export class PluginSettingsController {
 
     private sanitizeBooleanSetting(value: unknown, fallback: boolean): boolean {
         return typeof value === 'boolean' ? value : fallback;
-    }
-
-    private sanitizeHomepageSetting(value: unknown): HomepageSetting {
-        if (typeof value !== 'object' || value === null) {
-            return { ...DEFAULT_SETTINGS.homepage };
-        }
-
-        const record = value as Record<string, unknown>;
-        const source = isHomepageSource(record.source) ? record.source : DEFAULT_SETTINGS.homepage.source;
-        const file = normalizeOptionalVaultFilePath(typeof record.file === 'string' ? record.file : null);
-        const createMissingPeriodicNote =
-            typeof record.createMissingPeriodicNote === 'boolean'
-                ? record.createMissingPeriodicNote
-                : DEFAULT_SETTINGS.homepage.createMissingPeriodicNote;
-
-        return {
-            source,
-            file,
-            createMissingPeriodicNote
-        };
     }
 
     private sanitizeDualPaneOrientationSetting(value: unknown) {
@@ -1146,31 +1109,6 @@ export class PluginSettingsController {
             normalizeFileNameIconMapKey,
             DEFAULT_SETTINGS.fileNameIconMap
         );
-    }
-
-    private normalizeInterfaceIconsSettings(): void {
-        const raw = this.currentSettings.interfaceIcons;
-        if (!isPlainObjectRecordValue(raw)) {
-            this.currentSettings.interfaceIcons = sanitizeRecord(DEFAULT_SETTINGS.interfaceIcons, isStringRecordValue);
-            return;
-        }
-
-        const source = sanitizeRecord<string>(undefined);
-        Object.entries(raw).forEach(([key, value]) => {
-            if (typeof value !== 'string') {
-                return;
-            }
-            source[key] = value;
-        });
-
-        const legacySortIcon = source['list-sort'];
-        if (legacySortIcon && typeof legacySortIcon === 'string') {
-            source['list-sort-ascending'] = source['list-sort-ascending'] ?? legacySortIcon;
-            source['list-sort-descending'] = source['list-sort-descending'] ?? legacySortIcon;
-            delete source['list-sort'];
-        }
-
-        this.currentSettings.interfaceIcons = sanitizeRecord(normalizeUXIconMapRecord(source), isStringRecordValue);
     }
 
     private buildPatternCacheKey(selector: (profile: VaultProfile) => string[]): string {

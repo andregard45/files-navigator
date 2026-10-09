@@ -69,9 +69,6 @@ export const STRINGS_UK = {
         shortcutsHeader: 'Ярлики', // Header label for shortcuts section in navigation pane (English: Shortcuts)
         recentFilesHeader: 'Останні файли', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Властивості',
-        folders: 'Теки',
-        tags: 'Мітки',
-        calendar: 'Календар',
         vaultRootLabel: 'Сховище',
         pinShortcuts: 'Закріпити ярлики',
         pinShortcutsAndRecentFiles: 'Закріпити ярлики та останні файли',
@@ -443,46 +440,6 @@ export const STRINGS_UK = {
         fileIconRuleEditor: {
             addRuleAria: 'Додати правило'
         },
-        interfaceIcons: {
-            title: 'Іконки інтерфейсу',
-            fileItemsSection: 'Елементи файлу',
-            items: {
-                'nav-shortcuts': 'Ярлики',
-                'nav-recent-files': 'Останні файли',
-                'nav-expand-all': 'Розгорнути все',
-                'nav-collapse-all': 'Згорнути все',
-                'nav-calendar': 'Календар',
-                'nav-tree-expand': 'Стрілка дерева: розгорнути',
-                'nav-tree-collapse': 'Стрілка дерева: згорнути',
-                'nav-hidden-items': 'Приховані елементи',
-                'nav-new-folder': 'Нова тека',
-                'nav-show-single-pane': 'Показати одну панель',
-                'nav-show-dual-pane': 'Показати подвійну панель',
-                'nav-profile-chevron': 'Стрілка меню профілю',
-                'list-search': 'Пошук',
-                'list-reveal-file': 'Показати файл',
-                'list-descendants': 'Нотатки з підтек',
-                'list-expand-all': 'Розгорнути всі групи',
-                'list-collapse-all': 'Згорнути всі групи',
-                'list-sort-ascending': 'Порядок сортування: за зростанням',
-                'list-sort-descending': 'Порядок сортування: за спаданням',
-                'list-sort-modified': 'Сортувати за датою зміни',
-                'list-sort-created': 'Сортувати за датою створення',
-                'list-sort-title': 'Сортувати за заголовком',
-                'list-sort-filename': 'Сортувати за іменем файлу',
-                'list-sort-property': 'Сортувати за властивістю',
-                'list-new-note': 'Нова нотатка',
-                'list-pinned': 'Закріплені нотатки',
-                'nav-folder-open': 'Тека відкрита',
-                'nav-folder-closed': 'Тека закрита',
-                'nav-tags': 'Мітки',
-                'nav-tag': 'Мітка',
-                'nav-properties': 'Властивості',
-                'nav-property': 'Властивість',
-                'nav-property-value': 'Значення',
-                'file-unfinished-task': 'Завдання'
-            }
-        },
         colorPicker: {
             currentColor: 'Поточний',
             newColor: 'Новий',
@@ -611,14 +568,6 @@ export const STRINGS_UK = {
                 navigate: 'для навігації',
                 move: 'для переміщення',
                 select: 'для вибору',
-                dismiss: 'для закриття'
-            }
-        },
-        homepage: {
-            placeholder: 'Пошук файлів...',
-            instructions: {
-                navigate: 'для навігації',
-                select: 'для встановлення домашньої сторінки',
                 dismiss: 'для закриття'
             }
         },
@@ -812,7 +761,6 @@ export const STRINGS_UK = {
     commands: {
         open: 'Відкрити', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Перемкнути ліву бічну панель', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'Відкрити домашню сторінку', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Відкрити щоденну нотатку',
         openWeeklyNote: 'Відкрити щотижневу нотатку',
         openMonthlyNote: 'Відкрити щомісячну нотатку',
@@ -1632,29 +1580,6 @@ export const STRINGS_UK = {
                     all: 'Всі (можуть відкриватися зовні)'
                 }
             },
-            homepage: {
-                name: 'Домашня сторінка',
-                desc: 'Виберіть, що Notebook Navigator відкриває автоматично під час запуску.',
-                current: 'Поточний: {path}',
-                chooseButton: 'Вибрати файл',
-                options: {
-                    none: 'Немає',
-                    file: 'Файл',
-                    dailyNote: 'Щоденна нотатка',
-                    weeklyNote: 'Щотижнева нотатка',
-                    monthlyNote: 'Щомісячна нотатка',
-                    quarterlyNote: 'Щоквартальна нотатка',
-                    yearlyNote: 'Щорічна нотатка'
-                },
-                file: {
-                    name: 'Домашня сторінка: Файл запуску',
-                    empty: 'Файл не вибрано'
-                },
-                createMissing: {
-                    name: 'Домашня сторінка: Створити нотатку, якщо її немає',
-                    desc: 'Створює періодичну нотатку під час запуску або за командою, якщо її не існує.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Приховати нотатки за правилами властивостей (профіль сховища)',
                 desc: 'Список правил frontmatter, розділених комами. Використовуйте записи `key` або `key=value` (наприклад, status=done, published=true, archived).',
@@ -1756,11 +1681,6 @@ export const STRINGS_UK = {
             showShortcutAndRecentItemIcons: {
                 name: 'Показувати іконки для ярликів та останніх елементів',
                 desc: 'Відображати іконки поруч з елементами в розділах Ярлики та Останні.'
-            },
-            interfaceIcons: {
-                name: 'Іконки інтерфейсу',
-                desc: 'Редагувати іконки панелі інструментів, тек, міток, властивостей, закріплених, пошуку та сортування.',
-                buttonText: 'Редагувати іконки'
             },
             applyColorToIconsOnly: {
                 name: 'Застосовувати колір лише до іконок',

@@ -84,13 +84,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     startView: 'files',
     showInfoButtons: true,
 
-    // General tab - Homepage
-    homepage: {
-        source: 'none',
-        file: null,
-        createMissingPeriodicNote: true
-    },
-
     // General tab - Desktop appearance
     dualPane: true,
     dualPaneOrientation: 'horizontal',
@@ -129,7 +122,6 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     },
 
     // General tab - Icons
-    interfaceIcons: sanitizeRecord<string>(undefined),
     colorIconOnly: false,
 
     // General tab - Formatting

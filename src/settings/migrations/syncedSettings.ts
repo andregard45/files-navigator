@@ -127,23 +127,12 @@ export function migrateLegacySyncedSettings(params: {
     }
     delete mutableSettings['autoExpandFoldersTags'];
 
-    const hasStructuredHomepage =
-        typeof mutableSettings['homepage'] === 'object' &&
-        mutableSettings['homepage'] !== null &&
-        !Array.isArray(mutableSettings['homepage']);
-    const legacyHomepage = normalizeOptionalVaultFilePath(
-        typeof mutableSettings['homepage'] === 'string' ? mutableSettings['homepage'] : null
-    );
-
-    if (!hasStructuredHomepage) {
-        settings.homepage = {
-            source: legacyHomepage ? 'file' : 'none',
-            file: legacyHomepage,
-            createMissingPeriodicNote: defaultSettings.homepage.createMissingPeriodicNote
-        };
-    }
+    // Homepage feature removed: drop legacy keys so data.json stays clean.
+    delete mutableSettings['homepage'];
     delete mutableSettings['mobileHomepage'];
     delete mutableSettings['useMobileHomepage'];
+    // Interface icon customization removed: drop the legacy custom icon map.
+    delete mutableSettings['interfaceIcons'];
     delete mutableSettings['syncModes'];
 
     // The global default accepts the same property encodings as appearance overrides; whether the

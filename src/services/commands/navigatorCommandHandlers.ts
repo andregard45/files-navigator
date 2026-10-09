@@ -732,24 +732,6 @@ export default function registerNavigatorCommands(plugin: NotebookNavigatorPlugi
         });
     }
 
-    // Command to open the configured homepage file
-    plugin.addCommand({
-        id: 'open-homepage',
-        name: strings.commands.openHomepage,
-        checkCallback: (checking: boolean) => {
-            if (!plugin.canOpenHomepage()) {
-                return false;
-            }
-
-            if (!checking) {
-                // Execute homepage opening with error handling
-                runAsyncAction(() => plugin.openHomepage('command'));
-            }
-
-            return true;
-        }
-    });
-
     // Command to reveal the currently active file in the navigator
     plugin.addCommand({
         id: 'reveal-file',

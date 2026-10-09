@@ -68,9 +68,6 @@ export const STRINGS_KO = {
         shortcutsHeader: '바로가기',
         recentFilesHeader: '최근 파일', // Header label for recent files section in navigation pane (English: Recent files)
         properties: '속성',
-        folders: '폴더',
-        tags: '태그',
-        calendar: '달력',
         vaultRootLabel: '보관함',
         pinShortcuts: '바로가기를 고정',
         pinShortcutsAndRecentFiles: '바로가기와 최근 파일을 고정',
@@ -440,46 +437,6 @@ export const STRINGS_KO = {
         fileIconRuleEditor: {
             addRuleAria: '규칙 추가'
         },
-        interfaceIcons: {
-            title: '인터페이스 아이콘',
-            fileItemsSection: '파일 항목',
-            items: {
-                'nav-shortcuts': '바로가기',
-                'nav-recent-files': '최근 파일',
-                'nav-expand-all': '모두 펼치기',
-                'nav-collapse-all': '모두 접기',
-                'nav-calendar': '달력',
-                'nav-tree-expand': '트리 화살표: 펼치기',
-                'nav-tree-collapse': '트리 화살표: 접기',
-                'nav-hidden-items': '숨겨진 항목',
-                'nav-new-folder': '새 폴더',
-                'nav-show-single-pane': '단일 창 표시',
-                'nav-show-dual-pane': '이중 창 표시',
-                'nav-profile-chevron': '프로필 메뉴 화살표',
-                'list-search': '검색',
-                'list-reveal-file': '파일 표시',
-                'list-descendants': '하위 폴더의 노트',
-                'list-expand-all': '모든 그룹 펼치기',
-                'list-collapse-all': '모든 그룹 접기',
-                'list-sort-ascending': '정렬 순서: 오름차순',
-                'list-sort-descending': '정렬 순서: 내림차순',
-                'list-sort-modified': '수정 날짜로 정렬',
-                'list-sort-created': '생성 날짜로 정렬',
-                'list-sort-title': '제목으로 정렬',
-                'list-sort-filename': '파일 이름으로 정렬',
-                'list-sort-property': '속성으로 정렬',
-                'list-new-note': '새 노트',
-                'list-pinned': '고정된 노트',
-                'nav-folder-open': '열린 폴더',
-                'nav-folder-closed': '닫힌 폴더',
-                'nav-tags': '태그',
-                'nav-tag': '태그',
-                'nav-properties': '속성',
-                'nav-property': '속성',
-                'nav-property-value': '값',
-                'file-unfinished-task': '작업'
-            }
-        },
         colorPicker: {
             currentColor: '현재',
             newColor: '새 색상',
@@ -610,14 +567,6 @@ export const STRINGS_KO = {
                 navigate: '이동',
                 move: '이동',
                 select: '선택',
-                dismiss: '닫기'
-            }
-        },
-        homepage: {
-            placeholder: '파일 검색...',
-            instructions: {
-                navigate: '이동',
-                select: '홈페이지 설정',
                 dismiss: '닫기'
             }
         },
@@ -812,7 +761,6 @@ export const STRINGS_KO = {
     commands: {
         open: '열기', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: '왼쪽 사이드바 전환', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: '홈페이지 열기', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: '일일 노트 열기',
         openWeeklyNote: '주간 노트 열기',
         openMonthlyNote: '월간 노트 열기',
@@ -1628,29 +1576,6 @@ export const STRINGS_KO = {
                     all: '모두 (외부에서 열릴 수 있음)'
                 }
             },
-            homepage: {
-                name: '홈페이지',
-                desc: '시작 시 자동으로 열 대상을 선택합니다.',
-                current: '현재: {path}',
-                chooseButton: '파일 선택',
-                options: {
-                    none: '없음',
-                    file: '파일',
-                    dailyNote: '일일 노트',
-                    weeklyNote: '주간 노트',
-                    monthlyNote: '월간 노트',
-                    quarterlyNote: '분기 노트',
-                    yearlyNote: '연간 노트'
-                },
-                file: {
-                    name: '홈페이지: 시작 파일',
-                    empty: '선택된 파일 없음'
-                },
-                createMissing: {
-                    name: '홈페이지: 없으면 노트 생성',
-                    desc: '시작 시 또는 명령 실행 시 정기 노트가 없으면 생성합니다.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: '속성 규칙으로 노트 숨기기 (보관함 프로필)',
                 desc: '쉼표로 구분된 frontmatter 규칙 목록입니다. `key` 또는 `key=value` 항목을 사용합니다 (예: status=done, published=true, archived).',
@@ -1752,11 +1677,6 @@ export const STRINGS_KO = {
             showShortcutAndRecentItemIcons: {
                 name: '바로가기 및 최근 항목 아이콘 표시',
                 desc: '바로가기 및 최근 섹션의 항목 옆에 아이콘을 표시합니다.'
-            },
-            interfaceIcons: {
-                name: '인터페이스 아이콘',
-                desc: '도구 모음, 폴더, 태그, 속성, 고정 항목, 검색, 정렬 아이콘을 편집합니다.',
-                buttonText: '아이콘 편집'
             },
             applyColorToIconsOnly: {
                 name: '아이콘에만 색상 적용',

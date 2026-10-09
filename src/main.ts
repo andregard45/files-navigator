@@ -54,7 +54,6 @@ import { getLeafSplitLocation } from './utils/workspaceSplit';
 import { sanitizeRecord } from './utils/recordUtils';
 import { runAsyncAction } from './utils/async';
 import WorkspaceCoordinator from './services/workspace/WorkspaceCoordinator';
-import HomepageController from './services/workspace/HomepageController';
 import { FolderNoteSidebarService } from './services/workspace/FolderNoteSidebarService';
 import {
     disposeTemplateCommandButtons,
@@ -152,8 +151,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     private isHandlingExternalSettingsUpdate = false;
     // Coordinates workspace interactions with the navigator view
     private workspaceCoordinator: WorkspaceCoordinator | null = null;
-    // Handles homepage file opening and startup behavior
-    private homepageController: HomepageController | null = null;
     private folderNoteSidebarService: FolderNoteSidebarService | null = null;
     private settingTab: LazyNotebookNavigatorSettingTab | null = null;
     private hasWorkspaceLayoutReady = false;
@@ -593,9 +590,8 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
 
         this.recentNotesService = new RecentNotesService(this);
 
-        // Initialize workspace and homepage coordination
+        // Initialize workspace coordination
         this.workspaceCoordinator = new WorkspaceCoordinator(this);
-        this.homepageController = new HomepageController(this, this.workspaceCoordinator);
 
         // Initialize services
         this.tagTreeService = new TagTreeService();
@@ -688,10 +684,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
         // Register editor context menu
         registerWorkspaceEvents(this);
 
-        // Post-layout initialization
-        // Only auto-create the navigator view on first launch; upgrades restore existing leaves themselves
-        const shouldActivateOnStartup = isFirstLaunch;
-
         this.app.workspace.onLayoutReady(() => {
             this.hasWorkspaceLayoutReady = true;
             // Execute startup tasks asynchronously to avoid blocking the layout
@@ -700,7 +692,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
                     return;
                 }
 
-                await this.homepageController?.handleWorkspaceReady({ shouldActivateOnStartup });
                 await this.folderNoteSidebarService?.handleWorkspaceReady();
 
                 await this.languageService.ready;
@@ -1578,18 +1569,6 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      */
     async revealFileInNearestFolder(file: TFile, options?: RevealFileOptions) {
         this.workspaceCoordinator?.revealFileInNearestFolder(file, options);
-    }
-
-    public resolveHomepageFile(): TFile | null {
-        return this.homepageController?.resolveHomepageFile() ?? null;
-    }
-
-    public canOpenHomepage(): boolean {
-        return this.homepageController?.canOpenHomepage() ?? false;
-    }
-
-    public async openHomepage(trigger: 'startup' | 'command'): Promise<boolean> {
-        return this.homepageController?.open(trigger) ?? false;
     }
 
 }

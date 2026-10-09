@@ -225,11 +225,9 @@ describe('applyModifiedSettingsTransfer', () => {
 
     it('rejects invalid values for nullable string settings during import', () => {
         const nextSettings = applyModifiedSettingsTransfer(structuredClone(DEFAULT_SETTINGS), {
-            homepage: { bad: true },
             folderNoteTemplate: 123
         });
 
-        expect(nextSettings.homepage).toEqual(DEFAULT_SETTINGS.homepage);
         expect(nextSettings.folderNoteTemplate).toBeNull();
     });
 

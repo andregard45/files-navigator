@@ -16,14 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { ButtonComponent, Platform, Setting } from 'obsidian';
+import { Platform, Setting } from 'obsidian';
 import type { SettingDefinitionControl, SettingDefinitionGroup, SettingDefinitionItem, SettingDefinitionRender } from 'obsidian';
 import { MOMENT_FORMAT_DOCS_URL } from '../../constants/urls';
 import { strings } from '../../i18n';
-import { HomepageModal } from '../../modals/HomepageModal';
 import { MAX_PANE_TRANSITION_DURATION_MS, MIN_PANE_TRANSITION_DURATION_MS, PANE_TRANSITION_DURATION_STEP_MS } from '../../types';
 import { TIMEOUTS } from '../../types/obsidian-extended';
-import { runAsyncAction } from '../../utils/async';
 import { showNotice } from '../../utils/noticeUtils';
 import {
     DEFAULT_UI_SCALE,
@@ -42,8 +40,6 @@ import {
     createToggleControlDefinition
 } from '../nativeSettingControls';
 import {
-    isHomepageSource,
-    isPeriodicHomepageSource,
     NARROW_SIDEBAR_CUSTOM_WIDTH_DEFAULT,
     NARROW_SIDEBAR_CUSTOM_WIDTH_MAX,
     NARROW_SIDEBAR_CUSTOM_WIDTH_MIN,
@@ -133,31 +129,6 @@ function createStartupDefinitionGroup(context: SettingsTabContext): SettingDefin
                 navigation: strings.settings.items.defaultStartupView.options.navigation,
                 files: strings.settings.items.defaultStartupView.options.listPane
             }
-        }),
-        createRenderDefinition({
-            name: strings.settings.items.homepage.name,
-            desc: strings.settings.items.homepage.desc,
-            aliases: optionAliases(strings.settings.items.homepage.options),
-            render: setting => renderHomepageSetting(setting, context)
-        }),
-        createRenderDefinition({
-            name: strings.settings.items.homepage.file.name,
-            desc: strings.settings.items.homepage.file.empty,
-            aliases: [strings.settings.items.homepage.chooseButton, strings.common.clear],
-            visible: () => plugin.settings.homepage.source === 'file',
-            render: setting => renderHomepageFileSetting(setting, context)
-        }),
-        createRenderedToggleDefinition(context, {
-            name: strings.settings.items.homepage.createMissing.name,
-            desc: strings.settings.items.homepage.createMissing.desc,
-            getValue: () => plugin.settings.homepage.createMissingPeriodicNote,
-            setValue: value => {
-                plugin.settings.homepage = {
-                    ...plugin.settings.homepage,
-                    createMissingPeriodicNote: value
-                };
-            },
-            visible: () => isPeriodicHomepageSource(plugin.settings.homepage.source)
         })
     ]);
 }
@@ -390,39 +361,7 @@ function createViewDefinitionGroup(context: SettingsTabContext): SettingDefiniti
 }
 
 function createIconDefinitionGroup(context: SettingsTabContext): SettingDefinitionGroup {
-    const { plugin } = context;
-
     return createGroupDefinition(strings.settings.pages.appearanceAndBehavior.groups.icons, [
-        createRenderDefinition({
-            name: strings.settings.items.interfaceIcons.name,
-            desc: strings.settings.items.interfaceIcons.desc,
-            aliases: [strings.settings.items.interfaceIcons.buttonText],
-            render: setting => {
-                setting.setName(strings.settings.items.interfaceIcons.name).setDesc(strings.settings.items.interfaceIcons.desc);
-                setting.addButton(button => {
-                    button.setButtonText(strings.settings.items.interfaceIcons.buttonText).onClick(() => {
-                        runAsyncAction(async () => {
-                            const metadataService = plugin.metadataService;
-                            if (!metadataService) {
-                                showNotice(strings.common.unknownError, { variant: 'warning' });
-                                return;
-                            }
-
-                            const { UXIconMapModal } = await import('../../modals/UXIconMapModal');
-                            const modal = new UXIconMapModal(context.app, {
-                                metadataService,
-                                initialMap: plugin.settings.interfaceIcons,
-                                onSave: async nextMap => {
-                                    plugin.settings.interfaceIcons = nextMap;
-                                    await plugin.saveSettingsAndUpdate();
-                                }
-                            });
-                            modal.open();
-                        });
-                    });
-                });
-            }
-        }),
         createToggleDefinition('colorIconOnly', {
             name: strings.settings.items.applyColorToIconsOnly.name,
             desc: strings.settings.items.applyColorToIconsOnly.desc
@@ -528,96 +467,6 @@ function renderNarrowSidebarCustomWidthSetting(setting: Setting, context: Settin
 
 }
 
-function renderHomepageSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting
-        .setName(strings.settings.items.homepage.name)
-        .setDesc(strings.settings.items.homepage.desc)
-        .addDropdown(dropdown =>
-            dropdown
-                .addOption('none', strings.settings.items.homepage.options.none)
-                .addOption('file', strings.settings.items.homepage.options.file)
-                .addOption('daily-note', strings.settings.items.homepage.options.dailyNote)
-                .addOption('weekly-note', strings.settings.items.homepage.options.weeklyNote)
-                .addOption('monthly-note', strings.settings.items.homepage.options.monthlyNote)
-                .addOption('quarterly-note', strings.settings.items.homepage.options.quarterlyNote)
-                .addOption('yearly-note', strings.settings.items.homepage.options.yearlyNote)
-                .setValue(plugin.settings.homepage.source)
-                .onChange(async value => {
-                    if (!isHomepageSource(value)) {
-                        return;
-                    }
-
-                    plugin.settings.homepage = {
-                        ...plugin.settings.homepage,
-                        source: value
-                    };
-                    context.refreshSettingsDomState();
-                    await plugin.saveSettingsAndUpdate();
-                })
-        );
-
-}
-
-function renderHomepageFileSetting(setting: Setting, context: SettingsTabContext): void {
-    const { plugin } = context;
-
-    setting.setName(strings.settings.items.homepage.file.name);
-    setting.setDesc('');
-
-    const homepageFileDescEl = setting.descEl;
-    homepageFileDescEl.empty();
-    const homepageFileValueEl = homepageFileDescEl.createDiv();
-    let clearHomepageButton: ButtonComponent | null = null;
-
-    setting.addButton(button => {
-        button.setButtonText(strings.settings.items.homepage.chooseButton);
-        button.onClick(() => {
-            if (plugin.settings.homepage.source !== 'file') {
-                return;
-            }
-
-            new HomepageModal(context.app, file => {
-                plugin.settings.homepage = {
-                    ...plugin.settings.homepage,
-                    file: file.path
-                };
-                homepageFileValueEl.setText(strings.settings.items.homepage.current.replace('{path}', file.path));
-                clearHomepageButton?.setDisabled(false);
-                runAsyncAction(() => plugin.saveSettingsAndUpdate());
-            }).open();
-        });
-    });
-
-    setting.addButton(button => {
-        button.setButtonText(strings.common.clear);
-        clearHomepageButton = button;
-        button.setDisabled(!plugin.settings.homepage.file);
-        button.onClick(() => {
-            runAsyncAction(async () => {
-                if (plugin.settings.homepage.source !== 'file' || !plugin.settings.homepage.file) {
-                    return;
-                }
-
-                plugin.settings.homepage = {
-                    ...plugin.settings.homepage,
-                    file: null
-                };
-                homepageFileValueEl.setText(strings.settings.items.homepage.file.empty);
-                button.setDisabled(true);
-                await plugin.saveSettingsAndUpdate();
-            });
-        });
-    });
-
-    homepageFileValueEl.setText(
-        plugin.settings.homepage.file
-            ? strings.settings.items.homepage.current.replace('{path}', plugin.settings.homepage.file)
-            : strings.settings.items.homepage.file.empty
-    );
-}
-
 function renderDateFormatSetting(setting: Setting, context: SettingsTabContext): void {
     const { plugin, configureDebouncedTextSetting } = context;
 
@@ -670,31 +519,6 @@ function renderTimeFormatSetting(setting: Setting, context: SettingsTabContext):
             })
     );
     setting.controlEl.addClass('nn-setting-wide-input');
-}
-
-interface RenderedToggleOptions extends DefinitionOptions {
-    name: string;
-    desc: string;
-    getValue: () => boolean;
-    setValue: (value: boolean) => void;
-}
-
-function createRenderedToggleDefinition(context: SettingsTabContext, options: RenderedToggleOptions): SettingDefinitionRender {
-    return createRenderDefinition({
-        name: options.name,
-        desc: options.desc,
-        aliases: options.aliases,
-        visible: options.visible,
-        render: setting => {
-            setting.setName(options.name).setDesc(options.desc);
-            setting.addToggle(toggle =>
-                toggle.setValue(options.getValue()).onChange(async value => {
-                    options.setValue(value);
-                    await context.plugin.saveSettingsAndUpdate();
-                })
-            );
-        }
-    });
 }
 
 function createToggleDefinition(

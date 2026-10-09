@@ -69,9 +69,6 @@ export const STRINGS_IT = {
         shortcutsHeader: 'Scorciatoie', // Header label for shortcuts section in navigation pane (English: Shortcuts)
         recentFilesHeader: 'File recenti', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Proprietà',
-        folders: 'Cartelle',
-        tags: 'Etichette',
-        calendar: 'Calendario',
         vaultRootLabel: 'Vault',
         pinShortcuts: 'Fissa scorciatoie',
         pinShortcutsAndRecentFiles: 'Fissa scorciatoie e file recenti',
@@ -442,46 +439,6 @@ export const STRINGS_IT = {
         fileIconRuleEditor: {
             addRuleAria: 'Aggiungi regola'
         },
-        interfaceIcons: {
-            title: "Icone dell'interfaccia",
-            fileItemsSection: 'Elementi file',
-            items: {
-                'nav-shortcuts': 'Scorciatoie',
-                'nav-recent-files': 'File recenti',
-                'nav-expand-all': 'Espandi tutto',
-                'nav-collapse-all': 'Comprimi tutto',
-                'nav-calendar': 'Calendario',
-                'nav-tree-expand': 'Freccia albero: espandi',
-                'nav-tree-collapse': 'Freccia albero: comprimi',
-                'nav-hidden-items': 'Elementi nascosti',
-                'nav-new-folder': 'Nuova cartella',
-                'nav-show-single-pane': 'Mostra pannello singolo',
-                'nav-show-dual-pane': 'Mostra doppio pannello',
-                'nav-profile-chevron': 'Freccia menu profilo',
-                'list-search': 'Cerca',
-                'list-reveal-file': 'Mostra file',
-                'list-descendants': 'Note dalle sottocartelle',
-                'list-expand-all': 'Espandi tutti i gruppi',
-                'list-collapse-all': 'Comprimi tutti i gruppi',
-                'list-sort-ascending': 'Ordine: crescente',
-                'list-sort-descending': 'Ordine: decrescente',
-                'list-sort-modified': 'Ordina per data di modifica',
-                'list-sort-created': 'Ordina per data di creazione',
-                'list-sort-title': 'Ordina per titolo',
-                'list-sort-filename': 'Ordina per nome file',
-                'list-sort-property': 'Ordina per proprietà',
-                'list-new-note': 'Nuova nota',
-                'list-pinned': 'Note fissate',
-                'nav-folder-open': 'Cartella aperta',
-                'nav-folder-closed': 'Cartella chiusa',
-                'nav-tags': 'Etichette',
-                'nav-tag': 'Etichetta',
-                'nav-properties': 'Proprietà',
-                'nav-property': 'Proprietà',
-                'nav-property-value': 'Valore',
-                'file-unfinished-task': 'Attività'
-            }
-        },
         colorPicker: {
             currentColor: 'Attuale',
             newColor: 'Nuovo',
@@ -610,14 +567,6 @@ export const STRINGS_IT = {
                 navigate: 'per navigare',
                 move: 'per spostare',
                 select: 'per selezionare',
-                dismiss: 'per chiudere'
-            }
-        },
-        homepage: {
-            placeholder: 'Cerca file...',
-            instructions: {
-                navigate: 'per navigare',
-                select: 'per impostare homepage',
                 dismiss: 'per chiudere'
             }
         },
@@ -812,7 +761,6 @@ export const STRINGS_IT = {
     commands: {
         open: 'Apri', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Attiva/disattiva barra laterale sinistra', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'Apri homepage', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Apri nota giornaliera',
         openWeeklyNote: 'Apri nota settimanale',
         openMonthlyNote: 'Apri nota mensile',
@@ -1636,29 +1584,6 @@ export const STRINGS_IT = {
                     all: 'Tutti (potrebbero aprirsi esternamente)'
                 }
             },
-            homepage: {
-                name: 'Homepage',
-                desc: "Scegli cosa Notebook Navigator apre automaticamente all'avvio.",
-                current: 'Attuale: {path}',
-                chooseButton: 'Scegli file',
-                options: {
-                    none: 'Nessuno',
-                    file: 'File',
-                    dailyNote: 'Nota giornaliera',
-                    weeklyNote: 'Nota settimanale',
-                    monthlyNote: 'Nota mensile',
-                    quarterlyNote: 'Nota trimestrale',
-                    yearlyNote: 'Nota annuale'
-                },
-                file: {
-                    name: 'Homepage: File di avvio',
-                    empty: 'Nessun file selezionato'
-                },
-                createMissing: {
-                    name: 'Homepage: Crea nota se mancante',
-                    desc: "Crea la nota periodica all'avvio o tramite comando se non esiste."
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Nascondi note con regole di proprietà (profilo vault)',
                 desc: 'Lista di regole frontmatter separate da virgola. Usa voci `key` o `key=value` (es. status=done, published=true, archived).',
@@ -1760,11 +1685,6 @@ export const STRINGS_IT = {
             showShortcutAndRecentItemIcons: {
                 name: 'Mostra icone per scorciatoie e elementi recenti',
                 desc: 'Visualizza icone accanto agli elementi nelle sezioni Scorciatoie e Recenti.'
-            },
-            interfaceIcons: {
-                name: "Icone dell'interfaccia",
-                desc: 'Modifica icone di barra strumenti, cartelle, etichette, proprietà, elementi fissati, ricerca e ordinamento.',
-                buttonText: 'Modifica icone'
             },
             applyColorToIconsOnly: {
                 name: 'Applica colore solo alle icone',

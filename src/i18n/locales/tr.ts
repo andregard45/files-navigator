@@ -69,9 +69,6 @@ export const STRINGS_TR = {
         shortcutsHeader: 'Kısayollar', // Header label for shortcuts section in navigation pane (English: Shortcuts)
         recentFilesHeader: 'Son dosyalar', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Özellikler',
-        folders: 'Klasörler',
-        tags: 'Etiketler',
-        calendar: 'Takvim',
         vaultRootLabel: 'Kasa',
         pinShortcuts: 'Kısayolları sabitle',
         pinShortcutsAndRecentFiles: 'Kısayolları ve son dosyaları sabitle',
@@ -442,46 +439,6 @@ export const STRINGS_TR = {
         fileIconRuleEditor: {
             addRuleAria: 'Kural ekle'
         },
-        interfaceIcons: {
-            title: 'Arayüz simgeleri',
-            fileItemsSection: 'Dosya öğeleri',
-            items: {
-                'nav-shortcuts': 'Kısayollar',
-                'nav-recent-files': 'Son dosyalar',
-                'nav-expand-all': 'Tümünü genişlet',
-                'nav-collapse-all': 'Tümünü daralt',
-                'nav-calendar': 'Takvim',
-                'nav-tree-expand': 'Ağaç oku: genişlet',
-                'nav-tree-collapse': 'Ağaç oku: daralt',
-                'nav-hidden-items': 'Gizli öğeler',
-                'nav-new-folder': 'Yeni klasör',
-                'nav-show-single-pane': 'Tek bölme göster',
-                'nav-show-dual-pane': 'Çift bölme göster',
-                'nav-profile-chevron': 'Profil menüsü oku',
-                'list-search': 'Ara',
-                'list-reveal-file': 'Dosyayı göster',
-                'list-descendants': 'Alt klasörlerden notlar',
-                'list-expand-all': 'Tüm grupları genişlet',
-                'list-collapse-all': 'Tüm grupları daralt',
-                'list-sort-ascending': 'Sıralama: artan',
-                'list-sort-descending': 'Sıralama: azalan',
-                'list-sort-modified': 'Düzenlenme tarihine göre sırala',
-                'list-sort-created': 'Oluşturulma tarihine göre sırala',
-                'list-sort-title': 'Başlığa göre sırala',
-                'list-sort-filename': 'Dosya adına göre sırala',
-                'list-sort-property': 'Özelliğe göre sırala',
-                'list-new-note': 'Yeni not',
-                'list-pinned': 'Sabitlenmiş notlar',
-                'nav-folder-open': 'Klasör açık',
-                'nav-folder-closed': 'Klasör kapalı',
-                'nav-tags': 'Etiketler',
-                'nav-tag': 'Etiket',
-                'nav-properties': 'Özellikler',
-                'nav-property': 'Özellik',
-                'nav-property-value': 'Değer',
-                'file-unfinished-task': 'Görevler'
-            }
-        },
         colorPicker: {
             currentColor: 'Mevcut',
             newColor: 'Yeni',
@@ -612,14 +569,6 @@ export const STRINGS_TR = {
                 navigate: 'gezinmek için',
                 move: 'taşımak için',
                 select: 'seçmek için',
-                dismiss: 'kapatmak için'
-            }
-        },
-        homepage: {
-            placeholder: 'Dosya ara...',
-            instructions: {
-                navigate: 'gezinmek için',
-                select: 'ana sayfa olarak ayarlamak için',
                 dismiss: 'kapatmak için'
             }
         },
@@ -813,7 +762,6 @@ export const STRINGS_TR = {
     commands: {
         open: 'Aç', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Sol kenar çubuğunu aç/kapat', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'Ana sayfayı aç', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Günlük notu aç',
         openWeeklyNote: 'Haftalık notu aç',
         openMonthlyNote: 'Aylık notu aç',
@@ -1632,29 +1580,6 @@ export const STRINGS_TR = {
                     all: 'Tümü (harici olarak açılabilir)'
                 }
             },
-            homepage: {
-                name: 'Ana sayfa',
-                desc: "Notebook Navigator'ın başlangıçta otomatik olarak ne açacağını seçin.",
-                current: 'Mevcut: {path}',
-                chooseButton: 'Dosya seç',
-                options: {
-                    none: 'Yok',
-                    file: 'Dosya',
-                    dailyNote: 'Günlük not',
-                    weeklyNote: 'Haftalık not',
-                    monthlyNote: 'Aylık not',
-                    quarterlyNote: 'Çeyreklik not',
-                    yearlyNote: 'Yıllık not'
-                },
-                file: {
-                    name: 'Ana sayfa: Başlangıç dosyası',
-                    empty: 'Dosya seçilmedi'
-                },
-                createMissing: {
-                    name: 'Ana sayfa: Not yoksa oluştur',
-                    desc: 'Başlangıçta veya komutla, periyodik not yoksa oluşturur.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Özellik kurallarıyla notları gizle (kasa profili)',
                 desc: 'Virgülle ayrılmış frontmatter kuralları listesi. `key` veya `key=value` girdileri kullanın (örn. status=done, published=true, archived).',
@@ -1756,11 +1681,6 @@ export const STRINGS_TR = {
             showShortcutAndRecentItemIcons: {
                 name: 'Kısayollar ve son öğeler için simgeleri göster',
                 desc: 'Kısayollar ve Son kullanılanlar bölümlerindeki öğelerin yanında simgeleri görüntüle.'
-            },
-            interfaceIcons: {
-                name: 'Arayüz simgeleri',
-                desc: 'Araç çubuğu, klasör, etiket, özellik, sabitlenmiş, arama ve sıralama simgelerini düzenleyin.',
-                buttonText: 'Simgeleri düzenle'
             },
             applyColorToIconsOnly: {
                 name: 'Rengi yalnızca simgelere uygula',

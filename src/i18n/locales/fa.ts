@@ -69,9 +69,6 @@ export const STRINGS_FA = {
         shortcutsHeader: 'میانبرها',
         recentFilesHeader: 'فایل‌های اخیر', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'ویژگی‌ها',
-        folders: 'پوشه‌ها',
-        tags: 'برچسب‌ها',
-        calendar: 'تقویم',
         vaultRootLabel: 'خزانه',
         pinShortcuts: 'سنجاق کردن میانبرها',
         pinShortcutsAndRecentFiles: 'سنجاق کردن میانبرها و فایل‌های اخیر',
@@ -442,46 +439,6 @@ export const STRINGS_FA = {
         fileIconRuleEditor: {
             addRuleAria: 'افزودن قانون'
         },
-        interfaceIcons: {
-            title: 'آیکون‌های رابط کاربری',
-            fileItemsSection: 'آیتم‌های فایل',
-            items: {
-                'nav-shortcuts': 'میانبرها',
-                'nav-recent-files': 'فایل‌های اخیر',
-                'nav-expand-all': 'باز کردن همه',
-                'nav-collapse-all': 'بستن همه',
-                'nav-calendar': 'تقویم',
-                'nav-tree-expand': 'فلش درختی: باز کردن',
-                'nav-tree-collapse': 'فلش درختی: بستن',
-                'nav-hidden-items': 'آیتم‌های مخفی',
-                'nav-new-folder': 'پوشه جدید',
-                'nav-show-single-pane': 'نمایش پنل تکی',
-                'nav-show-dual-pane': 'نمایش پنل‌های دوگانه',
-                'nav-profile-chevron': 'فلش منوی پروفایل',
-                'list-search': 'جستجو',
-                'list-reveal-file': 'نمایش فایل',
-                'list-descendants': 'یادداشت‌ها از زیرپوشه‌ها',
-                'list-expand-all': 'باز کردن همه گروه‌ها',
-                'list-collapse-all': 'جمع کردن همه گروه‌ها',
-                'list-sort-ascending': 'ترتیب: صعودی',
-                'list-sort-descending': 'ترتیب: نزولی',
-                'list-sort-modified': 'مرتب‌سازی بر اساس تاریخ ویرایش',
-                'list-sort-created': 'مرتب‌سازی بر اساس تاریخ ایجاد',
-                'list-sort-title': 'مرتب‌سازی بر اساس عنوان',
-                'list-sort-filename': 'مرتب‌سازی بر اساس نام فایل',
-                'list-sort-property': 'مرتب‌سازی بر اساس ویژگی',
-                'list-new-note': 'یادداشت جدید',
-                'list-pinned': 'یادداشت‌های سنجاق‌شده',
-                'nav-folder-open': 'پوشه باز',
-                'nav-folder-closed': 'پوشه بسته',
-                'nav-tags': 'برچسب‌ها',
-                'nav-tag': 'برچسب',
-                'nav-properties': 'ویژگی‌ها',
-                'nav-property': 'ویژگی',
-                'nav-property-value': 'مقدار',
-                'file-unfinished-task': 'وظایف'
-            }
-        },
         colorPicker: {
             currentColor: 'فعلی',
             newColor: 'جدید',
@@ -613,14 +570,6 @@ export const STRINGS_FA = {
                 navigate: 'برای ناوبری',
                 move: 'برای انتقال',
                 select: 'برای انتخاب',
-                dismiss: 'برای بستن'
-            }
-        },
-        homepage: {
-            placeholder: 'جستجوی فایل...',
-            instructions: {
-                navigate: 'برای ناوبری',
-                select: 'برای تنظیم صفحه اصلی',
                 dismiss: 'برای بستن'
             }
         },
@@ -815,7 +764,6 @@ export const STRINGS_FA = {
     commands: {
         open: 'باز کردن',
         toggleLeftSidebar: 'تغییر نوار کناری چپ',
-        openHomepage: 'باز کردن صفحه اصلی',
         openDailyNote: 'باز کردن یادداشت روزانه',
         openWeeklyNote: 'باز کردن یادداشت هفتگی',
         openMonthlyNote: 'باز کردن یادداشت ماهانه',
@@ -1633,29 +1581,6 @@ export const STRINGS_FA = {
                     all: 'همه (ممکن است خارجی باز شود)'
                 }
             },
-            homepage: {
-                name: 'صفحه اصلی',
-                desc: 'انتخاب کنید Notebook Navigator هنگام راه‌اندازی چه چیزی را به طور خودکار باز کند.',
-                current: 'فعلی: {path}',
-                chooseButton: 'انتخاب فایل',
-                options: {
-                    none: 'هیچ',
-                    file: 'فایل',
-                    dailyNote: 'یادداشت روزانه',
-                    weeklyNote: 'یادداشت هفتگی',
-                    monthlyNote: 'یادداشت ماهانه',
-                    quarterlyNote: 'یادداشت فصلی',
-                    yearlyNote: 'یادداشت سالانه'
-                },
-                file: {
-                    name: 'صفحه اصلی: فایل راه‌اندازی',
-                    empty: 'فایلی انتخاب نشده'
-                },
-                createMissing: {
-                    name: 'صفحه اصلی: ایجاد یادداشت در صورت عدم وجود',
-                    desc: 'در صورت عدم وجود، یادداشت دوره‌ای را هنگام راه‌اندازی یا با فرمان ایجاد می‌کند.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'مخفی کردن یادداشت‌ها با قوانین ویژگی (پروفایل خزانه)',
                 desc: 'لیست قوانین فرانت‌متر جدا شده با کاما. از ورودی‌های `key` یا `key=value` استفاده کنید (مثل status=done, published=true, archived).',
@@ -1757,11 +1682,6 @@ export const STRINGS_FA = {
             showShortcutAndRecentItemIcons: {
                 name: 'نمایش آیکون برای میانبرها و آیتم‌های اخیر',
                 desc: 'آیکون‌ها را در کنار آیتم‌ها در بخش‌های میانبرها و اخیر نمایش دهید.'
-            },
-            interfaceIcons: {
-                name: 'آیکون‌های رابط کاربری',
-                desc: 'ویرایش آیکون‌های نوار ابزار، پوشه، برچسب، ویژگی، سنجاق شده، جستجو و مرتب‌سازی.',
-                buttonText: 'ویرایش آیکون‌ها'
             },
             applyColorToIconsOnly: {
                 name: 'اعمال رنگ فقط به آیکون‌ها',

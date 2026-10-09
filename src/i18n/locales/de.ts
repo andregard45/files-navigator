@@ -68,9 +68,6 @@ export const STRINGS_DE = {
         shortcutsHeader: 'Verknüpfungen',
         recentFilesHeader: 'Zuletzt verwendet', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Eigenschaften',
-        folders: 'Ordner',
-        tags: 'Tags',
-        calendar: 'Kalender',
         vaultRootLabel: 'Vault',
         pinShortcuts: 'Verknüpfungen anheften',
         pinShortcutsAndRecentFiles: 'Verknüpfungen und zuletzt verwendete Dateien anheften',
@@ -444,46 +441,6 @@ export const STRINGS_DE = {
         fileIconRuleEditor: {
             addRuleAria: 'Regel hinzufügen'
         },
-        interfaceIcons: {
-            title: 'Oberflächensymbole',
-            fileItemsSection: 'Datei-Elemente',
-            items: {
-                'nav-shortcuts': 'Verknüpfungen',
-                'nav-recent-files': 'Zuletzt verwendet',
-                'nav-expand-all': 'Alle ausklappen',
-                'nav-collapse-all': 'Alle einklappen',
-                'nav-calendar': 'Kalender',
-                'nav-tree-expand': 'Baumpfeil: ausklappen',
-                'nav-tree-collapse': 'Baumpfeil: einklappen',
-                'nav-hidden-items': 'Ausgeblendete Elemente',
-                'nav-new-folder': 'Neuer Ordner',
-                'nav-show-single-pane': 'Einspaltige Ansicht anzeigen',
-                'nav-show-dual-pane': 'Zweispaltige Ansicht anzeigen',
-                'nav-profile-chevron': 'Profilmenü-Pfeil',
-                'list-search': 'Suche',
-                'list-reveal-file': 'Datei anzeigen',
-                'list-descendants': 'Notizen aus Unterordnern',
-                'list-expand-all': 'Alle Gruppen ausklappen',
-                'list-collapse-all': 'Alle Gruppen einklappen',
-                'list-sort-ascending': 'Sortierung: aufsteigend',
-                'list-sort-descending': 'Sortierung: absteigend',
-                'list-sort-modified': 'Nach Änderungsdatum sortieren',
-                'list-sort-created': 'Nach Erstellungsdatum sortieren',
-                'list-sort-title': 'Nach Titel sortieren',
-                'list-sort-filename': 'Nach Dateiname sortieren',
-                'list-sort-property': 'Nach Eigenschaft sortieren',
-                'list-new-note': 'Neue Notiz',
-                'list-pinned': 'Angeheftete Notizen',
-                'nav-folder-open': 'Ordner geöffnet',
-                'nav-folder-closed': 'Ordner geschlossen',
-                'nav-tags': 'Tags',
-                'nav-tag': 'Tag',
-                'nav-properties': 'Eigenschaften',
-                'nav-property': 'Eigenschaft',
-                'nav-property-value': 'Wert',
-                'file-unfinished-task': 'Aufgaben'
-            }
-        },
         colorPicker: {
             currentColor: 'Aktuell',
             newColor: 'Neu',
@@ -614,14 +571,6 @@ export const STRINGS_DE = {
                 navigate: 'zum Navigieren',
                 move: 'zum Verschieben',
                 select: 'zum Auswählen',
-                dismiss: 'zum Abbrechen'
-            }
-        },
-        homepage: {
-            placeholder: 'Dateien durchsuchen...',
-            instructions: {
-                navigate: 'zum Navigieren',
-                select: 'als Startseite setzen',
                 dismiss: 'zum Abbrechen'
             }
         },
@@ -818,7 +767,6 @@ export const STRINGS_DE = {
     commands: {
         open: 'Öffnen', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Linke Seitenleiste umschalten', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'Startseite öffnen', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Tägliche Notiz öffnen',
         openWeeklyNote: 'Wöchentliche Notiz öffnen',
         openMonthlyNote: 'Monatliche Notiz öffnen',
@@ -1692,29 +1640,6 @@ export const STRINGS_DE = {
                     all: 'Alle (öffnet ggf. extern)'
                 }
             },
-            homepage: {
-                name: 'Startseite',
-                desc: 'Wähle, was Notebook Navigator beim Start automatisch öffnet.',
-                current: 'Aktuell: {path}',
-                chooseButton: 'Datei auswählen',
-                options: {
-                    none: 'Keine',
-                    file: 'Datei',
-                    dailyNote: 'Tagesnotiz',
-                    weeklyNote: 'Wochennotiz',
-                    monthlyNote: 'Monatsnotiz',
-                    quarterlyNote: 'Quartalsnotiz',
-                    yearlyNote: 'Jahresnotiz'
-                },
-                file: {
-                    name: 'Startseite: Startdatei',
-                    empty: 'Keine Datei ausgewählt'
-                },
-                createMissing: {
-                    name: 'Startseite: Notiz erstellen, falls nicht vorhanden',
-                    desc: 'Erstellt die periodische Notiz beim Start oder per Befehl, falls sie nicht existiert.'
-                }
-            },
             propertyKeys: {
                 name: 'Eigenschaftsschlüssel (Vault-Profil)',
                 desc: 'Frontmatter-Eigenschaftsschlüssel mit schlüsselweiser Sichtbarkeit für Navigation und Dateiliste.',
@@ -1766,11 +1691,6 @@ export const STRINGS_DE = {
             showShortcutAndRecentItemIcons: {
                 name: 'Symbole für Verknüpfungen und zuletzt verwendete Elemente anzeigen',
                 desc: 'Symbole neben Einträgen in den Bereichen Verknüpfungen und Zuletzt verwendet anzeigen.'
-            },
-            interfaceIcons: {
-                name: 'Oberflächensymbole',
-                desc: 'Symbole für Symbolleiste, Ordner, Tags, Eigenschaften, angeheftete Elemente, Suche und Sortierung bearbeiten.',
-                buttonText: 'Symbole bearbeiten'
             },
             applyColorToIconsOnly: {
                 name: 'Farbe nur auf Symbole anwenden',

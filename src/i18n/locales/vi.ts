@@ -69,9 +69,6 @@ export const STRINGS_VI = {
         shortcutsHeader: 'Lối tắt', // Header label for shortcuts section in navigation pane (English: Shortcuts)
         recentFilesHeader: 'Tệp gần đây', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Thuộc tính',
-        folders: 'Thư mục',
-        tags: 'Thẻ',
-        calendar: 'Lịch',
         vaultRootLabel: 'Vault',
         pinShortcuts: 'Ghim lối tắt',
         pinShortcutsAndRecentFiles: 'Ghim lối tắt và tệp gần đây',
@@ -442,46 +439,6 @@ export const STRINGS_VI = {
         fileIconRuleEditor: {
             addRuleAria: 'Thêm quy tắc'
         },
-        interfaceIcons: {
-            title: 'Biểu tượng giao diện',
-            fileItemsSection: 'Mục tệp',
-            items: {
-                'nav-shortcuts': 'Lối tắt',
-                'nav-recent-files': 'Tệp gần đây',
-                'nav-expand-all': 'Mở rộng tất cả',
-                'nav-collapse-all': 'Thu gọn tất cả',
-                'nav-calendar': 'Lịch',
-                'nav-tree-expand': 'Mũi tên cây: mở rộng',
-                'nav-tree-collapse': 'Mũi tên cây: thu gọn',
-                'nav-hidden-items': 'Mục ẩn',
-                'nav-new-folder': 'Thư mục mới',
-                'nav-show-single-pane': 'Hiện một ngăn',
-                'nav-show-dual-pane': 'Hiện hai ngăn',
-                'nav-profile-chevron': 'Mũi tên menu hồ sơ',
-                'list-search': 'Tìm kiếm',
-                'list-reveal-file': 'Hiện tệp',
-                'list-descendants': 'Ghi chú từ thư mục con',
-                'list-expand-all': 'Mở rộng tất cả nhóm',
-                'list-collapse-all': 'Thu gọn tất cả nhóm',
-                'list-sort-ascending': 'Thứ tự: tăng dần',
-                'list-sort-descending': 'Thứ tự: giảm dần',
-                'list-sort-modified': 'Sắp xếp theo ngày chỉnh sửa',
-                'list-sort-created': 'Sắp xếp theo ngày tạo',
-                'list-sort-title': 'Sắp xếp theo tiêu đề',
-                'list-sort-filename': 'Sắp xếp theo tên tệp',
-                'list-sort-property': 'Sắp xếp theo thuộc tính',
-                'list-new-note': 'Ghi chú mới',
-                'list-pinned': 'Ghi chú đã ghim',
-                'nav-folder-open': 'Thư mục mở',
-                'nav-folder-closed': 'Thư mục đóng',
-                'nav-tags': 'Thẻ',
-                'nav-tag': 'Thẻ',
-                'nav-properties': 'Thuộc tính',
-                'nav-property': 'Thuộc tính',
-                'nav-property-value': 'Giá trị',
-                'file-unfinished-task': 'Nhiệm vụ'
-            }
-        },
         colorPicker: {
             currentColor: 'Hiện tại',
             newColor: 'Mới',
@@ -612,14 +569,6 @@ export const STRINGS_VI = {
                 navigate: 'để điều hướng',
                 move: 'để di chuyển',
                 select: 'để chọn',
-                dismiss: 'để đóng'
-            }
-        },
-        homepage: {
-            placeholder: 'Tìm tệp...',
-            instructions: {
-                navigate: 'để điều hướng',
-                select: 'để đặt trang chủ',
                 dismiss: 'để đóng'
             }
         },
@@ -814,7 +763,6 @@ export const STRINGS_VI = {
     commands: {
         open: 'Mở', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Bật/tắt thanh bên trái', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'Mở trang chủ', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Mở ghi chú hàng ngày',
         openWeeklyNote: 'Mở ghi chú hàng tuần',
         openMonthlyNote: 'Mở ghi chú hàng tháng',
@@ -1632,29 +1580,6 @@ export const STRINGS_VI = {
                     all: 'Tất cả (có thể mở ngoài)'
                 }
             },
-            homepage: {
-                name: 'Trang chủ',
-                desc: 'Chọn nội dung Notebook Navigator mở tự động khi khởi động.',
-                current: 'Hiện tại: {path}',
-                chooseButton: 'Chọn tệp',
-                options: {
-                    none: 'Không',
-                    file: 'Tệp',
-                    dailyNote: 'Ghi chú hàng ngày',
-                    weeklyNote: 'Ghi chú hàng tuần',
-                    monthlyNote: 'Ghi chú hàng tháng',
-                    quarterlyNote: 'Ghi chú hàng quý',
-                    yearlyNote: 'Ghi chú hàng năm'
-                },
-                file: {
-                    name: 'Trang chủ: Tệp khởi động',
-                    empty: 'Chưa chọn tệp'
-                },
-                createMissing: {
-                    name: 'Trang chủ: Tạo ghi chú nếu thiếu',
-                    desc: 'Tạo ghi chú định kỳ khi khởi động hoặc qua lệnh nếu chưa tồn tại.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Ẩn ghi chú theo quy tắc thuộc tính (hồ sơ vault)',
                 desc: 'Danh sách quy tắc frontmatter phân cách bằng dấu phẩy. Sử dụng mục `key` hoặc `key=value` (ví dụ: status=done, published=true, archived).',
@@ -1756,11 +1681,6 @@ export const STRINGS_VI = {
             showShortcutAndRecentItemIcons: {
                 name: 'Hiện biểu tượng cho lối tắt và mục gần đây',
                 desc: 'Hiển thị biểu tượng bên cạnh các mục trong phần Lối tắt và Gần đây.'
-            },
-            interfaceIcons: {
-                name: 'Biểu tượng giao diện',
-                desc: 'Chỉnh sửa biểu tượng thanh công cụ, thư mục, thẻ, thuộc tính, đã ghim, tìm kiếm và sắp xếp.',
-                buttonText: 'Chỉnh sửa biểu tượng'
             },
             applyColorToIconsOnly: {
                 name: 'Chỉ áp dụng màu cho biểu tượng',

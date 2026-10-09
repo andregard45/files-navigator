@@ -16,8 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { deserializeIconFromFrontmatter, normalizeCanonicalIconId, serializeIconForFrontmatter } from './iconizeFormat';
-import { sanitizeRecord } from './recordUtils';
+import { normalizeCanonicalIconId } from './iconizeFormat';
 
 export type UXIconId =
     | 'nav-show-single-pane'
@@ -100,8 +99,6 @@ export const UX_ICON_DEFINITIONS: UXIconDefinition[] = [
     { id: 'nav-calendar', category: 'calendar', defaultIconId: 'calendar-days' }
 ];
 
-const UX_ICON_ID_SET: ReadonlySet<string> = new Set(UX_ICON_DEFINITIONS.map(definition => definition.id));
-
 const UX_ICON_DEFAULT_CANONICAL: Record<UXIconId, string> = (() => {
     const defaults = Object.create(null) as Record<UXIconId, string>;
     UX_ICON_DEFINITIONS.forEach(definition => {
@@ -110,67 +107,35 @@ const UX_ICON_DEFAULT_CANONICAL: Record<UXIconId, string> = (() => {
     return defaults;
 })();
 
-function isUXIconId(value: string): value is UXIconId {
-    return UX_ICON_ID_SET.has(value);
-}
-
-function normalizeUXIconKey(key: string): UXIconId | null {
-    if (isUXIconId(key)) {
-        return key;
-    }
-
-    switch (key) {
-        case 'folder-open':
-            return 'nav-folder-open';
-        case 'folder-closed':
-            return 'nav-folder-closed';
-        case 'tag':
-            return 'nav-tag';
-        case 'recent-files':
-            return 'nav-recent-files';
-        case 'list-sort':
-            return 'list-sort-ascending';
-        default:
-            return null;
-    }
-}
-
-export function resolveUXIcon(uxIconMap: Record<string, string> | undefined, iconId: UXIconId): string {
-    const stored = uxIconMap?.[iconId];
-    if (stored) {
-        const canonical = deserializeIconFromFrontmatter(stored);
-        if (canonical) {
-            return normalizeCanonicalIconId(canonical);
-        }
-    }
-
+/**
+ * Resolves an interface icon id. Custom icon mapping was removed: the UI always
+ * renders the built-in Lucide/Obsidian default. The first parameter is accepted
+ * for call-site compatibility only and is intentionally ignored.
+ */
+export function resolveUXIcon(_unusedIconMap: unknown, iconId: UXIconId): string {
     return UX_ICON_DEFAULT_CANONICAL[iconId];
 }
 
 export function resolveNavigationFolderIcon(params: {
-    interfaceIcons: Record<string, string> | undefined;
+    interfaceIcons?: Record<string, string> | undefined;
     customIcon?: string | null;
     isRoot: boolean;
     hasChildren: boolean;
     isExpanded: boolean;
 }): string {
-    const { interfaceIcons, customIcon, isRoot, hasChildren, isExpanded } = params;
+    const { customIcon, isRoot, hasChildren, isExpanded } = params;
     if (customIcon) {
         return customIcon;
     }
 
     if (isRoot) {
-        // A configured vault icon remains stable; otherwise the built-in icon reflects the root expansion state.
-        return interfaceIcons?.['nav-folder-root']
-            ? resolveUXIcon(interfaceIcons, 'nav-folder-root')
-            : hasChildren && isExpanded
-              ? 'open-vault'
-              : 'vault';
+        // The built-in root icon reflects the expansion state.
+        return hasChildren && isExpanded ? 'open-vault' : 'vault';
     }
 
     return hasChildren && isExpanded
-        ? resolveUXIcon(interfaceIcons, 'nav-folder-open')
-        : resolveUXIcon(interfaceIcons, 'nav-folder-closed');
+        ? resolveUXIcon(undefined, 'nav-folder-open')
+        : resolveUXIcon(undefined, 'nav-folder-closed');
 }
 
 function tryResolveLucideMenuIconId(iconId: string): string | null {
@@ -211,52 +176,12 @@ export function resolveIconForMenu(iconId: string | null | undefined): string | 
 }
 
 export function resolveUXIconForMenu(
-    uxIconMap: Record<string, string> | undefined,
+    _unusedIconMap: unknown,
     iconId: UXIconId,
     fallbackLucideMenuIconId?: string
 ): string {
-    const resolved = resolveUXIcon(uxIconMap, iconId);
+    const resolved = resolveUXIcon(undefined, iconId);
     return (
         resolveIconForMenu(resolved) ?? fallbackLucideMenuIconId ?? resolveIconForMenu(UX_ICON_DEFAULT_CANONICAL[iconId]) ?? 'lucide-circle'
     );
-}
-
-export function normalizeUXIconMapRecord(uxIconMap: Record<string, string> | undefined): Record<string, string> {
-    const normalized = sanitizeRecord<string>(undefined);
-
-    if (!uxIconMap) {
-        return normalized;
-    }
-
-    Object.entries(uxIconMap).forEach(([key, value]) => {
-        const normalizedKey = normalizeUXIconKey(key);
-        if (!normalizedKey || typeof value !== 'string') {
-            return;
-        }
-
-        const trimmed = value.trim();
-        if (!trimmed) {
-            return;
-        }
-
-        const canonical = deserializeIconFromFrontmatter(trimmed);
-        if (!canonical) {
-            return;
-        }
-
-        const normalizedCanonical = normalizeCanonicalIconId(canonical);
-        const defaultCanonical = UX_ICON_DEFAULT_CANONICAL[normalizedKey];
-        if (normalizedCanonical === defaultCanonical) {
-            return;
-        }
-
-        const serialized = serializeIconForFrontmatter(normalizedCanonical);
-        if (!serialized) {
-            return;
-        }
-
-        normalized[normalizedKey] = serialized;
-    });
-
-    return normalized;
 }
