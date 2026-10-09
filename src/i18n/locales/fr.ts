@@ -68,9 +68,6 @@ export const STRINGS_FR = {
         shortcutsHeader: 'Raccourcis',
         recentFilesHeader: 'Fichiers récents', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Propriétés',
-        folders: 'Dossiers',
-        tags: 'Mots-clés',
-        calendar: 'Calendrier',
         vaultRootLabel: 'Coffre',
         pinShortcuts: 'Épingler les raccourcis',
         pinShortcutsAndRecentFiles: 'Épingler les raccourcis et fichiers récents',
@@ -445,46 +442,6 @@ export const STRINGS_FR = {
         fileIconRuleEditor: {
             addRuleAria: 'Ajouter une règle'
         },
-        interfaceIcons: {
-            title: "Icônes de l'interface",
-            fileItemsSection: 'Éléments de fichier',
-            items: {
-                'nav-shortcuts': 'Raccourcis',
-                'nav-recent-files': 'Fichiers récents',
-                'nav-expand-all': 'Tout déplier',
-                'nav-collapse-all': 'Tout replier',
-                'nav-calendar': 'Calendrier',
-                'nav-tree-expand': "Chevron d'arbre : déplier",
-                'nav-tree-collapse': "Chevron d'arbre : replier",
-                'nav-hidden-items': 'Éléments cachés',
-                'nav-new-folder': 'Nouveau dossier',
-                'nav-show-single-pane': 'Afficher le panneau unique',
-                'nav-show-dual-pane': 'Afficher les panneaux doubles',
-                'nav-profile-chevron': 'Chevron du menu profil',
-                'list-search': 'Recherche',
-                'list-reveal-file': 'Révéler le fichier',
-                'list-descendants': 'Notes des sous-dossiers',
-                'list-expand-all': 'Déplier tous les groupes',
-                'list-collapse-all': 'Replier tous les groupes',
-                'list-sort-ascending': 'Ordre de tri : croissant',
-                'list-sort-descending': 'Ordre de tri : décroissant',
-                'list-sort-modified': 'Trier par date de modification',
-                'list-sort-created': 'Trier par date de création',
-                'list-sort-title': 'Trier par titre',
-                'list-sort-filename': 'Trier par nom de fichier',
-                'list-sort-property': 'Trier par propriété',
-                'list-new-note': 'Nouvelle note',
-                'list-pinned': 'Notes épinglées',
-                'nav-folder-open': 'Dossier ouvert',
-                'nav-folder-closed': 'Dossier fermé',
-                'nav-tags': 'Mots-clés',
-                'nav-tag': 'Mot-clé',
-                'nav-properties': 'Propriétés',
-                'nav-property': 'Propriété',
-                'nav-property-value': 'Valeur',
-                'file-unfinished-task': 'Tâches'
-            }
-        },
         colorPicker: {
             currentColor: 'Actuelle',
             newColor: 'Nouvelle',
@@ -616,14 +573,6 @@ export const STRINGS_FR = {
                 navigate: 'pour naviguer',
                 move: 'pour déplacer',
                 select: 'pour sélectionner',
-                dismiss: 'pour annuler'
-            }
-        },
-        homepage: {
-            placeholder: 'Rechercher des fichiers...',
-            instructions: {
-                navigate: 'pour naviguer',
-                select: 'pour définir la page d’accueil',
                 dismiss: 'pour annuler'
             }
         },
@@ -819,7 +768,6 @@ export const STRINGS_FR = {
     commands: {
         open: 'Ouvrir', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Basculer la barre latérale gauche', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: "Ouvrir la page d'accueil", // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Ouvrir la note quotidienne',
         openWeeklyNote: 'Ouvrir la note hebdomadaire',
         openMonthlyNote: 'Ouvrir la note mensuelle',
@@ -1693,29 +1641,6 @@ export const STRINGS_FR = {
                     all: "Tous (peuvent s'ouvrir en externe)"
                 }
             },
-            homepage: {
-                name: 'Page d’accueil',
-                desc: 'Choisissez ce que Notebook Navigator ouvre automatiquement au démarrage.',
-                current: 'Actuel : {path}',
-                chooseButton: 'Choisir un fichier',
-                options: {
-                    none: 'Aucun',
-                    file: 'Fichier',
-                    dailyNote: 'Note quotidienne',
-                    weeklyNote: 'Note hebdomadaire',
-                    monthlyNote: 'Note mensuelle',
-                    quarterlyNote: 'Note trimestrielle',
-                    yearlyNote: 'Note annuelle'
-                },
-                file: {
-                    name: 'Page d’accueil : Fichier de démarrage',
-                    empty: 'Aucun fichier sélectionné'
-                },
-                createMissing: {
-                    name: 'Page d’accueil : Créer la note si absente',
-                    desc: "Crée la note périodique au démarrage ou via la commande si elle n'existe pas."
-                }
-            },
             propertyKeys: {
                 name: 'Clés de propriétés (profil du coffre)',
                 desc: 'Clés de propriétés frontmatter, avec visibilité par clé pour la navigation et la liste de fichiers.',
@@ -1767,11 +1692,6 @@ export const STRINGS_FR = {
             showShortcutAndRecentItemIcons: {
                 name: 'Afficher les icônes pour les raccourcis et les éléments récents',
                 desc: 'Afficher les icônes à côté des éléments dans les sections Raccourcis et Récents.'
-            },
-            interfaceIcons: {
-                name: "Icônes de l'interface",
-                desc: "Modifier les icônes de barre d'outils, dossiers, mots-clés, propriétés, éléments épinglés, recherche et tri.",
-                buttonText: 'Modifier les icônes'
             },
             applyColorToIconsOnly: {
                 name: 'Appliquer la couleur uniquement aux icônes',

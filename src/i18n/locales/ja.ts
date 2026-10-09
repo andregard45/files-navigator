@@ -68,9 +68,6 @@ export const STRINGS_JA = {
         shortcutsHeader: 'ショートカット',
         recentFilesHeader: '最近のファイル', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'プロパティ',
-        folders: 'フォルダ',
-        tags: 'タグ',
-        calendar: 'カレンダー',
         vaultRootLabel: '保管庫',
         pinShortcuts: 'ショートカットを固定',
         pinShortcutsAndRecentFiles: 'ショートカットと最近のファイルを固定',
@@ -444,46 +441,6 @@ export const STRINGS_JA = {
         fileIconRuleEditor: {
             addRuleAria: 'ルールを追加'
         },
-        interfaceIcons: {
-            title: 'インターフェースアイコン',
-            fileItemsSection: 'ファイル項目',
-            items: {
-                'nav-shortcuts': 'ショートカット',
-                'nav-recent-files': '最近のファイル',
-                'nav-expand-all': 'すべて展開',
-                'nav-collapse-all': 'すべて折りたたむ',
-                'nav-calendar': 'カレンダー',
-                'nav-tree-expand': 'ツリー矢印: 展開',
-                'nav-tree-collapse': 'ツリー矢印: 折りたたみ',
-                'nav-hidden-items': '非表示項目',
-                'nav-new-folder': '新規フォルダ',
-                'nav-show-single-pane': 'シングルペインを表示',
-                'nav-show-dual-pane': 'デュアルペインを表示',
-                'nav-profile-chevron': 'プロファイルメニュー矢印',
-                'list-search': '検索',
-                'list-reveal-file': 'ファイルを表示',
-                'list-descendants': 'サブフォルダからのノート',
-                'list-expand-all': 'すべてのグループを展開',
-                'list-collapse-all': 'すべてのグループを折りたたむ',
-                'list-sort-ascending': '並べ替え: 昇順',
-                'list-sort-descending': '並べ替え: 降順',
-                'list-sort-modified': '更新日時で並べ替え',
-                'list-sort-created': '作成日時で並べ替え',
-                'list-sort-title': 'タイトルで並べ替え',
-                'list-sort-filename': 'ファイル名で並べ替え',
-                'list-sort-property': 'プロパティで並べ替え',
-                'list-new-note': '新規ノート',
-                'list-pinned': 'ピン留めされたノート',
-                'nav-folder-open': 'フォルダ（開）',
-                'nav-folder-closed': 'フォルダ（閉）',
-                'nav-tags': 'タグ',
-                'nav-tag': 'タグ',
-                'nav-properties': 'プロパティ',
-                'nav-property': 'プロパティ',
-                'nav-property-value': '値',
-                'file-unfinished-task': 'タスク'
-            }
-        },
         colorPicker: {
             currentColor: '現在',
             newColor: '新規',
@@ -613,14 +570,6 @@ export const STRINGS_JA = {
                 navigate: 'でナビゲート',
                 move: 'で移動',
                 select: 'で選択',
-                dismiss: 'でキャンセル'
-            }
-        },
-        homepage: {
-            placeholder: 'ファイルを検索...',
-            instructions: {
-                navigate: 'でナビゲート',
-                select: 'でホームページを設定',
                 dismiss: 'でキャンセル'
             }
         },
@@ -816,7 +765,6 @@ export const STRINGS_JA = {
     commands: {
         open: '開く', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: '左サイドバーの切り替え', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'ホームページを開く', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'デイリーノートを開く',
         openWeeklyNote: 'ウィークリーノートを開く',
         openMonthlyNote: 'マンスリーノートを開く',
@@ -1683,29 +1631,6 @@ export const STRINGS_JA = {
                     all: 'すべて (外部で開く場合あり)'
                 }
             },
-            homepage: {
-                name: 'ホームページ',
-                desc: '起動時に Notebook Navigator が自動で開く対象を選択します。',
-                current: '現在: {path}',
-                chooseButton: 'ファイルを選択',
-                options: {
-                    none: 'なし',
-                    file: 'ファイル',
-                    dailyNote: 'デイリーノート',
-                    weeklyNote: 'ウィークリーノート',
-                    monthlyNote: 'マンスリーノート',
-                    quarterlyNote: '四半期ノート',
-                    yearlyNote: '年次ノート'
-                },
-                file: {
-                    name: 'ホームページ: 起動ファイル',
-                    empty: 'ファイルが選択されていません'
-                },
-                createMissing: {
-                    name: 'ホームページ: ノートが存在しない場合に作成',
-                    desc: '起動時またはコマンド実行時に、定期ノートが存在しなければ作成します。'
-                }
-            },
             propertyKeys: {
                 name: 'プロパティキー（保管庫プロファイル）',
                 desc: 'フロントマターのプロパティキー。キーごとにナビゲーションとファイルリストの表示を設定できます。',
@@ -1757,11 +1682,6 @@ export const STRINGS_JA = {
             showShortcutAndRecentItemIcons: {
                 name: 'ショートカットと最近の項目のアイコンを表示',
                 desc: 'ショートカットと最近使用したファイルセクション内の項目の横にアイコンを表示します。'
-            },
-            interfaceIcons: {
-                name: 'インターフェースアイコン',
-                desc: 'ツールバー、フォルダ、タグ、プロパティ、ピン留め、検索、並べ替えのアイコンを編集します。',
-                buttonText: 'アイコンを編集'
             },
             applyColorToIconsOnly: {
                 name: 'アイコンのみに色を適用',

@@ -69,9 +69,6 @@ export const STRINGS_RU = {
         shortcutsHeader: 'Ярлыки', // Header label for shortcuts section in navigation pane (English: Shortcuts)
         recentFilesHeader: 'Недавние файлы', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Свойства',
-        folders: 'Папки',
-        tags: 'Теги',
-        calendar: 'Календарь',
         vaultRootLabel: 'Хранилище',
         pinShortcuts: 'Закрепить ярлыки',
         pinShortcutsAndRecentFiles: 'Закрепить ярлыки и недавние файлы',
@@ -443,46 +440,6 @@ export const STRINGS_RU = {
         fileIconRuleEditor: {
             addRuleAria: 'Добавить правило'
         },
-        interfaceIcons: {
-            title: 'Иконки интерфейса',
-            fileItemsSection: 'Элементы файла',
-            items: {
-                'nav-shortcuts': 'Ярлыки',
-                'nav-recent-files': 'Недавние файлы',
-                'nav-expand-all': 'Развернуть все',
-                'nav-collapse-all': 'Свернуть все',
-                'nav-calendar': 'Календарь',
-                'nav-tree-expand': 'Стрелка дерева: развернуть',
-                'nav-tree-collapse': 'Стрелка дерева: свернуть',
-                'nav-hidden-items': 'Скрытые элементы',
-                'nav-new-folder': 'Новая папка',
-                'nav-show-single-pane': 'Показать одну панель',
-                'nav-show-dual-pane': 'Показать двойную панель',
-                'nav-profile-chevron': 'Стрелка меню профиля',
-                'list-search': 'Поиск',
-                'list-reveal-file': 'Показать файл',
-                'list-descendants': 'Заметки из подпапок',
-                'list-expand-all': 'Развернуть все группы',
-                'list-collapse-all': 'Свернуть все группы',
-                'list-sort-ascending': 'Порядок сортировки: по возрастанию',
-                'list-sort-descending': 'Порядок сортировки: по убыванию',
-                'list-sort-modified': 'Сортировать по дате изменения',
-                'list-sort-created': 'Сортировать по дате создания',
-                'list-sort-title': 'Сортировать по заголовку',
-                'list-sort-filename': 'Сортировать по имени файла',
-                'list-sort-property': 'Сортировать по свойству',
-                'list-new-note': 'Новая заметка',
-                'list-pinned': 'Закреплённые заметки',
-                'nav-folder-open': 'Папка открыта',
-                'nav-folder-closed': 'Папка закрыта',
-                'nav-tags': 'Теги',
-                'nav-tag': 'Тег',
-                'nav-properties': 'Свойства',
-                'nav-property': 'Свойство',
-                'nav-property-value': 'Значение',
-                'file-unfinished-task': 'Задачи'
-            }
-        },
         colorPicker: {
             currentColor: 'Текущий',
             newColor: 'Новый',
@@ -611,14 +568,6 @@ export const STRINGS_RU = {
                 navigate: 'для навигации',
                 move: 'для перемещения',
                 select: 'для выбора',
-                dismiss: 'для закрытия'
-            }
-        },
-        homepage: {
-            placeholder: 'Поиск файлов...',
-            instructions: {
-                navigate: 'для навигации',
-                select: 'для установки домашней страницы',
                 dismiss: 'для закрытия'
             }
         },
@@ -813,7 +762,6 @@ export const STRINGS_RU = {
     commands: {
         open: 'Открыть', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'Переключить левую боковую панель', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'Открыть домашнюю страницу', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'Открыть ежедневную заметку',
         openWeeklyNote: 'Открыть еженедельную заметку',
         openMonthlyNote: 'Открыть ежемесячную заметку',
@@ -1632,29 +1580,6 @@ export const STRINGS_RU = {
                     all: 'Все (могут открываться внешне)'
                 }
             },
-            homepage: {
-                name: 'Домашняя страница',
-                desc: 'Выберите, что Notebook Navigator открывает автоматически при запуске.',
-                current: 'Текущая: {path}',
-                chooseButton: 'Выбрать файл',
-                options: {
-                    none: 'Нет',
-                    file: 'Файл',
-                    dailyNote: 'Ежедневная заметка',
-                    weeklyNote: 'Еженедельная заметка',
-                    monthlyNote: 'Ежемесячная заметка',
-                    quarterlyNote: 'Ежеквартальная заметка',
-                    yearlyNote: 'Ежегодная заметка'
-                },
-                file: {
-                    name: 'Домашняя страница: Файл запуска',
-                    empty: 'Файл не выбран'
-                },
-                createMissing: {
-                    name: 'Домашняя страница: Создавать заметку, если отсутствует',
-                    desc: 'Создаёт периодическую заметку при запуске или по команде, если её не существует.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Скрыть заметки по правилам свойств (профиль хранилища)',
                 desc: 'Список правил frontmatter через запятую. Используйте записи `key` или `key=value` (например, status=done, published=true, archived).',
@@ -1756,11 +1681,6 @@ export const STRINGS_RU = {
             showShortcutAndRecentItemIcons: {
                 name: 'Показывать иконки для ярлыков и недавних',
                 desc: 'Отображать иконки рядом с элементами в разделах Ярлыки и Недавние.'
-            },
-            interfaceIcons: {
-                name: 'Иконки интерфейса',
-                desc: 'Редактировать иконки панели инструментов, папок, тегов, свойств, закреплённых, поиска и сортировки.',
-                buttonText: 'Редактировать иконки'
             },
             applyColorToIconsOnly: {
                 name: 'Применять цвет только к иконкам',

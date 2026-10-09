@@ -68,9 +68,6 @@ export const STRINGS_ZH_TW = {
         shortcutsHeader: '捷徑',
         recentFilesHeader: '最近檔案', // Header label for recent files section in navigation pane (English: Recent files)
         properties: '屬性',
-        folders: '資料夾',
-        tags: '標籤',
-        calendar: '導覽日曆',
         vaultRootLabel: '儲存庫',
         pinShortcuts: '釘選捷徑',
         pinShortcutsAndRecentFiles: '釘選捷徑和最近檔案',
@@ -441,46 +438,6 @@ export const STRINGS_ZH_TW = {
         fileIconRuleEditor: {
             addRuleAria: '新增規則'
         },
-        interfaceIcons: {
-            title: '介面圖示',
-            fileItemsSection: '檔案項目',
-            items: {
-                'nav-shortcuts': '捷徑',
-                'nav-recent-files': '最近檔案',
-                'nav-expand-all': '全部展開',
-                'nav-collapse-all': '全部摺疊',
-                'nav-calendar': '日曆',
-                'nav-tree-expand': '樹狀箭頭：展開',
-                'nav-tree-collapse': '樹狀箭頭：摺疊',
-                'nav-hidden-items': '隱藏項目',
-                'nav-new-folder': '新建資料夾',
-                'nav-show-single-pane': '顯示單窗格',
-                'nav-show-dual-pane': '顯示雙窗格',
-                'nav-profile-chevron': '設定檔選單箭頭',
-                'list-search': '搜尋',
-                'list-reveal-file': '定位檔案',
-                'list-descendants': '子資料夾中的筆記',
-                'list-expand-all': '展開所有群組',
-                'list-collapse-all': '摺疊所有群組',
-                'list-sort-ascending': '排序：升序',
-                'list-sort-descending': '排序：降序',
-                'list-sort-modified': '依編輯日期排序',
-                'list-sort-created': '依建立日期排序',
-                'list-sort-title': '依標題排序',
-                'list-sort-filename': '依檔案名稱排序',
-                'list-sort-property': '依屬性排序',
-                'list-new-note': '新筆記',
-                'list-pinned': '釘選筆記',
-                'nav-folder-open': '資料夾開啟',
-                'nav-folder-closed': '資料夾關閉',
-                'nav-tags': '標籤',
-                'nav-tag': '標籤',
-                'nav-properties': '屬性',
-                'nav-property': '屬性',
-                'nav-property-value': '值',
-                'file-unfinished-task': '任務'
-            }
-        },
         colorPicker: {
             currentColor: '目前',
             newColor: '新顏色',
@@ -607,14 +564,6 @@ export const STRINGS_ZH_TW = {
                 navigate: '導覽',
                 move: '移動',
                 select: '選擇',
-                dismiss: '取消'
-            }
-        },
-        homepage: {
-            placeholder: '搜尋檔案...',
-            instructions: {
-                navigate: '導覽',
-                select: '設為首頁',
                 dismiss: '取消'
             }
         },
@@ -808,7 +757,6 @@ export const STRINGS_ZH_TW = {
     commands: {
         open: '開啟',
         toggleLeftSidebar: '切換左側邊欄',
-        openHomepage: '開啟首頁',
         openDailyNote: '開啟每日筆記',
         openWeeklyNote: '開啟每週筆記',
         openMonthlyNote: '開啟每月筆記',
@@ -1669,29 +1617,6 @@ export const STRINGS_ZH_TW = {
                     all: '全部（可能外部開啟）'
                 }
             },
-            homepage: {
-                name: '首頁',
-                desc: '選擇 Notebook Navigator 啟動時自動開啟的內容。',
-                current: '目前：{path}',
-                chooseButton: '選擇檔案',
-                options: {
-                    none: '無',
-                    file: '檔案',
-                    dailyNote: '每日筆記',
-                    weeklyNote: '週記',
-                    monthlyNote: '月記',
-                    quarterlyNote: '季度筆記',
-                    yearlyNote: '年度筆記'
-                },
-                file: {
-                    name: '首頁：啟動檔案',
-                    empty: '未選擇檔案'
-                },
-                createMissing: {
-                    name: '首頁：不存在時建立筆記',
-                    desc: '啟動或執行命令時，如果週期筆記不存在則建立。'
-                }
-            },
             propertyKeys: {
                 name: '屬性鍵（儲存庫設定檔）',
                 desc: 'Frontmatter 屬性鍵，可按鍵設定導覽和檔案清單的可見性。',
@@ -1743,11 +1668,6 @@ export const STRINGS_ZH_TW = {
             showShortcutAndRecentItemIcons: {
                 name: '顯示捷徑和最近項目的圖示',
                 desc: '在捷徑和最近檔案區段中的項目旁顯示圖示。'
-            },
-            interfaceIcons: {
-                name: '介面圖示',
-                desc: '編輯工具列、資料夾、標籤、屬性、釘選、搜尋和排序圖示。',
-                buttonText: '編輯圖示'
             },
             applyColorToIconsOnly: {
                 name: '僅對圖示套用顏色',

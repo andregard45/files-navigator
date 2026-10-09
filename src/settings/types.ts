@@ -44,26 +44,6 @@ export function resolveMoveFileConflictsSetting(value: unknown, fallback: MoveFi
     return isMoveFileConflictsSetting(value) ? value : fallback;
 }
 
-const PERIODIC_HOMEPAGE_SOURCES = ['daily-note', 'weekly-note', 'monthly-note', 'quarterly-note', 'yearly-note'] as const;
-const HOMEPAGE_SOURCES = ['none', 'file', ...PERIODIC_HOMEPAGE_SOURCES] as const;
-
-export type HomepageSource = (typeof HOMEPAGE_SOURCES)[number];
-export type PeriodicHomepageSource = (typeof PERIODIC_HOMEPAGE_SOURCES)[number];
-
-export function isHomepageSource(value: unknown): value is HomepageSource {
-    return typeof value === 'string' && HOMEPAGE_SOURCES.includes(value as HomepageSource);
-}
-
-export function isPeriodicHomepageSource(value: unknown): value is PeriodicHomepageSource {
-    return typeof value === 'string' && PERIODIC_HOMEPAGE_SOURCES.includes(value as PeriodicHomepageSource);
-}
-
-export interface HomepageSetting {
-    source: HomepageSource;
-    file: string | null;
-    createMissingPeriodicNote: boolean;
-}
-
 /** Available sort options for file listing */
 export type SortOption =
     | 'modified-desc'
@@ -539,6 +519,8 @@ export interface VaultProfile {
  * Settings are organized by tab for easier maintenance
  */
 export interface NotebookNavigatorSettings {
+    /** @deprecated Legacy interface icon customization map. Kept optional so old data.json files normalize cleanly; no longer read or written by the UI. */
+    interfaceIcons?: Record<string, string>;
     vaultProfiles: VaultProfile[];
     vaultProfile: string;
     vaultTitle: VaultTitleOption;
@@ -564,9 +546,6 @@ export interface NotebookNavigatorSettings {
     startView: 'navigation' | 'files';
     showInfoButtons: boolean;
 
-    // General tab - Homepage
-    homepage: HomepageSetting;
-
     // General tab - Desktop appearance
     dualPane: boolean;
     dualPaneOrientation: DualPaneOrientation;
@@ -587,7 +566,6 @@ export interface NotebookNavigatorSettings {
     toolbarVisibility: ToolbarVisibilitySettings;
 
     // General tab - Icons
-    interfaceIcons: Record<string, string>;
     colorIconOnly: boolean;
 
     // General tab - Formatting

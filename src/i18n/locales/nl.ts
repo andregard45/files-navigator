@@ -69,9 +69,6 @@ export const STRINGS_NL = {
         shortcutsHeader: 'Snelkoppelingen',
         recentFilesHeader: 'Recente bestanden', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Eigenschappen',
-        folders: 'Mappen',
-        tags: 'Tags',
-        calendar: 'Kalender',
         vaultRootLabel: 'Kluis',
         pinShortcuts: 'Snelkoppelingen vastpinnen',
         pinShortcutsAndRecentFiles: 'Snelkoppelingen en recente bestanden vastpinnen',
@@ -446,46 +443,6 @@ export const STRINGS_NL = {
         fileIconRuleEditor: {
             addRuleAria: 'Regel toevoegen'
         },
-        interfaceIcons: {
-            title: 'Interfacepictogrammen',
-            fileItemsSection: 'Bestandsitems',
-            items: {
-                'nav-shortcuts': 'Snelkoppelingen',
-                'nav-recent-files': 'Recente bestanden',
-                'nav-expand-all': 'Alles uitklappen',
-                'nav-collapse-all': 'Alles inklappen',
-                'nav-calendar': 'Kalender',
-                'nav-tree-expand': 'Boompijl: uitklappen',
-                'nav-tree-collapse': 'Boompijl: inklappen',
-                'nav-hidden-items': 'Verborgen items',
-                'nav-new-folder': 'Nieuwe map',
-                'nav-show-single-pane': 'Enkel paneel tonen',
-                'nav-show-dual-pane': 'Dubbel paneel tonen',
-                'nav-profile-chevron': 'Profielmenu-pijl',
-                'list-search': 'Zoeken',
-                'list-reveal-file': 'Bestand tonen',
-                'list-descendants': 'Notities uit submappen',
-                'list-expand-all': 'Alle groepen uitklappen',
-                'list-collapse-all': 'Alle groepen inklappen',
-                'list-sort-ascending': 'Sorteervolgorde: oplopend',
-                'list-sort-descending': 'Sorteervolgorde: aflopend',
-                'list-sort-modified': 'Sorteren op bewerkingsdatum',
-                'list-sort-created': 'Sorteren op aanmaakdatum',
-                'list-sort-title': 'Sorteren op titel',
-                'list-sort-filename': 'Sorteren op bestandsnaam',
-                'list-sort-property': 'Sorteren op eigenschap',
-                'list-new-note': 'Nieuwe notitie',
-                'list-pinned': 'Vastgepinde notities',
-                'nav-folder-open': 'Map open',
-                'nav-folder-closed': 'Map gesloten',
-                'nav-tags': 'Tags',
-                'nav-tag': 'Tag',
-                'nav-properties': 'Eigenschappen',
-                'nav-property': 'Eigenschap',
-                'nav-property-value': 'Waarde',
-                'file-unfinished-task': 'Taken'
-            }
-        },
         colorPicker: {
             currentColor: 'Huidig',
             newColor: 'Nieuw',
@@ -615,14 +572,6 @@ export const STRINGS_NL = {
                 navigate: 'om te navigeren',
                 move: 'om te verplaatsen',
                 select: 'om te selecteren',
-                dismiss: 'om te sluiten'
-            }
-        },
-        homepage: {
-            placeholder: 'Bestanden zoeken...',
-            instructions: {
-                navigate: 'om te navigeren',
-                select: 'om startpagina in te stellen',
                 dismiss: 'om te sluiten'
             }
         },
@@ -818,7 +767,6 @@ export const STRINGS_NL = {
     commands: {
         open: 'Openen',
         toggleLeftSidebar: 'Linkerzijbalk in-/uitschakelen',
-        openHomepage: 'Startpagina openen',
         openDailyNote: 'Dagelijkse notitie openen',
         openWeeklyNote: 'Wekelijkse notitie openen',
         openMonthlyNote: 'Maandelijkse notitie openen',
@@ -1640,29 +1588,6 @@ export const STRINGS_NL = {
                     all: 'Alle (kunnen extern worden geopend)'
                 }
             },
-            homepage: {
-                name: 'Startpagina',
-                desc: 'Kies wat Notebook Navigator automatisch opent bij het opstarten.',
-                current: 'Huidig: {path}',
-                chooseButton: 'Bestand kiezen',
-                options: {
-                    none: 'Geen',
-                    file: 'Bestand',
-                    dailyNote: 'Dagnotitie',
-                    weeklyNote: 'Weeknotitie',
-                    monthlyNote: 'Maandnotitie',
-                    quarterlyNote: 'Kwartaalnotitie',
-                    yearlyNote: 'Jaarnotitie'
-                },
-                file: {
-                    name: 'Startpagina: Opstartbestand',
-                    empty: 'Geen bestand geselecteerd'
-                },
-                createMissing: {
-                    name: 'Startpagina: Notitie aanmaken als deze ontbreekt',
-                    desc: 'Maakt de periodieke notitie aan bij opstarten of via opdracht als deze niet bestaat.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Notities verbergen met eigenschapsregels (kluisprofiel)',
                 desc: 'Kommagescheiden lijst van frontmatter-regels. Gebruik `key` of `key=value` items (bijv. status=done, published=true, archived).',
@@ -1764,11 +1689,6 @@ export const STRINGS_NL = {
             showShortcutAndRecentItemIcons: {
                 name: 'Pictogrammen tonen voor snelkoppelingen en recente items',
                 desc: 'Pictogrammen naast items in de secties Snelkoppelingen en Recent weergeven.'
-            },
-            interfaceIcons: {
-                name: 'Interfacepictogrammen',
-                desc: 'Bewerk pictogrammen voor werkbalk, map, tag, eigenschap, vastgepinde items, zoeken en sorteren.',
-                buttonText: 'Pictogrammen bewerken'
             },
             applyColorToIconsOnly: {
                 name: 'Kleur alleen op pictogrammen toepassen',

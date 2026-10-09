@@ -69,9 +69,6 @@ export const STRINGS_ID = {
         shortcutsHeader: 'Pintasan',
         recentFilesHeader: 'File terbaru', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'Properti',
-        folders: 'Folder',
-        tags: 'Tag',
-        calendar: 'Kalender',
         vaultRootLabel: 'Vault',
         pinShortcuts: 'Sematkan pintasan',
         pinShortcutsAndRecentFiles: 'Sematkan pintasan dan file terbaru',
@@ -443,46 +440,6 @@ export const STRINGS_ID = {
         fileIconRuleEditor: {
             addRuleAria: 'Tambah aturan'
         },
-        interfaceIcons: {
-            title: 'Ikon antarmuka',
-            fileItemsSection: 'Item file',
-            items: {
-                'nav-shortcuts': 'Pintasan',
-                'nav-recent-files': 'File terbaru',
-                'nav-expand-all': 'Luaskan semua',
-                'nav-collapse-all': 'Ciutkan semua',
-                'nav-calendar': 'Kalender',
-                'nav-tree-expand': 'Panah pohon: luaskan',
-                'nav-tree-collapse': 'Panah pohon: ciutkan',
-                'nav-hidden-items': 'Item tersembunyi',
-                'nav-new-folder': 'Folder baru',
-                'nav-show-single-pane': 'Tampilkan panel tunggal',
-                'nav-show-dual-pane': 'Tampilkan panel ganda',
-                'nav-profile-chevron': 'Panah menu profil',
-                'list-search': 'Cari',
-                'list-reveal-file': 'Tampilkan file',
-                'list-descendants': 'Catatan dari subfolder',
-                'list-expand-all': 'Luaskan semua grup',
-                'list-collapse-all': 'Ciutkan semua grup',
-                'list-sort-ascending': 'Urutan: menaik',
-                'list-sort-descending': 'Urutan: menurun',
-                'list-sort-modified': 'Urutkan berdasarkan tanggal edit',
-                'list-sort-created': 'Urutkan berdasarkan tanggal dibuat',
-                'list-sort-title': 'Urutkan berdasarkan judul',
-                'list-sort-filename': 'Urutkan berdasarkan nama file',
-                'list-sort-property': 'Urutkan berdasarkan properti',
-                'list-new-note': 'Catatan baru',
-                'list-pinned': 'Catatan yang disematkan',
-                'nav-folder-open': 'Folder terbuka',
-                'nav-folder-closed': 'Folder tertutup',
-                'nav-tags': 'Tag',
-                'nav-tag': 'Tag',
-                'nav-properties': 'Properti',
-                'nav-property': 'Properti',
-                'nav-property-value': 'Nilai',
-                'file-unfinished-task': 'Tugas'
-            }
-        },
         colorPicker: {
             currentColor: 'Saat ini',
             newColor: 'Baru',
@@ -613,14 +570,6 @@ export const STRINGS_ID = {
                 navigate: 'untuk navigasi',
                 move: 'untuk memindahkan',
                 select: 'untuk memilih',
-                dismiss: 'untuk menutup'
-            }
-        },
-        homepage: {
-            placeholder: 'Cari file...',
-            instructions: {
-                navigate: 'untuk navigasi',
-                select: 'untuk mengatur beranda',
                 dismiss: 'untuk menutup'
             }
         },
@@ -815,7 +764,6 @@ export const STRINGS_ID = {
     commands: {
         open: 'Buka',
         toggleLeftSidebar: 'Alihkan bilah sisi kiri',
-        openHomepage: 'Buka beranda',
         openDailyNote: 'Buka catatan harian',
         openWeeklyNote: 'Buka catatan mingguan',
         openMonthlyNote: 'Buka catatan bulanan',
@@ -1634,29 +1582,6 @@ export const STRINGS_ID = {
                     all: 'Semua (mungkin terbuka secara eksternal)'
                 }
             },
-            homepage: {
-                name: 'Beranda',
-                desc: 'Pilih apa yang Notebook Navigator buka secara otomatis saat memulai.',
-                current: 'Saat ini: {path}',
-                chooseButton: 'Pilih file',
-                options: {
-                    none: 'Tidak ada',
-                    file: 'File',
-                    dailyNote: 'Catatan harian',
-                    weeklyNote: 'Catatan mingguan',
-                    monthlyNote: 'Catatan bulanan',
-                    quarterlyNote: 'Catatan kuartalan',
-                    yearlyNote: 'Catatan tahunan'
-                },
-                file: {
-                    name: 'Beranda: File awal',
-                    empty: 'Tidak ada file yang dipilih'
-                },
-                createMissing: {
-                    name: 'Beranda: Buat catatan jika tidak ada',
-                    desc: 'Membuat catatan berkala saat startup atau perintah jika belum ada.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'Sembunyikan catatan dengan aturan properti (profil vault)',
                 desc: 'Daftar aturan frontmatter yang dipisahkan koma. Gunakan entri `key` atau `key=value` (misal, status=done, published=true, archived).',
@@ -1758,11 +1683,6 @@ export const STRINGS_ID = {
             showShortcutAndRecentItemIcons: {
                 name: 'Tampilkan ikon untuk pintasan dan item terbaru',
                 desc: 'Tampilkan ikon di samping item pada bagian Pintasan dan Terbaru.'
-            },
-            interfaceIcons: {
-                name: 'Ikon antarmuka',
-                desc: 'Edit ikon toolbar, folder, tag, properti, item tersemat, pencarian, dan pengurutan.',
-                buttonText: 'Edit ikon'
             },
             applyColorToIconsOnly: {
                 name: 'Terapkan warna ke ikon saja',

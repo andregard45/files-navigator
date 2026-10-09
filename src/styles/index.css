@@ -90,8 +90,6 @@ Keep this list ordered: later files override earlier ones.
 @import './sections/modal-edit-vault-profiles.css';
 /* modal-file-icon-rule-editor.css: file icon rule editor modal sizing and scroll container. */
 @import './sections/modal-file-icon-rule-editor.css';
-/* modal-ux-icon-map.css: UX icon map modal layout, mobile sizing, scroll container. */
-@import './sections/modal-ux-icon-map.css';
 /* modal-icon-picker.css: icon picker modal layout, search input, results grid, and category headers. */
 @import './sections/modal-icon-picker.css';
 /* modal-property-keys.css: property key visibility modal layout (navigation/list toggles). */

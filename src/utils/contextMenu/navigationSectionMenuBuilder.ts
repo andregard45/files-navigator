@@ -31,11 +31,11 @@ import {
     TAGS_ROOT_VIRTUAL_FOLDER_ID
 } from '../../types';
 import { executeCommand } from '../../utils/typeGuards';
-import { ensureRecord, isStringRecordValue, sanitizeRecord } from '../../utils/recordUtils';
-import { resolveUXIcon, resolveUXIconForMenu, type UXIconId } from '../../utils/uxIcons';
+import { ensureRecord, isStringRecordValue } from '../../utils/recordUtils';
+import type { UXIconId } from '../../utils/uxIcons';
+import { resolveUXIconForMenu } from '../../utils/uxIcons';
 import { addStyleMenu } from './styleMenuBuilder';
 import { strings } from '../../i18n';
-import { normalizeCanonicalIconId, serializeIconForFrontmatter } from '../../utils/iconizeFormat';
 import { runAsyncAction } from '../../utils/async';
 
 interface NavigationSectionShortcutActions {
@@ -213,38 +213,7 @@ export function showNavigationSectionContextMenu({
             await settingsProvider.saveSettingsAndUpdate();
         };
 
-        const setVirtualRootIcon = async (uxIconId: UXIconId, iconId: string | null): Promise<void> => {
-            const interfaceIcons = sanitizeRecord(settingsProvider.settings.interfaceIcons, isStringRecordValue);
-            const defaultIconId = normalizeCanonicalIconId(resolveUXIcon(undefined, uxIconId));
-            let didChange = false;
-
-            if (!iconId) {
-                if (Object.prototype.hasOwnProperty.call(interfaceIcons, uxIconId)) {
-                    delete interfaceIcons[uxIconId];
-                    didChange = true;
-                }
-            } else {
-                const canonicalIconId = normalizeCanonicalIconId(iconId);
-                const serializedIconId = serializeIconForFrontmatter(canonicalIconId);
-
-                if (!serializedIconId || canonicalIconId === defaultIconId) {
-                    if (Object.prototype.hasOwnProperty.call(interfaceIcons, uxIconId)) {
-                        delete interfaceIcons[uxIconId];
-                        didChange = true;
-                    }
-                } else if (interfaceIcons[uxIconId] !== serializedIconId) {
-                    interfaceIcons[uxIconId] = serializedIconId;
-                    didChange = true;
-                }
-            }
-
-            if (!didChange) {
-                return;
-            }
-
-            settingsProvider.settings.interfaceIcons = interfaceIcons;
-            await settingsProvider.saveSettingsAndUpdate();
-        };
+        // Interface icon customization was removed: virtual root sections always render the built-in default icons.
 
         const openAppearanceModal = async (initialTab: 'icon' | 'color' | 'background'): Promise<void> => {
             const { AppearanceModal } = await import('../../modals/AppearanceModal');
@@ -252,15 +221,8 @@ export function showNavigationSectionContextMenu({
                 title: titleOverride,
                 metadataService,
                 initialTab,
-                defaultIcon: virtualRootMenuConfig ? resolveUXIcon(undefined, virtualRootMenuConfig.uxIconId) : null,
-                icon: virtualRootMenuConfig
-                    ? {
-                          initial: resolveUXIcon(settingsProvider.settings.interfaceIcons, virtualRootMenuConfig.uxIconId),
-                          apply: async iconId => {
-                              await setVirtualRootIcon(virtualRootMenuConfig.uxIconId, iconId);
-                          }
-                      }
-                    : undefined,
+                defaultIcon: null,
+                icon: undefined,
                 color: {
                     initial: virtualFolderColor ?? null,
                     apply: async color => {

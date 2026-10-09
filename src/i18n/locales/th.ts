@@ -69,9 +69,6 @@ export const STRINGS_TH = {
         shortcutsHeader: 'ทางลัด',
         recentFilesHeader: 'ไฟล์ล่าสุด', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'คุณสมบัติ',
-        folders: 'โฟลเดอร์',
-        tags: 'แท็ก',
-        calendar: 'ปฏิทิน',
         vaultRootLabel: 'ห้องนิรภัย',
         pinShortcuts: 'ปักหมุดทางลัด',
         pinShortcutsAndRecentFiles: 'ปักหมุดทางลัดและไฟล์ล่าสุด',
@@ -441,46 +438,6 @@ export const STRINGS_TH = {
         fileIconRuleEditor: {
             addRuleAria: 'เพิ่มกฎ'
         },
-        interfaceIcons: {
-            title: 'ไอคอนอินเทอร์เฟซ',
-            fileItemsSection: 'รายการไฟล์',
-            items: {
-                'nav-shortcuts': 'ทางลัด',
-                'nav-recent-files': 'ไฟล์ล่าสุด',
-                'nav-expand-all': 'ขยายทั้งหมด',
-                'nav-collapse-all': 'ยุบทั้งหมด',
-                'nav-calendar': 'ปฏิทิน',
-                'nav-tree-expand': 'ลูกศรต้นไม้: ขยาย',
-                'nav-tree-collapse': 'ลูกศรต้นไม้: ยุบ',
-                'nav-hidden-items': 'รายการที่ซ่อน',
-                'nav-new-folder': 'โฟลเดอร์ใหม่',
-                'nav-show-single-pane': 'แสดงแผงเดียว',
-                'nav-show-dual-pane': 'แสดงแผงคู่',
-                'nav-profile-chevron': 'ลูกศรเมนูโปรไฟล์',
-                'list-search': 'ค้นหา',
-                'list-reveal-file': 'แสดงไฟล์',
-                'list-descendants': 'โน้ตจากโฟลเดอร์ย่อย',
-                'list-expand-all': 'ขยายกลุ่มทั้งหมด',
-                'list-collapse-all': 'ยุบกลุ่มทั้งหมด',
-                'list-sort-ascending': 'ลำดับ: น้อยไปมาก',
-                'list-sort-descending': 'ลำดับ: มากไปน้อย',
-                'list-sort-modified': 'จัดเรียงตามวันที่แก้ไข',
-                'list-sort-created': 'จัดเรียงตามวันที่สร้าง',
-                'list-sort-title': 'จัดเรียงตามชื่อเรื่อง',
-                'list-sort-filename': 'จัดเรียงตามชื่อไฟล์',
-                'list-sort-property': 'จัดเรียงตามคุณสมบัติ',
-                'list-new-note': 'โน้ตใหม่',
-                'list-pinned': 'โน้ตที่ปักหมุด',
-                'nav-folder-open': 'โฟลเดอร์เปิด',
-                'nav-folder-closed': 'โฟลเดอร์ปิด',
-                'nav-tags': 'แท็ก',
-                'nav-tag': 'แท็ก',
-                'nav-properties': 'คุณสมบัติ',
-                'nav-property': 'คุณสมบัติ',
-                'nav-property-value': 'ค่า',
-                'file-unfinished-task': 'งาน'
-            }
-        },
         colorPicker: {
             currentColor: 'ปัจจุบัน',
             newColor: 'ใหม่',
@@ -608,14 +565,6 @@ export const STRINGS_TH = {
                 navigate: 'เพื่อนำทาง',
                 move: 'เพื่อย้าย',
                 select: 'เพื่อเลือก',
-                dismiss: 'เพื่อปิด'
-            }
-        },
-        homepage: {
-            placeholder: 'ค้นหาไฟล์...',
-            instructions: {
-                navigate: 'เพื่อนำทาง',
-                select: 'เพื่อตั้งหน้าแรก',
                 dismiss: 'เพื่อปิด'
             }
         },
@@ -809,7 +758,6 @@ export const STRINGS_TH = {
     commands: {
         open: 'เปิด',
         toggleLeftSidebar: 'สลับแถบด้านซ้าย',
-        openHomepage: 'เปิดหน้าแรก',
         openDailyNote: 'เปิดโน้ตรายวัน',
         openWeeklyNote: 'เปิดโน้ตรายสัปดาห์',
         openMonthlyNote: 'เปิดโน้ตรายเดือน',
@@ -1627,29 +1575,6 @@ export const STRINGS_TH = {
                     all: 'ทั้งหมด (อาจเปิดภายนอก)'
                 }
             },
-            homepage: {
-                name: 'หน้าแรก',
-                desc: 'เลือกสิ่งที่ Notebook Navigator เปิดอัตโนมัติเมื่อเริ่มต้น',
-                current: 'ปัจจุบัน: {path}',
-                chooseButton: 'เลือกไฟล์',
-                options: {
-                    none: 'ไม่มี',
-                    file: 'ไฟล์',
-                    dailyNote: 'โน้ตรายวัน',
-                    weeklyNote: 'โน้ตรายสัปดาห์',
-                    monthlyNote: 'โน้ตรายเดือน',
-                    quarterlyNote: 'โน้ตรายไตรมาส',
-                    yearlyNote: 'โน้ตรายปี'
-                },
-                file: {
-                    name: 'หน้าแรก: ไฟล์เริ่มต้น',
-                    empty: 'ไม่ได้เลือกไฟล์'
-                },
-                createMissing: {
-                    name: 'หน้าแรก: สร้างโน้ตหากไม่มี',
-                    desc: 'สร้างโน้ตตามรอบเมื่อเริ่มต้นหรือเมื่อใช้คำสั่ง หากยังไม่มี'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'ซ่อนโน้ตตามกฎคุณสมบัติ (โปรไฟล์ห้องนิรภัย)',
                 desc: 'รายการกฎ frontmatter คั่นด้วยเครื่องหมายจุลภาค ใช้รูปแบบ `key` หรือ `key=value` (เช่น status=done, published=true, archived)',
@@ -1750,11 +1675,6 @@ export const STRINGS_TH = {
             showShortcutAndRecentItemIcons: {
                 name: 'แสดงไอคอนสำหรับทางลัดและรายการล่าสุด',
                 desc: 'แสดงไอคอนข้างรายการในส่วนทางลัดและล่าสุด'
-            },
-            interfaceIcons: {
-                name: 'ไอคอนอินเทอร์เฟซ',
-                desc: 'แก้ไขไอคอนแถบเครื่องมือ โฟลเดอร์ แท็ก คุณสมบัติ ปักหมุด ค้นหา และเรียงลำดับ',
-                buttonText: 'แก้ไขไอคอน'
             },
             applyColorToIconsOnly: {
                 name: 'ใช้สีกับไอคอนเท่านั้น',

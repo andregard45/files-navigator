@@ -68,9 +68,6 @@ export const STRINGS_ZH_CN = {
         shortcutsHeader: '快捷方式',
         recentFilesHeader: '最近文件', // Header label for recent files section in navigation pane (English: Recent files)
         properties: '属性',
-        folders: '文件夹',
-        tags: '标签',
-        calendar: '导航日历',
         vaultRootLabel: '仓库',
         pinShortcuts: '固定快捷方式',
         pinShortcutsAndRecentFiles: '固定快捷方式和最近文件',
@@ -440,46 +437,6 @@ export const STRINGS_ZH_CN = {
         fileIconRuleEditor: {
             addRuleAria: '添加规则'
         },
-        interfaceIcons: {
-            title: '界面图标',
-            fileItemsSection: '文件项目',
-            items: {
-                'nav-shortcuts': '快捷方式',
-                'nav-recent-files': '最近文件',
-                'nav-expand-all': '全部展开',
-                'nav-collapse-all': '全部折叠',
-                'nav-calendar': '日历',
-                'nav-tree-expand': '树形箭头：展开',
-                'nav-tree-collapse': '树形箭头：折叠',
-                'nav-hidden-items': '隐藏项目',
-                'nav-new-folder': '新建文件夹',
-                'nav-show-single-pane': '显示单窗格',
-                'nav-show-dual-pane': '显示双窗格',
-                'nav-profile-chevron': '配置菜单箭头',
-                'list-search': '搜索',
-                'list-reveal-file': '定位文件',
-                'list-descendants': '子文件夹中的笔记',
-                'list-expand-all': '展开所有分组',
-                'list-collapse-all': '折叠所有分组',
-                'list-sort-ascending': '排序：升序',
-                'list-sort-descending': '排序：降序',
-                'list-sort-modified': '按编辑日期排序',
-                'list-sort-created': '按创建日期排序',
-                'list-sort-title': '按标题排序',
-                'list-sort-filename': '按文件名排序',
-                'list-sort-property': '按属性排序',
-                'list-new-note': '新建笔记',
-                'list-pinned': '固定笔记',
-                'nav-folder-open': '文件夹打开',
-                'nav-folder-closed': '文件夹关闭',
-                'nav-tags': '标签',
-                'nav-tag': '标签',
-                'nav-properties': '属性',
-                'nav-property': '属性',
-                'nav-property-value': '值',
-                'file-unfinished-task': '任务'
-            }
-        },
         colorPicker: {
             currentColor: '当前',
             newColor: '新颜色',
@@ -606,14 +563,6 @@ export const STRINGS_ZH_CN = {
                 navigate: '导航',
                 move: '移动',
                 select: '选择',
-                dismiss: '取消'
-            }
-        },
-        homepage: {
-            placeholder: '搜索文件...',
-            instructions: {
-                navigate: '导航',
-                select: '设为主页',
                 dismiss: '取消'
             }
         },
@@ -807,7 +756,6 @@ export const STRINGS_ZH_CN = {
     commands: {
         open: '打开', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: '切换左侧边栏', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: '打开主页', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: '打开日记',
         openWeeklyNote: '打开周记',
         openMonthlyNote: '打开月记',
@@ -1668,29 +1616,6 @@ export const STRINGS_ZH_CN = {
                     all: '全部（可能外部打开）'
                 }
             },
-            homepage: {
-                name: '主页',
-                desc: '选择 Notebook Navigator 启动时自动打开的内容。',
-                current: '当前：{path}',
-                chooseButton: '选择文件',
-                options: {
-                    none: '无',
-                    file: '文件',
-                    dailyNote: '日记',
-                    weeklyNote: '周记',
-                    monthlyNote: '月记',
-                    quarterlyNote: '季度笔记',
-                    yearlyNote: '年记'
-                },
-                file: {
-                    name: '主页：启动文件',
-                    empty: '未选择文件'
-                },
-                createMissing: {
-                    name: '主页：不存在时创建笔记',
-                    desc: '启动或执行命令时，如果定期笔记不存在则创建。'
-                }
-            },
             propertyKeys: {
                 name: '属性键（仓库配置文件）',
                 desc: 'Frontmatter 属性键，可按键设置导航和文件列表的可见性。',
@@ -1742,11 +1667,6 @@ export const STRINGS_ZH_CN = {
             showShortcutAndRecentItemIcons: {
                 name: '显示快捷方式和最近项目的图标',
                 desc: '在快捷方式和最近文件分区中的项目旁显示图标。'
-            },
-            interfaceIcons: {
-                name: '界面图标',
-                desc: '编辑工具栏、文件夹、标签、属性、固定、搜索和排序图标。',
-                buttonText: '编辑图标'
             },
             applyColorToIconsOnly: {
                 name: '仅对图标应用颜色',

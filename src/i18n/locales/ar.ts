@@ -69,9 +69,6 @@ export const STRINGS_AR = {
         shortcutsHeader: 'اختصارات', // Header label for shortcuts section in navigation pane (English: Shortcuts)
         recentFilesHeader: 'ملفات حديثة', // Header label for recent files section in navigation pane (English: Recent files)
         properties: 'الخصائص',
-        folders: 'مجلدات',
-        tags: 'وسوم',
-        calendar: 'التقويم',
         vaultRootLabel: 'الخزنة',
         pinShortcuts: 'تثبيت الاختصارات',
         pinShortcutsAndRecentFiles: 'تثبيت الاختصارات والملفات الحديثة',
@@ -441,46 +438,6 @@ export const STRINGS_AR = {
         fileIconRuleEditor: {
             addRuleAria: 'إضافة قاعدة'
         },
-        interfaceIcons: {
-            title: 'أيقونات الواجهة',
-            fileItemsSection: 'عناصر الملفات',
-            items: {
-                'nav-shortcuts': 'الاختصارات',
-                'nav-recent-files': 'الملفات الأخيرة',
-                'nav-expand-all': 'توسيع الكل',
-                'nav-collapse-all': 'طي الكل',
-                'nav-calendar': 'التقويم',
-                'nav-tree-expand': 'سهم الشجرة: توسيع',
-                'nav-tree-collapse': 'سهم الشجرة: طي',
-                'nav-hidden-items': 'العناصر المخفية',
-                'nav-new-folder': 'مجلد جديد',
-                'nav-show-single-pane': 'إظهار لوحة واحدة',
-                'nav-show-dual-pane': 'إظهار لوحتين',
-                'nav-profile-chevron': 'سهم قائمة ملفات التعريف',
-                'list-search': 'بحث',
-                'list-reveal-file': 'الكشف عن الملف',
-                'list-descendants': 'ملاحظات من المجلدات الفرعية',
-                'list-expand-all': 'توسيع جميع المجموعات',
-                'list-collapse-all': 'طي جميع المجموعات',
-                'list-sort-ascending': 'ترتيب الفرز: تصاعدي',
-                'list-sort-descending': 'ترتيب الفرز: تنازلي',
-                'list-sort-modified': 'الفرز حسب تاريخ التعديل',
-                'list-sort-created': 'الفرز حسب تاريخ الإنشاء',
-                'list-sort-title': 'الفرز حسب العنوان',
-                'list-sort-filename': 'الفرز حسب اسم الملف',
-                'list-sort-property': 'الفرز حسب الخاصية',
-                'list-new-note': 'ملاحظة جديدة',
-                'list-pinned': 'الملاحظات المثبتة',
-                'nav-folder-open': 'مجلد مفتوح',
-                'nav-folder-closed': 'مجلد مغلق',
-                'nav-tags': 'وسوم',
-                'nav-tag': 'وسم',
-                'nav-properties': 'الخصائص',
-                'nav-property': 'خاصية',
-                'nav-property-value': 'قيمة',
-                'file-unfinished-task': 'المهام'
-            }
-        },
         colorPicker: {
             currentColor: 'الحالي',
             newColor: 'جديد',
@@ -610,14 +567,6 @@ export const STRINGS_AR = {
                 navigate: 'للتنقل',
                 move: 'للنقل',
                 select: 'للتحديد',
-                dismiss: 'للإغلاق'
-            }
-        },
-        homepage: {
-            placeholder: 'البحث عن ملفات...',
-            instructions: {
-                navigate: 'للتنقل',
-                select: 'لتعيين الصفحة الرئيسية',
                 dismiss: 'للإغلاق'
             }
         },
@@ -811,7 +760,6 @@ export const STRINGS_AR = {
     commands: {
         open: 'فتح', // Command palette: Opens the Notebook Navigator view (English: Open)
         toggleLeftSidebar: 'تبديل الشريط الجانبي الأيسر', // Command palette: Toggles left sidebar, opening Notebook Navigator when uncollapsing (English: Toggle left sidebar)
-        openHomepage: 'فتح الصفحة الرئيسية', // Command palette: Opens the Notebook Navigator view and loads the homepage file (English: Open homepage)
         openDailyNote: 'فتح الملاحظة اليومية',
         openWeeklyNote: 'فتح الملاحظة الأسبوعية',
         openMonthlyNote: 'فتح الملاحظة الشهرية',
@@ -1628,29 +1576,6 @@ export const STRINGS_AR = {
                     all: 'الكل (قد تفتح خارجيًا)'
                 }
             },
-            homepage: {
-                name: 'الصفحة الرئيسية',
-                desc: 'اختر ما يفتحه Notebook Navigator تلقائيًا عند بدء التشغيل.',
-                current: 'الحالي: {path}',
-                chooseButton: 'اختيار ملف',
-                options: {
-                    none: 'لا شيء',
-                    file: 'ملف',
-                    dailyNote: 'ملاحظة يومية',
-                    weeklyNote: 'ملاحظة أسبوعية',
-                    monthlyNote: 'ملاحظة شهرية',
-                    quarterlyNote: 'ملاحظة ربع سنوية',
-                    yearlyNote: 'ملاحظة سنوية'
-                },
-                file: {
-                    name: 'الصفحة الرئيسية: ملف بدء التشغيل',
-                    empty: 'لم يتم اختيار ملف'
-                },
-                createMissing: {
-                    name: 'الصفحة الرئيسية: إنشاء ملاحظة إذا كانت مفقودة',
-                    desc: 'إنشاء الملاحظة الدورية عند بدء التشغيل أو عبر الأمر إذا لم تكن موجودة.'
-                }
-            },
             hideNotesWithPropertyRules: {
                 name: 'إخفاء الملاحظات بقواعد الخصائص (ملف تعريف الخزنة)',
                 desc: 'قائمة مفصولة بفاصلة من قواعد خصائص البيانات الأمامية. استخدم إدخالات `key` أو `key=value` (مثل status=done, published=true, archived).',
@@ -1752,11 +1677,6 @@ export const STRINGS_AR = {
             showShortcutAndRecentItemIcons: {
                 name: 'إظهار أيقونات للاختصارات والعناصر الحديثة',
                 desc: 'عرض أيقونات بجانب العناصر في قسمَي الاختصارات والحديثة.'
-            },
-            interfaceIcons: {
-                name: 'أيقونات الواجهة',
-                desc: 'تحرير أيقونات شريط الأدوات والمجلدات والوسوم والخصائص والعناصر المثبتة والبحث والفرز.',
-                buttonText: 'تحرير الأيقونات'
             },
             applyColorToIconsOnly: {
                 name: 'تطبيق اللون على الأيقونات فقط',

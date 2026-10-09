@@ -710,59 +710,6 @@ describe('PluginSettingsController.applySettingsRecord', () => {
 });
 
 describe('PluginSettingsController.saveSettings', () => {
-    it('persists homepage to the settings record and mirrors it to local storage', async () => {
-        let storedData: Record<string, unknown> | null = null;
-
-        const controller = new PluginSettingsController({
-            keys: STORAGE_KEYS,
-            loadData: vi.fn(async () => (storedData ? structuredClone(storedData) : null)),
-            saveData: vi.fn(async data => {
-                storedData = structuredClone(data) as Record<string, unknown>;
-            }),
-        });
-        const settings = structuredClone(DEFAULT_SETTINGS);
-
-        settings.homepage = {
-            source: 'daily-note',
-            file: null,
-            createMissingPeriodicNote: true
-        };
-
-        mockLocalStorageStore.set(STORAGE_KEYS.homepageKey, {
-            source: 'file',
-            file: 'old-note.md',
-            createMissingPeriodicNote: false
-        });
-
-        controller.settings = settings;
-        await controller.saveSettings();
-
-        expect(mockLocalStorageStore.get(STORAGE_KEYS.homepageKey)).toEqual({
-            source: 'daily-note',
-            file: null,
-            createMissingPeriodicNote: true
-        });
-        expect(storedData?.['homepage']).toEqual({
-            source: 'daily-note',
-            file: null,
-            createMissingPeriodicNote: true
-        });
-
-        const reloadedController = new PluginSettingsController({
-            keys: STORAGE_KEYS,
-            loadData: vi.fn(async () => (storedData ? structuredClone(storedData) : null)),
-            saveData: vi.fn().mockResolvedValue(undefined),
-        });
-
-        await reloadedController.loadSettings();
-
-        expect(reloadedController.settings.homepage).toEqual({
-            source: 'daily-note',
-            file: null,
-            createMissingPeriodicNote: true
-        });
-    });
-
     it('keeps property sort overrides during save when their targets are no longer configured', async () => {
         let storedData: Record<string, unknown> | null = null;
         const statusNodeId = buildPropertyKeyNodeId('status');
