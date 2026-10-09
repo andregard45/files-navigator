@@ -1915,6 +1915,10 @@ export const STRINGS_DE = {
                 indexingTitle: 'Vault wird indiziert...',
                 progress: 'Notebook Navigator-Cache wird aktualisiert.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Frontmatter-Metadaten verwenden',
                 desc: 'Frontmatter für Notizname, Zeitstempel, Symbole und Farben verwenden'

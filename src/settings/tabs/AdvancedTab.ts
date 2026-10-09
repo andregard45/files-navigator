@@ -29,6 +29,37 @@ import { localStorage } from '../../utils/localStorage';
 import { runAsyncAction } from '../../utils/async';
 import { showNotice } from '../../utils/noticeUtils';
 import { createGroupDefinition, createRenderDefinition } from '../nativeSettingControls';
+import {
+    getDebugLoggingService,
+    readStartupDebugLoggingPreference,
+    writeStartupDebugLoggingPreference,
+} from '../../services/diagnostics/DebugLoggingService';
+
+/**
+ * Startup debug logging toggle. This preference is deliberately NOT part of the
+ * synced settings pipeline: it lives in browser localStorage (per device) and is
+ * stripped from data.json by `removeNonPersistableSettings()`. The label says
+ * "(not synced)" and that is enforced here.
+ */
+function renderStartupDebugLoggingSetting(setting: Setting, context: SettingsTabContext): void {
+    const { plugin } = context;
+    const initialEnabled = readStartupDebugLoggingPreference();
+    setting
+        .setName(strings.settings.items.startupDebugLogging.name)
+        .setDesc(strings.settings.items.startupDebugLogging.desc)
+        .addToggle(toggle => {
+            toggle.setValue(initialEnabled).onChange(value => {
+                const enabled = value === true;
+                writeStartupDebugLoggingPreference(enabled);
+                getDebugLoggingService()?.setEnabled(enabled);
+                // Keep the in-memory settings object consistent with the toggle so any
+                // code reading settings.startupDebugLogging sees the same value. The
+                // field is never persisted to data.json (non-persistable), and the
+                // service reads its enablement from localStorage at startup.
+                plugin.settings.startupDebugLogging = enabled;
+            });
+        });
+}
 
 /** Builds native 1.13 setting definitions for advanced settings. */
 export function createAdvancedSettingDefinitions(context: SettingsTabContext): SettingDefinitionItem[] {
@@ -60,6 +91,11 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
     }
 
     maintenanceItems.push(
+        createRenderDefinition({
+            name: strings.settings.items.startupDebugLogging.name,
+            desc: strings.settings.items.startupDebugLogging.desc,
+            render: setting => renderStartupDebugLoggingSetting(setting, context)
+        }),
         createRenderDefinition({
             name: strings.settings.items.metadataCleanup.name,
             desc: strings.settings.items.metadataCleanup.desc,

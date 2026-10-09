@@ -1905,6 +1905,10 @@ export const STRINGS_UK = {
                 indexingTitle: 'Індексація сховища...',
                 progress: 'Оновлення кешу Notebook Navigator.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Використовувати метадані frontmatter',
                 desc: 'Використовувати frontmatter для назви нотатки, часових міток, іконок та кольорів'

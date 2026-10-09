@@ -1906,6 +1906,10 @@ export const STRINGS_FA = {
                 indexingTitle: 'در حال نمایه\u200cسازی خزانه...',
                 progress: 'Notebook Navigator در حال به\u200cروزرسانی کش است.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'استفاده از متادیتای فرانت‌متر',
                 desc: 'از فرانت‌متر برای نام یادداشت، زمان‌ها، آیکون‌ها و رنگ‌ها استفاده کنید'

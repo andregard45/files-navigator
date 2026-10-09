@@ -95,6 +95,7 @@ import { useNavigationPaneTreeSections } from '../hooks/navigationPane/data/useN
 import { useNavigationPaneSourceState } from '../hooks/navigationPane/data/useNavigationPaneSourceState';
 import type { SelectionHistoryEntry } from '../context/selection/types';
 import type { SearchQueryUpdateOptions } from '../hooks/useListPaneSearch';
+import { recordStartupUserVisible } from '../services/diagnostics/DebugLoggingService';
 
 // Checks if two string arrays have identical content in the same order
 const arraysEqual = (a: string[], b: string[]): boolean => {
@@ -205,6 +206,14 @@ export const NotebookNavigatorComponent = React.memo(
         const uiState = useUIState();
         const uiDispatch = useUIDispatch();
         const uxRef = useRef(uxPreferences);
+        // Startup debug logging: record the first user-visible render exactly once.
+        // No-op when the setting is disabled (module helper checks isEnabled first).
+        const userVisibleRecordedRef = useRef(false);
+        useEffect(() => {
+            if (userVisibleRecordedRef.current) return;
+            userVisibleRecordedRef.current = true;
+            recordStartupUserVisible({ component: 'NotebookNavigatorComponent' });
+        }, []);
         useEffect(() => {
             uxRef.current = uxPreferences;
         }, [uxPreferences]);

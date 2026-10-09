@@ -1901,6 +1901,10 @@ export const STRINGS_AR = {
                 indexingTitle: 'جارٍ فهرسة الخزنة...',
                 progress: 'جارٍ تحديث ذاكرة التخزين المؤقت لـ Notebook Navigator.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'استخدام البيانات الأمامية',
                 desc: 'استخدام البيانات الأمامية لاسم الملاحظة والطوابع الزمنية والأيقونات والألوان'

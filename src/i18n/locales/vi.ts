@@ -1905,6 +1905,10 @@ export const STRINGS_VI = {
                 indexingTitle: 'Đang lập chỉ mục vault...',
                 progress: 'Đang cập nhật cache Notebook Navigator.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Dùng metadata frontmatter',
                 desc: 'Dùng frontmatter cho tên ghi chú, dấu thời gian, biểu tượng và màu'

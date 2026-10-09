@@ -1907,6 +1907,10 @@ export const STRINGS_ID = {
                 indexingTitle: 'Mengindeks vault...',
                 progress: 'Memperbarui cache Notebook Navigator.'
             },
+            startupDebugLogging: {
+                name: 'Startup debug logging (not synced)',
+                desc: 'Write startup diagnostics to a timestamped markdown file in the vault root, then stop after startup settles. The file may sync and can include file paths.'
+            },
             useFrontmatterMetadata: {
                 name: 'Gunakan metadata frontmatter',
                 desc: 'Gunakan frontmatter untuk nama catatan, timestamp, ikon, dan warna'
